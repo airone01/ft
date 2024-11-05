@@ -49,3 +49,6 @@
 [submodule "pool/shell-00"]
 	path = pool/shell-00
 	url = https://github.com/airone01/42-c-piscine-shell-00
+[submodule "milestone-0/libft"]
+	path = milestone-0/libft
+	url = https://github.com/airone01/42-libft
