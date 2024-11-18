@@ -10,13 +10,25 @@
 #                                                                              #
 # **************************************************************************** #
 
+# ------------- ANSI -------------
+BG_BLURPLE	= \033[48;5;99m
+RESET		= \033[0m
+
+# ------------- Meta -------------
 NAME	= libft.a
+PNAME	= milestone-0/libft
+
+# ----------- Commands -----------
+ECHO	= echo
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -Wpedantic -MMD -MP
 AR		= ar
-ARFLAGS	= rc
 RM      = rm -f
 
+# ------------- Flags ------------
+CFLAGS	= -Wall -Werror -Wextra -Wpedantic -MMD -MP
+ARFLAGS	= rcs
+
+# ------------ Sources -----------
 SRC =				\
 	ft_atoi.c		\
 	ft_bzero.c		\
@@ -61,33 +73,34 @@ SRC_BONUS =					\
 	ft_lstlast_bonus.c		\
 	ft_lstmap_bonus.c		\
 	ft_lstnew_bonus.c		\
-	ft_lstsize_bonus.c 
+	ft_lstsize_bonus.c
 
+# ------------ Mapping -----------
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 DEP_BONUS = $(SRC_BONUS:.c=.d)
 
+# ------------ Targets -----------
 all: $(NAME)
-
 $(NAME): $(OBJ)
+	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Building lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
-
 bonus: $(OBJ) $(OBJ_BONUS)
+	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Building bonuses lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
-
 %.o: %.c Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
-
--include $(DEP) $(DEP_BONUS)
-
 clean:
-	$(RM) $(OBJ) $(OBJ_BONUS) $(DEP) $(DEP_BONUS)
-
+	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Cleaning the project"
+	@$(RM) $(OBJ) $(OBJ_BONUS) $(DEP) $(DEP_BONUS)
 fclean: clean
-	$(RM) $(NAME)
-
+	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Fcleaning the project"
+	@$(RM) $(NAME)
 re: fclean all
 
+# ----------- Make meta ----------
+MAKEFLAGS	+= --no-print-directory
+-include $(DEP) $(DEP_BONUS)
 .PHONY: all bonus clean fclean re
-
+.SILENT: clean fclean
