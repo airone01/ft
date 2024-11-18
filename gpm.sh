@@ -9,7 +9,7 @@ usage() {
     echo -e "${BLUE}Git Project Manager 📦${NC}"
     echo -e "Usage:"
     echo -e "  $0 add <repo-url> <project-name> ${GREEN}# Add project to central repo${NC}"
-    echo -e "  $0 extract <project-name> <target-repo-url> ${GREEN}# Extract and force push project${NC}"
+    echo -e "  $0 submit <project-name> <target-repo-url> ${GREEN}# Submit (force push) a project to the 42 intra${NC}"
     exit 1
 }
 
@@ -34,7 +34,7 @@ add_project() {
 
     # Get all commit messages
     cd "${PROJECT_NAME}" || exit
-	COMMIT_LOG=$(git log --pretty=format:"- %s%n%b" | sed '/^$/N;/^\n$/D')
+    COMMIT_LOG=$(git log --pretty=format:"- %s%n%b" | sed '/^$/N;/^\n$/D')
     cd "$ORIGINAL_DIR" || exit
 
     # Create project directory and move files
@@ -52,12 +52,18 @@ add_project() {
     echo -e "${GREEN}✅ Successfully added ${PROJECT_NAME}${NC}"
 }
 
-extract_project() {
+submit_project() {
     PROJECT_NAME=$1
     TARGET_REPO=$2
     ORIGINAL_DIR=$(pwd)
 
-    echo -e "${BLUE}📤 Extracting ${PROJECT_NAME}...${NC}"
+    # Check if target repo is a valid vogsphere URL
+    if [[ ! "$TARGET_REPO" =~ ^git@vogsphere.42lyon.fr:vogsphere ]]; then
+        echo -e "${RED}❌ Invalid target repository URL. Must be a vogsphere URL (git@vogsphere.42lyon.fr:vogsphere...)${NC}"
+        exit 1
+    fi
+
+    echo -e "${BLUE}📤 submiting ${PROJECT_NAME}...${NC}"
 
     # Create temporary directory
     TEMP_DIR=$(mktemp -d)
@@ -97,19 +103,19 @@ extract_project() {
 }
 
 case "$1" in
-    "add")
-        if [ "$#" -ne 3 ]; then
-            usage
-        fi
-        add_project "$2" "$3"
-        ;;
-    "extract")
-        if [ "$#" -ne 3 ]; then
-            usage
-        fi
-        extract_project "$2" "$3"
-        ;;
-    *)
+"add")
+    if [ "$#" -ne 3 ]; then
         usage
-        ;;
+    fi
+    add_project "$2" "$3"
+    ;;
+"submit")
+    if [ "$#" -ne 3 ]; then
+        usage
+    fi
+    submit_project "$2" "$3"
+    ;;
+*)
+    usage
+    ;;
 esac
