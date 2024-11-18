@@ -5,40 +5,6 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-_gpm_completion() {
-    local cur prev opts
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD - 1]}"
-
-    # Main commands
-    opts="add submit install"
-
-    # Get list of existing project directories (excluding .git and other hidden dirs)
-    projects=$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' -printf '%f\n')
-
-    case "${prev}" in
-    gpm.sh)
-        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-        return 0
-        ;;
-    add)
-        if [ "${COMP_CWORD}" -eq 3 ]; then
-            # For the project name argument, suggest existing projects
-            COMPREPLY=($(compgen -W "${projects}" -- ${cur}))
-        fi
-        return 0
-        ;;
-    submit)
-        # Complete with existing project names
-        COMPREPLY=($(compgen -W "${projects}" -- ${cur}))
-        return 0
-        ;;
-    esac
-}
-
-complete -F _gpm_completion gpm.sh
-
 usage() {
     echo -e "${BLUE}Git Project Manager 📦${NC}"
     echo -e "Usage:"
@@ -140,24 +106,67 @@ submit_project() {
 install_gpm() {
     SCRIPT_PATH=$(realpath "$0")
     INSTALL_DIR="$HOME/.local/bin"
+    COMPLETION_DIR="$HOME/.zsh/completions"
 
     echo -e "${BLUE}📦 Installing GPM...${NC}"
 
-    # Create install directory if it doesn't exist
-    mkdir -p "$INSTALL_DIR"
+    # Create directories
+    mkdir -p "$INSTALL_DIR" "$COMPLETION_DIR"
 
-    # Copy script to install directory
+    # Copy script and completion
     cp "$SCRIPT_PATH" "$INSTALL_DIR/gpm"
     chmod +x "$INSTALL_DIR/gpm"
 
+    # Create completion file
+    cat >"$COMPLETION_DIR/_gpm" <<'EOL'
+#compdef gpm
+
+_gpm() {
+    local curcontext="$curcontext" state line ret=1
+    typeset -A opt_args
+
+    _arguments -C \
+        '1: :->command' \
+        '*::arg:->args' && ret=0
+
+    case $state in
+        command)
+            local commands=(
+                'add:Add project to central repo'
+                'submit:Submit project to 42 intra'
+                'install:Add gpm to PATH'
+            )
+            _describe -t commands 'commands' commands && ret=0
+            ;;
+        args)
+            case $words[1] in
+                add|submit)
+                    if (( CURRENT == 2 )); then
+                        local projects=(${(f)"$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' -printf '%f\n')"})
+                        _describe -t projects 'projects' projects && ret=0
+                    fi
+                    ;;
+            esac
+            ;;
+    esac
+
+    return ret
+}
+EOL
+
+    # Update .zshrc if needed
+    if ! grep -q "fpath=(~/.zsh/completions \$fpath)" "$HOME/.zshrc"; then
+        echo -e "\n# GPM completion" >>"$HOME/.zshrc"
+        echo "fpath=(~/.zsh/completions \$fpath)" >>"$HOME/.zshrc"
+        echo "autoload -U compinit" >>"$HOME/.zshrc"
+        echo "compinit" >>"$HOME/.zshrc"
+    fi
+
     # Add to PATH if not already there
     if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
-        echo -e "\n# GPM Path" >>"$HOME/.bashrc"
-        echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$HOME/.bashrc"
-        echo -e "${BLUE}🔄 Added $INSTALL_DIR to PATH${NC}"
-        echo -e "${GREEN}✅ Please restart your shell or run: source ~/.bashrc${NC}"
-    else
-        echo -e "${GREEN}✅ $INSTALL_DIR already in PATH${NC}"
+        echo -e "\n# GPM Path" >>"$HOME/.zshrc"
+        echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$HOME/.zshrc"
+        echo -e "${GREEN}✅ Please restart your shell or run: source ~/.zshrc${NC}"
     fi
 
     echo -e "${GREEN}✅ GPM installed successfully${NC}"
