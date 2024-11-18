@@ -5,11 +5,46 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
+_gpm_completion() {
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD - 1]}"
+
+    # Main commands
+    opts="add submit install"
+
+    # Get list of existing project directories (excluding .git and other hidden dirs)
+    projects=$(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' -printf '%f\n')
+
+    case "${prev}" in
+    gpm.sh)
+        COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+        return 0
+        ;;
+    add)
+        if [ "${COMP_CWORD}" -eq 3 ]; then
+            # For the project name argument, suggest existing projects
+            COMPREPLY=($(compgen -W "${projects}" -- ${cur}))
+        fi
+        return 0
+        ;;
+    submit)
+        # Complete with existing project names
+        COMPREPLY=($(compgen -W "${projects}" -- ${cur}))
+        return 0
+        ;;
+    esac
+}
+
+complete -F _gpm_completion gpm.sh
+
 usage() {
     echo -e "${BLUE}Git Project Manager 📦${NC}"
     echo -e "Usage:"
-    echo -e "  $0 add <repo-url> <project-name> ${GREEN}# Add project to central repo${NC}"
-    echo -e "  $0 submit <project-name> <target-repo-url> ${GREEN}# Submit (force push) a project to the 42 intra${NC}"
+    echo -e "  ${BLUE}gpm${NC} add <repo-url> <project-name>           ${GREEN}# Add project to central repo${NC}"
+    echo -e "  ${BLUE}gpm${NC} submit <project-name> <target-repo-url> ${GREEN}# Submit (force push) a project to the 42 intra${NC}"
+    echo -e "  ${BLUE}gpm${NC} install                                 ${GREEN}# Add gpm to your PATH${NC}"
     exit 1
 }
 
@@ -102,6 +137,32 @@ submit_project() {
     echo -e "${GREEN}✅ Project pushed to ${TARGET_REPO}${NC}"
 }
 
+install_gpm() {
+    SCRIPT_PATH=$(realpath "$0")
+    INSTALL_DIR="$HOME/.local/bin"
+
+    echo -e "${BLUE}📦 Installing GPM...${NC}"
+
+    # Create install directory if it doesn't exist
+    mkdir -p "$INSTALL_DIR"
+
+    # Copy script to install directory
+    cp "$SCRIPT_PATH" "$INSTALL_DIR/gpm"
+    chmod +x "$INSTALL_DIR/gpm"
+
+    # Add to PATH if not already there
+    if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+        echo -e "\n# GPM Path" >>"$HOME/.bashrc"
+        echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$HOME/.bashrc"
+        echo -e "${BLUE}🔄 Added $INSTALL_DIR to PATH${NC}"
+        echo -e "${GREEN}✅ Please restart your shell or run: source ~/.bashrc${NC}"
+    else
+        echo -e "${GREEN}✅ $INSTALL_DIR already in PATH${NC}"
+    fi
+
+    echo -e "${GREEN}✅ GPM installed successfully${NC}"
+}
+
 case "$1" in
 "add")
     if [ "$#" -ne 3 ]; then
@@ -114,6 +175,9 @@ case "$1" in
         usage
     fi
     submit_project "$2" "$3"
+    ;;
+"install")
+    install_gpm
     ;;
 *)
     usage
