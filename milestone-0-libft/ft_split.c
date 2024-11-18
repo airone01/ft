@@ -48,7 +48,7 @@ static char	*get_next_word(const char **str, char c)
 		len++;
 		(*str)++;
 	}
-	word = malloc((len + 1) * sizeof(char));
+	word = ft_calloc(len + 1, sizeof(char));
 	if (!word)
 		return (NULL);
 	ft_strlcpy(word, word_start, len + 1);
@@ -83,7 +83,7 @@ char	**ft_split(char *str, char c)
 	if (!str)
 		return (NULL);
 	word_count = count_words(str, c);
-	split = malloc((word_count + 1) * sizeof(char *));
+	split = ft_calloc(word_count + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
 	i = 0;
@@ -97,6 +97,5 @@ char	**ft_split(char *str, char c)
 		}
 		i++;
 	}
-	split[word_count] = NULL;
 	return (split);
 }
