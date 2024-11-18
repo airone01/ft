@@ -8,7 +8,7 @@ Collection of all my repos related to 42. Mostly for personal archiving.
 
 ## GPM
 
-> [!WARN]
+> [!WARNING]
 > GPM was never meant to be used by anyone other than me. It is a personal tool that I use to manage my projects in this monorepo. It is not meant to be a general-purpose tool. It could break your stuff, consider yourself warned.
 
 Git Project Manager (GPM) is a bash script that helps me manage my 42 projects in this monorepo. It provides two main functions:
