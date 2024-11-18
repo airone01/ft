@@ -19,34 +19,37 @@ add_project() {
 
     echo -e "${BLUE}🚀 Adding project ${PROJECT_NAME}...${NC}"
 
-    git remote add "${PROJECT_NAME}" "${REPO_URL}"
-    if ! git fetch "${PROJECT_NAME}"; then
-        echo -e "${RED}❌ Failed to fetch repository${NC}"
+    # Create temporary directory
+    TEMP_DIR=$(mktemp -d)
+    cd "$TEMP_DIR" || exit
+
+    # Clone the project repo
+    echo -e "${BLUE}📥 Cloning repository...${NC}"
+    if ! git clone "${REPO_URL}" "${PROJECT_NAME}"; then
+        echo -e "${RED}❌ Failed to clone repository${NC}"
+        cd ../.. && rm -rf "$TEMP_DIR"
         exit 1
     fi
 
-    echo -e "${BLUE}📦 Reorganizing project structure...${NC}"
-    if ! git filter-branch --tree-filter "
-        if [ ! -d \"${PROJECT_NAME}\" ]; then
-            mkdir -p ${PROJECT_NAME}/
-            for item in *; do
-                if [ \"\$item\" != \"${PROJECT_NAME}\" ]; then
-                    mv \"\$item\" ${PROJECT_NAME}/ 2>/dev/null || true
-                fi
-            done
-        fi
-        " "${PROJECT_NAME}/main"; then
-        echo -e "${RED}❌ Failed to reorganize project${NC}"
-        exit 1
-    fi
+    # Get all commit messages
+    cd "${PROJECT_NAME}" || exit
+    COMMIT_LOG=$(git log --pretty=format:"- %s%n%b")
 
-    echo -e "${BLUE}🔄 Merging project history...${NC}"
-    if ! git merge "${PROJECT_NAME}/main" --allow-unrelated-histories -m "Merge project ${PROJECT_NAME}"; then
-        echo -e "${RED}❌ Merge failed. Resolve conflicts and complete merge manually${NC}"
-        exit 1
-    fi
+    # Move back to original directory
+    cd ../../
 
-    git remote remove "${PROJECT_NAME}"
+    # Create project directory and move files
+    echo -e "${BLUE}📦 Moving project files...${NC}"
+    mkdir -p "${PROJECT_NAME}"
+    cp -r "${TEMP_DIR}/${PROJECT_NAME}"/* "${PROJECT_NAME}/"
+
+    # Clean up temp directory
+    rm -rf "$TEMP_DIR"
+
+    # Add and commit with full history in commit message
+    git add "${PROJECT_NAME}"
+    git commit -m "Add ${PROJECT_NAME}" -m "Original commit history:" -m "$COMMIT_LOG"
+
     echo -e "${GREEN}✅ Successfully added ${PROJECT_NAME}${NC}"
 }
 
