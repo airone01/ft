@@ -34,7 +34,7 @@ add_project() {
 
     # Get all commit messages
     cd "${PROJECT_NAME}" || exit
-    COMMIT_LOG=$(git log --pretty=format:"- %s%n%b")
+	COMMIT_LOG=$(git log --pretty=format:"- %s%n%b" | sed '/^$/N;/^\n$/D')
     cd "$ORIGINAL_DIR" || exit
 
     # Create project directory and move files
@@ -47,7 +47,7 @@ add_project() {
 
     # Add and commit with full history in commit message
     git add "${PROJECT_NAME}"
-    git commit -m "Add ${PROJECT_NAME}" -m "Original commit history:" -m "$COMMIT_LOG"
+    git commit -m "chore(gpm): add project ${PROJECT_NAME}" -m "Original commit history:" -m "$COMMIT_LOG"
 
     echo -e "${GREEN}✅ Successfully added ${PROJECT_NAME}${NC}"
 }
