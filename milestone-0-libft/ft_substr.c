@@ -27,13 +27,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*dst;
 
 	if (start >= ft_strlen(s))
-	{
-		dst = ft_calloc(1, sizeof(char));
-		if (!dst)
-			return (0);
-		dst[0] = '\0';
-		return (dst);
-	}
+		return (ft_strdup(""));
 	s = &(s[start]);
 	if (len > ft_strlen(s))
 		len = ft_strlen(s);
