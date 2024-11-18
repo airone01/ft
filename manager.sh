@@ -28,9 +28,15 @@ add_project() {
 
 	echo -e "${BLUE}📦 Reorganizing project structure...${NC}"
 	if ! git filter-branch --tree-filter "
+    if [ ! -d \"${PROJECT_NAME}\" ]; then
         mkdir -p ${PROJECT_NAME}/
-        mv * ${PROJECT_NAME}/ 2>/dev/null || true
-        " "${PROJECT_NAME}/main"; then
+        for item in *; do
+            if [ \"\$item\" != \"${PROJECT_NAME}\" ]; then
+                mv \"\$item\" ${PROJECT_NAME}/ 2>/dev/null || true
+            fi
+        done
+    fi
+    " "${PROJECT_NAME}/main"; then
 		echo -e "${RED}❌ Failed to reorganize project${NC}"
 		exit 1
 	fi
