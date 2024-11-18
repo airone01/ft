@@ -1,54 +1,54 @@
 [submodule "pool/shell-01"]
 	path = pool/shell-01
-	url = https://github.com/airone01/42-c-piscine-shell-01
+	url = https://github.com/airone01/ft-pool-shell-01
 [submodule "pool/c-00"]
 	path = pool/c-00
-	url = https://github.com/airone01/42-c-piscine-c-00
+	url = https://github.com/airone01/ft-pool-c-00
 [submodule "pool/c-01"]
 	path = pool/c-01
-	url = https://github.com/airone01/42-c-piscine-c-01
+	url = https://github.com/airone01/ft-pool-c-01
 [submodule "pool/c-02"]
 	path = pool/c-02
-	url = https://github.com/airone01/42-c-piscine-c-02
+	url = https://github.com/airone01/ft-pool-c-02
 [submodule "pool/c-03"]
 	path = pool/c-03
-	url = https://github.com/airone01/42-c-piscine-c-03
+	url = https://github.com/airone01/ft-pool-c-03
 [submodule "pool/c-04"]
 	path = pool/c-04
-	url = https://github.com/airone01/42-c-piscine-c-04
+	url = https://github.com/airone01/ft-pool-c-04
 [submodule "pool/c-05"]
 	path = pool/c-05
-	url = https://github.com/airone01/42-c-piscine-c-05
+	url = https://github.com/airone01/ft-pool-c-05
 [submodule "pool/c-06"]
 	path = pool/c-06
-	url = https://github.com/airone01/42-c-piscine-c-06
+	url = https://github.com/airone01/ft-pool-c-06
 [submodule "pool/c-07"]
 	path = pool/c-07
-	url = https://github.com/airone01/42-c-piscine-c-07
+	url = https://github.com/airone01/ft-pool-c-07
 [submodule "pool/c-08"]
 	path = pool/c-08
 	url = https://github.com/airone01/42-c-piscine-c-08
 [submodule "pool/rush-00"]
 	path = pool/rush-00
-	url = https://github.com/airone01/42-c-piscine-rush-00
+	url = https://github.com/airone01/ft-pool-rush-00
 [submodule "pool/rush-01"]
 	path = pool/rush-01
-	url = https://github.com/airone01/42-c-piscine-rush-01
+	url = https://github.com/airone01/ft-pool-rush-01
 [submodule "pool/rush-02"]
 	path = pool/rush-02
-	url = https://github.com/airone01/42-c-piscine-rush-02
+	url = https://github.com/airone01/ft-pool-rush-02
 [submodule "pool/bsq"]
 	path = pool/bsq
-	url = https://github.com/airone01/42-c-piscine-bsq
+	url = https://github.com/airone01/ft-pool-bsq
 [submodule "frog"]
-	path = frog
+	path = tools/diem
 	url = https://github.com/airone01/frog
 [submodule "pool/ford"]
-	path = pool/ford
+	path = tools/ford
 	url = https://github.com/airone01/42-ford
 [submodule "pool/shell-00"]
 	path = pool/shell-00
-	url = https://github.com/airone01/42-c-piscine-shell-00
+	url = https://github.com/airone01/ft-pool-shell-00
 [submodule "milestone-0/libft"]
 	path = milestone-0/libft
-	url = https://github.com/airone01/42-libft
+	url = https://github.com/airone01/ft-libft
