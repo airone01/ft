@@ -16,6 +16,7 @@ usage() {
 add_project() {
     REPO_URL=$1
     PROJECT_NAME=$2
+    ORIGINAL_DIR=$(pwd)
 
     echo -e "${BLUE}🚀 Adding project ${PROJECT_NAME}...${NC}"
 
@@ -27,16 +28,14 @@ add_project() {
     echo -e "${BLUE}📥 Cloning repository...${NC}"
     if ! git clone "${REPO_URL}" "${PROJECT_NAME}"; then
         echo -e "${RED}❌ Failed to clone repository${NC}"
-        cd ../.. && rm -rf "$TEMP_DIR"
+        cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
         exit 1
     fi
 
     # Get all commit messages
     cd "${PROJECT_NAME}" || exit
     COMMIT_LOG=$(git log --pretty=format:"- %s%n%b")
-
-    # Move back to original directory
-    cd ../../
+    cd "$ORIGINAL_DIR" || exit
 
     # Create project directory and move files
     echo -e "${BLUE}📦 Moving project files...${NC}"
@@ -56,6 +55,7 @@ add_project() {
 extract_project() {
     PROJECT_NAME=$1
     TARGET_REPO=$2
+    ORIGINAL_DIR=$(pwd)
 
     echo -e "${BLUE}📤 Extracting ${PROJECT_NAME}...${NC}"
 
@@ -67,7 +67,7 @@ extract_project() {
     git init
 
     # Copy latest version of files from main repo
-    cp -r "../../${PROJECT_NAME}"/* .
+    cp -r "${ORIGINAL_DIR}/${PROJECT_NAME}"/* .
 
     # Commit and force push
     git add .
@@ -75,11 +75,11 @@ extract_project() {
     git remote add origin "${TARGET_REPO}"
     if ! git push -f origin main; then
         echo -e "${RED}❌ Failed to push to repository${NC}"
-        cd ../.. && rm -rf "$TEMP_DIR"
+        cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
         exit 1
     fi
 
-    cd ../.. && rm -rf "$TEMP_DIR"
+    cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
     echo -e "${GREEN}✅ Project pushed to ${TARGET_REPO}${NC}"
 }
 
