@@ -34,6 +34,5 @@ char	*ft_strdup(const char *s)
 		dst[i] = s[i];
 		i++;
 	}
-	dst[i] = '\0';
 	return ((char *)dst);
 }

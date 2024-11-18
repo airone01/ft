@@ -27,26 +27,26 @@
  * than, to match, or be greater than the first n bytes of s2.
  *
  * For a nonzero return value, the sign is determined by the sign of  the  dif‐
- * ference  between the first pair of bytes (interpreted as unsigned char) that
+ * ference  between the first pair of bytes (interpreted as uint8_t) that
  * differ in s1 and s2.
  *
  * If n is zero, the return value is zero.
  */
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char	*se1;
-	unsigned char	*se2;
-	size_t			i;
+	uint8_t	*se1;
+	uint8_t	*se2;
+	size_t	i;
 
 	if (n == 0)
 		return (0);
-	se1 = (unsigned char *)s1;
-	se2 = (unsigned char *)s2;
+	se1 = (uint8_t *)s1;
+	se2 = (uint8_t *)s2;
 	i = 0;
 	while (n--)
 	{
 		if (se1[i] != se2[i])
-			return ((unsigned char) se1[i] - (unsigned char) se2[i]);
+			return ((uint8_t) se1[i] - (uint8_t) se2[i]);
 		i++;
 	}
 	return (0);

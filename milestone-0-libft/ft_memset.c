@@ -24,14 +24,14 @@
  */
 void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned char	*pt;
+	uint8_t	*pt;
 
 	if (n != 0)
 	{
 		pt = s;
 		while (n != 0)
 		{
-			*pt++ = (unsigned char) c;
+			*pt++ = (uint8_t) c;
 			n--;
 		}
 	}
