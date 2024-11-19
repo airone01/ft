@@ -15,25 +15,25 @@ BG_BLURPLE	= \033[48;5;99m
 RESET		= \033[0m
 
 # ------------- Meta -------------
-PMSTONE	= 0
-PNAME	= libft
-PFNAME	= milestone-$(PMSTONE)-$(PNAME)
-NAME	= $(PNAME).a
-DIR_OBJ = .obj/
+GPM_MSTONE	= 0
+GPM_NAME	= libft
+GPM_FNAME	= milestone-$(GPM_MSTONE)-$(GPM_NAME)
+NAME		= libft.a
+DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO	= echo
-CC		= cc
-AR		= ar
-RM      = rm -f
-MD		= mkdir -p
+ECHO		= echo
+CC			= cc
+AR			= ar
+RM      	= rm -f
+MD			= mkdir -p
 
 # ------------- Flags ------------
-CFLAGS	= -Wall -Werror -Wextra -Wpedantic -MMD -MP
-ARFLAGS	= rcs
+CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
+ARFLAGS		= rcs
 
 # ------------ Sources -----------
-SRC =				\
+SRC			=				\
 	ft_atoi.c		\
 	ft_bzero.c		\
 	ft_calloc.c		\
@@ -68,7 +68,7 @@ SRC =				\
 	ft_tolower.c	\
 	ft_toupper.c	\
 	ft_substr.c
-SRC_BONUS =					\
+SRC_BONUS	=					\
 	ft_lstadd_back_bonus.c	\
 	ft_lstadd_front_bonus.c	\
 	ft_lstclear_bonus.c		\
@@ -80,29 +80,38 @@ SRC_BONUS =					\
 	ft_lstsize_bonus.c
 
 # ------------ Mapping -----------
-OBJ = $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP = $(SRC:%.c=$(DIR_OBJ)%.d)
-OBJ_BONUS = $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
-DEP_BONUS = $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
+OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
+DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
+OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
+DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
+
 $(NAME): $(OBJ)
-	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Building lib"
+	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Building lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
-bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Building bonuses lib"
+
+.bonus: $(OBJ) $(OBJ_BONUS)
+	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Building bonuses lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
+	@touch .bonus
+
+bonus: .bonus # Temp file to avoid unnecessary rebuilds
+
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)... $@"
+	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)... $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Cleaning the project"
+	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Cleaning the project"
 	@$(RM) -r $(DIR_OBJ)
+
 fclean: clean
-	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Fcleaning the project"
+	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
 	@$(RM) $(NAME)
+
 re: fclean all
 
 # ----------- Make meta ----------
