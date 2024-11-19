@@ -33,7 +33,7 @@ CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
 ARFLAGS		= rcs
 
 # ------------ Sources -----------
-SRC			=				\
+SRC			=		\
 	ft_atoi.c		\
 	ft_bzero.c		\
 	ft_calloc.c		\
@@ -68,7 +68,7 @@ SRC			=				\
 	ft_tolower.c	\
 	ft_toupper.c	\
 	ft_substr.c
-SRC_BONUS	=					\
+SRC_BONUS	=				\
 	ft_lstadd_back_bonus.c	\
 	ft_lstadd_front_bonus.c	\
 	ft_lstclear_bonus.c		\
