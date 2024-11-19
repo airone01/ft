@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:49:50 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/23 17:07:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:35:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORD_MAINS_H
-# define FORD_MAINS_H
+#ifndef MAIN_H
+# define MAIN_H
 
-int     ft_strlen(char *str);
+int	ft_strlen(char *str);
 
 #endif

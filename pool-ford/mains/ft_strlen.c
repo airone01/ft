@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:47:37 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/23 16:11:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:30:49 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	main(int argc, char **argv)
 {
-     (void) argc;
-     printf("%d", ft_strlen(argv[1]));
+	(void) argc;
+	printf("%d", ft_strlen(argv[1]));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dupe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 14:14:54 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/22 19:19:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:34:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ unsigned int	**grid_dupe(unsigned int **grid, unsigned int size)
 
 	duped = make_grid(size);
 	i = 0;
-	while(i < size)
+	while (i < size)
 	{
 		j = 0;
-		while(j < size)
+		while (j < size)
 		{
 			duped[i][j] = grid[i][j];
 			j++;
