@@ -58,8 +58,12 @@ static char	*get_next_word(const char **str, char c)
 static void	free_split(char **split, size_t count)
 {
 	while (count--)
+	{
 		free(split[count]);
+		split[count] = NULL;
+	}
 	free(split);
+	split = NULL;
 }
 
 /*
