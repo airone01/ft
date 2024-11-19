@@ -1,0 +1,76 @@
+name: Make Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }} on ${{ matrix.os }}-${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        arch: [x86_64, aarch64]
+        target: [libft]
+        include:
+          # Linux builds
+          - os: ubuntu-latest
+            arch: x86_64
+            shell: bash
+          - os: ubuntu-latest
+            arch: aarch64
+            shell: bash
+            setup: |
+              sudo apt-get update
+              sudo apt-get install -y gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+          # Windows builds
+          - os: windows-latest
+            arch: x86_64
+            shell: msys2 {0}
+          - os: windows-latest
+            arch: aarch64
+            shell: msys2 {0}
+            setup: |
+              pacman -S --noconfirm mingw-w64-clang-aarch64-toolchain
+
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Setup MSYS2 for Windows builds
+      - if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            make
+            mingw-w64-x86_64-gcc
+            git
+
+      # Run any matrix-specific setup commands
+      - name: Setup Build Environment
+        if: matrix.setup
+        run: ${{ matrix.setup }}
+
+      # Set architecture-specific environment variables
+      - name: Configure Build Environment
+        run: |
+          if [ "${{ matrix.arch }}" = "aarch64" ]; then
+            if [ "${{ runner.os }}" = "Linux" ]; then
+              echo "CC=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+              echo "AR=aarch64-linux-gnu-ar" >> $GITHUB_ENV
+              echo "CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+            elif [ "${{ runner.os }}" = "Windows" ]; then
+              echo "CC=clang --target=aarch64-w64-mingw32" >> $GITHUB_ENV
+              echo "AR=llvm-ar" >> $GITHUB_ENV
+              echo "CROSS_COMPILE=aarch64-w64-mingw32-" >> $GITHUB_ENV
+            fi
+          fi
+
+      # Build the target
+      - name: Build ${{ matrix.target }}
+        run: make ${{ matrix.target }}
