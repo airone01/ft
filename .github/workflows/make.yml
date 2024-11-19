@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: Make ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
+    name: ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -26,20 +26,15 @@ jobs:
           # Windows builds
           - os: windows-latest
             arch: x86_64
-            shell: msys2 {0}
           - os: windows-latest
             arch: aarch64
-            shell: msys2 {0}
             setup: |
               pacman -S --noconfirm mingw-w64-clang-aarch64-toolchain
-
-    defaults:
-      run:
-        shell: ${{ matrix.shell }}
 
     steps:
       # Configure Git to handle special characters before checkout
       - name: Configure Git
+        shell: bash
         run: |
           git config --global core.protectNTFS false
           git config --global core.quotePath false
@@ -48,10 +43,10 @@ jobs:
       # Modified checkout with special handling
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history
+          fetch-depth: 0
           submodules: recursive
         env:
-          GIT_TEST_DEBUG: 1  # Enable Git debug output
+          GIT_TEST_DEBUG: 1
 
       # Setup MSYS2 for Windows builds
       - if: runner.os == 'Windows'
@@ -63,14 +58,17 @@ jobs:
             make
             mingw-w64-x86_64-gcc
             git
+            base-devel
 
       # Run any matrix-specific setup commands
       - name: Setup Build Environment
         if: matrix.setup
+        shell: msys2 {0}
         run: ${{ matrix.setup }}
 
       # Set architecture-specific environment variables
       - name: Configure Build Environment
+        shell: bash
         run: |
           if [ "${{ matrix.arch }}" = "aarch64" ]; then
             if [ "${{ runner.os }}" = "Linux" ]; then
@@ -86,4 +84,11 @@ jobs:
 
       # Build the target
       - name: Build ${{ matrix.target }}
+        if: runner.os == 'Windows'
+        shell: msys2 {0}
+        run: make ${{ matrix.target }}
+
+      - name: Build ${{ matrix.target }} Linux
+        if: runner.os == 'Linux'
+        shell: bash
         run: make ${{ matrix.target }}
