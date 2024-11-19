@@ -15,14 +15,18 @@ BG_BLURPLE	= \033[48;5;99m
 RESET		= \033[0m
 
 # ------------- Meta -------------
-NAME	= libft.a
-PNAME	= milestone-0/libft
+PMSTONE	= 0
+PNAME	= libft
+PFNAME	= milestone-$(PMSTONE)-$(PNAME)
+NAME	= $(PNAME).a
+DIR_OBJ = .obj/
 
 # ----------- Commands -----------
 ECHO	= echo
 CC		= cc
 AR		= ar
 RM      = rm -f
+MD		= mkdir -p
 
 # ------------- Flags ------------
 CFLAGS	= -Wall -Werror -Wextra -Wpedantic -MMD -MP
@@ -76,26 +80,28 @@ SRC_BONUS =					\
 	ft_lstsize_bonus.c
 
 # ------------ Mapping -----------
-OBJ = $(SRC:.c=.o)
-DEP = $(SRC:.c=.d)
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
-DEP_BONUS = $(SRC_BONUS:.c=.d)
+OBJ = $(SRC:%.c=$(DIR_OBJ)%.o)
+DEP = $(SRC:%.c=$(DIR_OBJ)%.d)
+OBJ_BONUS = $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
+DEP_BONUS = $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
 $(NAME): $(OBJ)
-	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Building lib"
+	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Building lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
 bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Building bonuses lib"
+	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Building bonuses lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
-%.o: %.c Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+$(DIR_OBJ)%.o: %.c Makefile
+	@$(MD) $(DIR_OBJ)
+	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)... $@"
+	@$(CC) $(CFLAGS) -c $< -o $@
 clean:
-	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Cleaning the project"
-	@$(RM) $(OBJ) $(OBJ_BONUS) $(DEP) $(DEP_BONUS)
+	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Cleaning the project"
+	@$(RM) -r $(DIR_OBJ)
 fclean: clean
-	@$(ECHO) "$(BG_BLURPLE) $(PNAME) \t$(RESET)Fcleaning the project"
+	@$(ECHO) "$(BG_BLURPLE) $(PFNAME) \t$(RESET)Fcleaning the project"
 	@$(RM) $(NAME)
 re: fclean all
 
