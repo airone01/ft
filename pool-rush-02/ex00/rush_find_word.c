@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rush_find_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 17:11:51 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/29 23:12:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:19:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*find_word(char ***cube, int len, int u, int qty)
 		ft_strcat(a_to_find, "000");
 		i++;
 	}
-	// printf("\na_to_find='%s' for u='%d' and qty='%d'\n", a_to_find, u, qty);
 	i = 0;
 	while (i < len)
 	{

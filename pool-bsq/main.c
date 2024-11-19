@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:11:15 by elagouch          #+#    #+#             */
-/*   Updated: 2024/10/02 19:38:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:35:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ t_map	*read_map_from_argv(int *len, char *str)
 	map = bsq_map_read(str, *len);
 	return (map);
 }
-
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {

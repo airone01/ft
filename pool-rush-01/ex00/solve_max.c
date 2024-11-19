@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solve_max.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 15:20:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/22 13:43:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:13:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@ void	get_xy(unsigned int xy[2], unsigned int index, unsigned int size);
 
 // Solves one uint depending on the where we currently are
 // Returns 1 if something was changed, 0 otherwise.
-void	solve_max_place(unsigned int xy[2], unsigned int **grid, unsigned int size, unsigned int j)
+void	solve_max_place(unsigned int xy[2], unsigned int **grid,
+			unsigned int size, unsigned int j)
 {
 	if (xy[0] == 0)
 		grid[j][xy[1]] = j;

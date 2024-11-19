@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 18:28:19 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/22 18:28:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:10:59 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,3 @@ int	ft_strlen(char *str)
 		return (0);
 	return (ft_strlen(str + sizeof(char)) + 1);
 }
-

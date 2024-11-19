@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_op.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:53:03 by elagouch          #+#    #+#             */
-/*   Updated: 2024/10/02 17:47:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:28:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	*free_and_null(void *ptr)
 	free(ptr);
 	return (NULL);
 }
-
-#include <stdio.h>
 
 /*
  * Frees a pointer and returns NULL.

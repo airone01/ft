@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   h_str.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 22:45:53 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/29 23:28:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:18:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef H_STR_H
-#define H_STR_H
+# define H_STR_H
 
 // Strings <-> numbers
 char			*ft_itoa(int nb);

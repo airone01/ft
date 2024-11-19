@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grid.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 10:34:21 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/22 18:26:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:11:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	show_grid(unsigned int **grid, unsigned int size)
 	unsigned int	j;
 
 	i = 0;
-	while(i < size)
+	while (i < size)
 	{
 		j = 0;
-		while(j < size)
+		while (j < size)
 		{
 			if (grid[i][j] == 0)
 				ft_putchar('.');
@@ -81,27 +81,23 @@ void	get_xy(unsigned int xy[2], unsigned int index, unsigned int size)
 
 	middle_size = size - 2;
 	if (index < middle_size)
-	// Top
 	{
 		xy[0] = 0;
 		xy[1] = 1 + index;
 		return ;
 	}
 	if (index < (middle_size * 2))
-	// Bot
 	{
 		xy[0] = size - 1;
 		xy[1] = (index % middle_size) + 1;
 		return ;
 	}
 	if (index < (middle_size * 3))
-	// Left
 	{
 		xy[0] = (index % middle_size) + 1;
 		xy[1] = 0;
 		return ;
 	}
-	// Right
 	xy[0] = (index % middle_size) + 1;
 	xy[1] = size - 1;
 	return ;
@@ -116,7 +112,7 @@ void	read_grid(char *str, unsigned int **grid, unsigned int size)
 
 	i = 0;
 	index = 0;
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		get_xy(xy, index, size);
 		if (str[i] >= '0' && str[i] <= '9')
@@ -127,4 +123,3 @@ void	read_grid(char *str, unsigned int **grid, unsigned int size)
 		i++;
 	}
 }
-

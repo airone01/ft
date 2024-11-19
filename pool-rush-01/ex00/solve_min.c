@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   solve_min.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 15:20:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/22 13:31:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:13:55 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-// Prototypes :-)
 void	get_xy(unsigned int xy[2], unsigned int index, unsigned int size);
 
-// Solves one uint depending on the where we currently are
-// Returns 1 if something was changed, 0 otherwise.
-// RETURNS: 1 if error
-#include <stdio.h>
-unsigned int	solve_min_xy_cond(unsigned int xy[2], unsigned int **grid, unsigned int size)
+unsigned int	solve_min_xy_cond(unsigned int xy[2],
+	unsigned int **grid, unsigned int size)
 {
 	if (xy[0] == 0)
 	{
