@@ -1,10 +1,10 @@
-name: Make Build
+name: Make
 
 on: [push, pull_request]
 
 jobs:
   build:
-    name: Build ${{ matrix.target }} on ${{ matrix.os }}-${{ matrix.arch }}
+    name: Make ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -38,7 +38,20 @@ jobs:
         shell: ${{ matrix.shell }}
 
     steps:
+      # Configure Git to handle special characters before checkout
+      - name: Configure Git
+        run: |
+          git config --global core.protectNTFS false
+          git config --global core.quotePath false
+          git config --global core.safecrlf false
+
+      # Modified checkout with special handling
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history
+          submodules: recursive
+        env:
+          GIT_TEST_DEBUG: 1  # Enable Git debug output
 
       # Setup MSYS2 for Windows builds
       - if: runner.os == 'Windows'
