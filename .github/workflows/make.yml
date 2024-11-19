@@ -9,27 +9,14 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        arch: [x86_64, aarch64]
+        os: [ubuntu-latest]
+        arch: [x86_64]
         target: [libft]
         include:
           # Linux builds
           - os: ubuntu-latest
             arch: x86_64
             shell: bash
-          - os: ubuntu-latest
-            arch: aarch64
-            shell: bash
-            setup: |
-              sudo apt-get update
-              sudo apt-get install -y gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
-          # Windows builds
-          - os: windows-latest
-            arch: x86_64
-          - os: windows-latest
-            arch: aarch64
-            setup: |
-              pacman -S --noconfirm mingw-w64-clang-aarch64-toolchain
 
     steps:
       # Configure Git to handle special characters before checkout
@@ -47,46 +34,6 @@ jobs:
           submodules: recursive
         env:
           GIT_TEST_DEBUG: 1
-
-      # Setup MSYS2 for Windows builds
-      - if: runner.os == 'Windows'
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: >-
-            make
-            mingw-w64-x86_64-gcc
-            git
-            base-devel
-
-      # Run any matrix-specific setup commands
-      - name: Setup Build Environment
-        if: matrix.setup
-        shell: msys2 {0}
-        run: ${{ matrix.setup }}
-
-      # Set architecture-specific environment variables
-      - name: Configure Build Environment
-        shell: bash
-        run: |
-          if [ "${{ matrix.arch }}" = "aarch64" ]; then
-            if [ "${{ runner.os }}" = "Linux" ]; then
-              echo "CC=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
-              echo "AR=aarch64-linux-gnu-ar" >> $GITHUB_ENV
-              echo "CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
-            elif [ "${{ runner.os }}" = "Windows" ]; then
-              echo "CC=clang --target=aarch64-w64-mingw32" >> $GITHUB_ENV
-              echo "AR=llvm-ar" >> $GITHUB_ENV
-              echo "CROSS_COMPILE=aarch64-w64-mingw32-" >> $GITHUB_ENV
-            fi
-          fi
-
-      # Build the target
-      - name: Build ${{ matrix.target }}
-        if: runner.os == 'Windows'
-        shell: msys2 {0}
-        run: make ${{ matrix.target }}
 
       - name: Build ${{ matrix.target }} Linux
         if: runner.os == 'Linux'
