@@ -11,13 +11,13 @@
 # **************************************************************************** #
 
 # ------------- ANSI -------------
-BG_BLURPLE	= \033[48;5;99m
+TITLE_SEC	= \033[48;5;78;30;1m
 RESET		= \033[0m
 
 # ------------- Meta -------------
 GPM_MSTONE	= 0
 GPM_NAME	= libft
-GPM_FNAME	= milestone-$(GPM_MSTONE)-$(GPM_NAME)
+GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= libft.a
 DIR_OBJ 	= .obj/
 
@@ -89,11 +89,11 @@ DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Building lib"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
 
 .bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Building bonuses lib"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building bonuses lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
 	@touch .bonus
 
@@ -101,15 +101,15 @@ bonus: .bonus # Temp file to avoid unnecessary rebuilds
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)... $@"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Cleaning the project"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
 	@$(RM) -r $(DIR_OBJ)
 
 fclean: clean
-	@$(ECHO) "$(BG_BLURPLE) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
 	@$(RM) $(NAME)
 
 re: fclean all

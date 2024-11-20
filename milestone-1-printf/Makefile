@@ -37,14 +37,12 @@ SRC			=				\
 	ft_printf.c				\
 	ft_putchar.c			\
 	ft_putnbr_base_ssize.c	\
+	ft_putstr_ssize.c		\
 	ft_strlen.c
-SRC_BONUS	=
 
 # ------------ Mapping -----------
 OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
 DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
@@ -52,13 +50,6 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building lib"
 	$(AR) $(ARFLAGS) $(NAME) $?
-
-.bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building bonuses lib"
-	$(AR) $(ARFLAGS) $(NAME) $?
-	@touch .bonus
-
-bonus: .bonus # Temp file to avoid unnecessary rebuilds
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
@@ -77,6 +68,6 @@ re: fclean all
 
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory
--include $(DEP) $(DEP_BONUS)
-.PHONY: all bonus clean fclean re
+-include $(DEP)
+.PHONY: all clean fclean re
 .SILENT: clean fclean
