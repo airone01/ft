@@ -6,119 +6,119 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 usage() {
-    echo -e "${BLUE}Git Project Manager 📦${NC}"
-    echo -e "Usage:"
-    echo -e "  ${BLUE}gpm${NC} add <repo-url> <project-name>           ${GREEN}# Add project to central repo${NC}"
-    echo -e "  ${BLUE}gpm${NC} submit <project-name> <target-repo-url> ${GREEN}# Submit (force push) a project to the 42 intra${NC}"
-    echo -e "  ${BLUE}gpm${NC} install                                 ${GREEN}# Add gpm to your PATH${NC}"
-    exit 1
+	echo -e "${BLUE}Git Project Manager 📦${NC}"
+	echo -e "Usage:"
+	echo -e "  ${BLUE}gpm${NC} add <repo-url> <project-name>           ${GREEN}# Add project to central repo${NC}"
+	echo -e "  ${BLUE}gpm${NC} submit <project-name> <target-repo-url> ${GREEN}# Submit (force push) a project to the 42 intra${NC}"
+	echo -e "  ${BLUE}gpm${NC} install                                 ${GREEN}# Add gpm to your PATH${NC}"
+	exit 1
 }
 
 add_project() {
-    REPO_URL=$1
-    PROJECT_NAME=$2
-    ORIGINAL_DIR=$(pwd)
+	REPO_URL=$1
+	PROJECT_NAME=$2
+	ORIGINAL_DIR=$(pwd)
 
-    echo -e "${BLUE}🚀 Adding project ${PROJECT_NAME}...${NC}"
+	echo -e "${BLUE}🚀 Adding project ${PROJECT_NAME}...${NC}"
 
-    # Create temporary directory
-    TEMP_DIR=$(mktemp -d)
-    cd "$TEMP_DIR" || exit
+	# Create temporary directory
+	TEMP_DIR=$(mktemp -d)
+	cd "$TEMP_DIR" || exit
 
-    # Clone the project repo
-    echo -e "${BLUE}📥 Cloning repository...${NC}"
-    if ! git clone "${REPO_URL}" "${PROJECT_NAME}"; then
-        echo -e "${RED}❌ Failed to clone repository${NC}"
-        cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
-        exit 1
-    fi
+	# Clone the project repo
+	echo -e "${BLUE}📥 Cloning repository...${NC}"
+	if ! git clone "${REPO_URL}" "${PROJECT_NAME}"; then
+		echo -e "${RED}❌ Failed to clone repository${NC}"
+		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+		exit 1
+	fi
 
-    # Get all commit messages
-    cd "${PROJECT_NAME}" || exit
-    COMMIT_LOG=$(git log --pretty=format:"- %s%n%b" | sed '/^$/N;/^\n$/D')
-    cd "$ORIGINAL_DIR" || exit
+	# Get all commit messages
+	cd "${PROJECT_NAME}" || exit
+	COMMIT_LOG=$(git log --pretty=format:"- %s%n%b" | sed '/^$/N;/^\n$/D')
+	cd "$ORIGINAL_DIR" || exit
 
-    # Create project directory and move files
-    echo -e "${BLUE}📦 Moving project files...${NC}"
-    mkdir -p "${PROJECT_NAME}"
-    cp -r "${TEMP_DIR}/${PROJECT_NAME}"/* "${PROJECT_NAME}/"
+	# Create project directory and move files
+	echo -e "${BLUE}📦 Moving project files...${NC}"
+	mkdir -p "${PROJECT_NAME}"
+	cp -r "${TEMP_DIR}/${PROJECT_NAME}"/* "${PROJECT_NAME}/"
 
-    # Clean up temp directory
-    rm -rf "$TEMP_DIR"
+	# Clean up temp directory
+	rm -rf "$TEMP_DIR"
 
-    # Add and commit with full history in commit message
-    git add "${PROJECT_NAME}"
-    git commit -m "chore(gpm): add project ${PROJECT_NAME}" -m "Original commit history:" -m "$COMMIT_LOG"
+	# Add and commit with full history in commit message
+	git add "${PROJECT_NAME}"
+	git commit -m "chore(gpm): add project ${PROJECT_NAME}" -m "Original commit history:" -m "$COMMIT_LOG"
 
-    echo -e "${GREEN}✅ Successfully added ${PROJECT_NAME}${NC}"
+	echo -e "${GREEN}✅ Successfully added ${PROJECT_NAME}${NC}"
 }
 
 submit_project() {
-    PROJECT_NAME=$1
-    TARGET_REPO=$2
-    ORIGINAL_DIR=$(pwd)
+	PROJECT_NAME=$1
+	TARGET_REPO=$2
+	ORIGINAL_DIR=$(pwd)
 
-    # Check if target repo is a valid vogsphere URL
-    if [[ ! "$TARGET_REPO" =~ ^git@vogsphere.42lyon.fr:vogsphere ]]; then
-        echo -e "${RED}❌ Invalid target repository URL. Must be a vogsphere URL (git@vogsphere.42lyon.fr:vogsphere...)${NC}"
-        exit 1
-    fi
+	# Check if target repo is a valid vogsphere URL
+	if [[ ! "$TARGET_REPO" =~ ^git@vogsphere.42lyon.fr:vogsphere ]]; then
+		echo -e "${RED}❌ Invalid target repository URL. Must be a vogsphere URL (git@vogsphere.42lyon.fr:vogsphere...)${NC}"
+		exit 1
+	fi
 
-    echo -e "${BLUE}📤 submiting ${PROJECT_NAME}...${NC}"
+	echo -e "${BLUE}📤 submiting ${PROJECT_NAME}...${NC}"
 
-    # Create temporary directory
-    TEMP_DIR=$(mktemp -d)
-    cd "$TEMP_DIR" || exit
+	# Create temporary directory
+	TEMP_DIR=$(mktemp -d)
+	cd "$TEMP_DIR" || exit
 
-    # Initialize new repo
-    git init
+	# Initialize new repo
+	git init
 
-    # Copy latest version of files from main repo
-    cp -r "${ORIGINAL_DIR}/${PROJECT_NAME}"/* .
+	# Copy latest version of files from main repo
+	cp -r "${ORIGINAL_DIR}/${PROJECT_NAME}"/* .
 
-    # Commit and force push
-    git add .
-    git commit -m "chore(gpm): submission of ${PROJECT_NAME}" -m "⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷
+	# Commit and force push
+	git add .
+	git commit -m "chore(gpm): submission of ${PROJECT_NAME}" -m "⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷
 ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇
 ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽
 ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕
 ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕
 ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕
 ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ This commit was generated by Git Project Manager
-⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ Visit https://github.com/airone01/ft/tree
-⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿
+⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ Visit https://github.com/airone01/ft
+⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵
 ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟
 ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠
 ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙
 ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣"
-    git remote add origin "${TARGET_REPO}"
-    if ! git push -f origin main; then
-        echo -e "${RED}❌ Failed to push to repository${NC}"
-        cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
-        exit 1
-    fi
+	git remote add origin "${TARGET_REPO}"
+	if ! git push -f origin main; then
+		echo -e "${RED}❌ Failed to push to repository${NC}"
+		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+		exit 1
+	fi
 
-    cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
-    echo -e "${GREEN}✅ Project pushed to ${TARGET_REPO}${NC}"
+	cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+	echo -e "${GREEN}✅ Project pushed to ${TARGET_REPO}${NC}"
 }
 
 install_gpm() {
-    SCRIPT_PATH=$(realpath "$0")
-    INSTALL_DIR="$HOME/.local/bin"
-    COMPLETION_DIR="$HOME/.zsh/completions"
+	SCRIPT_PATH=$(realpath "$0")
+	INSTALL_DIR="$HOME/.local/bin"
+	COMPLETION_DIR="$HOME/.zsh/completions"
 
-    echo -e "${BLUE}📦 Installing GPM...${NC}"
+	echo -e "${BLUE}📦 Installing GPM...${NC}"
 
-    # Create directories
-    mkdir -p "$INSTALL_DIR" "$COMPLETION_DIR"
+	# Create directories
+	mkdir -p "$INSTALL_DIR" "$COMPLETION_DIR"
 
-    # Copy script and completion
-    cp "$SCRIPT_PATH" "$INSTALL_DIR/gpm"
-    chmod +x "$INSTALL_DIR/gpm"
+	# Copy script and completion
+	cp "$SCRIPT_PATH" "$INSTALL_DIR/gpm"
+	chmod +x "$INSTALL_DIR/gpm"
 
-    # Create completion file
-    cat >"$COMPLETION_DIR/_gpm" <<'EOL'
+	# Create completion file
+	cat >"$COMPLETION_DIR/_gpm" <<'EOL'
 #compdef gpm
 
 _gpm() {
@@ -154,41 +154,41 @@ _gpm() {
 }
 EOL
 
-    # Update .zshrc if needed
-    if ! grep -q "fpath=(~/.zsh/completions \$fpath)" "$HOME/.zshrc"; then
-        echo -e "\n# GPM completion" >>"$HOME/.zshrc"
-        echo "fpath=(~/.zsh/completions \$fpath)" >>"$HOME/.zshrc"
-        echo "autoload -U compinit" >>"$HOME/.zshrc"
-        echo "compinit" >>"$HOME/.zshrc"
-    fi
+	# Update .zshrc if needed
+	if ! grep -q "fpath=(~/.zsh/completions \$fpath)" "$HOME/.zshrc"; then
+		echo -e "\n# GPM completion" >>"$HOME/.zshrc"
+		echo "fpath=(~/.zsh/completions \$fpath)" >>"$HOME/.zshrc"
+		echo "autoload -U compinit" >>"$HOME/.zshrc"
+		echo "compinit" >>"$HOME/.zshrc"
+	fi
 
-    # Add to PATH if not already there
-    if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
-        echo -e "\n# GPM Path" >>"$HOME/.zshrc"
-        echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$HOME/.zshrc"
-        echo -e "${GREEN}✅ Please restart your shell or run: source ~/.zshrc${NC}"
-    fi
+	# Add to PATH if not already there
+	if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+		echo -e "\n# GPM Path" >>"$HOME/.zshrc"
+		echo "export PATH=\"\$PATH:$INSTALL_DIR\"" >>"$HOME/.zshrc"
+		echo -e "${GREEN}✅ Please restart your shell or run: source ~/.zshrc${NC}"
+	fi
 
-    echo -e "${GREEN}✅ GPM installed successfully${NC}"
+	echo -e "${GREEN}✅ GPM installed successfully${NC}"
 }
 
 case "$1" in
 "add")
-    if [ "$#" -ne 3 ]; then
-        usage
-    fi
-    add_project "$2" "$3"
-    ;;
+	if [ "$#" -ne 3 ]; then
+		usage
+	fi
+	add_project "$2" "$3"
+	;;
 "submit")
-    if [ "$#" -ne 3 ]; then
-        usage
-    fi
-    submit_project "$2" "$3"
-    ;;
+	if [ "$#" -ne 3 ]; then
+		usage
+	fi
+	submit_project "$2" "$3"
+	;;
 "install")
-    install_gpm
-    ;;
+	install_gpm
+	;;
 *)
-    usage
-    ;;
+	usage
+	;;
 esac

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   libftprintf.h                                 _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
+/*   ft_printf.h                                   _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
 /*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
 /*   By: elagouch <elagouch@student.42.fr>        |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
 /*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
@@ -10,12 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
+# include <stdint.h>
 # include <unistd.h>
 
-ssize_t	ft_putnbr_base_ssize(long nbr, char *base);
+ssize_t	ft_putnbr_base_ssize_ulong(uintptr_t nbr, char *base);
+ssize_t	ft_putnbr_base_ssize_int(int nbr, char *base);
 ssize_t	ft_putstr_ssize(char *str);
 ssize_t	ft_putchar_ssize(char c);
 size_t	ft_strlen(const char *str);

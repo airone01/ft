@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "*.astro": "astro",
+    "libftprintf.h": "c",
+    "unistd.h": "c",
+    "ft_printf.h": "c",
+    "stdint.h": "c"
+  }
+}
