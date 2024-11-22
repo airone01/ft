@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "marvin",
+      "script": "bun",
+      "args": "index.ts"
+    }
+  ]
+}
