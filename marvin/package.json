@@ -1,20 +1,26 @@
 {
   "name": "marvin",
-  "module": "index.ts",
+  "private": true,
   "type": "module",
   "scripts": {
     "db:gen": "drizzle-kit generate --dialect sqlite --schema ./src/schema.ts",
     "db:migrate": "bun ./scripts/migrate.ts",
-    "bot:dev": "bun --watch ./src/index.ts"
+    "bot:dev": "bun --watch ./src/index.ts",
+    "web:build": "nuxt build",
+    "web:dev": "nuxt dev",
+    "web:gen": "nuxt generate",
+    "web:preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
-  "trustedDependencies": [
-    "svg-png-converter"
-  ],
   "devDependencies": {
     "@types/bun": "latest",
     "@types/signale": "^1.4.7",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.14",
     "drizzle-kit": "^0.28.1",
     "env-paths": "^3.0.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
     "xo": "^0.59.3"
   },
   "peerDependencies": {
@@ -25,7 +31,11 @@
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.3",
+    "nuxt": "^3.14.1592",
     "signale": "^1.4.0",
+    "theme-change": "^2.5.0",
+    "vue": "latest",
+    "vue-router": "latest",
     "zod": "^3.23.8"
   }
 }
