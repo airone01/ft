@@ -8,14 +8,17 @@
           </svg>
         </div>
         <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-          <li><a>Homepage</a></li>
-          <li><a>Portfolio</a></li>
-          <li><a>About</a></li>
+          <li>
+            <NuxtLink href="/">Homepage</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink href="/discord">Invite to Discord</NuxtLink>
+          </li>
         </ul>
       </div>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost text-xl">Marvin</a>
+      <NuxtLink href="/" class="btn btn-ghost text-xl">Quack</NuxtLink>
     </div>
     <div class="navbar-end">
       <!-- Search button -->

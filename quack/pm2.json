@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "marvin",
+      "name": "quack",
       "script": "bun",
       "args": "index.ts"
     }
