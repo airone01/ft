@@ -5,13 +5,13 @@
     </figure>
     <div class="card-body">
       <h2 class="card-title">Adopt a duck!</h2>
-      <p>Marvin is a Discord bot that will help you in your daily tasks at <a href="https://42lyon.fr"
-          class="link link-accent">42</a> in fun and interactive ways!</p>
+      <p>Quack is a Discord bot that will help you in your daily tasks at <NuxtLink href="https://42lyon.fr"
+          class="link link-accent">42</NuxtLink> in fun and interactive ways!</p>
       <div class="card-actions justify-end">
-        <a href="https://discord.com/oauth2/authorize?client_id=1292146624994480321">
+        <NuxtLink href="/discord">
           <button class="btn btn-primary">Add to
             my Discord apps</button>
-        </a>
+        </NuxtLink>
       </div>
     </div>
   </div>
