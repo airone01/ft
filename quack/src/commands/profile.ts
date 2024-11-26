@@ -54,7 +54,7 @@ export async function handler(interaction: ChatInputCommandInteraction) {
       .setTitle(user.login)
       .setThumbnail(user.image.versions.large)
       .addFields(
-        {name: 'Location', value: `<:Location:1310643964545728602> ${(!locations || locations.length === 0 || !locations[0].end_at) ? 'Not logged' : `${locations[0].host} - ${time(new Date(locations[0].begin_at), TimestampStyles.RelativeTime)}`}\n<:Campus:1310905787044073533> ${user.campus.map(c => c.name).join(', ')}`, inline: true},
+        {name: 'Location', value: `<:Location:1310643964545728602> ${(!locations || locations.length === 0 || !locations[0].end_at) ? `${locations[0].host} - ${time(new Date(locations[0].begin_at), TimestampStyles.RelativeTime)}` : 'Not logged'}\n<:Campus:1310905787044073533> ${user.campus.map(c => c.name).join(', ')}`, inline: true},
         {name: 'Stats', value: `<:Level:1310906661682020383> ${currentLevel.toFixed(2)}\n<:Wallet:1310910338857832550> ${user.wallet}\n<:Correction_Points:1310642265257152582> ${user.correction_point}`, inline: true},
         {name: 'Contact', value: `<:Name:1310906917727502376> ${user.first_name} ${user.last_name}\n<:Email:1310907404468224061> ||${user.email}||`, inline: true},
       );
