@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "db:gen": "drizzle-kit generate --dialect sqlite --schema ./src/schema.ts",
-    "db:migrate": "bun ./scripts/migrate.ts",
-    "bot:dev": "bun ./src/index.ts",
+    "db:migrate": "bun --bun ./scripts/migrate.ts",
+    "bot:dev": "bun --bun ./src/index.ts",
     "web:build": "nuxt build",
     "web:dev": "nuxt dev",
     "web:gen": "nuxt generate",
@@ -13,7 +13,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "^1.1.14",
     "@types/signale": "^1.4.7",
     "autoprefixer": "^10.4.20",
     "daisyui": "^4.12.14",
@@ -24,18 +24,19 @@
     "xo": "^0.59.3"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@uniiem/brainfuck": "^0.1.0",
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.36.3",
+    "drizzle-orm": "^0.36.4",
     "nuxt": "^3.14.1592",
+    "sharp": "^0.33.5",
     "signale": "^1.4.0",
     "theme-change": "^2.5.0",
-    "vue": "latest",
-    "vue-router": "latest",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
     "zod": "^3.23.8"
   }
 }
