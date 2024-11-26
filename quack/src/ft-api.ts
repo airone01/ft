@@ -5,6 +5,93 @@ import {logger} from './logger.js';
 
 const BASE_URL = 'https://api.intra.42.fr';
 
+type QueuedRequest = {
+  endpoint: string;
+  retryCount: number;
+  resolve: (value: Record<string, unknown> | undefined) => void;
+  reject: (reason?: unknown) => void;
+};
+
+class RequestManager { // eslint-disable-line @typescript-eslint/no-extraneous-class
+  static async enqueueRequest(endpoint: string): Promise<Record<string, unknown> | undefined> {
+    return new Promise((resolve, reject) => {
+      this.queue.push({
+        endpoint,
+        retryCount: 0,
+        resolve,
+        reject,
+      });
+
+      void this.processQueue();
+    });
+  }
+
+  private static readonly queue: QueuedRequest[] = [];
+  private static isProcessing = false;
+  private static readonly MAX_RETRIES = 3; // eslint-disable-line @typescript-eslint/class-literal-property-style
+  private static readonly RETRY_DELAYS = [1000, 5000, 15_000]; // Increasing delays in ms
+  private static rateLimitReset: number | undefined = undefined;
+
+  private static async processQueue(): Promise<void> {
+    if (this.isProcessing || this.queue.length === 0) {
+      return;
+    }
+
+    this.isProcessing = true;
+    const request = this.queue[0];
+
+    try {
+      // Check if we need to wait for rate limit reset
+      if (this.rateLimitReset && Date.now() < this.rateLimitReset) {
+        const waitTime = this.rateLimitReset - Date.now();
+        logger.warn(`Rate limit in effect. Waiting ${waitTime}ms before retrying...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime)); // eslint-disable-line no-promise-executor-return
+      }
+
+      const accessToken = await TokenManager.getToken();
+      const response = await fetch(`${BASE_URL}${request.endpoint}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      // Handle rate limiting
+      if (response.status === 429) {
+        const resetTime = response.headers.get('X-RateLimit-Reset');
+        if (resetTime) {
+          this.rateLimitReset = Number(resetTime) * 1000; // Convert to milliseconds
+        }
+
+        if (request.retryCount < this.MAX_RETRIES) {
+          const delayTime = this.RETRY_DELAYS[request.retryCount];
+          logger.warn(`Rate limited. Retrying in ${delayTime}ms... (Attempt ${request.retryCount + 1}/${this.MAX_RETRIES})`);
+          request.retryCount++;
+          await new Promise(resolve => setTimeout(resolve, delayTime)); // eslint-disable-line no-promise-executor-return
+          this.isProcessing = false;
+          return this.processQueue(); // eslint-disable-line @typescript-eslint/return-await
+        }
+
+        throw new Error('Max retries exceeded for rate limit');
+      }
+
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json() as unknown as Record<string, unknown>;
+      request.resolve(data);
+    } catch (error) {
+      logger.error(`Error processing request to ${request.endpoint}:`, error);
+      request.reject(error);
+    } finally {
+      this.queue.shift(); // Remove processed request
+      this.isProcessing = false;
+      // Process next request after a small delay to respect rate limits
+      setTimeout(async () => this.processQueue(), 500);
+    }
+  }
+}
+
 // Schema definitions
 const TokenSchema = z.object({
   access_token: z.string(),
@@ -217,19 +304,12 @@ class TokenManager { // eslint-disable-line @typescript-eslint/no-extraneous-cla
 }
 
 async function makeApiRequest(endpoint: string): Promise<Record<string, unknown> | undefined> {
-  const accessToken = await TokenManager.getToken();
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (!response.ok) {
-    logger.error(`Failed to fetch data from ${endpoint}. Error was ${response.statusText}`);
+  try {
+    return await RequestManager.enqueueRequest(endpoint);
+  } catch (error) {
+    logger.error(`Failed to fetch data from ${endpoint}.`, error);
     return undefined;
   }
-
-  return response.json() as unknown as Record<string, unknown>;
 }
 
 async function getUserData(): Promise<Array<z.infer<typeof UserSchema>> | undefined> {
