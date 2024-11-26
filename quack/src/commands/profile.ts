@@ -1,5 +1,7 @@
 import {
   type ChatInputCommandInteraction, InteractionContextType, SlashCommandBuilder,
+  time,
+  TimestampStyles,
 } from 'discord.js';
 import {getUserDetails, getUserProjects, getUserLocations} from '../ft-api.js';
 import {buildDefaultEmbed} from '../embed.js';
@@ -39,12 +41,6 @@ export async function handler(interaction: ChatInputCommandInteraction) {
       return;
     }
 
-    if (!projects || projects.length === 0) {
-      embed.setDescription('No projects found.');
-      await interaction.editReply({embeds: [embed]});
-      return;
-    }
-
     if (!user) {
       embed.setDescription('User not found.');
       await interaction.editReply({embeds: [embed]});
@@ -58,34 +54,48 @@ export async function handler(interaction: ChatInputCommandInteraction) {
       .setTitle(user.login)
       .setThumbnail(user.image.versions.large)
       .addFields(
-        {name: 'Location', value: `${(!locations || locations.length === 0) ? 'Not logged' : `${locations[0].campus_id}`} <:mingcute_map_pin_fill:1310643964545728602>`},
-        {name: 'Level', value: `${currentLevel.toFixed(2)}`, inline: true},
-        {name: 'Wallet', value: `${user.wallet}₳`, inline: true},
-        {name: 'CP', value: `${user.correction_point}`, inline: true},
-        {name: 'Name', value: `${user.first_name} ${user.last_name}`, inline: true},
-        {name: 'Email', value: user.email, inline: true},
-        {name: 'Campus', value: user.campus.map(c => c.name).join(', '), inline: true},
+        {name: 'Location', value: `<:Location:1310643964545728602> ${(!locations || locations.length === 0 || !locations[0].end_at) ? 'Not logged' : `${locations[0].host} - ${time(new Date(locations[0].begin_at), TimestampStyles.RelativeTime)}`}\n<:Campus:1310905787044073533> ${user.campus.map(c => c.name).join(', ')}`, inline: true},
+        {name: 'Stats', value: `<:Level:1310906661682020383> ${currentLevel.toFixed(2)}\n<:Wallet:1310910338857832550> ${user.wallet}\n<:Correction_Points:1310642265257152582> ${user.correction_point}`, inline: true},
+        {name: 'Contact', value: `<:Name:1310906917727502376> ${user.first_name} ${user.last_name}\n<:Email:1310907404468224061> ||${user.email}||`, inline: true},
       );
 
-    if (projects.length > 0) {
+    if (projects && projects.length > 0) {
       const lastProjects = projects
         .filter(p => p.final_mark !== null)
-        .slice(-3)
-        .map(p => `${p.project.name}: ${p.final_mark}%${p.marked ? '✅' : '❌'}`);
+        .filter(p => p.marked_at)
+        // @ts-expect-error TS glitches here. It's normal to compare Dates. See https://stackoverflow.com/a/10124053
+        .sort((a, b) => new Date(b.marked_at!) - new Date(a.marked_at!))
+        .slice(0, 3);
 
-      if (lastProjects.length > 0) {
-        embed.addFields({name: 'Last Projects', value: lastProjects.join('\n')});
+      const lastProjectsName = lastProjects
+        .map(p => p.project.name);
+
+      if (lastProjectsName.length > 0) {
+        embed.addFields({name: 'Last Projects', value: lastProjectsName.join('\n'), inline: true});
+
+        const lastProjectMarks = lastProjects
+          // eslint-disable-next-line unicorn/no-nested-ternary
+          .map(p => `${p.status === 'waiting_for_correction' ? ':hourglass_flowing_sand:' : (p.marked && p.status === 'finished') ? (p.final_mark! >= 50 ? ':white_check_mark:' : ':x:') : '???'} ${p.final_mark}%`);
+        embed.addFields({name: '\u200B', value: lastProjectMarks.join('\n'), inline: true});
+        const lastProjectDates = lastProjects
+          .map(p => p.marked_at ? time(new Date(p.marked_at), TimestampStyles.RelativeTime) : ' ');
+        embed.addFields({name: '\u200B', value: lastProjectDates.join('\n'), inline: true});
       }
     }
 
     if (currentCursus?.skills) {
       const topSkills = currentCursus.skills
         .sort((a, b) => b.level - a.level)
-        .slice(0, 3)
-        .map(s => `${s.name}: ${s.level.toFixed(2)}`);
+        .slice(0, 3);
+      const topSkillsName = topSkills
+        .map(s => s.name);
 
-      if (topSkills.length > 0) {
-        embed.addFields({name: 'Top Skills', value: topSkills.join('\n')});
+      if (topSkillsName.length > 0) {
+        embed.addFields({name: 'Top Skills', value: topSkillsName.join('\n'), inline: true});
+
+        const topSkillsLevel = topSkills
+          .map(s => s.level.toFixed(2));
+        embed.addFields({name: '\u200B', value: topSkillsLevel.join('\n'), inline: true});
       }
     }
 
