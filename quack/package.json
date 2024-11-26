@@ -5,7 +5,7 @@
   "scripts": {
     "db:gen": "drizzle-kit generate --dialect sqlite --schema ./src/schema.ts",
     "db:migrate": "bun ./scripts/migrate.ts",
-    "bot:dev": "bun --watch ./src/index.ts",
+    "bot:dev": "bun ./src/index.ts",
     "web:build": "nuxt build",
     "web:dev": "nuxt dev",
     "web:gen": "nuxt generate",
