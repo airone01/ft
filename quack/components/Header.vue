@@ -55,7 +55,7 @@
         </div>
       </button> -->
       <!-- Profile button -->
-      <Avatar class="pr-2" />
+      <!-- <Avatar class="pr-2" /> -->
     </div>
   </header>
   <div class="h-16 w-full" />

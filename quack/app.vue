@@ -4,5 +4,6 @@
     <main class="h-full w-full flex flex-col justify-center items-center gap-4 my-auto">
       <NuxtPage />
     </main>
+    <Footer />
   </div>
 </template>
