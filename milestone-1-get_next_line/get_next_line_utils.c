@@ -6,17 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:20 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 13:13:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:49:52 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdint.h>
-
-/*
-I neeed:
-- ft_substr
-*/
 
 /**
  * @brief	Get the length of a string
@@ -46,6 +40,7 @@ size_t	ft_strlen(const char *str)
  * @param	s2 The second string
  *
  * @returns	A new string that is the result of joining s1 and s2
+ * @note	The caller is responsible for freeing the memory
  */
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -91,10 +86,11 @@ char	*ft_strdup(const char *s)
 }
 
 /**
- * @brief	Allocates memory for an array of nmemb elements of size bytes each
+ * @brief	Locates the first occurrence of c in the string s
+ * 			or returns NULL if c is not found
  *
- * @param	nmemb Number of elements
- * @param	size Size of each element
+ * @param	s The string to search
+ * @param	c The character to search for
  *
  * @returns	A pointer to the allocated memory
  */
@@ -134,4 +130,81 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (0);
 	ft_strlcpy(dst, s, len + 1);
 	return (dst);
+}
+
+/**
+ * @brief	Returns the remaining buffer from the first newline character
+ *
+ * @param	buffer The buffer to search
+ *
+ * @returns	The remaining buffer from the first newline character
+ */
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	uint8_t	*p;
+	size_t	total;
+	void	*ptr;
+
+	if (size && nmemb > __SIZE_MAX__ / size)
+		return (0);
+	ptr = malloc(size * nmemb);
+	if (!ptr)
+		return (0);
+	p = ptr;
+	total = size * nmemb;
+	while (total--)
+		*p++ = 0;
+	return (ptr);
+}
+
+/**
+ * @brief	Returns the length of a string
+ *
+ * @param	str The string to measure
+ *
+ * @returns	The length of the string
+ */
+unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i])
+		i++;
+	if (size == 0)
+		return (i);
+	size--;
+	while (size-- && *src)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (i);
+}
+
+/**
+ * @brief	Concats two strings
+ *
+ * @param	dst The destination string
+ * @param	str The string to measure
+ * @param	size The maximum number of characters to measure
+ *
+ * @returns	The length of the string
+ */
+unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	i;
+
+	src_len = ft_strlen(src);
+	dst_len = ft_strlen(dst);
+	if (size <= dst_len)
+		return (size + src_len);
+	i = 0;
+	while (size && src[i] && (dst_len + i) < (size - 1))
+	{
+		dst[dst_len + i] = src[i];
+		i++;
+	}
+	dst[dst_len + i] = '\0';
+	return (dst_len + src_len);
 }
