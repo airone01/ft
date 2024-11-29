@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 12:51:33 by elagouch          #+#    #+#              #
-#    Updated: 2024/11/19 13:43:04 by elagouch         ###   ########.fr        #
+#    Updated: 2024/11/29 09:26:29 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,11 @@ CD		= cd
 
 # ------------ Jobs --------------
 # Format: milestone_number:job_name
-JOBS	= \
-	0:libft \
-	1:printf
+JOBS	= 			\
+	0:libft 		\
+	1:printf		\
+	1:born2beroot	\
+	1:get_next_line
 
 # ------------ Mapping -----------
 MILESTONE_TARGETS	= $(foreach job,$(JOBS),milestone$(word 1,$(subst :, ,$(job)))$(word 2,$(subst :, ,$(job))))
