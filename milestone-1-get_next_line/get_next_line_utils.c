@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:20 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 18:49:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:57:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s2_len;
 	char	*dst;
 
-	if (!s1 || !s2)
-		return (0);
+	if (!s1)
+		s1 = "";
+	if (!s2)
+		s2 = "";
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	dst = (char *)ft_calloc(s1_len + s2_len + 1, sizeof(char));
 	if (!dst)
-		return (0);
+		return (NULL);
 	ft_strlcpy(dst, s1, s1_len + 1);
 	ft_strlcat(dst, s2, s1_len + s2_len + 1);
 	return (dst);
@@ -207,4 +209,28 @@ unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
 	}
 	dst[dst_len + i] = '\0';
 	return (dst_len + src_len);
+}
+
+/**
+ * @brief	Fills a buffer with a constant byte
+ *
+ * @param	s The buffer to fill
+ * @param	c The byte to fill the buffer with
+ * @param	n The number of bytes to fill
+ *
+ * @returns	A pointer to the buffer
+ */
+void	ft_memset(void *s, int c, size_t n)
+{
+	uint8_t	*pt;
+
+	if (n != 0)
+	{
+		pt = s;
+		while (n != 0)
+		{
+			*pt++ = (uint8_t)c;
+			n--;
+		}
+	}
 }

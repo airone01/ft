@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 19:06:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:20:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,26 @@ char	*get_next_line(int fd)
 	ssize_t			index;
 	char			*line;
 
-	line = (char *)ft_calloc(ft_strlen((char *)remain), sizeof(uint8_t));
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	line = (char *)ft_calloc(1, sizeof(char));
+	if (!line)
+		return (NULL);
+	if (remain[0])
+	{
+		free(line);
+		line = ft_strdup((char *)remain);
+		ft_memset(remain, 0, BUFFER_SIZE);
+	}
 	index = read_until_nl(fd, &line);
 	if (index < 0)
 		return (NULL);
 	if (index >= 0)
 	{
 		ft_strlcpy((char *)remain, (char *)line + index + 1, BUFFER_SIZE);
-		line[index] = '\0';
+		line[index + 1] = '\0';
 	}
-	return ((char *)line);
+	return (line);
 }
 
 /**
@@ -57,15 +65,23 @@ ssize_t	read_until_nl(int fd, char **line)
 	ssize_t			bytes_read;
 	char			*tmp;
 
+	if (!*line)
+		*line = ft_strdup("");
+	if (!*line)
+		return (-1);
 	bytes_read = 1;
 	while (bytes_read && !ft_strchr(*line, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
-		if (bytes_read < 0 || !*line)
+		if (bytes_read < 0)
+			return (free(*line), -1);
+		if (!*line)
 			return (-1);
 		buff[bytes_read] = '\0';
 		tmp = ft_strjoin(*line, (char *)buff);
 		free(*line);
+		if (!tmp)
+			return (-1);
 		*line = tmp;
 	}
 	return (ft_strchr(*line, '\n') - *line);

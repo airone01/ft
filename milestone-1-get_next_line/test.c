@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 11:33:27 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 12:13:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:10:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	test_empty_file(void)
 	char	*line;
 
 	printf("Empty file test: ");
-	fd = open("empty.txt", O_RDWR | O_CREAT, 0644);
+	fd = open("empty.txt", O_RDWR, 0644);
 	line = get_next_line(fd);
 	if (line == NULL)
 		printf(GREEN "OK" RESET "\n");
@@ -44,9 +44,6 @@ void	test_single_line(void)
 	char		*line;
 
 	printf("Single line test: ");
-	fd = open("single.txt", O_RDWR | O_CREAT, 0644);
-	write(fd, test_str, strlen(test_str));
-	close(fd);
 	fd = open("single.txt", O_RDONLY);
 	line = get_next_line(fd);
 	if (line && strcmp(line, test_str) == 0)
@@ -59,15 +56,11 @@ void	test_single_line(void)
 
 void	test_multiple_lines(void)
 {
-	int			fd;
-	const char	*test_str = "Line 1\nLine 2\nLine 3\n";
-	char		*line;
-	int			line_count;
+	int		fd;
+	char	*line;
+	int		line_count;
 
 	printf("Multiple lines test: ");
-	fd = open("multiple.txt", O_RDWR | O_CREAT, 0644);
-	write(fd, test_str, strlen(test_str));
-	close(fd);
 	fd = open("multiple.txt", O_RDONLY);
 	line_count = 0;
 	while ((line = get_next_line(fd)) != NULL)
@@ -89,9 +82,6 @@ void	test_no_newline(void)
 	char		*line;
 
 	printf("No newline test: ");
-	fd = open("no_newline.txt", O_RDWR | O_CREAT, 0644);
-	write(fd, test_str, strlen(test_str));
-	close(fd);
 	fd = open("no_newline.txt", O_RDONLY);
 	line = get_next_line(fd);
 	if (line && strcmp(line, test_str) == 0)
@@ -116,16 +106,11 @@ void	test_invalid_fd(void)
 
 void	test_large_file(void)
 {
-	int			fd;
-	char		*line;
-	int			i;
-	const char	*large_str = "This is a very long line that will be repeated many times to test buffer handling\n";
+	int		fd;
+	char	*line;
+	int		i;
 
 	printf("Large file test: ");
-	fd = open("large.txt", O_RDWR | O_CREAT, 0644);
-	for (i = 0; i < 1000; i++)
-		write(fd, large_str, strlen(large_str));
-	close(fd);
 	fd = open("large.txt", O_RDONLY);
 	i = 0;
 	while ((line = get_next_line(fd)) != NULL && i < 1000)
@@ -142,14 +127,10 @@ void	test_large_file(void)
 
 void	test_mixed_line_lengths(void)
 {
-	int			fd;
-	char		*line;
-	const char	*test_str = "Short\nVery very very very very long line\n\nEmpty line above\n";
+	int		fd;
+	char	*line;
 
 	printf("Mixed line lengths test:\n");
-	fd = open("mixed.txt", O_RDWR | O_CREAT, 0644);
-	write(fd, test_str, strlen(test_str));
-	close(fd);
 	fd = open("mixed.txt", O_RDONLY);
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -163,15 +144,8 @@ void	test_binary_data(void)
 {
 	int		fd;
 	char	*line;
-	char	binary_data[100];
-	int		i;
 
 	printf("Binary data test: ");
-	fd = open("binary.txt", O_RDWR | O_CREAT, 0644);
-	for (i = 0; i < 100; i++)
-		binary_data[i] = i;
-	write(fd, binary_data, 100);
-	close(fd);
 	fd = open("binary.txt", O_RDONLY);
 	line = get_next_line(fd);
 	if (line != NULL)
