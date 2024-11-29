@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 19:06:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/11/29 19:13:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ ssize_t				ft_strchr_index(const char *s, int c);
 ssize_t				read_until_nl(int fd, char **line);
 size_t				ft_strlen(const char *str);
 void				*ft_calloc(size_t nmemb, size_t size);
+void				ft_memset(void *s, int c, size_t n);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strchr(const char *s, int c);
