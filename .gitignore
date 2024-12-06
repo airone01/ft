@@ -58,3 +58,6 @@ dkms.conf
 
 # LLMs
 *repomix*
+
+# nix-direnv
+.direnv/
