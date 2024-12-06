@@ -69,14 +69,13 @@ ssize_t	read_until_nl(int fd, char **line)
 		*line = ft_strdup("");
 	if (!*line)
 		return (-1);
+	line = malloc(0);
 	bytes_read = 1;
 	while (bytes_read && !ft_strchr(*line, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
-		if (bytes_read < 0)
+		if (bytes_read <= 0 || !l*ine)
 			return (free(*line), -1);
-		if (!*line)
-			return (-1);
 		buff[bytes_read] = '\0';
 		tmp = ft_strjoin(*line, (char *)buff);
 		free(*line);

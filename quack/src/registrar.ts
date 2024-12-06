@@ -59,10 +59,10 @@ async function registerExternalCommands(client: Client) {
   const guilds = client.guilds.cache.map(guild => guild.id);
 
   await Promise.all(guilds.map(async guild => {
-    await rest.put(Routes.applicationGuildCommands(env.DISCORD_CLIENT_ID, guild), {body: guildCommandsMetadata});
+    await rest.put(Routes.applicationGuildCommands(env.DISCORD_OAUTH2_ID, guild), {body: guildCommandsMetadata});
   }));
   logger.info(`Sent ${guildCommandsMetadata.length} guild commands in ${guilds.length} guilds to Discord`);
 
-  await rest.put(Routes.applicationCommands(env.DISCORD_CLIENT_ID), {body: commandsMetadata});
+  await rest.put(Routes.applicationCommands(env.DISCORD_OAUTH2_ID), {body: commandsMetadata});
   logger.info(`Sent ${commandsMetadata.length} global commands to Discord`);
 }
