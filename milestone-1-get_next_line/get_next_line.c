@@ -32,18 +32,18 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (remain[0])
-        line = ft_strdup((const char *)remain);
-    else
-        line = NULL;
-    ft_memset(remain, 0, BUFFER_SIZE);
+		line = ft_strdup((const char *)remain);
+	else
+		line = NULL;
+	ft_memset(remain, 0, BUFFER_SIZE);
 	index = read_until_nl(fd, &line);
 	if (index < 0)
 		return (free(line), NULL);
-    if (index == 1)
-        return (line);
-    ft_strlcpy((char *) remain, (char *) line + index + 1, BUFFER_SIZE);
-    line[index + 1] = '\0';
-    return (line);
+	if (index == 1)
+		return (line);
+	ft_strlcpy((char *)remain, (char *)line + index + 1, BUFFER_SIZE);
+	line[index + 1] = '\0';
+	return (line);
 }
 
 /**
@@ -65,15 +65,91 @@ ssize_t	read_until_nl(int fd, char **line)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read < 0)
-            return (-1);
-        if (bytes_read == 0)
-            return (1);
+			return (-1);
+		if (bytes_read == 0)
+			return (1);
 		buff[bytes_read] = '\0';
 		tmp = ft_strjoin(*line, (char *)buff);
-        free(*line);
-        if (!tmp)
+		free(*line);
+		if (!tmp)
 			return (free(line), -1);
 		*line = tmp;
 	}
 	return (ft_strchr(*line, '\n') - *line);
+}
+
+/**
+ * @brief	Returns the length of a string
+ *
+ * @param	str The string to measure
+ *
+ * @returns	The length of the string
+ */
+unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i])
+		i++;
+	if (size == 0)
+		return (i);
+	size--;
+	while (size-- && *src)
+		*dst++ = *src++;
+	*dst = '\0';
+	return (i);
+}
+
+/**
+ * @brief	Concats two strings
+ *
+ * @param	dst The destination string
+ * @param	str The string to measure
+ * @param	size The maximum number of characters to measure
+ *
+ * @returns	The length of the string
+ */
+unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	i;
+
+	src_len = ft_strlen(src);
+	dst_len = ft_strlen(dst);
+	if (size <= dst_len)
+		return (size + src_len);
+	i = 0;
+	while (size && src[i] && (dst_len + i) < (size - 1))
+	{
+		dst[dst_len + i] = src[i];
+		i++;
+	}
+	dst[dst_len + i] = '\0';
+	return (dst_len + src_len);
+}
+
+/**
+ * @brief	Fills a buffer with a constant byte
+ *
+ * @param	s The buffer to fill
+ * @param	c The byte to fill the buffer with
+ * @param	n The number of bytes to fill
+ *
+ * @returns	A pointer to the buffer
+ */
+void	ft_memset(void *s, int c, size_t n)
+{
+	uint8_t	*pt;
+
+	if (n != 0)
+	{
+		pt = s;
+		while (n != 0)
+		{
+			*pt++ = (uint8_t)c;
+			n--;
+		}
+	}
 }
