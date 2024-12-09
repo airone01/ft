@@ -36,7 +36,7 @@ ARFLAGS		= rcs
 SRC			=				\
 	get_next_line.c			\
 	get_next_line_utils.c	\
-	test.c
+	test2.c
 SRC_BONUS	=
 
 # ------------ Mapping -----------

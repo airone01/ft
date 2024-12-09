@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 20:20:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:06:38 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,19 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = (char *)ft_calloc(1, sizeof(char));
-	if (!line)
-		return (NULL);
 	if (remain[0])
-	{
-		free(line);
-		line = ft_strdup((char *)remain);
-		ft_memset(remain, 0, BUFFER_SIZE);
-	}
+        line = ft_strdup((const char *)remain);
+    else
+        line = NULL;
+    ft_memset(remain, 0, BUFFER_SIZE);
 	index = read_until_nl(fd, &line);
 	if (index < 0)
-		return (NULL);
-	if (index >= 0)
-	{
-		ft_strlcpy((char *)remain, (char *)line + index + 1, BUFFER_SIZE);
-		line[index + 1] = '\0';
-	}
-	return (line);
+		return (free(line), NULL);
+    if (index == 1)
+        return (line);
+    ft_strlcpy((char *) remain, (char *) line + index + 1, BUFFER_SIZE);
+    line[index + 1] = '\0';
+    return (line);
 }
 
 /**
@@ -65,22 +60,19 @@ ssize_t	read_until_nl(int fd, char **line)
 	ssize_t			bytes_read;
 	char			*tmp;
 
-	if (!*line)
-		*line = ft_strdup("");
-	if (!*line)
-		return (-1);
-	line = malloc(0);
 	bytes_read = 1;
-	while (bytes_read && !ft_strchr(*line, '\n'))
+	while (bytes_read > 0 && !ft_strchr(*line, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
-		if (bytes_read <= 0 || !l*ine)
-			return (free(*line), -1);
+		if (bytes_read < 0)
+            return (-1);
+        if (bytes_read == 0)
+            return (1);
 		buff[bytes_read] = '\0';
 		tmp = ft_strjoin(*line, (char *)buff);
-		free(*line);
-		if (!tmp)
-			return (-1);
+        free(*line);
+        if (!tmp)
+			return (free(line), -1);
 		*line = tmp;
 	}
 	return (ft_strchr(*line, '\n') - *line);
