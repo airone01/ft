@@ -98,7 +98,9 @@ char	*ft_strdup(const char *s)
  */
 char	*ft_strchr(const char *s, int c)
 {
-	while (*s)
+    if (!s)
+        return (NULL);
+    while (*s)
 	{
 		if (*s == (char)c)
 			return ((char *)s);
@@ -106,7 +108,7 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if (*s == (char)c)
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }
 
 /**
@@ -170,7 +172,7 @@ unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
-	i = 0;
+    i = 0;
 	while (src[i])
 		i++;
 	if (size == 0)
