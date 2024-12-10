@@ -14,6 +14,44 @@ usage() {
 	exit 1
 }
 
+# Function to parse .push file and create a list of files to include
+parse_push_file() {
+	local push_file="$1"
+	local base_dir="$2"
+	local files_to_include=()
+
+	if [ ! -f "$push_file" ]; then
+		echo -e "${RED}❌ No .push file found${NC}"
+		echo -e "${BLUE}ℹ️  Including all files by default${NC}"
+		echo "*" >"$push_file"
+	fi
+
+	while IFS= read -r pattern || [ -n "$pattern" ]; do
+		# Skip comments and empty lines
+		[[ $pattern =~ ^[[:space:]]*# ]] && continue
+		[[ -z $pattern ]] && continue
+
+		# Remove leading and trailing whitespace
+		pattern=$(echo "$pattern" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
+		# Handle pattern matching
+		if [[ $pattern == /* ]]; then
+			# Absolute path pattern (relative to project root)
+			pattern="${pattern#/}"
+			find "$base_dir" -path "$base_dir/$pattern" -print0 2>/dev/null | while IFS= read -r -d '' file; do
+				files_to_include+=("$file")
+			done
+		else
+			# Relative path pattern
+			find "$base_dir" -path "$base_dir/*$pattern" -print0 2>/dev/null | while IFS= read -r -d '' file; do
+				files_to_include+=("$file")
+			done
+		fi
+	done <"$push_file"
+
+	echo "${files_to_include[@]}"
+}
+
 add_project() {
 	REPO_URL=$1
 	PROJECT_NAME=$2
@@ -73,8 +111,36 @@ submit_project() {
 	# Initialize new repo
 	git init
 
-	# Copy latest version of files from main repo
-	cp -r "${ORIGINAL_DIR}/${PROJECT_NAME}"/* .
+	# Parse .push file and copy specified files
+	echo -e "${BLUE}📑 Reading .push file...${NC}"
+	PUSH_FILE="${ORIGINAL_DIR}/${PROJECT_NAME}/.push"
+
+	# Create empty directory for included files
+	mkdir -p staging
+
+	# Get list of files to include
+	mapfile -t INCLUDED_FILES < <(parse_push_file "$PUSH_FILE" "${ORIGINAL_DIR}/${PROJECT_NAME}")
+
+	if [ ${#INCLUDED_FILES[@]} -eq 0 ]; then
+		echo -e "${RED}❌ No files matched the patterns in .push file${NC}"
+		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+		exit 1
+	fi
+
+	# Copy included files maintaining directory structure
+	echo -e "${BLUE}📦 Copying specified files...${NC}"
+	for file in "${INCLUDED_FILES[@]}"; do
+		if [ -f "$file" ]; then
+			# Create the relative path for the file
+			rel_path="${file#${ORIGINAL_DIR}/${PROJECT_NAME}/}"
+			mkdir -p "$(dirname "staging/$rel_path")"
+			cp "$file" "staging/$rel_path"
+		fi
+	done
+
+	# Move staged files to root of temp directory
+	mv staging/* .
+	rmdir staging
 
 	# Commit and force push
 	git add .
