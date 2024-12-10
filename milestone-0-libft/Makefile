@@ -89,7 +89,7 @@ DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building lib"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
 	$(AR) $(ARFLAGS) $(NAME) $?
 
 .bonus: $(OBJ) $(OBJ_BONUS)

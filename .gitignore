@@ -61,3 +61,6 @@ dkms.conf
 
 # nix-direnv
 .direnv/
+
+# CMake
+compile_commands.json
