@@ -15,30 +15,39 @@ TITLE_SEC	= \033[48;5;78;30;1m
 RESET		= \033[0m
 
 # ------------- Meta -------------
-GPM_MSTONE	= 1
-GPM_NAME	= printf
+GPM_MSTONE	= 2
+GPM_NAME	= push_swap
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
-NAME		= libftprintf.a
+NAME		= push_swap
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
 ECHO		= echo
+MAKE		= make
 CC			= cc
 AR			= ar
 RM      	= rm -f
 MD			= mkdir -p
 
+# ------------ Libft ------------
+LIBFT_DIR	= ../milestone-0-libft
+LIBFT		= $(LIBFT_DIR)/libft.a
+LIBFT_FLAGS	= -L$(LIBFT_DIR) -lft
+
+# ------------ Printf -----------
+PRINTF_DIR	= ../milestone-1-printf
+PRINTF		= $(PRINTF_DIR)/libftprintf.a
+PRINTF_FLAGS	= -L$(PRINTF_DIR) -lftprintf
+
 # ------------- Flags ------------
 CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
+CFLAGS		+= -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 ARFLAGS		= rcs
 
 # ------------ Sources -----------
-SRC			=				\
-	ft_printf.c				\
-	ft_putchar.c			\
-	ft_putnbr_base_ssize.c	\
-	ft_putstr_ssize.c		\
-	ft_strlen.c
+SRC			=		\
+	stack_utils.c	\
+	main.c
 
 # ------------ Mapping -----------
 OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
@@ -47,9 +56,17 @@ DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
 # ------------ Targets -----------
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(LIBFT):
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
+	@$(MAKE) -C $(LIBFT_DIR)
+
+$(PRINTF):
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building printf"
+	@$(MAKE) -C $(PRINTF_DIR)
+
+$(NAME): $(LIBFT) $(PRINTF) $(OBJ)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(AR) $(ARFLAGS) $(NAME) $?
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(PRINTF_FLAGS) $(LIBFT_FLAGS)
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
@@ -59,10 +76,14 @@ $(DIR_OBJ)%.o: %.c Makefile
 clean:
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
 	@$(RM) -r $(DIR_OBJ)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(PRINTF_DIR) clean
 
 fclean: clean
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
 	@$(RM) $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(PRINTF_DIR) fclean
 
 re: fclean all
 

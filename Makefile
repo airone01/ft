@@ -26,7 +26,8 @@ JOBS	= 			\
 	0:libft 		\
 	1:printf		\
 	1:born2beroot	\
-	1:get_next_line
+	1:get_next_line	\
+	2:push_swap
 
 # ------------ Mapping -----------
 MILESTONE_TARGETS	= $(foreach job,$(JOBS),milestone$(word 1,$(subst :, ,$(job)))$(word 2,$(subst :, ,$(job))))
