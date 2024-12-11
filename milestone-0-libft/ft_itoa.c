@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_itoa.c                                     _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42lyon.fr>    |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/12 11:19:05 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/12 18:13:17 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 18:24:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,13 @@ static void	fill_number(char *s, int n, int len, const char *b)
 		s[0] = '-';
 }
 
-/*
+/**
  * Allocates (with malloc(3)) and returns a string representing the integer
  * received as an argument. Negative numbers must be handled.
  * (base-dependant version)
- *
- * @param	n	number
- * @param	b	base
- *
- * @returns	infered string
+ * @param	n	Number
+ * @param	b	Base
+ * @returns     Inferred string
  */
 char	*ft_itoa_base(int n, const char *b)
 {
@@ -83,10 +81,8 @@ char	*ft_itoa_base(int n, const char *b)
 /*
  * Allocates (with malloc(3)) and returns a string representing the integer
  * received as an argument. Negative numbers must be handled.
- *
- * @param	n	number
- *
- * @returns	infered string
+ * @param	n	Number
+ * @returns     Inferred string
  */
 char	*ft_itoa(int n)
 {

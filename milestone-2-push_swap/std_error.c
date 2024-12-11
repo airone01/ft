@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   std_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:23:43 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/11 16:46:40 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 16:48:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * Tells if a character is printable in the ASCII tabe
- * @param	c	Character
- * @returns     Boolean result
+#include <unistd.h>
+
+/**
+ * Displays "Error\n" to the standard error output
  */
-int	ft_isprint(int c)
+void	std_error(void)
 {
-	return (c >= 32 && c <= 126);
+	write(2, "Error\n", 6);
 }

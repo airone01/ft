@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   stack_del_one.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:23:43 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/11 10:18:20 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 17:43:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * Tells if a character is printable in the ASCII tabe
- * @param	c	Character
- * @returns     Boolean result
+#include "push_swap.h"
+
+/**
+ * Deletes and frees the head of a stack
+ * @param   stack   Stack to delete the head of
  */
-int	ft_isprint(int c)
+void	stack_del_one(t_stack *stack)
 {
-	return (c >= 32 && c <= 126);
+	free(stack);
+	stack = NULL;
 }

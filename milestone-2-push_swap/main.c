@@ -6,55 +6,62 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/10 18:21:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:42:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "push_swap.h"
 
-char **stdin_stack(int argc, char **argv);
-
 /**
- * Main entrypoint for
- * @param   argv
- * @param   argc
- * @returns POSIX return code
+ * Checks if the args passed to the app are correct
+ * @param   argc    Arguments count
+ * @param   argv    Arguments
+ * @return          Boolean result
  */
-int main(int argc, char **argv)
+size_t	args_legit(int argc, char **argv)
 {
-    char    **stack;
+	char	*str;
 
-    (void) argv;
-    if (argc <= 1)
-        return (1);
-    stack = stdin_stack(argc, argv);
-    free_stack(stack);
-    return(0);
+	while (argc--)
+	{
+		str = *argv;
+		while (*str == ' ' || (*str >= 7 && *str <= 15))
+			str++;
+		if (*str == '+' || *str == '-')
+			str++;
+		if (!*str || !ft_isdigit(*str))
+			return (0);
+		while (*str)
+		{
+			if (!ft_isdigit(*str) && !(*str == ' ' || (*str >= 7
+						&& *str <= 15)))
+				return (0);
+			str++;
+		}
+		argv++;
+	}
+	return (1);
 }
 
 /**
- * Gets a stack from CLI arguments
- * @param   argc    arguments count
- * @param   argv    arguments
- * @returns         stack
+ * Main entrypoint for push_stack
+ * @param   argc    Arguments count
+ * @param   argv    Arguments
+ * @return          POSIX return code
  */
-char **stdin_stack(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    char    **out;
-    char    **tmp;
+	t_stack	*entry_stack;
 
-    out = ft_calloc(1, sizeof (char **));
-    if (!out)
-        return (NULL);
-    while (argc--)
-    {
-        tmp = ft_split(*argv++, ' ');
-        if (!tmp)
-            return (free_stack(stack), NULL);
-        while (*tmp)
-            *out++ = *tmp++;
-    }
-    *out = NULL;
-    return (out);
+	if (argc <= 1)
+		return (1);
+	argc--;
+	argv++;
+	if (!args_legit(argc, argv))
+		return (std_error(), 1);
+	entry_stack = parse_stdin(argc, argv);
+	stack_print(entry_stack);
+	stack_clear(entry_stack);
+	return (0);
 }

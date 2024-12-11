@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_strmapi.c                                  _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42lyon.fr>    |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/12 16:28:05 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/12 16:48:36 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/18 19:07:41 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 18:51:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
+/**
  * Applies the function f to each character of the string s, passing its index
  * as the first argument and the character itself as the second. A new string
  * is created (using malloc(3)) to collect the results from the successive
  * applications of f.
- *
- * @param	s	the string on which to iterate
- * @param	f	the function to apply to each character
- *
- * @returns	the string created from the successive applications of ’f’.
+ * @param	s	The string on which to iterate
+ * @param	f	The function to apply to each character
+ * @returns     The string created from the successive applications of ’f’.
  * 			NULL if the allocation fails.
  */
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))

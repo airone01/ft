@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   stack_iter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:23:43 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/11 17:02:30 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 17:43:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * Tells if a character is printable in the ASCII tabe
- * @param	c	Character
- * @returns     Boolean result
+#include "push_swap.h"
+
+/**
+ * Calls a function iteratively on every stack layer
+ * @param   stack   Stack
+ * @param   f       Function
  */
-int	ft_isprint(int c)
+void	stack_iter(t_stack *stack, void (*f)(t_stack *))
 {
-	return (c >= 32 && c <= 126);
+	f(stack);
+	if (stack->next)
+		stack_iter(stack->next, f);
 }

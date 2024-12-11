@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*   stack_add_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:09:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/10 18:20:20 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:42:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
 /**
- * Frees a stack
- * @param   stack   stack
+ * Appends a new number at the end of a stack
+ * @param stack
+ * @param nbr
  */
-void free_stack(char **stack)
+void	stack_add_back(t_stack *stack, long nbr)
 {
-    while (*stack)
-        free(*stack++);
-    free(stack);
-    stack = NULL;
+	t_stack	*last;
+	t_stack	*tmp;
+
+	if (!stack)
+		return ;
+	last = stack_last(stack);
+	tmp = stack_new(nbr);
+	if (!tmp)
+		return ;
+	last->next = tmp;
 }

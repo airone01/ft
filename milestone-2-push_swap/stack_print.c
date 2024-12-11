@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   stack_printf.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:22:58 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/11 17:01:34 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 17:43:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
+
+static void	stack_print_one(t_stack *stack)
+{
+	ft_printf("%d,", stack->content);
+}
 
 /**
- * Tells if a character is alphanumerical (lowercase or uppercase or numerical
- * digit).
- * @param	c	Character
- * @returns     Boolean result
+ * Displays a stack to the standard output
+ * @param   stack   Stack to printf
  */
-int	ft_isalnum(int c)
+void	stack_print(t_stack *stack)
 {
-	return (ft_isalpha(c) || ft_isdigit(c));
+	stack_iter(stack, stack_print_one);
 }

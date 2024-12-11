@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   stack_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:23:43 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/11 10:17:48 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 17:43:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
- * Tells if a character is printable in the ASCII tabe
- * @param	c	Character
- * @returns     Boolean result
+#include "push_swap.h"
+
+/**
+ * Deletes and frees a stack
+ * @param   stack   Stack to completely delete
  */
-int	ft_isprint(int c)
+void	stack_clear(t_stack *stack)
 {
-	return (c >= 32 && c <= 126);
+	t_stack	*head;
+
+	if (!stack)
+		return ;
+	head = stack->next;
+	stack_del_one(stack);
+	stack_clear(head);
 }

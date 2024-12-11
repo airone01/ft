@@ -22,36 +22,46 @@ NAME		= push_swap
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO		= echo
-MAKE		= make
-CC			= cc
-AR			= ar
-RM      	= rm -f
-MD			= mkdir -p
+ECHO	= echo
+MAKE	= make
+CC		= cc
+AR		= ar
+RM     	= rm -f
+MD		= mkdir -p
 
 # ------------ Libft ------------
-LIBFT_DIR	= ../milestone-0-libft
+LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
-LIBFT_FLAGS	= -L$(LIBFT_DIR) -lft
 
 # ------------ Printf -----------
-PRINTF_DIR	= ../milestone-1-printf
+PRINTF_DIR	= ./printf
 PRINTF		= $(PRINTF_DIR)/libftprintf.a
-PRINTF_FLAGS	= -L$(PRINTF_DIR) -lftprintf
 
 # ------------- Flags ------------
-CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
-CFLAGS		+= -I$(LIBFT_DIR) -I$(PRINTF_DIR)
-ARFLAGS		= rcs
+CFLAGS			= -Wall -Werror -Wextra -Wpedantic -MMD -MP
+CFLAGS			+= -I$(LIBFT_DIR) -I$(PRINTF_DIR)
+ARFLAGS			= rcs
+LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
+PRINTF_FLAGS	= -L$(PRINTF_DIR) -lftprintf
 
 # ------------ Sources -----------
-SRC			=		\
-	stack_utils.c	\
-	main.c
+SRC	=						\
+	main.c					\
+	parse_stdin.c			\
+	stack_add_back.c		\
+	stack_add_front.c		\
+	stack_clear.c			\
+	stack_del_one.c			\
+	stack_from_strings.c	\
+	stack_iter.c			\
+	stack_last.c			\
+	stack_new.c				\
+	stack_print.c			\
+	std_error.c
 
 # ------------ Mapping -----------
-OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
+OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)
+DEP	= $(SRC:%.c=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)

@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_strlcpy.c                                  _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42lyon.fr>    |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/11 14:26:39 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/12 09:32:54 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 18:50:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
+/**
  * The strlcpy() and strlcat() functions copy and concatenate strings respec‐
  * tively.  They are designed to be safer, more consistent, and less error prone
- * replacements for strncpy(3) and strncat(3).  Unlike those functions, strlcpy()
- * and strlcat() take the full size of the buffer (not just the length) and guar‐
- * antee to NUL-terminate the result (as long as size is larger than 0 or, in the
- * case of strlcat(), as long as there is at least one byte free in dst).  Note
- * that a byte for the NUL should be included in size.  Also note that strlcpy()
- * and strlcat() only operate on true “C” strings.  This means that for strlcpy()
- * src must be NUL-terminated and for strlcat() both src and dst must be NUL-ter‐
- * minated.
- *
+ * replacements for strncpy(3) and strncat(3).  Unlike those functions,
+ * strlcpy() and strlcat() take the full size of the buffer (not just the
+ * length) and guarantee to NUL-terminate the result (as long as size is larger
+ * than 0 or, in the case of strlcat(), as long as there is at least one byte
+ * free in dst). Note that a byte for the NUL should be included in size. Also
+ * note that strlcpy() and strlcat() only operate on true “C” strings. This
+ * eans that for strlcpy() src must be NUL-terminated and for strlcat() both
+ * src and dst must be NUL-terminated.
  * The strlcpy() function copies up to size - 1 characters from the NUL-termi‐
  * nated string src to dst, NUL-terminating the result.
- *
- * @param	dest	destination pointer
- * @param	src		source pointer
- * @param	size	number of characters to copy
- *
- * @returns	total length of the string the function tried to create
+ * @param	dest	Destination pointer
+ * @param	src		Source pointer
+ * @param	size	Number of characters to copy
+ * @returns         Total length of the string the function tried to create
  */
 unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
 {

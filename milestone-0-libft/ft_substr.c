@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_substr.c                                   _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42lyon.fr>    |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/12 09:19:50 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/12 18:04:35 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 18:55:59 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
+/**
  * Allocates (with malloc(3)) and returns a substring from the string ’s’.
  * The substring begins at index ’start’ and is of maximum size ’len’.
- *
- * @param	s		the string from which to create the substring
- * @param	start	the start index of the substring in the string ’s’.
- * @param	len		the maximum length of the substring.
- *
- * @returns	the substring. NULL if the allocation fails.
+ * @param	s		The string from which to create the substring
+ * @param	start	The start index of the substring in the string ’s’.
+ * @param	len		The maximum length of the substring.
+ * @returns         The substring. NULL if the allocation fails.
  */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

@@ -1,31 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_atoi.c                                     _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42lyon.fr>    |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/11 17:21:41 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/11 18:19:02 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 17:58:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
+/**
  * Checks if the result is an overflow.
-*/
-static int	is_overflow(long long result, int b)
+ * @param   result  Result
+ * @param   nbr     Number
+ * @return          Boolean of result
+ */
+static int	is_overflow(long long result, int nbr)
 {
-	if ((result > LLONG_MAX / 10)
-		|| (result == LLONG_MAX / 10 && b > LLONG_MAX % 10))
+	if ((result > LLONG_MAX / 10) || (result == LLONG_MAX / 10 && nbr > LLONG_MAX
+			% 10))
 		return (1);
 	return (0);
 }
 
-/*
+/**
  * Classical atol implementation.
-*/
+ *
+ * @param	nptr	sing to infer number from
+ *
+ * @returns infered number
+ * @returns 0 if failed (or if there was no number)
+ *
+ * Execution:
+ * 1. Skip spaces
+ * 2. Skip `+` and registers _at most_ 1 `-` for negative numbers
+ * 3. Registers the number digit by digit until any non-decimal char is found
+ * 4. Skips the rest of the sing
+ *
+ * Caveats:
+ * - Ignores only white spaces first, then only `+`
+ * - Doesn't handle multi-negation
+ * - Not "smart"
+ */
 long	ft_atol(const char *nptr)
 {
 	unsigned long	count;
@@ -47,7 +66,7 @@ long	ft_atol(const char *nptr)
 	return (mult * count);
 }
 
-/*
+/**
  * Infers a number from a sing.
  *
  * @param	nptr	sing to infer number from

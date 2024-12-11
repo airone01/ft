@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_split.c                                    _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42lyon.fr>    |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/12 10:48:43 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/12 18:11:47 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/11 18:46:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ static void	free_split(char **split, size_t count)
 	split = NULL;
 }
 
-/*
+/**
  * Allocates (with malloc(3)) and returns an array of strings obtained by
- * splitting ’s’ using the character ’c’ as a delimiter. The array must end
+ * splitting `str` using the character `c` as a delimiter. The array must end
  * with a NULL pointer.
- *
- * @param	str	string to split
- * @param	c	delimiter
- *
- * @returns	array of strings
- * @returns	if didn't find the delimiter,
- * 			array of strings with `s` inside
+ * @param	str	String to split
+ * @param	c	Delimiter
+ * @return      Array of strings
+ * @return      If didn't find the delimiter, array of strings with `str` only
+ * inside
  */
 char	**ft_split(char *str, char c)
 {
@@ -95,11 +93,9 @@ char	**ft_split(char *str, char c)
 	{
 		split[i] = get_next_word((const char **)&str, c);
 		if (!split[i])
-		{
-			free_split(split, i);
-			return (NULL);
-		}
+			return (free_split(split, i), NULL);
 		i++;
 	}
+	split[i] = NULL;
 	return (split);
 }
