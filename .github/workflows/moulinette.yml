@@ -18,17 +18,13 @@ jobs:
 
             -   name: Install mini-moulinette
                 run: |
-                    cd $HOME
-                    git clone https://github.com/khairulhaaziq/mini-moulinette.git
-                    echo "alias mini='$HOME/mini-moulinette/mini-moul.sh'" >> ~/.bashrc
-                    source ~/.bashrc
+                    git clone https://github.com/khairulhaaziq/mini-moulinette.git $HOME/mini-moulinette
 
             -   name: Create symbolic link for C${{ matrix.c_project }}
                 run: |
-                    mkdir -p $HOME/C${{ matrix.c_project }}
-                    ln -s $GITHUB_WORKSPACE/* $HOME/C${{ matrix.c_project }}/
+                    ln -s $GITHUB_WORKSPACE/pool-c-${{ matrix.c_project }}/ $GITHUB_WORKSPACE/C${{ matrix.c_project }}/
 
             -   name: Run mini-moulinette tests
                 run: |
-                    cd $HOME/C${{ matrix.c_project }}
+                    cd $GITHUB_WORKSPACE/C${{ matrix.c_project }}/
                     $HOME/mini-moulinette/mini-moul.sh C${{ matrix.c_project }}
