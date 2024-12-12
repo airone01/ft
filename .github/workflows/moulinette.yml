@@ -22,7 +22,7 @@ jobs:
 
             -   name: Create symbolic link for C${{ matrix.c_project }}
                 run: |
-                    ln -s pool-c-${{ matrix.c_project }}/ C${{ matrix.c_project }}/
+                    ln -s pool-c-${{ matrix.c_project }}/ ./C${{ matrix.c_project }}/
 
             -   name: Run mini-moulinette tests
                 run: |
