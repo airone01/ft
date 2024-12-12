@@ -22,9 +22,9 @@ jobs:
 
             -   name: Create symbolic link for C${{ matrix.c_project }}
                 run: |
-                    ln -s $GITHUB_WORKSPACE/pool-c-${{ matrix.c_project }}/ $GITHUB_WORKSPACE/C${{ matrix.c_project }}/
+                    ln -s pool-c-${{ matrix.c_project }}/ C${{ matrix.c_project }}/
 
             -   name: Run mini-moulinette tests
                 run: |
-                    cd $GITHUB_WORKSPACE/C${{ matrix.c_project }}/
+                    cd C${{ matrix.c_project }}/
                     $HOME/mini-moulinette/mini-moul.sh C${{ matrix.c_project }}
