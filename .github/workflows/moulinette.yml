@@ -1,0 +1,34 @@
+name: Mini-moulinette Tests
+
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                c_project: [ '00', '01', '02', '03', '04', '05', '06', '07', '08' ]
+
+        steps:
+            -   uses: actions/checkout@v3
+
+            -   name: Install mini-moulinette
+                run: |
+                    cd $HOME
+                    git clone https://github.com/khairulhaaziq/mini-moulinette.git
+                    echo "alias mini='$HOME/mini-moulinette/mini-moul.sh'" >> ~/.bashrc
+                    source ~/.bashrc
+
+            -   name: Create symbolic link for C${{ matrix.c_project }}
+                run: |
+                    mkdir -p $HOME/C${{ matrix.c_project }}
+                    ln -s $GITHUB_WORKSPACE/* $HOME/C${{ matrix.c_project }}/
+
+            -   name: Run mini-moulinette tests
+                run: |
+                    cd $HOME/C${{ matrix.c_project }}
+                    $HOME/mini-moulinette/mini-moul.sh C${{ matrix.c_project }}
