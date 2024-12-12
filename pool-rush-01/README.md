@@ -1,7 +1,7 @@
 <div align="center">
   <img src=https://skillicons.dev/icons?i=c />
   <br />
-  <p>42 - <code>c-piscine-rush-01</code></p>
+  <code>c-piscine-rush-01</code>
 </div>
 
 ## Build
