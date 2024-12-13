@@ -6,12 +6,17 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:22:52 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 13:17:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:11:54 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/**
+ * Finds how many bits are needed to represent the largest normalized number
+ * @param   num Largest normalized number
+ * @return      Bit count
+ */
 static size_t   get_max_bits(const ssize_t num)
 {
     size_t  max_bits;
@@ -27,11 +32,6 @@ static size_t   get_max_bits(const ssize_t num)
     return (max_bits);
 }
 
-static ssize_t  get_normalized_value(ssize_t num, ssize_t min)
-{
-    return (num - min);
-}
-
 /**
  * Complete implementation of the radix sort algorithm
  * @param   stack   Stack
@@ -39,7 +39,6 @@ static ssize_t  get_normalized_value(ssize_t num, ssize_t min)
 void    sort_radix(t_stack *stack_a)
 {
     t_stack *stack_b;
-    t_stack *current;
     size_t  size;
     size_t  max_bits;
     size_t  i;
@@ -47,17 +46,8 @@ void    sort_radix(t_stack *stack_a)
     ssize_t min;
     ssize_t max;
 
-    min = stack_a->content;
-    max = min;
-    current = stack_a;
-    while (current)
-    {
-        if (current->content < min)
-            min = current->content;
-        if (current->content > max)
-            max = current->content;
-        current = current->next;
-    }
+    min = stack_min(stack_a);
+    max = stack_max(stack_a);
     stack_b = NULL;
     size = stack_size(stack_a);
     max_bits = get_max_bits(max - min);
@@ -65,7 +55,7 @@ void    sort_radix(t_stack *stack_a)
     {
         for (j = 0; j < size; j++)
         {
-            ssize_t normalized = get_normalized_value(stack_a->content, min);
+            ssize_t normalized = stack_a->content - min;
             if ((normalized >> i) & 1)
                 ra(&stack_a);
             else

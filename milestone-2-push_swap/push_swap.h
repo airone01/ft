@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 17:50:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:11:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void				stack_clear(t_stack *stack);
 // -> Misc.
 void				stack_iter(t_stack *stack, void (*f)(t_stack *));
 ssize_t             stack_max(t_stack *stack);
+ssize_t             stack_min(t_stack *stack);
 size_t              stack_size(t_stack *stack);
 
 // ### STACK MANIPULATION ###

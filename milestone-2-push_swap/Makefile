@@ -62,6 +62,7 @@ SRC	=						\
 	stack_iter.c			\
 	stack_last.c			\
 	stack_max.c				\
+	stack_min.c				\
 	stack_new.c				\
 	stack_print.c			\
 	stack_size.c			\
