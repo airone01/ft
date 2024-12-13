@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:22:52 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 14:11:54 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:14:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,21 @@ void    sort_radix(t_stack *stack_a)
     stack_b = NULL;
     size = stack_size(stack_a);
     max_bits = get_max_bits(max - min);
-    for (i = 0; i < max_bits; i++)
+    i = 0;
+    while (i < max_bits)
     {
-        for (j = 0; j < size; j++)
+        j = 0;
+        while (j < size)
         {
             ssize_t normalized = stack_a->content - min;
             if ((normalized >> i) & 1)
                 ra(&stack_a);
             else
                 pb(&stack_a, &stack_b);
+            j++;
         }
         while (stack_b)
             pa(&stack_a, &stack_b);
+        i++;
     }
 }

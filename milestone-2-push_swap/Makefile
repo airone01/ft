@@ -53,12 +53,10 @@ SRC	=						\
 	mani_rrotate.c			\
 	parse_stdin.c			\
 	sort_radix.c			\
-	sort_count.c			\
 	stack_add_back.c		\
 	stack_add_front.c		\
 	stack_clear.c			\
 	stack_del_one.c			\
-	stack_from_strings.c	\
 	stack_iter.c			\
 	stack_last.c			\
 	stack_max.c				\

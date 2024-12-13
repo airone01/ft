@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 14:11:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:19:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_stack
 
 // ### STACK FUNCTIONS ###
 // -> Creating
-t_stack				*stack_from_strings(char **strings);
 t_stack				*stack_add_front(t_stack *stack, ssize_t nbr);
 void				stack_add_back(t_stack *stack, ssize_t nbr);
 // -> Removing
@@ -57,7 +56,7 @@ t_stack				*stack_last(t_stack *stack);
 t_stack				*stack_new(ssize_t nbr);
 
 // ### SORTING ###
-void                sort_count(t_stack *stack, size_t dth);
+//void                sort_count(t_stack *stack, size_t dth);
 void                sort_radix(t_stack *stack);
 
 // ### DISPLAYING ###
