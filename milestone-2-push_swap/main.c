@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 17:48:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:23:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,22 @@ size_t	args_legit(int argc, char **argv)
 		while (*str)
 		{
 			if (!ft_isdigit(*str) && !(*str == ' ' || (*str >= 7
-						&& *str <= 15)))
+						&& *str <= 15)) && !(*str == '+' || *str == '-'))
 				return (0);
 			str++;
 		}
 		argv++;
 	}
 	return (1);
+}
+
+static void verboser(size_t verbose, t_stack *stack)
+{
+    if (verbose)
+    {
+        stack_print(stack);
+        write(1, "\n", 1);
+    }
 }
 
 /**
@@ -53,17 +62,27 @@ size_t	args_legit(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_stack	*stack;
+    size_t  verbose;
 
 	if (argc <= 1)
 		return (1);
 	argc--;
 	argv++;
-	if (!args_legit(argc, argv))
+    verbose = 0;
+    if (ft_strncmp(*argv, "--verbose", 100) == 0)
+    {
+        if (argc <= 1)
+            return (1);
+        argc--;
+        argv++;
+        verbose = 1;
+    }
+    if (!args_legit(argc, argv))
 		return (std_error(), 1);
     stack = parse_stdin(argc, argv);
-//	stack_print(stack);
-//    write(1, "\n", 1);
+    verboser(verbose, stack);
     sort_radix(stack);
-	stack_clear(stack);
+    verboser(verbose, stack);
+    stack_clear(stack);
 	return (0);
 }
