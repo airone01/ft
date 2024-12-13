@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_min.c                                        :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 15:56:05 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 16:41:38 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/13 18:40:32 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/13 18:42:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <unistd.h>
 
 /**
- * Gets the first node with the lowest value in a stack
- * @param   stack   Stack to search
- * @return          First node with the lowest value
+ * Gets the absolute value
+ * @param   nb  Number to get the absolute value of
+ * @return      Absolute value of nb
  */
-t_stack *stack_minn(t_stack *stack)
+ssize_t ft_abs(ssize_t nb)
 {
-    t_stack *tmp;
-
-    if (!stack->next)
-        return (stack);
-    tmp = stack_minn(stack->next);
-    if (stack->val < tmp->val)
-        return (stack);
-    return (tmp);
+    if (nb < 0)
+        return (-nb);
+    return (nb);
 }

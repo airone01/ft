@@ -6,25 +6,25 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:56:05 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 16:01:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:08:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /**
- * Gets the maximum content value in a stack
+ * Gets the first node with the highest value in a stack
  * @param   stack   Stack to search
- * @return          Maximum number
+ * @return          First node with the highest value
  */
-ssize_t stack_max(t_stack *stack)
+t_stack *stack_maxn(t_stack *stack)
 {
-    ssize_t tmp;
+    t_stack *tmp;
 
     if (!stack->next)
-        return (stack->content);
-    tmp = stack_max(stack->next);
-    if (stack->content > tmp)
-        return (stack->content);
+        return (stack);
+    tmp = stack_maxn(stack->next);
+    if (stack->val > tmp->val)
+        return (stack);
     return (tmp);
 }

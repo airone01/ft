@@ -18,9 +18,9 @@ static void swap(t_stack *stack)
 
     if (!stack || !stack->next)
         return ;
-    tmp = stack->content;
-    stack->content = stack->next->content;
-    stack->next->content = tmp;
+    tmp = stack->val;
+    stack->val = stack->next->val;
+    stack->next->val = tmp;
 }
 
 /**

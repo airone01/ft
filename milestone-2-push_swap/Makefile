@@ -46,24 +46,34 @@ PRINTF_FLAGS	= -L$(PRINTF_DIR) -lftprintf
 
 # ------------ Sources -----------
 SRC	=						\
+	ft_abs.c				\
 	main.c					\
 	mani_swap.c				\
 	mani_push.c				\
 	mani_rotate.c			\
 	mani_rrotate.c			\
 	parse_stdin.c			\
-	sort_radix.c			\
+	sort_cheapest.c			\
+	sort_cost.c				\
+	sort_large.c			\
+	sort_move.c				\
+	sort_push_save_three.c	\
+	sort_shift_back.c		\
+	sort_tiny.c				\
 	stack_add_back.c		\
 	stack_add_front.c		\
 	stack_clear.c			\
 	stack_del_one.c			\
+	stack_indexes.c			\
 	stack_iter.c			\
 	stack_last.c			\
 	stack_max.c				\
 	stack_min.c				\
 	stack_new.c				\
+	stack_pos.c				\
 	stack_print.c			\
 	stack_size.c			\
+	stack_sorted.c			\
 	std_error.c
 
 # ------------ Mapping -----------

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 14:15:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:35:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,27 @@ size_t	args_legit(int argc, char **argv)
 }
 
 /**
+ * Chooses a sorting method depending on stack to be sorted
+ * @param   stack_a Stack A
+ */
+void    push_swap(t_stack *stack_a)
+{
+    t_stack	*stack_b;
+    size_t  len;
+
+    stack_b = NULL;
+    len = stack_size(stack_a);
+    stack_indexes(stack_a, len);
+    if (len == 2 && !stack_sorted(stack_a))
+        sa(stack_a);
+    else if (len == 3)
+        sort_tiny(&stack_a);
+    else if (len > 3 && !stack_sorted(stack_a))
+        sort_large(len, &stack_a, &stack_b);
+    stack_clear(stack_a);
+}
+
+/**
  * Main entrypoint for push_stack
  * @param   argc    Arguments count
  * @param   argv    Arguments
@@ -52,7 +73,7 @@ size_t	args_legit(int argc, char **argv)
  */
 int	main(int argc, char **argv)
 {
-	t_stack	*stack;
+	t_stack	*stack_a;
 
 	if (argc <= 1)
 		return (1);
@@ -60,8 +81,7 @@ int	main(int argc, char **argv)
 	argv++;
     if (!args_legit(argc, argv))
 		return (std_error(), 1);
-    stack = parse_stdin(argc, argv);
-    sort_radix(stack);
-    stack_clear(stack);
+    stack_a = parse_stdin(argc, argv);
+    push_swap(stack_a);
 	return (0);
 }

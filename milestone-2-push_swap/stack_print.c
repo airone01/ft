@@ -14,7 +14,7 @@
 
 static void	stack_print_one(t_stack *stack)
 {
-	ft_printf("%d,", stack->content);
+	ft_printf("%d,", stack->val);
 }
 
 /**

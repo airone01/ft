@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_min.c                                        :+:      :+:    :+:   */
+/*   sort_large.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 15:56:05 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 16:41:38 by elagouch         ###   ########.fr       */
+/*   Created: 2024/12/13 16:21:23 by elagouch          #+#    #+#             */
+/*   Updated: 2024/12/13 18:36:52 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/**
- * Gets the first node with the lowest value in a stack
- * @param   stack   Stack to search
- * @return          First node with the lowest value
- */
-t_stack *stack_minn(t_stack *stack)
+void    sort_large(size_t len, t_stack **stack_a, t_stack **stack_b)
 {
-    t_stack *tmp;
-
-    if (!stack->next)
-        return (stack);
-    tmp = stack_minn(stack->next);
-    if (stack->val < tmp->val)
-        return (stack);
-    return (tmp);
+    push_save_three(len, stack_a, stack_b);
+    sort_tiny(stack_a);
+    while(stack_b)
+    {
+        stack_target_pos(stack_a, stack_b);
+        cost((ssize_t)len, stack_a, stack_b);
+    }
 }
