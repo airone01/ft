@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:09:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 17:42:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:41:49 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void	stack_add_back(t_stack *stack, long nbr)
 	tmp = stack_new(nbr);
 	if (!tmp)
 		return ;
+    tmp->prev = last;
 	last->next = tmp;
 }

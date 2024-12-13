@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 17:42:26 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:48:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ size_t	args_legit(int argc, char **argv)
  */
 int	main(int argc, char **argv)
 {
-	t_stack	*entry_stack;
+	t_stack	*stack;
 
 	if (argc <= 1)
 		return (1);
@@ -60,8 +60,10 @@ int	main(int argc, char **argv)
 	argv++;
 	if (!args_legit(argc, argv))
 		return (std_error(), 1);
-	entry_stack = parse_stdin(argc, argv);
-	stack_print(entry_stack);
-	stack_clear(entry_stack);
+    stack = parse_stdin(argc, argv);
+//	stack_print(stack);
+//    write(1, "\n", 1);
+    sort_radix(stack);
+	stack_clear(stack);
 	return (0);
 }

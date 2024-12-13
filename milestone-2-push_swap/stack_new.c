@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:04:50 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 17:42:43 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:41:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ t_stack	*stack_new(long nbr)
 	if (!head)
 		return (NULL);
 	head->content = nbr;
+    head->next = NULL;
+    head->prev = NULL;
 	return (head);
 }
