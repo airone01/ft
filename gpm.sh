@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -14,42 +14,119 @@ usage() {
 	exit 1
 }
 
-# Function to parse .push file and create a list of files to include
+# Function to parse .push file and read exact file names
 parse_push_file() {
-	local push_file="$1"
-	local base_dir="$2"
-	local files_to_include=()
+    local push_file="$1"
+    local base_dir="$2"
+    local files_to_include=()
 
-	if [ ! -f "$push_file" ]; then
-		echo -e "${RED}❌ No .push file found${NC}"
-		echo -e "${BLUE}ℹ️  Including all files by default${NC}"
-		echo "*" >"$push_file"
+    if [ ! -f "$push_file" ]; then
+        echo -e "${RED}❌ No .push file found${NC}"
+        echo -e "${BLUE}ℹ️  Including all files by default${NC}"
+        echo "*" >"$push_file"
+    fi
+
+    while IFS= read -r filename || [ -n "$filename" ]; do
+        # Skip comments and empty lines
+        [[ $filename =~ ^[[:space:]]*# ]] && continue
+        [[ -z $filename ]] && continue
+
+        # Remove leading and trailing whitespace
+        filename=$(echo "$filename" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
+        # Handle absolute paths (relative to project root)
+        if [[ $filename == /* ]]; then
+            filename="${filename#/}"
+            if [ -f "$base_dir/$filename" ]; then
+                files_to_include+=("$base_dir/$filename")
+            else
+                echo -e "${RED}Warning: File not found: $filename${NC}"
+            fi
+        else
+            # Handle relative paths
+            if [ -f "$base_dir/$filename" ]; then
+                files_to_include+=("$base_dir/$filename")
+            else
+                echo -e "${RED}Warning: File not found: $filename${NC}"
+            fi
+        fi
+    done <"$push_file"
+
+    for file in "${files_to_include[@]}"; do
+        echo "$file"
+    done
+    # echo "${files_to_include[@]}"
+}
+
+submit_project() {
+	PROJECT_NAME=$1
+	TARGET_REPO=$2
+	ORIGINAL_DIR=$(pwd)
+
+	# Check if target repo is a valid vogsphere URL
+	if [[ ! "$TARGET_REPO" =~ ^git@vogsphere\.42lyon\.fr:vogsphere ]]; then
+		echo -e "${RED}❌ Invalid target repository URL. Must be a vogsphere URL (git@vogsphere.42lyon.fr:vogsphere...)${NC}"
+		exit 1
 	fi
 
-	while IFS= read -r pattern || [ -n "$pattern" ]; do
-		# Skip comments and empty lines
-		[[ $pattern =~ ^[[:space:]]*# ]] && continue
-		[[ -z $pattern ]] && continue
+	echo -e "${BLUE}📤 submiting ${PROJECT_NAME}...${NC}"
 
-		# Remove leading and trailing whitespace
-		pattern=$(echo "$pattern" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+	# Create temporary directory
+	TEMP_DIR=$(mktemp -d)
+	cd "$TEMP_DIR" || exit
 
-		# Handle pattern matching
-		if [[ $pattern == /* ]]; then
-			# Absolute path pattern (relative to project root)
-			pattern="${pattern#/}"
-			find "$base_dir" -path "$base_dir/$pattern" -print0 2>/dev/null | while IFS= read -r -d '' file; do
-				files_to_include+=("$file")
-			done
-		else
-			# Relative path pattern
-			find "$base_dir" -path "$base_dir/*$pattern" -print0 2>/dev/null | while IFS= read -r -d '' file; do
-				files_to_include+=("$file")
-			done
-		fi
-	done <"$push_file"
+	# Initialize new repo
+	git init
 
-	echo "${files_to_include[@]}"
+	# Parse .push file and copy specified files
+	echo -e "${BLUE}📑 Reading .push file...${NC}"
+	PUSH_FILE="${ORIGINAL_DIR}/${PROJECT_NAME}/.push"
+
+    # Read files into array
+    readarray -t INCLUDED_FILES < <(parse_push_file "$PUSH_FILE" "${ORIGINAL_DIR}/${PROJECT_NAME}")
+
+	if [ ${#INCLUDED_FILES[@]} -eq 0 ]; then
+		echo -e "${RED}❌ No files in .push file${NC}"
+		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+		exit 1
+	fi
+
+	# Copy included files maintaining directory structure
+	echo -e "${BLUE}📦 Copying specified files...${NC}"
+    for file in "${INCLUDED_FILES[@]}"; do
+        if [ -f "$file" ]; then
+            cp "$file" .
+        fi
+    done
+
+	# Commit and force push
+	git add .
+	git commit -m "chore(gpm): submission of ${PROJECT_NAME}" -m "
+╔════════════════════════════════╦══════════════════════════════════════════════════╗
+║ ⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷ ║                                                  ║
+║ ⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇ ║                                                  ║
+║ ⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽ ║                                                  ║
+║ ⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕ ║                                                  ║
+║ ⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕ ║                  ■            ■                  ║
+║ ⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕ ║                                                  ║
+║ ⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ ║ This commit was generated by Git Project Manager ║
+║ ⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ ║       Visit https://github.com/airone01/ft       ║
+║ ⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿ ║                                                  ║
+║ ⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ║                  ■            ■                  ║
+║ ⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟ ║                                                  ║
+║ ⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠ ║                                                  ║
+║ ⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙ ║                                                  ║
+║ ⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣ ║                                                  ║
+╚════════════════════════════════╩══════════════════════════════════════════════════╝"
+	git remote add origin "${TARGET_REPO}"
+	if ! git push -f origin main; then
+		echo -e "${RED}❌ Failed to push to repository${NC}"
+		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+		exit 1
+	fi
+
+	cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
+	echo -e "${GREEN}✅ Project pushed to ${TARGET_REPO}${NC}"
 }
 
 add_project() {
@@ -89,84 +166,6 @@ add_project() {
 	git commit -m "chore(gpm): add project ${PROJECT_NAME}" -m "Original commit history:" -m "$COMMIT_LOG"
 
 	echo -e "${GREEN}✅ Successfully added ${PROJECT_NAME}${NC}"
-}
-
-submit_project() {
-	PROJECT_NAME=$1
-	TARGET_REPO=$2
-	ORIGINAL_DIR=$(pwd)
-
-	# Check if target repo is a valid vogsphere URL
-	if [[ ! "$TARGET_REPO" =~ ^git@vogsphere.42lyon.fr:vogsphere ]]; then
-		echo -e "${RED}❌ Invalid target repository URL. Must be a vogsphere URL (git@vogsphere.42lyon.fr:vogsphere...)${NC}"
-		exit 1
-	fi
-
-	echo -e "${BLUE}📤 submiting ${PROJECT_NAME}...${NC}"
-
-	# Create temporary directory
-	TEMP_DIR=$(mktemp -d)
-	cd "$TEMP_DIR" || exit
-
-	# Initialize new repo
-	git init
-
-	# Parse .push file and copy specified files
-	echo -e "${BLUE}📑 Reading .push file...${NC}"
-	PUSH_FILE="${ORIGINAL_DIR}/${PROJECT_NAME}/.push"
-
-	# Create empty directory for included files
-	mkdir -p staging
-
-	# Get list of files to include
-	mapfile -t INCLUDED_FILES < <(parse_push_file "$PUSH_FILE" "${ORIGINAL_DIR}/${PROJECT_NAME}")
-
-	if [ ${#INCLUDED_FILES[@]} -eq 0 ]; then
-		echo -e "${RED}❌ No files matched the patterns in .push file${NC}"
-		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
-		exit 1
-	fi
-
-	# Copy included files maintaining directory structure
-	echo -e "${BLUE}📦 Copying specified files...${NC}"
-	for file in "${INCLUDED_FILES[@]}"; do
-		if [ -f "$file" ]; then
-			# Create the relative path for the file
-			rel_path="${file#${ORIGINAL_DIR}/${PROJECT_NAME}/}"
-			mkdir -p "$(dirname "staging/$rel_path")"
-			cp "$file" "staging/$rel_path"
-		fi
-	done
-
-	# Move staged files to root of temp directory
-	mv staging/* .
-	rmdir staging
-
-	# Commit and force push
-	git add .
-	git commit -m "chore(gpm): submission of ${PROJECT_NAME}" -m "⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷
-⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇
-⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽
-⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕
-⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕
-⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕
-⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄ This commit was generated by Git Project Manager
-⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕ Visit https://github.com/airone01/ft
-⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿
-⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟
-⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠
-⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙
-⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣"
-	git remote add origin "${TARGET_REPO}"
-	if ! git push -f origin main; then
-		echo -e "${RED}❌ Failed to push to repository${NC}"
-		cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
-		exit 1
-	fi
-
-	cd "$ORIGINAL_DIR" && rm -rf "$TEMP_DIR"
-	echo -e "${GREEN}✅ Project pushed to ${TARGET_REPO}${NC}"
 }
 
 install_gpm() {
