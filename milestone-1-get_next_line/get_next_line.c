@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/09 13:06:38 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:43:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
  * 			string. If the read buffer has a line, it will return that line and
  * 			keep the rest of the buffer for the next call. If the buffer is
  * 			empty, it will read more data from the file descriptor.
- *
  * @param	fd The file descriptor to read from
- *
  * @returns	The next line from the file descriptor or NULL if there is
  * 			nothing more to read or an error occurred
  */
@@ -35,7 +33,11 @@ char	*get_next_line(int fd)
 		line = ft_strdup((const char *)remain);
 	else
 		line = NULL;
-	ft_memset(remain, 0, BUFFER_SIZE);
+	index = 0;
+	while (index < BUFFER_SIZE)
+	{
+		remain[index++] = 0;
+	}
 	index = read_until_nl(fd, &line);
 	if (index < 0)
 		return (free(line), NULL);
@@ -47,11 +49,9 @@ char	*get_next_line(int fd)
 }
 
 /**
- * @brief	Maiun function flow and loop to read from the file descriptor
- *
+ * @brief	Main function flow and loop to read from the file descriptor
  * @param	fd The file descriptor to read from
  * @param	line The current line being read
- *
  * @returns The index of the newline character in the line
  */
 ssize_t	read_until_nl(int fd, char **line)
@@ -80,9 +80,7 @@ ssize_t	read_until_nl(int fd, char **line)
 
 /**
  * @brief	Returns the length of a string
- *
  * @param	str The string to measure
- *
  * @returns	The length of the string
  */
 unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
@@ -102,12 +100,10 @@ unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
 }
 
 /**
- * @brief	Concats two strings
- *
+ * @brief	Concatenates two strings
  * @param	dst The destination string
  * @param	str The string to measure
  * @param	size The maximum number of characters to measure
- *
  * @returns	The length of the string
  */
 unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
@@ -131,25 +127,26 @@ unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
 }
 
 /**
- * @brief	Fills a buffer with a constant byte
+ * @brief	Returns the remaining buffer from the first newline character
  *
- * @param	s The buffer to fill
- * @param	c The byte to fill the buffer with
- * @param	n The number of bytes to fill
+ * @param	buffer The buffer to search
  *
- * @returns	A pointer to the buffer
+ * @returns	The remaining buffer from the first newline character
  */
-void	ft_memset(void *s, int c, size_t n)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	uint8_t	*pt;
+	uint8_t	*p;
+	size_t	total;
+	void	*ptr;
 
-	if (n != 0)
-	{
-		pt = s;
-		while (n != 0)
-		{
-			*pt++ = (uint8_t)c;
-			n--;
-		}
-	}
+	if (size && nmemb > __SIZE_MAX__ / size)
+		return (0);
+	ptr = malloc(size * nmemb);
+	if (!ptr)
+		return (0);
+	p = ptr;
+	total = size * nmemb;
+	while (total--)
+		*p++ = 0;
+	return (ptr);
 }
