@@ -38,7 +38,7 @@ PRINTF_DIR	= ./printf
 PRINTF		= $(PRINTF_DIR)/libftprintf.a
 
 # ------------- Flags ------------
-CFLAGS			= -Wall -Werror -Wextra -Wpedantic -MMD -MP
+CFLAGS			= -Wall -Werror -Wextra -Wpedantic -MMD -MP -g3
 CFLAGS			+= -I$(LIBFT_DIR) -I$(PRINTF_DIR)
 ARFLAGS			= rcs
 LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
