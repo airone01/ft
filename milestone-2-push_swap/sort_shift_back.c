@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:35:10 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 16:49:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:26:59 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,27 @@
  * @param   len     Length of stack
  * @param   stack   Stack
  */
-void    stack_shift(ssize_t len, t_stack **stack)
+void    stack_shift(t_stack **stack)
 {
-    ssize_t low_idx;
+    ssize_t low_pos;
+    ssize_t len;
 
-    low_idx = stack_minn(*stack)->idx;
-    if (low_idx > len / 2)
+    len = stack_size(*stack);
+    low_pos = stack_minn(*stack)->idx;
+    if (low_pos > len / 2)
     {
-        while (low_idx < len)
+        while (low_pos < len)
         {
             rra(stack);
-            low_idx++;
+            low_pos++;
         }
     }
     else
     {
-        while (low_idx > 0)
+        while (low_pos > 0)
         {
             ra(stack);
-            low_idx--;
+            low_pos--;
         }
     }
 }

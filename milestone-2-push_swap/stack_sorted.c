@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:49:56 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 20:06:45 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:08:55 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ ssize_t stack_sorted(t_stack *stack)
 {
     while (stack->next)
     {
-        if (stack->val < stack->next->val)
+        if (stack->val > stack->next->val)
             return(0);
         stack = stack->next;
     }

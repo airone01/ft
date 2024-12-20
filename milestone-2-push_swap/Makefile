@@ -100,6 +100,13 @@ $(DIR_OBJ)%.o: %.c Makefile
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+visualizer:
+	cmake -B ./push_swap_visualizer/build/ ./push_swap_visualizer/
+	make -C ./push_swap_visualizer/build/
+
+visualize: visualizer $(NAME)
+	./push_swap_visualizer/build/bin/visualizer $(NAME)
+
 clean:
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
 	@$(RM) -r $(DIR_OBJ)

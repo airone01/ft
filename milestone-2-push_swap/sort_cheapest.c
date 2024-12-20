@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:37:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 19:15:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:44:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void    cheapest_move(t_stack **stack_a, t_stack **stack_b)
     ssize_t cost_a;
     ssize_t cost_b;
 
+    if (!stack_b || !*stack_b)
+        return;
     tmp = *stack_b;
     cheap = LONG_MAX;
     while (tmp)

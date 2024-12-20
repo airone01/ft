@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 18:35:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:25:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void    push_swap(t_stack *stack_a)
     else if (len == 3)
         sort_tiny(&stack_a);
     else if (len > 3 && !stack_sorted(stack_a))
-        sort_large(len, &stack_a, &stack_b);
+        sort_large(&stack_a, &stack_b);
     stack_clear(stack_a);
 }
 

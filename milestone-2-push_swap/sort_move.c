@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:47:32 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 19:12:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:42:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void rr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
 {
     while (*cost_a > 0 && *cost_b > 0)
     {
-        (*cost_a)++;
-        (*cost_b)++;
+        (*cost_a)--;
+        (*cost_b)--;
         rr(stack_a, stack_b);
     }
 }
@@ -69,7 +69,7 @@ static void ra_both(t_stack **stack_a, ssize_t *cost)
         if (*cost > 0)
         {
             ra(stack_a);
-            (*cost)++;
+            (*cost)--;
         }
         else if (*cost < 0)
         {
@@ -92,7 +92,7 @@ static void rb_both(t_stack **stack_b, ssize_t *cost)
         if (*cost > 0)
         {
             rb(stack_b);
-            (*cost)++;
+            (*cost)--;
         }
         else if (*cost < 0)
         {

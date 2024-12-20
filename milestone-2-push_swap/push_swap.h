@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 19:16:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:26:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ t_stack				*stack_new(ssize_t nbr);
 //void                sort_count(t_stack *stack, size_t dth);
 ssize_t             stack_sorted(t_stack *stack);
 void                move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a, ssize_t cost_b);
-void                push_save_three(size_t len, t_stack **stack_a, t_stack **stack_b);
-void                sort_large(size_t len, t_stack **stack_a, t_stack **stack_b);
-void                cost(ssize_t len_a, t_stack **stack_a, t_stack **stack_b);
+void                sort_large(t_stack **stack_a, t_stack **stack_b);
 void                stack_target_pos(t_stack **stack_a, t_stack **stack_b);
-void                stack_shift(ssize_t len, t_stack **stack);
+void                push_save_three(t_stack **stack_a, t_stack **stack_b);
+void                cheapest_move(t_stack **stack_a, t_stack **stack_b);
+void                cost(t_stack **stack_a, t_stack **stack_b);
+void                stack_shift(t_stack **stack);
 void                sort_tiny(t_stack **stack);
 
 // ### DISPLAYING ###
