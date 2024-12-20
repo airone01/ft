@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:55:15 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 13:43:26 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:37:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static ssize_t  stack_target(t_stack **stack_a, ssize_t b_idx,
     tmp_a = *stack_a;
     while (tmp_a)
     {
-        if (tmp_a->idx > b_idx && tmp_a->idx < target_idx)
+        if (tmp_a->idx < target_idx)
         {
             target_idx = tmp_a->idx;
             target_pos = tmp_a->pos;

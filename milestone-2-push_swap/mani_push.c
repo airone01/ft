@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:56:18 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 16:57:43 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:18:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void push(t_stack **dest, t_stack **src)
     if (*src)
         (*src)->prev = NULL;
     tmp->next = *dest;
+    tmp->prev = NULL;
     if (*dest)
         (*dest)->prev = tmp;
     *dest = tmp;

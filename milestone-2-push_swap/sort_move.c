@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:47:32 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 13:42:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:43:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ static void rb_both(t_stack **stack_b, ssize_t *cost)
  * @param   cost_a  Cost of stack A
  * @param   cost_b  Cost of stack B
  */
-void    move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a, ssize_t cost_b)
+void    move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a,
+             ssize_t cost_b)
 {
     if (cost_a < 0 && cost_b < 0)
         rrr_both(stack_a, stack_b, &cost_a, &cost_b);

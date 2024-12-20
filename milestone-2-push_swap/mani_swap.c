@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:52:50 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 16:55:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:05:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ static void swap(t_stack *stack)
 {
     ssize_t tmp;
 
-    if (!stack || !stack->next)
-        return ;
-    tmp = stack->val;
-    stack->val = stack->next->val;
-    stack->next->val = tmp;
+	if (!stack || !stack->next)
+		return ;
+	tmp = stack->val;
+	stack->val = stack->next->val;
+	stack->next->val = tmp;
+	tmp = stack->idx;
+	stack->idx = stack->next->idx;
+	stack->next->idx = tmp;
 }
 
 /**

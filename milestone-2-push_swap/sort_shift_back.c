@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:35:10 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 13:26:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:04:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void    stack_shift(t_stack **stack)
     ssize_t low_pos;
     ssize_t len;
 
-    len = stack_size(*stack);
+    len = (ssize_t)stack_size(*stack);
     low_pos = stack_minn(*stack)->idx;
     if (low_pos > len / 2)
     {
