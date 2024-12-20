@@ -6,14 +6,14 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:35:10 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 15:04:11 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:31:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /**
- * Assuming that most of the stack is sorted, this shifts the stack until its
+ * Assuming that the stack is sorted, this shifts the stack until its
  * lowest value is at the top.
  * If it is in the bottom half of the stack, the  function reverse rotates it
  * into position, otherwise rotates it until it's at the top of the stack.
@@ -26,7 +26,7 @@ void    stack_shift(t_stack **stack)
     ssize_t len;
 
     len = (ssize_t)stack_size(*stack);
-    low_pos = stack_minn(*stack)->idx;
+    low_pos = stack_lowest_pos(stack);
     if (low_pos > len / 2)
     {
         while (low_pos < len)

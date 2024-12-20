@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 13:26:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 15:30:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void				stack_del_one(t_stack *stack);
 void				stack_clear(t_stack *stack);
 // -> Misc.
 t_stack             *stack_maxn(t_stack *stack);
-t_stack             *stack_minn(t_stack *stack);
 size_t              stack_size(t_stack *stack);
 void				stack_iter(t_stack *stack, void (*f)(t_stack *));
 void                stack_indexes(t_stack *stack, size_t len);
@@ -63,6 +62,7 @@ t_stack				*stack_new(ssize_t nbr);
 
 // ### SORTING ###
 //void                sort_count(t_stack *stack, size_t dth);
+ssize_t				stack_lowest_pos(t_stack **stack);
 ssize_t             stack_sorted(t_stack *stack);
 void                move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a, ssize_t cost_b);
 void                sort_large(t_stack **stack_a, t_stack **stack_b);
