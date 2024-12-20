@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 17:20:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:48:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ int	main(int argc, char **argv)
     if (!args_legit(argc, argv))
 		return (std_error(), 1);
     stack_a = parse_stdin(argc, argv);
-    push_swap(stack_a);
+	if (!stack_a)
+		return (std_error(), 1);
+	push_swap(stack_a);
 	stack_clear(stack_a);
 	return (0);
 }
