@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:52:50 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 15:05:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:00:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void swap(t_stack *stack)
 void    sa(t_stack *stack_a)
 {
     swap(stack_a);
-    ft_printf("sa\n");
+    write(1, "sa\n", 3);
 }
 
 /**
@@ -45,7 +45,7 @@ void    sa(t_stack *stack_a)
 void    sb(t_stack *stack_b)
 {
     swap(stack_b);
-    ft_printf("sb\n");
+    write(1, "sb\n", 3);
 }
 
 /**
@@ -57,5 +57,5 @@ void    ss(t_stack *stack_a, t_stack *stack_b)
 {
     swap(stack_a);
     swap(stack_b);
-    ft_printf("ss\n");
+    write(1, "ss\n", 3);
 }

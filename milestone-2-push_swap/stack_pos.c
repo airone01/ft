@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:55:15 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 14:37:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:24:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,16 @@ static void stack_pos(t_stack **stack)
  * in A and assigns that as the position.
  * @param   stack_a     Stack A
  * @param   b_idx       Index of Stack B
- * @param   target_idx  Targeted index
  * @param   target_pos  Targeted position
  * @return              The target position
  */
 static ssize_t  stack_target(t_stack **stack_a, ssize_t b_idx,
-        ssize_t target_idx, ssize_t target_pos)
+        ssize_t target_pos)
 {
     t_stack *tmp_a;
+	ssize_t target_idx;
 
+	target_idx = LONG_MAX;
     tmp_a = *stack_a;
     while (tmp_a)
     {
@@ -86,7 +87,7 @@ void    stack_target_pos(t_stack **stack_a, t_stack **stack_b)
     stack_pos(stack_b);
     while (tmp_b)
     {
-        target_pos = stack_target(stack_a, tmp_b->idx, LONG_MAX, target_pos);
+        target_pos = stack_target(stack_a, tmp_b->idx, target_pos);
         tmp_b->t_pos = target_pos;
         tmp_b = tmp_b->next;
     }

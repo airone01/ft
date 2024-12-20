@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:10:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 17:42:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:49:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,27 @@
  */
 t_stack	*parse_and_add_anyway(t_stack *head, char *str)
 {
-	long	nbr;
-	char	**strs;
+	size_t  i;
+	char    **strs;
+	long    nbr;
 
+	i = 0;
 	strs = ft_split(str, ' ');
-	while (*strs)
+	while (strs[i])
 	{
 		nbr = ft_atoi(*strs);
 		if (!head)
 			head = stack_new(nbr);
 		else
 			stack_add_back(head, nbr);
-		strs++;
+		i++;
 	}
+	i = 0;
+	while (strs[i]) {
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
 	return (head);
 }
 

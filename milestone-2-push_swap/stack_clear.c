@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:17:48 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 17:43:01 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:36:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@
  */
 void	stack_clear(t_stack *stack)
 {
-	t_stack	*head;
+	t_stack *current;
+	t_stack *next;
 
-	if (!stack)
-		return ;
-	head = stack->next;
-	stack_del_one(stack);
-	stack_clear(head);
+	current = stack;
+	while (current)
+	{
+		next = current->next;
+		stack_del_one(current);
+		current = next;
+	}
 }

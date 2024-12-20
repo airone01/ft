@@ -64,3 +64,6 @@ dkms.conf
 
 # CMake
 compile_commands.json
+
+# Jetbrains
+**/.idea/

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:58:08 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 16:59:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:52:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ static void rotate(t_stack **stack)
     first = *stack;
     last = stack_last(*stack);
     *stack = first->next;
-    (*stack)->prev = NULL;
     first->next = NULL;
-    first->prev = last;
     last->next = first;
 }
 
@@ -36,7 +34,7 @@ static void rotate(t_stack **stack)
 void    ra(t_stack **stack_a)
 {
     rotate(stack_a);
-    ft_printf("ra\n");
+    write(1, "ra\n", 3);
 }
 
 /**
@@ -47,7 +45,7 @@ void    ra(t_stack **stack_a)
 void    rb(t_stack **stack_b)
 {
     rotate(stack_b);
-    ft_printf("rb\n");
+    write(1, "rb\n", 3);
 }
 
 /**
@@ -59,5 +57,5 @@ void    rr(t_stack **stack_a, t_stack **stack_b)
 {
     rotate(stack_a);
     rotate(stack_b);
-    ft_printf("rr\n");
+    write(1, "rr\n", 3);
 }

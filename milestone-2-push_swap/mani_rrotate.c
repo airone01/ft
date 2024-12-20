@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:00:02 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 17:01:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:04:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 static void reverse_rotate(t_stack **stack)
 {
     t_stack *last;
-    t_stack *before_last;
+    t_stack *pre_last;
 
-    if (!*stack || !(*stack)->next)
-        return ;
     last = stack_last(*stack);
-    before_last = last->prev;
-    before_last->next = NULL;
-    last->prev = NULL;
-    last->next = *stack;
-    (*stack)->prev = last;
+	pre_last = stack_before_last(*stack);
+	if (pre_last)
+		pre_last->next = NULL;
+	last->next = *stack;
     *stack = last;
 }
 
@@ -36,7 +33,7 @@ static void reverse_rotate(t_stack **stack)
 void    rra(t_stack **stack_a)
 {
     reverse_rotate(stack_a);
-    ft_printf("rra\n");
+    write(1, "rra\n", 4);
 }
 
 /**
@@ -47,7 +44,7 @@ void    rra(t_stack **stack_a)
 void    rrb(t_stack **stack_b)
 {
     reverse_rotate(stack_b);
-    ft_printf("rrb\n");
+	write(1, "rrb\n", 4);
 }
 
 /**
@@ -59,5 +56,5 @@ void    rrr(t_stack **stack_a, t_stack **stack_b)
 {
     reverse_rotate(stack_a);
     reverse_rotate(stack_b);
-    ft_printf("rrr\n");
+	write(1, "rrr\n", 4);
 }

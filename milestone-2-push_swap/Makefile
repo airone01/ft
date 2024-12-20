@@ -33,26 +33,21 @@ MD		= mkdir -p
 LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-# ------------ Printf -----------
-PRINTF_DIR	= ./printf
-PRINTF		= $(PRINTF_DIR)/libftprintf.a
-
 # ------------- Flags ------------
 CFLAGS			= -Wall -Werror -Wextra -Wpedantic -MMD -MP -g3
-CFLAGS			+= -I$(LIBFT_DIR) -I$(PRINTF_DIR)
+CFLAGS			+= -I$(LIBFT_DIR)
 ARFLAGS			= rcs
 LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
-PRINTF_FLAGS	= -L$(PRINTF_DIR) -lftprintf
 
 # ------------ Sources -----------
 SRC	=						\
 	ft_abs.c				\
-	main.c					\
 	mani_swap.c				\
 	mani_push.c				\
 	mani_rotate.c			\
 	mani_rrotate.c			\
 	parse_stdin.c			\
+	push_swap.c				\
 	sort_cheapest.c			\
 	sort_cost.c				\
 	sort_large.c			\
@@ -61,7 +56,6 @@ SRC	=						\
 	sort_shift_back.c		\
 	sort_tiny.c				\
 	stack_add_back.c		\
-	stack_add_front.c		\
 	stack_clear.c			\
 	stack_del_one.c			\
 	stack_indexes.c			\
@@ -71,7 +65,6 @@ SRC	=						\
 	stack_max.c				\
 	stack_new.c				\
 	stack_pos.c				\
-	stack_print.c			\
 	stack_size.c			\
 	stack_sorted.c			\
 	std_error.c
@@ -87,13 +80,9 @@ $(LIBFT):
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(PRINTF):
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building printf"
-	@$(MAKE) -C $(PRINTF_DIR)
-
-$(NAME): $(LIBFT) $(PRINTF) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(PRINTF_FLAGS) $(LIBFT_FLAGS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT_FLAGS)
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
@@ -111,13 +100,11 @@ clean:
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
 	@$(RM) -r $(DIR_OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@$(MAKE) -C $(PRINTF_DIR) clean
 
 fclean: clean
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
 	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(MAKE) -C $(PRINTF_DIR) fclean
 
 re: fclean all
 

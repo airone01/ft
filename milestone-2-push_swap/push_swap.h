@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 15:30:45 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:03:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PUSH_SWAP_H
 
 # include "libft/libft.h"
-# include "printf/ft_printf.h"
 # include <unistd.h>
 
 typedef struct s_stack
@@ -26,12 +25,10 @@ typedef struct s_stack
     ssize_t			cost_a;
     ssize_t			cost_b;
     struct s_stack	*next;
-    struct s_stack	*prev;
 }					t_stack;
 
 // ### STACK FUNCTIONS ###
 // -> Creating
-t_stack				*stack_add_front(t_stack *stack, ssize_t nbr);
 void				stack_add_back(t_stack *stack, ssize_t nbr);
 // -> Removing
 void				stack_del_one(t_stack *stack);
@@ -57,6 +54,7 @@ void                rrr(t_stack **stack_a, t_stack **stack_b);
 
 // ### PARSING ###
 t_stack				*parse_stdin(int argc, char **argv);
+t_stack				*stack_before_last(t_stack *stack);
 t_stack				*stack_last(t_stack *stack);
 t_stack				*stack_new(ssize_t nbr);
 
@@ -74,7 +72,6 @@ void                stack_shift(t_stack **stack);
 void                sort_tiny(t_stack **stack);
 
 // ### DISPLAYING ###
-void				stack_print(t_stack *stack);
 void				std_error(void);
 
 // ### MISC ###
