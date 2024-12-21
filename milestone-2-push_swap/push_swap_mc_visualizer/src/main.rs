@@ -11,7 +11,7 @@ use valence::prelude::*;
 use valence::spawn::IsFlat;
 use valence::MINECRAFT_VERSION;
 
-const START_POS: BlockPos = BlockPos::new(0, 90, 0);
+const START_POS: BlockPos = BlockPos::new(0, 100, 0);
 const VIEW_DIST: u8 = 10;
 const PLATFORM_SIZE: i32 = 4;
 const ARRAY_SIZE: i32 = 100;
@@ -33,36 +33,10 @@ const VISUALIZATION_BLOCKS: [BlockState; 12] = [
     BlockState::BLUE_WOOL,
 ];
 
-#[derive(Component)]
-struct VisualizerState {
-    array: Vec<i32>,
-    wall_offset: BlockPos, // Position where the visualization wall starts
-}
-
-pub fn main() {
-    App::new()
-        .insert_resource(NetworkSettings {
-            connection_mode: ConnectionMode::Offline,
-            callbacks: MyCallbacks.into(),
-            ..Default::default()
-        })
-        .add_plugins(DefaultPlugins)
-        .add_systems(
-            Update,
-            (
-                init_clients,
-                reset_clients.after(init_clients),
-                manage_chunks.after(reset_clients),
-                despawn_disconnected_clients,
-            ),
-        )
-        .run();
-}
-
-struct MyCallbacks;
+struct SortingVisualizerServer;
 
 #[async_trait]
-impl NetworkCallbacks for MyCallbacks {
+impl NetworkCallbacks for SortingVisualizerServer {
     async fn server_list_ping(
         &self,
         _shared: &SharedNetworkState,
@@ -91,11 +65,47 @@ impl NetworkCallbacks for MyCallbacks {
     }
 }
 
-fn create_platform(layer: &mut ChunkLayer) {
-    for x in -PLATFORM_SIZE..=PLATFORM_SIZE {
-        for z in -PLATFORM_SIZE..=PLATFORM_SIZE {
-            let platform_pos = BlockPos::new(START_POS.x + x, START_POS.y, START_POS.z + z);
-            layer.set_block(platform_pos, BlockState::MOSS_BLOCK);
+#[derive(Component)]
+struct VisualizerState {
+    array_a: Vec<i32>,
+    array_b: Vec<i32>,
+    wall_offset_a: BlockPos, // Position where the first visualization wall starts
+    wall_offset_b: BlockPos, // Position where the second visualization wall starts
+}
+
+pub fn main() {
+    App::new()
+        .insert_resource(NetworkSettings {
+            connection_mode: ConnectionMode::Offline,
+            callbacks: SortingVisualizerServer.into(),
+            ..Default::default()
+        })
+        .add_plugins(DefaultPlugins)
+        .add_systems(
+            Update,
+            (
+                init_clients,
+                reset_clients.after(init_clients),
+                manage_chunks.after(reset_clients),
+                despawn_disconnected_clients,
+            ),
+        )
+        .run();
+}
+
+fn create_backdrop(wall_offset_a: BlockPos, wall_offset_b: BlockPos, layer: &mut ChunkLayer) {
+    let total_width = (wall_offset_b.x - wall_offset_a.x) + MAX_HEIGHT + 4;
+    let total_height = ARRAY_SIZE + 4;
+
+    // Create black wall
+    for x in 0..total_width {
+        for y in 0..total_height {
+            let pos = BlockPos::new(
+                wall_offset_a.x - x + 2 + MAX_HEIGHT,
+                wall_offset_a.y + y - 2,
+                wall_offset_a.z + 1,
+            );
+            layer.set_block(pos, BlockState::BLACK_CONCRETE);
         }
     }
 }
@@ -118,11 +128,27 @@ fn get_block_color(value: i32) -> BlockState {
     VISUALIZATION_BLOCKS[index]
 }
 
+fn create_platform(layer: &mut ChunkLayer) {
+    for x in -PLATFORM_SIZE..=PLATFORM_SIZE {
+        for z in -PLATFORM_SIZE..=PLATFORM_SIZE {
+            let platform_pos = BlockPos::new(START_POS.x + x, START_POS.y, START_POS.z + z);
+            layer.set_block(platform_pos, BlockState::BLACK_STAINED_GLASS);
+        }
+    }
+    for x in (-PLATFORM_SIZE + 1)..=(PLATFORM_SIZE - 1) {
+        for z in (-PLATFORM_SIZE + 1)..=(PLATFORM_SIZE - 1) {
+            let platform_pos = BlockPos::new(START_POS.x + x, START_POS.y, START_POS.z + z);
+            layer.set_block(platform_pos, BlockState::BARRIER);
+        }
+    }
+    layer.set_block(START_POS, BlockState::RED_STAINED_GLASS);
+}
+
 fn visualize_array(array: &[i32], wall_offset: BlockPos, layer: &mut ChunkLayer) {
     // Clear previous visualization
     for x in 0..MAX_HEIGHT {
         for y in 0..ARRAY_SIZE {
-            let pos = BlockPos::new(wall_offset.x + x, wall_offset.y + y, wall_offset.z);
+            let pos = BlockPos::new(wall_offset.x - x, wall_offset.y + y, wall_offset.z);
             layer.set_block(pos, BlockState::AIR);
         }
     }
@@ -134,8 +160,8 @@ fn visualize_array(array: &[i32], wall_offset: BlockPos, layer: &mut ChunkLayer)
 
         for x in 0..width {
             let pos = BlockPos::new(
-                wall_offset.x + x,
-                wall_offset.y + (ARRAY_SIZE - 1 - i as i32) as i32, // Reversed y-axis so larger numbers appear at bottom
+                wall_offset.x - x,        // Changed to subtract x to make bars start from the left
+                wall_offset.y + i as i32, // Removed the reversal so bars start from bottom
                 wall_offset.z,
             );
             layer.set_block(pos, block_type);
@@ -166,20 +192,35 @@ fn init_clients(
 
         client.send_chat_message("Welcome to the Sorting Visualizer!".italic());
 
-        let random_array = generate_random_array();
-        let wall_offset =
-            BlockPos::new(START_POS.x - ARRAY_SIZE / 2, START_POS.y, START_POS.z + 50);
+        let random_array_a = generate_random_array();
+        let random_array_b = generate_random_array();
+
+        // Position both walls to the left, with space between them
+        let wall_offset_a = BlockPos::new(
+            START_POS.x,
+            START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
+            START_POS.z + 50,
+        );
+        let wall_offset_b = BlockPos::new(
+            START_POS.x + 50,
+            START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
+            START_POS.z + 50,
+        );
 
         let state = VisualizerState {
-            array: random_array,
-            wall_offset,
+            array_a: random_array_a,
+            array_b: random_array_b,
+            wall_offset_a,
+            wall_offset_b,
         };
 
         let mut layer = ChunkLayer::new(ident!("overworld"), &dimensions, &biomes, &server);
 
-        // Create platform and initial visualization
+        // Create platform, backdrop and initial visualization
         create_platform(&mut layer);
-        visualize_array(&state.array, wall_offset, &mut layer);
+        create_backdrop(state.wall_offset_a, state.wall_offset_b, &mut layer);
+        visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
+        visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
 
         commands.entity(entity).insert((state, layer));
     }
@@ -201,9 +242,11 @@ fn reset_clients(
                 layer.insert_chunk(pos, UnloadedChunk::new());
             }
 
-            // Reset platform and visualization
+            // Reset platform, backdrop and visualization
             create_platform(&mut layer);
-            visualize_array(&state.array, state.wall_offset, &mut layer);
+            create_backdrop(state.wall_offset_a, state.wall_offset_b, &mut layer);
+            visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
+            visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
 
             // Position player for optimal viewing
             pos.set([
