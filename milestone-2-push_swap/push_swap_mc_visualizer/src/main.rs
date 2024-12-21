@@ -1,9 +1,10 @@
 #![allow(clippy::type_complexity)]
 
 use std::net::SocketAddr;
+use std::process::Command;
 
-use rand::seq::SliceRandom;
-use rand::Rng;
+use valence::interact_block::InteractBlockEvent;
+use valence::inventory::PlayerAction;
 use valence::network::{
     async_trait, BroadcastToLan, ConnectionMode, HandshakeData, PlayerSampleEntry, ServerListPing,
 };
@@ -14,7 +15,7 @@ use valence::MINECRAFT_VERSION;
 const START_POS: BlockPos = BlockPos::new(0, 100, 0);
 const VIEW_DIST: u8 = 10;
 const PLATFORM_SIZE: i32 = 4;
-const ARRAY_SIZE: i32 = 100;
+const ARRAY_SIZE: i32 = 10;
 const MAX_HEIGHT: i32 = 50; // Maximum height for visualization
 
 // Different colored blocks for visualization
@@ -69,28 +70,9 @@ impl NetworkCallbacks for SortingVisualizerServer {
 struct VisualizerState {
     array_a: Vec<i32>,
     array_b: Vec<i32>,
-    wall_offset_a: BlockPos, // Position where the first visualization wall starts
-    wall_offset_b: BlockPos, // Position where the second visualization wall starts
-}
-
-pub fn main() {
-    App::new()
-        .insert_resource(NetworkSettings {
-            connection_mode: ConnectionMode::Offline,
-            callbacks: SortingVisualizerServer.into(),
-            ..Default::default()
-        })
-        .add_plugins(DefaultPlugins)
-        .add_systems(
-            Update,
-            (
-                init_clients,
-                reset_clients.after(init_clients),
-                manage_chunks.after(reset_clients),
-                despawn_disconnected_clients,
-            ),
-        )
-        .run();
+    wall_offset_a: BlockPos,
+    wall_offset_b: BlockPos,
+    last_click: f64,
 }
 
 fn create_backdrop(wall_offset_a: BlockPos, wall_offset_b: BlockPos, layer: &mut ChunkLayer) {
@@ -169,6 +151,17 @@ fn visualize_array(array: &[i32], wall_offset: BlockPos, layer: &mut ChunkLayer)
     }
 }
 
+fn execute_push_swap(numbers: &[i32]) -> Result<String, std::io::Error> {
+    // Convert numbers to string arguments
+    let args: Vec<String> = numbers.iter().map(|n| n.to_string()).collect();
+
+    // Execute push_swap
+    let output = Command::new("./push_swap").args(&args).output()?;
+
+    // Convert output to string
+    Ok(String::from_utf8_lossy(&output.stdout).into_owned())
+}
+
 fn init_clients(
     mut clients: Query<
         (
@@ -190,12 +183,12 @@ fn init_clients(
         is_flat.0 = true;
         *game_mode = GameMode::Creative;
 
-        client.send_chat_message("Welcome to the Sorting Visualizer!".italic());
+        client.send_chat_message("Welcome to Push Swap Visualizer!".italic());
+        client.send_chat_message("Left click to start sorting!".italic());
 
-        let random_array_a = generate_random_array();
-        let random_array_b = generate_random_array();
+        let random_array = generate_random_array();
+        let empty_array = Vec::new(); // Stack B starts empty
 
-        // Position both walls to the left, with space between them
         let wall_offset_a = BlockPos::new(
             START_POS.x,
             START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
@@ -208,15 +201,15 @@ fn init_clients(
         );
 
         let state = VisualizerState {
-            array_a: random_array_a,
-            array_b: random_array_b,
+            array_a: random_array.clone(),
+            array_b: empty_array,
             wall_offset_a,
             wall_offset_b,
+            last_click: 0.0,
         };
 
         let mut layer = ChunkLayer::new(ident!("overworld"), &dimensions, &biomes, &server);
 
-        // Create platform, backdrop and initial visualization
         create_platform(&mut layer);
         create_backdrop(state.wall_offset_a, state.wall_offset_b, &mut layer);
         visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
@@ -275,4 +268,121 @@ fn manage_chunks(mut clients: Query<(&Position, &OldPosition, &mut ChunkLayer), 
             }
         }
     }
+}
+
+fn handle_click(
+    mut clients: Query<(Entity, &mut Client, &mut VisualizerState, &mut ChunkLayer)>,
+    mut interact_block: EventReader<InteractBlockEvent>,
+) {
+    for event in interact_block.read() {
+        if let Ok((entity, mut client, mut state, mut layer)) = clients.get_mut(event.client) {
+            let current_time = std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs_f64();
+
+            // Prevent multiple executions within 1 second
+            if current_time - state.last_click < 1.0 {
+                continue;
+            }
+            state.last_click = current_time;
+
+            // Execute push_swap
+            match execute_push_swap(&state.array_a) {
+                Ok(output) => {
+                    client.send_chat_message("Executing push_swap...".italic());
+
+                    // Parse and execute commands
+                    for line in output.lines() {
+                        match line.trim() {
+                            "pa" => {
+                                if !state.array_b.is_empty() {
+                                    let value = state.array_b.pop().unwrap();
+                                    state.array_a.push(value);
+                                }
+                            }
+                            "pb" => {
+                                if !state.array_a.is_empty() {
+                                    let value = state.array_a.pop().unwrap();
+                                    state.array_b.push(value);
+                                }
+                            }
+                            "ra" => {
+                                if !state.array_a.is_empty() {
+                                    let value = state.array_a.remove(0);
+                                    state.array_a.push(value);
+                                }
+                            }
+                            "rb" => {
+                                if !state.array_b.is_empty() {
+                                    let value = state.array_b.remove(0);
+                                    state.array_b.push(value);
+                                }
+                            }
+                            "rra" => {
+                                if !state.array_a.is_empty() {
+                                    let value = state.array_a.pop().unwrap();
+                                    state.array_a.insert(0, value);
+                                }
+                            }
+                            "rrb" => {
+                                if !state.array_b.is_empty() {
+                                    let value = state.array_b.pop().unwrap();
+                                    state.array_b.insert(0, value);
+                                }
+                            }
+                            "sa" => {
+                                if state.array_a.len() >= 2 {
+                                    state.array_a.swap(0, 1);
+                                }
+                            }
+                            "sb" => {
+                                if state.array_b.len() >= 2 {
+                                    state.array_b.swap(0, 1);
+                                }
+                            }
+                            _ => {
+                                client.send_chat_message(
+                                    format!("Unknown command: {}", line).italic(),
+                                );
+                            }
+                        }
+
+                        // Update visualization after each operation
+                        visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
+                        visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
+
+                        // Add a small delay to make the visualization visible
+                        std::thread::sleep(std::time::Duration::from_millis(100));
+                    }
+
+                    client.send_chat_message("Sorting complete!".italic());
+                }
+                Err(e) => {
+                    client.send_chat_message(format!("Error executing push_swap: {}", e).italic());
+                }
+            }
+        }
+    }
+}
+
+pub fn main() {
+    App::new()
+        .insert_resource(NetworkSettings {
+            connection_mode: ConnectionMode::Offline,
+            callbacks: SortingVisualizerServer.into(),
+            ..Default::default()
+        })
+        .add_plugins(DefaultPlugins)
+        .add_systems(
+            Update,
+            (
+                init_clients,
+                reset_clients.after(init_clients),
+                manage_chunks.after(reset_clients),
+                handle_click,
+                despawn_disconnected_clients,
+            ),
+        )
+        .run();
 }
