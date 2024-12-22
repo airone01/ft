@@ -3,16 +3,16 @@ use valence::{BlockPos, BlockState, ChunkLayer};
 use crate::consts::{ARRAY_SIZE, MAX_HEIGHT, PLATFORM_SIZE, START_POS};
 
 pub fn create_backdrop(wall_offset_a: BlockPos, wall_offset_b: BlockPos, layer: &mut ChunkLayer) {
-    let total_width = (wall_offset_b.x - wall_offset_a.x) + MAX_HEIGHT + 4;
+    let total_width = (wall_offset_a.x - wall_offset_b.x) + MAX_HEIGHT + 4;
     let total_height = ARRAY_SIZE + 4;
 
     // Create black wall
     for x in 0..total_width {
         for y in 0..total_height {
             let pos = BlockPos::new(
-                wall_offset_a.x - x + 2 + MAX_HEIGHT,
-                wall_offset_a.y + y - 2,
-                wall_offset_a.z + 1,
+                wall_offset_b.x - x + 2 + MAX_HEIGHT,
+                wall_offset_b.y + y - 2,
+                wall_offset_b.z + 1,
             );
             layer.set_block(pos, BlockState::BLACK_CONCRETE);
         }

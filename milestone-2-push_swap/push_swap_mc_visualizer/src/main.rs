@@ -53,12 +53,12 @@ fn init_clients(
         );
 
         let wall_offset_a = BlockPos::new(
-            START_POS.x,
+            START_POS.x + 50,
             START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
             START_POS.z + 50,
         );
         let wall_offset_b = BlockPos::new(
-            START_POS.x + 50,
+            START_POS.x,
             START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
             START_POS.z + 50,
         );

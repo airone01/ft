@@ -25,7 +25,12 @@ pub fn visualize_array(array: &[i32], wall_offset: BlockPos, layer: &mut ChunkLa
         let block_type = get_block_color(value);
 
         for x in 0..width {
-            let pos = BlockPos::new(wall_offset.x - x, wall_offset.y + i as i32, wall_offset.z);
+            // Change the y-coordinate calculation to start from the top
+            let pos = BlockPos::new(
+                wall_offset.x - x,
+                wall_offset.y + (ARRAY_SIZE - 1 - i as i32), // This is the key change
+                wall_offset.z,
+            );
             layer.set_block(pos, block_type);
         }
     }
