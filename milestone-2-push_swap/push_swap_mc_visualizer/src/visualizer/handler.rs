@@ -1,41 +1,63 @@
-use super::visualize_array;
-use crate::push_swap::execute_push_swap;
-use crate::state::{PushSwapChannel, VisualizerState};
+use crate::state::{PushSwapStatus, VisualizerState};
 use crate::utils::generate_random_array;
+use crate::{PushSwapChannel, RuntimeResource};
 use valence::interact_block::InteractBlockEvent;
 use valence::prelude::*;
 
 pub fn handle_click(
-    mut clients: Query<(Entity, &mut Client, &mut VisualizerState, &mut ChunkLayer)>,
+    mut clients: Query<(Entity, &mut Client, &mut VisualizerState), With<Client>>,
     mut interact_block: EventReader<InteractBlockEvent>,
     channel: Res<PushSwapChannel>,
+    runtime: Res<RuntimeResource>,
 ) {
     for event in interact_block.read() {
-        if let Ok((entity, mut client, mut state, _)) = clients.get_mut(event.client) {
-            client.send_chat_message("Running...");
-
+        if let Ok((entity, mut client, mut state)) = clients.get_mut(event.client) {
             let current_time = std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap()
                 .as_secs_f64();
 
-            if state.is_sorting || current_time - state.last_click < 1.0 {
-                continue;
+            // Check if we're already processing something or clicked too recently
+            match state.push_swap_status {
+                PushSwapStatus::Executing => {
+                    client.send_chat_message("Already processing a sort...".color(Color::YELLOW));
+                    continue;
+                }
+                _ if current_time - state.last_click < 1.0 => {
+                    client.send_chat_message(
+                        "Please wait a moment before clicking again".color(Color::YELLOW),
+                    );
+                    continue;
+                }
+                _ => {}
             }
+
             state.last_click = current_time;
-            state.is_sorting = true;
 
-            client.send_chat_message("Loading push_swap results...".color(Color::YELLOW));
-
-            // let numbers = state.array_a.clone();
+            // Generate new random array and start execution
             let numbers = generate_random_array();
-            let entity = entity;
-            let sender = channel.sender.clone();
+            state.push_swap_status = PushSwapStatus::Executing;
 
-            tokio::spawn(async move {
-                if let Ok(output) = execute_push_swap(&numbers).await {
-                    let instructions: Vec<String> = output.lines().map(|s| s.to_string()).collect();
-                    let _ = sender.send((entity, instructions)).await;
+            client.send_chat_message("Starting new sort...".color(Color::YELLOW));
+
+            // Spawn the push_swap execution task
+            let sender = channel.sender.clone();
+            let entity = entity;
+
+            runtime.runtime.spawn(async move {
+                match crate::push_swap::execute_push_swap(&numbers).await {
+                    Ok(output) => {
+                        let instructions: Vec<String> =
+                            output.lines().map(|s| s.to_string()).collect();
+                        let _ = sender
+                            .send((entity, PushSwapStatus::Completed(instructions)))
+                            .await;
+                    }
+                    Err(e) => {
+                        let _ = sender
+                            .send((entity, PushSwapStatus::Failed(e.to_string())))
+                            .await;
+                    }
                 }
             });
         }
@@ -47,7 +69,9 @@ pub fn process_instructions(
 ) {
     for (mut client, mut state, mut layer) in clients.iter_mut() {
         if let Some(instructions) = state.pending_instructions.take() {
-            for instruction in instructions {
+            state.is_sorting = true;
+
+            for instruction in instructions.clone() {
                 match instruction.trim() {
                     "pa" => {
                         if !state.array_b.is_empty() {
@@ -93,18 +117,27 @@ pub fn process_instructions(
                     }
                     _ => {
                         client.send_chat_message(
-                            format!("Unknown command: {}", instruction).italic(),
+                            format!("Unknown command: {}", instruction)
+                                .color(Color::rgb(234, 88, 12))
+                                .italic(),
                         );
                     }
                 }
 
+                // Update visualization
+                use crate::visualizer::visualize_array;
                 visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
                 visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
 
                 std::thread::sleep(std::time::Duration::from_millis(100));
             }
 
-            client.send_chat_message("Sorting complete!".color(Color::GREEN));
+            client.send_chat_message(
+                "Sorting complete!".color(Color::GREEN)
+                    + " (".color(Color::GRAY)
+                    + instructions.len().into_text().color(Color::AQUA)
+                    + " instructions)".color(Color::RESET),
+            );
             state.is_sorting = false;
         }
     }

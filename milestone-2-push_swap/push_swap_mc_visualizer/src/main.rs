@@ -19,11 +19,6 @@ use valence::network::ConnectionMode;
 use valence::prelude::*;
 use valence::spawn::IsFlat;
 
-#[derive(Resource, Default)]
-pub struct PushSwapTasks {
-    tasks: Vec<(Entity, Vec<String>)>, // (client_entity, instructions)
-}
-
 fn init_clients(
     mut clients: Query<
         (
@@ -76,6 +71,8 @@ fn init_clients(
             last_click: 0.0,
             pending_instructions: Some(Vec::new()),
             is_sorting: false,
+            last_status_check: std::time::SystemTime::now(),
+            push_swap_status: PushSwapStatus::NotStarted,
         };
 
         let mut layer = ChunkLayer::new(ident!("overworld"), &dimensions, &biomes, &server);
@@ -134,6 +131,7 @@ pub async fn main() {
             ..Default::default()
         })
         .init_resource::<PushSwapChannel>()
+        .init_resource::<RuntimeResource>() // Add this line
         .add_plugins(DefaultPlugins)
         .add_event::<InteractBlockEvent>()
         .add_systems(
@@ -142,9 +140,10 @@ pub async fn main() {
                 init_clients,
                 reset_clients.after(init_clients),
                 manage_chunks.after(reset_clients),
+                execute_initial_push_swap.after(init_clients),
+                check_push_swap_status,
+                process_instructions.after(check_push_swap_status),
                 handle_click,
-                check_push_swap_results.after(handle_click),
-                process_instructions.after(check_push_swap_results),
                 despawn_disconnected_clients,
             ),
         )
