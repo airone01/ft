@@ -1,12 +1,14 @@
+// src/visualizer/mod.rs
 pub mod blocks;
 mod handler;
 pub mod utils;
-pub use handler::handle_click;
 
-use utils::get_block_color;
-use valence::{BlockPos, BlockState, ChunkLayer};
+pub use blocks::{create_backdrop, create_platform};
+pub use handler::{handle_click, process_instructions};
+pub use utils::get_block_color;
 
 use crate::consts::{ARRAY_SIZE, MAX_HEIGHT};
+use valence::{BlockPos, BlockState, ChunkLayer};
 
 pub fn visualize_array(array: &[i32], wall_offset: BlockPos, layer: &mut ChunkLayer) {
     // Clear previous visualization
@@ -23,11 +25,7 @@ pub fn visualize_array(array: &[i32], wall_offset: BlockPos, layer: &mut ChunkLa
         let block_type = get_block_color(value);
 
         for x in 0..width {
-            let pos = BlockPos::new(
-                wall_offset.x - x,        // Changed to subtract x to make bars start from the left
-                wall_offset.y + i as i32, // Removed the reversal so bars start from bottom
-                wall_offset.z,
-            );
+            let pos = BlockPos::new(wall_offset.x - x, wall_offset.y + i as i32, wall_offset.z);
             layer.set_block(pos, block_type);
         }
     }

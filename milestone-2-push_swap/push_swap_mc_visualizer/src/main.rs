@@ -4,29 +4,24 @@ pub mod chunks;
 pub mod consts;
 pub mod network;
 pub mod push_swap;
+pub mod state;
 pub mod utils;
 pub mod visualizer;
 
 use chunks::manage_chunks;
-use consts::{ARRAY_SIZE, START_POS, VIEW_DIST};
+use consts::*;
 use network::SortingVisualizerServer;
-use utils::generate_random_array;
-use visualizer::blocks::{create_backdrop, create_platform};
+use state::*;
+use valence::interact_block::InteractBlockEvent;
+use visualizer::*;
 
 use valence::network::ConnectionMode;
 use valence::prelude::*;
 use valence::spawn::IsFlat;
-use visualizer::{handle_click, visualize_array};
 
-#[derive(Component)]
-struct VisualizerState {
-    array_a: Vec<i32>,
-    array_b: Vec<i32>,
-    wall_offset_a: BlockPos,
-    wall_offset_b: BlockPos,
-    last_click: f64,
-    is_sorting: bool,
-    pending_instructions: Option<Vec<String>>,
+#[derive(Resource, Default)]
+pub struct PushSwapTasks {
+    tasks: Vec<(Entity, Vec<String>)>, // (client_entity, instructions)
 }
 
 fn init_clients(
@@ -46,6 +41,8 @@ fn init_clients(
     mut commands: Commands,
 ) {
     for (entity, mut client, mut visible_chunk_layer, mut is_flat, mut game_mode) in &mut clients {
+        println!("Initializing new client entity: {:?}", entity);
+
         visible_chunk_layer.0 = entity;
         is_flat.0 = true;
         *game_mode = GameMode::Creative;
@@ -78,9 +75,7 @@ fn init_clients(
             wall_offset_b,
             last_click: 0.0,
             pending_instructions: Some(Vec::new()),
-            // last_instruction_time: 0.0,
             is_sorting: false,
-            // last_click: 0.0,
         };
 
         let mut layer = ChunkLayer::new(ident!("overworld"), &dimensions, &biomes, &server);
@@ -90,7 +85,7 @@ fn init_clients(
         visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
         visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
 
-        commands.entity(entity).insert((state, layer));
+        commands.entity(entity).insert(state).insert(layer);
     }
 }
 
@@ -128,7 +123,8 @@ fn reset_clients(
     }
 }
 
-pub fn main() {
+#[tokio::main]
+pub async fn main() {
     App::new()
         .insert_resource(NetworkSettings {
             connection_mode: ConnectionMode::Online {
@@ -137,7 +133,9 @@ pub fn main() {
             callbacks: SortingVisualizerServer.into(),
             ..Default::default()
         })
+        .init_resource::<PushSwapChannel>()
         .add_plugins(DefaultPlugins)
+        .add_event::<InteractBlockEvent>()
         .add_systems(
             Update,
             (
@@ -145,6 +143,8 @@ pub fn main() {
                 reset_clients.after(init_clients),
                 manage_chunks.after(reset_clients),
                 handle_click,
+                check_push_swap_results.after(handle_click),
+                process_instructions.after(check_push_swap_results),
                 despawn_disconnected_clients,
             ),
         )

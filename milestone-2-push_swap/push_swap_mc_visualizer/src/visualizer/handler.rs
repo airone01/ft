@@ -1,123 +1,111 @@
-use valence::message::SendMessage as _;
-use valence::prelude::IntoText as _;
-use valence::text::Color;
-use valence::{
-    client::Client,
-    interact_block::InteractBlockEvent,
-    prelude::{Entity, EventReader, Query},
-    ChunkLayer,
-};
-
+use super::visualize_array;
+use crate::push_swap::execute_push_swap;
+use crate::state::{PushSwapChannel, VisualizerState};
 use crate::utils::generate_random_array;
-use crate::visualize_array;
-use crate::{push_swap::execute_push_swap, VisualizerState};
+use valence::interact_block::InteractBlockEvent;
+use valence::prelude::*;
 
 pub fn handle_click(
     mut clients: Query<(Entity, &mut Client, &mut VisualizerState, &mut ChunkLayer)>,
     mut interact_block: EventReader<InteractBlockEvent>,
+    channel: Res<PushSwapChannel>,
 ) {
     for event in interact_block.read() {
-        if let Ok((_entity, mut client, mut state, mut layer)) = clients.get_mut(event.client) {
+        if let Ok((entity, mut client, mut state, _)) = clients.get_mut(event.client) {
+            client.send_chat_message("Running...");
+
             let current_time = std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap()
                 .as_secs_f64();
 
-            // Prevent multiple executions within 1 second
-            if current_time - state.last_click < 1.0 {
+            if state.is_sorting || current_time - state.last_click < 1.0 {
                 continue;
             }
             state.last_click = current_time;
+            state.is_sorting = true;
 
-            // Execute push_swap
-            client.send_chat_message("Executing push_swap...".color(Color::YELLOW));
-            match execute_push_swap(&generate_random_array()) {
-                Ok(output) => {
-                    client.send_chat_message(
-                        "Input: >".into_text()
-                            + state
-                                .array_a
-                                .iter()
-                                .map(|n| n.to_string())
-                                .collect::<Vec<String>>()
-                                .join(" ")
-                                .color(Color::LIGHT_PURPLE)
-                            + "<",
-                    );
-                    client.send_chat_message(
-                        "Output: >".into_text() + output.clone().color(Color::LIGHT_PURPLE) + "<",
-                    );
+            client.send_chat_message("Loading push_swap results...".color(Color::YELLOW));
 
-                    // Parse and execute commands
-                    for line in output.lines() {
-                        match line.trim() {
-                            "pa" => {
-                                if !state.array_b.is_empty() {
-                                    let value = state.array_b.pop().unwrap();
-                                    state.array_a.push(value);
-                                }
-                            }
-                            "pb" => {
-                                if !state.array_a.is_empty() {
-                                    let value = state.array_a.pop().unwrap();
-                                    state.array_b.push(value);
-                                }
-                            }
-                            "ra" => {
-                                if !state.array_a.is_empty() {
-                                    let value = state.array_a.remove(0);
-                                    state.array_a.push(value);
-                                }
-                            }
-                            "rb" => {
-                                if !state.array_b.is_empty() {
-                                    let value = state.array_b.remove(0);
-                                    state.array_b.push(value);
-                                }
-                            }
-                            "rra" => {
-                                if !state.array_a.is_empty() {
-                                    let value = state.array_a.pop().unwrap();
-                                    state.array_a.insert(0, value);
-                                }
-                            }
-                            "rrb" => {
-                                if !state.array_b.is_empty() {
-                                    let value = state.array_b.pop().unwrap();
-                                    state.array_b.insert(0, value);
-                                }
-                            }
-                            "sa" => {
-                                if state.array_a.len() >= 2 {
-                                    state.array_a.swap(0, 1);
-                                }
-                            }
-                            "sb" => {
-                                if state.array_b.len() >= 2 {
-                                    state.array_b.swap(0, 1);
-                                }
-                            }
-                            _ => {
-                                client.send_chat_message(
-                                    format!("Unknown command: {}", line).italic(),
-                                );
-                            }
+            // let numbers = state.array_a.clone();
+            let numbers = generate_random_array();
+            let entity = entity;
+            let sender = channel.sender.clone();
+
+            tokio::spawn(async move {
+                if let Ok(output) = execute_push_swap(&numbers).await {
+                    let instructions: Vec<String> = output.lines().map(|s| s.to_string()).collect();
+                    let _ = sender.send((entity, instructions)).await;
+                }
+            });
+        }
+    }
+}
+
+pub fn process_instructions(
+    mut clients: Query<(&mut Client, &mut VisualizerState, &mut ChunkLayer)>,
+) {
+    for (mut client, mut state, mut layer) in clients.iter_mut() {
+        if let Some(instructions) = state.pending_instructions.take() {
+            for instruction in instructions {
+                match instruction.trim() {
+                    "pa" => {
+                        if !state.array_b.is_empty() {
+                            let value = state.array_b.remove(0);
+                            state.array_a.insert(0, value);
                         }
-
-                        // Update visualization after each operation
-                        visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
-                        visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
-
-                        // Add a small delay to make the visualization visible
-                        std::thread::sleep(std::time::Duration::from_millis(100));
                     }
+                    "pb" => {
+                        if !state.array_a.is_empty() {
+                            let value = state.array_a.remove(0);
+                            state.array_b.insert(0, value);
+                        }
+                    }
+                    "ra" => {
+                        if !state.array_a.is_empty() {
+                            state.array_a.rotate_left(1);
+                        }
+                    }
+                    "rb" => {
+                        if !state.array_b.is_empty() {
+                            state.array_b.rotate_left(1);
+                        }
+                    }
+                    "rra" => {
+                        if !state.array_a.is_empty() {
+                            state.array_a.rotate_right(1);
+                        }
+                    }
+                    "rrb" => {
+                        if !state.array_b.is_empty() {
+                            state.array_b.rotate_right(1);
+                        }
+                    }
+                    "sa" => {
+                        if state.array_a.len() >= 2 {
+                            state.array_a.swap(0, 1);
+                        }
+                    }
+                    "sb" => {
+                        if state.array_b.len() >= 2 {
+                            state.array_b.swap(0, 1);
+                        }
+                    }
+                    _ => {
+                        client.send_chat_message(
+                            format!("Unknown command: {}", instruction).italic(),
+                        );
+                    }
+                }
 
-                    client.send_chat_message("Sorting complete!".italic());
-                }
-                Err(e) => {
-                    client.send_chat_message(format!("Error executing push_swap: {}", e).italic());
-                }
+                visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
+                visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
+
+                std::thread::sleep(std::time::Duration::from_millis(100));
             }
+
+            client.send_chat_message("Sorting complete!".color(Color::GREEN));
+            state.is_sorting = false;
         }
     }
 }
