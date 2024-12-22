@@ -12,7 +12,7 @@ pub const MAX_HEIGHT: i32 = 50;
 
 // Those you can change
 pub const ARRAY_SIZE: i32 = 100;
-pub const INSTRUCTION_DELAY: f64 = 0.1; // Delay between instructions
+pub const INSTRUCTION_DELAY: f64 = 0.05; // Delay between instructions
 
 // Different colored blocks for visualization
 pub const VISUALIZATION_BLOCKS: [BlockState; 12] = [

@@ -128,12 +128,12 @@ pub fn process_instructions(
             instructions.len(),
             instruction
         );
-        client.send_chat_message(
+        client.send_action_bar_message(
             format!(
-                "Executing instruction {}/{}: {}",
+                "{}/{} ({}%)",
                 current_instruction + 1,
                 instructions.len(),
-                instruction
+                (current_instruction as f32 / instructions.len() as f32 * 100.0).round()
             )
             .color(Color::AQUA),
         );
