@@ -12,6 +12,7 @@ use chunks::manage_chunks;
 use consts::*;
 use network::SortingVisualizerServer;
 use state::*;
+use utils::rainbow_text;
 use valence::interact_block::InteractBlockEvent;
 use visualizer::*;
 
@@ -42,15 +43,11 @@ fn init_clients(
         is_flat.0 = true;
         *game_mode = GameMode::Creative;
 
-        client.send_chat_message(
-            "=====================================================\n".color(Color::DARK_GRAY),
-        );
-        client.send_chat_message(
-            "               Welcome to the push_swap Visualizer!".color(Color::GREEN),
-        );
-        client.send_chat_message(
-            "\n=====================================================".color(Color::DARK_GRAY),
-        );
+        client.set_title("");
+        client.set_subtitle(rainbow_text(
+            "Welcome to this goofy ahh push_swap visualizer!",
+        ));
+        // client.send_chat_message();
 
         let wall_offset_a = BlockPos::new(
             START_POS.x + 50,

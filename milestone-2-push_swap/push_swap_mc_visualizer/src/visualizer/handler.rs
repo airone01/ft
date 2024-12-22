@@ -114,7 +114,7 @@ pub fn process_instructions(
                 "Sorting complete!".color(Color::GREEN)
                     + " (".color(Color::GRAY)
                     + instructions.len().into_text().color(Color::AQUA)
-                    + " instructions)".color(Color::RESET),
+                    + " instructions)".color(Color::GRAY),
             );
             continue;
         }
