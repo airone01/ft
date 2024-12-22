@@ -2,7 +2,8 @@ use crate::consts::MINECRAFT_VERSION;
 
 use core::net::SocketAddr;
 
-use valence::network::BroadcastToLan;
+use log::debug;
+use valence::log;
 use valence::prelude::Uuid;
 use valence::text::{Color, IntoText as _};
 use valence::{
@@ -20,6 +21,7 @@ impl NetworkCallbacks for SortingVisualizerServer {
         _remote_addr: SocketAddr,
         handshake_data: &HandshakeData,
     ) -> ServerListPing {
+        debug!("Received server list ping from {}", _remote_addr);
         ServerListPing::Respond {
             online_players: 69,
             max_players: 420,
@@ -35,10 +37,5 @@ impl NetworkCallbacks for SortingVisualizerServer {
                 .to_legacy_lossy(),
             protocol: handshake_data.protocol_version,
         }
-    }
-
-    // rly needed?
-    async fn broadcast_to_lan(&self, _shared: &SharedNetworkState) -> BroadcastToLan {
-        BroadcastToLan::Enabled("Hello Valence!".into())
     }
 }

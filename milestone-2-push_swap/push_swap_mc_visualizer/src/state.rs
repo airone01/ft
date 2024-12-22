@@ -1,9 +1,10 @@
 use std::time::SystemTime;
 
+use log::{error, info};
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc;
 
-use valence::prelude::*;
+use valence::{log, prelude::*};
 
 #[derive(Resource)]
 pub struct RuntimeResource {
@@ -12,6 +13,7 @@ pub struct RuntimeResource {
 
 impl Default for RuntimeResource {
     fn default() -> Self {
+        info!("Creating new Tokio runtime");
         Self {
             runtime: Runtime::new().expect("Failed to create Tokio runtime"),
         }
@@ -34,6 +36,7 @@ pub struct PushSwapChannel {
 
 impl Default for PushSwapChannel {
     fn default() -> Self {
+        info!("Creating new push swap channel");
         let (sender, receiver) = mpsc::channel(32);
         Self { sender, receiver }
     }
@@ -50,10 +53,13 @@ pub struct VisualizerState {
     pub is_sorting: bool,
     pub push_swap_status: PushSwapStatus,
     pub last_status_check: SystemTime,
+    pub last_instruction_time: f64,
+    pub current_instruction_index: usize,
 }
 
 impl Default for VisualizerState {
     fn default() -> Self {
+        info!("Creating new visualizer state");
         Self {
             array_a: Vec::new(),
             array_b: Vec::new(),
@@ -64,6 +70,8 @@ impl Default for VisualizerState {
             is_sorting: false,
             push_swap_status: PushSwapStatus::NotStarted,
             last_status_check: SystemTime::now(),
+            last_instruction_time: 0.0,
+            current_instruction_index: 0,
         }
     }
 }
@@ -76,22 +84,29 @@ pub fn execute_initial_push_swap(
     use crate::utils::generate_random_array;
 
     for (entity, mut state, mut client) in clients.iter_mut() {
+        info!("Executing initial push_swap for new client");
         let numbers = generate_random_array();
+        state.push_swap_status = PushSwapStatus::Executing;
+
+        // Store the initial array in array_a
+        state.array_a = numbers.clone();
         state.push_swap_status = PushSwapStatus::Executing;
 
         // Spawn the push_swap execution task
         let sender = channel.sender.clone();
         let entity = entity;
-
         runtime.runtime.spawn(async move {
+            info!("Spawned push_swap execution task");
             match crate::push_swap::execute_push_swap(&numbers).await {
                 Ok(output) => {
+                    info!("Push_swap execution completed successfully");
                     let instructions: Vec<String> = output.lines().map(|s| s.to_string()).collect();
                     let _ = sender
                         .send((entity, PushSwapStatus::Completed(instructions)))
                         .await;
                 }
                 Err(e) => {
+                    error!("Push_swap execution failed: {}", e);
                     let _ = sender
                         .send((entity, PushSwapStatus::Failed(e.to_string())))
                         .await;
@@ -113,16 +128,24 @@ pub fn check_push_swap_status(
         if let Ok((mut state, mut client)) = clients.get_mut(entity) {
             match new_status {
                 PushSwapStatus::Failed(error) => {
+                    error!("Push swap execution failed: {}", error);
                     client.send_chat_message(
                         format!("Push swap execution failed: {}", error).color(Color::RED),
                     );
                     state.push_swap_status = PushSwapStatus::NotStarted;
                 }
                 PushSwapStatus::Completed(instructions) => {
+                    info!(
+                        "Push swap execution completed with {} instructions",
+                        instructions.len()
+                    );
                     client.send_chat_message(
                         "Push swap execution completed successfully!".color(Color::DARK_PURPLE),
                     );
                     state.pending_instructions = Some(instructions);
+                    state.current_instruction_index = 0;
+                    state.is_sorting = true;
+                    state.last_instruction_time = 0.0; // This will trigger first instruction immediately
                     state.push_swap_status = PushSwapStatus::NotStarted;
                 }
                 _ => {}

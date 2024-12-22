@@ -8,8 +8,11 @@ pub use valence::MINECRAFT_VERSION;
 pub const START_POS: BlockPos = BlockPos::new(0, 100, 0);
 pub const VIEW_DIST: u8 = 10;
 pub const PLATFORM_SIZE: i32 = 4;
-pub const ARRAY_SIZE: i32 = 10;
-pub const MAX_HEIGHT: i32 = 50; // Maximum height for visualization
+pub const MAX_HEIGHT: i32 = 50;
+
+// Those you can change
+pub const ARRAY_SIZE: i32 = 100;
+pub const INSTRUCTION_DELAY: f64 = 0.1; // Delay between instructions
 
 // Different colored blocks for visualization
 pub const VISUALIZATION_BLOCKS: [BlockState; 12] = [
