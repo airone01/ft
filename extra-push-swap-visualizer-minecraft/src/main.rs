@@ -1,24 +1,34 @@
 #![allow(clippy::type_complexity)]
 
-pub mod chunks;
-pub mod consts;
-pub mod network;
-pub mod push_swap;
-pub mod state;
-pub mod utils;
-pub mod visualizer;
+mod chunks;
+mod cli;
+mod consts;
+mod network;
+mod push_swap;
+mod settings;
+mod state;
+mod utils;
+mod visualizer;
+
+use clap::Parser as _;
 
 use chunks::manage_chunks;
+use cli::Args;
 use consts::*;
 use network::SortingVisualizerServer;
+use settings::*;
 use state::*;
 use utils::rainbow_text;
 use valence::interact_block::InteractBlockEvent;
 use visualizer::*;
 
+use valence::log as _;
 use valence::network::ConnectionMode;
+use valence::prelude::*;
 use valence::spawn::IsFlat;
-use valence::{log, prelude::*};
+
+#[macro_use]
+extern crate log;
 
 fn init_clients(
     mut clients: Query<
@@ -37,8 +47,9 @@ fn init_clients(
     mut commands: Commands,
 ) {
     for (entity, mut client, mut visible_chunk_layer, mut is_flat, mut game_mode) in &mut clients {
-        log::info!("Initializing new client (entity: {:?})", entity);
+        info!("Initializing new client (entity: {:?})", entity);
 
+        let settings = get_settings();
         visible_chunk_layer.0 = entity;
         is_flat.0 = true;
         *game_mode = GameMode::Creative;
@@ -51,19 +62,18 @@ fn init_clients(
 
         let wall_offset_a = BlockPos::new(
             START_POS.x + 50,
-            START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
+            START_POS.y - (settings.array_size as f32 * 0.5).floor() as i32,
             START_POS.z + 50,
         );
         let wall_offset_b = BlockPos::new(
             START_POS.x,
-            START_POS.y - (ARRAY_SIZE as f32 * 0.5).floor() as i32,
+            START_POS.y - (settings.array_size as f32 * 0.5).floor() as i32,
             START_POS.z + 50,
         );
 
-        log::debug!(
+        debug!(
             "Creating initial state with wall offsets: {:?}, {:?}",
-            wall_offset_a,
-            wall_offset_b
+            wall_offset_a, wall_offset_b
         );
 
         let state = VisualizerState {
@@ -82,13 +92,13 @@ fn init_clients(
 
         let mut layer = ChunkLayer::new(ident!("overworld"), &dimensions, &biomes, &server);
 
-        log::debug!("Creating initial visualization elements");
+        debug!("Creating initial visualization elements");
         create_platform(&mut layer);
         create_backdrop(state.wall_offset_a, state.wall_offset_b, &mut layer);
         visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
         visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
 
-        log::info!("Client initialization complete, inserting components");
+        info!("Client initialization complete, inserting components");
         commands.entity(entity).insert(state).insert(layer);
     }
 }
@@ -104,23 +114,23 @@ fn reset_clients(
 ) {
     for (mut _client, mut pos, mut look, state, mut layer) in &mut clients {
         if state.is_added() {
-            log::info!("Resetting client state");
+            info!("Resetting client state");
 
             // Init chunks
-            log::debug!("Initializing chunks");
+            debug!("Initializing chunks");
             for pos in ChunkView::new(START_POS.into(), VIEW_DIST).iter() {
                 layer.insert_chunk(pos, UnloadedChunk::new());
             }
 
             // Reset platform, backdrop and visualization
-            log::debug!("Resetting platform and visualization elements");
+            debug!("Resetting platform and visualization elements");
             create_platform(&mut layer);
             create_backdrop(state.wall_offset_a, state.wall_offset_b, &mut layer);
             visualize_array(&state.array_a, state.wall_offset_a, &mut layer);
             visualize_array(&state.array_b, state.wall_offset_b, &mut layer);
 
             // Position player for optimal viewing
-            log::debug!("Setting player position and look direction");
+            debug!("Setting player position and look direction");
             pos.set([
                 f64::from(START_POS.x) + 0.5,
                 f64::from(START_POS.y) + 1.0,
@@ -129,16 +139,40 @@ fn reset_clients(
             look.yaw = 0.0;
             look.pitch = 0.0;
 
-            log::info!("Client reset complete");
+            info!("Client reset complete");
         }
     }
 }
 
 #[tokio::main]
 pub async fn main() {
-    log::info!("Starting push_swap visualizer application");
+    let args = Args::parse();
+    init_settings(&args);
 
-    App::new()
+    let settings = get_settings();
+    if settings.info {
+        println!("-------------- Executable info --------------");
+        println!("Server version   : {}", env!("CARGO_PKG_VERSION"));
+        println!(
+            "Server build     : {}",
+            option_env!("BUILD_HASH").unwrap_or("dev-build")
+        );
+        println!("--------------- Server config ---------------");
+        println!("MAX_HEIGHT : {}", settings.max_height);
+        println!("ARRAY_SIZE : {}", settings.array_size);
+        println!("INSTR_DELAY: {}", settings.instr_delay);
+        println!("VIEW_DIST  : {}", VIEW_DIST);
+        println!("---------------------------------------------");
+        return;
+    }
+
+    if let Err(e) = setup_executable() {
+        println!("Error: {}", e);
+        return;
+    }
+
+    let mut binding = App::new();
+    let app = binding
         .insert_resource(NetworkSettings {
             connection_mode: ConnectionMode::Online {
                 prevent_proxy_connections: false,
@@ -162,8 +196,16 @@ pub async fn main() {
                 handle_click,
                 despawn_disconnected_clients,
             ),
-        )
-        .run();
+        );
 
-    log::info!("Application terminated");
+    info!(
+        "Server stared at {}",
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_secs()
+    );
+    app.run();
+
+    info!("Server terminated");
 }

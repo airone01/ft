@@ -1,10 +1,9 @@
 use std::time::SystemTime;
 
-use log::{error, info};
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc;
 
-use valence::{log, prelude::*};
+use valence::prelude::*;
 
 #[derive(Resource)]
 pub struct RuntimeResource {

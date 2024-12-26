@@ -1,12 +1,13 @@
-use crate::consts::ARRAY_SIZE;
-
 use valence::prelude::Color;
 use valence::prelude::IntoText as _;
 use valence::Text;
 
+use crate::get_settings;
+
 pub fn generate_random_array() -> Vec<i32> {
-    let mut array = Vec::with_capacity(ARRAY_SIZE as usize);
-    for i in 0..ARRAY_SIZE {
+    let settings = get_settings();
+    let mut array = Vec::with_capacity(settings.array_size as usize);
+    for i in 0..settings.array_size {
         array.push(i + 1);
     }
     use rand::seq::SliceRandom;

@@ -2,8 +2,6 @@ use crate::consts::MINECRAFT_VERSION;
 
 use core::net::SocketAddr;
 
-use log::debug;
-use valence::log;
 use valence::prelude::Uuid;
 use valence::text::{Color, IntoText as _};
 use valence::{

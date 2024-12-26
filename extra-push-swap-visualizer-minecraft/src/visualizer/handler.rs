@@ -1,10 +1,9 @@
 use crate::state::{PushSwapStatus, VisualizerState};
 use crate::utils::generate_random_array;
-use crate::{PushSwapChannel, RuntimeResource, INSTRUCTION_DELAY};
+use crate::{get_settings, PushSwapChannel, RuntimeResource};
 
-use log::{debug, info, warn};
 use valence::interact_block::InteractBlockEvent;
-use valence::{log, prelude::*};
+use valence::prelude::*;
 
 pub fn handle_click(
     mut clients: Query<(Entity, &mut Client, &mut VisualizerState), With<Client>>,
@@ -89,7 +88,7 @@ pub fn process_instructions(
             .as_secs_f64();
 
         // Only process if enough time has passed since last instruction
-        if current_time - state.last_instruction_time < INSTRUCTION_DELAY {
+        if current_time - state.last_instruction_time < get_settings().instr_delay {
             continue;
         }
 
