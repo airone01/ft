@@ -1,6 +1,7 @@
 use valence::{BlockPos, BlockState, ChunkLayer};
 
-use crate::{consts::*, get_settings};
+use crate::consts::*;
+use crate::settings::get_settings;
 
 pub fn create_backdrop(wall_offset_a: BlockPos, wall_offset_b: BlockPos, layer: &mut ChunkLayer) {
     let settings = get_settings();

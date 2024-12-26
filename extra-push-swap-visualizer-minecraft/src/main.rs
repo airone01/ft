@@ -12,16 +12,16 @@ mod visualizer;
 
 use clap::Parser as _;
 
-use chunks::manage_chunks;
-use cli::Args;
-use consts::*;
-use network::SortingVisualizerServer;
-use settings::*;
-use state::*;
-use utils::rainbow_text;
-use valence::interact_block::InteractBlockEvent;
-use visualizer::*;
+use crate::chunks::manage_chunks;
+use crate::cli::Args;
+use crate::consts::*;
+use crate::network::SortingVisualizerServer;
+use crate::settings::*;
+use crate::state::*;
+use crate::utils::rainbow_text;
+use crate::visualizer::*;
 
+use valence::interact_block::InteractBlockEvent;
 use valence::log as _;
 use valence::network::ConnectionMode;
 use valence::prelude::*;
@@ -30,7 +30,7 @@ use valence::spawn::IsFlat;
 #[macro_use]
 extern crate log;
 
-fn init_clients(
+pub fn init_clients(
     mut clients: Query<
         (
             Entity,
@@ -103,7 +103,7 @@ fn init_clients(
     }
 }
 
-fn reset_clients(
+pub fn reset_clients(
     mut clients: Query<(
         &mut Client,
         &mut Position,

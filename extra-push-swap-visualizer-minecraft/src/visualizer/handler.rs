@@ -1,6 +1,6 @@
-use crate::state::{PushSwapStatus, VisualizerState};
+use crate::settings::get_settings;
+use crate::state::{PushSwapChannel, PushSwapStatus, RuntimeResource, VisualizerState};
 use crate::utils::generate_random_array;
-use crate::{get_settings, PushSwapChannel, RuntimeResource};
 
 use valence::interact_block::InteractBlockEvent;
 use valence::prelude::*;

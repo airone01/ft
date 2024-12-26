@@ -3,7 +3,7 @@ use std::process::Command;
 
 use once_cell::sync::OnceCell;
 
-use crate::Args;
+use crate::cli::Args;
 
 #[derive(Debug)]
 pub struct Settings {
@@ -94,4 +94,23 @@ pub fn setup_executable() -> Result<(), String> {
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod settings_tests {
+    use crate::{get_settings, utils::initialize_test};
+
+    #[test]
+    fn test_settings_init() {
+        initialize_test();
+
+        let settings = get_settings();
+
+        assert_eq!(settings.executable, "test_exec");
+        assert_eq!(settings.makefile, "test_make");
+        assert_eq!(settings.array_size, 50);
+        assert_eq!(settings.instr_delay, 0.1);
+        assert_eq!(settings.max_height, 75);
+        assert!(settings.info);
+    }
 }

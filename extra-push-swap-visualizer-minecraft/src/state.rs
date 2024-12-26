@@ -117,7 +117,14 @@ pub fn execute_initial_push_swap(
     }
 }
 
-// System to check push_swap status periodically
+/// Check for incoming push_swap status updates and handle them
+/// appropriately. This system will update the client's state
+/// and send chat messages to the client as needed.
+///
+/// ## Parameters
+///
+/// - `clients`: Query of all entities with VisualizerState and Client components
+/// - `channel`: Resource containing the push_swap channel
 pub fn check_push_swap_status(
     mut clients: Query<(&mut VisualizerState, &mut Client)>,
     mut channel: ResMut<PushSwapChannel>,
@@ -150,5 +157,87 @@ pub fn check_push_swap_status(
                 _ => {}
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{PushSwapStatus, VisualizerState};
+    use valence::prelude::*;
+
+    #[test]
+    fn test_visualizer_state_default_values() {
+        let state = VisualizerState::default();
+
+        assert!(state.array_a.is_empty());
+        assert!(state.array_b.is_empty());
+        assert_eq!(state.wall_offset_a, BlockPos::default());
+        assert_eq!(state.wall_offset_b, BlockPos::default());
+        assert_eq!(state.last_click, 0.0);
+        assert!(state.pending_instructions.is_none());
+        assert!(!state.is_sorting);
+        assert!(matches!(state.push_swap_status, PushSwapStatus::NotStarted));
+        assert_eq!(state.current_instruction_index, 0);
+    }
+
+    #[test]
+    fn test_push_swap_status_transitions() {
+        // Test transition to Executing
+        let status = PushSwapStatus::Executing;
+        assert!(matches!(status, PushSwapStatus::Executing));
+
+        // Test transition to Failed
+        let error_msg = "Test error".to_string();
+        let status = PushSwapStatus::Failed(error_msg.clone());
+        if let PushSwapStatus::Failed(msg) = status {
+            assert_eq!(msg, error_msg);
+        } else {
+            panic!("Expected Failed status");
+        }
+
+        // Test transition to Completed
+        let instructions = vec!["sa".to_string(), "pb".to_string()];
+        let status = PushSwapStatus::Completed(instructions.clone());
+        if let PushSwapStatus::Completed(inst) = status {
+            assert_eq!(inst, instructions);
+        } else {
+            panic!("Expected Completed status");
+        }
+    }
+
+    #[test]
+    fn test_visualizer_state_array_operations() {
+        let mut state = VisualizerState::default();
+
+        // Test array A operations
+        state.array_a = vec![1, 2, 3];
+        assert_eq!(state.array_a.len(), 3);
+        assert_eq!(state.array_a[0], 1);
+
+        // Test array B operations
+        state.array_b = vec![4, 5];
+        assert_eq!(state.array_b.len(), 2);
+        assert_eq!(state.array_b[0], 4);
+    }
+
+    #[test]
+    fn test_visualizer_state_instruction_management() {
+        let mut state = VisualizerState::default();
+
+        let instructions = vec!["sa".to_string(), "pb".to_string(), "ra".to_string()];
+        state.pending_instructions = Some(instructions.clone());
+        state.is_sorting = true;
+
+        assert!(state.pending_instructions.is_some());
+        assert_eq!(state.pending_instructions.as_ref().unwrap().len(), 3);
+        assert!(state.is_sorting);
+
+        // Test instruction progression
+        state.current_instruction_index = 1;
+        assert_eq!(state.current_instruction_index, 1);
+        assert_eq!(
+            state.pending_instructions.as_ref().unwrap()[state.current_instruction_index],
+            "pb"
+        );
     }
 }
