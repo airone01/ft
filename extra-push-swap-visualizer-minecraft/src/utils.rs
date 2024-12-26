@@ -75,8 +75,10 @@ fn hsv_to_rgb(hue: f32, saturation: f32, value: f32) -> (u8, u8, u8) {
     )
 }
 
+#[allow(dead_code)]
 static INIT: Once = Once::new();
 
+#[allow(dead_code)]
 pub fn initialize_test() {
     INIT.call_once(|| {
         let args = crate::cli::Args {
