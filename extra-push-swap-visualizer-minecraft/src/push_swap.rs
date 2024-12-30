@@ -1,18 +1,24 @@
 use std::process::Command;
 
-pub async fn execute_push_swap(numbers: &[i32]) -> Result<String, String> {
-    // Convert numbers to space-separated string
-    let input = numbers
-        .iter()
-        .map(|n| n.to_string())
-        .collect::<Vec<String>>()
-        .join(" ");
+use log::*;
 
-    // Execute push_swap with the numbers as arguments
-    let output = Command::new("./push_swap")
-        .arg(&input)
+use crate::get_settings;
+
+pub async fn execute_push_swap(numbers: &[i32]) -> Result<String, String> {
+    // Create command with path from settings
+    let mut cmd = Command::new(get_settings().executable.clone());
+
+    // Add each number as a separate argument
+    for num in numbers {
+        cmd.arg(num.to_string());
+    }
+
+    // Execute the command
+    debug!("Executing push_swap with {} numbers", numbers.len());
+    let output = cmd
         .output()
         .map_err(|e| format!("Failed to execute push_swap: {}", e))?;
+    debug!("push_swap executed with status: {}", output.status);
 
     // Check if the execution was successful
     if output.status.success() {

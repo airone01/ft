@@ -11,6 +11,7 @@ mod utils;
 mod visualizer;
 
 use clap::Parser as _;
+use log::info as pretty_info;
 
 use crate::chunks::manage_chunks;
 use crate::cli::Args;
@@ -151,18 +152,20 @@ pub async fn main() {
 
     let settings = get_settings();
     if settings.info {
-        println!("-------------- Executable info --------------");
-        println!("Server version   : {}", env!("CARGO_PKG_VERSION"));
-        println!(
+        pretty_env_logger::init();
+
+        pretty_info!("-------------- Executable info --------------");
+        pretty_info!("Server version   : {}", env!("CARGO_PKG_VERSION"));
+        pretty_info!(
             "Server build     : {}",
             option_env!("BUILD_HASH").unwrap_or("dev-build")
         );
-        println!("--------------- Server config ---------------");
-        println!("MAX_HEIGHT : {}", settings.max_height);
-        println!("ARRAY_SIZE : {}", settings.array_size);
-        println!("INSTR_DELAY: {}", settings.instr_delay);
-        println!("VIEW_DIST  : {}", VIEW_DIST);
-        println!("---------------------------------------------");
+        pretty_info!("--------------- Server config ---------------");
+        pretty_info!("MAX_HEIGHT : {}", settings.max_height);
+        pretty_info!("ARRAY_SIZE : {}", settings.array_size);
+        pretty_info!("INSTR_DELAY: {}", settings.instr_delay);
+        pretty_info!("VIEW_DIST  : {}", VIEW_DIST);
+        pretty_info!("---------------------------------------------");
         return;
     }
 

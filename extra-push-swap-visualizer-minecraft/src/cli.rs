@@ -1,6 +1,6 @@
 use clap::Parser;
 
-/// A Minecraft server for testing push_swap
+/// A feature-rich Minecraft server for flexing your push_swap
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 pub struct Args {
@@ -27,10 +27,10 @@ pub struct Args {
     pub array_size: i32,
 
     /// Delay between each instruction
-    #[arg(long, env, default_value = "0.05")]
+    #[arg(long, env, default_value = "0.01")]
     pub instr_delay: f64,
 
-    /// Maximum length of each number
-    #[arg(long, env, default_value = "100", hide = true)]
+    /// Max length of display line. Changing this will probably break the display.
+    #[arg(long, env, default_value = "50")]
     pub max_height: i32,
 }

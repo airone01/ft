@@ -7,9 +7,8 @@ use crate::cli::Args;
 
 #[derive(Debug)]
 pub struct Settings {
-    pub executable: String,
-    pub cwd: String,
-    pub makefile: String,
+    pub executable: PathBuf,
+    pub makefile: PathBuf,
     pub array_size: i32,
     pub instr_delay: f64,
     pub max_height: i32,
@@ -19,9 +18,8 @@ pub struct Settings {
 impl Default for Settings {
     fn default() -> Self {
         Self {
-            executable: String::from("push_swap"),
-            cwd: String::from("."),
-            makefile: String::new(),
+            executable: PathBuf::from("push_swap"),
+            makefile: PathBuf::new(),
             array_size: 100,
             instr_delay: 0.05,
             max_height: 100,
@@ -33,11 +31,12 @@ impl Default for Settings {
 static SETTINGS: OnceCell<Settings> = OnceCell::new();
 
 pub fn init_settings(args: &Args) {
+    let cwd = PathBuf::from(&args.cwd);
+
     SETTINGS
         .set(Settings {
-            executable: args.executable.clone(),
-            cwd: args.cwd.clone(),
-            makefile: args.makefile.clone(),
+            executable: cwd.join(&args.executable),
+            makefile: cwd.join(&args.makefile),
             array_size: args.array_size,
             instr_delay: args.instr_delay,
             max_height: args.max_height,
@@ -52,25 +51,27 @@ pub fn get_settings() -> &'static Settings {
 
 pub fn setup_executable() -> Result<(), String> {
     let settings = get_settings();
-    let cwd = PathBuf::from(&settings.cwd);
 
-    // Check for Makefile
-    let makefile_path = if settings.makefile.starts_with('/') {
-        PathBuf::from(&settings.makefile)
-    } else {
-        cwd.join(&settings.makefile)
-    };
-
-    if makefile_path.exists() {
+    if settings.makefile.exists() {
         println!("Launching make...");
+        let makefile_dir = settings.makefile.parent().ok_or("Invalid Makefile path")?;
+        let makefile_name = settings
+            .makefile
+            .file_name()
+            .ok_or("Invalid Makefile name")?
+            .to_str()
+            .ok_or("Invalid UTF-8 in Makefile path")?;
+
         let status = Command::new("make")
             .args(&[
                 "--directory",
-                makefile_path.parent().unwrap().to_str().unwrap(),
+                makefile_dir
+                    .to_str()
+                    .ok_or("Invalid UTF-8 in Makefile directory")?,
                 "--makefile",
-                makefile_path.file_name().unwrap().to_str().unwrap(),
+                makefile_name,
             ])
-            .current_dir(makefile_path.parent().unwrap())
+            .current_dir(makefile_dir)
             .status()
             .map_err(|e| format!("Failed to execute make: {}", e))?;
 
@@ -79,18 +80,14 @@ pub fn setup_executable() -> Result<(), String> {
         }
         println!("Make complete");
     } else {
-        println!("Warning: no Makefile found");
+        println!("warn: no Makefile found");
     }
 
-    // Check executable
-    let exec_path = if settings.executable.starts_with('/') {
-        PathBuf::from(&settings.executable)
-    } else {
-        cwd.join(&settings.executable)
-    };
-
-    if !exec_path.exists() {
-        return Err(format!("Executable not found at {}\nConsider passing argument -e or running inside a Make project", exec_path.display()));
+    if !settings.executable.exists() {
+        return Err(format!(
+            "Executable not found at {}\nConsider passing argument -e or running inside a Make project",
+            settings.executable.display()
+        ));
     }
 
     Ok(())
@@ -99,6 +96,7 @@ pub fn setup_executable() -> Result<(), String> {
 #[cfg(test)]
 mod settings_tests {
     use crate::{get_settings, utils::initialize_test};
+    use std::path::PathBuf;
 
     #[test]
     fn test_settings_init() {
@@ -106,8 +104,8 @@ mod settings_tests {
 
         let settings = get_settings();
 
-        assert_eq!(settings.executable, "test_exec");
-        assert_eq!(settings.makefile, "test_make");
+        assert_eq!(settings.executable, PathBuf::from("/test/path/test_exec"));
+        assert_eq!(settings.makefile, PathBuf::from("/test/path/test_make"));
         assert_eq!(settings.array_size, 50);
         assert_eq!(settings.instr_delay, 0.1);
         assert_eq!(settings.max_height, 75);
