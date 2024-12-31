@@ -13,7 +13,7 @@ use std::{
     time::Instant,
 };
 
-use super::{TestCase, TestResult, TestRunner, TestStatus};
+use super::{IndividualResult, TestCase, TestResult, TestRunner, TestStatus};
 
 pub struct CTestRunner {
     work_dir: PathBuf,
@@ -71,64 +71,65 @@ impl TestRunner for CTestRunner {
         let test_file = temp_dir.path().join(format!("{}.c", test_case.name));
         let output_file = temp_dir.path().join(&test_case.name);
 
-        // Write test file
+        // Write and compile test file
         if let Err(e) = fs::write(&test_file, &test_case.source) {
             return TestResult {
                 status: TestStatus::Failed(format!("Failed to write test file: {}", e)),
                 duration: start_time.elapsed(),
-                output: None,
+                results: vec![],
             };
         }
 
-        // Compile
-        match self.compile(&test_file, &output_file) {
-            Ok(()) => (),
-            Err(e) => {
-                return TestResult {
-                    status: TestStatus::Failed(format!("Compilation failed: {}", e)),
-                    duration: start_time.elapsed(),
-                    output: None,
-                }
-            }
+        if let Err(e) = self.compile(&test_file, &output_file) {
+            return TestResult {
+                status: TestStatus::Failed(format!("Compilation failed: {}", e)),
+                duration: start_time.elapsed(),
+                results: vec![],
+            };
         }
 
-        // Run test with each argument and compare outputs
-        let mut all_output = String::new();
-        for (i, arg) in test_case.args.iter().enumerate() {
-            match self.run_single_test(&output_file, arg) {
+        // Run individual tests
+        let mut results = Vec::new();
+        let mut all_passed = true;
+
+        for test_input in &test_case.test_inputs {
+            match self.run_single_test(&output_file, &test_input.input) {
                 Ok(output) => {
-                    // Compare with expected output
-                    if let Some(expected) = test_case.expected_outputs.get(i) {
-                        if output.trim() != expected.trim() {
-                            return TestResult {
-                                status: TestStatus::Failed(format!(
-                                    "Output mismatch for input '{}'\nExpected: {}\nGot: {}",
-                                    arg, expected, output
-                                )),
-                                duration: start_time.elapsed(),
-                                output: Some(all_output),
-                            };
-                        }
+                    let output = output.trim().to_string();
+                    let passed = output == test_input.expected.trim();
+                    if !passed {
+                        all_passed = false;
                     }
-                    all_output.push_str(&output);
+
+                    results.push(IndividualResult {
+                        input: test_input.input.clone(),
+                        expected: test_input.expected.clone(),
+                        actual: output,
+                        passed,
+                        index: test_input.index,
+                    });
                 }
                 Err(e) => {
                     return TestResult {
                         status: TestStatus::Failed(format!(
                             "Test failed with input '{}': {}",
-                            arg, e
+                            test_input.input, e
                         )),
                         duration: start_time.elapsed(),
-                        output: Some(all_output),
+                        results,
                     }
                 }
             }
         }
 
         TestResult {
-            status: TestStatus::Passed,
+            status: if all_passed {
+                TestStatus::Passed
+            } else {
+                TestStatus::Failed("Some tests failed".to_string())
+            },
             duration: start_time.elapsed(),
-            output: Some(all_output),
+            results,
         }
     }
 

@@ -49,22 +49,36 @@ fn main() {
             for test in test_cases {
                 debug!("Running test: {}", test.name);
                 let result = runner.run(&test);
-                match result.status {
-                    runner::TestStatus::Passed => {
-                        info!(target: &test.name, "✅ Passed ({:?})", result.duration);
+
+                info!(target: &test.name, "Testing {}:", test.name);
+                for individual in &result.results {
+                    if individual.passed {
+                        info!(
+                            target: &test.name,
+                            "✅ Test {}",
+                            individual.index,
+                        );
+                    } else {
+                        info!(
+                            target: &test.name,
+                            "❌ Test {}: Input: '{}' -> Expected: '{}', Got: '{}'",
+                            individual.index,
+                            individual.input,
+                            individual.expected,
+                            individual.actual
+                        );
                     }
-                    runner::TestStatus::Failed(err) => {
-                        error!(target: &test.name, "❌ Failed: {}", err);
-                        if let Some(output) = result.output {
-                            debug!("Test output:\n{}", output);
-                        }
-                    }
-                    _ => warn!(
-                        target: &test.name,
-                        "❌ Ended with unexpected status: {:?}",
-                        result.status
-                    ),
                 }
+
+                let total = result.results.len();
+                let passed = result.results.iter().filter(|r| r.passed).count();
+                info!(
+                    target: &test.name,
+                    "Results: {}/{} tests passed ({:?})",
+                    passed,
+                    total,
+                    result.duration
+                );
             }
         }
         Project::Unknown => unreachable!(),

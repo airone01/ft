@@ -14,24 +14,34 @@ pub struct TestCase {
     pub id: usize,
     pub name: String,
     pub source: String,
-    pub args: Vec<String>,
-    pub expected_outputs: Vec<String>,
+    pub test_inputs: Vec<TestInput>,
+}
+
+#[derive(Debug, Clone)]
+pub struct TestInput {
+    pub input: String,
+    pub expected: String,
+    pub index: usize,
 }
 
 impl TestCase {
-    pub fn new(id: usize, name: String, source: String, args: Vec<String>) -> Self {
+    pub fn new(id: usize, name: String, source: String, inputs: Vec<(String, String)>) -> Self {
+        let test_inputs = inputs
+            .into_iter()
+            .enumerate()
+            .map(|(i, (input, expected))| TestInput {
+                input,
+                expected,
+                index: i + 1,
+            })
+            .collect();
+
         Self {
             id,
             name,
             source,
-            args,
-            expected_outputs: Vec::new(),
+            test_inputs,
         }
-    }
-
-    pub fn with_expected_outputs(mut self, outputs: Vec<String>) -> Self {
-        self.expected_outputs = outputs;
-        self
     }
 }
 
@@ -42,6 +52,15 @@ pub enum TestStatus {
     Running,
     Passed,
     Failed(String),
+}
+
+#[derive(Debug)]
+pub struct IndividualResult {
+    pub input: String,
+    pub expected: String,
+    pub actual: String,
+    pub passed: bool,
+    pub index: usize,
 }
 
 impl fmt::Display for TestStatus {
@@ -59,7 +78,7 @@ impl fmt::Display for TestStatus {
 pub struct TestResult {
     pub status: TestStatus,
     pub duration: Duration,
-    pub output: Option<String>,
+    pub results: Vec<IndividualResult>,
 }
 
 pub trait TestRunner {

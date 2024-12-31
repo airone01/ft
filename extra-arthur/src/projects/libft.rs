@@ -87,18 +87,13 @@ impl LibftTest {
             .iter()
             .enumerate()
             .map(|(id, test)| {
-                TestCase::new(
-                    id,
-                    test.name.clone(),
-                    test.source.clone(),
-                    test.test_cases.iter().map(|tc| tc.input.clone()).collect(),
-                )
-                .with_expected_outputs(
-                    test.test_cases
-                        .iter()
-                        .map(|tc| tc.expected.clone())
-                        .collect(),
-                )
+                let inputs = test
+                    .test_cases
+                    .iter()
+                    .map(|tc| (tc.input.clone(), tc.expected.clone()))
+                    .collect::<Vec<_>>();
+
+                TestCase::new(id, test.name.clone(), test.source.clone(), inputs)
             })
             .collect()
     }
