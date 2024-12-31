@@ -1,3 +1,10 @@
+//! Test execution framework
+//!
+//! Provides:
+//! - TestCase: Structure representing a single test
+//! - TestRunner: Trait for implementing test execution
+//! - TestResult/TestStatus: Test execution outcomes
+//!
 use std::fmt;
 use std::time::Duration;
 pub mod c;

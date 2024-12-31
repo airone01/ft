@@ -1,3 +1,11 @@
+//! C-specific test runner implementation
+//!
+//! Handles:
+//! - Compiling C test files
+//! - Linking with project libraries
+//! - Running tests and capturing output
+//! - Comparing results with expected output
+
 use std::{
     fs,
     path::{Path, PathBuf},

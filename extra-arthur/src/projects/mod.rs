@@ -1,3 +1,10 @@
+//! Project detection and configuration
+//!
+//! This module handles:
+//! - Detecting project type from directory contents
+//! - Loading appropriate test configurations
+//! - Managing project-specific settings
+
 use log::{debug, info};
 use std::{fs, path::Path};
 
