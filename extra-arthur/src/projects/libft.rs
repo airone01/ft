@@ -56,14 +56,10 @@ impl LibftTest {
                         .filter_map(|line| {
                             let parts: Vec<_> = line.split('|').collect();
                             if parts.len() == 2 {
-                                debug!(
-                                    "Test case - Input: '{}', Expected: '{}'",
-                                    parts[0], parts[1]
-                                );
-                                Some(TestInput {
-                                    input: parts[0].to_string(),
-                                    expected: parts[1].to_string(),
-                                })
+                                let input = parts[0].to_string();
+                                let expected = parts[1].replace("\\n", "\n");
+                                debug!("Test case - Input: {:?}, Expected: {:?}", input, expected);
+                                Some(TestInput { input, expected })
                             } else {
                                 debug!("Invalid test case line: {}", line);
                                 None

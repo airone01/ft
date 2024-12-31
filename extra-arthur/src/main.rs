@@ -43,25 +43,26 @@ fn main() {
             }
 
             let test_cases = libft.get_test_cases();
-            info!("Loaded {} test cases", test_cases.len());
+            debug!("Loaded {} test cases", test_cases.len());
 
             // Run tests
             for test in test_cases {
-                info!("Running test: {}", test.name);
+                debug!("Running test: {}", test.name);
                 let result = runner.run(&test);
                 match result.status {
                     runner::TestStatus::Passed => {
-                        info!("✅ Test {} passed ({:?})", test.name, result.duration);
+                        info!(target: &test.name, "✅ Passed ({:?})", result.duration);
                     }
                     runner::TestStatus::Failed(err) => {
-                        error!("❌ Test {} failed: {}", test.name, err);
+                        error!(target: &test.name, "❌ Failed: {}", err);
                         if let Some(output) = result.output {
                             debug!("Test output:\n{}", output);
                         }
                     }
                     _ => warn!(
-                        "Test {} ended with unexpected status: {:?}",
-                        test.name, result.status
+                        target: &test.name,
+                        "❌ Ended with unexpected status: {:?}",
+                        result.status
                     ),
                 }
             }

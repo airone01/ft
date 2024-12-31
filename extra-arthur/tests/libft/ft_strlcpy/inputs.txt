@@ -1,0 +1,4 @@
+hello|Result: 5\nBuffer: hell
+world|Result: 5\nBuffer: worl
+|Result: 0\nBuffer:
+   |Result: 3\nBuffer:

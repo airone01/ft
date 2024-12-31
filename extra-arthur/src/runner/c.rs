@@ -26,8 +26,13 @@ impl CTestRunner {
     }
 
     fn compile(&self, test_file: &Path, output_file: &Path) -> Result<(), String> {
-        let output = Command::new("gcc")
+        let output = Command::new("cc")
             .current_dir(&self.work_dir)
+            .arg("-Wall")
+            .arg("-Wextra")
+            .arg("-Werror")
+            .arg("-Wpedantic")
+            .arg("-g3")
             .arg("-o")
             .arg(output_file)
             .arg(test_file)

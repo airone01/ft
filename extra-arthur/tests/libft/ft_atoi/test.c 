@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include "libft.h"
+
+// The atoi that is asked of the students of 42 is different
+// Than the original. Hence we have to check for the value directly.
+
+int main(int argc, char **argv) {
+    if (argc != 2) return 1;
+    printf("%d\n", ft_atoi(argv[1]));
+    return 0;
+}

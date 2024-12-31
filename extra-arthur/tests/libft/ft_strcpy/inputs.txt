@@ -1,3 +1,0 @@
-hello|hello\nLength: 5
-test string|test string\nLength: 11
-|Length: 0
