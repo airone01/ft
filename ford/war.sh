@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Reset
 Color_Off='\033[0m'       # Text Reset
@@ -307,4 +307,3 @@ if [[ "$1" == "nprime" ]]; then
 	assert_1 "-1" "2";
 	assert_1 "-10" "2";
 fi
-
