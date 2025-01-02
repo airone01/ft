@@ -11,6 +11,8 @@ use std::time::Duration;
 use async_trait::async_trait;
 
 pub mod c;
+pub mod cat_e;
+pub mod results;
 
 #[derive(Debug, Clone)]
 pub struct TestCase {
@@ -49,21 +51,31 @@ impl TestCase {
 }
 
 #[derive(Debug, Clone)]
+pub enum TestError {
+    Compilation(String),
+    Runtime(String),
+    FileSystem(String),
+    Other(String),
+}
+
+impl fmt::Display for TestError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            TestError::Compilation(msg) => write!(f, "Compilation Error: {}", msg),
+            TestError::Runtime(msg) => write!(f, "Runtime Error: {}", msg),
+            TestError::FileSystem(msg) => write!(f, "File System Error: {}", msg),
+            TestError::Other(msg) => write!(f, "Error: {}", msg),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
 pub enum TestStatus {
     NotStarted,
     Compiling,
     Running,
     Passed,
-    Failed(String),
-}
-
-#[derive(Debug)]
-pub struct IndividualResult {
-    pub input: String,
-    pub expected: String,
-    pub actual: String,
-    pub passed: bool,
-    pub index: usize,
+    Failed(TestError),
 }
 
 impl fmt::Display for TestStatus {
@@ -73,11 +85,21 @@ impl fmt::Display for TestStatus {
             TestStatus::Compiling => write!(f, "Compiling"),
             TestStatus::Running => write!(f, "Running"),
             TestStatus::Passed => write!(f, "Passed"),
-            TestStatus::Failed(err) => write!(f, "Failed: {}", err),
+            TestStatus::Failed(err) => write!(f, "{}", err),
         }
     }
 }
 
+#[derive(Clone, Debug)]
+pub struct IndividualResult {
+    pub input: String,
+    pub expected: String,
+    pub actual: String,
+    pub passed: bool,
+    pub index: usize,
+}
+
+#[derive(Clone)]
 pub struct TestResult {
     pub status: TestStatus,
     pub duration: Duration,

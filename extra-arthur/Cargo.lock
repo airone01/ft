@@ -84,6 +84,7 @@ dependencies = [
  "color-eyre",
  "crossterm",
  "log",
+ "once_cell",
  "pretty_env_logger",
  "rand",
  "tempfile",

@@ -1,6 +1,8 @@
-use crate::runner::TestCase;
-use log::debug;
 use std::path::PathBuf;
+
+use log::debug;
+
+use crate::runner::{cat_e::CatE, TestCase};
 
 pub struct LibftTest {
     work_dir: PathBuf,
@@ -64,7 +66,11 @@ impl LibftTest {
                                     .replace("\\v", "\u{000b}")
                                     .replace("\\r", "\r")
                                     .replace("\\f", "\u{000c}");
-                                debug!("Test case - Input: {:?}, Expected: {:?}", input, expected);
+                                debug!(
+                                    "Testing input: {:<10} expecting: {}",
+                                    input.debug_display(),
+                                    expected.debug_display()
+                                );
                                 Some(TestInput { input, expected })
                             } else {
                                 debug!("Invalid test case line: {}", line);

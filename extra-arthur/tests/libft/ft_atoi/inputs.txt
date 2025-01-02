@@ -1,44 +1,44 @@
-42|y
--42|y
-+42|y
-   42|y
---42|y
-2147483647|y
--2147483648|y
- \t\v\n\r\f123|y
-+0000000000000000000000000000000000000000000000000000123|y
-42;3|y
-42/3|y
-abc|y
-   |y
-|y
- \t\v\n\r\f123|y
-0|y
--1000043|y
-+0000000000000000000000000000000000000000000000000000123|y
-    123|y
---123|y
--+123|y
-+-123|y
-++123|y
-- 123|y
-+ 123|y
-+\n123|y
-1209|y
-12/3|y
-12;3|y
-1|y
-a1|y
---1|y
-++1|y
-+1|y
--1|y
-0|y
-+42lyon|y
-+101|y
-"-+42|y
-"+-42|y
-+\t\v\n\r\f42|y
--\t\v\n\r\f42|y
-1\t\v\n\r\f42|y
--1\t\v\n\r\f42|y
+42|Valid
+-42|Valid
++42|Valid
+   42|Valid
+--42|Valid
+2147483647|Valid
+-2147483648|Valid
+ \t\v\n\r\f123|Valid
++0000000000000000000000000000000000000000000000000000123|Valid
+42;3|Valid
+42/3|Valid
+abc|Valid
+   |Valid
+|Valid
+ \t\v\n\r\f123|Valid
+0|Valid
+-1000043|Valid
++0000000000000000000000000000000000000000000000000000123|Valid
+    123|Valid
+--123|Valid
+-+123|Valid
++-123|Valid
+++123|Valid
+- 123|Valid
++ 123|Valid
++\n123|Valid
+1209|Valid
+12/3|Valid
+12;3|Valid
+1|Valid
+a1|Valid
+--1|Valid
+++1|Valid
++1|Valid
+-1|Valid
+0|Valid
++42lValidon|Valid
++101|Valid
+"-+42|Valid
+"+-42|Valid
++\t\v\n\r\f42|Valid
+-\t\v\n\r\f42|Valid
+1\t\v\n\r\f42|Valid
+-1\t\v\n\r\f42|Valid

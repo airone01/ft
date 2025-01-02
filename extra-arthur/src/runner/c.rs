@@ -13,7 +13,7 @@ use std::{
 
 use async_trait::async_trait;
 
-use super::{IndividualResult, TestCase, TestResult, TestRunner, TestStatus};
+use super::{IndividualResult, TestCase, TestError, TestResult, TestRunner, TestStatus};
 
 #[derive(Clone)]
 pub struct CTestRunner {
@@ -26,7 +26,7 @@ impl CTestRunner {
         Self { work_dir, lib_name }
     }
 
-    async fn compile(&self, test_file: &Path, output_file: &Path) -> Result<(), String> {
+    async fn compile(&self, test_file: &Path, output_file: &Path) -> Result<(), TestError> {
         let output = tokio::process::Command::new("cc")
             .current_dir(&self.work_dir)
             .args(&["-Wall", "-Wextra", "-Werror", "-Wpedantic", "-g3"])
@@ -38,25 +38,29 @@ impl CTestRunner {
             .arg("-I.") // Add the current directory to header search path
             .output()
             .await
-            .map_err(|e| format!("Failed to execute gcc: {}", e))?;
+            .map_err(|e| TestError::Compilation(format!("Failed to compile: {}", e)))?;
 
         if !output.status.success() {
-            return Err(String::from_utf8_lossy(&output.stderr).to_string());
+            return Err(TestError::Compilation(
+                String::from_utf8_lossy(&output.stderr).to_string(),
+            ));
         }
 
         Ok(())
     }
 
-    async fn run_single_test(&self, executable: &Path, arg: &str) -> Result<String, String> {
+    async fn run_single_test(&self, executable: &Path, arg: &str) -> Result<String, TestError> {
         let output = tokio::process::Command::new(executable)
             .current_dir(&self.work_dir)
             .arg(arg)
             .output()
             .await
-            .map_err(|e| format!("Failed to execute test: {}", e))?;
+            .map_err(|e| TestError::Runtime(format!("Failed to execute test: {}", e)))?;
 
         if !output.status.success() {
-            return Err(String::from_utf8_lossy(&output.stderr).to_string());
+            return Err(TestError::Runtime(
+                String::from_utf8_lossy(&output.stderr).to_string(),
+            ));
         }
 
         Ok(String::from_utf8_lossy(&output.stdout).to_string())
@@ -74,15 +78,18 @@ impl TestRunner for CTestRunner {
         // Write and compile test file
         if let Err(e) = tokio::fs::write(&test_file, &test_case.source).await {
             return TestResult {
-                status: TestStatus::Failed(format!("Failed to write test file: {}", e)),
+                status: TestStatus::Failed(TestError::FileSystem(format!(
+                    "Failed to write test file: {}",
+                    e
+                ))),
                 duration: start_time.elapsed(),
                 results: vec![],
             };
         }
 
-        if let Err(e) = self.compile(&test_file, &output_file).await {
+        if let Err(err) = self.compile(&test_file, &output_file).await {
             return TestResult {
-                status: TestStatus::Failed(format!("Compilation failed: {}", e)),
+                status: TestStatus::Failed(err),
                 duration: start_time.elapsed(),
                 results: vec![],
             };
@@ -109,12 +116,9 @@ impl TestRunner for CTestRunner {
                         index: test_input.index,
                     });
                 }
-                Err(e) => {
+                Err(err) => {
                     return TestResult {
-                        status: TestStatus::Failed(format!(
-                            "Test failed with input '{}': {}",
-                            test_input.input, e
-                        )),
+                        status: TestStatus::Failed(err),
                         duration: start_time.elapsed(),
                         results,
                     }
@@ -126,7 +130,7 @@ impl TestRunner for CTestRunner {
             status: if all_passed {
                 TestStatus::Passed
             } else {
-                TestStatus::Failed("Some tests failed".to_string())
+                TestStatus::Failed(TestError::Other("Some tests failed".to_string()))
             },
             duration: start_time.elapsed(),
             results,
