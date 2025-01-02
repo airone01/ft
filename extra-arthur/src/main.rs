@@ -35,7 +35,7 @@ async fn main() {
     match project {
         Project::Libft => {
             let runner = CTestRunner::new(args.cwd.clone(), "ft".to_string());
-            let mut libft = LibftTest::new(args.cwd);
+            let mut libft = LibftTest::new();
 
             if let Err(e) = libft.load_tests().await {
                 error!("Error loading tests: {}", e);

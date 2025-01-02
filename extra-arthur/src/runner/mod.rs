@@ -16,7 +16,6 @@ pub mod results;
 
 #[derive(Debug, Clone)]
 pub struct TestCase {
-    pub id: usize,
     pub name: String,
     pub source: String,
     pub test_inputs: Vec<TestInput>,
@@ -30,7 +29,7 @@ pub struct TestInput {
 }
 
 impl TestCase {
-    pub fn new(id: usize, name: String, source: String, inputs: Vec<(String, String)>) -> Self {
+    pub fn new(name: String, source: String, inputs: Vec<(String, String)>) -> Self {
         let test_inputs = inputs
             .into_iter()
             .enumerate()
@@ -42,7 +41,6 @@ impl TestCase {
             .collect();
 
         Self {
-            id,
             name,
             source,
             test_inputs,
@@ -71,9 +69,6 @@ impl fmt::Display for TestError {
 
 #[derive(Debug, Clone)]
 pub enum TestStatus {
-    NotStarted,
-    Compiling,
-    Running,
     Passed,
     Failed(TestError),
 }
@@ -81,9 +76,6 @@ pub enum TestStatus {
 impl fmt::Display for TestStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            TestStatus::NotStarted => write!(f, "Not Started"),
-            TestStatus::Compiling => write!(f, "Compiling"),
-            TestStatus::Running => write!(f, "Running"),
             TestStatus::Passed => write!(f, "Passed"),
             TestStatus::Failed(err) => write!(f, "{}", err),
         }
@@ -109,5 +101,4 @@ pub struct TestResult {
 #[async_trait]
 pub trait TestRunner {
     async fn run(&self, test_case: &TestCase) -> TestResult;
-    async fn cleanup(&self) -> std::io::Result<()>;
 }

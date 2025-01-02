@@ -43,11 +43,4 @@ impl Project {
         debug!("No project detected");
         Project::Unknown
     }
-
-    pub fn test_dir(&self) -> &str {
-        match self {
-            Project::Libft => "tests/libft",
-            Project::Unknown => "",
-        }
-    }
 }

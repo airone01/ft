@@ -136,8 +136,4 @@ impl TestRunner for CTestRunner {
             results,
         }
     }
-
-    async fn cleanup(&self) -> std::io::Result<()> {
-        Ok(()) // Temp dir is cleaned up automatically
-    }
 }

@@ -5,7 +5,6 @@ use log::debug;
 use crate::runner::{cat_e::CatE, TestCase};
 
 pub struct LibftTest {
-    work_dir: PathBuf,
     test_files: Vec<TestFile>,
 }
 
@@ -21,11 +20,8 @@ struct TestInput {
 }
 
 impl LibftTest {
-    pub fn new(work_dir: PathBuf) -> Self {
-        Self {
-            work_dir,
-            test_files: vec![],
-        }
+    pub fn new() -> Self {
+        Self { test_files: vec![] }
     }
 
     pub async fn load_tests(&mut self) -> std::io::Result<()> {
@@ -97,15 +93,14 @@ impl LibftTest {
     pub fn get_test_cases(&self) -> Vec<TestCase> {
         self.test_files
             .iter()
-            .enumerate()
-            .map(|(id, test)| {
+            .map(|test| {
                 let inputs = test
                     .test_cases
                     .iter()
                     .map(|tc| (tc.input.clone(), tc.expected.clone()))
                     .collect::<Vec<_>>();
 
-                TestCase::new(id, test.name.clone(), test.source.clone(), inputs)
+                TestCase::new(test.name.clone(), test.source.clone(), inputs)
             })
             .collect()
     }
