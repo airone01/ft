@@ -18,8 +18,8 @@
  */
 void	stack_clear(t_stack *stack)
 {
-	t_stack *current;
-	t_stack *next;
+	t_stack	*current;
+	t_stack	*next;
 
 	current = stack;
 	while (current)

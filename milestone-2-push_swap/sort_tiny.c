@@ -19,17 +19,17 @@
  * with indexes 1 2 3.
  * @param   stack   Stack
  */
-void    sort_tiny(t_stack **stack)
+void	sort_tiny(t_stack **stack)
 {
-    ssize_t high;
+	ssize_t	high;
 
-    if (stack_sorted(*stack))
-        return ;
-    high = stack_maxn(*stack)->idx;
-    if ((*stack)->idx == high)
-        ra(stack);
-    else if ((*stack)->next->idx == high)
-        rra(stack);
-    if ((*stack)->idx > (*stack)->next->idx)
-        sa(*stack);
+	if (stack_sorted(*stack))
+		return ;
+	high = stack_maxn(*stack)->idx;
+	if ((*stack)->idx == high)
+		ra(stack);
+	else if ((*stack)->next->idx == high)
+		rra(stack);
+	if ((*stack)->idx > (*stack)->next->idx)
+		sa(*stack);
 }

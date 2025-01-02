@@ -23,15 +23,15 @@
  * @param   cost_a  Cost of stack A
  * @param   cost_b  Cost of stack B
  */
-static void rrr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
-                     ssize_t *cost_b)
+static void	rrr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
+		ssize_t *cost_b)
 {
-    while (*cost_a < 0 && *cost_b < 0)
-    {
-        (*cost_a)++;
-        (*cost_b)++;
-        rrr(stack_a, stack_b);
-    }
+	while (*cost_a < 0 && *cost_b < 0)
+	{
+		(*cost_a)++;
+		(*cost_b)++;
+		rrr(stack_a, stack_b);
+	}
 }
 
 /**
@@ -45,15 +45,15 @@ static void rrr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
  * @param   cost_a  Cost of stack A
  * @param   cost_b  Cost of stack B
  */
-static void rr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
-                     ssize_t *cost_b)
+static void	rr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
+		ssize_t *cost_b)
 {
-    while (*cost_a > 0 && *cost_b > 0)
-    {
-        (*cost_a)--;
-        (*cost_b)--;
-        rr(stack_a, stack_b);
-    }
+	while (*cost_a > 0 && *cost_b > 0)
+	{
+		(*cost_a)--;
+		(*cost_b)--;
+		rr(stack_a, stack_b);
+	}
 }
 
 /**
@@ -62,21 +62,21 @@ static void rr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
  * @param   stack_a Stack A
  * @param   cost    Cost of stack A
  */
-static void ra_both(t_stack **stack_a, ssize_t *cost)
+static void	ra_both(t_stack **stack_a, ssize_t *cost)
 {
-    while(*cost)
-    {
-        if (*cost > 0)
-        {
-            ra(stack_a);
-            (*cost)--;
-        }
-        else if (*cost < 0)
-        {
-            rra(stack_a);
-            (*cost)++;
-        }
-    }
+	while (*cost)
+	{
+		if (*cost > 0)
+		{
+			ra(stack_a);
+			(*cost)--;
+		}
+		else if (*cost < 0)
+		{
+			rra(stack_a);
+			(*cost)++;
+		}
+	}
 }
 
 /**
@@ -85,21 +85,21 @@ static void ra_both(t_stack **stack_a, ssize_t *cost)
  * @param   stack_b Stack B
  * @param   cost    Cost of stack B
  */
-static void rb_both(t_stack **stack_b, ssize_t *cost)
+static void	rb_both(t_stack **stack_b, ssize_t *cost)
 {
-    while(*cost)
-    {
-        if (*cost > 0)
-        {
-            rb(stack_b);
-            (*cost)--;
-        }
-        else if (*cost < 0)
-        {
-            rrb(stack_b);
-            (*cost)++;
-        }
-    }
+	while (*cost)
+	{
+		if (*cost > 0)
+		{
+			rb(stack_b);
+			(*cost)--;
+		}
+		else if (*cost < 0)
+		{
+			rrb(stack_b);
+			(*cost)++;
+		}
+	}
 }
 
 /**
@@ -113,14 +113,14 @@ static void rb_both(t_stack **stack_b, ssize_t *cost)
  * @param   cost_a  Cost of stack A
  * @param   cost_b  Cost of stack B
  */
-void    move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a,
-             ssize_t cost_b)
+void	move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a,
+		ssize_t cost_b)
 {
-    if (cost_a < 0 && cost_b < 0)
-        rrr_both(stack_a, stack_b, &cost_a, &cost_b);
-    else
-        rr_both(stack_a, stack_b, &cost_a, &cost_b);
-    ra_both(stack_a, &cost_a);
-    rb_both(stack_b, &cost_b);
-    pa(stack_a, stack_b);
+	if (cost_a < 0 && cost_b < 0)
+		rrr_both(stack_a, stack_b, &cost_a, &cost_b);
+	else
+		rr_both(stack_a, stack_b, &cost_a, &cost_b);
+	ra_both(stack_a, &cost_a);
+	rb_both(stack_b, &cost_b);
+	pa(stack_a, stack_b);
 }

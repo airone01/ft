@@ -12,9 +12,9 @@
 
 #include "push_swap.h"
 
-static void swap(t_stack *stack)
+static void	swap(t_stack *stack)
 {
-    ssize_t tmp;
+	ssize_t	tmp;
 
 	if (!stack || !stack->next)
 		return ;
@@ -31,10 +31,10 @@ static void swap(t_stack *stack)
  * Do nothing if there is only one or no elements.
  * @param   stack_a Stack A
  */
-void    sa(t_stack *stack_a)
+void	sa(t_stack *stack_a)
 {
-    swap(stack_a);
-    write(1, "sa\n", 3);
+	swap(stack_a);
+	write(1, "sa\n", 3);
 }
 
 /**
@@ -42,10 +42,10 @@ void    sa(t_stack *stack_a)
  * Do nothing if there is only one or no elements.
  * @param   stack_b Stack B
  */
-void    sb(t_stack *stack_b)
+void	sb(t_stack *stack_b)
 {
-    swap(stack_b);
-    write(1, "sb\n", 3);
+	swap(stack_b);
+	write(1, "sb\n", 3);
 }
 
 /**
@@ -53,9 +53,9 @@ void    sb(t_stack *stack_b)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void    ss(t_stack *stack_a, t_stack *stack_b)
+void	ss(t_stack *stack_a, t_stack *stack_b)
 {
-    swap(stack_a);
-    swap(stack_b);
-    write(1, "ss\n", 3);
+	swap(stack_a);
+	swap(stack_b);
+	write(1, "ss\n", 3);
 }

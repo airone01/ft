@@ -17,9 +17,9 @@
  * @param   nb  Number to get the absolute value of
  * @return      Absolute value of nb
  */
-ssize_t ft_abs(ssize_t nb)
+ssize_t	ft_abs(ssize_t nb)
 {
-    if (nb < 0)
-        return (-nb);
-    return (nb);
+	if (nb < 0)
+		return (-nb);
+	return (nb);
 }

@@ -12,16 +12,16 @@
 
 #include "push_swap.h"
 
-static void push(t_stack **dest, t_stack **src)
+static void	push(t_stack **dest, t_stack **src)
 {
-    t_stack *tmp;
+	t_stack	*tmp;
 
-    if (!*src)
-        return ;
-    tmp = *src;
-    *src = (*src)->next;
-    tmp->next = *dest;
-    *dest = tmp;
+	if (!*src)
+		return ;
+	tmp = *src;
+	*src = (*src)->next;
+	tmp->next = *dest;
+	*dest = tmp;
 }
 
 /**
@@ -30,10 +30,10 @@ static void push(t_stack **dest, t_stack **src)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void    pa(t_stack **stack_a, t_stack **stack_b)
+void	pa(t_stack **stack_a, t_stack **stack_b)
 {
-    push(stack_a, stack_b);
-    write(1, "pa\n", 3);
+	push(stack_a, stack_b);
+	write(1, "pa\n", 3);
 }
 
 /**
@@ -42,8 +42,8 @@ void    pa(t_stack **stack_a, t_stack **stack_b)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void    pb(t_stack **stack_a, t_stack **stack_b)
+void	pb(t_stack **stack_a, t_stack **stack_b)
 {
-    push(stack_b, stack_a);
-    write(1, "pb\n", 3);
+	push(stack_b, stack_a);
+	write(1, "pb\n", 3);
 }

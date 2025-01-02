@@ -23,4 +23,4 @@ jobs:
         python3 -m pip install norminette
 
     - name: Run norminette
-      run: norminette
+      run: norminette milestone-{0-libft,1-get_next_line,1-printf,2-push_swap}

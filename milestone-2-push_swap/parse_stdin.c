@@ -14,10 +14,11 @@
 
 static void	strs_clear(char **strs)
 {
-	char **ptr;
+	char	**ptr;
 
 	ptr = strs;
-	while (*strs) {
+	while (*strs)
+	{
 		free(*strs);
 		strs++;
 	}
@@ -39,8 +40,8 @@ static void	all_clear(char **strs, t_stack *stack)
 t_stack	*parse_and_add_anyway(t_stack *head, char *str)
 {
 	ssize_t	nbr;
-	size_t  i;
-	char    **strs;
+	size_t	i;
+	char	**strs;
 
 	i = 0;
 	strs = ft_split(str, ' ');

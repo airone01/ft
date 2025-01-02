@@ -26,11 +26,11 @@ t_stack	*stack_new(long nbr)
 	if (!head)
 		return (NULL);
 	head->val = nbr;
-    head->next = NULL;
-    head->idx = 0;
-    head->pos = 0;
-    head->t_pos = 0;
-    head->cost_a = 0;
-    head->cost_b = 0;
+	head->next = NULL;
+	head->idx = 0;
+	head->pos = 0;
+	head->t_pos = 0;
+	head->cost_a = 0;
+	head->cost_b = 0;
 	return (head);
 }

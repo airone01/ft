@@ -19,14 +19,14 @@
  */
 void	stack_add_back(t_stack *stack, long nbr)
 {
-	t_stack *last;
-	t_stack *tmp;
+	t_stack	*last;
+	t_stack	*tmp;
 
 	if (!stack)
-		return;
+		return ;
 	tmp = stack_new(nbr);
 	if (!tmp)
-		return;
+		return ;
 	last = stack_last(stack);
 	last->next = tmp;
 }

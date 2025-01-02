@@ -17,14 +17,14 @@
  * @param   stack   Stack to search
  * @return          First node with the highest value
  */
-t_stack *stack_maxn(t_stack *stack)
+t_stack	*stack_maxn(t_stack *stack)
 {
-    t_stack *tmp;
+	t_stack	*tmp;
 
-    if (!stack->next)
-        return (stack);
-    tmp = stack_maxn(stack->next);
-    if (stack->val > tmp->val)
-        return (stack);
-    return (tmp);
+	if (!stack->next)
+		return (stack);
+	tmp = stack_maxn(stack->next);
+	if (stack->val > tmp->val)
+		return (stack);
+	return (tmp);
 }

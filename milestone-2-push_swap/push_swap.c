@@ -34,8 +34,8 @@ size_t	args_legit(int argc, char **argv)
 			return (0);
 		while (*str)
 		{
-			if (!ft_isdigit(*str) && !(*str == ' ' || (*str >= 7
-						&& *str <= 15)) && !(*str == '+' || *str == '-'))
+			if (!ft_isdigit(*str) && !(*str == ' ' || (*str >= 7 && *str <= 15))
+				&& !(*str == '+' || *str == '-'))
 				return (0);
 			str++;
 		}
@@ -48,20 +48,20 @@ size_t	args_legit(int argc, char **argv)
  * Chooses a sorting method depending on stack to be sorted
  * @param   stack_a Stack A
  */
-void    push_swap(t_stack *stack_a)
+void	push_swap(t_stack *stack_a)
 {
-    t_stack	*stack_b;
-    size_t  len;
+	t_stack	*stack_b;
+	size_t	len;
 
-    stack_b = NULL;
-    len = stack_size(stack_a);
-    stack_indexes(stack_a, len);
-    if (len == 2 && !stack_sorted(stack_a))
-        sa(stack_a);
-    else if (len == 3)
-        sort_tiny(&stack_a);
-    else if (len > 3 && !stack_sorted(stack_a))
-        sort_large(&stack_a, &stack_b);
+	stack_b = NULL;
+	len = stack_size(stack_a);
+	stack_indexes(stack_a, len);
+	if (len == 2 && !stack_sorted(stack_a))
+		sa(stack_a);
+	else if (len == 3)
+		sort_tiny(&stack_a);
+	else if (len > 3 && !stack_sorted(stack_a))
+		sort_large(&stack_a, &stack_b);
 }
 
 /**
@@ -78,9 +78,9 @@ int	main(int argc, char **argv)
 		return (1);
 	argc--;
 	argv++;
-    if (!args_legit(argc, argv))
+	if (!args_legit(argc, argv))
 		return (std_error(), 1);
-    stack_a = parse_stdin(argc, argv);
+	stack_a = parse_stdin(argc, argv);
 	if (!stack_a)
 		return (std_error(), 1);
 	push_swap(stack_a);

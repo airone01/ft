@@ -12,17 +12,17 @@
 
 #include "push_swap.h"
 
-static void reverse_rotate(t_stack **stack)
+static void	reverse_rotate(t_stack **stack)
 {
-    t_stack *last;
-    t_stack *pre_last;
+	t_stack	*last;
+	t_stack	*pre_last;
 
-    last = stack_last(*stack);
+	last = stack_last(*stack);
 	pre_last = stack_before_last(*stack);
 	if (pre_last)
 		pre_last->next = NULL;
 	last->next = *stack;
-    *stack = last;
+	*stack = last;
 }
 
 /**
@@ -30,10 +30,10 @@ static void reverse_rotate(t_stack **stack)
  * The last element becomes the first one.
  * @param   stack_a Stack A
  */
-void    rra(t_stack **stack_a)
+void	rra(t_stack **stack_a)
 {
-    reverse_rotate(stack_a);
-    write(1, "rra\n", 4);
+	reverse_rotate(stack_a);
+	write(1, "rra\n", 4);
 }
 
 /**
@@ -41,9 +41,9 @@ void    rra(t_stack **stack_a)
  * The last element becomes the first one.
  * @param   stack_b Stack B
  */
-void    rrb(t_stack **stack_b)
+void	rrb(t_stack **stack_b)
 {
-    reverse_rotate(stack_b);
+	reverse_rotate(stack_b);
 	write(1, "rrb\n", 4);
 }
 
@@ -52,9 +52,9 @@ void    rrb(t_stack **stack_b)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void    rrr(t_stack **stack_a, t_stack **stack_b)
+void	rrr(t_stack **stack_a, t_stack **stack_b)
 {
-    reverse_rotate(stack_a);
-    reverse_rotate(stack_b);
+	reverse_rotate(stack_a);
+	reverse_rotate(stack_b);
 	write(1, "rrr\n", 4);
 }
