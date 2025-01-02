@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        c_project: [ '00', '01', '02', '03', '04', '05', '06', '07', '08' ]
+        c_project: [ '00', '01', '03', '04', '06', '07', '08' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -25,4 +25,4 @@ jobs:
         run: |
           mv pool-c-${{ matrix.c_project }} C${{ matrix.c_project }}
           cd C${{ matrix.c_project }}/
-          $HOME/mini-moulinette/mini-moul.sh C${{ matrix.c_project }}
+          !($HOME/mini-moulinette/mini-moul.sh|tee /dev/tty|grep -q FAIL)

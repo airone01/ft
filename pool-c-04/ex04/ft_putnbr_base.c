@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:37:33 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/18 13:37:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 22:11:59 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdint.h>
 #include <unistd.h>
-// For tests
-// #include <stdlib.h>
 
 int	ft_strlen(char *str)
 {
@@ -47,28 +46,23 @@ int	bad_base(char *base)
 	return (0);
 }
 
-void	ft_putnbr_base(int nbr, char *base)
+ssize_t	ft_putnbr_base(uintptr_t nbr, char *base)
 {
-	int	base_len;
+	ssize_t	count;
+	size_t	base_len;
 
-	base_len = ft_strlen(base);
 	if (bad_base(base))
-		return ;
-	if (nbr < 0)
+		return (0);
+	count = 0;
+	base_len = ft_strlen(base);
+	if ((long)nbr < 0)
 	{
-		write(1, "-", 1);
-		ft_putnbr_base(-nbr, base);
-		return ;
+		count += write(1, "-", 1);
+		count += ft_putnbr_base(-nbr, base);
+		return (count);
 	}
 	if (nbr >= base_len)
-	{
-		ft_putnbr_base(nbr / base_len, base);
-	}
-	write(1, &(base[nbr % base_len]), 1);
+		count += ft_putnbr_base(nbr / base_len, base);
+	count += write(1, &(base[nbr % base_len]), 1);
+	return (count);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	(void) argc;
-// 	ft_putnbr_base(atoi(argv[1]), argv[2]);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 22:33:07 by elagouch          #+#    #+#             */
-/*   Updated: 2024/09/22 23:05:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 22:34:49 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ int	ft_sqrt(int nb)
 {
 	int	i;
 
-	if (nb <= 1)
+	if (nb < 1)
 		return (0);
 	i = 1;
 	while ((i * i) < nb)
