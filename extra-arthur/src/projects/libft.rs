@@ -1,5 +1,5 @@
 use crate::runner::TestCase;
-use log::{debug, info};
+use log::debug;
 use std::path::PathBuf;
 
 pub struct LibftTest {
@@ -26,14 +26,15 @@ impl LibftTest {
         }
     }
 
-    pub fn load_tests(&mut self) -> std::io::Result<()> {
+    pub async fn load_tests(&mut self) -> std::io::Result<()> {
         // Load all test directories under tests/libft/
         let test_dir = PathBuf::from("tests/libft");
         debug!("Looking for tests in: {}", test_dir.display());
 
-        for entry in std::fs::read_dir(test_dir)? {
-            let entry = entry?;
-            if entry.file_type()?.is_dir() {
+        let mut entries = tokio::fs::read_dir(&test_dir).await?;
+        while let Some(entry) = entries.next_entry().await? {
+            let entry = entry;
+            if entry.file_type().await?.is_dir() {
                 let fn_name = entry.file_name();
                 let fn_name = fn_name.to_string_lossy();
                 debug!("Found test directory: {}", fn_name);
@@ -57,7 +58,12 @@ impl LibftTest {
                             let parts: Vec<_> = line.split('|').collect();
                             if parts.len() == 2 {
                                 let input = parts[0].to_string();
-                                let expected = parts[1].replace("\\n", "\n");
+                                let expected = parts[1]
+                                    .replace("\\n", "\n")
+                                    .replace("\\t", "\t")
+                                    .replace("\\v", "\u{000b}")
+                                    .replace("\\r", "\r")
+                                    .replace("\\f", "\u{000c}");
                                 debug!("Test case - Input: {:?}, Expected: {:?}", input, expected);
                                 Some(TestInput { input, expected })
                             } else {
@@ -73,7 +79,7 @@ impl LibftTest {
                         source,
                         test_cases,
                     });
-                    info!("Loaded {} test cases for {}", cases_count, fn_name);
+                    debug!("Loaded {} test cases for {}", cases_count, fn_name);
                 } else {
                     debug!("Missing test files for {}", fn_name);
                 }

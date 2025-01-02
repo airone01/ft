@@ -7,14 +7,15 @@
 //! - Comparing results with expected output
 
 use std::{
-    fs,
     path::{Path, PathBuf},
-    process::Command,
     time::Instant,
 };
 
+use async_trait::async_trait;
+
 use super::{IndividualResult, TestCase, TestResult, TestRunner, TestStatus};
 
+#[derive(Clone)]
 pub struct CTestRunner {
     work_dir: PathBuf,
     lib_name: String,
@@ -25,14 +26,10 @@ impl CTestRunner {
         Self { work_dir, lib_name }
     }
 
-    fn compile(&self, test_file: &Path, output_file: &Path) -> Result<(), String> {
-        let output = Command::new("cc")
+    async fn compile(&self, test_file: &Path, output_file: &Path) -> Result<(), String> {
+        let output = tokio::process::Command::new("cc")
             .current_dir(&self.work_dir)
-            .arg("-Wall")
-            .arg("-Wextra")
-            .arg("-Werror")
-            .arg("-Wpedantic")
-            .arg("-g3")
+            .args(&["-Wall", "-Wextra", "-Werror", "-Wpedantic", "-g3"])
             .arg("-o")
             .arg(output_file)
             .arg(test_file)
@@ -40,6 +37,7 @@ impl CTestRunner {
             .arg("-L.") // Add the current directory to library search path
             .arg("-I.") // Add the current directory to header search path
             .output()
+            .await
             .map_err(|e| format!("Failed to execute gcc: {}", e))?;
 
         if !output.status.success() {
@@ -49,11 +47,12 @@ impl CTestRunner {
         Ok(())
     }
 
-    fn run_single_test(&self, executable: &Path, arg: &str) -> Result<String, String> {
-        let output = Command::new(executable)
+    async fn run_single_test(&self, executable: &Path, arg: &str) -> Result<String, String> {
+        let output = tokio::process::Command::new(executable)
             .current_dir(&self.work_dir)
             .arg(arg)
             .output()
+            .await
             .map_err(|e| format!("Failed to execute test: {}", e))?;
 
         if !output.status.success() {
@@ -64,15 +63,16 @@ impl CTestRunner {
     }
 }
 
+#[async_trait]
 impl TestRunner for CTestRunner {
-    fn run(&self, test_case: &TestCase) -> TestResult {
+    async fn run(&self, test_case: &TestCase) -> TestResult {
         let start_time = Instant::now();
         let temp_dir = tempfile::tempdir().unwrap();
         let test_file = temp_dir.path().join(format!("{}.c", test_case.name));
         let output_file = temp_dir.path().join(&test_case.name);
 
         // Write and compile test file
-        if let Err(e) = fs::write(&test_file, &test_case.source) {
+        if let Err(e) = tokio::fs::write(&test_file, &test_case.source).await {
             return TestResult {
                 status: TestStatus::Failed(format!("Failed to write test file: {}", e)),
                 duration: start_time.elapsed(),
@@ -80,7 +80,7 @@ impl TestRunner for CTestRunner {
             };
         }
 
-        if let Err(e) = self.compile(&test_file, &output_file) {
+        if let Err(e) = self.compile(&test_file, &output_file).await {
             return TestResult {
                 status: TestStatus::Failed(format!("Compilation failed: {}", e)),
                 duration: start_time.elapsed(),
@@ -93,7 +93,7 @@ impl TestRunner for CTestRunner {
         let mut all_passed = true;
 
         for test_input in &test_case.test_inputs {
-            match self.run_single_test(&output_file, &test_input.input) {
+            match self.run_single_test(&output_file, &test_input.input).await {
                 Ok(output) => {
                     let output = output.trim().to_string();
                     let passed = output == test_input.expected.trim();
@@ -133,7 +133,7 @@ impl TestRunner for CTestRunner {
         }
     }
 
-    fn cleanup(&self) -> std::io::Result<()> {
+    async fn cleanup(&self) -> std::io::Result<()> {
         Ok(()) // Temp dir is cleaned up automatically
     }
 }

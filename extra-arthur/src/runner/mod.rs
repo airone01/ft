@@ -7,6 +7,9 @@
 //!
 use std::fmt;
 use std::time::Duration;
+
+use async_trait::async_trait;
+
 pub mod c;
 
 #[derive(Debug, Clone)]
@@ -81,7 +84,8 @@ pub struct TestResult {
     pub results: Vec<IndividualResult>,
 }
 
+#[async_trait]
 pub trait TestRunner {
-    fn run(&self, test_case: &TestCase) -> TestResult;
-    fn cleanup(&self) -> std::io::Result<()>;
+    async fn run(&self, test_case: &TestCase) -> TestResult;
+    async fn cleanup(&self) -> std::io::Result<()>;
 }
