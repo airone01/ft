@@ -1,6 +1,6 @@
 name: Make
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
@@ -11,7 +11,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64]
-        target: [libft]
+        target: [libft, get_next_line, printf, push_swap]
         include:
           # Linux builds
           - os: ubuntu-latest

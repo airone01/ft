@@ -1,28 +1,28 @@
 name: Mini-moulinette
 
 on:
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
-    workflow_dispatch:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                c_project: [ '00', '01', '02', '03', '04', '05', '06', '07', '08' ]
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        c_project: [ '00', '01', '02', '03', '04', '05', '06', '07', '08' ]
 
-        steps:
-            -   uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-            -   name: Install mini-moulinette
-                run: |
-                    git clone https://github.com/khairulhaaziq/mini-moulinette.git $HOME/mini-moulinette
+      - name: Install mini-moulinette
+        run: |
+          git clone https://github.com/khairulhaaziq/mini-moulinette.git $HOME/mini-moulinette
 
-            -   name: Run mini-moulinette tests
-                run: |
-                    mv pool-c-${{ matrix.c_project }} C${{ matrix.c_project }}
-                    cd C${{ matrix.c_project }}/
-                    $HOME/mini-moulinette/mini-moul.sh C${{ matrix.c_project }}
+      - name: Run mini-moulinette tests
+        run: |
+          mv pool-c-${{ matrix.c_project }} C${{ matrix.c_project }}
+          cd C${{ matrix.c_project }}/
+          $HOME/mini-moulinette/mini-moul.sh C${{ matrix.c_project }}
