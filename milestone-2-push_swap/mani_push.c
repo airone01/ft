@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mani_push.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:56:18 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 19:03:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:21:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	push(t_stack **dest, t_stack **src)
 void	pa(t_stack **stack_a, t_stack **stack_b)
 {
 	push(stack_a, stack_b);
-	write(1, "pa\n", 3);
+	(void)!write(1, "pa\n", 3);
 }
 
 /**
@@ -45,5 +45,5 @@ void	pa(t_stack **stack_a, t_stack **stack_b)
 void	pb(t_stack **stack_a, t_stack **stack_b)
 {
 	push(stack_b, stack_a);
-	write(1, "pb\n", 3);
+	(void)!write(1, "pb\n", 3);
 }

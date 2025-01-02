@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
+#    By: elagouch <airone01@proton.me>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 12:51:33 by elagouch          #+#    #+#              #
-#    Updated: 2024/11/29 09:26:29 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/02 18:21:38 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,6 @@ CD		= cd
 JOBS	= 			\
 	0:libft 		\
 	1:printf		\
-	1:born2beroot	\
-	1:get_next_line	\
 	2:push_swap
 
 # ------------ Mapping -----------

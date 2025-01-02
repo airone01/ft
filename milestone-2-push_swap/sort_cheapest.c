@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_cheapest.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:37:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 13:44:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:22:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	cheapest_move(t_stack **stack_a, t_stack **stack_b)
 
 	if (!stack_b || !*stack_b)
 		return ;
+	cost_a = 0;
+	cost_b = 0;
 	tmp = *stack_b;
 	cheap = LONG_MAX;
 	while (tmp)
