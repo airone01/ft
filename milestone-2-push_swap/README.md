@@ -18,7 +18,16 @@ make
 make libft
 ```
 
-### `printf`
+## Test
+
+### Against tester
+
 ```shell
-make printf
+bash ./tester.sh
+```
+
+### Visually
+
+```shell
+make visualize
 ```

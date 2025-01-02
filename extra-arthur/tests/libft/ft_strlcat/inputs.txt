@@ -1,0 +1,4 @@
+hello|Result: 7\nBuffer: hihello
+world|Result: 7\nBuffer: hiworld
+|Result: 2\nBuffer: hi
+   |Result: 5\nBuffer: hi

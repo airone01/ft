@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base_ssize.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:37:33 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/20 13:33:15 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:17:30 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ ssize_t	ft_putnbr_base_ssize_ulong(uintptr_t nbr, char *base)
 		return (0);
 	count = 0;
 	base_len = ft_strlen(base);
-	if (nbr < 0)
+	if ((long)nbr < 0)
 	{
 		count += write(1, "-", 1);
 		count += ft_putnbr_base_ssize_ulong(-nbr, base);

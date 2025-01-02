@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   std_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:46:40 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 16:48:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 18:23:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
  */
 void	std_error(void)
 {
-	write(2, "Error\n", 6);
+	(void)!write(2, "Error\n", 6);
 }

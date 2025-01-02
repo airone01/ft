@@ -6,19 +6,16 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:20 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/29 19:57:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2024/12/16 13:44:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /**
- * @brief	Get the length of a string
- *
+ * Get the length of a string
  * @param	str The string to get the length of
- *
  * @returns	The length of the string
- *
  * @note	Implemented iteratively and not recursively to avoid stack overflow
  */
 size_t	ft_strlen(const char *str)
@@ -34,11 +31,9 @@ size_t	ft_strlen(const char *str)
 }
 
 /**
- * @brief	Joins two strings together
- *
+ * Joins two strings together
  * @param	s1 The first string
  * @param	s2 The second string
- *
  * @returns	A new string that is the result of joining s1 and s2
  * @note	The caller is responsible for freeing the memory
  */
@@ -63,10 +58,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 /**
- * @brief	Duplicates a string.
- *
+ * Duplicates a string.
  * @param	s string to duplicate
- *
  * @returns	A pointer to the newly allocated string,
  * 			or NULL if the allocation failed
  */
@@ -88,12 +81,10 @@ char	*ft_strdup(const char *s)
 }
 
 /**
- * @brief	Locates the first occurrence of c in the string s
- * 			or returns NULL if c is not found
- *
+ * Locates the first occurrence of c in the string s
+ * or returns NULL if c is not found
  * @param	s The string to search
  * @param	c The character to search for
- *
  * @returns	A pointer to the allocated memory
  */
 char	*ft_strchr(const char *s, int c)
@@ -109,29 +100,4 @@ char	*ft_strchr(const char *s, int c)
 	if (*s == (char)c)
 		return ((char *)s);
 	return (NULL);
-}
-
-/**
- * @brief	Returns the remaining buffer from the first newline character
- *
- * @param	buffer The buffer to search
- *
- * @returns	The remaining buffer from the first newline character
- */
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	uint8_t	*p;
-	size_t	total;
-	void	*ptr;
-
-	if (size && nmemb > __SIZE_MAX__ / size)
-		return (0);
-	ptr = malloc(size * nmemb);
-	if (!ptr)
-		return (0);
-	p = ptr;
-	total = size * nmemb;
-	while (total--)
-		*p++ = 0;
-	return (ptr);
 }

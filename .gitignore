@@ -57,10 +57,16 @@ dkms.conf
 *.bonus
 
 # LLMs
-*repomix*
+repomix-output.txt
 
 # nix-direnv
 .direnv/
 
 # CMake
 compile_commands.json
+
+# Jetbrains
+**/.idea/
+
+# Rust
+target/

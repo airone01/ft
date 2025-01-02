@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/12 14:06:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/02 17:32:10 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
  */
 static int	is_overflow(long long result, int nbr)
 {
-	if ((result > LLONG_MAX / 10) || (result == LLONG_MAX / 10 && nbr >
-        LLONG_MAX % 10))
+	if ((result > LLONG_MAX / 10) || (result == LLONG_MAX / 10 && nbr
+			> LLONG_MAX % 10))
 		return (1);
 	return (0);
 }
