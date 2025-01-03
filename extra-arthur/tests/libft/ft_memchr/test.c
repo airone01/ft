@@ -17,11 +17,11 @@
 int	main(int argc, char **argv)
 {
 	void	*result;
-	char	str[];
+	char	*str;
 
 	if (argc != 2)
 		return (1);
-	str = "Hello World";
+    str = strdup("Hello");
 	result = ft_memchr(str, argv[1][0], strlen(str));
 	if (result)
 		printf("Found at position: %ld\n", (char *)result - str);

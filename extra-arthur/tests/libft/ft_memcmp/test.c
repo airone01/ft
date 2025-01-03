@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <string.h>
 #include "libft.h"
 
 int	main(int argc, char **argv)
 {
-	char	s1[];
+	char	*s1;
 
 	if (argc != 2)
 		return (1);
-	s1 = "Hello";
+	s1 = strdup("Hello");
 	printf("%d\n", ft_memcmp(s1, argv[1], 5));
 	return (0);
 }
