@@ -1,4 +1,4 @@
-<img src="https://api.iconify.design/simple-icons:42.svg" width="8.5%" align="right" />
+<img src="https://skillicons.dev/icons?i=c,cpp,rust" align="right" />
 
 # `airone01/ft`
 
