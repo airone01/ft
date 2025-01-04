@@ -2,6 +2,7 @@
   <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swapm.png" />
   <br />
   <code>Minecraft push_swap visualizer</code>
+  <p>A program to flex on your friends by visualizing your push_swap algorithm in Minecraft. It uses <a src="https://valence.rs/">Valence</a> to control the game packets and visualize the sorting algorithm on your <code>1.20.1</code> client.</p>
 </div>
 
 ## Demo
@@ -50,7 +51,7 @@ Run the server in the same directory as your compiled `push_swap` binary.
   - To do that preface your commands with `RUST_LOG=info` or run `export RUST_LOG=info` once
 - This project will probbaly react badly to a crashing `push_swap`.
 - Even if the operations are bad, as long as `push_swap` doesn't crash, the display should work (maybe)
-- This project is not optimized or fast.
+- This project is not optimized or fast, neither is the code of quality.
 - The server is compiled for support of paid clients only. You can edit the code to allow "cracked" user as well.
 - If you want to contribute, DM me, find me at 42 Lyon (`elagouch`) or open an Issue/PR here. Thank you :-)
 

@@ -16,7 +16,7 @@ RESET		= \033[0m
 
 # ------------- Meta -------------
 GPM_MSTONE	= 1
-GPM_NAME	= printf
+GPM_NAME	= ft_printf
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= libftprintf.a
 DIR_OBJ 	= .obj/

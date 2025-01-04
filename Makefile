@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elagouch <airone01@proton.me>              +#+  +:+       +#+         #
+#    By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 12:51:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/02 18:21:38 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/04 19:53:41 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CD		= cd
 # Format: milestone_number:job_name
 JOBS	= 			\
 	0:libft 		\
-	1:printf		\
+	1:ft_printf		\
 	2:push_swap
 
 # ------------ Mapping -----------
