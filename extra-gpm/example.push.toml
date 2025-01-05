@@ -1,0 +1,26 @@
+# Example push.toml
+[project]
+name = "libft"
+version = "1.0.0"
+
+[submit]
+# Files to include in submission
+files = ["src/*.{c,h}", "Makefile"]
+
+# Files to exclude even if matched by include patterns
+exclude = ["src/test_*.c"]
+
+[submit.preprocessor]
+# GPM directives to process
+enable_gpm = true
+# Function search paths for GPM: directives
+function_paths = ["milestone-0-libft", "milestone-1-get_next_line"]
+
+# Future extensibility examples:
+[submit.hooks]
+pre_submit = "make clean"
+post_submit = "make fclean"
+
+[submit.validation]
+norminette = true
+make_test = true

@@ -16,10 +16,20 @@
           nodePackages.prisma
           openssl
           lld
+
           # Prisma
           prisma-engines
+
           # Sharp
           stdenv.cc.cc.lib
+
+          # Rust
+          pkg-config
+          rustc
+          cargo
+          gcc
+          rustfmt
+          clippy
         ];
         shellHook = with pkgs; ''
           # Prisma
@@ -31,7 +41,7 @@
           export PRISMA_FMT_BINARY="${prisma-engines}/bin/prisma-fmt"
           export PATH="$PWD/node_modules/.bin/:$PATH"
           # Sharp
-          export LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib"
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib:"
         '';
       };
     });

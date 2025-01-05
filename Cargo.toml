@@ -1,0 +1,7 @@
+[workspace]
+members = ["extra-arthur", "extra-gpm", "extra-push-swap-visualizer-minecraft"]
+exclude = []
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
