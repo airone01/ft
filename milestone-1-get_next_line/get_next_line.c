@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/16 13:43:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/05 01:24:43 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ char	*get_next_line(int fd)
 		line = NULL;
 	index = 0;
 	while (index < BUFFER_SIZE)
-	{
 		remain[index++] = 0;
-	}
 	index = read_until_nl(fd, &line);
 	if (index < 0)
-		return (free(line), NULL);
+		return (NULL);
 	if (index == 1)
 		return (line);
 	ft_strlcpy((char *)remain, (char *)line + index + 1, BUFFER_SIZE);
@@ -127,11 +125,20 @@ unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
 }
 
 /**
- * @brief	Returns the remaining buffer from the first newline character
- *
- * @param	buffer The buffer to search
- *
- * @returns	The remaining buffer from the first newline character
+ * The calloc() function allocates memory for an array  of  nmemb  elements  of
+ * size  bytes  each and returns a pointer to the allocated memory.  The memory
+ * is set to zero.  If nmemb or size is 0, then calloc() returns  either  NULL,
+ * or  a  unique pointer value that can later be successfully passed to free().
+ * If the multiplication of nmemb and size would result  in  integer  overflow,
+ * then  calloc() returns an error.  By contrast, an integer overflow would not
+ * be detected in the following call to malloc(), with the result that  an  in‐
+ * correctly sized block of memory would be allocated:
+ * ```c
+ * malloc(nmemb * size);
+ * ```
+ * @param	nmemb	Length of the variable
+ * @param	size	Length of the type of the variable
+ * @returns			Pointer to NUL-filled memory
  */
 void	*ft_calloc(size_t nmemb, size_t size)
 {

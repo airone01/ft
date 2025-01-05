@@ -1,0 +1,18 @@
+# Build results
+target/
+node_modules/
+.next/
+.nuxt/
+
+# Lockfiles
+Cargo.lock
+package-lock.json
+flake.lock
+
+# Other
+LICENSE
+
+# When fetching all the repo uncomment this
+quack*
+extra-*
+pool-*
