@@ -2,7 +2,7 @@ use crate::config::push::PushConfigManager;
 use crate::config::Config;
 use crate::processor::gpm::GpmProcessor;
 use crate::Command;
-use colored::*;
+use crossterm::style::Stylize;
 use std::path::PathBuf;
 use std::process::Command as ProcessCommand;
 use tempfile::TempDir;

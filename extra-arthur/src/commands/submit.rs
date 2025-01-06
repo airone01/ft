@@ -3,8 +3,8 @@ use crate::config::Config;
 use crate::processor::gpm::GpmProcessor;
 use crate::Command;
 use anyhow::Context;
-use colored::*;
-use std::path::{Path, PathBuf};
+use crossterm::style::Stylize;
+use std::path::Path;
 use std::process::Command as ProcessCommand;
 use tempfile::TempDir;
 
@@ -69,7 +69,7 @@ impl Submit {
             .args([
                 "commit",
                 "-m",
-                &format!("chore(gpm): submission of {}", self.project_name),
+                &format!(r"chore(gpm): submission of {}", self.project_name),
             ])
             .current_dir(dir)
             .status()
