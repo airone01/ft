@@ -90,11 +90,11 @@ $(DIR_OBJ)%.o: %.c Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 visualizer:
-	cmake -B ./push_swap_visualizer/build/ ./push_swap_visualizer/
-	make -C ./push_swap_visualizer/build/
+	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/
+	make -C ../extra-ps-visualizer/build/
 
 visualize: visualizer $(NAME)
-	./push_swap_visualizer/build/bin/visualizer $(NAME)
+	../extra-ps-visualizer/build/bin/visualizer $(NAME)
 
 clean:
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
