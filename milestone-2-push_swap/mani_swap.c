@@ -6,7 +6,7 @@
 /*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:52:50 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 18:21:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:52:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	swap(t_stack *stack)
 void	sa(t_stack *stack_a)
 {
 	swap(stack_a);
-	(void)!write(1, "sa\n", 3);
+	if (PS_OUTPUT)
+		(void)!write(1, "sa\n", 3);
 }
 
 /**
@@ -45,7 +46,8 @@ void	sa(t_stack *stack_a)
 void	sb(t_stack *stack_b)
 {
 	swap(stack_b);
-	(void)!write(1, "sb\n", 3);
+	if (PS_OUTPUT)
+		(void)!write(1, "sb\n", 3);
 }
 
 /**
@@ -57,5 +59,6 @@ void	ss(t_stack *stack_a, t_stack *stack_b)
 {
 	swap(stack_a);
 	swap(stack_b);
-	(void)!write(1, "ss\n", 3);
+	if (PS_OUTPUT)
+		(void)!write(1, "ss\n", 3);
 }

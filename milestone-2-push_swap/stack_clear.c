@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:17:48 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 18:36:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:33:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
  * Deletes and frees a stack
  * @param   stack   Stack to completely delete
  */
-void	stack_clear(t_stack *stack)
+void	stack_clear(t_stack **stack)
 {
 	t_stack	*current;
 	t_stack	*next;
 
-	current = stack;
+	if (!stack)
+		return ;
+	current = *stack;
 	while (current)
 	{
 		next = current->next;
-		stack_del_one(current);
+		free(current);
 		current = next;
 	}
+	*stack = NULL;
 }

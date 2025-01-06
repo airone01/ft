@@ -30,11 +30,11 @@ RM     	= rm -f
 MD		= mkdir -p
 
 # ------------ Libft ------------
-LIBFT_DIR	= ./libft
+LIBFT_DIR	= ../milestone-0-libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 # ------------- Flags ------------
-CFLAGS			= -Wall -Werror -Wextra -Wpedantic -MMD -MP -g3
+CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MMD -MP
 CFLAGS			+= -I$(LIBFT_DIR)
 ARFLAGS			= rcs
 LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
@@ -57,7 +57,6 @@ SRC	=						\
 	sort_tiny.c				\
 	stack_add_back.c		\
 	stack_clear.c			\
-	stack_del_one.c			\
 	stack_indexes.c			\
 	stack_iter.c			\
 	stack_last.c			\

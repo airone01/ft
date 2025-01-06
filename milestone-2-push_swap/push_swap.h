@@ -6,15 +6,20 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 19:03:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:30:58 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "libft/libft.h"
+# include "../milestone-0-libft/libft.h" // GPM!
+// GPM!! #include "libft.h"
 # include <unistd.h>
+
+# ifndef PS_OUTPUT
+#  define PS_OUTPUT 1
+# endif
 
 typedef struct s_stack
 {
@@ -31,8 +36,7 @@ typedef struct s_stack
 // -> Creating
 void				stack_add_back(t_stack *stack, ssize_t nbr);
 // -> Removing
-void				stack_del_one(t_stack *stack);
-void				stack_clear(t_stack *stack);
+void				stack_clear(t_stack **stack);
 // -> Misc.
 t_stack				*stack_maxn(t_stack *stack);
 size_t				stack_size(t_stack *stack);

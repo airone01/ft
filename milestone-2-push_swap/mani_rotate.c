@@ -6,7 +6,7 @@
 /*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:58:08 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 18:21:49 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:54:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	rotate(t_stack **stack)
 void	ra(t_stack **stack_a)
 {
 	rotate(stack_a);
-	(void)!write(1, "ra\n", 3);
+	if (PS_OUTPUT)
+		(void)!write(1, "ra\n", 3);
 }
 
 /**
@@ -45,7 +46,8 @@ void	ra(t_stack **stack_a)
 void	rb(t_stack **stack_b)
 {
 	rotate(stack_b);
-	(void)!write(1, "rb\n", 3);
+	if (PS_OUTPUT)
+		(void)!write(1, "rb\n", 3);
 }
 
 /**
@@ -57,5 +59,6 @@ void	rr(t_stack **stack_a, t_stack **stack_b)
 {
 	rotate(stack_a);
 	rotate(stack_b);
-	(void)!write(1, "rr\n", 3);
+	if (PS_OUTPUT)
+		(void)!write(1, "rr\n", 3);
 }

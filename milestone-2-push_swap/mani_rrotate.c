@@ -6,7 +6,7 @@
 /*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:00:02 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 18:22:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:30:30 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	reverse_rotate(t_stack **stack)
 void	rra(t_stack **stack_a)
 {
 	reverse_rotate(stack_a);
-	(void)!write(1, "rra\n", 4);
+	if (PS_OUTPUT)
+		(void)!write(1, "rra\n", 4);
 }
 
 /**
@@ -44,7 +45,8 @@ void	rra(t_stack **stack_a)
 void	rrb(t_stack **stack_b)
 {
 	reverse_rotate(stack_b);
-	(void)!write(1, "rrb\n", 4);
+	if (PS_OUTPUT)
+		(void)!write(1, "rrb\n", 4);
 }
 
 /**
@@ -56,5 +58,6 @@ void	rrr(t_stack **stack_a, t_stack **stack_b)
 {
 	reverse_rotate(stack_a);
 	reverse_rotate(stack_b);
-	(void)!write(1, "rrr\n", 4);
+	if (PS_OUTPUT)
+		(void)!write(1, "rrr\n", 4);
 }
