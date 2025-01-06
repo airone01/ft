@@ -34,7 +34,7 @@ LIBFT_DIR	= ../milestone-0-libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 # ------------- Flags ------------
-CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MMD -MP
+CFLAGS			+= -Wall -Werror -Wextra -MMD -MP
 CFLAGS			+= -I$(LIBFT_DIR)
 ARFLAGS			= rcs
 LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
@@ -57,6 +57,7 @@ SRC	=						\
 	sort_tiny.c				\
 	stack_add_back.c		\
 	stack_clear.c			\
+	stack_dupes.c			\
 	stack_indexes.c			\
 	stack_iter.c			\
 	stack_last.c			\
@@ -79,13 +80,13 @@ $(LIBFT):
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(OBJ) | $(LIBFT)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT_FLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)$(CC) CFLAGS $< $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 visualizer:
@@ -108,7 +109,6 @@ fclean: clean
 re: fclean all
 
 # ----------- Make meta ----------
-MAKEFLAGS	+= --no-print-directory
 -include $(DEP)
+MAKEFLAGS	+= --no-print-directory
 .PHONY: all clean fclean re
-.SILENT: clean fclean

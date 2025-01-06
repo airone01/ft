@@ -1,5 +1,5 @@
 [workspace]
-members = ["extra-arthur", "extra-gpm", "extra-push-swap-visualizer-minecraft"]
+members = ["extra-arthur", "extra-ps-visualizer-minecraft"]
 exclude = []
 resolver = "2"
 

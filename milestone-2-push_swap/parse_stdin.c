@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:10:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 17:32:54 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:24:55 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	strs_clear(char **strs)
 static void	all_clear(char **strs, t_stack *stack)
 {
 	strs_clear(strs);
-	stack_clear(&stack);
+	stack_clear(stack);
 }
 
 /**
@@ -46,7 +46,7 @@ t_stack	*parse_and_add_anyway(t_stack *stack, char *str)
 	strs = ft_split(str, ' ');
 	while (strs[i])
 	{
-		nbr = ft_atol(*strs);
+		nbr = ft_atol(strs[i]);
 		if (nbr > INT_MAX || nbr < INT_MIN)
 			return (all_clear(strs, stack), NULL);
 		if (stack)

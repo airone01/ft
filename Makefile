@@ -84,6 +84,8 @@ fclean:
 		fi; \
 	done
 
+all: $(MILESTONE_TARGETS)
+
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory
-.PHONY: clean fclean default $(ALL_TARGETS)
+.PHONY: clean fclean default $(ALL_TARGETS) all

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 17:33:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:13:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,13 @@ int	main(int argc, char **argv)
 	if (!args_legit(argc, argv))
 		return (std_error(), 1);
 	stack_a = parse_stdin(argc, argv);
-	if (!stack_a)
-		return (std_error(), 1);
+	if (!stack_a || stack_dupes(stack_a))
+	{
+		stack_clear(stack_a);
+		std_error();
+		return (1);
+	}
 	stack_a = push_swap(stack_a);
-	stack_clear(&stack_a);
+	stack_clear(stack_a);
 	return (0);
 }

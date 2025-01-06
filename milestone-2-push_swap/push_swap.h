@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 17:30:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:11:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ typedef struct s_stack
 // -> Creating
 void				stack_add_back(t_stack *stack, ssize_t nbr);
 // -> Removing
-void				stack_clear(t_stack **stack);
+void				stack_clear(t_stack *stack);
 // -> Misc.
 t_stack				*stack_maxn(t_stack *stack);
 size_t				stack_size(t_stack *stack);
 void				stack_iter(t_stack *stack, void (*f)(t_stack *));
-void				stack_indexes(t_stack *stack, size_t len);
+void 				stack_indexes(t_stack *stack, size_t len);
 
 // ### STACK MANIPULATION ###
 void				sa(t_stack *stack_a);
@@ -61,6 +61,8 @@ t_stack				*parse_stdin(int argc, char **argv);
 t_stack				*stack_before_last(t_stack *stack);
 t_stack				*stack_last(t_stack *stack);
 t_stack				*stack_new(ssize_t nbr);
+ssize_t				stack_dupes(t_stack *s1);
+void				stack_pos(t_stack **stack);
 
 // ### SORTING ###
 // void                sort_count(t_stack *stack, size_t dth);

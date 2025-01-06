@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:10:32 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 15:48:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:54:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * Assigns an index to each value of a stack
  * @param   stack   Stack
  * @param   len     Length of the stack
+ * @returns			Truthy if entries were correct, falsy otherwise
  */
 void	stack_indexes(t_stack *stack, size_t len)
 {
