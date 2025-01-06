@@ -6,12 +6,10 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:04:50 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 17:31:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:05:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../milestone-0-libft/libft.h" // GPM!
-// GPM!! #include "libft.h"
 #include "push_swap.h"
 
 /**

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 18:11:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:50:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include "../milestone-0-libft/libft.h" // GPM!
+//# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
 // GPM!! #include "libft.h"
 # include <unistd.h>
 
@@ -39,6 +40,7 @@ void				stack_add_back(t_stack *stack, ssize_t nbr);
 void				stack_clear(t_stack *stack);
 // -> Misc.
 t_stack				*stack_maxn(t_stack *stack);
+size_t				args_legit(int argc, char **argv);
 size_t				stack_size(t_stack *stack);
 void				stack_iter(t_stack *stack, void (*f)(t_stack *));
 void 				stack_indexes(t_stack *stack, size_t len);
@@ -83,5 +85,6 @@ void				std_error(void);
 
 // ### MISC ###
 ssize_t				ft_abs(ssize_t nb);
+char				*get_next_line(int fd);
 
 #endif

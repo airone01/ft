@@ -31,23 +31,24 @@ MD		= mkdir -p
 
 # ------------ Libft ------------
 LIBFT_DIR	= ../milestone-0-libft
+GNL_DIR		= ../milestone-1-get_next_line
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 # ------------- Flags ------------
 CFLAGS			+= -Wall -Werror -Wextra -MMD -MP
 CFLAGS			+= -I$(LIBFT_DIR)
-ARFLAGS			= rcs
-LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
+LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
 
 # ------------ Sources -----------
-SRC	=						\
+SRC_COMMON	=				\
+	args_legit.c			\
 	ft_abs.c				\
+	get_next_line.c			\
 	mani_swap.c				\
 	mani_push.c				\
 	mani_rotate.c			\
 	mani_rrotate.c			\
 	parse_stdin.c			\
-	push_swap.c				\
 	sort_cheapest.c			\
 	sort_cost.c				\
 	sort_large.c			\
@@ -68,10 +69,14 @@ SRC	=						\
 	stack_size.c			\
 	stack_sorted.c			\
 	std_error.c
+SRC = $(SRC_COMMON) push_swap.c
+SRC_BONUS = $(SRC_COMMON) checker.c
 
 # ------------ Mapping -----------
 OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)
 DEP	= $(SRC:%.c=$(DIR_OBJ)%.d)
+OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
+DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
@@ -88,6 +93,13 @@ $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)$(CC) CFLAGS $< $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+.bonus: $(OBJ_BONUS) | $(LIBFT)
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building bonuses for $(NAME)"
+	$(CC) $(CFLAGS) -o $(NAME) $^ $(LIBFT_FLAGS)
+	@touch .bonus
+
+bonus: .bonus # Temp file to avoid unnecessary rebuilds
 
 visualizer:
 	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/
@@ -109,6 +121,6 @@ fclean: clean
 re: fclean all
 
 # ----------- Make meta ----------
--include $(DEP)
+-include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory
 .PHONY: all clean fclean re
