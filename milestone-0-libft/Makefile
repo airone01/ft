@@ -22,7 +22,7 @@ NAME		= libft.a
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO		= echo
+ECHO		= echo -e
 CC			= cc
 AR			= ar
 RM      	= rm -f

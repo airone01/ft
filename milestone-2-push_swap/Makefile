@@ -22,7 +22,7 @@ NAME		= push_swap
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO	= echo
+ECHO	= echo -e
 MAKE	= make
 CC		= cc
 AR		= ar

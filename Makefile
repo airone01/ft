@@ -16,7 +16,7 @@ TITLE_SEC	= \033[48;5;78;30;1m
 RESET		= \033[0m
 
 # ----------- Commands -----------
-ECHO	= echo
+ECHO	= echo -e
 MAKE	= make
 CD		= cd
 
@@ -45,7 +45,7 @@ list:
 	@$(ECHO) "$(TITLE_PRI) ft \t\t$(RESET)Available Projects:$(RESET)"
 	@$(foreach mile,$(MILESTONES),\
 		$(foreach job,$(filter $(mile):%,$(JOBS)),\
-			echo "$(TITLE_SEC) $(mile) $(RESET)\t\t - $(word 2,$(subst :, ,$(job)))"; \
+			$(ECHO) "$(TITLE_SEC) $(mile) $(RESET)\t\t - $(word 2,$(subst :, ,$(job)))"; \
 		) \
 	)
 

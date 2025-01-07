@@ -26,7 +26,7 @@ NAME		= get_next_line.a
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO	= echo
+ECHO	= echo -e
 MAKE	= make
 CC		= cc
 AR		= ar
@@ -76,13 +76,13 @@ $(DIR_OBJ)%.o: %.c get_next_line.h gnl.Makefile
 	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)$(CC) CFLAGS $< $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-test: $(OBJ) $(OBJ_TEST) | $(LIBFT)
+checker: $(OBJ) $(OBJ_TEST) | $(LIBFT)
 	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Building $(NAME)"
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
 
-test2: $(OBJ) $(OBJ_TEST)
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Building $(NAME)"
-	$(CC) $(CFLAGS) -o $@ $^
+test: $(NAME)
+	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Testing $(NAME)"
+	@$(MAKE) -C $(realpath ./tester) m
 
 clean:
 	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Cleaning the project"
