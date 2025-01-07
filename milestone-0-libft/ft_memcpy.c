@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:44:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:14:20 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
  * The  memcpy()  function  copies  n bytes from memory area src to memory area
  * dest.  The memory areas must not overlap.  Use memmove(3) if the memory  ar‐
  * eas do overlap.
- * @param	s	Pointer
- * @param	c	Constant byte
- * @param	n	Size in number of bytes
- * @returns	pointer to the memory area s
+ * @param	dest	Destination pointer
+ * @param	Src		Source pointer
+ * @param	n		N-most bytes to copy
+ * @returns			Pointer to the resulting memory area s
  */
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {

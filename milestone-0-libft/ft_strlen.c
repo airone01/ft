@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/05 01:29:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:27:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return (0);
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i])
 		i++;
 	return (i);
 }

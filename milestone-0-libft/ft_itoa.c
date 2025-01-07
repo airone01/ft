@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:24:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:10:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	*ft_itoa_base(int n, const char *b)
 	size_t	len;
 	char	*s;
 
+	if (!b)
+		return (NULL);
 	len = get_num_len(n, b);
 	s = ft_calloc(len + 1, sizeof(char));
 	if (!s)

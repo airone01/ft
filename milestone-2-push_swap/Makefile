@@ -30,14 +30,16 @@ RM     	= rm -f
 MD		= mkdir -p
 
 # ------------ Libft ------------
-LIBFT_DIR	= ../milestone-0-libft
-GNL_DIR		= ../milestone-1-get_next_line
+LIBFT_DIR	= $(realpath ../milestone-0-libft)
+GNL_DIR		= $(realpath ../milestone-1-get_next_line)
 LIBFT		= $(LIBFT_DIR)/libft.a
+GNL			= $(GNL_DIR)/get_next_line.a
 
 # ------------- Flags ------------
-CFLAGS			+= -Wall -Werror -Wextra -MMD -MP
-CFLAGS			+= -I$(LIBFT_DIR)
+CFLAGS			+= -Wall -Werror -Wextra -MMD -MP -g3
+CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR)
 LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
+GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a
 
 # ------------ Sources -----------
 SRC_COMMON	=				\
@@ -69,8 +71,11 @@ SRC_COMMON	=				\
 	stack_size.c			\
 	stack_sorted.c			\
 	std_error.c
-SRC = $(SRC_COMMON) push_swap.c
-SRC_BONUS = $(SRC_COMMON) checker.c
+SRC = $(SRC_COMMON)	\
+	push_swap.c
+SRC_BONUS = $(SRC_COMMON)	\
+	checker.c				\
+	checker_main.c
 
 # ------------ Mapping -----------
 OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)
@@ -85,18 +90,22 @@ $(LIBFT):
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
 	@$(MAKE) -C $(LIBFT_DIR)
 
+$(GNL):
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
+	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile
+
 $(NAME): $(OBJ) | $(LIBFT)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)$(CC) CFLAGS $< $@"
+	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-.bonus: $(OBJ_BONUS) | $(LIBFT)
+.bonus: $(OBJ_BONUS) | $(LIBFT) $(GNL)
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building bonuses for $(NAME)"
-	$(CC) $(CFLAGS) -o $(NAME) $^ $(LIBFT_FLAGS)
+	$(CC) $(CFLAGS) -o checker $^ $(GNL_FLAGS) $(LIBFT_FLAGS)
 	@touch .bonus
 
 bonus: .bonus # Temp file to avoid unnecessary rebuilds
@@ -111,12 +120,12 @@ visualize: visualizer $(NAME)
 clean:
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
 	@$(RM) -r $(DIR_OBJ)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile clean
 
 fclean: clean
 	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
 	@$(RM) $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile fclean
 
 re: fclean all
 

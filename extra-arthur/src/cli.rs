@@ -10,7 +10,7 @@ pub struct Cli {
     pub cwd: PathBuf,
 
     /// Verbose output mode (-v, -vv, -vvv)
-    #[arg(short, long, action = clap::ArgAction::Count, default_value = "1")]
+    #[arg(short, long, action = clap::ArgAction::Count)]
     pub verbose: u8,
 
     #[command(subcommand)]

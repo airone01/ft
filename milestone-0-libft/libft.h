@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                      _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀ */
-/*   libft.h                                        _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇ */
-/*                                                 | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃ */
-/*   By: elagouch <elagouch@student.42.fr>         |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇ */
-/*                                                 | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅ */
-/*   Created: 2024/11/05 15:32:58 by elagouch      |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆ */
-/*   Updated: 2024/11/18 10:37:51 by elagouch        |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁ */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/07 16:27:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char				*ft_strdup(const char *s);
 long				ft_atol(const char *nptr);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
+int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(const char *nptr);
 int					ft_toupper(int c);
 int					ft_tolower(int c);

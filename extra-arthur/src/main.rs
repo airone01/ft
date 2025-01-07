@@ -10,7 +10,7 @@ use tokio;
 use arthur::{
     cli::{Cli, Commands, ProjectCommands},
     commands::{submit::Submit, test::Test},
-    projects::{LibftTest, Project},
+    projects::{LibftTest, GetNextLineTest, Project},
     runner::{c::CTestRunner, results::TestResults, TestRunner},
     Command as _,
 };
@@ -19,9 +19,8 @@ fn setup_logging(verbose: u8) {
     let env = Env::default().filter_or(
         "GPM_LOG",
         match verbose {
-            0 => "warn",
-            1 => "info",
-            2 => "debug",
+            0 => "info",
+            1 => "debug",
             _ => "trace",
         },
     );
@@ -83,7 +82,7 @@ async fn main() -> anyhow::Result<()> {
             // Load test cases for the project
             match project {
                 Project::Libft => {
-                    let runner = CTestRunner::new(cli.cwd.clone(), "ft".to_string());
+                    let runner = CTestRunner::new(cli.cwd.clone(), "ft");
                     let mut libft = LibftTest::new();
 
                     if let Err(e) = libft.load_tests().await {
@@ -108,6 +107,37 @@ async fn main() -> anyhow::Result<()> {
                     for handle in handles {
                         if let std::result::Result::Ok((name, result)) = handle.await {
                             // Store the result
+                            test_results.add_function_result(name, result);
+                        }
+                    }
+
+                    test_results.display_summary();
+                }
+                Project::GetNextLine => {
+                    let runner = CTestRunner::new(cli.cwd.clone(), "gnl");
+                    let mut gnl = GetNextLineTest::new();
+
+                    if let Err(e) = gnl.load_tests().await {
+                        error!("Error loading tests: {}", e);
+                        process::exit(1);
+                    }
+
+                    let test_cases = gnl.get_test_cases();
+                    let mut test_results = TestResults::default();
+                    let mut handles = vec![];
+
+                    for test in test_cases {
+                        let runner_clone = runner.clone();
+                        let handle = tokio::spawn(async move {
+                            let result = runner_clone.run(&test).await;
+                            (test.name.clone(), result)
+                        });
+                        handles.push(handle);
+                    }
+
+                    // Wait for all tests to complete
+                    for handle in handles {
+                        if let std::result::Result::Ok((name, result)) = handle.await {
                             test_results.add_function_result(name, result);
                         }
                     }

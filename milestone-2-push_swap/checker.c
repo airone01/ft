@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 20:15:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 20:38:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 19:12:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,42 +67,23 @@ size_t	execute(t_stack **stack_a)
 	t_stack	*stack_b;
 	char	*line;
 	size_t	res;
+	size_t	fd;
 
+	fd = 0;
 	stack_b = NULL;
-	line = get_next_line(0);
-	while (line)
+	while (1)
 	{
-		line = get_next_line(0);
+		line = get_next_line(fd);
+		if (!line || !*line)
+			return (free(line), 0);
 		res = 0;
 		res += execute_s(line, stack_a, &stack_b);
 		res += execute_p(line, stack_a, &stack_b);
 		res += execute_r(line, stack_a, &stack_b);
 		res += execute_rr(line, stack_a, &stack_b);
+		free(line);
 		if (res == 0)
 			return (1);
 	}
 	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	t_stack	*stack_a;
-
-	if (argc <= 1)
-		return (1);
-	argc--;
-	argv++;
-	if (!args_legit(argc, argv))
-		return (std_error(), 1);
-	stack_a = parse_stdin(argc, argv);
-	if (!stack_a || stack_size(stack_a) <= 1 || stack_dupes(stack_a))
-	{
-		stack_clear(stack_a);
-		std_error();
-		return (1);
-	}
-	execute(&stack_a);
-	if (stack_sorted(stack_a))
-		return ((void)write(1, "OK\n", 3), 0);
-	return ((void)write(1, "KO\n", 3), 1);
 }

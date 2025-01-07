@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/16 13:34:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:05:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,22 @@
 #  define BUFFER_SIZE 1
 # endif
 
+# ifndef FD_SIZE
+#  define FD_SIZE 1024
+# endif
+
 # include <limits.h>
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-unsigned int	ft_strlcat(char *dst, const char *src, size_t size);
-unsigned int	ft_strlcpy(char *dst, const char *src, size_t size);
-ssize_t			read_until_nl(int fd, char **line);
-size_t			ft_strlen(const char *str);
-void			*ft_calloc(size_t nmemb, size_t size);
-void			ft_memset(void *s, int c, size_t n);
-char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_strchr(const char *s, int c);
-char			*ft_strdup(const char *s);
-char			*get_next_line(int fd);
+size_t	ft_strlen(const char *str);
+size_t	is_line(const char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_bzero(void *s, size_t n);
+char	*ft_strdup(const char *s);
+void	ft_buffclean(char *str);
+char	*get_next_line(int fd);
 
 #endif

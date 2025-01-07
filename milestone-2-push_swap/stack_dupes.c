@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 17:55:03 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 18:20:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:58:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@
  * @param	s1	Stack
  * @return		Truthy if yes, otherwise falsy
  */
-ssize_t stack_dupes(t_stack *s1)
+ssize_t	stack_dupes(t_stack *s1)
 {
-	t_stack *start;
-	t_stack *s2;
+	t_stack	*start;
+	t_stack	*s2;
 
 	if (!s1)
 		return (0);
-	stack_pos(&s1);
 	start = s1;
 	while (s1)
 	{

@@ -9,11 +9,14 @@ use log::{debug, info};
 use std::{fs, path::Path};
 
 pub mod libft;
+pub mod gnl;
 pub use libft::*;
+pub use gnl::*;
 
 #[derive(Debug)]
 pub enum Project {
     Libft,
+    GetNextLine,
     Unknown,
 }
 
@@ -38,6 +41,12 @@ impl Project {
         if files.iter().any(|f| f == "libft.h") {
             info!("Found libft.h - detected as Libft project");
             return Project::Libft;
+        }
+
+        // Check for get_next_line first (more specific)
+        if files.iter().any(|f| f.contains("get_next_line.h") || f.contains("get_next_line_bonus.h")) {
+            info!("Found get_next_line header - detected as Get Next Line project");
+            return Project::GetNextLine;
         }
 
         debug!("No project detected");

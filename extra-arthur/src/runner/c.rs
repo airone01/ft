@@ -11,31 +11,79 @@ use std::{
     time::Instant,
 };
 
+use walkdir::WalkDir;
 use async_trait::async_trait;
 
 use super::{IndividualResult, TestCase, TestError, TestResult, TestRunner, TestStatus};
-
 #[derive(Clone)]
 pub struct CTestRunner {
     work_dir: PathBuf,
-    lib_name: String,
+    project_type: ProjectType,
+}
+
+#[derive(Clone)]
+enum ProjectType {
+    Libft,
+    GetNextLine,
 }
 
 impl CTestRunner {
-    pub fn new(work_dir: PathBuf, lib_name: String) -> Self {
-        Self { work_dir, lib_name }
+    pub fn new(work_dir: PathBuf, project_name: &str) -> Self {
+        let project_type = match project_name {
+            "ft" => ProjectType::Libft,
+            "gnl" => ProjectType::GetNextLine,
+            _ => panic!("Unsupported project type"),
+        };
+
+        Self {
+            work_dir,
+            project_type,
+        }
     }
 
     async fn compile(&self, test_file: &Path, output_file: &Path) -> Result<(), TestError> {
-        let output = tokio::process::Command::new("cc")
+        let mut command = tokio::process::Command::new("cc");
+        command
             .current_dir(&self.work_dir)
-            .args(&["-Wall", "-Wextra", "-Werror", "-Wpedantic", "-g3"])
+            .args(&["-Wall", "-Wextra", "-Werror", "-g3"])
             .arg("-o")
             .arg(output_file)
-            .arg(test_file)
-            .arg(format!("-l{}", self.lib_name))
-            .arg("-L.") // Add the current directory to library search path
-            .arg("-I.") // Add the current directory to header search path
+            .arg(test_file);
+
+        // Add project-specific compilation flags
+        match self.project_type {
+            ProjectType::Libft => {
+                command
+                    .arg("-L.")
+                    .arg("-I.")
+                    .arg("-lft");
+            }
+            ProjectType::GetNextLine => {
+                // Find and compile get_next_line source files
+                let mut source_files = vec![];
+                for entry in WalkDir::new(&self.work_dir) {
+                    let entry = entry.map_err(|e| {
+                        TestError::Compilation(format!("Error scanning directory: {}", e))
+                    })?;
+                    let path = entry.path();
+                    if path.is_file() && path.extension().and_then(|s| s.to_str()) == Some("c") {
+                        let name = path.file_name().unwrap().to_string_lossy();
+                        if name.starts_with("get_next_line") {
+                            source_files.push(path.to_path_buf());
+                        }
+                    }
+                }
+
+                // Add source files and include directory
+                command.args(&source_files);
+                command
+                    .arg("-I.")
+                    .arg("-D")
+                    .arg("BUFFER_SIZE=42");
+            }
+        }
+
+        let output = command
             .output()
             .await
             .map_err(|e| TestError::Compilation(format!("Failed to compile: {}", e)))?;

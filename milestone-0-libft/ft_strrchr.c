@@ -6,9 +6,11 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:52 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:55:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:16:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 /**
  * The strrchr() function returns a pointer to the last occurrence of the char‐
@@ -22,7 +24,9 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char	*se;
 
-	se = 0;
+	if (!s)
+		return (NULL);
+	se = NULL;
 	while (*s)
 	{
 		if (*s == (char)c)

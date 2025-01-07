@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/06 20:50:11 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:39:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 # define PUSH_SWAP_H
 
 # include "../milestone-0-libft/libft.h" // GPM!
-//# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
+# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
 // GPM!! #include "libft.h"
 # include <unistd.h>
+# include <fcntl.h>
 
 # ifndef PS_OUTPUT
 #  define PS_OUTPUT 1
+# endif
+
+# ifndef BUFF_SIZE
+#  define BUFF_SIZE 8
+# endif
+
+# ifndef MAX_FD
+#  define MAX_FD 1
 # endif
 
 typedef struct s_stack
@@ -43,7 +52,7 @@ t_stack				*stack_maxn(t_stack *stack);
 size_t				args_legit(int argc, char **argv);
 size_t				stack_size(t_stack *stack);
 void				stack_iter(t_stack *stack, void (*f)(t_stack *));
-void 				stack_indexes(t_stack *stack, size_t len);
+void				stack_indexes(t_stack *stack, size_t len);
 
 // ### STACK MANIPULATION ###
 void				sa(t_stack *stack_a);
@@ -86,5 +95,8 @@ void				std_error(void);
 // ### MISC ###
 ssize_t				ft_abs(ssize_t nb);
 char				*get_next_line(int fd);
+
+// ### BONUSES ###
+size_t				execute(t_stack **stack_a);
 
 #endif

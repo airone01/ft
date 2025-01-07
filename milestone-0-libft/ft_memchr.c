@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:43:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:12:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	*ft_memchr(const void *s, int c, size_t n)
 {
 	uint8_t	*se;
 
+	if (!s)
+		return (NULL);
 	se = (uint8_t *)s;
 	while (n--)
 	{
