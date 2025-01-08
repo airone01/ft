@@ -84,29 +84,23 @@ impl PushConfigManager {
         let config: PushConfiguration =
             toml::from_str(&content).context("Failed to parse push.toml")?;
 
-        self.validate_config(&config)?;
+        self.validate_config(&config, project_path)?;
 
         Ok(config)
     }
 
-    fn validate_config(&self, config: &PushConfiguration) -> anyhow::Result<()> {
+    fn validate_config(
+        &self,
+        config: &PushConfiguration,
+        project_path: &Path,
+    ) -> anyhow::Result<()> {
         // Validate file patterns
         if config.submit.files.is_empty() {
             return Err(GpmError::ConfigError("No files specified in push.toml".into()).into());
         }
 
         // Validate function paths if GPM is enabled
-        if config.submit.preprocessor.enable_gpm {
-            for path in &config.submit.preprocessor.function_paths {
-                if !path.exists() {
-                    return Err(GpmError::ConfigError(format!(
-                        "Function path not found: {}",
-                        path.display()
-                    ))
-                    .into());
-                }
-            }
-        }
+        config.submit.preprocessor.validate(project_path)?;
 
         // Validate hooks if present
         if let Some(pre_submit) = &config.submit.hooks.pre_submit {
@@ -206,8 +200,9 @@ impl PushConfigManager {
             let source_path = if Path::new(&copy_config.source).is_absolute() {
                 PathBuf::from(&copy_config.source)
             } else {
-                // If path starts with ../, resolve it relative to source_base
+                // Resolve relative paths from the source_base directory
                 if copy_config.source.starts_with("../") {
+                    // For paths starting with ../, resolve from parent of source_base
                     source_base
                         .parent()
                         .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?
@@ -216,6 +211,7 @@ impl PushConfigManager {
                     source_base.join(&copy_config.source)
                 }
             };
+            log::debug!("Resolving source path: {}", source_path.display());
 
             // Get the concrete file path if it exists
             if source_path.exists() {
@@ -257,9 +253,11 @@ impl PushConfigManager {
                     source_base.join(&copy_config.source)
                 };
 
-                let glob = globset::Glob::new(pattern.to_str().ok_or_else(|| {
-                    anyhow::anyhow!("Invalid path: {}", pattern.display())
-                })?)?;
+                let glob = globset::Glob::new(
+                    pattern
+                        .to_str()
+                        .ok_or_else(|| anyhow::anyhow!("Invalid path: {}", pattern.display()))?,
+                )?;
                 let matcher = glob.compile_matcher();
 
                 // Define the base directory for glob search
@@ -333,7 +331,7 @@ impl PushConfigManager {
 }
 
 impl PreprocessorConfig {
-    pub fn validate(&self) -> anyhow::Result<()> {
+    pub fn validate(&self, project_path: &Path) -> anyhow::Result<()> {
         if self.enable_gpm {
             // Validate function paths
             if self.function_paths.is_empty() {
@@ -343,12 +341,13 @@ impl PreprocessorConfig {
                 .into());
             }
 
-            // Check if paths exist
+            // Check if paths exist relative to project directory
             for path in &self.function_paths {
-                if !path.exists() {
+                let full_path = project_path.join(path);
+                if !full_path.exists() {
                     return Err(GpmError::ConfigError(format!(
                         "Function path does not exist: {}",
-                        path.display()
+                        full_path.display()
                     ))
                     .into());
                 }
@@ -360,7 +359,7 @@ impl PreprocessorConfig {
 }
 
 impl PushConfiguration {
-    pub fn validate(&self) -> anyhow::Result<()> {
+    pub fn validate(&self, project_path: &Path) -> anyhow::Result<()> {
         // Validate project info
         if self.project.name.is_empty() {
             return Err(GpmError::ConfigError("Project name cannot be empty".into()).into());
@@ -395,7 +394,7 @@ impl PushConfiguration {
         }
 
         // Validate preprocessor config
-        self.submit.preprocessor.validate()?;
+        self.submit.preprocessor.validate(project_path)?;
 
         Ok(())
     }

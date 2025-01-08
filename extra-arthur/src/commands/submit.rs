@@ -1,29 +1,35 @@
+use std::path::{Path, PathBuf};
+use std::process::Command as ProcessCommand;
+
 use crate::config::push::{PushConfigManager, PushConfiguration};
 use crate::config::Config;
 use crate::processor::gpm::GpmProcessor;
 use crate::Command;
+
 use anyhow::Context;
 use crossterm::style::Stylize;
-use std::path::Path;
-use std::process::Command as ProcessCommand;
 use tempfile::TempDir;
+use log::{debug, info, trace};
 
 pub struct Submit {
     project_name: String,
     target_repo: String,
     config: Config,
     push_config: Option<PushConfiguration>,
+    cwd: PathBuf,
 }
 
 impl Submit {
-    pub fn new(project_name: &str, target_repo: &str) -> Self {
+    pub fn new(project_name: &str, target_repo: &str, cwd: PathBuf) -> Self {
         Self {
             project_name: project_name.to_string(),
             target_repo: target_repo.to_string(),
-            config: Config::load().expect("Failed to load config"),
+            config: Config::load(cwd.clone()).expect("Failed to load config"),
             push_config: None,
+            cwd,
         }
     }
+
     fn setup_git_repo(&self, dir: &Path, target_repo: &str) -> anyhow::Result<()> {
         // Initialize repository
         let status = ProcessCommand::new("git")
@@ -89,7 +95,7 @@ impl Submit {
         }
 
         // Force push
-        println!("{}", "🚀 Pushing to remote...".blue());
+        debug!("Pushing to remote...");
         let status = ProcessCommand::new("git")
             .args(["push", "-f", "origin", "HEAD:main"])
             .current_dir(dir)
@@ -103,25 +109,27 @@ impl Submit {
     }
 
     fn prepare_submission(&mut self) -> anyhow::Result<TempDir> {
-        let project_path = self
-            .config
-            .get_project_path(&self.project_name)
-            .ok_or_else(|| anyhow::anyhow!("Project not found"))?;
+        // Resolve project path relative to cwd
+        let project_path = self.cwd.join(
+            self.config
+                .get_project_path(&self.project_name)
+                .ok_or_else(|| anyhow::anyhow!("Project not found"))?,
+        );
 
         // Load push.toml configuration
         let config_manager = PushConfigManager::new();
-        let push_config = config_manager.load_push_config(project_path)?;
+        let push_config = config_manager.load_push_config(&project_path)?;
 
         // Create temporary directory for processed files
         let temp_dir = TempDir::new()?;
         let processor = GpmProcessor::new();
 
         // Get files to include based on push.toml configuration
-        let files = config_manager.get_included_files(&push_config, project_path)?;
+        let files = config_manager.get_included_files(&push_config, &project_path)?;
 
         // Process each file
         for file in files {
-            let relative_path = file.strip_prefix(project_path)?;
+            let relative_path = file.strip_prefix(&project_path)?;
             let output_path = temp_dir.path().join(relative_path);
 
             // Create parent directories if needed
@@ -131,16 +139,20 @@ impl Submit {
 
             // Process or copy the file
             if push_config.submit.preprocessor.enable_gpm
-                && matches!(file.extension().and_then(|s| s.to_str()), Some("c" | "h"))
+                && (matches!(file.extension().and_then(|s| s.to_str()), Some("c" | "h"))
+                || file.file_name().and_then(|s| s.to_str()) == Some("Makefile")
+                || file.file_name().and_then(|s| s.to_str()) == Some("makefile"))
             {
+                trace!("Applying potential GPM processing to {}", file.display());
                 processor.process_file(&file, &output_path, &push_config.submit.preprocessor)?;
             } else {
+                trace!("Copying file without processing: {}", file.display());
                 std::fs::copy(&file, &output_path)?;
             }
         }
 
         // Copy additional files as specified in the configuration
-        config_manager.copy_additional_files(&push_config, project_path, temp_dir.path())?;
+        config_manager.copy_additional_files(&push_config, &project_path, temp_dir.path())?;
 
         // Store push_config for use in execute
         self.push_config = Some(push_config);
@@ -149,7 +161,7 @@ impl Submit {
     }
 
     fn run_hook(&self, command: &str) -> anyhow::Result<()> {
-        println!("{} {}", "🔄 Running hook:".blue(), command);
+        info!("{} {}", "Running hook:".blue(), command);
 
         let status = ProcessCommand::new("sh")
             .arg("-c")
@@ -174,7 +186,7 @@ impl Command for Submit {
             .ok_or_else(|| anyhow::anyhow!("Project not found"))?;
 
         let config_manager = PushConfigManager::new();
-        let push_config = config_manager.load_push_config(project_path)?;
+        let push_config = config_manager.load_push_config(&project_path)?;
 
         // Run pre-submit hook if configured
         if let Some(pre_hook) = &push_config.submit.hooks.pre_submit {
@@ -192,7 +204,7 @@ impl Command for Submit {
             self.run_hook(post_hook)?;
         }
 
-        println!("{}", "✅ Project submitted successfully!".green());
+        info!("Project submitted successfully!");
         Ok(())
     }
 }

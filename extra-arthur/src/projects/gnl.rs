@@ -1,6 +1,7 @@
-use std::path::PathBuf;
+use crate::runner::{TestCase, TestLoader};
+use async_trait::async_trait;
 use log::debug;
-use crate::runner::{TestCase};
+use std::path::PathBuf;
 
 pub struct GetNextLineTest {
     test_files: Vec<TestFile>,
@@ -15,6 +16,19 @@ struct TestFile {
 struct TestInput {
     input: String,
     expected: String,
+}
+
+#[async_trait]
+impl TestLoader for GetNextLineTest {
+    async fn load_tests(&mut self) -> std::io::Result<()> {
+        // Existing load_tests implementation
+        self.load_tests().await
+    }
+
+    fn get_test_cases(&self) -> Vec<TestCase> {
+        // Existing get_test_cases implementation
+        self.get_test_cases()
+    }
 }
 
 impl GetNextLineTest {

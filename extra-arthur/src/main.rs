@@ -10,8 +10,8 @@ use tokio;
 use arthur::{
     cli::{Cli, Commands, ProjectCommands},
     commands::{submit::Submit, test::Test},
-    projects::{LibftTest, GetNextLineTest, Project},
-    runner::{c::CTestRunner, results::TestResults, TestRunner},
+    projects::{GetNextLineTest, LibftTest, Project},
+    runner::{c::CTestRunner, results::TestResults, run_project_tests, TestLoader, TestRunner},
     Command as _,
 };
 
@@ -58,14 +58,14 @@ async fn main() -> anyhow::Result<()> {
                 target_repo,
             } => {
                 info!("Submitting project {}", target_repo);
-                Submit::new(&project_name, &target_repo).execute()?;
+                Submit::new(&project_name, &target_repo, cli.cwd).execute()?;
             }
             ProjectCommands::Doctor { project_name } => {
                 println!("Running doctor on project {}", project_name);
             }
             ProjectCommands::Test { project_name } => {
                 println!("Testing project at {}", project_name);
-                Test::new(&project_name).execute()?;
+                Test::new(cli.cwd, &project_name).execute()?;
             }
         },
         Commands::Test => {
@@ -83,65 +83,12 @@ async fn main() -> anyhow::Result<()> {
             match project {
                 Project::Libft => {
                     let runner = CTestRunner::new(cli.cwd.clone(), "ft");
-                    let mut libft = LibftTest::new();
-
-                    if let Err(e) = libft.load_tests().await {
-                        error!("Error loading tests: {}", e);
-                        process::exit(1);
-                    }
-
-                    let test_cases = libft.get_test_cases();
-                    let mut test_results = TestResults::default();
-                    let mut handles = vec![];
-
-                    for test in test_cases {
-                        let runner_clone = runner.clone(); // Need to implement Clone
-                        let handle = tokio::spawn(async move {
-                            let result = runner_clone.run(&test).await;
-                            (test.name.clone(), result)
-                        });
-                        handles.push(handle);
-                    }
-
-                    // Wait for all tests to complete
-                    for handle in handles {
-                        if let std::result::Result::Ok((name, result)) = handle.await {
-                            // Store the result
-                            test_results.add_function_result(name, result);
-                        }
-                    }
-
+                    let test_results = run_project_tests(LibftTest::new(), runner).await;
                     test_results.display_summary();
                 }
                 Project::GetNextLine => {
                     let runner = CTestRunner::new(cli.cwd.clone(), "gnl");
-                    let mut gnl = GetNextLineTest::new();
-
-                    if let Err(e) = gnl.load_tests().await {
-                        error!("Error loading tests: {}", e);
-                        process::exit(1);
-                    }
-
-                    let test_cases = gnl.get_test_cases();
-                    let mut test_results = TestResults::default();
-                    let mut handles = vec![];
-
-                    for test in test_cases {
-                        let runner_clone = runner.clone();
-                        let handle = tokio::spawn(async move {
-                            let result = runner_clone.run(&test).await;
-                            (test.name.clone(), result)
-                        });
-                        handles.push(handle);
-                    }
-
-                    // Wait for all tests to complete
-                    for handle in handles {
-                        if let std::result::Result::Ok((name, result)) = handle.await {
-                            test_results.add_function_result(name, result);
-                        }
-                    }
-
+                    let test_results = run_project_tests(GetNextLineTest::new(), runner).await;
                     test_results.display_summary();
                 }
                 Project::Unknown => unreachable!(),

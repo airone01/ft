@@ -9,6 +9,7 @@ use std::path::{Path, PathBuf};
 pub struct GpmProcessor {
     gpm_directive_regex: Regex,
     gpm_remove_regex: Regex,
+    gpm_strip_comment_regex: Regex,
     function_extractor: FunctionExtractor,
 }
 
@@ -21,8 +22,9 @@ impl Default for GpmProcessor {
 impl GpmProcessor {
     pub fn new() -> Self {
         Self {
-            gpm_directive_regex: Regex::new(r"//\s*GPM:\s*([a-zA-Z0-9_]+)\s*$").unwrap(),
-            gpm_remove_regex: Regex::new(r"//\s*GPM!\s*$").unwrap(),
+            gpm_directive_regex: Regex::new(r"(?://|#)\s*GPM:\s*([a-zA-Z0-9_]+)\s*$").unwrap(),
+            gpm_remove_regex: Regex::new(r"(?://|#)\s*GPM!\s*$").unwrap(),
+            gpm_strip_comment_regex: Regex::new(r"(?://|#)\s*GPM@\s*(.+)$").unwrap(),
             function_extractor: FunctionExtractor::new(),
         }
     }
@@ -68,8 +70,13 @@ impl GpmProcessor {
                         "Function '{}' not found in any search path",
                         func_name
                     ))
-                    .into());
+                        .into());
                 }
+            } else if let Some(captures) = self.gpm_strip_comment_regex.captures(line) {
+                // For GPM@ directives, only keep the content after GPM@
+                let content = captures.get(1).unwrap().as_str();
+                result.push_str(content);
+                result.push('\n');
             } else {
                 result.push_str(line);
                 result.push('\n');
@@ -117,7 +124,7 @@ impl FileProcessor for GpmProcessor {
                 };
 
                 match path.extension().and_then(|s| s.to_str()) {
-                    Some("c" | "h") => self.process_file(path, &output_path, &config)?,
+                    Some("c" | "h" | "Makefile" | "makefile") => self.process_file(path, &output_path, &config)?,
                     _ => {
                         fs::copy(path, &output_path)?;
                     }
@@ -133,6 +140,26 @@ mod tests {
     use super::*;
     use std::fs;
     use tempfile::TempDir;
+
+    #[test]
+    fn test_gpm_strip_comment() -> anyhow::Result<()> {
+        let processor = GpmProcessor::new();
+        let content = r#"int main(void)
+{
+    // GPM@ This comment text will be preserved
+    # GPM@ Another preserved text
+    // Normal comment stays
+    return (0);
+}
+"#;
+        let processed = processor.process_content(content, &[])?;
+        assert!(processed.contains("This comment text will be preserved"));
+        assert!(processed.contains("Another preserved text"));
+        assert!(processed.contains("// Normal comment stays"));
+        assert!(!processed.contains("GPM@"));
+        assert!(!processed.contains("//") || !processed.contains("#"));
+        Ok(())
+    }
 
     #[test]
     fn test_gpm_remove() -> anyhow::Result<()> {

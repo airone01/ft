@@ -24,10 +24,10 @@ files = [
 
 [submit.preprocessor]
 enable_gpm = true
-function_paths = ["milestone-2-push_swap"]
+function_paths = [".", ".."]
 
 [submit.hooks]
-pre_submit = "make fclean"
+# pre_submit = "make fclean"
 
 [submit.validation]
 norminette = true

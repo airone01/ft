@@ -18,10 +18,10 @@ struct ValidationResults {
 }
 
 impl Test {
-    pub fn new(project_name: &str) -> Self {
+    pub fn new(cwd: PathBuf, project_name: &str) -> Self {
         Self {
             project_name: project_name.to_string(),
-            config: Config::load().expect("Failed to load config"),
+            config: Config::load(cwd).expect("Failed to load config"),
         }
     }
 
@@ -33,7 +33,7 @@ impl Test {
 
         // Load push.toml configuration
         let config_manager = PushConfigManager::new();
-        let push_config = config_manager.load_push_config(project_path)?;
+        let push_config = config_manager.load_push_config(&project_path)?;
 
         println!("{}", "📋 Testing configuration loaded successfully".blue());
 
@@ -42,13 +42,13 @@ impl Test {
         let processor = GpmProcessor::new();
 
         // Get files to include based on push.toml configuration
-        let files = config_manager.get_included_files(&push_config, project_path)?;
+        let files = config_manager.get_included_files(&push_config, &project_path)?;
 
         println!("{} {} files selected for testing", "📦".blue(), files.len());
 
         // Process each file
         for file in files {
-            let relative_path = file.strip_prefix(project_path)?;
+            let relative_path = file.strip_prefix(project_path.clone())?;
             let output_path = temp_dir.path().join(relative_path);
 
             println!("{} Processing: {}", "🔄".blue(), relative_path.display());
@@ -60,7 +60,7 @@ impl Test {
 
             // Process or copy the file
             if push_config.submit.preprocessor.enable_gpm
-                && matches!(file.extension().and_then(|s| s.to_str()), Some("c" | "h"))
+                && matches!(file.extension().and_then(|s| s.to_str()), Some("c" | "h" | "Makefile" | "makefile"))
             {
                 processor.process_file(&file, &output_path, &push_config.submit.preprocessor)?;
                 println!("{} GPM directives processed", "✓".green());
