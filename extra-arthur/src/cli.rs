@@ -56,4 +56,11 @@ pub enum ProjectCommands {
         /// Name of the project
         project_name: String,
     },
+
+    /// List all standard functions defined in push config
+    #[command(alias = "l")]
+    List {
+        /// Name of the project
+        project_name: String,
+    },
 }

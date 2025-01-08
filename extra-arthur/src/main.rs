@@ -9,7 +9,7 @@ use tokio;
 
 use arthur::{
     cli::{Cli, Commands, ProjectCommands},
-    commands::{submit::Submit, test::Test},
+    commands::{submit::Submit, test::Test, list::List},
     projects::{GetNextLineTest, LibftTest, Project},
     runner::{c::CTestRunner, results::TestResults, run_project_tests, TestLoader, TestRunner},
     Command as _,
@@ -66,6 +66,9 @@ async fn main() -> anyhow::Result<()> {
             ProjectCommands::Test { project_name } => {
                 println!("Testing project at {}", project_name);
                 Test::new(cli.cwd, &project_name).execute()?;
+            }
+            ProjectCommands::List { project_name } => {
+                List::new(&project_name, cli.cwd).execute()?;
             }
         },
         Commands::Test => {
