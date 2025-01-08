@@ -22,8 +22,8 @@ t_stack	*stack_last(t_stack *stack)
 {
 	if (!stack)
 		return (NULL);
-	if (stack->next)
-		return (stack_last(stack->next));
+	while (stack->next)
+		stack = stack->next;
 	return (stack);
 }
 

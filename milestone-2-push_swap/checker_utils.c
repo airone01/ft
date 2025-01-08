@@ -54,6 +54,9 @@ size_t	execute_rr(char *line, t_stack **stack_a, t_stack **stack_b)
 	return (0);
 }
 
+/**
+* User is responsible for clearing stack_a
+*/
 size_t	execute(t_stack **stack_a)
 {
 	t_stack	*stack_b;
@@ -67,9 +70,9 @@ size_t	execute(t_stack **stack_a)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			return (1);
+			return (stack_clear(stack_b), 1);
 		if (!*line)
-			return (free(line), 0);
+			return (free(line), stack_clear(stack_b), 0);
 		detected = execute_s(line, stack_a, &stack_b);
 		detected += execute_p(line, stack_a, &stack_b);
 		detected += execute_r(line, stack_a, &stack_b);
@@ -78,5 +81,5 @@ size_t	execute(t_stack **stack_a)
 		if (!detected)
 			return (1);
 	}
-	return (0);
+	return (stack_clear(stack_b), 0);
 }
