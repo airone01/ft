@@ -19,10 +19,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-# ifndef PS_OUTPUT
-#  define PS_OUTPUT 1
-# endif
-
 # ifndef BUFF_SIZE
 #  define BUFF_SIZE 8
 # endif
@@ -55,17 +51,17 @@ void				stack_iter(t_stack *stack, void (*f)(t_stack *));
 void				stack_indexes(t_stack *stack, size_t len);
 
 // ### STACK MANIPULATION ###
-void				sa(t_stack *stack_a);
-void				sb(t_stack *stack_b);
-void				ss(t_stack *stack_a, t_stack *stack_b);
-void				pa(t_stack **stack_a, t_stack **stack_b);
-void				pb(t_stack **stack_a, t_stack **stack_b);
-void				ra(t_stack **stack_a);
-void				rb(t_stack **stack_b);
-void				rr(t_stack **stack_a, t_stack **stack_b);
-void				rra(t_stack **stack_a);
-void				rrb(t_stack **stack_b);
-void				rrr(t_stack **stack_a, t_stack **stack_b);
+void				sa(t_stack *stack_a, size_t display);
+void				sb(t_stack *stack_b, size_t display);
+void				ss(t_stack *stack_a, t_stack *stack_b, size_t display);
+void				pa(t_stack **stack_a, t_stack **stack_b, size_t display);
+void				pb(t_stack **stack_a, t_stack **stack_b, size_t display);
+void				ra(t_stack **stack_a, size_t display);
+void				rb(t_stack **stack_b, size_t display);
+void				rr(t_stack **stack_a, t_stack **stack_b, size_t display);
+void				rra(t_stack **stack_a, size_t display);
+void				rrb(t_stack **stack_b, size_t display);
+void				rrr(t_stack **stack_a, t_stack **stack_b, size_t display);
 
 // ### PARSING ###
 t_stack				*parse_stdin(int argc, char **argv);
@@ -74,6 +70,7 @@ t_stack				*stack_last(t_stack *stack);
 t_stack				*stack_new(ssize_t nbr);
 ssize_t				stack_dupes(t_stack *s1);
 void				stack_pos(t_stack **stack);
+int					stack_legit(t_stack *stack);
 
 // ### SORTING ###
 // void                sort_count(t_stack *stack, size_t dth);
@@ -91,6 +88,7 @@ void				sort_tiny(t_stack **stack);
 
 // ### DISPLAYING ###
 void				std_error(void);
+void				stack_clear_error(t_stack *stack_a);
 
 // ### MISC ###
 ssize_t				ft_abs(ssize_t nb);

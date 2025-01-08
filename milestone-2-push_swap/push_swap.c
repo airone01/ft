@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <errno.h>
 
 /**
  * Finds the element of a stack with the lowest index.
@@ -52,7 +53,7 @@ t_stack	*push_swap(t_stack *stack_a)
 	stack_indexes(stack_a, len);
 	stack_a_start = stack_lowest(stack_a);
 	if (len == 2 && !stack_sorted(stack_a))
-		sa(stack_a);
+		sa(stack_a, 1);
 	else if (len == 3)
 		sort_tiny(&stack_a);
 	else if (len > 3 && !stack_sorted(stack_a))
@@ -77,12 +78,8 @@ int	main(int argc, char **argv)
 	if (!args_legit(argc, argv))
 		return (std_error(), 1);
 	stack_a = parse_stdin(argc, argv);
-	if (!stack_a || stack_size(stack_a) <= 1 || stack_dupes(stack_a))
-	{
-		stack_clear(stack_a);
-		std_error();
-		return (1);
-	}
+	if (stack_legit(stack_a))
+		return (EINVAL);
 	stack_a = push_swap(stack_a);
 	stack_clear(stack_a);
 	return (0);

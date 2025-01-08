@@ -32,16 +32,16 @@ void	push_save_three(t_stack **stack_a, t_stack **stack_b)
 	{
 		if ((*stack_a)->idx <= (ssize_t)len / 2)
 		{
-			pb(stack_a, stack_b);
+			pb(stack_a, stack_b, 1);
 			pushed++;
 		}
 		else
-			ra(stack_a);
+			ra(stack_a, 1);
 		i++;
 	}
 	while (len - pushed > 3)
 	{
-		pb(stack_a, stack_b);
+		pb(stack_a, stack_b, 1);
 		pushed++;
 	}
 }

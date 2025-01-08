@@ -27,9 +27,9 @@ void	sort_tiny(t_stack **stack)
 		return ;
 	high = stack_maxn(*stack)->idx;
 	if ((*stack)->idx == high)
-		ra(stack);
+		ra(stack, 1);
 	else if ((*stack)->next->idx == high)
-		rra(stack);
+		rra(stack, 1);
 	if ((*stack)->idx > (*stack)->next->idx)
-		sa(*stack);
+		sa(*stack, 1);
 }

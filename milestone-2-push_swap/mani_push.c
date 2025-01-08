@@ -30,10 +30,10 @@ static void	push(t_stack **dest, t_stack **src)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void	pa(t_stack **stack_a, t_stack **stack_b)
+void	pa(t_stack **stack_a, t_stack **stack_b, size_t display)
 {
 	push(stack_a, stack_b);
-	if (PS_OUTPUT)
+	if (display)
 		(void)!write(1, "pa\n", 3);
 }
 
@@ -43,9 +43,9 @@ void	pa(t_stack **stack_a, t_stack **stack_b)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void	pb(t_stack **stack_a, t_stack **stack_b)
+void	pb(t_stack **stack_a, t_stack **stack_b, size_t display)
 {
 	push(stack_b, stack_a);
-	if (PS_OUTPUT)
+	if (display)
 		(void)!write(1, "pb\n", 3);
 }

@@ -51,14 +51,34 @@ size_t	is_line(const char *str)
 
 void	clear_static(char *buffer)
 {
-	int	i;
+	size_t        i;
 
 	i = 0;
 	while (buffer[i])
-	{
+    {
 		buffer[i] = '\0';
 		i++;
+    }
+}
+
+char	*ft_strjoin_free(char *left, char buffer[FD_SIZE], char *line,
+		ssize_t bytes_read)
+{
+	char	*new;
+	size_t	i;
+
+	if (bytes_read == -1)
+	{
+		i = 0;
+		while (buffer[i++])
+			buffer[i - 1] = '\0';
+		clear_static(buffer);
+		return (free(line), NULL);
 	}
+	buffer[bytes_read] = '\0';
+	new = ft_strjoin(left, buffer);
+	free(left);
+	return (new);
 }
 
 /**
@@ -73,27 +93,24 @@ void	clear_static(char *buffer)
 char	*get_next_line(int fd)
 {
 	static char	buffer[FD_SIZE][BUFFER_SIZE + 1];
-	ssize_t		read_byte;
+	ssize_t		bytes_read;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 0 || FD_SIZE < 0)
 		return (NULL);
-	read_byte = 1;
+	bytes_read = 1;
 	line = ft_strdup(buffer[fd]);
 	if (!line)
-		return (NULL);
-	while (read_byte && is_line(line) == 0)
+		return (free(line), NULL);
+	while (bytes_read && is_line(line) == 0)
 	{
-		read_byte = read(fd, buffer[fd], BUFFER_SIZE);
-		if (read_byte == -1)
-			return (clear_static(buffer[fd]), free(line), NULL);
-		buffer[fd][read_byte] = '\0';
-		line = ft_strjoin(line, buffer[fd]);
+		bytes_read = read(fd, buffer[fd], BUFFER_SIZE);
+		line = ft_strjoin_free(line, buffer[fd], line, bytes_read);
 		if (!line)
 			return (NULL);
 	}
 	ft_buff_clean(buffer[fd]);
 	if (line[0] == 0)
-		return (free(line), NULL);
+		return (free(line), ft_strdup(""));
 	return (line);
 }

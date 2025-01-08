@@ -60,10 +60,12 @@ SRC_COMMON	=				\
 	sort_tiny.c				\
 	stack_add_back.c		\
 	stack_clear.c			\
+	stack_clear_error.c		\
 	stack_dupes.c			\
 	stack_indexes.c			\
 	stack_iter.c			\
 	stack_last.c			\
+	stack_legit.c			\
 	stack_lowest_pos.c		\
 	stack_max.c				\
 	stack_new.c				\
@@ -75,7 +77,7 @@ SRC = $(SRC_COMMON)	\
 	push_swap.c
 SRC_BONUS = $(SRC_COMMON)	\
 	checker.c				\
-	checker_main.c
+	checker_utils.c
 
 # ------------ Mapping -----------
 OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)

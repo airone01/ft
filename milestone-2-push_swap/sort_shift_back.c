@@ -31,7 +31,7 @@ void	stack_shift(t_stack **stack)
 	{
 		while (low_pos < len)
 		{
-			rra(stack);
+			rra(stack, 1);
 			low_pos++;
 		}
 	}
@@ -39,7 +39,7 @@ void	stack_shift(t_stack **stack)
 	{
 		while (low_pos > 0)
 		{
-			ra(stack);
+			ra(stack, 1);
 			low_pos--;
 		}
 	}
