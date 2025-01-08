@@ -8,7 +8,6 @@ files = [
 	"args_legit.c",
 	"checker.c",
 	"checker_utils.c",
-	"ft_abs.c",
 	"get_next_line.c",
 	"mani_*.c",
 	"parse_stdin.c",
@@ -35,7 +34,31 @@ norminette = true
 
 # Lift
 [[submit.copy]]
+source = "../milestone-0-libft/ft_abs.c"
+destination = "."
+flatten = true
+
+[[submit.copy]]
+source = "../milestone-0-libft/ft_atol.c"
+destination = "."
+flatten = true
+
+[[submit.copy]]
+source = "../milestone-0-libft/ft_calloc.c"
+destination = "."
+flatten = true
+
+[[submit.copy]]
 source = "../milestone-0-libft/ft_isdigit.c"
 destination = "."
 flatten = true
 
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isnumber.c"
+destination = "."
+flatten = true
+
+[[submit.copy]]
+source = "../milestone-0-libft/ft_split.c"
+destination = "."
+flatten = true

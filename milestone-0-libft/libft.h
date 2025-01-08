@@ -47,9 +47,7 @@ void				*ft_bzero(void *s, size_t n);
 char				*ft_strnstr(const char *big, const char *little,
 						size_t len);
 char				*ft_strrchr(const char *s, int c);
-char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s);
-long				ft_atol(const char *nptr);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_strcmp(const char *s1, const char *s2);
@@ -74,5 +72,9 @@ char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_itoa_base(int n, const char *b);
 char				*ft_itoa(int n);
+// Additional stuff by me
+ssize_t				ft_abs(ssize_t nb);
+char				*ft_strchr(const char *s, int c);
+long				ft_atol(const char *nptr);
 
 #endif

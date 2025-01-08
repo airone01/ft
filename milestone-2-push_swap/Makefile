@@ -61,7 +61,7 @@ SRC_COMMON	=				\
 	stack_size.c			\
 	stack_sorted.c			\
 	std_error.c
-# GPM@ SRC_COMMON += ft_isdigit.c
+# GPM@ SRC_COMMON += ft_abs.c ft_isdigit.c ft_calloc.c ft_split.c ft_atol.c
 SRC = $(SRC_COMMON)	\
 	push_swap.c
 SRC_BONUS = $(SRC_COMMON)	\

@@ -18,6 +18,8 @@
 // GPM!! #include "libft.h"
 # include <unistd.h>
 # include <fcntl.h>
+# include <limits.h>
+# include <stdlib.h>
 
 # ifndef BUFF_SIZE
 #  define BUFF_SIZE 8
@@ -91,10 +93,16 @@ void				std_error(void);
 void				stack_clear_error(t_stack *stack_a);
 
 // ### MISC ###
-ssize_t				ft_abs(ssize_t nb);
 char				*get_next_line(int fd);
 
 // ### BONUSES ###
 size_t				execute(t_stack **stack_a);
+
+// ### LIBFT ###
+// GPM@ ssize_t				ft_abs(ssize_t nb);
+// GPM@ void				*ft_calloc(size_t nmemb, size_t size);
+// GPM@ char				**ft_split(char *str, char c);
+// GPM@ long				ft_atol(const char *nptr);
+// GPM@ int					ft_isdigit(int c);
 
 #endif

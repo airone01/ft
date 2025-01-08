@@ -229,6 +229,15 @@ impl PushConfigManager {
                     )
                 };
 
+                // Copy the file with line filtering
+                let content = std::fs::read_to_string(&source_path)?;
+                let filtered_content = content
+                    .lines()
+                    .filter(|line| !line.trim().starts_with("#include \"libft.h\""))
+                    .collect::<Vec<&str>>()
+                    .join("\n");
+                std::fs::write(&target_path, filtered_content)?;
+
                 // Create parent directories if needed
                 if let Some(parent) = target_path.parent() {
                     std::fs::create_dir_all(parent)?;
