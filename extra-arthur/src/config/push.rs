@@ -5,6 +5,18 @@ use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 
 #[derive(Debug, Serialize, Deserialize)]
+pub struct FileCopyConfig {
+    /// Source file or glob pattern
+    pub source: String,
+    /// Optional destination path (relative to project root)
+    /// If not specified, maintains same path structure as source
+    pub destination: Option<String>,
+    /// Whether to flatten directory structure when copying
+    #[serde(default)]
+    pub flatten: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct PushConfiguration {
     pub project: ProjectInfo,
     pub submit: SubmitConfig,
@@ -25,6 +37,9 @@ pub struct SubmitConfig {
     pub hooks: HooksConfig,
     #[serde(default)]
     pub validation: ValidationConfig,
+    /// Configuration for copying additional files
+    #[serde(default)]
+    pub copy: Vec<FileCopyConfig>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -178,6 +193,142 @@ impl PushConfigManager {
             builder.add(Glob::new(pattern)?);
         }
         Ok(builder.build()?)
+    }
+
+    pub fn copy_additional_files(
+        &self,
+        config: &PushConfiguration,
+        source_base: &Path,
+        target_base: &Path,
+    ) -> anyhow::Result<()> {
+        for copy_config in &config.submit.copy {
+            // Handle both absolute and relative source paths
+            let source_path = if Path::new(&copy_config.source).is_absolute() {
+                PathBuf::from(&copy_config.source)
+            } else {
+                // If path starts with ../, resolve it relative to source_base
+                if copy_config.source.starts_with("../") {
+                    source_base
+                        .parent()
+                        .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?
+                        .join(copy_config.source.strip_prefix("../").unwrap())
+                } else {
+                    source_base.join(&copy_config.source)
+                }
+            };
+
+            // Get the concrete file path if it exists
+            if source_path.exists() {
+                let target_path = if let Some(dest) = &copy_config.destination {
+                    target_base.join(dest).join(
+                        source_path
+                            .file_name()
+                            .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
+                    )
+                } else {
+                    target_base.join(
+                        source_path
+                            .file_name()
+                            .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
+                    )
+                };
+
+                // Create parent directories if needed
+                if let Some(parent) = target_path.parent() {
+                    std::fs::create_dir_all(parent)?;
+                }
+
+                // Copy the file
+                std::fs::copy(&source_path, &target_path)?;
+                log::debug!(
+                    "Copied {} to {}",
+                    source_path.display(),
+                    target_path.display()
+                );
+            } else {
+                // If path doesn't exist directly, try glob pattern
+                let pattern = if copy_config.source.starts_with("../") {
+                    // For patterns starting with ../, look in parent directory
+                    let parent = source_base
+                        .parent()
+                        .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?;
+                    parent.join(copy_config.source.strip_prefix("../").unwrap())
+                } else {
+                    source_base.join(&copy_config.source)
+                };
+
+                let glob = globset::Glob::new(pattern.to_str().ok_or_else(|| {
+                    anyhow::anyhow!("Invalid path: {}", pattern.display())
+                })?)?;
+                let matcher = glob.compile_matcher();
+
+                // Define the base directory for glob search
+                let search_base = if copy_config.source.starts_with("../") {
+                    source_base
+                        .parent()
+                        .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?
+                        .to_path_buf()
+                } else {
+                    source_base.to_path_buf()
+                };
+
+                // Walk through source directory
+                let mut found_matches = false;
+                for entry in walkdir::WalkDir::new(&search_base) {
+                    let entry = entry?;
+                    if !entry.file_type().is_file() {
+                        continue;
+                    }
+
+                    let relative_path = entry
+                        .path()
+                        .strip_prefix(&search_base)?
+                        .to_string_lossy()
+                        .into_owned();
+
+                    if matcher.is_match(&relative_path) {
+                        found_matches = true;
+                        let source_path = entry.path();
+                        let target_path = if let Some(dest) = &copy_config.destination {
+                            if copy_config.flatten {
+                                target_base.join(dest).join(
+                                    source_path
+                                        .file_name()
+                                        .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
+                                )
+                            } else {
+                                target_base.join(dest).join(&relative_path)
+                            }
+                        } else {
+                            target_base.join(&relative_path)
+                        };
+
+                        // Create parent directories if needed
+                        if let Some(parent) = target_path.parent() {
+                            std::fs::create_dir_all(parent)?;
+                        }
+
+                        // Copy the file
+                        std::fs::copy(source_path, &target_path)?;
+                        log::debug!(
+                            "Copied {} to {}",
+                            source_path.display(),
+                            target_path.display()
+                        );
+                    }
+                }
+
+                if !found_matches {
+                    log::warn!(
+                        "No files matched pattern: {} (searched in {})",
+                        copy_config.source,
+                        search_base.display()
+                    );
+                }
+            }
+        }
+
+        Ok(())
     }
 }
 

@@ -139,6 +139,9 @@ impl Submit {
             }
         }
 
+        // Copy additional files as specified in the configuration
+        config_manager.copy_additional_files(&push_config, project_path, temp_dir.path())?;
+
         // Store push_config for use in execute
         self.push_config = Some(push_config);
 

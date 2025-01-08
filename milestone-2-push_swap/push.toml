@@ -1,0 +1,41 @@
+[project]
+name = "push_swap"
+version = "0.1.0"
+
+[submit]
+files = [
+	# C sources
+	"args_legit.c",
+	"checker.c",
+	"checker_utils.c",
+	"ft_abs.c",
+	"get_next_line.c",
+	"mani_*.c",
+	"parse_stdin.c",
+	"push_swap.c",
+	"sort_*.c",
+	"stack_*.c",
+	"std_error.c",
+	# C headers
+	"push_swap.h",
+	# Other
+	"Makefile"
+]
+
+[submit.preprocessor]
+enable_gpm = true
+function_paths = ["milestone-2-push_swap"]
+
+[submit.hooks]
+pre_submit = "make fclean"
+
+[submit.validation]
+norminette = true
+# make_test = true
+
+# Lift
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isdigit.c"
+destination = "."
+flatten = true
+
