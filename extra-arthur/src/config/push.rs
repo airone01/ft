@@ -14,6 +14,17 @@ pub struct FileCopyConfig {
     /// Whether to flatten directory structure when copying
     #[serde(default)]
     pub flatten: bool,
+    /// Text replacements to apply during copying
+    #[serde(default)]
+    pub replace: Vec<TextReplacement>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct TextReplacement {
+    /// Text to find
+    pub find: String,
+    /// Text to replace with
+    pub replace_with: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -189,12 +200,39 @@ impl PushConfigManager {
         Ok(builder.build()?)
     }
 
+    // Implementation of copy function
     pub fn copy_additional_files(
         &self,
         config: &PushConfiguration,
         source_base: &Path,
         target_base: &Path,
     ) -> anyhow::Result<()> {
+        // Helper function to filter and copy a single file
+        fn filter_and_copy(source: &Path, target: &Path, replacements: &[TextReplacement]) -> anyhow::Result<()> {
+            // Create parent directories if needed
+            if let Some(parent) = target.parent() {
+                std::fs::create_dir_all(parent)?;
+            }
+
+            // Read file content
+            let mut content = std::fs::read_to_string(source)?;
+
+            // Apply all text replacements
+            for replacement in replacements {
+                content = content.replace(&replacement.find, &replacement.replace_with);
+            }
+
+            // Write the processed content
+            std::fs::write(target, content)?;
+
+            log::debug!(
+            "Copied and processed {} to {}",
+            source.display(),
+            target.display()
+        );
+            Ok(())
+        }
+
         for copy_config in &config.submit.copy {
             // Handle both absolute and relative source paths
             let source_path = if Path::new(&copy_config.source).is_absolute() {
@@ -202,7 +240,6 @@ impl PushConfigManager {
             } else {
                 // Resolve relative paths from the source_base directory
                 if copy_config.source.starts_with("../") {
-                    // For paths starting with ../, resolve from parent of source_base
                     source_base
                         .parent()
                         .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?
@@ -229,31 +266,10 @@ impl PushConfigManager {
                     )
                 };
 
-                // Copy the file with line filtering
-                let content = std::fs::read_to_string(&source_path)?;
-                let filtered_content = content
-                    .lines()
-                    .filter(|line| !line.trim().starts_with("#include \"libft.h\""))
-                    .collect::<Vec<&str>>()
-                    .join("\n");
-                std::fs::write(&target_path, filtered_content)?;
-
-                // Create parent directories if needed
-                if let Some(parent) = target_path.parent() {
-                    std::fs::create_dir_all(parent)?;
-                }
-
-                // Copy the file
-                std::fs::copy(&source_path, &target_path)?;
-                log::debug!(
-                    "Copied {} to {}",
-                    source_path.display(),
-                    target_path.display()
-                );
+                filter_and_copy(&source_path, &target_path, &copy_config.replace)?;
             } else {
-                // If path doesn't exist directly, try glob pattern
+                // Handle glob patterns...
                 let pattern = if copy_config.source.starts_with("../") {
-                    // For patterns starting with ../, look in parent directory
                     let parent = source_base
                         .parent()
                         .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?;
@@ -310,27 +326,16 @@ impl PushConfigManager {
                             target_base.join(&relative_path)
                         };
 
-                        // Create parent directories if needed
-                        if let Some(parent) = target_path.parent() {
-                            std::fs::create_dir_all(parent)?;
-                        }
-
-                        // Copy the file
-                        std::fs::copy(source_path, &target_path)?;
-                        log::debug!(
-                            "Copied {} to {}",
-                            source_path.display(),
-                            target_path.display()
-                        );
+                        filter_and_copy(source_path, &target_path, &copy_config.replace)?;
                     }
                 }
 
                 if !found_matches {
                     log::warn!(
-                        "No files matched pattern: {} (searched in {})",
-                        copy_config.source,
-                        search_base.display()
-                    );
+                    "No files matched pattern: {} (searched in {})",
+                    copy_config.source,
+                    search_base.display()
+                );
                 }
             }
         }

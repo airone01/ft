@@ -36,29 +36,47 @@ norminette = true
 [[submit.copy]]
 source = "../milestone-0-libft/ft_abs.c"
 destination = "."
+replace = [
+	{ find = "libft.h", replace_with = "push_swap.h" }
+]
 flatten = true
 
 [[submit.copy]]
 source = "../milestone-0-libft/ft_atol.c"
 destination = "."
+replace = [
+	{ find = "libft.h", replace_with = "push_swap.h" }
+]
 flatten = true
 
 [[submit.copy]]
 source = "../milestone-0-libft/ft_calloc.c"
 destination = "."
+replace = [
+	{ find = "libft.h", replace_with = "push_swap.h" }
+]
 flatten = true
 
 [[submit.copy]]
 source = "../milestone-0-libft/ft_isdigit.c"
 destination = "."
+replace = [
+	{ find = "libft.h", replace_with = "push_swap.h" }
+]
 flatten = true
 
 [[submit.copy]]
 source = "../milestone-0-libft/ft_isnumber.c"
 destination = "."
+replace = [
+	{ find = "libft.h", replace_with = "push_swap.h" }
+]
 flatten = true
 
 [[submit.copy]]
 source = "../milestone-0-libft/ft_split.c"
 destination = "."
+replace = [
+	{ find = "libft.h", replace_with = "push_swap.h" }
+]
 flatten = true

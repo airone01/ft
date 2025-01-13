@@ -36,13 +36,46 @@
 
 ## Projects
 
-| **Milestone** |                                                                  **Project**                                                                  |     **Finished**      | **Grade** |
-| :-----------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------: | :-------: |
-|       0       |             [![libft logo](https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png)](/milestone-0-libft/README.md)             | ✅ <br> (with bonuses) |    125    |
-|       1       |    [![born2beroot logo](https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png)](/milestone-1-born2beroot/README.md)    | ✅ <br> (with bonuses) |    125    |
-|       1       |       [![ft_printf logo](https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png)](/milestone-1-ft_printf/README.md)       |           ✅           |    100    |
-|       1       | [![get_next_line logo](https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png)](/milestone-1-get_next_line/README.md) |           ✅           |    100    |
-|       2       |       [![push_swap logo](https://github.com/ayogun/42-project-badges/raw/main/badges/push_swapn.png)](/milestone-1-push_swap/README.md)       |          ...          |           |
+<table border="1" align="center">
+  <thead>
+    <tr>
+      <th><strong>Milestone</strong></th>
+      <th><strong>Project</strong></th>
+      <th><strong>Finished</strong></th>
+      <th><strong>Grade</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>0</td>
+      <td><a href="/milestone-0-libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
+      <td>✅ <br> (with bonuses)</td>
+      <td>125</td>
+    </tr>
+    <tr align="center">
+      <td rowspan="3">1</td>
+      <td><a href="/milestone-1-born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
+      <td>✅ <br> (with bonuses)</td>
+      <td>125</td>
+    </tr>
+    <tr align="center">
+      <td><a href="/milestone-1-ft_printf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png" alt="ft_printf logo"></a></td>
+      <td>✅</td>
+      <td>100</td>
+    </tr>
+    <tr align="center">
+      <td><a href="/milestone-1-get_next_line/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png" alt="get_next_line logo"></a></td>
+      <td>✅</td>
+      <td>100</td>
+    </tr>
+    <tr align="center">
+      <td>2</td>
+      <td><a href="/milestone-1-push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swapn.png" alt="push_swap logo"></a></td>
+      <td>...</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Extra tools/projects
 
@@ -58,21 +91,26 @@ A program to flex on your friends by visualizing your push_swap algorithm in Min
 
 ### [`Arthur`](/extra-arthur/README.md)
 
-Arthur is a test runner for 42 projects. It is a program that runs tests on your project and displays the results in a nice and readable format. Currently, it supports `libft`.
+> [!WARNING]
+> GPM and Arthur were never meant to be used by anyone other than me. They are tools designed for my workflow that I use to manage my projects in this monorepo.
+> They could break your stuff.
+
+Arthur is a test runner for 42 projects, with an implementation of the functionnalities of the now-defunct GPM.
+- The test runner runs tests on your project and displays the results in a nice and readable format. Currently, it supports `libft`.
+- The project manager handles file manipulation before pushing a project for validation on the 42 intra. This allows me to keep all the deps clean internally in this repo.
+
+More info [`here`](/extra-arthur/README.md).
 
 <img src="https://skillicons.dev/icons?i=bash" align="right" />
 
-### [`GPM`](/gpm.sh)
+## Additional stuff/notes
 
-> [!WARNING]
-> GPM was never meant to be used by anyone other than me. It is a personal tool that I use to manage my projects in this monorepo. It is not meant to be a general-purpose tool. It could break your stuff, consider yourself warned.
+### ~~`GPM`~~ replace by [Arthur](#arthur)
 
 Git Project Manager (GPM) is a bash script that helps me manage my 42 projects in this monorepo. It provides two main functions:
 
 -   `gpm.sh add <repo-url> <project-name>`: Adds a project from a separate repository to this central repo while preserving its commit history in the commit message (to a certain extent)
 -   `gpm.sh submit <project-name> <target-repo-url>`: Submits a project from this repo and force pushes it to a target repository (usually the 42 intra)
-
-## Additional stuff/notes
 
 ### Direnv
 
@@ -80,4 +118,5 @@ This project's dev dependencies are managed using `nix-direnv`. If you don't kno
 
 ### Ford
 
-`ford` was a quick and dirty test runner I made for my projects during the pool. I's now deprecated in favor of [arthur](/extra-arthur/README.md).
+`ford` was a quick and dirty test runner I made for my projects during the pool. I's now deprecated in favor of [Arthur](#arthur).
+
