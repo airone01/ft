@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                       _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  #
-#    Makefile                                       _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  #
-#                                                  | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  #
-#    By: elagouch <elagouch@student.42.fr>         |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  #
-#                                                  | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  #
-#    Created: 2024/11/05 15:39:47 by elagouch      |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  #
-#    Updated: 2024/11/18 11:13:41 by elagouch        |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  #
-#                                                                              #
-# **************************************************************************** #
-
 # ------------- Meta -------------
 MAKEFLAGS	+= --no-print-directory
 .PHONY: all clean fclean re
@@ -49,30 +37,30 @@ ARFLAGS			= rcs
 
 # ------------ Sources -----------
 SRC	=							\
-	get_next_line.c				\
-	get_next_line_utils.c
-#	get_next_line_bonus.c		\
-#	get_next_line_utils_bonus.c
+	get_next_line				\
+	get_next_line_utils
+#	get_next_line_bonus		\
+#	get_next_line_utils_bonus
 SRC_TEST =	\
-	main.c
+	main
 
 # ------------ Mapping -----------
-OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP	= $(SRC:%.c=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
-OBJ_TEST	= $(SRC_TEST:%.c=$(DIR_OBJ)%.o)
-DEP_TEST	= $(SRC_TEST:%.c=$(DIR_OBJ)%.d)
+OBJ         = $(_SRC:%=$(DIR_OBJ)%.o)
+DEP         = $(_SRC:%=$(DIR_OBJ)%.d)
+OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
+DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
+OBJ_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.o)
+DEP_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
 
 $(LIBFT):
-	@$(ECHO) "$(MSG) ⏳ Building libft\n"
+	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(AR) $(ARFLAGS) $(NAME) $?
 	@$(ECHO) "$(SUCCESS)\n"
 
@@ -81,8 +69,8 @@ $(DIR_OBJ)%.o: %.c get_next_line.h gnl.Makefile
 	@$(ECHO) "$(MSG) ⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-checker: $(OBJ) $(OBJ_TEST) | $(LIBFT)
-	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+checker: $(OBJ) $(OBJ_TEST) $(LIBFT)
+	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
 
 test: $(NAME)

@@ -16,6 +16,7 @@ CD		= cd
 JOBS	= 			\
 	0:libft 		\
 	1:ft_printf		\
+	1:get_next_line	\
 	2:push_swap
 
 # ------------ Mapping -----------
@@ -28,8 +29,8 @@ MILESTONES = $(sort $(foreach job,$(JOBS),$(word 1,$(subst :, ,$(job)))))
 
 # ------------ Targets -----------
 default:
-	@$(ECHO) "$(MSG) 👀 Please choose a project to build.\n"
-	@$(ECHO) "\t\tRun 'make list' to see all available projects.\n"
+	@$(ECHO) "$(MSG) 👀 Please choose a project to build or run 'make all'.\n"
+	@$(ECHO) "\t\t Run 'make list' to see all available projects.\n"
 
 # List all projects organized by milestone
 list:
@@ -46,36 +47,35 @@ $(foreach job,$(JOBS),$(eval $(word 2,$(subst :, ,$(job))): milestone$(word 1,$(
 # Generate the milestone targets (e.g., milestone0libft)
 define make_milestone_target
 milestone$(word 1,$(subst :, ,$(1)))$(word 2,$(subst :, ,$(1))):
-	@$(ECHO) "$(MSG) Building $(word 2,$(subst :, ,$(1)))\n"
-	@$(CD) milestone-$(word 1,$(subst :, ,$(1)))-$(word 2,$(subst :, ,$(1))) && $(MAKE)
+	@$(ECHO) "$(MSG) 🏗️  Building $(word 2,$(subst :, ,$(1)))\n"
+	@$(CD) milestone-$(word 1,$(subst :, ,$(1)))-$(word 2,$(subst :, ,$(1))) && $(MAKE) -f *Makefile
 endef
 
 $(foreach job,$(JOBS),$(eval $(call make_milestone_target,$(job))))
+
+all:
+	@$(ECHO) "$(MSG) 🏗️  Building all projects\n"
+	@for job in $(JOBS); do \
+		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \
+		(cd "$$dir" && $(MAKE) -f *Makefile); \
+	done
 
 # Clean targets with better path handling
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning all projects\n"
 	@for job in $(JOBS); do \
 		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \
-		if [ -d "$$dir" ]; then \
-			(cd "$$dir" && $(MAKE) clean); \
-		else \
-			$(ECHO) "$(TITLE) $$(echo $$job | cut -d: -f1) $(RESET)\t\t - Directory $$dir not found\n"; \
-		fi; \
+		(cd "$$dir" && $(MAKE) -f *Makefile clean); \
 	done
 
 fclean:
 	@$(ECHO) "$(MSG) 🧹 Fcleaning all projects\n"
 	@for job in $(JOBS); do \
 		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \
-		if [ -d "$$dir" ]; then \
-			(cd "$$dir" && $(MAKE) fclean); \
-		else \
-			$(ECHO) "$(TITLE) $$(echo $$job | cut -d: -f1) $(RESET)\t\t - Directory $$dir not found\n"; \
-		fi; \
+		(cd "$$dir" && $(MAKE) -f *Makefile fclean); \
 	done
 
-all: $(MILESTONE_TARGETS)
+#all: $(MILESTONE_TARGETS)
 
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory

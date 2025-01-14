@@ -25,71 +25,71 @@ CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MD -MP
 ARFLAGS		= rcs
 
 # ------------ Sources -----------
-SRC			=		\
-	ft_atoi.c		\
-	ft_abs.c        \
-	ft_bzero.c		\
-	ft_calloc.c		\
-	ft_isalnum.c	\
-	ft_isalpha.c	\
-	ft_isascii.c	\
-	ft_isdigit.c	\
-	ft_isprint.c	\
-	ft_itoa.c		\
-	ft_memchr.c		\
-	ft_memcmp.c		\
-	ft_memcpy.c		\
-	ft_memmove.c	\
-	ft_memset.c		\
-	ft_putchar_fd.c	\
-	ft_putendl_fd.c	\
-	ft_putnbr_fd.c	\
-	ft_putstr_fd.c	\
-	ft_split.c		\
-	ft_strdup.c		\
-	ft_strrchr.c	\
-	ft_strchr.c		\
-	ft_strcmp.c		\
-	ft_striteri.c	\
-	ft_strjoin.c	\
-	ft_strlcat.c	\
-	ft_strlcpy.c	\
-	ft_strlen.c		\
-	ft_strmapi.c	\
-	ft_strnstr.c	\
-	ft_strncmp.c	\
-	ft_strtrim.c	\
-	ft_tolower.c	\
-	ft_toupper.c	\
-	ft_substr.c
-SRC_BONUS	=				\
-	ft_lstadd_back_bonus.c	\
-	ft_lstadd_front_bonus.c	\
-	ft_lstclear_bonus.c		\
-	ft_lstdelone_bonus.c	\
-	ft_lstiter_bonus.c		\
-	ft_lstlast_bonus.c		\
-	ft_lstmap_bonus.c		\
-	ft_lstnew_bonus.c		\
-	ft_lstsize_bonus.c
+_SRC			=			\
+	ft_atoi					\
+	ft_abs					\
+	ft_bzero				\
+	ft_calloc				\
+	ft_isalnum				\
+	ft_isalpha				\
+	ft_isascii				\
+	ft_isdigit				\
+	ft_isprint				\
+	ft_itoa					\
+	ft_memchr				\
+	ft_memcmp				\
+	ft_memcpy				\
+	ft_memmove				\
+	ft_memset				\
+	ft_putchar_fd			\
+	ft_putendl_fd			\
+	ft_putnbr_fd			\
+	ft_putstr_fd			\
+	ft_split				\
+	ft_strdup				\
+	ft_strrchr				\
+	ft_strchr				\
+	ft_strcmp				\
+	ft_striteri				\
+	ft_strjoin				\
+	ft_strlcat				\
+	ft_strlcpy				\
+	ft_strlen				\
+	ft_strmapi				\
+	ft_strnstr				\
+	ft_strncmp				\
+	ft_strtrim				\
+	ft_tolower				\
+	ft_toupper				\
+	ft_substr
+_SRC_BONUS	=				\
+	ft_lstadd_back_bonus	\
+	ft_lstadd_front_bonus	\
+	ft_lstclear_bonus		\
+	ft_lstdelone_bonus		\
+	ft_lstiter_bonus		\
+	ft_lstlast_bonus		\
+	ft_lstmap_bonus			\
+	ft_lstnew_bonus			\
+	ft_lstsize_bonus
 
 # ------------ Mapping -----------
-OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
+DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
+OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
+DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(AR) $(ARFLAGS) $(NAME) $?
 	@$(ECHO) "$(SUCCESS)\n"
 
 .bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(MSG) ⏳ Building bonuses lib\n"
-	$(AR) $(ARFLAGS) $(NAME) $?
+	@$(ECHO) "$(MSG) 🏗️  Building bonuses lib\n"
+	@$(AR) $(ARFLAGS) $(NAME) $?
 	@touch .bonus
 	@$(ECHO) "$(SUCCESSB)\n"
 
@@ -114,4 +114,3 @@ re: fclean all
 MAKEFLAGS	+= --no-print-directory
 -include $(DEP) $(DEP_BONUS)
 .PHONY: all bonus clean fclean re
-.SILENT: clean fclean

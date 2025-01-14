@@ -24,22 +24,22 @@ CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
 ARFLAGS		= rcs
 
 # ------------ Sources -----------
-SRC			=				\
-	ft_printf.c				\
-	ft_putchar.c			\
-	ft_putnbr_base_ssize.c	\
-	ft_putstr_ssize.c		\
-	ft_strlen.c
+_SRC		=				\
+	ft_printf				\
+	ft_putchar				\
+	ft_putnbr_base_ssize	\
+	ft_putstr_ssize			\
+	ft_strlen
 
 # ------------ Mapping -----------
-OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
+DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(AR) $(ARFLAGS) $(NAME) $?
 	@$(ECHO) "$(SUCCESS)\n"
 
@@ -62,4 +62,3 @@ re: fclean all
 MAKEFLAGS	+= --no-print-directory
 -include $(DEP)
 .PHONY: all clean fclean re
-.SILENT: clean fclean

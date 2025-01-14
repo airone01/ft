@@ -124,15 +124,15 @@ DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 all: $(NAME)
 
 $(LIBFT): $(SRC_LIBFT)
-	@$(ECHO) "$(MSG) ⏳ Building libft\n"
+	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(GNL): $(SRC_GNL) # GPM!
-	@$(ECHO) "$(MSG) ⏳ Building libft\n" # GPM!
+	@$(ECHO) "$(MSG) 🏗️  Building libft\n" # GPM!
 	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile # GPM!
 # GPM!
 $(NAME): $(OBJ) $(LIBFT)
-	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
 	@$(ECHO) "$(SUCCESS)\n"
 
@@ -143,7 +143,7 @@ $(DIR_OBJ)%.o: %.c Makefile
 
 # GPM@ ..bonus: $(OBJ_BONUS) $(LIBFT)
 .bonus: $(OBJ_BONUS) $(LIBFT) $(GNL) # GPM!
-	@$(ECHO) "$(MSG) ⏳ Building bonuses for $(NAME)\n"
+	@$(ECHO) "$(MSG) 🏗️ Building bonuses for $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(GNL_FLAGS) $(LIBFT_FLAGS) # GPM!
 	# GPM@ .	@$(CC) $(CFLAGS) -o  $(BNAME) $^ $(LIBFT_FLAGS)
 	@touch .bonus
