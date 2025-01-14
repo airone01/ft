@@ -30,7 +30,7 @@ MILESTONES = $(sort $(foreach job,$(JOBS),$(word 1,$(subst :, ,$(job)))))
 # ------------ Targets -----------
 default:
 	@$(ECHO) "$(MSG) 👀 Please choose a project to build or run 'make all'.\n"
-	@$(ECHO) "\t\t Run 'make list' to see all available projects.\n"
+	@$(ECHO) "\t\t    Run 'make list' to see all available projects.\n"
 
 # List all projects organized by milestone
 list:
