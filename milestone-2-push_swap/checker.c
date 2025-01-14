@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:37:35 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 19:01:49 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:06:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ int	main(int argc, char **argv)
 		return (1);
 	argc--;
 	argv++;
-    return (run_program(argc, argv));
+	return (run_program(argc, argv));
 }

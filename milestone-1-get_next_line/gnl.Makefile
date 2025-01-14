@@ -15,8 +15,12 @@ MAKEFLAGS	+= --no-print-directory
 .PHONY: all clean fclean re
 
 # ------------- ANSI -------------
-TITLE_SEC	= \033[48;5;78;30;1m
+TITLE	    = \033[48;5;198;30;1m
 RESET		= \033[0m
+GREEN		= \033[1;32m
+MSG			= $(TITLE) $(GPM_FNAME) \t\t$(RESET)
+SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
+SUCCESSB	= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
 
 # ------------- Meta -------------
 GPM_MSTONE	= 1
@@ -26,7 +30,7 @@ NAME		= get_next_line.a
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO	= echo -e
+ECHO	= printf
 MAKE	= make
 CC		= cc
 AR		= ar
@@ -64,33 +68,34 @@ DEP_TEST	= $(SRC_TEST:%.c=$(DIR_OBJ)%.d)
 all: $(NAME)
 
 $(LIBFT):
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Building libft"
+	@$(ECHO) "$(MSG) ⏳ Building libft\n"
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Building $(NAME)"
-	$(AR) $(ARFLAGS) $(NAME) $?
+	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(AR) $(ARFLAGS) $(NAME) $?
+	@$(ECHO) "$(SUCCESS)\n"
 
 $(DIR_OBJ)%.o: %.c get_next_line.h gnl.Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)$(CC) CFLAGS $< $@"
+	@$(ECHO) "$(MSG) ⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 checker: $(OBJ) $(OBJ_TEST) | $(LIBFT)
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Building $(NAME)"
+	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
 
 test: $(NAME)
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Testing $(NAME)"
+	@$(ECHO) "$(MSG) 🧪 Testing $(NAME)\n"
 	@$(MAKE) -C $(realpath ./tester) m
 
 clean:
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Cleaning the project"
+	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
 	@$(RM) -r $(DIR_OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@$(ECHO) "$(TITLE_SEC) 1-gnl \t\t$(RESET)Fcleaning the project"
+	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
 	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 

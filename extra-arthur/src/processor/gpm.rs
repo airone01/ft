@@ -24,7 +24,7 @@ impl GpmProcessor {
         Self {
             gpm_directive_regex: Regex::new(r"(?://|#)\s*GPM:\s*([a-zA-Z0-9_]+)\s*$").unwrap(),
             gpm_remove_regex: Regex::new(r"(?://|#)\s*GPM!\s*$").unwrap(),
-            gpm_strip_comment_regex: Regex::new(r"(?://|#)\s*GPM@\s*(.+)$").unwrap(),
+            gpm_strip_comment_regex: Regex::new(r"(?://|#)\s*GPM@\s*\.(.+)$").unwrap(),
             function_extractor: FunctionExtractor::new(),
         }
     }
@@ -73,7 +73,7 @@ impl GpmProcessor {
                         .into());
                 }
             } else if let Some(captures) = self.gpm_strip_comment_regex.captures(line) {
-                // For GPM@ directives, only keep the content after GPM@
+                // For GPM@ .directives, only keep the content after GPM@
                 let content = captures.get(1).unwrap().as_str();
                 result.push_str(content);
                 result.push('\n');
@@ -146,8 +146,8 @@ mod tests {
         let processor = GpmProcessor::new();
         let content = r#"int main(void)
 {
-    // GPM@ This comment text will be preserved
-    # GPM@ Another preserved text
+    // GPM@ .This comment text will be preserved
+    # GPM@ .Another preserved text
     // Normal comment stays
     return (0);
 }

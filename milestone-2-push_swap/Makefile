@@ -1,126 +1,179 @@
 # ------------- ANSI -------------
-TITLE_SEC	= \033[48;5;78;30;1m
+TITLE		= \033[48;5;227;30;1m
 RESET		= \033[0m
+GREEN		= \033[1;32m
+MSG			= $(TITLE) $(GPM_FNAME) \t$(RESET)
+SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
+SUCCESSB	= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
 
 # ------------- Meta -------------
 GPM_MSTONE	= 2
 GPM_NAME	= push_swap
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= push_swap
+BNAME		= checker
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO	= echo -e
-MAKE	= make
+ECHO	= printf
 CC		= cc
 AR		= ar
 RM     	= rm -f
 MD		= mkdir -p
 
 # ------------ Libft ------------
-LIBFT_DIR	= $(realpath ../milestone-0-libft)
-GNL_DIR		= $(realpath ../milestone-1-get_next_line)
+LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
+# GPM@ .LIBFT_DIR	= $(realpath ./libft)
+GNL_DIR		= $(realpath ../milestone-1-get_next_line)# GPM!
 LIBFT		= $(LIBFT_DIR)/libft.a
-GNL			= $(GNL_DIR)/get_next_line.a
+GNL			= $(GNL_DIR)/get_next_line.a # GPM!
 
 # ------------- Flags ------------
-CFLAGS			+= -Wall -Werror -Wextra -MMD -MP -g3
-CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR)
+CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MD -MP
+CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
+# GPM@ .CFLAGS			+= -I$(LIBFT_DIR) # GPM!
 LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
-GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a
+GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a # GPM!
 
 # ------------ Sources -----------
-SRC_COMMON	=				\
-	args_legit.c			\
-	ft_abs.c				\
-	get_next_line.c			\
-	mani_swap.c				\
-	mani_push.c				\
-	mani_rotate.c			\
-	mani_rrotate.c			\
-	parse_stdin.c			\
-	sort_cheapest.c			\
-	sort_cost.c				\
-	sort_large.c			\
-	sort_move.c				\
-	sort_push_save_three.c	\
-	sort_shift_back.c		\
-	sort_tiny.c				\
-	stack_add_back.c		\
-	stack_clear.c			\
-	stack_clear_error.c		\
-	stack_dupes.c			\
-	stack_indexes.c			\
-	stack_iter.c			\
-	stack_last.c			\
-	stack_legit.c			\
-	stack_lowest_pos.c		\
-	stack_max.c				\
-	stack_new.c				\
-	stack_pos.c				\
-	stack_size.c			\
-	stack_sorted.c			\
-	std_error.c
-# GPM@ SRC_COMMON += ft_abs.c ft_isdigit.c ft_calloc.c ft_split.c ft_atol.c
-SRC = $(SRC_COMMON)	\
-	push_swap.c
-SRC_BONUS = $(SRC_COMMON)	\
-	checker.c				\
-	checker_utils.c
+_SRC_GNL	=	get_next_line get_next_line_utils # GNL!
+_SRC_LIBFT	=				\
+	ft_atoi					\
+	ft_abs					\
+	ft_bzero				\
+	ft_calloc				\
+	ft_isalnum				\
+	ft_isalpha				\
+	ft_isascii				\
+	ft_isdigit				\
+	ft_isprint				\
+	ft_itoa					\
+	ft_memchr				\
+	ft_memcmp				\
+	ft_memcpy				\
+	ft_memmove				\
+	ft_memset				\
+	ft_putchar_fd			\
+	ft_putendl_fd			\
+	ft_putnbr_fd			\
+	ft_putstr_fd			\
+	ft_split				\
+	ft_strdup				\
+	ft_strrchr				\
+	ft_strchr				\
+	ft_strcmp				\
+	ft_striteri				\
+	ft_strjoin				\
+	ft_strlcat				\
+	ft_strlcpy				\
+	ft_strlen				\
+	ft_strmapi				\
+	ft_strnstr				\
+	ft_strncmp				\
+	ft_strtrim				\
+	ft_tolower				\
+	ft_toupper				\
+	ft_substr
+_SRC_COMMON	=				\
+	args_legit				\
+	mani_swap				\
+	mani_push				\
+	mani_rotate				\
+	mani_rrotate			\
+	parse_stdin				\
+	sort_cheapest			\
+	sort_cost				\
+	sort_large				\
+	sort_move				\
+	sort_push_save_three	\
+	sort_shift_back			\
+	sort_tiny				\
+	stack_add_back			\
+	stack_clear				\
+	stack_clear_error		\
+	stack_dupes				\
+	stack_indexes			\
+	stack_iter				\
+	stack_last				\
+	stack_legit				\
+	stack_lowest_pos		\
+	stack_max				\
+	stack_new				\
+	stack_pos				\
+	stack_size				\
+	stack_sorted			\
+	std_error
+_SRC = $(_SRC_COMMON)		\
+	push_swap
+_SRC_BONUS = $(_SRC_COMMON)	\
+	checker					\
+	checker_utils
+# GPM@ ._SRC_BONUS += get_next_line
 
 # ------------ Mapping -----------
-OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP	= $(SRC:%.c=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
+SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
+SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c) # GNL!
+SRC			= $(_SRC:%=%.c)
+SRC_BONUS	= $(_SRC_BONUS:%=%.c)
+OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
+DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
+OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
+DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
 all: $(NAME)
 
-$(LIBFT):
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
+$(LIBFT): $(SRC_LIBFT)
+	@$(ECHO) "$(MSG) ⏳ Building libft\n"
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(GNL):
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
-	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile
-
-$(NAME): $(OBJ) | $(LIBFT)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
+$(GNL): $(SRC_GNL) # GPM!
+	@$(ECHO) "$(MSG) ⏳ Building libft\n" # GPM!
+	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile # GPM!
+# GPM!
+$(NAME): $(OBJ) $(LIBFT)
+	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
+	@$(ECHO) "$(SUCCESS)\n"
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
+	@$(ECHO) "$(MSG) ⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-.bonus: $(OBJ_BONUS) | $(LIBFT) $(GNL)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building bonuses for $(NAME)"
-	$(CC) $(CFLAGS) -o checker $^ $(GNL_FLAGS) $(LIBFT_FLAGS)
+# GPM@ ..bonus: $(OBJ_BONUS) $(LIBFT)
+.bonus: $(OBJ_BONUS) $(LIBFT) $(GNL) # GPM!
+	@$(ECHO) "$(MSG) ⏳ Building bonuses for $(NAME)\n"
+	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(GNL_FLAGS) $(LIBFT_FLAGS) # GPM!
+	# GPM@ .	@$(CC) $(CFLAGS) -o  $(BNAME) $^ $(LIBFT_FLAGS)
 	@touch .bonus
+	@$(ECHO) "$(SUCCESSB)\n"
 
-bonus: .bonus # Temp file to avoid unnecessary rebuilds
-
-visualizer:
-	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/
-	make -C ../extra-ps-visualizer/build/
-
-visualize: visualizer $(NAME)
-	../extra-ps-visualizer/build/bin/visualizer $(NAME)
+bonus: .bonus
+ # GPM!
+visualizer: # GPM!
+	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/ # GPM!
+	make -C ../extra-ps-visualizer/build/ # GPM!
+ # GPM!
+visualize: visualizer $(NAME) # GPM!
+	../extra-ps-visualizer/build/bin/visualizer $(NAME) # GPM!
 
 clean:
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
+	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
 	@$(RM) -r $(DIR_OBJ)
-	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile clean
+	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile clean # GPM!
 
 fclean: clean
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
-	@$(RM) $(NAME)
-	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile fclean
+	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
+	@$(RM) $(NAME) $(BNAME)
+	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile fclean # GPM!
 
 re: fclean all
 
 # ----------- Make meta ----------
 -include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re visualize visualizer # GPM!
+# GPM@ ..PHONY: all bonus clean fclean re
+.SILENT: all bonus .bonus clean fclean re visualize visualizer # GPM!
+# GPM@ ..SILENT: all bonus .bonus clean fclean re

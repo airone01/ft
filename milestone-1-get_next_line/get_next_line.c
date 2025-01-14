@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 18:09:28 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:07:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ size_t	is_line(const char *str)
 
 void	clear_static(char *buffer)
 {
-	size_t        i;
+	size_t	i;
 
 	i = 0;
 	while (buffer[i])
-    {
+	{
 		buffer[i] = '\0';
 		i++;
-    }
+	}
 }
 
 char	*ft_strjoin_free(char *left, char buffer[FD_SIZE], char *line,

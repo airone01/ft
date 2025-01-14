@@ -1,18 +1,9 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                       _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  #
-#    Makefile                                       _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  #
-#                                                  | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  #
-#    By: elagouch <elagouch@student.42.fr>         |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  #
-#                                                  | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  #
-#    Created: 2024/11/05 15:39:47 by elagouch      |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  #
-#    Updated: 2024/11/18 11:13:41 by elagouch        |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  #
-#                                                                              #
-# **************************************************************************** #
-
 # ------------- ANSI -------------
-TITLE_SEC	= \033[48;5;78;30;1m
+TITLE		= \033[48;5;202;30;1m
 RESET		= \033[0m
+GREEN		= \033[1;32m
+MSG			= $(TITLE) $(GPM_FNAME) \t$(RESET)
+SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
 
 # ------------- Meta -------------
 GPM_MSTONE	= 1
@@ -22,7 +13,7 @@ NAME		= libftprintf.a
 DIR_OBJ 	= .obj/
 
 # ----------- Commands -----------
-ECHO		= echo -e
+ECHO		= printf
 CC			= cc
 AR			= ar
 RM      	= rm -f
@@ -48,20 +39,21 @@ DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(AR) $(ARFLAGS) $(NAME) $?
+	@$(ECHO) "$(MSG) ⏳ Building $(NAME)\n"
+	@$(AR) $(ARFLAGS) $(NAME) $?
+	@$(ECHO) "$(SUCCESS)\n"
 
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
+	@$(ECHO) "$(MSG) ⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
+	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
 	@$(RM) -r $(DIR_OBJ)
 
 fclean: clean
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
+	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
 	@$(RM) $(NAME)
 
 re: fclean all

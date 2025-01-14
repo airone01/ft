@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 18:39:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:17:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../milestone-0-libft/libft.h" // GPM!
 # include "../milestone-1-get_next_line/get_next_line.h" // GPM!
-// GPM!! #include "libft.h"
+// GPM@ .# include "libft/libft.h"
 # include <unistd.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -99,10 +99,10 @@ char				*get_next_line(int fd);
 size_t				execute(t_stack **stack_a);
 
 // ### LIBFT ###
-// GPM@ ssize_t				ft_abs(ssize_t nb);
-// GPM@ void				*ft_calloc(size_t nmemb, size_t size);
-// GPM@ char				**ft_split(char *str, char c);
-// GPM@ long				ft_atol(const char *nptr);
-// GPM@ int					ft_isdigit(int c);
+// GPM@ .ssize_t				ft_abs(ssize_t nb);
+// GPM@ .void				*ft_calloc(size_t nmemb, size_t size);
+// GPM@ .char				**ft_split(char *str, char c);
+// GPM@ .long				ft_atol(const char *nptr);
+// GPM@ .int					ft_isdigit(int c);
 
 #endif
