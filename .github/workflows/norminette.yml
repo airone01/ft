@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'milestone-*/**/*'
   pull_request:
     branches: [ "main", "dev" ]
+    paths:
+      - 'milestone-*/**/*'
 
 jobs:
   norminette:
