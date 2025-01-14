@@ -4,12 +4,12 @@
 //! - Detecting project type from directory contents
 //! - Loading appropriate test configurations
 //! - Managing project-specific settings
-
-use log::{debug, info};
-use std::{fs, path::Path};
-
 pub mod libft;
 pub mod gnl;
+
+use log::{trace, info, warn};
+use std::{fs, path::Path};
+
 pub use libft::*;
 pub use gnl::*;
 
@@ -22,7 +22,7 @@ pub enum Project {
 
 impl Project {
     pub fn detect(path: &Path) -> Self {
-        debug!("Checking directory: {}", path.display());
+        trace!("Checking directory: {}", path.display());
 
         let files = match fs::read_dir(path) {
             Ok(entries) => entries
@@ -30,12 +30,12 @@ impl Project {
                 .map(|e| e.file_name().to_string_lossy().to_string())
                 .collect::<Vec<_>>(),
             Err(e) => {
-                debug!("Error reading directory: {}", e);
+                warn!("Error reading directory: {}", e);
                 return Project::Unknown;
             }
         };
 
-        debug!("Found files: {:?}", files);
+        trace!("Found files: {:?}", files);
 
         // For libft, check if libft.h exists
         if files.iter().any(|f| f == "libft.h") {
@@ -49,7 +49,7 @@ impl Project {
             return Project::GetNextLine;
         }
 
-        debug!("No project detected");
+        trace!("No project detected");
         Project::Unknown
     }
 }

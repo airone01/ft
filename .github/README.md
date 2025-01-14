@@ -4,11 +4,14 @@
 
 <div align="center">
   <p>
-    <a href="https://github.com/airone01/ft/pulse"><img alt="Last commit" src="https://img.shields.io/github/last-commit/airone01/ft?style=for-the-badge&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/></a> 
-	<a href="https://github.com/airone01/ft/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/airone01/ft?style=for-the-badge&logo=unlicense&color=ee999f&logoColor=D9E0EE&labelColor=302D41" /></a> 
-    <a href="https://github.com/airone01/ft/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/airone01/ft?style=for-the-badge&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" /></a> 
-    <a href="https://github.com/airone01/ft/issues"><img alt="Issues" src="https://img.shields.io/github/issues/airone01/ft?style=for-the-badge&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" /></a> 
-    <a href="https://github.com/airone01/ft"><img alt="Repo Size" src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft/pulse"><img alt="Last commit" src="https://img.shields.io/github/last-commit/airone01/ft?style=flat-square&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/></a>
+    <a href="https://github.com/airone01/ft/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/airone01/ft?style=flat-square&logo=unlicense&color=ee999f&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/airone01/ft?style=flat-square&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft/issues"><img alt="Issues" src="https://img.shields.io/github/issues/airone01/ft?style=flat-square&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft"><img alt="Repo Size" src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41" /></a><br />
+    <a href="https://github.com/airone01/ft/actions/workflows/make.yml"><img alt="Make workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/make.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft/actions/workflows/norminette.yml"><img alt="Norminette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/norminette.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft/actions/workflows/moulinette.yml"><img alt="Moulinette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/moulinette.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
   </p>
 </div>
 
@@ -26,9 +29,9 @@
 [Extra tools/projects]: #extra-toolsprojects
 [Additional stuff/notes]: #additional-stuffnotes
 
-**[<kbd> <br>Projects<br> </kbd>][Projects]**
-**[<kbd> <br>Extra tools/projects<br> </kbd>][Extra tools/projects]**
-**[<kbd> <br>Additional stuff/notes<br> </kbd>][Additional stuff/notes]**
+**[<kbd> <br> Projects <br> </kbd>][Projects]**
+**[<kbd> <br> Extra tools/projects <br> </kbd>][Extra tools/projects]**
+**[<kbd> <br> Additional stuff/notes <br> </kbd>][Additional stuff/notes]**
 
 </p></div>
 
@@ -70,7 +73,7 @@
     </tr>
     <tr align="center">
       <td>2</td>
-      <td><a href="/milestone-1-push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swapn.png" alt="push_swap logo"></a></td>
+      <td><a href="/milestone-2-push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swapn.png" alt="push_swap logo"></a></td>
       <td>...</td>
       <td></td>
     </tr>
@@ -79,7 +82,7 @@
 
 ## Extra tools/projects
 
-<img src="https://skillicons.dev/icons?i=rust" align="right" />
+<img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
 ### [`Minecraft push_swap visualizer`](https://github.com/airone01/ft/tree/main/extra-push-swap-visualizer-minecraft)
 
@@ -87,7 +90,7 @@ A program to flex on your friends by visualizing your push_swap algorithm in Min
 
 ![In-game screenshot](/.github/assets/screenshot_1.webp)
 
-<img src="https://skillicons.dev/icons?i=rust" align="right" />
+<img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
 ### [`Arthur`](/extra-arthur/README.md)
 
@@ -95,22 +98,20 @@ A program to flex on your friends by visualizing your push_swap algorithm in Min
 > GPM and Arthur were never meant to be used by anyone other than me. They are tools designed for my workflow that I use to manage my projects in this monorepo.
 > They could break your stuff.
 
-Arthur is a test runner for 42 projects, with an implementation of the functionnalities of the now-defunct GPM.
+Arthur is a test runner for 42 projects implementing the core functionnalities (and more) of the now-defunct GPM.
 - The test runner runs tests on your project and displays the results in a nice and readable format. Currently, it supports `libft`.
 - The project manager handles file manipulation before pushing a project for validation on the 42 intra. This allows me to keep all the deps clean internally in this repo.
 
 More info [`here`](/extra-arthur/README.md).
 
-<img src="https://skillicons.dev/icons?i=bash" align="right" />
-
 ## Additional stuff/notes
 
-### ~~`GPM`~~ replace by [Arthur](#arthur)
+<img alt="Bash logo" src="https://skillicons.dev/icons?i=bash" align="right" />
 
-Git Project Manager (GPM) is a bash script that helps me manage my 42 projects in this monorepo. It provides two main functions:
+### ~~`GPM`~~ replaced by [Arthur](#arthur)
 
--   `gpm.sh add <repo-url> <project-name>`: Adds a project from a separate repository to this central repo while preserving its commit history in the commit message (to a certain extent)
--   `gpm.sh submit <project-name> <target-repo-url>`: Submits a project from this repo and force pushes it to a target repository (usually the 42 intra)
+Git Project Manager (GPM) was a bash script that helped me manage my projects in this monorepo.
+I have re-implemented its core functionnalities (and more) in [Arthur](#arthur).
 
 ### Direnv
 
@@ -118,5 +119,10 @@ This project's dev dependencies are managed using `nix-direnv`. If you don't kno
 
 ### Ford
 
-`ford` was a quick and dirty test runner I made for my projects during the pool. I's now deprecated in favor of [Arthur](#arthur).
+`ford` was a quick and dirty test runner I made for my projects during the pool. It's now deprecated in favor of [Arthur](#arthur).
 
+### Make
+
+You can build all of the projects that use Make using `make all` (at the repo root).
+
+Additionally, you can list them with `make list` build one with `make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
