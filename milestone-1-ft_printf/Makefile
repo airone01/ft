@@ -19,6 +19,9 @@ AR			= ar
 RM      	= rm -f
 MD			= mkdir -p
 
+# ------------ Libft ------------# GPM!
+LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
+# GPM!
 # ------------- Flags ------------
 CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
 ARFLAGS		= rcs
@@ -28,8 +31,8 @@ _SRC		=				\
 	ft_printf				\
 	ft_putchar				\
 	ft_putnbr_base_ssize	\
-	ft_putstr_ssize			\
-	ft_strlen
+	ft_putstr_ssize
+# GPM@ ._SRC		+=	ft_strlen
 
 # ------------ Mapping -----------
 OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
@@ -38,11 +41,17 @@ DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
 # ------------ Targets -----------
 all: $(NAME)
 
-$(NAME): $(OBJ)
+# GPM@ .$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBFT_DIR)/.obj/ft_strlen.o # GPM!
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
-	@$(AR) $(ARFLAGS) $(NAME) $?
+	@$(AR) $(ARFLAGS) $(NAME) $? # GPM!
+# GPM@ .	@$(AR) $(ARFLAGS) $(NAME) $?
 	@$(ECHO) "$(SUCCESS)\n"
 
+$(LIBFT_DIR)/.obj/ft_strlen.o: $(LIBFT_DIR)/ft_strlen.c $(LIBFT_DIR)/Makefile # GPM!
+	@$(MD) $(LIBFT_DIR)/.obj/ # GPM!
+	@$(CC) $(CFLAGS) -c $< -o $@ # GPM!
+# GPM!
 $(DIR_OBJ)%.o: %.c Makefile
 	@$(MD) $(DIR_OBJ)
 	@$(ECHO) "$(MSG) ⏳ $@\n"

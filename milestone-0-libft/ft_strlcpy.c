@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:50:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:25:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strlcpy
 /**
  * The strlcpy() and strlcat() functions copy and concatenate strings respec‐
  * tively.  They are designed to be safer, more consistent, and less error prone
@@ -45,3 +46,4 @@ unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
 	*dst = '\0';
 	return (i);
 }
+// GPM? end ft_strlcpy

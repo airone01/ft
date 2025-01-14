@@ -126,3 +126,9 @@ This project's dev dependencies are managed using `nix-direnv`. If you don't kno
 You can build all of the projects that use Make using `make all` (at the repo root).
 
 Additionally, you can list them with `make list` build one with `make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
+
+### Note for myself
+
+```bash
+alias b="cd ~/goinfre/ft; cargo r --package arthur -- -vvv p s push_swap https://github.com/airone01/gpm-test; rm -rf ~/goinfre/test; git clone https://github.com/airone01/gpm-test ~/goinfre/test; cd ~/goinfre/test; make all bonus"
+```

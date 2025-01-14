@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 17:59:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:17:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_calloc
 /**
  * The calloc() function allocates memory for an array  of  nmemb  elements  of
  * size  bytes  each and returns a pointer to the allocated memory.  The memory
@@ -39,3 +40,4 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (0);
 	return (ft_bzero(ptr, size * nmemb));
 }
+// GPM? end ft_calloc

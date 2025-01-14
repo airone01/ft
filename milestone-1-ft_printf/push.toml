@@ -1,0 +1,31 @@
+[project]
+name = "ft_printf"
+version = "1.0.0"
+
+[submit]
+files = [
+    "Makefile",
+    "ft_printf.h",
+    "ft_printf.c",
+    "ft_putchar.c",
+    "ft_putnbr_base_ssize.c",
+    "ft_putstr_ssize.c",
+]
+
+[submit.preprocessor]
+enable_gpm = true
+function_paths = [".", ".."]
+
+[submit.hooks]
+pre_submit = "make fclean"
+
+[submit.validation]
+norminette = true
+
+########### Lift ###########
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strlen.c"
+destination = ""
+replace = [
+    { find = "libft.h", replace_with = "ft_printf.h" }
+]

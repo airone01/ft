@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:45:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:23:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_putnbr_fd
 /**
  * Outputs the integer ’n’ to the given file descriptor.
  * @param	c	The interger to output
@@ -38,3 +39,4 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	ft_putchar_fd(n + '0', fd);
 }
+// GPM? end ft_putnbr_fd

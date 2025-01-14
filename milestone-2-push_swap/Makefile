@@ -143,7 +143,7 @@ $(DIR_OBJ)%.o: %.c Makefile
 
 # GPM@ ..bonus: $(OBJ_BONUS) $(LIBFT)
 .bonus: $(OBJ_BONUS) $(LIBFT) $(GNL) # GPM!
-	@$(ECHO) "$(MSG) 🏗️ Building bonuses for $(NAME)\n"
+	@$(ECHO) "$(MSG) 🏗️  Building bonuses for $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(GNL_FLAGS) $(LIBFT_FLAGS) # GPM!
 	# GPM@ .	@$(CC) $(CFLAGS) -o  $(BNAME) $^ $(LIBFT_FLAGS)
 	@touch .bonus

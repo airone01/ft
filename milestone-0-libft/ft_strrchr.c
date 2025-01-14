@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 14:16:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:26:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strrchr
 /**
  * The strrchr() function returns a pointer to the last occurrence of the char‐
  * acter c in the string s.
@@ -37,3 +38,4 @@ char	*ft_strrchr(const char *s, int c)
 		se = (char *)s;
 	return (se);
 }
+// GPM? end ft_strrchr

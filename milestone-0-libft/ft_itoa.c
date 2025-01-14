@@ -6,12 +6,14 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 14:10:28 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:20:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_itoa
+// GPM? begin ft_itoa_base
 static size_t	get_num_len(int n, const char *b)
 {
 	size_t	len;
@@ -79,6 +81,7 @@ char	*ft_itoa_base(int n, const char *b)
 	fill_number(s, n, len, b);
 	return (s);
 }
+// GPM? end ft_itoa_base
 
 /*
  * Allocates (with malloc(3)) and returns a string representing the integer
@@ -90,3 +93,4 @@ char	*ft_itoa(int n)
 {
 	return (ft_itoa_base(n, "0123456789"));
 }
+// GPM? end ft_itoa

@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 14:12:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:21:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_memchr
 /**
  * The  memchr()  function scans the initial n bytes of the memory area pointed
  * to by s for the first instance of c.  Both c and the  bytes  of  the  memory
@@ -37,3 +38,4 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (0);
 }
+// GPM? end ft_memchr

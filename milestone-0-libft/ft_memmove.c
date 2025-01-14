@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:44:40 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:22:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_memmove
 /**
  * The  memmove()  function  copies n bytes from memory area src to memory area
  * dest.  The memory areas may overlap: copying takes place as though the bytes
@@ -43,3 +44,4 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (ft_memcpy(dest, src, n));
 }
+// GPM? end ft_memmove

@@ -6,12 +6,14 @@
 /*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 17:32:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:19:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_atoi
+// GPM? begin ft_atol
 /**
  * Checks if the result is an overflow.
  * @param   result  Result
@@ -65,6 +67,7 @@ long	ft_atol(const char *nptr)
 	}
 	return (mult * count);
 }
+// GPM? end ft_atol
 
 /**
  * Infers a number from a sing.
@@ -89,3 +92,4 @@ int	ft_atoi(const char *nptr)
 {
 	return (ft_atol(nptr));
 }
+// GPM? end ft_atoi

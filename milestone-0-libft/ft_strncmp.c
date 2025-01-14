@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:49 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:52:49 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:25:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strncmp
 /**
  * The strcmp() function compares the two strings s1 and s2.  The locale is not
  * taken into account (for a locale-aware  comparison,  see  strcoll(3)).   The
@@ -42,3 +43,4 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+// GPM? end ft_strncmp
