@@ -37,10 +37,8 @@ ARFLAGS			= rcs
 
 # ------------ Sources -----------
 _SRC	=					\
-	get_next_line			\
-	get_next_line_utils
-#	get_next_line_bonus		\
-#	get_next_line_utils_bonus
+	get_next_line
+# GPM@ _SRC += get_next_line_utils
 _SRC_TEST =	\
 	main
 
@@ -64,10 +62,10 @@ $(NAME): $(OBJ) $(LIBFT)
 	@$(AR) $(ARFLAGS) $(NAME) $?
 	@$(ECHO) "$(SUCCESS)\n"
 
-$(DIR_OBJ)%.o: %.c get_next_line.h gnl.Makefile
+$(DIR_OBJ)%.o: %.c
 	@$(MD) $(DIR_OBJ)
 	@$(ECHO) "$(MSG) ⏳ $@\n"
-	@$(CC) $(CFLAGS) $(LIBFT_FLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 checker: $(OBJ) $(OBJ_TEST) $(LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
