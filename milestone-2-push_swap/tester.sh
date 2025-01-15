@@ -16,16 +16,18 @@ function test_result {
 }
 
 # Test 1: Non-numeric parameters
-./push_swap a b c 2>/dev/null | grep -q "Error"
+./push_swap a b c | grep -q "Error"
 test_result $?
 
 # Test 2: Duplicate numeric parameters
-./push_swap 1 2 3 2 2>/dev/null | grep -q "Error"
+./push_swap 1 2 3 2 | grep -q "Error"
 test_result $?
 
 # Test 3: Numeric parameters including one greater than MAXINT
-./push_swap 1 2 2147483648 2>/dev/null | grep -q "Error"
+./push_swap 1 2 2147483648 | grep -q "Error"
 test_result $?
+
+echo -e "\nBasic tests:"
 
 # Test 4: No parameters
 output=$(./push_swap)
@@ -67,15 +69,6 @@ else
     echo -e "${RED}KO${NC}"
 fi
 
-# Test 9: Random values (no instructions if already sorted)
-ARG="$(seq 0 9 | shuf | tr '\n' ' ')"
-output=$(./push_swap $ARG)
-if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
-else
-    echo -e "${RED}KO${NC}"
-fi
-
 # Test 10: Sorted output validation
 ARG="2 1 0"
 ./push_swap $ARG | ./checker_linux $ARG | grep -q "OK"
@@ -100,11 +93,11 @@ instructions=$(./push_swap $ARG | wc -l)
 test_result $?
 
 # Test 14: Checker duplicate numeric parameter
-./checker 1 2 3 2 2>/dev/null | grep -q "Error"
+./checker 1 2 3 2 | grep -q "Error"
 test_result $?
 
 # Test 15: Checker parameter greater than MAXINT
-./checker 1 2 2147483648 2>/dev/null | grep -q "Error"
+./checker 1 2 2147483648 | grep -q "Error"
 test_result $?
 
 # Test 16: Checker without parameters
@@ -115,26 +108,28 @@ else
     echo -e "${RED}KO${NC}"
 fi
 
+echo here
+
 # Test 17: Checker invalid instruction
-printf "invalid\n" | ./checker 1 2 3 2>/dev/null | grep -q "Error"
+printf "invalid\n" | ./checker 1 2 3 | grep -q "Error"
 test_result $?
 
 # Test 18: Checker instruction with spaces
-printf " sa \n" | ./checker 1 2 3 2>/dev/null | grep -q "Error"
+printf " sa \n" | ./checker 1 2 3 | grep -q "Error"
 test_result $?
 
 # Test 19: Checker valid list, invalid sort instructions
-printf "sa\npb\nrrr\n" | ./checker 0 9 1 8 2 7 3 6 4 5 2>/dev/null | grep -q "KO"
+printf "sa\npb\nrrr\n" | ./checker 0 9 1 8 2 7 3 6 4 5 | grep -q "KO"
 test_result $?
 
 # Test 20: Checker valid list, invalid instructions
 ARG="0 9 1 8 2"
-printf "pb\nra\nra\nsa\nra\n" | ./checker $ARG 2>/dev/null | grep -q "KO"
+printf "pb\nra\nra\nsa\nra\n" | ./checker $ARG | grep -q "KO"
 test_result $?
 
 # Test 21: Checker valid list, valid instructions
 ARG="0 9 1 8 2"
-printf "pb\nra\npb\nra\nsa\nra\npa\npa\n" | ./checker $ARG 2>/dev/null | grep -q "OK"
+printf "pb\nra\npb\nra\nsa\nra\npa\npa\n" | ./checker $ARG | grep -q "OK"
 test_result $?
 
 # Test 22: Checker valid list, no instructions
