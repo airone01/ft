@@ -128,7 +128,7 @@ $(LIBFT): $(SRC_LIBFT)
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(GNL): $(SRC_GNL) # GPM!
-	@$(ECHO) "$(MSG) 🏗️  Building libft\n" # GPM!
+	@$(ECHO) "$(MSG) 🏗️  Building GNL\n" # GPM!
 	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile # GPM!
 # GPM!
 $(NAME): $(OBJ) $(LIBFT)

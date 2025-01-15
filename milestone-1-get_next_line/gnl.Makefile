@@ -3,7 +3,7 @@ MAKEFLAGS	+= --no-print-directory
 .PHONY: all clean fclean re
 
 # ------------- ANSI -------------
-TITLE	    = \033[48;5;198;30;1m
+TITLE		= \033[48;5;198;30;1m
 RESET		= \033[0m
 GREEN		= \033[1;32m
 MSG			= $(TITLE) $(GPM_FNAME) \t\t$(RESET)
@@ -22,7 +22,7 @@ ECHO	= printf
 MAKE	= make
 CC		= cc
 AR		= ar
-RM     	= rm -f
+RM		= rm -f
 MD		= mkdir -p
 
 # ------------ Libft ------------
@@ -36,17 +36,17 @@ LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
 ARFLAGS			= rcs
 
 # ------------ Sources -----------
-SRC	=							\
-	get_next_line				\
+_SRC	=					\
+	get_next_line			\
 	get_next_line_utils
 #	get_next_line_bonus		\
 #	get_next_line_utils_bonus
-SRC_TEST =	\
+_SRC_TEST =	\
 	main
 
 # ------------ Mapping -----------
-OBJ         = $(_SRC:%=$(DIR_OBJ)%.o)
-DEP         = $(_SRC:%=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
+DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
 OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
 DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 OBJ_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.o)
@@ -67,7 +67,7 @@ $(NAME): $(OBJ) $(LIBFT)
 $(DIR_OBJ)%.o: %.c get_next_line.h gnl.Makefile
 	@$(MD) $(DIR_OBJ)
 	@$(ECHO) "$(MSG) ⏳ $@\n"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LIBFT_FLAGS) -c $< -o $@
 
 checker: $(OBJ) $(OBJ_TEST) $(LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"

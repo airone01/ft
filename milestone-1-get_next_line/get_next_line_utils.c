@@ -6,12 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 18:07:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:44:54 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft/libft.h" // GPM!
+#include "libft.h" // GPM!
 
 // GPM: ft_bzero
 
