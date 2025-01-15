@@ -51,7 +51,20 @@ OBJ_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.o)
 DEP_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
-all: $(NAME)
+all: .title $(NAME)
+
+.title:
+	@$(ECHO) "$(MSG)               ___ \n"
+	@$(ECHO) "$(MSG)              /\\_ \\ \n"
+	@$(ECHO) "$(MSG)   __     ___ \\//\\ \\ \n"
+	@$(ECHO) "$(MSG) /'_ \`\\ /' _ \`\\ \\ \\ \\ \n"
+	@$(ECHO) "$(MSG)/\\ \\L\\ \\/\\ \\/\\ \\ \\_\\ \\_ \n"
+	@$(ECHO) "$(MSG)\\ \\____ \\ \\_\\ \\_\\/\\____\\ \n"
+	@$(ECHO) "$(MSG) \\/___L\\ \\/_/\\/_/\\/____/ \n"
+	@$(ECHO) "$(MSG)   /\\____/ \n"
+	@$(ECHO) "$(MSG)   \\_/__/ \n"
+	@$(ECHO) "$(MSG)\n"
+	@touch .title
 
 $(LIBFT):
 	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
@@ -82,7 +95,7 @@ clean:
 
 fclean: clean
 	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) .title
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all

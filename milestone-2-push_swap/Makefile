@@ -121,7 +121,20 @@ OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
 DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
-all: $(NAME)
+all: .title $(NAME)
+
+.title:
+	@$(ECHO) "$(MSG)                        __ \n"
+	@$(ECHO) "$(MSG)                       /\\ \\ \n"
+	@$(ECHO) "$(MSG) _____   __  __    ____\\ \\ \\___              ____  __  __  __     __     _____ \n"
+	@$(ECHO) "$(MSG)/\\ '__\`\\/\\ \\/\\ \\  /',__\\\\\\\\ \\  _ \`\\           /',__\\/\\ \\/\\ \\/\\ \\  /'__\`\\  /\\ '__\`\\ \n"
+	@$(ECHO) "$(MSG)\\ \\ \\L\\ \\ \\ \\_\\ \\/\\__, \`\\\\\\\\ \\ \\ \\ \\         /\\__, \`\\ \\ \\_/ \\_/ \\/\\ \\L\\.\\_\\ \\ \\L\\ \\ \n"
+	@$(ECHO) "$(MSG) \\ \\ ,__/\\ \\____/\\/\\____/ \\ \\_\\ \\_\\        \\/\\____/\\ \\___x___/'\\ \\__/.\\_\\\\\\\\ \\ ,__/ \n"
+	@$(ECHO) "$(MSG)  \\ \\ \\/  \\/___/  \\/___/   \\/_/\\/_/  _______\\/___/  \\/__//__/   \\/__/\\/_/ \\ \\ \\/ \n"
+	@$(ECHO) "$(MSG)   \\ \\_\\                            /\\______\\                              \\ \\_\\ \n"
+	@$(ECHO) "$(MSG)    \\/_/                            \\/______/                               \\/_/ \n"
+	@$(ECHO) "$(MSG)\n"
+	@touch .title
 
 $(LIBFT): $(SRC_LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
@@ -160,7 +173,7 @@ visualize: visualizer $(NAME) # GPM!
 
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(DIR_OBJ)
+	@$(RM) -r $(DIR_OBJ) .title
 	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile clean # GPM!
 
 fclean: clean
@@ -174,6 +187,6 @@ re: fclean all
 -include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory
 .PHONY: all bonus clean fclean re visualize visualizer # GPM!
-# GPM@ ..PHONY: all bonus clean fclean re
+# GPM@ ..PHONY: all bonus clean fclean re title
 .SILENT: all bonus .bonus clean fclean re visualize visualizer # GPM!
 # GPM@ ..SILENT: all bonus .bonus clean fclean re

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/15 17:14:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:34:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@
 #  define FD_SIZE 1024
 # endif
 
-// GPM@ .# include "libft/libft.h"
-# include "libft.h" // GPM!
 # include <limits.h>
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-size_t	ft_strlen(const char *str);
-size_t	is_line(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_bzero(void *s, size_t n);
-char	*ft_strdup(const char *s);
-void	ft_buffclean(char *str);
-char	*get_next_line(int fd);
+// Libft
+size_t			ft_strlen(const char *str);
+size_t			is_line(const char *str);
+char			*ft_strjoin(char const *s1, char const *s2);
+void			*ft_calloc(size_t nmemb, size_t size);
+void			*ft_memset(void *s, int c, size_t n);
+char			*ft_strdup(const char *s);
+char			*get_next_line(int fd);
 
 #endif

@@ -54,6 +54,14 @@ endef
 $(foreach job,$(JOBS),$(eval $(call make_milestone_target,$(job))))
 
 all:
+	@$(ECHO) "$(MSG)   ___  __ \n"
+	@$(ECHO) "$(MSG) /'___\\/\\ \\__ \n"
+	@$(ECHO) "$(MSG)/\\ \\__/\\ \\ ,_\\ \n"
+	@$(ECHO) "$(MSG)\\ \\ ,__\\\\\\\\ \\ \\/ \n"
+	@$(ECHO) "$(MSG) \\ \\ \\_/ \\ \\ \\_ \n"
+	@$(ECHO) "$(MSG)  \\ \\_\\   \\ \\__\\ \n"
+	@$(ECHO) "$(MSG)   \\/_/    \\/__/ \n"
+	@$(ECHO) "$(MSG)\n"
 	@$(ECHO) "$(MSG) 🏗️  Building all projects\n"
 	@for job in $(JOBS); do \
 		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \

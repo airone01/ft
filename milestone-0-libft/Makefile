@@ -80,7 +80,18 @@ OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
 DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
-all: $(NAME)
+all: .title $(NAME)
+
+.title:
+	@$(ECHO) "$(MSG) ___        __         ___  __ \n"
+	@$(ECHO) "$(MSG)/\\_ \\    __/\\ \\      /'___\\/\\ \\__ \n"
+	@$(ECHO) "$(MSG)\\//\\ \\  /\\_\\ \\ \\____/\\ \\__/\\ \\ ,_\\ \n"
+	@$(ECHO) "$(MSG)  \\ \\ \\ \\/\\ \\ \\ '__\`\\ \\ ,__\\\\\\\\ \\ \\/ \n"
+	@$(ECHO) "$(MSG)   \\_\\ \\_\\ \\ \\ \\ \\L\\ \\ \\ \\_/ \\ \\ \\_ \n"
+	@$(ECHO) "$(MSG)   /\\____\\\\\\\\ \\_\\ \\_,__/\\ \\_\\   \\ \\__\\ \n"
+	@$(ECHO) "$(MSG)   \\/____/ \\/_/\\/___/  \\/_/    \\/__/ \n"
+	@$(ECHO) "$(MSG)\n"
+	@touch .title
 
 $(NAME): $(OBJ)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
@@ -102,7 +113,7 @@ $(DIR_OBJ)%.o: %.c Makefile
 
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(DIR_OBJ)
+	@$(RM) -r $(DIR_OBJ) .title
 
 fclean: clean
 	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
@@ -113,4 +124,4 @@ re: fclean all
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory
 -include $(DEP) $(DEP_BONUS)
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re title

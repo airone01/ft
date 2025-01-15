@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:17:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:36:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ptr = malloc(size * nmemb);
 	if (!ptr)
 		return (0);
-	return (ft_bzero(ptr, size * nmemb));
+	return (ft_memset(ptr, 0, size * nmemb));
 }
 // GPM? end ft_calloc

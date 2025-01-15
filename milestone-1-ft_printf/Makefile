@@ -39,7 +39,20 @@ OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
 DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
 
 # ------------ Targets -----------
-all: $(NAME)
+all: .title $(NAME)
+
+.title:
+	@$(ECHO) "$(MSG)   ___  __                                       __       ___ \n"
+	@$(ECHO) "$(MSG) /'___\\/\\ \\__                         __        /\\ \\__  /'___\\ \n"
+	@$(ECHO) "$(MSG)/\\ \\__/\\ \\ ,_\\          _____   _ __ /\\_\\    ___\\ \\ ,_\\/\\ \\__/ \n"
+	@$(ECHO) "$(MSG)\\ \\ ,__\\\\\\\\ \\ \\/         /\\ '__\`\\/\\\`'__\\/\\ \\ /' _ \`\\ \\ \\/\\ \\ ,__\\ \n"
+	@$(ECHO) "$(MSG) \\ \\ \\_/ \\ \\ \\_        \\ \\ \\L\\ \\ \\ \\/ \\ \\ \\/\\ \\/\\ \\ \\ \\_\\ \\ \\_/ \n"
+	@$(ECHO) "$(MSG)  \\ \\_\\   \\ \\__\\        \\ \\ ,__/\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\__\\\\\\\\ \\_\\ \n"
+	@$(ECHO) "$(MSG)   \\/_/    \\/__/  _______\\ \\ \\/  \\/_/   \\/_/\\/_/\\/_/\\/__/ \\/_/ \n"
+	@$(ECHO) "$(MSG)                 /\\______\\\\\\\\ \\_\\ \n"
+	@$(ECHO) "$(MSG)                 \\/______/ \\/_/ \n"
+	@$(ECHO) "$(MSG)\n"
+	@touch .title
 
 # GPM@ .$(NAME): $(OBJ)
 $(NAME): $(OBJ) $(LIBFT_DIR)/.obj/ft_strlen.o # GPM!
@@ -59,7 +72,7 @@ $(DIR_OBJ)%.o: %.c Makefile
 
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(DIR_OBJ)
+	@$(RM) -r $(DIR_OBJ) .title
 
 fclean: clean
 	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
@@ -70,4 +83,4 @@ re: fclean all
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory
 -include $(DEP)
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re title
