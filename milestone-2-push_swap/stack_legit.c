@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_legit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:00:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 18:07:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/15 15:19:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@
  */
 int	stack_legit(t_stack *stack)
 {
-	if (!stack || stack_size(stack) <= 1)
+	ssize_t	size;
+
+	if (!stack)
 		return (stack_clear_error(stack), 1);
+	size = stack_size(stack);
+	if (size < 1)
+		return (stack_clear_error(stack), 1);
+	if (size <= 1)
+		return (stack_clear(stack), 1);
 	stack_pos(&stack);
 	if (stack_dupes(stack))
 		return (stack_clear_error(stack), 1);
