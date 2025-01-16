@@ -65,28 +65,28 @@ On_ICyan='\033[0;106m'    # Cyan
 On_IWhite='\033[0;107m'   # White
 
 if [ $# -eq 0 ]; then
-	FORD_PATH=.
+  FORD_PATH=.
 fi
 
 if [ $# -eq 1 ]; then
-	if [ $1 = "--help" ] || [ $1 = "-h" ]; then
-		echo "Usage: ford [directory]"
-		return 0
-	fi
-	FORD_PATH=$1
+  if [ $1 = "--help" ] || [ $1 = "-h" ]; then
+    echo "Usage: ford [directory]"
+    return 0
+  fi
+  FORD_PATH=$1
 fi
 
 title() {
-	echo -e "${BIBlack}${Reverse}     $1 ${Color_Off}"
+  echo -e "${BIBlack}${Reverse}     $1 ${Color_Off}"
 }
 ok() {
-	echo -en "${On_Green}${BIWhite} OK ${Color_Off} $1"
+  echo -en "${On_Green}${BIWhite} OK ${Color_Off} $1"
 }
 ko() {
-	echo -en "${On_Red}${BIWhite} KO ${Color_Off}${BIRed} $1"
+  echo -en "${On_Red}${BIWhite} KO ${Color_Off}${BIRed} $1"
 }
 warn() {
-	echo -en "${On_Yellow}${BIWhite} !! ${Color_Off}${BIYellow} $1"
+  echo -en "${On_Yellow}${BIWhite} !! ${Color_Off}${BIYellow} $1"
 }
 
 # Norminette
@@ -94,10 +94,10 @@ title "NORM"
 NORM_OK="$(norminette -R CheckForbiddenSourceHeader ${FORD_PATH} 2>&1|grep 'OK!')"
 NORM_KO="$(norminette -R CheckForbiddenSourceHeader ${FORD_PATH} 2>&1|grep -ve '.*OK!' -e '^  ')"
 if [ -n "${NORM_OK}" ]; then
-	echo -ne "${NORM_OK}\n" | while read line ; do ok "$(echo ${line}|sed 's/: OK!//g')\n" ; done
+  echo -ne "${NORM_OK}\n" | while read line ; do ok "$(echo ${line}|sed 's/: OK!//g')\n" ; done
 fi
 if [ -n "${NORM_KO}" ]; then
-	ko "${NORM_KO}\n"
+  ko "${NORM_KO}\n"
 fi
 
 # Additional files
@@ -105,59 +105,58 @@ title "Dir tree"
 AF="$(find . -path ./.git -prune -o -name '*' -type f -print|grep -ve '.*\.c$' -e '.*\.h$' -e '.*\.cpp$')"
 # if [ -z "${AF}" ]
 if [ -n "${AF}" ]; then
-	ko "Unwanted files? :\n${AF}\n";
+  ko "Unwanted files? :\n${AF}\n";
 else
-	ok "Unwanted files\n";
+  ok "Unwanted files\n";
 fi
 DIRS="$(find . -path ./.git -prune -o -name '*' -type d -print|grep -ve '.*/ex..$' -e '^\.$')"
 if [ -n "${DIRS}" ]; then
-	ko "Unwanted dirs:\n${DIRS}\n";
+  ko "Unwanted dirs:\n${DIRS}\n";
 else
-	ok "Unwanted dirs\n";
+  ok "Unwanted dirs\n";
 fi
 
 # GIT
 title "GIT"
 GIT_EF="$(git status --porcelain|grep -e '??'|cut -c4-)"
 if [ -n "${GIT_EF}" ]; then
-	ko "Untracked files (use 'git add' then 'git commit' or remove!):\n${GIT_EF}\n";
+  ko "Untracked files (use 'git add' then 'git commit' or remove!):\n${GIT_EF}\n";
 else
-	ok "Untracked files\n";
+  ok "Untracked files\n";
 fi
 GIT_ST="$(git status --porcelain|grep -ve '??')"
 if [ -n "${GIT_ST}" ]; then
-	ko "Uncommited changes (use 'git commit'!):\n${GIT_ST}\n";
+  ko "Uncommited changes (use 'git commit'!):\n${GIT_ST}\n";
 else
-	ok "Uncommited changes\n";
+  ok "Uncommited changes\n";
 fi
 GIT_PUSH="$(git log --branches --not --remotes --oneline --graph)"
 if [ -n "${GIT_PUSH}" ]; then
-	ko "!!! UNPUSHED COMMITS !!! Push to repo with 'git commit'!:\n${GIT_PUSH}\n";
+  ko "!!! UNPUSHED COMMITS !!! Push to repo with 'git commit'!:\n${GIT_PUSH}\n";
 else
-	ok "Unpushed commits\n";
+  ok "Unpushed commits\n";
 fi
 
 # C files
 title "C files"
 C_LIB="$(grep -re '^#include <stdio.h>' -e '^#include <string.h>' -e '^#include <bsd' -e '^#include <limits.h>')"
 if [ -n "${C_LIB}" ]; then
-	ko "Forbidden libs (comment the line):\n${C_LIB}\n";
+  ko "Forbidden libs (comment the line):\n${C_LIB}\n";
 else
-	ok "Forbidden libs\n";
+  ok "Forbidden libs\n";
 fi
 C_MAIN="$(grep -re '^int	*main(.*$')"
 if [ -n "${C_MAIN}" ]; then
-	warn "Main uncommented (comment the function):\n${C_MAIN}\n";
+  warn "Main uncommented (comment the function):\n${C_MAIN}\n";
 else
-	ok "Main uncommented\n";
+  ok "Main uncommented\n";
 fi
 
 # CC
 title "CC/GCC (no compile!)"
 CC_KO="$(cc -Wall -Werror -Wextra -fsyntax-only **/* 2>&1)"
 if [ -n "${CC_KO}" ]; then
-	ko "CC errors:\n${CC_KO}\n";
+  ko "CC errors:\n${CC_KO}\n";
 else
-	ok "CC errors\n";
+  ok "CC errors\n";
 fi
-

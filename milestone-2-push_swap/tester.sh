@@ -8,11 +8,11 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 function test_result {
-    if [ "$1" -eq 0 ]; then
-        echo -e "${GREEN}OK${NC}"
-    else
-        echo -e "${RED}KO${NC}"
-    fi
+	if [ "$1" -eq 0 ]; then
+		echo -e "${GREEN}OK${NC}"
+	else
+		echo -e "${RED}KO${NC}"
+	fi
 }
 
 # Test 1: Non-numeric parameters
@@ -32,41 +32,41 @@ echo -e "\nBasic tests:"
 # Test 4: No parameters
 output=$(./push_swap)
 if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
+	echo -e "${GREEN}OK${NC}"
 else
-    echo -e "${RED}KO${NC}"
+	echo -e "${RED}KO${NC}"
 fi
 
 # Test 5: Single parameter
 output=$(./push_swap 42)
 if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
+	echo -e "${GREEN}OK${NC}"
 else
-    echo -e "${RED}KO${NC}"
+	echo -e "${RED}KO${NC}"
 fi
 
 # Test 6: Two sorted parameters
 output=$(./push_swap 2 3)
 if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
+	echo -e "${GREEN}OK${NC}"
 else
-    echo -e "${RED}KO${NC}"
+	echo -e "${RED}KO${NC}"
 fi
 
 # Test 7: Sorted sequence of four numbers
 output=$(./push_swap 0 1 2 3)
 if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
+	echo -e "${GREEN}OK${NC}"
 else
-    echo -e "${RED}KO${NC}"
+	echo -e "${RED}KO${NC}"
 fi
 
 # Test 8: Sorted sequence of ten numbers
 output=$(./push_swap 0 1 2 3 4 5 6 7 8 9)
 if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
+	echo -e "${GREEN}OK${NC}"
 else
-    echo -e "${RED}KO${NC}"
+	echo -e "${RED}KO${NC}"
 fi
 
 # Test 10: Sorted output validation
@@ -103,9 +103,9 @@ test_result $?
 # Test 16: Checker without parameters
 output=$(./checker)
 if [ -z "$output" ]; then
-    echo -e "${GREEN}OK${NC}"
+	echo -e "${GREEN}OK${NC}"
 else
-    echo -e "${RED}KO${NC}"
+	echo -e "${RED}KO${NC}"
 fi
 
 echo here

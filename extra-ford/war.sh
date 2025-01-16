@@ -70,240 +70,240 @@ SCRIPTPATH="$(realpath -LP ~/ford)"
 MAKEFILEPATH="$(realpath -mLP "${SCRIPTPATH}/Makefile")"
 
 if [ $# -eq 1 ]; then
-	if [ $1 = "--help" ] || [ $1 = "-h" ] || [ $# -eq 0 ]; then
-		echo "Usage: war <project> [--list]"
-		exit 0
-	fi
-	FORD_PATH=$1
+  if [ $1 = "--help" ] || [ $1 = "-h" ] || [ $# -eq 0 ]; then
+    echo "Usage: war <project> [--list]"
+    exit 0
+  fi
+  FORD_PATH=$1
 fi
 
 title() {
-	echo -e "${On_Black}${BIWhite}     $1 ${Color_Off}"
+  echo -e "${On_Black}${BIWhite}     $1 ${Color_Off}"
 }
 ok() {
-	echo -en "${On_Green}${BIWhite} OK ${Color_Off} $1"
+  echo -en "${On_Green}${BIWhite} OK ${Color_Off} $1"
 }
 ko() {
-	echo -en "${On_Red}${BIWhite} KO ${Color_Off}${BIRed} $1"
+  echo -en "${On_Red}${BIWhite} KO ${Color_Off}${BIRed} $1"
 }
 
 assert_1() {
-	RESULT="$(./a.out "$1")"
-	if [[ "$RESULT" == "$2" ]]; then
-		ok "'$(echo $1|sed 's/\n/\\n/g')'\n";
-	else
-		ko "'$(echo $1|sed 's/\n/\\n/g')'\nExpected: '$2'\nGot     : '$RESULT'\n";
-	fi
+  RESULT="$(./a.out "$1")"
+  if [[ "$RESULT" == "$2" ]]; then
+    ok "'$(echo $1|sed 's/\n/\\n/g')'\n";
+  else
+    ko "'$(echo $1|sed 's/\n/\\n/g')'\nExpected: '$2'\nGot     : '$RESULT'\n";
+  fi
 }
 assert_2() {
-	RESULT="$(./a.out "$1" "$2")"
-	if [[ "$RESULT" == "$3" ]]; then
-		ok "'$(echo $1|sed 's/\n/\\n/g')'\n";
-	else
-		ko "'$(echo $1|sed 's/\n/\\n/g')'\nExpected: '$3'\nGot     : '$RESULT'\n";
-	fi
+  RESULT="$(./a.out "$1" "$2")"
+  if [[ "$RESULT" == "$3" ]]; then
+    ok "'$(echo $1|sed 's/\n/\\n/g')'\n";
+  else
+    ko "'$(echo $1|sed 's/\n/\\n/g')'\nExpected: '$3'\nGot     : '$RESULT'\n";
+  fi
 }
 
 fbuild() {
-	if [ -z "${EXO}" ]; then
-		ko "fbuild(${PROJ}): EXO is undefined\n"
-		return 1;
-	fi
-	if [ -z "${PROG}" ]; then
-		PROG="$(realpath "${EXO}/${PROJ}.out")";
-	fi
-	if [ -z "${MAIN}" ]; then
-		MAIN="$(realpath "${SCRIPTPATH}/mains/${PROJ}")";
-	fi
-	if [ -z "${SRCS}" ]; then
-		SRCS="$(realpath "${EXO}/${PROJ}.c")";
-	fi
-	MAIN="$(realpath -mLP "${SCRIPTPATH}/${MAIN}.c")"
-	title "Debug info"
-	echo -en "SCRIPTPATH: ${SCRIPTPATH}\nMAKEFILEPATH: ${MAKEFILEPATH}\nEXO: ${EXO}\nPROJ: ${PROJ}\nPROG: ${PROG}\nMAIN: ${MAIN}\nSRCS: ${SRCS}\n"
-	title "make"
-	make --makefile="${MAKEFILEPATH}" re;
+  if [ -z "${EXO}" ]; then
+    ko "fbuild(${PROJ}): EXO is undefined\n"
+    return 1;
+  fi
+  if [ -z "${PROG}" ]; then
+    PROG="$(realpath "${EXO}/${PROJ}.out")";
+  fi
+  if [ -z "${MAIN}" ]; then
+    MAIN="$(realpath "${SCRIPTPATH}/mains/${PROJ}")";
+  fi
+  if [ -z "${SRCS}" ]; then
+    SRCS="$(realpath "${EXO}/${PROJ}.c")";
+  fi
+  MAIN="$(realpath -mLP "${SCRIPTPATH}/${MAIN}.c")"
+  title "Debug info"
+  echo -en "SCRIPTPATH: ${SCRIPTPATH}\nMAKEFILEPATH: ${MAKEFILEPATH}\nEXO: ${EXO}\nPROJ: ${PROJ}\nPROG: ${PROG}\nMAIN: ${MAIN}\nSRCS: ${SRCS}\n"
+  title "make"
+  make --makefile="${MAKEFILEPATH}" re;
 }
 
 c04() {
-	EXO="ex00"
-	PROJ="ft_strlen";
-	fbuild;
-	# ftest;
+  EXO="ex00"
+  PROJ="ft_strlen";
+  fbuild;
+  # ftest;
 }
 if [[ "$1" == "c04" ]]; then
-	c04;
+  c04;
 fi
 
 # For atoi
 if [[ "$1" == "atoi" ]]; then
-	title "Testing for ft_atoi"
-	assert_1 "1234" "1234";
-	assert_1 "" "0";
-	assert_1 "    1234" "1234";
-	assert_1 "-1" "-1";
-	assert_1 "1" "1";
-	assert_1 "-69420" "-69420";
-	assert_1 "abc123" "0";
-	assert_1 "2147483647" "2147483647";
-	assert_1 "-2147483648" "-2147483648";
-	assert_1 "-" "0";
-	assert_1 "+++--+-123" "-123";
-	assert_1 "      +++--+-123" "-123";
-	assert_1 "      +++- -+-123" "0";
-	assert_1 "-0012gfg4" "-12";
-	# assert_1 "-999999999999" "-2147483648";
-	# assert_1 "1231231231311133" "2147483647";
+  title "Testing for ft_atoi"
+  assert_1 "1234" "1234";
+  assert_1 "" "0";
+  assert_1 "    1234" "1234";
+  assert_1 "-1" "-1";
+  assert_1 "1" "1";
+  assert_1 "-69420" "-69420";
+  assert_1 "abc123" "0";
+  assert_1 "2147483647" "2147483647";
+  assert_1 "-2147483648" "-2147483648";
+  assert_1 "-" "0";
+  assert_1 "+++--+-123" "-123";
+  assert_1 "      +++--+-123" "-123";
+  assert_1 "      +++- -+-123" "0";
+  assert_1 "-0012gfg4" "-12";
+  # assert_1 "-999999999999" "-2147483648";
+  # assert_1 "1231231231311133" "2147483647";
 fi
 
 # Classic "int-like string"
 if [[ "$1" == "int_str" ]]; then
-	title "Testing nbr strings"
-	assert_1 "1234" "1234";
-	assert_1 "0" "0";
-	assert_1 "-1" "-1";
-	assert_1 "1" "1";
-	assert_1 "-69420" "-69420";
-	assert_1 "2147483647" "2147483647";
-	assert_1 "-2147483648" "-2147483648";
-	# assert_1 "-999999999999" "-2147483648";
-	# assert_1 "1231231231311133" "2147483647";
+  title "Testing nbr strings"
+  assert_1 "1234" "1234";
+  assert_1 "0" "0";
+  assert_1 "-1" "-1";
+  assert_1 "1" "1";
+  assert_1 "-69420" "-69420";
+  assert_1 "2147483647" "2147483647";
+  assert_1 "-2147483648" "-2147483648";
+  # assert_1 "-999999999999" "-2147483648";
+  # assert_1 "1231231231311133" "2147483647";
 fi
 
 # For strlen
 if [[ "$1" == "strlen" ]]; then
-	title "Testing for ft_strlen"
-	assert_1 "1234" "4";
-	assert_1 "0" "1";
-	assert_1 "" "0";
-	assert_1 "aaaaaaaaaaaaaa" "14";
-	assert_1 "              " "14";
-	assert_1 "abcdefghijklmnopqrstuvwxyz" "26";
+  title "Testing for ft_strlen"
+  assert_1 "1234" "4";
+  assert_1 "0" "1";
+  assert_1 "" "0";
+  assert_1 "aaaaaaaaaaaaaa" "14";
+  assert_1 "              " "14";
+  assert_1 "abcdefghijklmnopqrstuvwxyz" "26";
 fi
 
 # For putstr
 if [[ "$1" == "putstr" ]]; then
-	title "Testing for ft_putstr"
-	assert_1 "1234" "1234";
-	assert_1 "0" "0";
-	assert_1 "" "";
-	assert_1 "aaaaaaaaaaaaaa" "aaaaaaaaaaaaaa";
-	assert_1 "              " "              ";
-	assert_1 "abcdefghijklmnopqrstuvwxyz" "abcdefghijklmnopqrstuvwxyz";
-	assert_1 "\n" "\n";
-	assert_1 "\n\n" "\n\n";
+  title "Testing for ft_putstr"
+  assert_1 "1234" "1234";
+  assert_1 "0" "0";
+  assert_1 "" "";
+  assert_1 "aaaaaaaaaaaaaa" "aaaaaaaaaaaaaa";
+  assert_1 "              " "              ";
+  assert_1 "abcdefghijklmnopqrstuvwxyz" "abcdefghijklmnopqrstuvwxyz";
+  assert_1 "\n" "\n";
+  assert_1 "\n\n" "\n\n";
 fi
 
 # For putstr_base
 if [[ "$1" == "putstr_base" ]]; then
-	title "Testing for ft_putstr_base: positive"
-	assert_2 "1234" "0123456789" "1234";
-	assert_2 "" "0123456789" "0";
-	assert_2 "" "01" "0";
-	assert_2 "69420" "01" "10000111100101100";
-	assert_2 "69420" "0123456789ABCDEF" "10F2C";
-	assert_2 "69420" "01234567" "207454";
-	assert_2 "0" "0123456789" "0";
-	assert_2 "69420" "0" "";
-	assert_2 "69420" "" "";
-	title "Testing for ft_putstr_base: negative"
-	assert_2 "-1234" "0123456789" "-1234";
-	assert_2 "-" "0123456789" "0";
-	assert_2 "-" "01" "0";
-	assert_2 "-69420" "01" "-10000111100101100";
-	assert_2 "-69420" "0123456789ABCDEF" "-10F2C";
-	assert_2 "-69420" "01234567" "-207454";
-	assert_2 "-0" "0123456789" "0";
-	assert_2 "-69420" "0" "";
-	assert_2 "-69420" "" "";
+  title "Testing for ft_putstr_base: positive"
+  assert_2 "1234" "0123456789" "1234";
+  assert_2 "" "0123456789" "0";
+  assert_2 "" "01" "0";
+  assert_2 "69420" "01" "10000111100101100";
+  assert_2 "69420" "0123456789ABCDEF" "10F2C";
+  assert_2 "69420" "01234567" "207454";
+  assert_2 "0" "0123456789" "0";
+  assert_2 "69420" "0" "";
+  assert_2 "69420" "" "";
+  title "Testing for ft_putstr_base: negative"
+  assert_2 "-1234" "0123456789" "-1234";
+  assert_2 "-" "0123456789" "0";
+  assert_2 "-" "01" "0";
+  assert_2 "-69420" "01" "-10000111100101100";
+  assert_2 "-69420" "0123456789ABCDEF" "-10F2C";
+  assert_2 "-69420" "01234567" "-207454";
+  assert_2 "-0" "0123456789" "0";
+  assert_2 "-69420" "0" "";
+  assert_2 "-69420" "" "";
 fi
 
 # For facto
 if [[ "$1" == "facto" ]]; then
-	title "Testing for ft_factorial"
-	assert_1 "0" "1";
-	assert_1 "1" "1";
-	assert_1 "2" "2";
-	assert_1 "3" "6";
-	assert_1 "4" "24";
-	assert_1 "5" "120";
-	assert_1 "6" "720";
-	assert_1 "7" "5040";
-	assert_1 "8" "40320";
-	assert_1 "9" "362880";
-	assert_1 "10" "3628800";
-	title "Testing for ft_factorial: edge-cases"
-	assert_1 "-123" "0";
+  title "Testing for ft_factorial"
+  assert_1 "0" "1";
+  assert_1 "1" "1";
+  assert_1 "2" "2";
+  assert_1 "3" "6";
+  assert_1 "4" "24";
+  assert_1 "5" "120";
+  assert_1 "6" "720";
+  assert_1 "7" "5040";
+  assert_1 "8" "40320";
+  assert_1 "9" "362880";
+  assert_1 "10" "3628800";
+  title "Testing for ft_factorial: edge-cases"
+  assert_1 "-123" "0";
 fi
 
 # For pow
 if [[ "$1" == "pow" ]]; then
-	title "Testing for ft_power"
-	assert_2 "0" "0" "1";
-	assert_2 "100" "-1" "0";
-	assert_2 "100" "-10" "0";
-	assert_2 "100" "0" "1";
-	assert_2 "2" "4" "16";
-	assert_2 "3" "2" "9";
-	assert_2 "4" "7" "16384";
+  title "Testing for ft_power"
+  assert_2 "0" "0" "1";
+  assert_2 "100" "-1" "0";
+  assert_2 "100" "-10" "0";
+  assert_2 "100" "0" "1";
+  assert_2 "2" "4" "16";
+  assert_2 "3" "2" "9";
+  assert_2 "4" "7" "16384";
 fi
 
 # For fibonacci sequence
 if [[ "$1" == "fibo" ]]; then
-	title "Testing for ft_fibonacci"
-	assert_1 "15" "610";
-	assert_1 "1" "1";
-	assert_1 "10" "55";
-	assert_1 "4" "3";
-	assert_1 "7" "13";
-	title "Testing for ft_fibonacci: edge cases"
-	assert_1 "0" "0";
-	assert_1 "1" "1";
-	assert_1 "2" "1";
-	assert_1 "3" "2";
-	assert_1 "-1" "-1";
-	assert_1 "-10" "-1";
+  title "Testing for ft_fibonacci"
+  assert_1 "15" "610";
+  assert_1 "1" "1";
+  assert_1 "10" "55";
+  assert_1 "4" "3";
+  assert_1 "7" "13";
+  title "Testing for ft_fibonacci: edge cases"
+  assert_1 "0" "0";
+  assert_1 "1" "1";
+  assert_1 "2" "1";
+  assert_1 "3" "2";
+  assert_1 "-1" "-1";
+  assert_1 "-10" "-1";
 fi
 
 # For square root
 if [[ "$1" == "sqrt" ]]; then
-	title "Testing for ft_sqrt"
-	assert_1 "25" "5";
-	assert_1 "81" "9";
-	title "Testing for ft_sqrt: edge cases"
-	assert_1 "0" "0";
-	assert_1 "2" "0";
-	assert_1 "-1" "0";
-	assert_1 "-10" "0";
+  title "Testing for ft_sqrt"
+  assert_1 "25" "5";
+  assert_1 "81" "9";
+  title "Testing for ft_sqrt: edge cases"
+  assert_1 "0" "0";
+  assert_1 "2" "0";
+  assert_1 "-1" "0";
+  assert_1 "-10" "0";
 fi
 
 # For is_prime
 if [[ "$1" == "prime" ]]; then
-	title "Testing for ft_is_prime"
-	assert_1 "2" "1";
-	assert_1 "3" "1";
-	assert_1 "16" "0";
-	assert_1 "17" "1";
-	assert_1 "21" "0";
-	title "Testing for ft_is_prime: edge cases"
-	assert_1 "0" "0";
-	assert_1 "1" "0";
-	assert_1 "-1" "0";
-	assert_1 "-10" "0";
+  title "Testing for ft_is_prime"
+  assert_1 "2" "1";
+  assert_1 "3" "1";
+  assert_1 "16" "0";
+  assert_1 "17" "1";
+  assert_1 "21" "0";
+  title "Testing for ft_is_prime: edge cases"
+  assert_1 "0" "0";
+  assert_1 "1" "0";
+  assert_1 "-1" "0";
+  assert_1 "-10" "0";
 fi
 
 # For find_next_prime
 if [[ "$1" == "nprime" ]]; then
-	title "Testing for ft_find_next_prime"
-	assert_1 "2" "2";
-	assert_1 "3" "3";
-	assert_1 "16" "17";
-	assert_1 "17" "17";
-	assert_1 "18" "19";
-	assert_1 "21" "23";
-	title "Testing for ft_find_next_prime: edge cases"
-	assert_1 "0" "2";
-	assert_1 "1" "2";
-	assert_1 "-1" "2";
-	assert_1 "-10" "2";
+  title "Testing for ft_find_next_prime"
+  assert_1 "2" "2";
+  assert_1 "3" "3";
+  assert_1 "16" "17";
+  assert_1 "17" "17";
+  assert_1 "18" "19";
+  assert_1 "21" "23";
+  title "Testing for ft_find_next_prime: edge cases"
+  assert_1 "0" "2";
+  assert_1 "1" "2";
+  assert_1 "-1" "2";
+  assert_1 "-10" "2";
 fi

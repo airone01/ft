@@ -1,20 +1,20 @@
 {
-	"output": {
-		"filePath": "repomix-output.txt",
-		"style": "xml",
-		"removeComments": false,
-		"removeEmptyLines": false,
-		"topFilesLength": 10,
-		"showLineNumbers": true,
-		"copyToClipboard": false
-	},
-	"include": [],
-	"ignore": {
-		"useGitignore": true,
-		"useDefaultPatterns": true,
-		"customPatterns": []
-	},
-	"security": {
-		"enableSecurityCheck": false
-	}
+  "output": {
+    "filePath": "repomix-output.txt",
+    "style": "xml",
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "topFilesLength": 10,
+    "showLineNumbers": true,
+    "copyToClipboard": false
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": []
+  },
+  "security": {
+    "enableSecurityCheck": false
+  }
 }
