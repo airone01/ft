@@ -63,7 +63,7 @@ all: .title $(NAME)
 	@$(ECHO) "$(MSG) \\/___L\\ \\/_/\\/_/\\/____/ \n"
 	@$(ECHO) "$(MSG)   /\\____/ \n"
 	@$(ECHO) "$(MSG)   \\_/__/ \n"
-	@$(ECHO) "$(MSG)\n"
+	@$(ECHO) "$(MSG) \n"
 	@touch .title
 
 $(LIBFT):

@@ -7,6 +7,9 @@ SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)\n
 SUCCESSB	= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)\n
 RESET		= \033[0m
 
+# ------------- Meta -------------
+MK_SELECTOR =
+
 # ----------- Commands -----------
 ECHO	= printf
 CD		= cd

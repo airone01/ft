@@ -3,34 +3,39 @@
 # top-most EditorConfig file
 root = true
 
+# Default settings
 [*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# C/C++ files
+[*.{c,h,cpp}]
 indent_style = tab
-indent_size = 4
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = false
 
-[*]
-indent_style = space
-indent_size = 4
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
+# Makefiles
+[{*.mk,Makefile}]
+indent_style = tab
 
-[*.sh]
-indent_style = space
+# Scripts
+[**/*.sh]
 indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
 
-[*.nix]
-indent_style = space
+# Nix
+[**/*.nix]
 indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
+
+# Config files
+[*.{yaml,yml,json,toml}]
+indent_size = 2
+
+# JavaScript/TyepScript
+[*.{js,ts}]
+indent_size = 2
+
+# Web
+[*.{html,css,scss,jsx,tsx,vue,svelte,astro}]
+indent_size = 2

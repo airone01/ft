@@ -31,7 +31,7 @@ GNL			= $(GNL_DIR)/get_next_line.a # GPM!
 # ------------- Flags ------------
 CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MD -MP
 CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
-# GPM@ .CFLAGS			+= -I$(LIBFT_DIR) # GPM!
+# GPM@ .CFLAGS			+= -I$(LIBFT_DIR)
 LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
 GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a # GPM!
 
@@ -133,7 +133,7 @@ all: .title $(NAME)
 	@$(ECHO) "$(MSG)  \\ \\ \\/  \\/___/  \\/___/   \\/_/\\/_/  _______\\/___/  \\/__//__/   \\/__/\\/_/ \\ \\ \\/ \n"
 	@$(ECHO) "$(MSG)   \\ \\_\\                            /\\______\\                              \\ \\_\\ \n"
 	@$(ECHO) "$(MSG)    \\/_/                            \\/______/                               \\/_/ \n"
-	@$(ECHO) "$(MSG)\n"
+	@$(ECHO) "$(MSG) \n"
 	@touch .title
 
 $(LIBFT): $(SRC_LIBFT)
@@ -142,7 +142,7 @@ $(LIBFT): $(SRC_LIBFT)
 
 $(GNL): $(SRC_GNL) # GPM!
 	@$(ECHO) "$(MSG) 🏗️  Building GNL\n" # GPM!
-	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile # GPM!
+	@$(MAKE) -C $(GNL_DIR) -f gnl.mk # GPM!
 # GPM!
 $(NAME): $(OBJ) $(LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
@@ -163,23 +163,23 @@ $(DIR_OBJ)%.o: %.c Makefile
 	@$(ECHO) "$(SUCCESSB)\n"
 
 bonus: .bonus
- # GPM!
+# GPM!
 visualizer: # GPM!
 	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/ # GPM!
 	make -C ../extra-ps-visualizer/build/ # GPM!
- # GPM!
+# GPM!
 visualize: visualizer $(NAME) # GPM!
 	../extra-ps-visualizer/build/bin/visualizer $(NAME) # GPM!
 
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
 	@$(RM) -r $(DIR_OBJ) .title
-	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile clean # GPM!
+	@$(MAKE) -C $(GNL_DIR) -f gnl.mk clean # GPM!
 
 fclean: clean
 	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
 	@$(RM) $(NAME) $(BNAME)
-	@$(MAKE) -C $(GNL_DIR) -f gnl.Makefile fclean # GPM!
+	@$(MAKE) -C $(GNL_DIR) -f gnl.mk fclean # GPM!
 
 re: fclean all
 
