@@ -1,104 +1,98 @@
-# ------------- Meta -------------
-MAKEFLAGS	+= --no-print-directory
-.PHONY: all clean fclean re
+# **************************************************************************** #
+#                               ANSI COLOR CODES                               #
+# **************************************************************************** #
 
-# ------------- ANSI -------------
-TITLE		= \033[48;5;198;30;1m
-RESET		= \033[0m
-GREEN		= \033[1;32m
-MSG			= $(TITLE) $(GPM_FNAME) \t\t$(RESET)
-SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
-SUCCESSB	= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
+include $(realpath ../extra-make/art.mk) # GPM!
+# GPM: make_ansi_color_codes
+COLOR			= $(COLOR_GET_NEXT_LINE)
 
-# ------------- Meta -------------
+# **************************************************************************** #
+#                            COMMON ANSI VARIABLES                             #
+# **************************************************************************** #
+
+# GPM: make_ansi_color_variables
+
+# **************************************************************************** #
+#                                   METADATA                                   #
+# **************************************************************************** #
+
 GPM_MSTONE	= 1
 GPM_NAME	= get_next_line
 GPM_FNAME	= $(GPM_MSTONE)-gnl
 NAME		= get_next_line.a
 DIR_OBJ 	= .obj/
 
-# ----------- Commands -----------
-ECHO	= printf
-MAKE	= make
-CC		= cc
-AR		= ar
-RM		= rm -f
-MD		= mkdir -p
+# **************************************************************************** #
+#                                   COMMANDS                                   #
+# **************************************************************************** #
 
-# ------------ Libft ------------
-LIBFT_DIR	= $(realpath ../milestone-0-libft)
+include $(realpath ../extra-make/commands.mk) # GPM!
+# GPM: make_commands
+
+# **************************************************************************** #
+#                                    FLAGS                                     #
+# **************************************************************************** #
+
+include $(realpath ../extra-make/flags.mk) # GPM!
+# GPM: make_flags
+CFLAGS			+= -I$(LIBFT_DIR)
+
+# **************************************************************************** #
+#                                    LIBFT                                     #
+# **************************************************************************** #
+
+LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
+# GPM@ .LIBFT_DIR	= $(realpath ./libft)
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-# ------------- Flags ------------
-CFLAGS			+= -Wall -Werror -Wextra -MMD -MP -g3
-CFLAGS			+= -I$(LIBFT_DIR) -I$(realpath .)
-LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
-ARFLAGS			= rcs
+# **************************************************************************** #
+#                                   SOURCES                                    #
+# **************************************************************************** #
 
-# ------------ Sources -----------
-_SRC	=					\
-	get_next_line
-# GPM@ _SRC += get_next_line_utils
-_SRC_TEST =	\
-	main
+_SRC_GNL	=	get_next_line get_next_line_utils
+# GPM: make_src_libft
+# GPM: make_src_push_swap
+include $(realpath ../extra-make/meta.mk) # GPM!
+# GPM@ ._SRC_PUSH_SWAP_BONUS	+= $(_SRC_GNL)
 
-# ------------ Mapping -----------
-OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
-DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
-OBJ_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.o)
-DEP_TEST	= $(_SRC_TEST:%=$(DIR_OBJ)%.d)
+# **************************************************************************** #
+#                                   MAPPING                                    #
+# **************************************************************************** #
 
-# ------------ Targets -----------
-all: .title $(NAME)
+SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
+SRC			= $(_SRC_GNL_BONUS:%=%.c)
+SRC_BONUS	= $(_SRC_GNL_BONUS:%=%.c)
+OBJ			= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.o)
+DEP			= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.d)
+OBJ_BONUS	= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.o)
+DEP_BONUS	= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.d)
+
+# **************************************************************************** #
+#                                   TARGETS                                    #
+# **************************************************************************** #
+
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
 .title:
-	@$(ECHO) "$(MSG)               ___ \n"
-	@$(ECHO) "$(MSG)              /\\_ \\ \n"
-	@$(ECHO) "$(MSG)   __     ___ \\//\\ \\ \n"
-	@$(ECHO) "$(MSG) /'_ \`\\ /' _ \`\\ \\ \\ \\ \n"
-	@$(ECHO) "$(MSG)/\\ \\L\\ \\/\\ \\/\\ \\ \\_\\ \\_ \n"
-	@$(ECHO) "$(MSG)\\ \\____ \\ \\_\\ \\_\\/\\____\\ \n"
-	@$(ECHO) "$(MSG) \\/___L\\ \\/_/\\/_/\\/____/ \n"
-	@$(ECHO) "$(MSG)   /\\____/ \n"
-	@$(ECHO) "$(MSG)   \\_/__/ \n"
+	@$(ECHO) "$(MSG)             __\n"
+	@$(ECHO) "$(MSG)  ___ ____  / /\n"
+	@$(ECHO) "$(MSG) / _ \`/ _ \/ /\n"
+	@$(ECHO) "$(MSG) \_, /_//_/_/\n"
+	@$(ECHO) "$(MSG)/___/\n"
 	@$(ECHO) "$(MSG) \n"
 	@touch .title
 
-$(LIBFT):
-	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
-	@$(MAKE) -C $(LIBFT_DIR)
+include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
+# GPM: make_target_lib_libft
+# GPM
+checker: $(OBJ) $(OBJ_TEST) $(LIBFT) # GPM
+	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n" # GPM
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS) # GPM
 
-$(NAME): $(OBJ) $(LIBFT)
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
-	@$(AR) $(ARFLAGS) $(NAME) $?
-	@$(ECHO) "$(SUCCESS)\n"
+# **************************************************************************** #
+#                                MAKE METADATA                                 #
+# **************************************************************************** #
 
-$(DIR_OBJ)%.o: %.c
-	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(MSG) ⏳ $@\n"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-checker: $(OBJ) $(OBJ_TEST) $(LIBFT)
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
-
-test: $(NAME)
-	@$(ECHO) "$(MSG) 🧪 Testing $(NAME)\n"
-	@$(MAKE) -C $(realpath ./tester) m
-
-clean:
-	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(DIR_OBJ)
-	@$(MAKE) -C $(LIBFT_DIR) clean
-
-fclean: clean
-	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
-	@$(RM) $(NAME) .title
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-
-re: fclean all
-
-# ----------- Make meta ----------
--include $(DEP) $(DEP_BONUS) $(DEP_TEST)
+include $(realpath ../extra-make/make_meta.mk) # GPM!
+# GPM: make_make_meta

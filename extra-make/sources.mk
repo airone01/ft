@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    meta.mk                                            :+:      :+:    :+:    #
+#    sources.mk                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/17 14:56:42 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/22 17:28:15 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,3 +90,10 @@ _SRC_PUSH_SWAP_BONUS	=	\
 	checker_utils			\
 	$(_SRC_PUSH_SWAP_COMMOM)
 # GPM? end make_src_push_swap
+# GPM? begin make_src_ft_strlen
+_SRC_FT_PRINTF		=		\
+	ft_printf				\
+	ft_putchar				\
+	ft_putnbr_base_ssize	\
+	ft_putstr_ssize
+# GPM? end make_src_ft_strlen

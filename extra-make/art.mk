@@ -6,15 +6,14 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:45:02 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/16 17:06:08 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/22 17:54:28 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# GPM? begin make_ansi_color_codes
 # **************************************************************************** #
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
-
+# GPM? begin make_ansi_color_codes
 COLOR_LIBFT			= 78
 COLOR_FT_PRINTF		= 202
 COLOR_GET_NEXT_LINE	= 198
@@ -30,7 +29,7 @@ RESET			= \033[0m
 GREEN			= \033[1;32m
 # Calculate padding length (you can adjust the total desired width)
 DESIRED_WIDTH	= 14
-PADDING_LENGTH	= $(shell echo $$(($(DESIRED_WIDTH) - $(shell echo "$(GPM_NAME) " | wc -c))))
+PADDING_LENGTH	= $(shell echo $$(($(DESIRED_WIDTH) - $(shell echo "$(GPM_FNAME) " | wc -c))))
 PADDING			= $(shell printf '%*s' $(PADDING_LENGTH))
 # Define message with dynamic padding
 MSG				= $(TITLE) $(GPM_FNAME) $(RESET)$(PADDING)

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/17 14:57:04 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/22 17:53:41 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,16 @@ include $(realpath ../extra-make/art.mk) # GPM!
 # GPM: make_ansi_color_codes
 COLOR			= $(COLOR_PUSH_SWAP)
 
+# **************************************************************************** #
+#                            COMMON ANSI VARIABLES                             #
+# **************************************************************************** #
+
 # GPM: make_ansi_color_variables
 
 # **************************************************************************** #
 #                                   METADATA                                   #
 # **************************************************************************** #
+
 GPM_MSTONE	= 2
 GPM_NAME	= push_swap
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
@@ -33,6 +38,7 @@ DIR_OBJ 	= .obj/
 # **************************************************************************** #
 #                                   COMMANDS                                   #
 # **************************************************************************** #
+
 ECHO	= printf
 CC		= cc
 AR		= ar
@@ -42,6 +48,7 @@ MD		= mkdir -p
 # **************************************************************************** #
 #                                    LIBFT                                     #
 # **************************************************************************** #
+
 LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
 # GPM@ .LIBFT_DIR	= $(realpath ./libft)
 GNL_DIR		= $(realpath ../milestone-1-get_next_line)# GPM!
@@ -51,6 +58,7 @@ GNL			= $(GNL_DIR)/get_next_line.a # GPM!
 # **************************************************************************** #
 #                                    FLAGS                                     #
 # **************************************************************************** #
+
 CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MD -MP
 CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
 # GPM@ .CFLAGS			+= -I$(LIBFT_DIR)
@@ -60,15 +68,14 @@ GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a # GPM!
 # **************************************************************************** #
 #                                   SOURCES                                    #
 # **************************************************************************** #
-_SRC_GNL	=	get_next_line get_next_line_utils
-# GPM: make_src_libft
-# GPM: make_src_push_swap
-include $(realpath ../extra-make/meta.mk) # GPM!
-# GPM@ ._SRC_PUSH_SWAP_BONUS	+= $(_SRC_GNL)
+
+# GPM: make_src
+include $(realpath ../extra-make/sources.mk) # GPM!
 
 # **************************************************************************** #
 #                                   MAPPING                                    #
 # **************************************************************************** #
+
 SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
 SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c) # GPM!
 SRC			= $(_SRC_PUSH_SWAP:%=%.c)
@@ -81,48 +88,21 @@ DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(DIR_OBJ)%.d)
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
-all: .title $(NAME)
+
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
 .title:
-	@$(ECHO) "$(MSG)                        __ \n"
-	@$(ECHO) "$(MSG)                       /\\ \\ \n"
-	@$(ECHO) "$(MSG) _____   __  __    ____\\ \\ \\___              ____  __  __  __     __     _____ \n"
-	@$(ECHO) "$(MSG)/\\ '__\`\\/\\ \\/\\ \\  /',__\\\\\\\\ \\  _ \`\\           /',__\\/\\ \\/\\ \\/\\ \\  /'__\`\\  /\\ '__\`\\ \n"
-	@$(ECHO) "$(MSG)\\ \\ \\L\\ \\ \\ \\_\\ \\/\\__, \`\\\\\\\\ \\ \\ \\ \\         /\\__, \`\\ \\ \\_/ \\_/ \\/\\ \\L\\.\\_\\ \\ \\L\\ \\ \n"
-	@$(ECHO) "$(MSG) \\ \\ ,__/\\ \\____/\\/\\____/ \\ \\_\\ \\_\\        \\/\\____/\\ \\___x___/'\\ \\__/.\\_\\\\\\\\ \\ ,__/ \n"
-	@$(ECHO) "$(MSG)  \\ \\ \\/  \\/___/  \\/___/   \\/_/\\/_/  _______\\/___/  \\/__//__/   \\/__/\\/_/ \\ \\ \\/ \n"
-	@$(ECHO) "$(MSG)   \\ \\_\\                            /\\______\\                              \\ \\_\\ \n"
-	@$(ECHO) "$(MSG)    \\/_/                            \\/______/                               \\/_/ \n"
+	@$(ECHO) "$(MSG)                  __\n"
+	@$(ECHO) "$(MSG)   ___  __ _____ / /     ____    _____ ____\n"
+	@$(ECHO) "$(MSG)  / _ \\/ // (_-</ _ \\   (_-< |/|/ / _ \`/ _ \\ \n"
+	@$(ECHO) "$(MSG) / .__/\_,_/___/_//_/__/___/__,__/\\_,_/ .__/\n"
+	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
 	@$(ECHO) "$(MSG) \n"
 	@touch .title
 
-$(LIBFT): $(SRC_LIBFT)
-	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
-	@$(MAKE) -C $(LIBFT_DIR)
-
-$(GNL): $(SRC_GNL) # GPM!
-	@$(ECHO) "$(MSG) 🏗️  Building GNL\n" # GPM!
-	@$(MAKE) -C $(GNL_DIR) # GPM!
-# GPM!
-$(NAME): $(OBJ) $(LIBFT)
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS)
-	@$(ECHO) "$(SUCCESS)\n"
-
-$(DIR_OBJ)%.o: %.c Makefile
-	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(MSG) ⏳ $@\n"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# GPM@ ..bonus: $(OBJ_BONUS) $(LIBFT)
-.bonus: $(OBJ_BONUS) $(LIBFT) $(GNL) # GPM!
-	@$(ECHO) "$(MSG) 🏗️  Building bonuses for $(NAME)\n"
-	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(GNL_FLAGS) $(LIBFT_FLAGS) # GPM!
-	# GPM@ .	@$(CC) $(CFLAGS) -o  $(BNAME) $^ $(LIBFT_FLAGS)
-	@touch .bonus
-	@$(ECHO) "$(SUCCESSB)\n"
-
-bonus: .bonus
+include $(realpath ../extra-make/targets_bin_libft_gnl_bonus.mk) # GPM!
+# GPM: make_target_bin_libft_bonus
 # GPM!
 visualizer: # GPM!
 	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/ # GPM!
@@ -131,23 +111,10 @@ visualizer: # GPM!
 visualize: visualizer $(NAME) # GPM!
 	../extra-ps-visualizer/build/bin/visualizer $(NAME) # GPM!
 
-clean:
-	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(DIR_OBJ) .title
-	@$(MAKE) -C $(GNL_DIR) clean # GPM!
-	@$(MAKE) -C $(LIBFT_DIR) clean
-
-fclean: clean
-	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
-	@$(RM) $(NAME) $(BNAME)
-	@$(MAKE) -C $(GNL_DIR) fclean # GPM!
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-
-re: fclean all
-
 # **************************************************************************** #
 #                                MAKE METADATA                                 #
 # **************************************************************************** #
+
 -include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory
 .PHONY: all bonus clean fclean re visualize visualizer # GPM!
