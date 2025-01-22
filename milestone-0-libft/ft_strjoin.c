@@ -43,7 +43,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 // GPM? end ft_strjoin
 
 //// Dependency-free implementation
-//char	*ft_strjoin(char const *s1, char const *s2)
+// char	*ft_strjoin(char const *s1, char const *s2)
 //{
 //	size_t	s1_len;
 //	size_t	s2_len;
@@ -71,7 +71,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 //}
 
 //// Kaan's implementation
-//char	*ft_strjoin(char *s1, const char *s2)
+// char	*ft_strjoin(char *s1, const char *s2)
 //{
 //	char		*join;
 //	size_t		i;

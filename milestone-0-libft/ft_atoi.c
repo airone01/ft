@@ -22,8 +22,8 @@
  */
 static int	is_overflow(long long result, int nbr)
 {
-	if ((result > LLONG_MAX / 10) || (result == LLONG_MAX / 10 && nbr
-			> LLONG_MAX % 10))
+	if ((result > LLONG_MAX / 10) || (result == LLONG_MAX / 10
+			&& nbr > LLONG_MAX % 10))
 		return (1);
 	return (0);
 }

@@ -4,12 +4,12 @@ version = "1.0.0"
 
 [submit]
 files = [
-    "Makefile",
-    "ft_printf.h",
-    "ft_printf.c",
-    "ft_putchar.c",
-    "ft_putnbr_base_ssize.c",
-    "ft_putstr_ssize.c",
+  "Makefile",
+  "ft_printf.h",
+  "ft_printf.c",
+  "ft_putchar.c",
+  "ft_putnbr_base_ssize.c",
+  "ft_putstr_ssize.c",
 ]
 
 [submit.preprocessor]
@@ -27,5 +27,5 @@ norminette = true
 source = "../milestone-0-libft/ft_strlen.c"
 destination = ""
 replace = [
-    { find = "libft.h", replace_with = "ft_printf.h" }
+  { find = "libft.h", replace_with = "ft_printf.h" }
 ]

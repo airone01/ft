@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 16:17:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:59:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../milestone-0-libft/libft.h" // GPM!
+# include "../milestone-0-libft/libft.h"                 // GPM!
 # include "../milestone-1-get_next_line/get_next_line.h" // GPM!
 // GPM@ .# include "libft/libft.h"
-# include <unistd.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
+# include <unistd.h>
 
-# ifndef BUFF_SIZE
-#  define BUFF_SIZE 8
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 8
 # endif
 
-# ifndef MAX_FD
-#  define MAX_FD 1
+# ifndef FD_SIZE
+#  define FD_SIZE 1
 # endif
 
 typedef struct s_stack
@@ -97,6 +97,7 @@ char				*get_next_line(int fd);
 
 // ### BONUSES ###
 size_t				execute(t_stack **stack_a);
+// GPM@ .				ft_abs(ssize_t nb);
 
 // ### LIBFT ###
 // GPM@ .ssize_t				ft_abs(ssize_t nb);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_push_save_three.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:22:30 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 15:08:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:13:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

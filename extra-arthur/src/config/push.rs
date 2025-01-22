@@ -1,6 +1,6 @@
 use crate::error::GpmError;
 use anyhow::Context;
-use globset::{Glob, GlobSet, GlobSetBuilder};
+use globset::{Glob, GlobSetBuilder};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 
@@ -171,35 +171,6 @@ impl PushConfigManager {
         Ok(included)
     }
 
-    fn matches_pattern(path: &Path, pattern: &str) -> bool {
-        // Simple glob pattern matching
-        // In a real implementation, you might want to use the 'glob' crate
-        let path_str = path.to_string_lossy();
-        if pattern.contains("*") {
-            let parts: Vec<&str> = pattern.split('*').collect();
-            let mut current_pos = 0;
-
-            for part in parts {
-                if let Some(pos) = path_str[current_pos..].find(part) {
-                    current_pos += pos + part.len();
-                } else {
-                    return false;
-                }
-            }
-            true
-        } else {
-            path_str == pattern
-        }
-    }
-
-    fn build_glob_set(patterns: &[String]) -> anyhow::Result<GlobSet> {
-        let mut builder = GlobSetBuilder::new();
-        for pattern in patterns {
-            builder.add(Glob::new(pattern)?);
-        }
-        Ok(builder.build()?)
-    }
-
     // Implementation of copy function
     pub fn copy_additional_files(
         &self,
@@ -207,8 +178,17 @@ impl PushConfigManager {
         source_base: &Path,
         target_base: &Path,
     ) -> anyhow::Result<()> {
-        // Helper function to filter and copy a single file
-        fn filter_and_copy(source: &Path, target: &Path, replacements: &[TextReplacement]) -> anyhow::Result<()> {
+        let gpm_processor = crate::processor::gpm::GpmProcessor::new();
+
+        // Helper function to process and copy a single file
+        fn process_and_copy(
+            source: &Path,
+            target: &Path,
+            replacements: &[TextReplacement],
+            config: &PushConfiguration,
+            gpm_processor: &crate::processor::gpm::GpmProcessor,
+            should_process_gpm: bool,
+        ) -> anyhow::Result<()> {
             // Create parent directories if needed
             if let Some(parent) = target.parent() {
                 std::fs::create_dir_all(parent)?;
@@ -222,23 +202,33 @@ impl PushConfigManager {
                 content = content.replace(&replacement.find, &replacement.replace_with);
             }
 
-            // Write the processed content
-            std::fs::write(target, content)?;
+            // Write to a temporary file for GPM processing if needed
+            if should_process_gpm && config.submit.preprocessor.enable_gpm {
+                let temp_dir = tempfile::tempdir()?;
+                let temp_file = temp_dir.path().join("temp_file");
+                std::fs::write(&temp_file, content)?;
+
+                // Process with GPM
+                gpm_processor.process_file(&temp_file, target, &config.submit.preprocessor)?;
+            } else {
+                // Write directly if no GPM processing needed
+                std::fs::write(target, content)?;
+            }
 
             log::debug!(
-            "Copied and processed {} to {}",
-            source.display(),
-            target.display()
-        );
+                "Processed and copied {} to {}",
+                source.display(),
+                target.display()
+            );
             Ok(())
         }
 
+        // Rest of the implementation remains the same, but use process_and_copy instead
         for copy_config in &config.submit.copy {
             // Handle both absolute and relative source paths
             let source_path = if Path::new(&copy_config.source).is_absolute() {
                 PathBuf::from(&copy_config.source)
             } else {
-                // Resolve relative paths from the source_base directory
                 if copy_config.source.starts_with("../") {
                     source_base
                         .parent()
@@ -248,7 +238,6 @@ impl PushConfigManager {
                     source_base.join(&copy_config.source)
                 }
             };
-            log::debug!("Resolving source path: {}", source_path.display());
 
             // Get the concrete file path if it exists
             if source_path.exists() {
@@ -266,7 +255,14 @@ impl PushConfigManager {
                     )
                 };
 
-                filter_and_copy(&source_path, &target_path, &copy_config.replace)?;
+                process_and_copy(
+                    &source_path,
+                    &target_path,
+                    &copy_config.replace,
+                    config,
+                    &gpm_processor,
+                    self.should_process_with_gpm(&source_path),
+                )?;
             } else {
                 // Handle glob patterns...
                 let pattern = if copy_config.source.starts_with("../") {
@@ -285,7 +281,7 @@ impl PushConfigManager {
                 )?;
                 let matcher = glob.compile_matcher();
 
-                // Define the base directory for glob search
+                // Define base directory for glob search
                 let search_base = if copy_config.source.starts_with("../") {
                     source_base
                         .parent()
@@ -326,21 +322,36 @@ impl PushConfigManager {
                             target_base.join(&relative_path)
                         };
 
-                        filter_and_copy(source_path, &target_path, &copy_config.replace)?;
+                        process_and_copy(
+                            source_path,
+                            &target_path,
+                            &copy_config.replace,
+                            config,
+                            &gpm_processor,
+                            self.should_process_with_gpm(source_path),
+                        )?;
                     }
                 }
 
                 if !found_matches {
                     log::warn!(
-                    "No files matched pattern: {} (searched in {})",
-                    copy_config.source,
-                    search_base.display()
-                );
+                        "No files matched pattern: {} (searched in {})",
+                        copy_config.source,
+                        search_base.display()
+                    );
                 }
             }
         }
 
         Ok(())
+    }
+
+    fn should_process_with_gpm(&self, path: &Path) -> bool {
+        matches!(path.extension().and_then(|s| s.to_str()), Some("c" | "h"))
+            || matches!(
+                path.file_name().and_then(|s| s.to_str()),
+                Some("Makefile" | "makefile")
+            )
     }
 }
 
@@ -367,48 +378,6 @@ impl PreprocessorConfig {
                 }
             }
         }
-
-        Ok(())
-    }
-}
-
-impl PushConfiguration {
-    pub fn validate(&self, project_path: &Path) -> anyhow::Result<()> {
-        // Validate project info
-        if self.project.name.is_empty() {
-            return Err(GpmError::ConfigError("Project name cannot be empty".into()).into());
-        }
-
-        // Validate submit config
-        if self.submit.files.is_empty() {
-            return Err(GpmError::ConfigError("No files specified for submission".into()).into());
-        }
-
-        // Validate glob patterns
-        for pattern in &self.submit.files {
-            if let Err(e) = globset::Glob::new(pattern) {
-                return Err(GpmError::InvalidGlobPattern(format!(
-                    "Invalid include pattern '{}': {}",
-                    pattern, e
-                ))
-                .into());
-            }
-        }
-
-        if let Some(excludes) = &self.submit.exclude {
-            for pattern in excludes {
-                if let Err(e) = globset::Glob::new(pattern) {
-                    return Err(GpmError::InvalidGlobPattern(format!(
-                        "Invalid exclude pattern '{}': {}",
-                        pattern, e
-                    ))
-                    .into());
-                }
-            }
-        }
-
-        // Validate preprocessor config
-        self.submit.preprocessor.validate(project_path)?;
 
         Ok(())
     }

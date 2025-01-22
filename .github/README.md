@@ -130,5 +130,5 @@ Additionally, you can list them with `make list` build one with `make <PROJECT>`
 ### Note for myself
 
 ```bash
-alias b="cd ~/goinfre/ft; cargo r --package arthur -- -vvv p s push_swap https://github.com/airone01/gpm-test; rm -rf ~/goinfre/test; git clone https://github.com/airone01/gpm-test ~/goinfre/test; cd ~/goinfre/test; make all bonus"
+alias reload="rm -rf ~/goinfre/test && cd ~/ft && cargo r --package arthur -- -vvv p s push_swap https://github.com/airone01/gpm-test && git clone https://github.com/airone01/gpm-test ~/goinfre/test && cd ~/goinfre/test && make all bonus"
 ```

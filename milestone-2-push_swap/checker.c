@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_main.c                                     :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:37:35 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 18:06:45 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:21:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //#include <stdio.h>
 //
-//void	stack_display(t_stack *stack)
+// void	stack_display(t_stack *stack)
 //{
 //	int		i;
 //

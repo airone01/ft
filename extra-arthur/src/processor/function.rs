@@ -20,8 +20,8 @@ impl Default for FunctionExtractor {
 impl FunctionExtractor {
     pub fn new() -> Self {
         Self {
-            begin_regex: Regex::new(r"//\s*GPM\?\s*begin\s+([a-zA-Z0-9_]+)\s*$").unwrap(),
-            end_regex: Regex::new(r"//\s*GPM\?\s*end\s+([a-zA-Z0-9_]+)\s*$").unwrap(),
+            begin_regex: Regex::new(r"(?://|#)\s*GPM\?\s*begin\s+([a-zA-Z0-9_]+)\s*$").unwrap(),
+            end_regex: Regex::new(r"(?://|#)\s*GPM\?\s*end\s+([a-zA-Z0-9_]+)\s*$").unwrap(),
         }
     }
 }
@@ -38,7 +38,7 @@ impl FunctionExtractorTrait for FunctionExtractor {
                 let entry = entry.context("Failed to read directory entry")?;
                 let path = entry.path();
 
-                if path.extension().and_then(|s| s.to_str()) == Some("c") {
+                if matches!(path.extension().and_then(|s| s.to_str()), Some("c") | Some("h") | Some("cpp") | Some("mk")) || path.file_name().and_then(|s| s.to_str()) == Some("Makefile") {
                     log::debug!("Checking file: {}", path.display());
                     match fs::read_to_string(path) {
                         Ok(content) => {

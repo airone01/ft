@@ -23,7 +23,7 @@ files = [
 
 [submit.preprocessor]
 enable_gpm = true
-function_paths = [".", ".."]
+function_paths = ["."]
 
 [submit.hooks]
 pre_submit = "make fclean"
@@ -151,12 +151,14 @@ destination = "libft"
 
 ########### GNL ###########
 [[submit.copy]]
-source = "../milestone-1-get_next_line/get_next_line.h"
-destination = ""
-
-[[submit.copy]]
 source = "../milestone-1-get_next_line/get_next_line.c"
 destination = ""
+replace = [
+    { find = "get_next_line.h", replace_with = "push_swap.h" }
+]
 [[submit.copy]]
 source = "../milestone-1-get_next_line/get_next_line_utils.c"
 destination = ""
+replace = [
+    { find = "get_next_line.h", replace_with = "push_swap.h" }
+]

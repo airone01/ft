@@ -7,9 +7,6 @@ SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)\n
 SUCCESSB	= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)\n
 RESET		= \033[0m
 
-# ------------- Meta -------------
-MK_SELECTOR =
-
 # ----------- Commands -----------
 ECHO	= printf
 CD		= cd
@@ -51,7 +48,7 @@ $(foreach job,$(JOBS),$(eval $(word 2,$(subst :, ,$(job))): milestone$(word 1,$(
 define make_milestone_target
 milestone$(word 1,$(subst :, ,$(1)))$(word 2,$(subst :, ,$(1))):
 	@$(ECHO) "$(MSG) 🏗️  Building $(word 2,$(subst :, ,$(1)))\n"
-	@$(CD) milestone-$(word 1,$(subst :, ,$(1)))-$(word 2,$(subst :, ,$(1))) && $(MAKE) -f *Makefile
+	@$(CD) milestone-$(word 1,$(subst :, ,$(1)))-$(word 2,$(subst :, ,$(1))) && $(MAKE)
 endef
 
 $(foreach job,$(JOBS),$(eval $(call make_milestone_target,$(job))))
@@ -68,7 +65,7 @@ all:
 	@$(ECHO) "$(MSG) 🏗️  Building all projects\n"
 	@for job in $(JOBS); do \
 		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \
-		(cd "$$dir" && $(MAKE) -f *Makefile); \
+		(cd "$$dir" && $(MAKE)); \
 	done
 
 # Clean targets with better path handling
@@ -76,14 +73,14 @@ clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning all projects\n"
 	@for job in $(JOBS); do \
 		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \
-		(cd "$$dir" && $(MAKE) -f *Makefile clean); \
+		(cd "$$dir" && $(MAKE) clean); \
 	done
 
 fclean:
 	@$(ECHO) "$(MSG) 🧹 Fcleaning all projects\n"
 	@for job in $(JOBS); do \
 		dir=milestone-$$(echo $$job | cut -d: -f1)-$$(echo $$job | cut -d: -f2); \
-		(cd "$$dir" && $(MAKE) -f *Makefile fclean); \
+		(cd "$$dir" && $(MAKE) fclean); \
 	done
 
 #all: $(MILESTONE_TARGETS)

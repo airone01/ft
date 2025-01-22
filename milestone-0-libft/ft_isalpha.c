@@ -13,8 +13,8 @@
 // GPM? begin ft_isalpha
 /**
  * Tells if a character is alphabetical (lowercase or uppercase)
- * @param	c	    Character
- * @returns	        Boolean result
+ * @param	c		 Character
+ * @returns		     Boolean result
  */
 int	ft_isalpha(int c)
 {

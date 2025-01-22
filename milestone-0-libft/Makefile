@@ -1,30 +1,69 @@
-# ------------- ANSI -------------
-TITLE		= \033[48;5;78;30;1m
-RESET		= \033[0m
-GREEN		= \033[1;32m
-MSG			= $(TITLE) $(GPM_FNAME) \t$(RESET)
-SUCCESS		= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
-SUCCESSB	= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
+#    Updated: 2025/01/17 14:07:34 by elagouch         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# ------------- Meta -------------
+# **************************************************************************** #
+#                               ANSI COLOR CODES                               #
+# **************************************************************************** #
+
+COLOR_LIBFT			= 78
+COLOR_FT_PRINTF		= 202
+COLOR_GET_NEXT_LINE	= 198
+COLOR_PUSH_SWAP		= 227
+COLOR				= $(COLOR_LIBFT)
+
+# **************************************************************************** #
+#                            COMMON ANSI VARIABLES                             #
+# **************************************************************************** #
+
+TITLE			= \033[48;5;$(COLOR);30;1m
+RESET			= \033[0m
+GREEN			= \033[1;32m
+# Calculate padding length (you can adjust the total desired width)
+DESIRED_WIDTH	= 14
+PADDING_LENGTH	= $(shell echo $$(($(DESIRED_WIDTH) - $(shell echo "$(GPM_NAME) " | wc -c))))
+PADDING			= $(shell printf '%*s' $(PADDING_LENGTH))
+# Define message with dynamic padding
+MSG				= $(TITLE) $(GPM_FNAME) $(RESET)$(PADDING)
+SUCCESS			= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
+SUCCESSB		= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
+# GPM? end make_ansi_color_variables
+
+# **************************************************************************** #
+#                                   METADATA                                   #
+# **************************************************************************** #
 GPM_MSTONE	= 0
 GPM_NAME	= libft
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= libft.a
 DIR_OBJ 	= .obj/
 
-# ----------- Commands -----------
+# **************************************************************************** #
+#                                   COMMANDS                                   #
+# **************************************************************************** #
 ECHO		= printf
 CC			= cc
 AR			= ar
 RM      	= rm -f
 MD			= mkdir -p
 
-# ------------- Flags ------------
+# **************************************************************************** #
+#                                    FLAGS                                     #
+# **************************************************************************** #
 CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MD -MP
 ARFLAGS		= rcs
 
-# ------------ Sources -----------
+# **************************************************************************** #
+#                                   SOURCES                                    #
+# **************************************************************************** #
 _SRC			=			\
 	ft_atoi					\
 	ft_abs					\
@@ -73,13 +112,17 @@ _SRC_BONUS	=				\
 	ft_lstnew_bonus			\
 	ft_lstsize_bonus
 
-# ------------ Mapping -----------
+# **************************************************************************** #
+#                                   MAPPING                                    #
+# **************************************************************************** #
 OBJ			= $(_SRC:%=$(DIR_OBJ)%.o)
 DEP			= $(_SRC:%=$(DIR_OBJ)%.d)
 OBJ_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.o)
 DEP_BONUS	= $(_SRC_BONUS:%=$(DIR_OBJ)%.d)
 
-# ------------ Targets -----------
+# **************************************************************************** #
+#                                   TARGETS                                    #
+# **************************************************************************** #
 all: .title $(NAME)
 
 .title:

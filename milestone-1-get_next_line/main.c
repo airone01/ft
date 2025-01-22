@@ -30,7 +30,7 @@
 //	}
 //}
 
-//int	main(void)
+// int	main(void)
 //{
 //	int		fd;
 //	char	*line;

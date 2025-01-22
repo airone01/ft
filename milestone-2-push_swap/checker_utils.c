@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 20:15:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/07 19:12:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:20:58 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ size_t	execute_rr(char *line, t_stack **stack_a, t_stack **stack_b)
 }
 
 /**
-* User is responsible for clearing stack_a
-*/
+ * User is responsible for clearing stack_a
+ */
 size_t	execute(t_stack **stack_a)
 {
 	t_stack	*stack_b;
-	char	*line;
 	size_t	detected;
 	size_t	fd;
+	char	*line;
 
 	fd = 0;
 	stack_b = NULL;

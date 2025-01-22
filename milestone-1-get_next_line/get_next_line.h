@@ -27,12 +27,12 @@
 # include <unistd.h>
 
 // Libft
-size_t			ft_strlen(const char *str);
-size_t			is_line(const char *str);
-char			*ft_strjoin(char const *s1, char const *s2);
-void			*ft_calloc(size_t nmemb, size_t size);
-void			*ft_memset(void *s, int c, size_t n);
-char			*ft_strdup(const char *s);
-char			*get_next_line(int fd);
+size_t	ft_strlen(const char *str);
+size_t	is_line(const char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
+char	*ft_strdup(const char *s);
+char	*get_next_line(int fd);
 
 #endif
