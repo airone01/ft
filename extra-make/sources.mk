@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 17:28:15 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/23 16:08:55 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,3 +97,7 @@ _SRC_FT_PRINTF		=		\
 	ft_putnbr_base_ssize	\
 	ft_putstr_ssize
 # GPM? end make_src_ft_strlen
+# GPM? negin make_src_pipex
+_SRC_PIPEX	=				\
+	_main
+# GPM? end make_src_pipex
