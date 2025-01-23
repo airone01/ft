@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:28:53 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 14:47:59 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/23 12:31:34 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 # **************************************************************************** #
 # GPM? begin make_target_bin_libft_gnl_bonus
 LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
+GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a
 
 $(LIBFT): $(SRC_LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
@@ -37,7 +38,7 @@ $(NAME): $(OBJ) $(LIBFT)
 
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(DIR_OBJ) .title
+	@$(RM) -r $(OUT_DIR) .title
 	@$(MAKE) -C $(GNL_DIR) clean
 	@$(MAKE) -C $(LIBFT_DIR) clean
 

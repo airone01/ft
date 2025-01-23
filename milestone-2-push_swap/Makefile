@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 17:53:41 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/23 13:30:24 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,17 +33,14 @@ GPM_NAME	= push_swap
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= push_swap
 BNAME		= checker
-DIR_OBJ 	= .obj/
+OUT_DIR 	= .out/
 
 # **************************************************************************** #
 #                                   COMMANDS                                   #
 # **************************************************************************** #
 
-ECHO	= printf
-CC		= cc
-AR		= ar
-RM     	= rm -f
-MD		= mkdir -p
+include $(realpath ../extra-make/commands.mk)
+# GPM: make_commands
 
 # **************************************************************************** #
 #                                    LIBFT                                     #
@@ -59,11 +56,10 @@ GNL			= $(GNL_DIR)/get_next_line.a # GPM!
 #                                    FLAGS                                     #
 # **************************************************************************** #
 
-CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MD -MP
+include $(realpath ../extra-make/flags.mk) # GPM!
+# GPM: make_flags
 CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
 # GPM@ .CFLAGS			+= -I$(LIBFT_DIR)
-LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
-GNL_FLAGS		+= -L$(GNL_DIR) -l:get_next_line.a # GPM!
 
 # **************************************************************************** #
 #                                   SOURCES                                    #
@@ -80,10 +76,10 @@ SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
 SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c) # GPM!
 SRC			= $(_SRC_PUSH_SWAP:%=%.c)
 SRC_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=%.c)
-OBJ			= $(_SRC_PUSH_SWAP:%=$(DIR_OBJ)%.o)
-DEP			= $(_SRC_PUSH_SWAP:%=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC_PUSH_SWAP:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_PUSH_SWAP:%=$(OUT_DIR)%.d)
+OBJ_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.o)
+DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.d)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -115,9 +111,5 @@ visualize: visualizer $(NAME) # GPM!
 #                                MAKE METADATA                                 #
 # **************************************************************************** #
 
--include $(DEP) $(DEP_BONUS)
-MAKEFLAGS	+= --no-print-directory
-.PHONY: all bonus clean fclean re visualize visualizer # GPM!
-# GPM@ ..PHONY: all bonus clean fclean re title
-.SILENT: all bonus .bonus clean fclean re visualize visualizer # GPM!
-# GPM@ ..SILENT: all bonus .bonus clean fclean re
+include $(realpath ../extra-make/make_meta.mk) # GPM!
+# GPM: make_make_meta

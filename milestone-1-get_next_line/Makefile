@@ -20,7 +20,7 @@ GPM_MSTONE	= 1
 GPM_NAME	= get_next_line
 GPM_FNAME	= $(GPM_MSTONE)-gnl
 NAME		= get_next_line.a
-DIR_OBJ 	= .obj/
+OUT_DIR 	= .out/
 
 # **************************************************************************** #
 #                                   COMMANDS                                   #
@@ -62,10 +62,10 @@ include $(realpath ../extra-make/meta.mk) # GPM!
 SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
 SRC			= $(_SRC_GNL_BONUS:%=%.c)
 SRC_BONUS	= $(_SRC_GNL_BONUS:%=%.c)
-OBJ			= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.o)
-DEP			= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(_SRC_GNL_BONUS:%=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC_GNL_BONUS:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_GNL_BONUS:%=$(OUT_DIR)%.d)
+OBJ_BONUS	= $(_SRC_GNL_BONUS:%=$(OUT_DIR)%.o)
+DEP_BONUS	= $(_SRC_GNL_BONUS:%=$(OUT_DIR)%.d)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #

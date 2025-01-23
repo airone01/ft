@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:45:02 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 17:54:28 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/23 13:27:38 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,16 @@
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 # GPM? begin make_ansi_color_codes
+# Common core projects
+COLOR_FT			= 99
 COLOR_LIBFT			= 78
+COLOR_B2BR			= 208
 COLOR_FT_PRINTF		= 202
 COLOR_GET_NEXT_LINE	= 198
 COLOR_PUSH_SWAP		= 227
+# Extra projects
+COLOR_MINECRAFT		= 34
+COLOR_ARTHUR		= 33
 # GPM? end make_ansi_color_codes
 # GPM? begin make_ansi_color_variables
 # **************************************************************************** #
@@ -36,26 +42,3 @@ MSG				= $(TITLE) $(GPM_FNAME) $(RESET)$(PADDING)
 SUCCESS			= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
 SUCCESSB		= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
 # GPM? end make_ansi_color_variables
-
-#   ___ __   _____
-#  / (_) /  / _/ /_
-# / / / _ \/ _/ __/
-#/_/_/_.__/_/ \__/
-
-#   _____               _      __  ___
-#  / _/ /_    ___  ____(_)__  / /_/ _/
-# / _/ __/   / _ \/ __/ / _ \/ __/ _/
-#/_/ \__/___/ .__/_/ /_/_//_/\__/_/
-#      /___/_/
-
-#            __                  __     ___
-#  ___ ____ / /_   ___  _____ __/ /_   / (_)__  ___
-# / _ `/ -_) __/  / _ \/ -_) \ / __/  / / / _ \/ -_)
-# \_, /\__/\__/__/_//_/\__/_\_\\__/__/_/_/_//_/\__/
-#/___/       /___/               /___/
-
-#                  __
-#   ___  __ _____ / /     ____    _____ ____
-#  / _ \/ // (_-</ _ \   (_-< |/|/ / _ `/ _ \
-# / .__/\_,_/___/_//_/__/___/__,__/\_,_/ .__/
-#/_/                /___/             /_/

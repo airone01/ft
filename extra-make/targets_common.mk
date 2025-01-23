@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 17:49:06 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/23 12:39:22 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,10 @@
 # GPM? begin make_target_common
 all: .title $(NAME)
 
-$(DIR_OBJ)%.o: %.c Makefile
-	@$(MD) $(DIR_OBJ)
+$(OUT_DIR):
+	@$(MD) $(OUT_DIR)
+
+$(OUT_DIR)%.o: %.c Makefile $(OUT_DIR)
 	@$(ECHO) "$(MSG) ⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 

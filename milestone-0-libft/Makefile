@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 17:49:47 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/23 12:28:50 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ GPM_MSTONE	= 0
 GPM_NAME	= libft
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= libft.a
-DIR_OBJ 	= .obj/
+OUT_DIR 	= .out/
 
 # **************************************************************************** #
 #                                   COMMANDS                                   #
@@ -56,10 +56,10 @@ include $(realpath ../extra-make/sources.mk) # GPM!
 # **************************************************************************** #
 #                                   MAPPING                                    #
 # **************************************************************************** #
-OBJ			= $(_SRC_LIBFT:%=$(DIR_OBJ)%.o)
-DEP			= $(_SRC_LIBFT:%=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(_SRC_LIBFT_BONUS:%=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC_LIBFT:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_LIBFT:%=$(OUT_DIR)%.d)
+OBJ_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.o)
+DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #

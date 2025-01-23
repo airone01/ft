@@ -20,7 +20,7 @@ GPM_MSTONE	= 1
 GPM_NAME	= ft_printf
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= libftprintf.a
-DIR_OBJ 	= .obj/
+OUT_DIR 	= .out/
 
 # **************************************************************************** #
 #                                   COMMANDS                                   #
@@ -52,8 +52,8 @@ include $(realpath ../extra-make/sources.mk) # GPM!
 #                                   MAPPING                                    #
 # **************************************************************************** #
 
-OBJ			= $(_SRC_FT_PRINTF:%=$(DIR_OBJ)%.o)
-DEP			= $(_SRC_FT_PRINTF:%=$(DIR_OBJ)%.d)
+OBJ			= $(_SRC_FT_PRINTF:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_FT_PRINTF:%=$(OUT_DIR)%.d)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
