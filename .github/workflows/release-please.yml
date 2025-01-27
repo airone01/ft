@@ -14,12 +14,11 @@ jobs:
   release-please:
     runs-on: ubuntu-22.04
     steps:
-      - uses: googleapis/release-please-action@v16
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           command: manifest
           token: ${{secrets.GH_TOKEN}}
-          default-branch: main
 
       # Note: Here I stripped the npm publication logic from the original example
 
