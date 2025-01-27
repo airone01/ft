@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:23:23 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 12:21:26 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 15:19:31 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ $(LIBFT):
 	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) | $(LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(AR) $(NAME) $?
 	@$(ECHO) "$(SUCCESS)\n"
