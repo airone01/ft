@@ -1,6 +1,15 @@
 name: Make
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'milestone-*/**/*'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'milestone-*/**/*'
 
 jobs:
   build:

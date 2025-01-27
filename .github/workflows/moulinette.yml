@@ -3,11 +3,11 @@ name: Mini-moulinette
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main" ]
     paths:
       - 'pool-c-*/**/*'
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main" ]
     paths:
       - 'pool-c-*/**/*'
 
