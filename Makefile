@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 07:56:10 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 16:04:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 11:03:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,12 +84,12 @@ $(foreach job,$(JOBS),$(eval $(word 2,$(subst :, ,$(job))): milestone$(word 1,$(
 define make_milestone_target
 milestone$(word 1,$(subst :, ,$(1)))$(word 2,$(subst :, ,$(1))):
 	@$(ECHO) "$(MSG) 🏗️  Building $(word 2,$(subst :, ,$(1)))\n"
-	@$(CD) milestone-$(word 1,$(subst :, ,$(1)))-$(word 2,$(subst :, ,$(1))) && $(MAKE)
+	@$(MAKE) -C milestone-$(word 1,$(subst :, ,$(1)))-$(word 2,$(subst :, ,$(1)))
 endef
 define make_extra_target
 extra-$(1):
 	@$(ECHO) "$(MSG) 🏗️  Building $(1)\n"
-	@$(CD) $(1) && $(MAKE)
+	@$(MAKE) -C $(1)
 endef
 
 $(foreach job,$(JOBS),$(eval $(call make_milestone_target,$(job))))
