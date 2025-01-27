@@ -11,7 +11,7 @@
         nativeBuildInputs = [ pkgs.bashInteractive ];
         buildInputs = with pkgs; [
           # Node tools
-          nodejs_18
+          nodejs_22
           bun
           nodePackages.prisma
           openssl

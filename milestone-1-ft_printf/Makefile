@@ -62,14 +62,13 @@ DEP			= $(_SRC_FT_PRINTF:%=$(OUT_DIR)%.d)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-.title:
+title:
 	@$(ECHO) "$(MSG)   _____               _      __  ___\n"
 	@$(ECHO) "$(MSG)  / _/ /_    ___  ____(_)__  / /_/ _/\n"
 	@$(ECHO) "$(MSG) / _/ __/   / _ \/ __/ / _ \\/ __/ _/\n"
 	@$(ECHO) "$(MSG)/_/ \__/___/ .__/_/ /_/_//_/\\__/_/\n"
 	@$(ECHO) "$(MSG)      /___/_/\n"
 	@$(ECHO) "$(MSG) \n"
-	@touch .title
 
 include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
 # GPM: make_target_lib_libft

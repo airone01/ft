@@ -74,14 +74,13 @@ DEP_BONUS	= $(_SRC_GNL_BONUS:%=$(OUT_DIR)%.d)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-.title:
+title:
 	@$(ECHO) "$(MSG)             __\n"
 	@$(ECHO) "$(MSG)  ___ ____  / /\n"
 	@$(ECHO) "$(MSG) / _ \`/ _ \/ /\n"
 	@$(ECHO) "$(MSG) \_, /_//_/_/\n"
 	@$(ECHO) "$(MSG)/___/\n"
 	@$(ECHO) "$(MSG) \n"
-	@touch .title
 
 include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
 # GPM: make_target_lib_libft

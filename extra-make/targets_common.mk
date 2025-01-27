@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 15:14:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:41:32 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                                   TARGETS                                    #
 # **************************************************************************** #
 # GPM? begin make_target_common
-all: .title $(NAME)
+all: title $(NAME)
 
 $(OUT_DIR):
 	@$(MD) $(OUT_DIR)

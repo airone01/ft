@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:23:23 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 12:21:26 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:41:37 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@
 # GPM? begin make_target_lib_bonus
 $(NAME): $(OBJ)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
-	@$(AR) $(NAME) $?
+	@$(AR) $(NAME) $^
 	@$(ECHO) "$(SUCCESS)\n"
 
 .bonus: $(OBJ) $(OBJ_BONUS)
 	@$(ECHO) "$(MSG) 🏗️  Building bonuses of $(NAME)\n"
-	@$(AR) $(NAME) $?
+	@$(AR) $(NAME) $^
 	@touch .bonus
 	@$(ECHO) "$(SUCCESSB)\n"
 
@@ -33,5 +33,5 @@ clean:
 
 fclean: clean
 	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
-	@$(RM) $(NAME) .title
+	@$(RM) $(NAME)
 # GPM? end make_target_lib_bonus

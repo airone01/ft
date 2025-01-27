@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 16:08:55 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:47:01 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,9 @@ _SRC_LIBFT	=				\
 	ft_toupper				\
 	ft_substr
 # GPM? end make_src_libft
+_SRC_GNL_BONUS	=			\
+	get_next_line			\
+	get_next_line_utils
 # GPM? begin make_src_push_swap
 _SRC_PUSH_SWAP_COMMOM	=	\
 	args_legit				\
@@ -100,4 +103,5 @@ _SRC_FT_PRINTF		=		\
 # GPM? negin make_src_pipex
 _SRC_PIPEX	=				\
 	_main
+
 # GPM? end make_src_pipex

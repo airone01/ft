@@ -1,9 +1,3 @@
-# Build results
-target/
-node_modules/
-.next/
-.nuxt/
-
 # Lockfiles
 Cargo.lock
 package-lock.json
@@ -12,7 +6,6 @@ flake.lock
 # Other
 LICENSE
 
-# When fetching all the repo uncomment this
+# So as not to get all projects
 quack*
-extra-*
 pool-*

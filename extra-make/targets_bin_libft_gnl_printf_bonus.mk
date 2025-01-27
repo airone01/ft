@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:28:53 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 15:09:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:41:01 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ $(NAME): $(OBJ) $(LIBFT) $(GNL) $(PRINTF)
 
 clean:
 	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
-	@$(RM) -r $(OUT_DIR) .title
+	@$(RM) -r $(OUT_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(GNL_DIR) clean
 	@$(MAKE) -C $(PRINTF_DIR) clean
