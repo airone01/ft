@@ -1,0 +1,7 @@
+[workspace]
+members = ["extra-arthur", "extra-ps-visualizer-minecraft"]
+exclude = []
+resolver = "2"
+
+[workspace.package]
+edition = "2021"

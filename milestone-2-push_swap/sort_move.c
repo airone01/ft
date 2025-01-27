@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_move.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:47:32 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 14:43:26 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:13:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	rrr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
 	{
 		(*cost_a)++;
 		(*cost_b)++;
-		rrr(stack_a, stack_b);
+		rrr(stack_a, stack_b, 1);
 	}
 }
 
@@ -52,7 +52,7 @@ static void	rr_both(t_stack **stack_a, t_stack **stack_b, ssize_t *cost_a,
 	{
 		(*cost_a)--;
 		(*cost_b)--;
-		rr(stack_a, stack_b);
+		rr(stack_a, stack_b, 1);
 	}
 }
 
@@ -68,12 +68,12 @@ static void	ra_both(t_stack **stack_a, ssize_t *cost)
 	{
 		if (*cost > 0)
 		{
-			ra(stack_a);
+			ra(stack_a, 1);
 			(*cost)--;
 		}
 		else if (*cost < 0)
 		{
-			rra(stack_a);
+			rra(stack_a, 1);
 			(*cost)++;
 		}
 	}
@@ -91,12 +91,12 @@ static void	rb_both(t_stack **stack_b, ssize_t *cost)
 	{
 		if (*cost > 0)
 		{
-			rb(stack_b);
+			rb(stack_b, 1);
 			(*cost)--;
 		}
 		else if (*cost < 0)
 		{
-			rrb(stack_b);
+			rrb(stack_b, 1);
 			(*cost)++;
 		}
 	}
@@ -122,5 +122,5 @@ void	move(t_stack **stack_a, t_stack **stack_b, ssize_t cost_a,
 		rr_both(stack_a, stack_b, &cost_a, &cost_b);
 	ra_both(stack_a, &cost_a);
 	rb_both(stack_b, &cost_b);
-	pa(stack_a, stack_b);
+	pa(stack_a, stack_b, 1);
 }

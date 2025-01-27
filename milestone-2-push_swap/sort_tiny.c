@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_tiny.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:01:23 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/13 17:31:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:15:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	sort_tiny(t_stack **stack)
 		return ;
 	high = stack_maxn(*stack)->idx;
 	if ((*stack)->idx == high)
-		ra(stack);
+		ra(stack, 1);
 	else if ((*stack)->next->idx == high)
-		rra(stack);
+		rra(stack, 1);
 	if ((*stack)->idx > (*stack)->next->idx)
-		sa(*stack);
+		sa(*stack, 1);
 }

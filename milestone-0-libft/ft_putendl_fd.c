@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:45:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:22:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_putendl_fd
 /**
  * Outputs the string ’s’ to the given file descriptor followed by a newline.
  * @param	s	The string to output
@@ -22,3 +23,4 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, s, ft_strlen(s) * sizeof(char));
 	write(fd, "\n", sizeof(char));
 }
+// GPM? end ft_putendl_fd

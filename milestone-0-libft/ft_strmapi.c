@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:41 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:51:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:25:24 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strmapi
 /**
  * Applies the function f to each character of the string s, passing its index
  * as the first argument and the character itself as the second. A new string
@@ -40,3 +41,4 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	}
 	return (dst);
 }
+// GPM? end ft_strmapi

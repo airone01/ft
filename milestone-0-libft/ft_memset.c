@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:45:11 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:22:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_memset
 /**
  * The  memset() function fills the first n bytes of the memory area pointed to
  * by s with the constant byte c.
@@ -35,3 +36,4 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	return (s);
 }
+// GPM? end ft_memset

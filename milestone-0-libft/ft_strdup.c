@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:47:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/05 01:31:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strdup
 /**
  * Duplicates a string.
  * @param	s	String to duplicate
@@ -34,3 +35,4 @@ char	*ft_strdup(const char *s)
 	}
 	return ((char *)dst);
 }
+// GPM? end ft_strdup

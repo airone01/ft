@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_shift_back.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:35:10 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 15:31:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:13:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	stack_shift(t_stack **stack)
 	{
 		while (low_pos < len)
 		{
-			rra(stack);
+			rra(stack, 1);
 			low_pos++;
 		}
 	}
@@ -39,7 +39,7 @@ void	stack_shift(t_stack **stack)
 	{
 		while (low_pos > 0)
 		{
-			ra(stack);
+			ra(stack, 1);
 			low_pos--;
 		}
 	}

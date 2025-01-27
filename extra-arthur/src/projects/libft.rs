@@ -1,8 +1,9 @@
+use async_trait::async_trait;
 use std::path::PathBuf;
 
 use log::debug;
 
-use crate::runner::{cat_e::CatE, TestCase};
+use crate::runner::{cat_e::CatE, TestCase, TestLoader};
 
 pub struct LibftTest {
     test_files: Vec<TestFile>,
@@ -17,6 +18,19 @@ struct TestFile {
 struct TestInput {
     input: String,
     expected: String,
+}
+
+#[async_trait]
+impl TestLoader for LibftTest {
+    async fn load_tests(&mut self) -> std::io::Result<()> {
+        // Existing load_tests implementation
+        self.load_tests().await
+    }
+
+    fn get_test_cases(&self) -> Vec<TestCase> {
+        // Existing get_test_cases implementation
+        self.get_test_cases()
+    }
 }
 
 impl LibftTest {

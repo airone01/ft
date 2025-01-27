@@ -8,7 +8,7 @@ use crate::runner::cat_e::CatE;
 use super::{IndividualResult, TestError, TestResult, TestStatus};
 
 #[derive(Default)]
-pub(crate) struct TestResults {
+pub struct TestResults {
     total_tests: usize,
     passed_tests: usize,
     compilation_errors: usize,
@@ -37,7 +37,7 @@ impl TestError {
 }
 
 impl TestResults {
-    pub(crate) fn add_function_result(&mut self, name: String, result: TestResult) {
+    pub fn add_function_result(&mut self, name: String, result: TestResult) {
         match &result.status {
             TestStatus::Failed(TestError::Compilation(_)) => {
                 self.compilation_errors += 1;

@@ -4,12 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main", "dev" ]
+    paths:
+      - 'milestone-*/**/*'
   pull_request:
     branches: [ "main", "dev" ]
+    paths:
+      - 'milestone-*/**/*'
 
 jobs:
   norminette:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
 
@@ -24,4 +28,4 @@ jobs:
         python3 -m pip install norminette
 
     - name: Run norminette
-      run: norminette milestone-{0-libft,1-get_next_line,1-printf,2-push_swap}
+      run: norminette milestone-{0-libft,1-get_next_line,1-ft_printf,2-push_swap}

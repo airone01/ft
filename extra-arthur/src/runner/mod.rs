@@ -5,10 +5,12 @@
 //! - TestRunner: Trait for implementing test execution
 //! - TestResult/TestStatus: Test execution outcomes
 //!
-use std::fmt;
-use std::time::Duration;
+use std::{fmt, process, time::Duration};
 
 use async_trait::async_trait;
+use log::error;
+
+use crate::runner::{c::CTestRunner, results::TestResults};
 
 pub mod c;
 pub mod cat_e;
@@ -26,6 +28,46 @@ pub struct TestInput {
     pub input: String,
     pub expected: String,
     pub index: usize,
+}
+
+#[async_trait]
+pub trait TestLoader {
+    async fn load_tests(&mut self) -> std::io::Result<()>;
+    fn get_test_cases(&self) -> Vec<TestCase>;
+}
+
+pub async fn run_project_tests<T: TestLoader>(
+    mut test_loader: T,
+    runner: CTestRunner,
+) -> TestResults {
+    // Load tests
+    if let Err(e) = test_loader.load_tests().await {
+        error!("Error loading tests: {}", e);
+        process::exit(1);
+    }
+
+    let test_cases = test_loader.get_test_cases();
+    let mut test_results = TestResults::default();
+    let mut handles = vec![];
+
+    // Spawn test tasks
+    for test in test_cases {
+        let runner_clone = runner.clone();
+        let handle = tokio::spawn(async move {
+            let result = runner_clone.run(&test).await;
+            (test.name.clone(), result)
+        });
+        handles.push(handle);
+    }
+
+    // Wait for all tests to complete
+    for handle in handles {
+        if let Ok((name, result)) = handle.await {
+            test_results.add_function_result(name, result);
+        }
+    }
+
+    test_results
 }
 
 impl TestCase {

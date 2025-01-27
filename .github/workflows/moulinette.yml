@@ -3,13 +3,17 @@ name: Mini-moulinette
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ "main", "dev" ]
+    paths:
+      - 'pool-c-*/**/*'
   pull_request:
-    branches: [ main ]
+    branches: [ "main", "dev" ]
+    paths:
+      - 'pool-c-*/**/*'
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         c_project: [ '00', '01', '03', '04', '06', '07', '08' ]

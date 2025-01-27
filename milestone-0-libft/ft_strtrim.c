@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:56 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:55:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:26:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strtrim
 /**
  * Allocates (with malloc(3)) and returns a copy of ’s1’ with the characters
  * specified in ’set’ removed from the beginning and the end of the string.
@@ -39,3 +40,4 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(s, &s1[start], end - start + 1);
 	return (s);
 }
+// GPM? end ft_strtrim

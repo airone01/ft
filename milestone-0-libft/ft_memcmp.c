@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:43:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:21:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_memcmp
 /**
  * The  memcmp()  function  compares the first n bytes (each interpreted as un‐
  * signed char) of the memory areas s1 and s2.
@@ -46,3 +47,4 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
+// GPM? end ft_memcmp

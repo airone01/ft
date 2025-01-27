@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mani_rotate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:58:08 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 18:21:49 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:12:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ static void	rotate(t_stack **stack)
  * The first element becomes the last one.
  * @param   stack_a Stack A
  */
-void	ra(t_stack **stack_a)
+void	ra(t_stack **stack_a, size_t display)
 {
 	rotate(stack_a);
-	(void)!write(1, "ra\n", 3);
+	if (display)
+		(void)!write(1, "ra\n", 3);
 }
 
 /**
@@ -42,10 +43,11 @@ void	ra(t_stack **stack_a)
  * The first element becomes the last one.
  * @param   stack_b Stack B
  */
-void	rb(t_stack **stack_b)
+void	rb(t_stack **stack_b, size_t display)
 {
 	rotate(stack_b);
-	(void)!write(1, "rb\n", 3);
+	if (display)
+		(void)!write(1, "rb\n", 3);
 }
 
 /**
@@ -53,9 +55,10 @@ void	rb(t_stack **stack_b)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void	rr(t_stack **stack_a, t_stack **stack_b)
+void	rr(t_stack **stack_a, t_stack **stack_b, size_t display)
 {
 	rotate(stack_a);
 	rotate(stack_b);
-	(void)!write(1, "rr\n", 3);
+	if (display)
+		(void)!write(1, "rr\n", 3);
 }

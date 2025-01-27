@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:53:30 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:25:49 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_strnstr
 /**
  * The strnstr() function locates the first occurrence of the null-terminated
  * string little in the string big, where not more than len characters are
@@ -49,3 +50,4 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
+// GPM? end ft_strnstr

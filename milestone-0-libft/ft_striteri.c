@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:47:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:24:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// GPM? begin ft_striteri
 /**
  * Applies the function ’f’ on each character of the string passed as argument,
  * passing its index as first argument. Each character is passed by address to
@@ -27,3 +28,4 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 	while (*s)
 		f(i++, s++);
 }
+// GPM? end ft_striteri

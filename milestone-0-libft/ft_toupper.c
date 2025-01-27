@@ -6,10 +6,11 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:56:38 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:26:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// GPM? begin ft_toupper
 /**
  * If  c  is a lowercase letter, toupper() returns its uppercase equivalent, if
  * an uppercase representation exists in the current locale.  Otherwise, it re‐
@@ -24,3 +25,4 @@ int	ft_toupper(int c)
 		return (c - 32);
 	return (c);
 }
+// GPM? end ft_toupper

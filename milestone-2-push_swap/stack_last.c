@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_last.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:02:28 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 19:02:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:16:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_stack	*stack_last(t_stack *stack)
 {
 	if (!stack)
 		return (NULL);
-	if (stack->next)
-		return (stack_last(stack->next));
+	while (stack->next)
+		stack = stack->next;
 	return (stack);
 }
 

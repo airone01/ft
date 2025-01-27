@@ -13,7 +13,7 @@
 int	count_words(char *str)
 {
 	int	sum;
-	int	i;	
+	int	i;
 
 	sum = 0;
 	i = 0;

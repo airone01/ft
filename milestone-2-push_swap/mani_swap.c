@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mani_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:52:50 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 18:21:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:12:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ static void	swap(t_stack *stack)
  * Do nothing if there is only one or no elements.
  * @param   stack_a Stack A
  */
-void	sa(t_stack *stack_a)
+void	sa(t_stack *stack_a, size_t display)
 {
 	swap(stack_a);
-	(void)!write(1, "sa\n", 3);
+	if (display)
+		(void)!write(1, "sa\n", 3);
 }
 
 /**
@@ -42,10 +43,11 @@ void	sa(t_stack *stack_a)
  * Do nothing if there is only one or no elements.
  * @param   stack_b Stack B
  */
-void	sb(t_stack *stack_b)
+void	sb(t_stack *stack_b, size_t display)
 {
 	swap(stack_b);
-	(void)!write(1, "sb\n", 3);
+	if (display)
+		(void)!write(1, "sb\n", 3);
 }
 
 /**
@@ -53,9 +55,10 @@ void	sb(t_stack *stack_b)
  * @param   stack_a Stack A
  * @param   stack_b Stack B
  */
-void	ss(t_stack *stack_a, t_stack *stack_b)
+void	ss(t_stack *stack_a, t_stack *stack_b, size_t display)
 {
 	swap(stack_a);
 	swap(stack_b);
-	(void)!write(1, "ss\n", 3);
+	if (display)
+		(void)!write(1, "ss\n", 3);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_pos.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:55:15 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 16:50:52 by codespace        ###   ########.fr       */
+/*   Updated: 2025/01/16 16:21:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @example With values 3 0 9 1 and indexes 3 1 4 2 and pos 0 1 2 3
  * @param   stack   Stack
  */
-static void	stack_pos(t_stack **stack)
+void	stack_pos(t_stack **stack)
 {
 	t_stack	*tmp;
 	ssize_t	i;

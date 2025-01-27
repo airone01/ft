@@ -1,121 +1,85 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                       _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  #
-#    Makefile                                       _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  #
-#                                                  | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  #
-#    By: elagouch <elagouch@student.42.fr>         |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  #
-#                                                  | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  #
-#    Created: 2024/11/05 15:39:47 by elagouch      |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  #
-#    Updated: 2024/11/18 11:13:41 by elagouch        |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
+#    Updated: 2025/01/23 12:28:50 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# ------------- ANSI -------------
-TITLE_SEC	= \033[48;5;78;30;1m
-RESET		= \033[0m
+# **************************************************************************** #
+#                               ANSI COLOR CODES                               #
+# **************************************************************************** #
 
-# ------------- Meta -------------
+include $(realpath ../extra-make/art.mk) # GPM!
+# GPM: make_ansi_color_codes
+COLOR			= $(COLOR_LIBFT)
+
+# **************************************************************************** #
+#                            COMMON ANSI VARIABLES                             #
+# **************************************************************************** #
+
+# GPM: make_ansi_color_variables
+
+# **************************************************************************** #
+#                                   METADATA                                   #
+# **************************************************************************** #
 GPM_MSTONE	= 0
 GPM_NAME	= libft
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= libft.a
-DIR_OBJ 	= .obj/
+OUT_DIR 	= .out/
 
-# ----------- Commands -----------
-ECHO		= echo
-CC			= cc
-AR			= ar
-RM      	= rm -f
-MD			= mkdir -p
+# **************************************************************************** #
+#                                   COMMANDS                                   #
+# **************************************************************************** #
 
-# ------------- Flags ------------
-CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MMD -MP
-ARFLAGS		= rcs
+include $(realpath ../extra-make/commands.mk) # GPM!
+# GPM: make_commands
 
-# ------------ Sources -----------
-SRC			=		\
-	ft_atoi.c		\
-	ft_bzero.c		\
-	ft_calloc.c		\
-	ft_isalnum.c	\
-	ft_isalpha.c	\
-	ft_isascii.c	\
-	ft_isdigit.c	\
-	ft_isprint.c	\
-	ft_itoa.c		\
-	ft_memchr.c		\
-	ft_memcmp.c		\
-	ft_memcpy.c		\
-	ft_memmove.c	\
-	ft_memset.c		\
-	ft_putchar_fd.c	\
-	ft_putendl_fd.c	\
-	ft_putnbr_fd.c	\
-	ft_putstr_fd.c	\
-	ft_split.c		\
-	ft_strdup.c		\
-	ft_strrchr.c	\
-	ft_strchr.c		\
-	ft_striteri.c	\
-	ft_strjoin.c	\
-	ft_strlcat.c	\
-	ft_strlcpy.c	\
-	ft_strlen.c		\
-	ft_strmapi.c	\
-	ft_strnstr.c	\
-	ft_strncmp.c	\
-	ft_strtrim.c	\
-	ft_tolower.c	\
-	ft_toupper.c	\
-	ft_substr.c
-SRC_BONUS	=				\
-	ft_lstadd_back_bonus.c	\
-	ft_lstadd_front_bonus.c	\
-	ft_lstclear_bonus.c		\
-	ft_lstdelone_bonus.c	\
-	ft_lstiter_bonus.c		\
-	ft_lstlast_bonus.c		\
-	ft_lstmap_bonus.c		\
-	ft_lstnew_bonus.c		\
-	ft_lstsize_bonus.c
+# **************************************************************************** #
+#                                    FLAGS                                     #
+# **************************************************************************** #
 
-# ------------ Mapping -----------
-OBJ			= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP			= $(SRC:%.c=$(DIR_OBJ)%.d)
-OBJ_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.o)
-DEP_BONUS	= $(SRC_BONUS:%.c=$(DIR_OBJ)%.d)
+CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MD -MP
 
-# ------------ Targets -----------
-all: $(NAME)
+# **************************************************************************** #
+#                                   SOURCES                                    #
+# **************************************************************************** #
 
-$(NAME): $(OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(AR) $(ARFLAGS) $(NAME) $?
+# GPM: make_src
+include $(realpath ../extra-make/sources.mk) # GPM!
 
-.bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building bonuses lib"
-	$(AR) $(ARFLAGS) $(NAME) $?
-	@touch .bonus
+# **************************************************************************** #
+#                                   MAPPING                                    #
+# **************************************************************************** #
+OBJ			= $(_SRC_LIBFT:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_LIBFT:%=$(OUT_DIR)%.d)
+OBJ_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.o)
+DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
 
-bonus: .bonus # Temp file to avoid unnecessary rebuilds
+# **************************************************************************** #
+#                                   TARGETS                                    #
+# **************************************************************************** #
 
-$(DIR_OBJ)%.o: %.c Makefile
-	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
-	@$(CC) $(CFLAGS) -c $< -o $@
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
-clean:
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
-	@$(RM) -r $(DIR_OBJ)
+.title:
+	@$(ECHO) "$(MSG)   ___ __   _____\n"
+	@$(ECHO) "$(MSG)  / (_) /  / _/ /_\n"
+	@$(ECHO) "$(MSG) / / / _ \\/ _/ __/\n"
+	@$(ECHO) "$(MSG)/_/_/_.__/_/ \\__/\n"
+	@$(ECHO) "$(MSG) \n"
+	@touch .title
 
-fclean: clean
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
-	@$(RM) $(NAME)
-
-re: fclean all
+include $(realpath ../extra-make/targets_lib_bonus.mk) # GPM!
+# GPM: make_target_lib_bonus
 
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory
 -include $(DEP) $(DEP_BONUS)
-.PHONY: all bonus clean fclean re
-.SILENT: clean fclean
+.PHONY: all bonus clean fclean re title

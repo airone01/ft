@@ -3,13 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/11 18:47:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:29:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+// GPM? begin ft_strchr
 /**
  * The strchr() function returns a pointer to the first occurrence of the char‐
  * acter c in the string s.
@@ -20,6 +23,8 @@
  */
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)
@@ -28,5 +33,6 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if (*s == (char)c)
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }
+// GPM? end ft_strchr

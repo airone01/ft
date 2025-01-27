@@ -55,6 +55,7 @@ dkms.conf
 
 # ft
 *.bonus
+*.title
 
 # LLMs
 repomix-output.txt
@@ -66,7 +67,7 @@ repomix-output.txt
 compile_commands.json
 
 # Jetbrains
-**/.idea/
+.idea/
 
 # Rust
-target/
+target

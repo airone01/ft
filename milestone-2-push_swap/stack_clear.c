@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:17:48 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 18:36:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:15:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	stack_clear(t_stack *stack)
 	t_stack	*current;
 	t_stack	*next;
 
+	if (!stack)
+		return ;
 	current = stack;
 	while (current)
 	{
 		next = current->next;
-		stack_del_one(current);
+		free(current);
 		current = next;
 	}
 }

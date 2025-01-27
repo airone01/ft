@@ -1,0 +1,16 @@
+[project]
+name = "get_next_line"
+version = "1.0.0"
+
+[submit]
+files = ["get_next_line.h", "get_next_line.c", "get_next_line_utils.c"]
+
+[submit.preprocessor]
+enable_gpm = true
+function_paths = [".", ".."]
+
+[submit.hooks]
+pre_submit = "make fclean"
+
+[submit.validation]
+norminette = true

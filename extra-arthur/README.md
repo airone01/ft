@@ -1,3 +1,5 @@
+<img src="https://skillicons.dev/icons?i=rust" align="right" />
+
 # Arthur - 42 Project Tester
 
 A test runner for 42 school projects. Currently supports:

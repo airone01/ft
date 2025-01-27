@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   stack_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:04:50 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 18:51:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:16:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
 
 /**

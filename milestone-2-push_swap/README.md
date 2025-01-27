@@ -1,7 +1,5 @@
 <div align="center">
-  <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swapm.png" />
-  <br />
-  <code>push_swap</code>
+	<img src="https://github.com/ayogun/42-project-badges/raw/main/covers/cover-push_swap-bonus.png" />
 </div>
 
 ## Build

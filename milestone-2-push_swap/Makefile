@@ -1,115 +1,115 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                       _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  #
-#    Makefile                                       _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  #
-#                                                  | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  #
-#    By: elagouch <elagouch@student.42.fr>         |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  #
-#                                                  | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  #
-#    Created: 2024/11/05 15:39:47 by elagouch      |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  #
-#    Updated: 2024/11/18 11:13:41 by elagouch        |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
+#    Updated: 2025/01/23 13:30:24 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# ------------- ANSI -------------
-TITLE_SEC	= \033[48;5;78;30;1m
-RESET		= \033[0m
+# **************************************************************************** #
+#                               ANSI COLOR CODES                               #
+# **************************************************************************** #
 
-# ------------- Meta -------------
+include $(realpath ../extra-make/art.mk) # GPM!
+# GPM: make_ansi_color_codes
+COLOR			= $(COLOR_PUSH_SWAP)
+
+# **************************************************************************** #
+#                            COMMON ANSI VARIABLES                             #
+# **************************************************************************** #
+
+# GPM: make_ansi_color_variables
+
+# **************************************************************************** #
+#                                   METADATA                                   #
+# **************************************************************************** #
+
 GPM_MSTONE	= 2
 GPM_NAME	= push_swap
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 NAME		= push_swap
-DIR_OBJ 	= .obj/
+BNAME		= checker
+OUT_DIR 	= .out/
 
-# ----------- Commands -----------
-ECHO	= echo
-MAKE	= make
-CC		= cc
-AR		= ar
-RM     	= rm -f
-MD		= mkdir -p
+# **************************************************************************** #
+#                                   COMMANDS                                   #
+# **************************************************************************** #
 
-# ------------ Libft ------------
-LIBFT_DIR	= ./libft
+include $(realpath ../extra-make/commands.mk)
+# GPM: make_commands
+
+# **************************************************************************** #
+#                                    LIBFT                                     #
+# **************************************************************************** #
+
+LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
+# GPM@ .LIBFT_DIR	= $(realpath ./libft)
+GNL_DIR		= $(realpath ../milestone-1-get_next_line)# GPM!
 LIBFT		= $(LIBFT_DIR)/libft.a
+GNL			= $(GNL_DIR)/get_next_line.a # GPM!
 
-# ------------- Flags ------------
-CFLAGS			= -Wall -Werror -Wextra -Wpedantic -MMD -MP -g3
-CFLAGS			+= -I$(LIBFT_DIR)
-ARFLAGS			= rcs
-LIBFT_FLAGS		= -L$(LIBFT_DIR) -lft
+# **************************************************************************** #
+#                                    FLAGS                                     #
+# **************************************************************************** #
 
-# ------------ Sources -----------
-SRC	=						\
-	ft_abs.c				\
-	mani_swap.c				\
-	mani_push.c				\
-	mani_rotate.c			\
-	mani_rrotate.c			\
-	parse_stdin.c			\
-	push_swap.c				\
-	sort_cheapest.c			\
-	sort_cost.c				\
-	sort_large.c			\
-	sort_move.c				\
-	sort_push_save_three.c	\
-	sort_shift_back.c		\
-	sort_tiny.c				\
-	stack_add_back.c		\
-	stack_clear.c			\
-	stack_del_one.c			\
-	stack_indexes.c			\
-	stack_iter.c			\
-	stack_last.c			\
-	stack_lowest_pos.c		\
-	stack_max.c				\
-	stack_new.c				\
-	stack_pos.c				\
-	stack_size.c			\
-	stack_sorted.c			\
-	std_error.c
+include $(realpath ../extra-make/flags.mk) # GPM!
+# GPM: make_flags
+CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
+# GPM@ .CFLAGS			+= -I$(LIBFT_DIR)
 
-# ------------ Mapping -----------
-OBJ	= $(SRC:%.c=$(DIR_OBJ)%.o)
-DEP	= $(SRC:%.c=$(DIR_OBJ)%.d)
+# **************************************************************************** #
+#                                   SOURCES                                    #
+# **************************************************************************** #
 
-# ------------ Targets -----------
-all: $(NAME)
+# GPM: make_src
+include $(realpath ../extra-make/sources.mk) # GPM!
 
-$(LIBFT):
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building libft"
-	@$(MAKE) -C $(LIBFT_DIR)
+# **************************************************************************** #
+#                                   MAPPING                                    #
+# **************************************************************************** #
 
-$(NAME): $(LIBFT) $(OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Building $(NAME)"
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT_FLAGS)
+SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
+SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c) # GPM!
+SRC			= $(_SRC_PUSH_SWAP:%=%.c)
+SRC_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=%.c)
+OBJ			= $(_SRC_PUSH_SWAP:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_PUSH_SWAP:%=$(OUT_DIR)%.d)
+OBJ_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.o)
+DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.d)
 
-$(DIR_OBJ)%.o: %.c Makefile
-	@$(MD) $(DIR_OBJ)
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)... $@"
-	@$(CC) $(CFLAGS) -c $< -o $@
+# **************************************************************************** #
+#                                   TARGETS                                    #
+# **************************************************************************** #
 
-visualizer:
-	cmake -B ./push_swap_visualizer/build/ ./push_swap_visualizer/
-	make -C ./push_swap_visualizer/build/
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
-visualize: visualizer $(NAME)
-	./push_swap_visualizer/build/bin/visualizer $(NAME)
+.title:
+	@$(ECHO) "$(MSG)                  __\n"
+	@$(ECHO) "$(MSG)   ___  __ _____ / /     ____    _____ ____\n"
+	@$(ECHO) "$(MSG)  / _ \\/ // (_-</ _ \\   (_-< |/|/ / _ \`/ _ \\ \n"
+	@$(ECHO) "$(MSG) / .__/\_,_/___/_//_/__/___/__,__/\\_,_/ .__/\n"
+	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
+	@$(ECHO) "$(MSG) \n"
+	@touch .title
 
-clean:
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Cleaning the project"
-	@$(RM) -r $(DIR_OBJ)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+include $(realpath ../extra-make/targets_bin_libft_gnl_bonus.mk) # GPM!
+# GPM: make_target_bin_libft_bonus
+# GPM!
+visualizer: # GPM!
+	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/ # GPM!
+	make -C ../extra-ps-visualizer/build/ # GPM!
+# GPM!
+visualize: visualizer $(NAME) # GPM!
+	../extra-ps-visualizer/build/bin/visualizer $(NAME) # GPM!
 
-fclean: clean
-	@$(ECHO) "$(TITLE_SEC) $(GPM_FNAME) \t$(RESET)Fcleaning the project"
-	@$(RM) $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+# **************************************************************************** #
+#                                MAKE METADATA                                 #
+# **************************************************************************** #
 
-re: fclean all
-
-# ----------- Make meta ----------
-MAKEFLAGS	+= --no-print-directory
--include $(DEP)
-.PHONY: all clean fclean re
-.SILENT: clean fclean
+include $(realpath ../extra-make/make_meta.mk) # GPM!
+# GPM: make_make_meta

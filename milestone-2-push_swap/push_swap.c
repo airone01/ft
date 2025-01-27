@@ -3,65 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 15:25:47 by elagouch          #+#    #+#             */
-/*   Updated: 2024/12/20 19:48:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:20:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "push_swap.h"
+#include <errno.h>
 
 /**
- * Checks if the args passed to the app are correct
- * @param   argc    Arguments count
- * @param   argv    Arguments
- * @return          Boolean result
+ * Finds the element of a stack with the lowest index.
+ * This element will be the head at the end since we sort the stack.
+ * Then it will be used for clearing the whole stack.
+ * @param	stack	Stack to search
+ * @return			Head of the stack
  */
-size_t	args_legit(int argc, char **argv)
+t_stack	*stack_lowest(t_stack *stack)
 {
-	char	*str;
+	t_stack	*found;
 
-	while (argc--)
+	if (!stack)
+		return (NULL);
+	found = stack;
+	while (stack->next)
 	{
-		str = *argv;
-		while (*str == ' ' || (*str >= 7 && *str <= 15))
-			str++;
-		if (*str == '+' || *str == '-')
-			str++;
-		if (!*str || !ft_isdigit(*str))
-			return (0);
-		while (*str)
-		{
-			if (!ft_isdigit(*str) && !(*str == ' ' || (*str >= 7 && *str <= 15))
-				&& !(*str == '+' || *str == '-'))
-				return (0);
-			str++;
-		}
-		argv++;
+		if (found && stack->idx < found->idx)
+			found = stack;
+		stack = stack->next;
 	}
-	return (1);
+	return (found);
 }
 
 /**
- * Chooses a sorting method depending on stack to be sorted
+ * Chooses a sorting method depending on stack to be sorted.
  * @param   stack_a Stack A
+ * @returns			The lowest (and first) element of the
+ * 					stack to easily free the stack
  */
-void	push_swap(t_stack *stack_a)
+t_stack	*push_swap(t_stack *stack_a)
 {
 	t_stack	*stack_b;
+	t_stack	*stack_a_start;
 	size_t	len;
 
 	stack_b = NULL;
 	len = stack_size(stack_a);
 	stack_indexes(stack_a, len);
+	stack_a_start = stack_lowest(stack_a);
 	if (len == 2 && !stack_sorted(stack_a))
-		sa(stack_a);
+		sa(stack_a, 1);
 	else if (len == 3)
 		sort_tiny(&stack_a);
 	else if (len > 3 && !stack_sorted(stack_a))
 		sort_large(&stack_a, &stack_b);
+	return (stack_a_start);
 }
 
 /**
@@ -81,9 +78,9 @@ int	main(int argc, char **argv)
 	if (!args_legit(argc, argv))
 		return (std_error(), 1);
 	stack_a = parse_stdin(argc, argv);
-	if (!stack_a)
-		return (std_error(), 1);
-	push_swap(stack_a);
+	if (stack_legit(stack_a))
+		return (EINVAL);
+	stack_a = push_swap(stack_a);
 	stack_clear(stack_a);
 	return (0);
 }

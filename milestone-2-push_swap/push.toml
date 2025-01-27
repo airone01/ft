@@ -1,0 +1,164 @@
+[project]
+name = "push_swap"
+version = "1.0.0"
+
+[submit]
+files = [
+	# C sources
+	"args_legit.c",
+	"checker.c",
+	"checker_utils.c",
+	"get_next_line.c",
+	"mani_*.c",
+	"parse_stdin.c",
+	"push_swap.c",
+	"sort_*.c",
+	"stack_*.c",
+	"std_error.c",
+	# C headers
+	"push_swap.h",
+	# Other
+	"Makefile"
+]
+
+[submit.preprocessor]
+enable_gpm = true
+function_paths = ["."]
+
+[submit.hooks]
+pre_submit = "make fclean"
+
+[submit.validation]
+norminette = true
+
+########### Lift ###########
+[[submit.copy]]
+source = "../milestone-0-libft/Makefile"
+destination = "libft"
+
+[[submit.copy]]
+source = "../milestone-0-libft/libft.h"
+destination = "libft"
+
+[[submit.copy]]
+source = "../milestone-0-libft/ft_abs.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_atoi.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_bzero.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_calloc.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isalnum.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isalpha.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isascii.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isdigit.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_isprint.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_itoa.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_memchr.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_memcmp.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_memcpy.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_memmove.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_memset.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_putchar_fd.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_putendl_fd.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_putnbr_fd.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_putstr_fd.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_split.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strchr.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strcmp.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strdup.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_striteri.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strjoin.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strlcat.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strlcpy.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strlen.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strmapi.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strncmp.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strnstr.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strrchr.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_strtrim.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_substr.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_tolower.c"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/ft_toupper.c"
+destination = "libft"
+
+########### GNL ###########
+[[submit.copy]]
+source = "../milestone-1-get_next_line/get_next_line.c"
+destination = ""
+replace = [
+    { find = "get_next_line.h", replace_with = "push_swap.h" }
+]
+[[submit.copy]]
+source = "../milestone-1-get_next_line/get_next_line_utils.c"
+destination = ""
+replace = [
+    { find = "get_next_line.h", replace_with = "push_swap.h" }
+]
