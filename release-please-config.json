@@ -1,25 +1,24 @@
 {
-	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
-	"release-type": "simple",
-	"tag-separator": "@",
-	"include-component-in-tag": true,
-	"separate-pull-requests": true,
-	"group-pull-request-title-pattern": "chore: release ${branch}",
-	"release-search-depth": 400,
-	"commit-search-depth": 500,
-	"packages": {
-		".": {},
-		"extra-arthur": {
-			"release-type": "rust"
-		},
-		"extra-ps-visualizer-minecraft": {
-			"release-type": "rust"
-		},
-		"milestone-0-libft": {},
-		"milestone-1-ft_printf": {},
-		"milestone-1-get_next_line": {},
-		"milestone-2-pipex": {},
-		"milestone-2-push_swap": {},
-		"milestone-2-so_long": {}
-	}
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "tag-separator": "@",
+  "include-component-in-tag": true,
+  "separate-pull-requests": true,
+  "group-pull-request-title-pattern": "chore: release ${branch}",
+  "release-search-depth": 400,
+  "commit-search-depth": 500,
+  "packages": {
+    "extra-arthur": {
+      "release-type": "rust"
+    },
+    "extra-ps-visualizer-minecraft": {
+      "release-type": "rust"
+    },
+    "milestone-0-libft": {},
+    "milestone-1-ft_printf": {},
+    "milestone-1-get_next_line": {},
+    "milestone-2-pipex": {},
+    "milestone-2-push_swap": {},
+    "milestone-2-so_long": {}
+  }
 }

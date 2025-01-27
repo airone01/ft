@@ -1,6 +1,9 @@
 {
-	".": "0.0.0",
-	"extra-arthur": "1.0.0",
-	"extra-ps-visualizer-minecraft": "0.1.0",
-	"milestone-1-get_next_line": "1.0.0"
+  "extra-arthur": "1.0.0",
+  "extra-ps-visualizer-minecraft": "0.1.0",
+  "milestone-0-libft": "0.1.0",
+  "milestone-1-ft_printf": "0.1.0",
+  "milestone-1-get_next_line": "1.0.0",
+  "milestone-2-pipex": "0.1.0",
+  "milestone-2-push_swap": "0.1.0"
 }
