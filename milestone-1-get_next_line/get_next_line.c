@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 18:07:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:12:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,14 @@ size_t	is_line(const char *str)
 	return (0);
 }
 
-void	clear_static(char *buffer)
-{
-	size_t	i;
-
-	i = 0;
-	while (buffer[i])
-	{
-		buffer[i] = '\0';
-		i++;
-	}
-}
-
-char	*ft_strjoin_free(char *left, char buffer[FD_SIZE], char *line,
+char	*ft_strjoin_free(char *left, char buffer[BUFFER_SIZE + 1], char *line,
 		ssize_t bytes_read)
 {
 	char	*new;
-	size_t	i;
 
 	if (bytes_read == -1)
 	{
-		i = 0;
-		while (buffer[i++])
-			buffer[i - 1] = '\0';
-		clear_static(buffer);
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		return (free(line), NULL);
 	}
 	buffer[bytes_read] = '\0';
@@ -96,7 +80,7 @@ char	*get_next_line(int fd)
 	ssize_t		bytes_read;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 0 || FD_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || FD_SIZE <= 0 || fd >= FD_SIZE)
 		return (NULL);
 	bytes_read = 1;
 	line = ft_strdup(buffer[fd]);
@@ -110,7 +94,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	ft_buff_clean(buffer[fd]);
-	if (line[0] == 0)
-		return (free(line), ft_strdup(""));
+	if (line[0] == '\0')
+		return (free(line), NULL);
 	return (line);
 }

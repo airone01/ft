@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:28:53 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 15:09:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 19:15:58 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(PRINTF): $(SRC_PRINTF)
 	@$(ECHO) "$(MSG) 🏗️  Building ft_printf\n"
 	@$(MAKE) -C $(PRINTF_DIR)
 
-$(NAME): $(OBJ) $(LIBFT) $(GNL) $(PRINTF)
+$(NAME): $(OBJ) | $(LIBFT) $(GNL) $(PRINTF)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $@ $^ $(GNL_FLAGS) $(LIBFT_FLAGS) $(PRINTF_FLAGS)
 	@$(ECHO) "$(SUCCESS)\n"

@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/27 19:25:29 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/27 18:17:07 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/27 18:17:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Entry point of the program
+ * @brief	Print the error message and exit
  */
-int	main(int argc, char **argv, char **envp)
+void	perror_and_exit(void)
 {
-	char	*file1;
-	int		fds[2];
+	perror("Error");
+	exit(errno);
+}
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	args_valid(argc, argv, fds);
-	file1 = file_read(fds[0]);
-	file_write(fds[1], file1);
-	free(file1);
-	return (0);
+/**
+ * @brief	Set errno, print the error message and exit
+ */
+void	perror_errno_and_exit(int err)
+{
+	errno = err;
+	perror_and_exit();
 }

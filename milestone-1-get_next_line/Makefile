@@ -49,11 +49,8 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 #                                   SOURCES                                    #
 # **************************************************************************** #
 
-_SRC_GNL	=	get_next_line get_next_line_utils
-# GPM: make_src_libft
-# GPM: make_src_push_swap
-include $(realpath ../extra-make/meta.mk) # GPM!
-# GPM@ ._SRC_PUSH_SWAP_BONUS	+= $(_SRC_GNL)
+# GPM: make_src
+include $(realpath ../extra-make/sources.mk) # GPM!
 
 # **************************************************************************** #
 #                                   MAPPING                                    #
