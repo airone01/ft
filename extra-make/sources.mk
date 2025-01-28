@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 22:47:01 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/28 14:07:13 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,9 @@ _SRC_FT_PRINTF		=		\
 # GPM? end make_src_ft_strlen
 # GPM? negin make_src_pipex
 _SRC_PIPEX	=				\
-	_main
-
+	_main					\
+	args_valid				\
+	error					\
+	file_read				\
+	file_write
 # GPM? end make_src_pipex
