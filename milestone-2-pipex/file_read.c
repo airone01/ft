@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:31:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/27 19:23:54 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:58:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  *
  * @param	fd	A valid file descriptor
  */
-char	*file_read(int fd)
+char	*file_read(ssize_t fd)
 {
 	char	*file;
 	char	*tmp;

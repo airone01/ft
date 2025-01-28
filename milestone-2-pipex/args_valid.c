@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:32:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/27 19:18:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:57:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param	argv	Arguments
  * @param	fds		File descriptors (assumig are 2)
  */
-void	args_valid(int argc, char **argv, int *fds)
+void	args_valid(size_t argc, char **argv, ssize_t *fds)
 {
 	if (argc < 5)
 		perror_errno_and_exit(EINVAL);

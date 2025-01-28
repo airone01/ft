@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/28 14:24:24 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/28 16:00:52 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,10 @@ _SRC_PIPEX	=				\
 	_main					\
 	args_valid				\
 	env_find				\
+	env_find_bin			\
 	error					\
 	file_read				\
-	file_write
+	file_write				\
+	find_bin				\
+	path_find_bin
 # GPM? end make_src_pipex

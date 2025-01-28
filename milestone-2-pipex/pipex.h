@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 14:39:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:56:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ char	*file_read(ssize_t fd);
 void	file_write(ssize_t fd, char *file);
 
 // Environment variables
-char	*env_find(char **env, char *var);
+char	*env_find(char **envp, char *var);
+char	*env_find_bin(char **envp, char *bin);
+
+// Misc
+char	*path_find_bin(char *path, char *bin);
+char	*find_bin(char **envp, char *bin);
 
 #endif
