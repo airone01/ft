@@ -10,12 +10,6 @@
 make
 ```
 
-### `libft`
-
-```shell
-make libft
-```
-
 ## Test
 
 ### Against tester

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/27 19:26:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:39:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@
 # include <unistd.h>
 
 // Error management
-void	perror_errno_and_exit(int err);
+void	perror_errno_and_exit(size_t err);
 void	perror_and_exit(void);
 
 // Argument management
-void	args_valid(int argc, char **argv, int *fds);
+void	args_valid(size_t argc, char **argv, ssize_t *fds);
 
 // Files IO
-char	*file_read(int fd);
-void	file_write(int fd, char *file);
+char	*file_read(ssize_t fd);
+void	file_write(ssize_t fd, char *file);
+
+// Environment variables
+char	*env_find(char **env, char *var);
 
 #endif

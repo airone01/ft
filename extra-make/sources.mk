@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/28 14:07:13 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/28 14:24:24 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,6 +104,7 @@ _SRC_FT_PRINTF		=		\
 _SRC_PIPEX	=				\
 	_main					\
 	args_valid				\
+	env_find				\
 	error					\
 	file_read				\
 	file_write
