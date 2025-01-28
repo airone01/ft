@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   cmda_print.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 20:08:34 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/28 18:51:09 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/28 20:04:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Entry point of the program
+ * @brief	Prints a command
  */
-int	main(int argc, char **argv, char **envp)
+void	cmda_print(void *content)
 {
-	ssize_t	fds[2];
-	char	*file1;
-	t_list	*cmdas;
+	t_cmda	*cmda;
+	char	**args;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	args_valid(argc, argv, (ssize_t *)fds);
-	cmdas = populate_cmds(argc, argv, envp);
-	// ft_lstiter(cmdas, cmda_print);
-	ft_lstclear(&cmdas, cmda_free);
-	file1 = file_read(fds[0]);
-	file_write(fds[1], file1);
-	free(file1);
-	return (0);
+	if (!content)
+	{
+		ft_printf("[DEBUG] cmda_print: NULL content\n");
+		return ;
+	}
+	cmda = (t_cmda *)content;
+	ft_printf("[COMMAND (advanced)]\npath: '%s'\nargs: ", cmda->bin);
+	args = cmda->args;
+	while (*args)
+	{
+		ft_printf("'%s'", *args);
+		if (*(args + 1))
+			ft_printf(" ");
+		args++;
+	}
+	ft_printf("\n");
 }

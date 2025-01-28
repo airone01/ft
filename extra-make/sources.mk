@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/28 18:06:59 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/28 19:12:29 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,13 @@ _SRC_FT_PRINTF		=		\
 # GPM? negin make_src_pipex
 _SRC_PIPEX	=				\
 	_main					\
+	args_cmds				\
 	args_valid				\
+	cmd_free				\
+	cmd_print				\
+	cmd_to_cmda				\
+	cmda_free				\
+	cmda_print				\
 	env_find				\
 	env_find_bin			\
 	error					\

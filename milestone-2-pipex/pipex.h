@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 18:30:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 19:36:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,37 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_cmda
+{
+	char	*bin;
+	char	**args;
+}			t_cmda;
+
 // Error management
-void	perror_errno_and_exit(size_t err);
-void	perror_and_exit(void);
+void		perror_errno_and_exit(size_t err);
+void		perror_and_exit(void);
 
 // Argument management
-void	args_valid(size_t argc, char **argv, ssize_t *fds);
+void		args_valid(size_t argc, char **argv, ssize_t *fds);
 
 // Files IO
-char	*file_read(ssize_t fd);
-void	file_write(ssize_t fd, char *file);
+char		*file_read(ssize_t fd);
+void		file_write(ssize_t fd, char *file);
 
 // Environment variables
-char	*env_find(char **envp, char *var);
-char	*env_find_bin(char **envp, char *bin);
+char		*env_find(char **envp, char *var);
+char		*env_find_bin(char **envp, char *bin);
+
+// Simple commands
+t_list		*populate_cmds(int argc, char **argv, char **envp);
+t_list		*cmds_to_cmdas(t_list *cmds, char **envp);
+void		cmda_print(void *content);
+void		cmd_print(void *content);
+void		cmda_free(void *cmda);
+void		cmd_free(void *cmd);
 
 // Misc
-char	*path_find_bin(char *path, char *bin);
-char	*find_bin(char **envp, char *bin);
+char		*path_find_bin(char *path, char *bin);
+char		*find_bin(char **envp, char *bin);
 
 #endif

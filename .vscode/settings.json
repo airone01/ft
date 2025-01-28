@@ -1,6 +1,8 @@
 {
   "files.associations": {
     "*.astro": "astro",
-    "pipex.h": "c"
+    "pipex.h": "c",
+    "errno.h": "c",
+    "ft_printf.h": "c"
   }
 }
