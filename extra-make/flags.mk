@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 14:45:08 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/22 14:45:25 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:37:20 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,5 +15,5 @@
 # **************************************************************************** #
 
 #GPM? begin make_flags
-CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -MD -MP
+CFLAGS			+= -Wall -Werror -Wextra -Wpedantic -Wno-unused-result -MD -MP
 #GPM? begin make_flags

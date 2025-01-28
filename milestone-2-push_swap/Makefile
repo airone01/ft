@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 13:30:24 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:42:39 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,14 +88,13 @@ DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.d)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-.title:
+title:
 	@$(ECHO) "$(MSG)                  __\n"
 	@$(ECHO) "$(MSG)   ___  __ _____ / /     ____    _____ ____\n"
 	@$(ECHO) "$(MSG)  / _ \\/ // (_-</ _ \\   (_-< |/|/ / _ \`/ _ \\ \n"
 	@$(ECHO) "$(MSG) / .__/\_,_/___/_//_/__/___/__,__/\\_,_/ .__/\n"
 	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
 	@$(ECHO) "$(MSG) \n"
-	@touch .title
 
 include $(realpath ../extra-make/targets_bin_libft_gnl_bonus.mk) # GPM!
 # GPM: make_target_bin_libft_bonus

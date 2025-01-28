@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:23:23 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 18:12:22 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/28 14:07:34 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ $(LIBFT):
 
 $(NAME): $(OBJ) | $(LIBFT)
 	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
-	@$(AR) $(NAME) $?
+	@$(AR) $(NAME) $^
 	@$(ECHO) "$(SUCCESS)\n"
 
 clean:
@@ -32,6 +32,6 @@ clean:
 
 fclean: clean
 	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
-	@$(RM) $(NAME) .title
+	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 # GPM? end make_target_lib_libft

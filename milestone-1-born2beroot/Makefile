@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 13:10:32 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 13:29:16 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:42:10 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,18 +35,17 @@ include $(realpath ../extra-make/commands.mk)
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-all: .title msg
+all: title msg
 clean:
-	@$(RM) .title
+	@$(RM) title
 fclean: clean
 
-.title:
+title:
 	@$(ECHO) "$(MSG)   __   ___  __\n"
 	@$(ECHO) "$(MSG)  / /  |_  |/ /  ____\n"
 	@$(ECHO) "$(MSG) / _ \\/ __// _ \\/ __/\n"
 	@$(ECHO) "$(MSG)/_.__/____/_.__/_/\n"
 	@$(ECHO) "$(MSG) \n"
-	@touch .title
 
 msg:
 	@$(ECHO) "$(MSG) 👀 There is nothing to be done here.\n"

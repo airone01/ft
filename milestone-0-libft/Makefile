@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/23 12:28:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:41:55 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ include $(realpath ../extra-make/commands.mk) # GPM!
 #                                    FLAGS                                     #
 # **************************************************************************** #
 
-CFLAGS		= -Wall -Werror -Wextra -Wpedantic -MD -MP
+include $(realpath ../extra-make/flags.mk) # GPM!
+# GPM: make_flags
 
 # **************************************************************************** #
 #                                   SOURCES                                    #
@@ -68,13 +69,12 @@ DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-.title:
+title:
 	@$(ECHO) "$(MSG)   ___ __   _____\n"
 	@$(ECHO) "$(MSG)  / (_) /  / _/ /_\n"
 	@$(ECHO) "$(MSG) / / / _ \\/ _/ __/\n"
 	@$(ECHO) "$(MSG)/_/_/_.__/_/ \\__/\n"
 	@$(ECHO) "$(MSG) \n"
-	@touch .title
 
 include $(realpath ../extra-make/targets_lib_bonus.mk) # GPM!
 # GPM: make_target_lib_bonus

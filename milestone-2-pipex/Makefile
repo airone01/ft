@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 15:22:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/27 22:42:34 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,14 +94,13 @@ DEP_BONUS	= $(_SRC_PIPEX_BONUS:%=$(OUT_DIR)%.d)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-.title:
+title:
 	@$(ECHO) "$(MSG)         _\n"
 	@$(ECHO) "$(MSG)   ___  (_)__  _____ __\n"
 	@$(ECHO) "$(MSG)  / _ \\/ / _ \\/ -_) \\ /\n"
 	@$(ECHO) "$(MSG) / .__/_/ .__/\\__/_\\_\\ \n"
 	@$(ECHO) "$(MSG)/_/    /_/\n"
 	@$(ECHO) "$(MSG) \n"
-	@touch .title
 
 include $(realpath ../extra-make/targets_bin_libft_gnl_printf_bonus.mk) # GPM!
 # GPM: make_target_bin_libft_gnl_printf_bonus
