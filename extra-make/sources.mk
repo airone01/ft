@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/28 16:00:52 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/28 18:06:59 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,16 @@ _SRC_LIBFT	=				\
 	ft_isdigit				\
 	ft_isprint				\
 	ft_itoa					\
+	ft_lstat_bonus			\
+	ft_lstadd_back_bonus	\
+	ft_lstadd_front_bonus	\
+	ft_lstclear_bonus		\
+	ft_lstdelone_bonus		\
+	ft_lstiter_bonus		\
+	ft_lstlast_bonus		\
+	ft_lstmap_bonus			\
+	ft_lstnew_bonus			\
+	ft_lstsize_bonus		\
 	ft_memchr				\
 	ft_memcmp				\
 	ft_memcpy				\
