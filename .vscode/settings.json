@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.astro": "astro",
+    "pipex.h": "c"
+  }
+}

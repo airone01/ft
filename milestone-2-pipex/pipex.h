@@ -6,12 +6,18 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 15:56:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:30:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# ifndef PIPEX_PIPES
+#  define PIPEX_PIPES
+#  define PIPEX_PIPES_MIN 2
+#  define PIPEX_PIPES_MAX 1024
+# endif
 
 # include "../milestone-0-libft/libft.h"                 // GPM!
 # include "../milestone-1-ft_printf/ft_printf.h"         // GPM!

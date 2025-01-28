@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:56:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 17:58:15 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:13:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ char	*find_bin(char **envp, char *bin)
 	result = env_find_bin(envp, bin);
 	if (result)
 		return (result);
-	perror_errno_and_exit(ENOENT);
 	return (NULL);
 }
