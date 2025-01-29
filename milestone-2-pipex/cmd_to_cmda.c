@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:52:18 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 18:26:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:31:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ char	**split_args_and_find_bin(t_app *app, char **envp, char *cmd)
 	bin_og = args[0];
 	bin = find_bin(app, envp, bin_og);
 	free(bin_og);
+	args[0] = NULL;
 	if (!bin)
+	{
+		free_strings(args);
 		app_exit_errno(*app, ENOENT);
+	}
 	args[0] = bin;
 	return (args);
 }
@@ -53,27 +57,24 @@ char	**split_args_and_find_bin(t_app *app, char **envp, char *cmd)
  */
 void	cmds_to_cmdas(t_app *app, char **envp)
 {
-	t_list	*cmdas_og;
-	t_list	*cmds_og;
 	t_list	*cmds;
 	t_list	*tmp;
 	char	**args;
 
 	cmds = app->cmds;
-	cmds_og = app->cmds;
-	cmdas_og = app->cmdas;
 	while (cmds)
 	{
 		args = split_args_and_find_bin(app, envp, cmds->content);
 		tmp = ft_lstnew(args);
 		if (!tmp)
+		{
+			free_strings(args);
 			app_exit_errno(*app, ENOMEM);
-		if (!app->cmdas)
-			app->cmdas = tmp;
-		else
+		}
+		if (app->cmdas)
 			ft_lstadd_back(&app->cmdas, tmp);
+		else
+			app->cmdas = tmp;
 		cmds = cmds->next;
 	}
-	app->cmds = cmds_og;
-	app->cmdas = cmdas_og;
 }
