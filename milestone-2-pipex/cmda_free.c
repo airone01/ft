@@ -6,23 +6,26 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 19:09:54 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 20:08:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:50:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/**
+ * Frees an advanced command as a list of strings
+ *
+ * @param cmda	The advanced command
+ */
 void	cmda_free(void *cmda)
 {
 	char	**args;
 
-	args = ((t_cmda *)cmda)->args;
+	args = (char **)cmda;
 	while (*args)
 	{
 		free(*args);
 		args++;
 	}
-	free(((t_cmda *)cmda)->args);
-	free(((t_cmda *)cmda)->bin);
 	free(cmda);
 }

@@ -6,35 +6,39 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:52:18 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 20:00:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:51:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * Splits the command into the binary and the arguments and populates a t_cmda
+ * Splits the command into the arguments and finds the binary.
+ * Then, it places the binary in the first argument.
  *
  * @param envp	The environment variables
  * @param cmd	The command
  *
- * @returns		The advanced command
+ * @returns		The command as an array of strings
  *
  * @exception	ENOMEM if malloc fails
  */
-t_cmda	*split_args_and_find_bin(char **envp, char *cmd)
+char	**split_args_and_find_bin(char **envp, char *cmd)
 {
-	char	**args;
-	t_cmda	*cmda;
+	char	**cmdas;
+	char	*bin_og;
+	char	*bin;
 
-	cmda = ft_calloc(1, sizeof(t_cmda));
-	cmda->args = ft_split(cmd, ' ');
-	if (!cmda->args)
+	cmdas = ft_split(cmd, ' ');
+	if (!cmdas)
 		perror_errno_and_exit(ENOMEM);
-	cmda->bin = find_bin(envp, cmda->args[0]);
-	if (!cmda->bin)
+	bin_og = cmdas[0];
+	bin = find_bin(envp, bin_og);
+	if (!bin)
 		perror_errno_and_exit(ENOENT);
-	return (cmda);
+	free(bin_og);
+	cmdas[0] = bin;
+	return (cmdas);
 }
 
 /**
@@ -49,15 +53,14 @@ t_cmda	*split_args_and_find_bin(char **envp, char *cmd)
  */
 t_list	*cmds_to_cmdas(t_list *cmds, char **envp)
 {
-	t_cmda	*cmda;
 	t_list	*cmds_og;
-	char	**args;
 
 	cmds_og = cmds;
 	while (cmds)
 	{
-		cmda = split_args_and_find_bin(envp, cmds->content);
-		cmds->content = cmda;
+		cmds->content = split_args_and_find_bin(envp, cmds->content);
+		if (!cmds->content)
+			perror_errno_and_exit(ENOMEM);
 		cmds = cmds->next;
 	}
 	return (cmds_og);
