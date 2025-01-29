@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:46:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:43:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:04:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,5 @@ static void	populate_basic_cmds(t_app *app, int argc, char **argv)
 void	populate_cmds(t_app *app, int argc, char **argv, char **envp)
 {
 	populate_basic_cmds(app, argc, argv);
-	if (!app->cmds)
-		app_exit_errno(*app, ENOMEM);
 	cmds_to_cmdas(app, envp);
 }

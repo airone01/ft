@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:15:01 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:30:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:22:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ t_app	app_new(void)
 	app.file1 = NULL;
 	app.file2 = NULL;
 	app.cmds = NULL;
+	app.cmdas = NULL;
 	return (app);
 }

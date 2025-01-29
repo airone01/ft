@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:48:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:56:10 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_app
 {
 	ssize_t	fds[2];
 	t_list	*cmds;
+	t_list	*cmdas;
 	char	*file1;
 	char	*file2;
 }			t_app;
