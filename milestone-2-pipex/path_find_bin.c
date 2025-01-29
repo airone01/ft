@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:59:39 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 15:14:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:46:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-char	*path_find_bin(char *dir, char *bin)
+char	*path_find_bin(t_app *app, char *dir, char *bin)
 {
 	char	*tmp;
 	char	*full_path;
@@ -33,11 +33,11 @@ char	*path_find_bin(char *dir, char *bin)
 		return (NULL);
 	tmp = ft_strjoin(dir, "/");
 	if (!tmp)
-		perror_errno_and_exit(ENOMEM);
+		app_exit_errno(*app, ENOMEM);
 	full_path = ft_strjoin(tmp, bin);
 	free(tmp);
 	if (!full_path)
-		perror_errno_and_exit(ENOMEM);
+		app_exit_errno(*app, ENOMEM);
 	if (access(full_path, X_OK) == 0)
 		return (full_path);
 	free(full_path);

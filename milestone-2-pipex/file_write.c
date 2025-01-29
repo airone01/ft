@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 19:24:02 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 15:58:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:46:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief	Writes a file to a file descriptor
  */
-void	file_write(ssize_t fd, char *file)
+void	file_write(t_app *app, ssize_t fd, char *file)
 {
 	if (write(fd, file, ft_strlen(file)) == -1)
-		perror_and_exit();
+		app_exit(*app);
 	close(fd);
 }

@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   app_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:17:07 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/28 15:57:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:21:17 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Print the error message and exit
+ * @brief	Exits the program safely with an error number
  */
-void	perror_and_exit(void)
+void	app_exit_errno(t_app app, size_t errno_p)
 {
-	perror("Error");
-	exit(errno);
+	errno = errno_p;
+	app_exit(app);
 }
 
 /**
- * @brief	Set errno, print the error message and exit
+ * @brief	Exits the program safely
  */
-void	perror_errno_and_exit(size_t err)
+void	app_exit(t_app app)
 {
-	errno = err;
-	perror_and_exit();
+	app_free(app);
+	perror("Error");
+	exit(errno);
 }

@@ -1,41 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_read.c                                        :+:      :+:    :+:   */
+/*   app_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 17:31:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:45:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/29 16:15:01 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/29 16:30:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Read the whole file
- *
- * @param	fd	A valid file descriptor
+ * @brief	Initializes the app structure
  */
-char	*file_read(t_app *app, ssize_t fd)
+t_app	app_new(void)
 {
-	char	*file;
-	char	*tmp;
-	char	*new_file;
+	t_app	app;
 
-	file = ft_strdup("");
-	if (!file)
-		app_exit_errno(*app, ENOMEM);
-	tmp = get_next_line(fd);
-	while (tmp)
-	{
-		new_file = ft_strjoin(file, tmp);
-		free(file);
-		free(tmp);
-		if (!new_file)
-			app_exit_errno(*app, ENOMEM);
-		file = new_file;
-		tmp = get_next_line(fd);
-	}
-	return (file);
+	app.fds[0] = -1;
+	app.fds[1] = -1;
+	app.file1 = NULL;
+	app.file2 = NULL;
+	app.cmds = NULL;
+	return (app);
 }

@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_read.c                                        :+:      :+:    :+:   */
+/*   app_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 17:31:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:45:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/29 16:12:57 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/29 16:58:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Read the whole file
- *
- * @param	fd	A valid file descriptor
+ * @brief	Frees the strings in a list as pointers
  */
-char	*file_read(t_app *app, ssize_t fd)
+static void	free_ptrs(void *str)
 {
-	char	*file;
-	char	*tmp;
-	char	*new_file;
+	free_strings((char **)str);
+}
 
-	file = ft_strdup("");
-	if (!file)
-		app_exit_errno(*app, ENOMEM);
-	tmp = get_next_line(fd);
-	while (tmp)
-	{
-		new_file = ft_strjoin(file, tmp);
-		free(file);
-		free(tmp);
-		if (!new_file)
-			app_exit_errno(*app, ENOMEM);
-		file = new_file;
-		tmp = get_next_line(fd);
-	}
-	return (file);
+/**
+ * @brief	Frees the whole app structure
+ */
+void	app_free(t_app app)
+{
+	if (app.fds[0] != -1)
+		close(app.fds[0]);
+	if (app.fds[1] != -1)
+		close(app.fds[1]);
+	free(app.file1);
+	free(app.file2);
+	if (app.cmds)
+		ft_lstclear(&app.cmds, free_ptrs);
+	free(app.cmds);
 }

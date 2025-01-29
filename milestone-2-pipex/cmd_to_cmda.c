@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:52:18 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 15:51:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:54:30 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-char	**split_args_and_find_bin(char **envp, char *cmd)
+char	**split_args_and_find_bin(t_app *app, char **envp, char *cmd)
 {
 	char	**cmdas;
 	char	*bin_og;
@@ -31,11 +31,14 @@ char	**split_args_and_find_bin(char **envp, char *cmd)
 
 	cmdas = ft_split(cmd, ' ');
 	if (!cmdas)
-		perror_errno_and_exit(ENOMEM);
+		app_exit_errno(*app, ENOMEM);
 	bin_og = cmdas[0];
-	bin = find_bin(envp, bin_og);
+	bin = find_bin(app, envp, bin_og);
 	if (!bin)
-		perror_errno_and_exit(ENOENT);
+	{
+		free_strings(cmdas);
+		app_exit_errno(*app, ENOENT);
+	}
 	free(bin_og);
 	cmdas[0] = bin;
 	return (cmdas);
@@ -51,17 +54,17 @@ char	**split_args_and_find_bin(char **envp, char *cmd)
  *
  * @exception	ENOMEM if malloc fails
  */
-t_list	*cmds_to_cmdas(t_list *cmds, char **envp)
+void	cmds_to_cmdas(t_app *app, char **envp)
 {
-	t_list	*cmds_og;
+	t_list	*cmds;
+	void	*tmp;
 
-	cmds_og = cmds;
+	cmds = app->cmds;
 	while (cmds)
 	{
-		cmds->content = split_args_and_find_bin(envp, cmds->content);
+		cmds->content = split_args_and_find_bin(app, envp, cmds->content);
 		if (!cmds->content)
-			perror_errno_and_exit(ENOMEM);
+			app_exit_errno(*app, ENOMEM);
 		cmds = cmds->next;
 	}
-	return (cmds_og);
 }

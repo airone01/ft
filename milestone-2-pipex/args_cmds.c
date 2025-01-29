@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:46:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 15:35:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:43:25 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,24 @@
 /**
  * @brief	Populates the list of commands from the arguments
  */
-static t_list	*populate_basic_cmds(int argc, char **argv)
+static void	populate_basic_cmds(t_app *app, int argc, char **argv)
 {
-	t_list	*cmds;
 	t_list	*tmp;
 
 	argc -= 3;
 	argv += 2;
-	cmds = NULL;
 	while (argc--)
 	{
 		tmp = ft_lstnew(*argv);
 		if (!tmp)
-			perror_errno_and_exit(ENOMEM);
-		if (!cmds)
-			cmds = tmp;
+			app_exit_errno(*app, ENOMEM);
+		if (!app->cmds)
+			app->cmds = tmp;
 		else
-			ft_lstadd_back(&cmds, tmp);
+			ft_lstadd_back(&app->cmds, tmp);
 		argv++;
 	}
-	return (cmds);
+	return ;
 }
 
 /**
@@ -48,16 +46,10 @@ static t_list	*populate_basic_cmds(int argc, char **argv)
  *
  * @exception	ENOMEM if malloc fails
  */
-t_list	*populate_cmds(int argc, char **argv, char **envp)
+void	populate_cmds(t_app *app, int argc, char **argv, char **envp)
 {
-	t_list	*cmds;
-	t_list	*cmdas;
-
-	cmds = populate_basic_cmds(argc, argv);
-	if (!cmds)
-		perror_errno_and_exit(ENOMEM);
-	cmdas = cmds_to_cmdas(cmds, envp);
-	if (!cmdas)
-		perror_errno_and_exit(ENOMEM);
-	return (cmdas);
+	populate_basic_cmds(app, argc, argv);
+	if (!app->cmds)
+		app_exit_errno(*app, ENOMEM);
+	cmds_to_cmdas(app, envp);
 }

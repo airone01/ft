@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 15:51:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:55:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@
  */
 int	main(int argc, char **argv, char **envp)
 {
-	ssize_t	fds[2];
-	char	*file1;
-	t_list	*cmdas;
+	t_app	app;
 
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	args_valid(argc, argv, (ssize_t *)fds);
-	cmdas = populate_cmds(argc, argv, envp);
-	ft_lstiter(cmdas, cmda_print);
-	ft_lstclear(&cmdas, cmda_free);
-	file1 = file_read(fds[0]);
-	file_write(fds[1], file1);
-	free(file1);
+	app = app_new();
+	args_valid(&app, argc, argv);
+	populate_cmds(&app, argc, argv, envp);
+	ft_lstiter(app.cmds, cmda_print);
+	// ft_lstclear(cmda_free); // REMOVED IN NEW VERSION
+	app.file1 = file_read(&app, app.fds[0]);
+	file_write(&app, app.fds[1], app.file1);
+	app_free(app);
 	return (0);
 }
