@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 19:44:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:06:58 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 # include "../milestone-0-libft/libft.h"                 // GPM!
 # include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
-# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>

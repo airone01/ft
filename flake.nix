@@ -1,9 +1,13 @@
 {
   description = "Flake for ft";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = { nixpkgs, flake-utils, ... }:
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    c_formatter_42.url = "github:maix-flake/c_formatter_42";
+  };
+
+  outputs = { nixpkgs, flake-utils, c_formatter_42, ... }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
@@ -30,6 +34,11 @@
           gcc
           rustfmt
           clippy
+
+          # 42
+          c_formatter_42.packages.${system}.default
+          norminette
+          valgrind
         ];
         shellHook = with pkgs; ''
           # Prisma

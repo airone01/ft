@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 19:27:50 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 19:46:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:03:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	handle_input(t_app app, int *pipe_prev, int *pipe_curr)
+static void	handle_input(t_app app, int *pipe_prev)
 {
 	if (pipe_prev[0] != -1)
 	{
@@ -27,8 +27,7 @@ static void	handle_input(t_app app, int *pipe_prev, int *pipe_curr)
 	}
 }
 
-static void	handle_output(t_app app, t_list *current_cmd, int *pipe_prev,
-		int *pipe_curr)
+static void	handle_output(t_app app, t_list *current_cmd, int *pipe_curr)
 {
 	if (current_cmd->next)
 	{
@@ -48,8 +47,8 @@ void	exec_cmda_child(t_app app, t_list *current_cmd, int *pipe_prev,
 {
 	char	**args;
 
-	handle_input(app, pipe_prev, pipe_curr);
-	handle_output(app, current_cmd, pipe_prev, pipe_curr);
+	handle_input(app, pipe_prev);
+	handle_output(app, current_cmd, pipe_curr);
 	args = (char **)current_cmd->content;
 	execve(args[0], args, app.envp);
 	exit(EXIT_FAILURE);
