@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:15:01 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 15:50:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:52:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief	Initializes the app structure
  */
-t_app	app_new(void)
+t_app	app_new(char **envp)
 {
 	t_app	app;
 
@@ -24,5 +24,6 @@ t_app	app_new(void)
 	app.fd_pipes = NULL;
 	app.fd_file_in = -1;
 	app.fd_file_out = -1;
+	app.envp = envp;
 	return (app);
 }

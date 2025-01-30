@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:46:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 15:18:26 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:53:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,13 @@ static void	populate_basic_cmds(t_app *app, int argc, char **argv)
  *
  * @param argc	Number of arguments
  * @param argv	Arguments
- * @param envp	Environment variables
  *
  * @returns		A list of commands
  *
  * @exception	ENOMEM if malloc fails
  */
-void	populate_cmds(t_app *app, int argc, char **argv, char **envp)
+void	populate_cmds(t_app *app, int argc, char **argv)
 {
 	populate_basic_cmds(app, argc, argv);
-	cmds_to_cmdas(app, envp);
+	cmds_to_cmdas(app);
 }

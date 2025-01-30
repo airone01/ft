@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:52:18 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 19:31:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:53:54 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
  * Splits the command into the arguments and finds the binary.
  * Then, it places the binary in the first argument.
  *
- * @param envp	The environment variables
  * @param cmd	The command
  *
  * @returns		The command as an array of strings
  *
  * @exception	ENOMEM if malloc fails
  */
-char	**split_args_and_find_bin(t_app *app, char **envp, char *cmd)
+char	**split_args_and_find_bin(t_app *app, char *cmd)
 {
 	char	**args;
 	char	*bin_og;
@@ -33,7 +32,7 @@ char	**split_args_and_find_bin(t_app *app, char **envp, char *cmd)
 	if (!args)
 		app_exit_errno(*app, ENOMEM);
 	bin_og = args[0];
-	bin = find_bin(app, envp, bin_og);
+	bin = find_bin(app, bin_og);
 	free(bin_og);
 	args[0] = NULL;
 	if (!bin)
@@ -49,13 +48,12 @@ char	**split_args_and_find_bin(t_app *app, char **envp, char *cmd)
  * Converts a list of commands to a list of advanced commands
  *
  * @param cmds	The list of commands
- * @param envp	The environment variables
  *
  * @returns		Itself, transformed as a list of advanced commands
  *
  * @exception	ENOMEM if malloc fails
  */
-void	cmds_to_cmdas(t_app *app, char **envp)
+void	cmds_to_cmdas(t_app *app)
 {
 	t_list	*cmds;
 	t_list	*tmp;
@@ -64,7 +62,7 @@ void	cmds_to_cmdas(t_app *app, char **envp)
 	cmds = app->cmds;
 	while (cmds)
 	{
-		args = split_args_and_find_bin(app, envp, cmds->content);
+		args = split_args_and_find_bin(app, cmds->content);
 		tmp = ft_lstnew(args);
 		if (!tmp)
 		{

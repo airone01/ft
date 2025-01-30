@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 16:16:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:55:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ typedef struct s_app
 	t_list	*cmds;
 	// t_list of char*
 	t_list	*cmdas;
+	char	**envp;
 }			t_app;
 
 // "app" commands
 void		app_exit_errno(t_app app, size_t errno_p);
 void		app_exit(t_app app);
-t_app		app_new(void);
+t_app		app_new(char **envp);
 
 // Memory management
 void		free_strings(char **strings);
@@ -59,12 +60,12 @@ void		args_valid(t_app *app, size_t argc, char **argv);
 void		fds_open(t_app *app);
 
 // Environment variables
-char		*env_find(char **envp, char *var);
-char		*env_find_bin(t_app *app, char **envp, char *bin);
+char		*env_find(t_app app, char *var);
+char		*env_find_bin(t_app *app, char *bin);
 
 // Simple commands
-void		populate_cmds(t_app *app, int argc, char **argv, char **envp);
-void		cmds_to_cmdas(t_app *app, char **envp);
+void		populate_cmds(t_app *app, int argc, char **argv);
+void		cmds_to_cmdas(t_app *app);
 void		cmda_print(void *content);
 void		cmd_print(void *content);
 void		cmda_free(void *cmda);
@@ -72,6 +73,9 @@ void		cmd_free(void *cmd);
 
 // Path resolution
 char		*path_find_bin(t_app *app, char *path, char *bin);
-char		*find_bin(t_app *app, char **envp, char *bin);
+char		*find_bin(t_app *app, char *bin);
+
+// Execution
+void		exec_cmdas(t_app app);
 
 #endif
