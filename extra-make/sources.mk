@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/30 16:40:57 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/30 18:05:04 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,6 +128,7 @@ _SRC_PIPEX	=				\
 	env_find				\
 	env_find_bin			\
 	exec_cmdas				\
+	exec_cmdas_get_fds		\
 	fds_open				\
 	find_bin				\
 	path_find_bin

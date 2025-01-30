@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:25:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 15:58:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:30:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,5 @@ void	fds_open(t_app *app)
 
 	cmds_len = ft_lstsize(app->cmdas);
 	while (cmds_len--)
-	{
 		fd_pair_new(app);
-	}
 }

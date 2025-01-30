@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 16:55:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:40:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@
 # include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
-// Global data ("app")
+// Global data
 typedef struct s_app
 {
 	int		fd_file_in;
 	int		fd_file_out;
-	// t_list of file[2]
+	// t_list of int[2]
 	t_list	*fd_pipes;
 	// t_list of char
 	t_list	*cmds;
@@ -44,7 +45,7 @@ typedef struct s_app
 	char	**envp;
 }			t_app;
 
-// "app" commands
+// Global data functions
 void		app_exit_errno(t_app app, size_t errno_p);
 void		app_exit(t_app app);
 t_app		app_new(char **envp);
@@ -63,7 +64,7 @@ void		fds_open(t_app *app);
 char		*env_find(t_app app, char *var);
 char		*env_find_bin(t_app *app, char *bin);
 
-// Simple commands
+// Arguments parsing
 void		populate_cmds(t_app *app, int argc, char **argv);
 void		cmds_to_cmdas(t_app *app);
 void		cmda_print(void *content);
@@ -77,5 +78,13 @@ char		*find_bin(t_app *app, char *bin);
 
 // Execution
 void		exec_cmdas(t_app app);
+
+// Execution: file descriptors
+int			get_fd_in(t_app app, t_list *fd_pipes, int cmd_index);
+int			get_fd_out(t_app app, t_list *fd_pipes, int cmd_index,
+				int cmd_count);
+
+// Misc
+void		close_pipe_safely(int fd);
 
 #endif
