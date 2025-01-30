@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 18:40:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:44:13 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # ifndef PIPEX_PIPES
 #  define PIPEX_PIPES
-#  define PIPEX_PIPES_MIN 2
+#  define PIPEX_PIPES_MIN 1
 #  define PIPEX_PIPES_MAX 1024
 # endif
 
@@ -36,8 +36,6 @@ typedef struct s_app
 {
 	int		fd_file_in;
 	int		fd_file_out;
-	// t_list of int[2]
-	t_list	*fd_pipes;
 	// t_list of char
 	t_list	*cmds;
 	// t_list of char*
@@ -58,7 +56,6 @@ void		nothing(void *ptr);
 
 // File descriptors and pipes
 void		args_valid(t_app *app, size_t argc, char **argv);
-void		fds_open(t_app *app);
 
 // Environment variables
 char		*env_find(t_app app, char *var);
@@ -78,13 +75,12 @@ char		*find_bin(t_app *app, char *bin);
 
 // Execution
 void		exec_cmdas(t_app app);
+void		exec_cmda_child(t_app app, t_list *current_cmd, int *pipe_prev,
+				int *pipe_curr);
 
 // Execution: file descriptors
 int			get_fd_in(t_app app, t_list *fd_pipes, int cmd_index);
 int			get_fd_out(t_app app, t_list *fd_pipes, int cmd_index,
 				int cmd_count);
-
-// Misc
-void		close_pipe_safely(int fd);
 
 #endif

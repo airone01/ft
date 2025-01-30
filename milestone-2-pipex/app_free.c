@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:12:57 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 16:16:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:23:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
  */
 void	app_free(t_app app)
 {
-	free_fds(app);
 	ft_lstclear(&app.cmds, nothing);
 	ft_lstclear(&app.cmdas, (void (*)(void *))free_strings);
 }

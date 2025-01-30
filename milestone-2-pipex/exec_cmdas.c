@@ -6,135 +6,73 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 16:37:25 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 18:54:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:37:20 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	close_fd_if_valid(int fd)
+static void	null_pipes(int *pipe_prev, int *pipe_curr)
 {
-	if (fd > 2)
-		close(fd);
+	pipe_prev[0] = -1;
+	pipe_prev[1] = -1;
+	pipe_curr[0] = -1;
+	pipe_curr[1] = -1;
 }
 
-static void	close_pipe(int pipe_fds[2])
+void	exec_cmda_parent(t_app app, t_list **current_cmd, int *pipe_prev,
+		int *pipe_curr)
 {
-	close_fd_if_valid(pipe_fds[0]);
-	close_fd_if_valid(pipe_fds[1]);
-}
+	int	status;
 
-static void	execute_child(t_app app, char **args, int fd_in, int fd_out)
-{
-	char	*bin_path;
-
-	if (fd_in != STDIN_FILENO)
+	if (pipe_prev[0] != -1)
 	{
-		if (dup2(fd_in, STDIN_FILENO) == -1)
-			app_exit(app);
-		close_fd_if_valid(fd_in);
+		close(pipe_prev[0]);
+		close(pipe_prev[1]);
 	}
-	if (fd_out != STDOUT_FILENO)
+	if ((*current_cmd)->next)
 	{
-		if (dup2(fd_out, STDOUT_FILENO) == -1)
-			app_exit(app);
-		close_fd_if_valid(fd_out);
+		pipe_prev[0] = pipe_curr[0];
+		pipe_prev[1] = pipe_curr[1];
 	}
-	bin_path = args[0];
-	args++;
-	if (execve(bin_path, args, app.envp) == -1)
-		app_exit(app);
+	*current_cmd = (*current_cmd)->next;
 }
 
-static void	execute_first_command(t_app app, char **cmd, int pipe_fds[2])
+static void	main_loop(t_app app, t_list *current_cmd, int *pipe_prev,
+		int *pipe_curr)
 {
 	pid_t	pid;
 
-	pid = fork();
-	if (pid == -1)
-		app_exit(app);
-	if (pid == 0)
+	while (current_cmd)
 	{
-		close_fd_if_valid(pipe_fds[0]);
-		execute_child(app, cmd, app.fd_file_in, pipe_fds[1]);
+		if (current_cmd->next)
+		{
+			if (pipe(pipe_curr) == -1)
+				app_exit_errno(app, errno);
+		}
+		pid = fork();
+		if (pid == -1)
+			app_exit_errno(app, errno);
+		if (pid == 0)
+			exec_cmda_child(app, current_cmd, pipe_prev, pipe_curr);
+		else
+			exec_cmda_parent(app, &current_cmd, pipe_prev, pipe_curr);
 	}
-}
-
-static void	execute_last_command(t_app app, char **cmd, int prev_pipe[2])
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		app_exit(app);
-	if (pid == 0)
-	{
-		close_fd_if_valid(prev_pipe[1]);
-		execute_child(app, cmd, prev_pipe[0], app.fd_file_out);
-	}
-}
-
-static void	execute_middle_command(t_app app, char **cmd, int prev_pipe[2],
-		int next_pipe[2])
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		app_exit(app);
-	if (pid == 0)
-	{
-		close_fd_if_valid(prev_pipe[1]);
-		close_fd_if_valid(next_pipe[0]);
-		execute_child(app, cmd, prev_pipe[0], next_pipe[1]);
-	}
-	else
-		wait(NULL);
 }
 
 void	exec_cmdas(t_app app)
 {
 	t_list	*current_cmd;
-	t_list	*current_pipe;
-	int		cmd_index;
-	int		*curr_pipe;
-	int		*prev_pipe;
+	int		pipe_prev[2];
+	int		pipe_curr[2];
 
 	current_cmd = app.cmdas;
-	current_pipe = app.fd_pipes;
-	cmd_index = 0;
-	while (current_cmd)
-	{
-		curr_pipe = NULL;
-		if (current_pipe)
-			curr_pipe = current_pipe->content;
-		if (cmd_index == 0)
-			execute_first_command(app, current_cmd->content, curr_pipe);
-		else if (!current_cmd->next)
-			execute_last_command(app, current_cmd->content, prev_pipe);
-		else
-			execute_middle_command(app, current_cmd->content, prev_pipe,
-				curr_pipe);
-		prev_pipe = curr_pipe;
-		current_cmd = current_cmd->next;
-		if (current_pipe)
-			current_pipe = current_pipe->next;
-		else
-			current_pipe = NULL;
-		cmd_index++;
-	}
-	// Close all pipes in parent
-	current_pipe = app.fd_pipes;
-	while (current_pipe)
-	{
-		close_pipe(current_pipe->content);
-		current_pipe = current_pipe->next;
-	}
-	// Wait for all children
-	while (cmd_index--)
-		wait(NULL);
+	null_pipes(pipe_prev, pipe_curr);
+	main_loop(app, current_cmd, pipe_prev, pipe_curr);
+	if (app.fd_file_in != -1)
+		close(app.fd_file_in);
+	if (app.fd_file_out != -1)
+		close(app.fd_file_out);
+	while (wait(NULL) > 0)
+		;
 }
-
-in = open(file1);
-
-pipe_magick(in, ...)
