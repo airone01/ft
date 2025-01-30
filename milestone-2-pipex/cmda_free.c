@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_read.c                                        :+:      :+:    :+:   */
+/*   cmda_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 17:31:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:45:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/28 19:09:54 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/29 19:26:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Read the whole file
+ * Frees an advanced command as a list of strings
  *
- * @param	fd	A valid file descriptor
+ * @param cmda	The advanced command
  */
-char	*file_read(t_app *app, ssize_t fd)
+void	cmda_free(void *cmda)
 {
-	char	*file;
-	char	*tmp;
-	char	*new_file;
+	char	**args;
 
-	file = ft_strdup("");
-	if (!file)
-		app_exit_errno(*app, ENOMEM);
-	tmp = get_next_line(fd);
-	while (tmp)
+	args = (char **)cmda;
+	while (*args)
 	{
-		new_file = ft_strjoin(file, tmp);
-		free(file);
-		free(tmp);
-		if (!new_file)
-			app_exit_errno(*app, ENOMEM);
-		file = new_file;
-		tmp = get_next_line(fd);
+		free(*args);
+		args++;
 	}
-	return (file);
+	free(cmda);
 }

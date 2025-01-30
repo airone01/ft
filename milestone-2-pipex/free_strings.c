@@ -1,41 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_read.c                                        :+:      :+:    :+:   */
+/*   free_strings.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 17:31:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:45:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/29 16:09:52 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/29 18:41:54 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Read the whole file
- *
- * @param	fd	A valid file descriptor
+ * @brief	Frees an array of strings
  */
-char	*file_read(t_app *app, ssize_t fd)
+void	free_strings(char **strings)
 {
-	char	*file;
-	char	*tmp;
-	char	*new_file;
+	char	**tmp;
 
-	file = ft_strdup("");
-	if (!file)
-		app_exit_errno(*app, ENOMEM);
-	tmp = get_next_line(fd);
-	while (tmp)
+	tmp = strings;
+	while (tmp && *tmp)
 	{
-		new_file = ft_strjoin(file, tmp);
-		free(file);
-		free(tmp);
-		if (!new_file)
-			app_exit_errno(*app, ENOMEM);
-		file = new_file;
-		tmp = get_next_line(fd);
+		free(*tmp);
+		tmp++;
 	}
-	return (file);
+	free(strings);
 }

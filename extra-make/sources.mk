@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/28 14:07:13 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/29 16:49:25 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,16 @@ _SRC_LIBFT	=				\
 	ft_isdigit				\
 	ft_isprint				\
 	ft_itoa					\
+	ft_lstat_bonus			\
+	ft_lstadd_back_bonus	\
+	ft_lstadd_front_bonus	\
+	ft_lstclear_bonus		\
+	ft_lstdelone_bonus		\
+	ft_lstiter_bonus		\
+	ft_lstlast_bonus		\
+	ft_lstmap_bonus			\
+	ft_lstnew_bonus			\
+	ft_lstsize_bonus		\
 	ft_memchr				\
 	ft_memcmp				\
 	ft_memcpy				\
@@ -103,8 +113,21 @@ _SRC_FT_PRINTF		=		\
 # GPM? negin make_src_pipex
 _SRC_PIPEX	=				\
 	_main					\
+	app_exit				\
+	app_free				\
+	app_new					\
+	args_cmds				\
 	args_valid				\
-	error					\
+	cmd_free				\
+	cmd_print				\
+	cmd_to_cmda				\
+	cmda_free				\
+	cmda_print				\
+	env_find				\
+	env_find_bin			\
+	free_strings			\
 	file_read				\
-	file_write
+	file_write				\
+	find_bin				\
+	path_find_bin
 # GPM? end make_src_pipex

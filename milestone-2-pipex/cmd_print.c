@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_read.c                                        :+:      :+:    :+:   */
+/*   cmd_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 17:31:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:45:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/28 18:51:09 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/29 19:51:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /**
- * @brief	Read the whole file
- *
- * @param	fd	A valid file descriptor
+ * @brief	Prints a command
  */
-char	*file_read(t_app *app, ssize_t fd)
+void	cmd_print(void *content)
 {
-	char	*file;
-	char	*tmp;
-	char	*new_file;
+	char	*cmd;
 
-	file = ft_strdup("");
-	if (!file)
-		app_exit_errno(*app, ENOMEM);
-	tmp = get_next_line(fd);
-	while (tmp)
-	{
-		new_file = ft_strjoin(file, tmp);
-		free(file);
-		free(tmp);
-		if (!new_file)
-			app_exit_errno(*app, ENOMEM);
-		file = new_file;
-		tmp = get_next_line(fd);
-	}
-	return (file);
+	cmd = (char *)content;
+	ft_printf("bin:\t%s\n", (char *)cmd);
 }

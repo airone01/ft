@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   cmd_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 19:46:31 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/28 18:50:47 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/28 18:51:20 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/**
- * @brief	Entry point of the program
- */
-int	main(int argc, char **argv, char **envp)
+void	cmd_free(void *content)
 {
-	t_app	app;
-
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	app = app_new();
-	args_valid(&app, argc, argv);
-	populate_cmds(&app, argc, argv, envp);
-	app.file1 = file_read(&app, app.fds[0]);
-	file_write(&app, app.fds[1], app.file1);
-	app_free(app);
-	return (0);
+	free(content);
 }

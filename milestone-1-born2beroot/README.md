@@ -4,6 +4,4 @@
 
 ## FAQ
 
-**Q: Will born2beroot be included in this repo?**
-
-**A: No.**
+**Will born2beroot not be included in this repo, because it is a VM.**

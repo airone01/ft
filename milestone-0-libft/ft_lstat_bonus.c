@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   ft_lstat_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 19:46:31 by elagouch         ###   ########.fr       */
+/*   Created: 2025/01/28 18:05:10 by elagouch          #+#    #+#             */
+/*   Updated: 2025/01/28 18:06:20 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
 /**
- * @brief	Entry point of the program
+ * @brief	Returns the element at the given index
  */
-int	main(int argc, char **argv, char **envp)
+t_list	*ft_lstat(t_list *lst, size_t index)
 {
-	t_app	app;
+	size_t	i;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	app = app_new();
-	args_valid(&app, argc, argv);
-	populate_cmds(&app, argc, argv, envp);
-	app.file1 = file_read(&app, app.fds[0]);
-	file_write(&app, app.fds[1], app.file1);
-	app_free(app);
-	return (0);
+	i = 0;
+	while (lst && i < index)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (lst);
 }
