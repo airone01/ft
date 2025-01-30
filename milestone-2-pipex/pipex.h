@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 17:56:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:16:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,30 @@
 // Global data ("app")
 typedef struct s_app
 {
-	ssize_t	fds[2];
+	int		fd_file_in;
+	int		fd_file_out;
+	// t_list of file[2]
+	t_list	*fd_pipes;
+	// t_list of char
 	t_list	*cmds;
+	// t_list of char*
 	t_list	*cmdas;
-	char	*file1;
-	char	*file2;
 }			t_app;
 
 // "app" commands
 void		app_exit_errno(t_app app, size_t errno_p);
 void		app_exit(t_app app);
-void		app_free(t_app app);
 t_app		app_new(void);
 
-// Argument management
-void		args_valid(t_app *app, size_t argc, char **argv);
+// Memory management
+void		free_strings(char **strings);
+void		app_free(t_app app);
+void		free_fds(t_app app);
+void		nothing(void *ptr);
 
-// Files IO
-char		*file_read(t_app *app, ssize_t fd);
-void		file_write(t_app *app, ssize_t fd, char *file);
+// File descriptors and pipes
+void		args_valid(t_app *app, size_t argc, char **argv);
+void		fds_open(t_app *app);
 
 // Environment variables
 char		*env_find(char **envp, char *var);
@@ -65,9 +70,8 @@ void		cmd_print(void *content);
 void		cmda_free(void *cmda);
 void		cmd_free(void *cmd);
 
-// Misc
+// Path resolution
 char		*path_find_bin(t_app *app, char *path, char *bin);
 char		*find_bin(t_app *app, char **envp, char *bin);
-void		free_strings(char **strings);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:46:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 19:52:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:18:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,5 @@ static void	populate_basic_cmds(t_app *app, int argc, char **argv)
 void	populate_cmds(t_app *app, int argc, char **argv, char **envp)
 {
 	populate_basic_cmds(app, argc, argv);
-	ft_printf("[DEBUG] Commands:\n");
-	ft_lstiter(app->cmds, cmd_print);
 	cmds_to_cmdas(app, envp);
-	ft_printf("[DEBUG] Advanced commands:\n");
-	ft_lstiter(app->cmdas, cmda_print);
 }

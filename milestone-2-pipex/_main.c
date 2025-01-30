@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 19:46:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:54:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	app = app_new();
+	// Check args and open entry and exit files
 	args_valid(&app, argc, argv);
+	// Read the commands and arguments from the cli params
 	populate_cmds(&app, argc, argv, envp);
-	app.file1 = file_read(&app, app.fds[0]);
-	file_write(&app, app.fds[1], app.file1);
+	// Open the pipes and store the file descriptors
+	fds_open(&app);
+	// Execute the commands
+	// Free the app structure and exit
 	app_free(app);
 	return (0);
 }

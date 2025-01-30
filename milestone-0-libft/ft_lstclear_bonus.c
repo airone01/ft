@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 19:35:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:14:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@
  */
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
+	t_list	*tmp;
+
 	if (!lst || !*lst || !del)
 		return ;
 	while (*lst)
 	{
+		tmp = (*lst)->next;
 		ft_lstdelone(*lst, del);
-		*lst = (*lst)->next;
+		*lst = tmp;
 	}
 	*lst = NULL;
 }
