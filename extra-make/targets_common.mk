@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 16:36:20 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ all: title $(NAME)
 $(OUT_DIR):
 	@$(MD) $(OUT_DIR)
 
-$(OUT_DIR)%.o: %.c Makefile $(OUT_DIR)
+$(OUT_DIR)%.o: %.c | Makefile $(OUT_DIR)
 	@$(ECHO) "$(MSG)⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 

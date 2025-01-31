@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:28:53 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 16:43:58 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(NAME): $(OBJ) | $(LIBFT) $(GNL) $(PRINTF)
 	@$(CC) $(CFLAGS) -o $@ $^ $(GNL_FLAGS) $(LIBFT_FLAGS) $(PRINTF_FLAGS)
 	@$(ECHO) "$(SUCCESS)\n"
 
-.bonus: $(OBJ_BONUS) $(LIBFT) $(GNL) $(PRINTF)
+$(BNAME): $(OBJ_BONUS) | $(LIBFT) $(GNL) $(PRINTF)
 	@$(ECHO) "$(MSG)🏗️  Building bonuses for $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(GNL_FLAGS) $(LIBFT_FLAGS) $(PRINTF_FLAGS)
 	@touch .bonus
@@ -55,5 +55,5 @@ fclean: clean
 	@$(MAKE) -C $(GNL_DIR) fclean
 	@$(MAKE) -C $(PRINTF_DIR) fclean
 
-bonus: .bonus
+bonus: $(BNAME)
 # GPM? begin make_target_bin_libft_gnl_bonus

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:15:01 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 12:30:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:13:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_app	app_new(char **envp)
 	app.cmdas = NULL;
 	app.fd_file_in = -1;
 	app.fd_file_out = -1;
+	app.bonus_pipes[0] = -1;
+	app.bonus_pipes[1] = -1;
 	app.envp = envp;
 	return (app);
 }
