@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:35:26 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 22:32:48 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,11 @@
 # **************************************************************************** #
 
 all: title
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
+	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n"
 	@$(CARGO_BUILD)
 	@$(ECHO) "$(SUCCESS)\n"
 
 clean:
-	@$(ECHO) "$(MSG) 🧹 Nothing to clean\n"
+	@$(ECHO) "$(MSG)🧹 Nothing to clean\n"
 
 fclean: clean

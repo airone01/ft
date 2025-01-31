@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 12:36:08 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 16:44:24 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,8 +111,7 @@ _SRC_FT_PRINTF		=		\
 	ft_putstr_ssize
 # GPM? end make_src_ft_strlen
 # GPM? negin make_src_pipex
-_SRC_PIPEX	=				\
-	_main					\
+_SRC_PIPEX_COMMON	=		\
 	app_exit				\
 	app_free				\
 	app_free_utils			\
@@ -128,5 +127,12 @@ _SRC_PIPEX	=				\
 	exec_cmdas_get_fds		\
 	exec_cmda_child			\
 	find_bin				\
+	bonus_here_doc			\
 	path_find_bin
+_SRC_PIPEX_MANDATORY	=	\
+	_main					\
+	$(_SRC_PIPEX_COMMON)
+_SRC_PIPEX_BONUS	=		\
+	_main_bonus			\
+	$(_SRC_PIPEX_COMMON)
 # GPM? end make_src_pipex

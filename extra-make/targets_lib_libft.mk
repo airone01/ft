@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:23:23 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/28 14:07:34 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,21 +17,21 @@
 LIBFT_FLAGS		+= -L$(LIBFT_DIR) -lft
 
 $(LIBFT):
-	@$(ECHO) "$(MSG) 🏗️  Building libft\n"
+	@$(ECHO) "$(MSG)🏗️  Building libft\n"
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJ) | $(LIBFT)
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
+	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n"
 	@$(AR) $(NAME) $^
 	@$(ECHO) "$(SUCCESS)\n"
 
 clean:
-	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
+	@$(ECHO) "$(MSG)🧹 Cleaning the project\n"
 	@$(RM) -r $(OUT_DIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
+	@$(ECHO) "$(MSG)🧹 Fcleaning the project\n"
 	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 # GPM? end make_target_lib_libft

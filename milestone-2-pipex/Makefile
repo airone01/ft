@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 13:35:34 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 16:40:02 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,9 +48,11 @@ include $(realpath ../extra-make/commands.mk)
 
 LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
 PRINTF_DIR	= $(realpath ../milestone-1-ft_printf)# GPM!
+GNL_DIR		= $(realpath ../milestone-1-get_next_line)# GPM!
 
 LIBFT		= $(LIBFT_DIR)/libft.a			# GPM!
 PRINTF		= $(PRINTF_DIR)/libftprintf.a	# GPM!
+GNL			= $(GNL_DIR)/libget_next_line.a	# GPM!
 
 # **************************************************************************** #
 #                                    FLAGS                                     #
@@ -75,12 +77,13 @@ include $(realpath ../extra-make/sources.mk) # GPM!
 # GPM: make_src_pipex
 
 SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)		# GPM!
+SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c)			# GPM!
 SRC_PRINTF	= $(_SRC_PRINTF:%=$(PRINTF_DIR)/%.c)	# GPM!
 
-SRC			= $(_SRC_PIPEX:%=%.c)
+SRC			= $(_SRC_PIPEX_MANDATORY:%=%.c)
 SRC_BONUS	= $(_SRC_PIPEX_BONUS:%=%.c)
-OBJ			= $(_SRC_PIPEX:%=$(OUT_DIR)%.o)
-DEP			= $(_SRC_PIPEX:%=$(OUT_DIR)%.d)
+OBJ			= $(_SRC_PIPEX_MANDATORY:%=$(OUT_DIR)%.o)
+DEP			= $(_SRC_PIPEX_MANDATORY:%=$(OUT_DIR)%.d)
 OBJ_BONUS	= $(_SRC_PIPEX_BONUS:%=$(OUT_DIR)%.o)
 DEP_BONUS	= $(_SRC_PIPEX_BONUS:%=$(OUT_DIR)%.d)
 
@@ -97,10 +100,10 @@ title:
 	@$(ECHO) "$(MSG)  / _ \\/ / _ \\/ -_) \\ /\n"
 	@$(ECHO) "$(MSG) / .__/_/ .__/\\__/_\\_\\ \n"
 	@$(ECHO) "$(MSG)/_/    /_/\n"
-	@$(ECHO) "$(MSG) \n"
+	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/targets_bin_libft_printf_bonus.mk) # GPM!
-# GPM: make_target_bin_libft_printf_bonus
+include $(realpath ../extra-make/targets_bin_libft_gnl_printf_bonus.mk) # GPM!
+# GPM: make_target_bin_libft_gnl_printf_bonus
 
 # **************************************************************************** #
 #                                MAKE METADATA                                 #

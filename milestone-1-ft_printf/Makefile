@@ -68,7 +68,7 @@ title:
 	@$(ECHO) "$(MSG) / _/ __/   / _ \/ __/ / _ \\/ __/ _/\n"
 	@$(ECHO) "$(MSG)/_/ \__/___/ .__/_/ /_/_//_/\\__/_/\n"
 	@$(ECHO) "$(MSG)      /___/_/\n"
-	@$(ECHO) "$(MSG) \n"
+	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
 # GPM: make_target_lib_libft

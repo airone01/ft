@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:45:02 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 13:52:43 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 15:41:10 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ DESIRED_WIDTH	= 14
 PADDING_LENGTH	= $(shell echo $$(($(DESIRED_WIDTH) - $(shell echo "$(GPM_FNAME) " | wc -c))))
 PADDING			= $(shell printf '%*s' $(PADDING_LENGTH))
 # Define message with dynamic padding
-MSG				= $(TITLE) $(GPM_FNAME) $(PADDING)$(RESET)
-SUCCESS			= $(MSG) $(GREEN)✅ Successfully built! 🚀$(RESET)
-SUCCESSB		= $(MSG) $(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
+MSG				= $(TITLE) $(GPM_FNAME) $(PADDING)$(RESET) ${}
+SUCCESS			= $(MSG)$(GREEN)✅ Successfully built! 🚀$(RESET)
+SUCCESSB		= $(MSG)$(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
 # GPM? end make_ansi_color_variables

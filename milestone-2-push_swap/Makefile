@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 22:42:39 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 15:38:25 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ title:
 	@$(ECHO) "$(MSG)  / _ \\/ // (_-</ _ \\   (_-< |/|/ / _ \`/ _ \\ \n"
 	@$(ECHO) "$(MSG) / .__/\_,_/___/_//_/__/___/__,__/\\_,_/ .__/\n"
 	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
-	@$(ECHO) "$(MSG) \n"
+	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_bin_libft_gnl_bonus.mk) # GPM!
 # GPM: make_target_bin_libft_bonus

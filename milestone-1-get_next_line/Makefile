@@ -77,13 +77,13 @@ title:
 	@$(ECHO) "$(MSG) / _ \`/ _ \/ /\n"
 	@$(ECHO) "$(MSG) \_, /_//_/_/\n"
 	@$(ECHO) "$(MSG)/___/\n"
-	@$(ECHO) "$(MSG) \n"
+	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
 # GPM: make_target_lib_libft
 # GPM
 checker: $(OBJ) $(OBJ_TEST) $(LIBFT) # GPM
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n" # GPM
+	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n" # GPM
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS) # GPM
 
 # **************************************************************************** #
