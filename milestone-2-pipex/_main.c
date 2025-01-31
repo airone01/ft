@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 19:36:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:30:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 
 	app = app_new(envp);
 	args_valid(&app, argc, argv);
-	populate_cmds(&app, argc, argv);
+	populate_cmdas(&app, argc, argv);
 	exec_cmdas(app);
 	app_free(app);
 	return (0);

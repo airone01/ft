@@ -1,39 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args_cmds.c                                        :+:      :+:    :+:   */
+/*   args_cmdas.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:46:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 16:53:16 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:36:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/**
- * @brief	Populates the list of commands from the arguments
- */
-static void	populate_basic_cmds(t_app *app, int argc, char **argv)
-{
-	t_list	*tmp;
-
-	argc -= 3;
-	argv += 2;
-	while (argc--)
-	{
-		tmp = ft_lstnew(*argv);
-		if (!tmp)
-			app_exit_errno(*app, ENOMEM);
-		if (!app->cmds)
-			app->cmds = tmp;
-		else
-			ft_lstadd_back(&app->cmds, tmp);
-		argv++;
-	}
-	return ;
-}
 
 /**
  * Populates the list of commands from the arguments
@@ -45,8 +22,26 @@ static void	populate_basic_cmds(t_app *app, int argc, char **argv)
  *
  * @exception	ENOMEM if malloc fails
  */
-void	populate_cmds(t_app *app, int argc, char **argv)
+void	populate_cmdas(t_app *app, int argc, char **argv)
 {
-	populate_basic_cmds(app, argc, argv);
-	cmds_to_cmdas(app);
+	t_list	*tmp;
+	char	**args;
+
+	argc -= 3;
+	argv += 2;
+	while (argc--)
+	{
+		args = cmda_args(app, *argv);
+		tmp = ft_lstnew(args);
+		if (!tmp)
+		{
+			free_strings(args);
+			app_exit_errno(*app, ENOMEM);
+		}
+		if (app->cmdas)
+			ft_lstadd_back(&app->cmdas, tmp);
+		else
+			app->cmdas = tmp;
+		argv++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 23:06:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:32:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 #  define PIPEX_PIPES_MAX 1024
 # endif
 
-# include "../milestone-0-libft/libft.h"                 // GPM!
-# include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
+# include "../milestone-0-libft/libft.h"         // GPM!
+# include "../milestone-1-ft_printf/ft_printf.h" // GPM!
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>
@@ -35,8 +35,6 @@ typedef struct s_app
 {
 	int		fd_file_in;
 	int		fd_file_out;
-	// t_list of char
-	t_list	*cmds;
 	// t_list of char*
 	t_list	*cmdas;
 	char	**envp;
@@ -53,20 +51,16 @@ void		app_free(t_app app);
 void		free_fds(t_app app);
 void		nothing(void *ptr);
 
-// File descriptors and pipes
-void		args_valid(t_app *app, size_t argc, char **argv);
-
 // Environment variables
 char		*env_find(t_app app, char *var);
 char		*env_find_bin(t_app *app, char *bin);
 
 // Arguments parsing
-void		populate_cmds(t_app *app, int argc, char **argv);
-void		cmds_to_cmdas(t_app *app);
+char		**cmda_args(t_app *app, char *cmd);
+void		populate_cmdas(t_app *app, int argc, char **argv);
+void		args_valid(t_app *app, size_t argc, char **argv);
 void		cmda_print(void *content);
-void		cmd_print(void *content);
 void		cmda_free(void *cmda);
-void		cmd_free(void *cmd);
 
 // Path resolution
 char		*path_find_bin(t_app *app, char *path, char *bin);
