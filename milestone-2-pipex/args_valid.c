@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:32:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 16:37:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:27:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	args_valid(t_app *app, size_t argc, char **argv)
 {
 	int	here_doc;
 
-	here_doc = ft_strcmp(argv[1], "here_doc") == 0;
 	if (argc < 5)
 		app_exit_errno(*app, EINVAL);
 	if (argc >= PIPEX_PIPES_MAX + 4)
 		app_exit_errno(*app, E2BIG);
+	here_doc = ft_strcmp(argv[1], "here_doc") == 0;
 	if (here_doc && argc < 6)
 		app_exit_errno(*app, EINVAL);
 	handle_file_opening(app, here_doc, argc, argv);
