@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/29 16:49:25 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 12:36:08 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,19 +115,18 @@ _SRC_PIPEX	=				\
 	_main					\
 	app_exit				\
 	app_free				\
+	app_free_utils			\
 	app_new					\
-	args_cmds				\
+	args_cmdas				\
 	args_valid				\
-	cmd_free				\
-	cmd_print				\
-	cmd_to_cmda				\
+	cmda_args				\
 	cmda_free				\
 	cmda_print				\
 	env_find				\
 	env_find_bin			\
-	free_strings			\
-	file_read				\
-	file_write				\
+	exec_cmdas				\
+	exec_cmdas_get_fds		\
+	exec_cmda_child			\
 	find_bin				\
 	path_find_bin
 # GPM? end make_src_pipex
