@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:23:23 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/27 22:41:37 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,12 @@
 # **************************************************************************** #
 # GPM? begin make_target_lib_bonus
 $(NAME): $(OBJ)
-	@$(ECHO) "$(MSG) 🏗️  Building $(NAME)\n"
+	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n"
 	@$(AR) $(NAME) $^
 	@$(ECHO) "$(SUCCESS)\n"
 
 .bonus: $(OBJ) $(OBJ_BONUS)
-	@$(ECHO) "$(MSG) 🏗️  Building bonuses of $(NAME)\n"
+	@$(ECHO) "$(MSG)🏗️  Building bonuses of $(NAME)\n"
 	@$(AR) $(NAME) $^
 	@touch .bonus
 	@$(ECHO) "$(SUCCESSB)\n"
@@ -28,10 +28,10 @@ $(NAME): $(OBJ)
 bonus: .bonus
 
 clean:
-	@$(ECHO) "$(MSG) 🧹 Cleaning the project\n"
+	@$(ECHO) "$(MSG)🧹 Cleaning the project\n"
 	@$(RM) -r $(OUT_DIR)
 
 fclean: clean
-	@$(ECHO) "$(MSG) 🧹 Fcleaning the project\n"
+	@$(ECHO) "$(MSG)🧹 Fcleaning the project\n"
 	@$(RM) $(NAME)
 # GPM? end make_target_lib_bonus

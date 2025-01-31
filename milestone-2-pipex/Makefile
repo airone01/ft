@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 13:35:34 by elagouch         ###   ########.fr        #
+#    Updated: 2025/01/31 15:35:50 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ include $(realpath ../extra-make/sources.mk) # GPM!
 # GPM: make_src_pipex
 
 SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)		# GPM!
+SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c)			# GPM!
 SRC_PRINTF	= $(_SRC_PRINTF:%=$(PRINTF_DIR)/%.c)	# GPM!
 
 SRC			= $(_SRC_PIPEX:%=%.c)
@@ -97,10 +98,10 @@ title:
 	@$(ECHO) "$(MSG)  / _ \\/ / _ \\/ -_) \\ /\n"
 	@$(ECHO) "$(MSG) / .__/_/ .__/\\__/_\\_\\ \n"
 	@$(ECHO) "$(MSG)/_/    /_/\n"
-	@$(ECHO) "$(MSG) \n"
+	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/targets_bin_libft_printf_bonus.mk) # GPM!
-# GPM: make_target_bin_libft_printf_bonus
+include $(realpath ../extra-make/targets_bin_libft_gnl_printf_bonus.mk) # GPM!
+# GPM: make_target_bin_libft_gnl_printf_bonus
 
 # **************************************************************************** #
 #                                MAKE METADATA                                 #
