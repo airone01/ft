@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 07:56:10 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/03 19:59:17 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ JOBS	= 			\
 	1:ft_printf		\
 	1:get_next_line	\
 	2:push_swap		\
-	2:pipex
+	2:pipex			\
+	2:fdf
 JOBS_EXTRA	=				\
 	arthur					\
 	ps-visualizer-minecraft

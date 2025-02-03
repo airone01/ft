@@ -72,7 +72,7 @@
       <td>100</td>
     </tr>
     <tr align="center">
-      <td rowspan="2">2</td>
+      <td rowspan="3">2</td>
       <td><a href="/milestone-2-pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexn.png" alt="pipex logo"></a></td>
       <td>...</td>
       <td></td>
@@ -81,6 +81,11 @@
       <td><a href="/milestone-2-push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swape.png" alt="push_swap logo"></a></td>
       <td>✅</td>
       <td>100</td>
+    </tr>
+    <tr align="center">
+      <td><a href="/milestone-2-fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfe.png" alt="fdf logo"></a></td>
+      <td>...</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

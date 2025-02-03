@@ -20,7 +20,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         arch: [x86_64]
-        target: [libft, ft_printf, push_swap, get_next_line]
+        target: [libft, ft_printf, get_next_line, pipex, push_swap, fdf]
         include:
           # Linux builds
           - os: ubuntu-22.04
