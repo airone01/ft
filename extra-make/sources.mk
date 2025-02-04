@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 16:44:24 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/04 13:28:29 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,4 +135,8 @@ _SRC_PIPEX_MANDATORY	=	\
 _SRC_PIPEX_BONUS	=		\
 	_main_bonus			\
 	$(_SRC_PIPEX_COMMON)
+_SRC_FDF_COMMON	=	\
+	_main
+_SRC_FDF_MANDATORY	=		\
+	$(_SRC_FDF_COMMON)
 # GPM? end make_src_pipex
