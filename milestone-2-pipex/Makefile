@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 16:40:02 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/04 13:25:49 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ GNL			= $(GNL_DIR)/libget_next_line.a	# GPM!
 include $(realpath ../extra-make/flags.mk) # GPM!
 # GPM: make_flags
 
-CFLAGS			+= -I$(GNL_DIR) -I$(PRINTF_DIR) # GPM!
+CFLAGS			+= -I$(GNL_DIR) -I$(PRINTF_DIR) -I$(PRINTF_DIR) # GPM!
 
 # **************************************************************************** #
 #                                   SOURCES                                    #
