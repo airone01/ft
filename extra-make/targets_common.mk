@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 01:02:06 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 17:05:24 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,13 @@ CFLAGS	+= -Wfloat-equal
 # Makes strings const char*
 # Can break old code but meh fuck it
 CFLAGS	+= -Wwrite-strings
-# Kinda important but not in CC by default
-CFLAGS	+= -Wstringop-truncation
 # Keeps the frame pointer in registers
 # Minor performance cost
 CFLAGS	+= -fno-omit-frame-pointer
+ifeq ($(CC),gcc)
+# Kinda important but not in CC by default
+CFLAGS	+= -Wstringop-truncation
+endif
 
 # Default
 BUILD_ENV ?= dev
@@ -73,8 +75,11 @@ include $(realpath ../extra-make/sources.mk) # GPM!
 #                                   MAPPING                                    #
 # **************************************************************************** #
 
+GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
+
 SRC			:= $(_SRC_$(GPM_MNAME)_MANDATORY:%=%.c)
 SRC_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:%=%.c)
+SRC_HEADERS	:= $(_SRC_$(GPM_MNAME)_HEADERS:%=%.h)
 OBJ			:= $(_SRC_$(GPM_MNAME)_MANDATORY:%=$(OUT_DIR)%.o)
 DEP			:= $(_SRC_$(GPM_MNAME)_MANDATORY:%=$(OUT_DIR)%.d)
 OBJ_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:%=$(OUT_DIR)%.o)
@@ -89,23 +94,8 @@ $(OUT_DIR):
 
 $(OUT_DIR)%.o: %.c | Makefile $(OUT_DIR)
 	@$(ECHO) "$(MSG)⏳ $@\n"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# $(NAME): $(OBJ) | $(NAME_DEPS_INDIRECT)
-$(NAME): $(OBJ) | $(LIBFT) $(GNL) $(PRINTF) $(MINILIBX)
-	@$(ECHO) "$(MSG)🏗️  Building mandatory for $(NAME)\n"
-	@$(ECHO) "$(MSG)🏗️  Indr deps are $(NAME_DEPS_INDIRECT)\n"
-	@$(ECHO) "$(MSG)🏗️  Objs are $(OBJ)\n"
-	@$(CC) $(CFLAGS) -o $@ $^
-	@$(ECHO) "$(SUCCESS)\n"
-
-$(BNAME): $(OBJ_BONUS) | $(BNAME_DEPS_INDIRECT)
-	@$(ECHO) "$(MSG)🏗️  Building bonuses for $(NAME)\n"
-	@$(CC) $(CFLAGS) -o $(BNAME) $^
-	@touch .bonus
-	@$(ECHO) "$(SUCCESSB)\n"
-
-# NAME_DEPS_INDIRECT	+= $(LIBFT) $(GNL) $(PRINTF) $(MINILIBX)
 BNAME_DEPS_INDIRECT = $(NAME_DEPS_INDIRECT)
 
 clean: $(CLEAN_TARGETS)

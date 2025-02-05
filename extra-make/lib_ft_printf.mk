@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 01:03:09 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 17:02:49 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,10 @@
 PRINTF_SRC	=	$(_SRC_PRINTF:%=$(PRINTF_DIR)/%.c)
 PRINTF		=	$(PRINTF_DIR)/libftprintf.a
 
+# LD
+LDLAGS	+= -L$(PRINTF_DIR) -l:libftprintf.a
 # CC
-CFLAGS	+= -L$(PRINTF_DIR) -l:libftprintf.a
+CFLAGS	+= -I$(PRINTF_DIR)
 
 # Make target config
 NAME_DEPS_INDIRECT	+= $(PRINTF)

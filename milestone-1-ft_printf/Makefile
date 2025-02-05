@@ -7,60 +7,27 @@ include $(realpath ../extra-make/art.mk) # GPM!
 COLOR			= $(COLOR_FT_PRINTF)
 
 # **************************************************************************** #
-#                            COMMON ANSI VARIABLES                             #
-# **************************************************************************** #
-
-# GPM: make_ansi_color_variables
-
-# **************************************************************************** #
 #                                   METADATA                                   #
 # **************************************************************************** #
 
-GPM_MSTONE	= 1
-GPM_NAME	= ft_printf
-GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
-NAME		= libftprintf.a
-OUT_DIR 	= .out/
+GPM_MSTONE	:= 1
+GPM_NAME	:= ft_printf
+GPM_MNAME	:= PRINTF
+NAME		:= libftprintf.a
+BNAME		:= blibftprintf.a
+OUT_DIR 	:= .out/
 
 # **************************************************************************** #
-#                                   COMMANDS                                   #
+#                                    LIBS                                      #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/commands.mk) # GPM!
-# GPM: make_commands
-
-# **************************************************************************** #
-#                                    FLAGS                                     #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/flags.mk) # GPM!
-# GPM: make_flags
-# GPM!
-# **************************************************************************** # GPM!
-#                                    LIBFT                                     # GPM!
-# **************************************************************************** # GPM!
-LIBFT_DIR	= $(realpath ../milestone-0-libft) # GPM!
-
-# **************************************************************************** #
-#                                   SOURCES                                    #
-# **************************************************************************** #
-
-# GPM: make_src
-include $(realpath ../extra-make/sources.mk) # GPM!
-
-# **************************************************************************** #
-#                                   MAPPING                                    #
-# **************************************************************************** #
-
-OBJ			= $(_SRC_FT_PRINTF:%=$(OUT_DIR)%.o)
-DEP			= $(_SRC_FT_PRINTF:%=$(OUT_DIR)%.d)
+LIBFT_DIR		:= $(realpath ../milestone-0-libft)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
+all: title $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)   _____               _      __  ___\n"
@@ -70,12 +37,9 @@ title:
 	@$(ECHO) "$(MSG)      /___/_/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
-# GPM: make_target_lib_libft
+include $(realpath ../extra-make/lib_libft.mk)
 
-# **************************************************************************** #
-#                                MAKE METADATA                                 #
-# **************************************************************************** #
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
-include $(realpath ../extra-make/make_meta.mk) # GPM!
-# GPM: make_make_meta
+include $(realpath ../extra-make/targets_bin.mk)

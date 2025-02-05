@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 01:03:48 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 16:55:40 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,12 @@ COLOR			= $(COLOR_FDF)
 #                                   METADATA                                   #
 # **************************************************************************** #
 
-GPM_MSTONE	= 2
-GPM_NAME	= fdf
-GPM_MNAME	= FDF
-GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
-NAME		= fdf
-BNAME		= bfdf
-OUT_DIR 	= .out/
+GPM_MSTONE	:= 2
+GPM_NAME	:= fdf
+GPM_MNAME	:= FDF
+NAME		:= fdf
+BNAME		:= bfdf
+OUT_DIR 	:= .out/
 
 # **************************************************************************** #
 #                                    LIBS                                      #
@@ -51,9 +50,6 @@ title:
 	@$(ECHO) "$(MSG) / _/ _  / _/\n"
 	@$(ECHO) "$(MSG)/_/ \\_,_/_/\n"
 	@$(ECHO) "$(MSG)\n"
-	# @$(ECHO) "$(MSG)DEBUG:\n"
-	# @$(ECHO) "$(MSG)Deps are $(NAME_DEPS_INDIRECT)\n"
-	# @$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)
 include $(realpath ../extra-make/lib_ft_printf.mk)
@@ -62,3 +58,5 @@ include $(realpath ../extra-make/lib_minilibx.mk)
 
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
+
+include $(realpath ../extra-make/targets_bin.mk)

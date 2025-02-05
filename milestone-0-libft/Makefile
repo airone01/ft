@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 01:04:33 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 16:55:20 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,61 +19,30 @@ include $(realpath ../extra-make/art.mk) # GPM!
 COLOR			= $(COLOR_LIBFT)
 
 # **************************************************************************** #
-#                            COMMON ANSI VARIABLES                             #
-# **************************************************************************** #
-
-# GPM: make_ansi_color_variables
-
-# **************************************************************************** #
 #                                   METADATA                                   #
 # **************************************************************************** #
-GPM_MSTONE	= 0
-GPM_NAME	= libft
-GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
-NAME		= libft.a
-OUT_DIR 	= .out/
 
-# **************************************************************************** #
-#                                   COMMANDS                                   #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/commands.mk) # GPM!
-# GPM: make_commands
-
-# **************************************************************************** #
-#                                    FLAGS                                     #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/flags.mk) # GPM!
-# GPM: make_flags
-
-# **************************************************************************** #
-#                                   SOURCES                                    #
-# **************************************************************************** #
-
-# GPM: make_src
-include $(realpath ../extra-make/sources.mk) # GPM!
-
-# **************************************************************************** #
-#                                   MAPPING                                    #
-# **************************************************************************** #
-OBJ			= $(_SRC_LIBFT:%=$(OUT_DIR)%.o)
-DEP			= $(_SRC_LIBFT:%=$(OUT_DIR)%.d)
-OBJ_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.o)
-DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
+GPM_MSTONE	:= 0
+GPM_NAME	:= libft
+GPM_MNAME	:= LIBFT
+NAME		:= libft.a
+BNAME		:= blibft.a
+OUT_DIR 	:= .out/
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
+all: title $(NAME)
+
+title:
+	@$(ECHO) "$(MSG)   ___ __   _____\n"
+	@$(ECHO) "$(MSG)  / (_) /  / _/ /_\n"
+	@$(ECHO) "$(MSG) / / / _ \\/ _/ __/\n"
+	@$(ECHO) "$(MSG)/_/_/_.__/_/ \\__/\n"
+	@$(ECHO) "$(MSG)\n"
+
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-
-include $(realpath ../extra-make/targets_lib_bonus.mk) # GPM!
-# GPM: make_target_lib_bonus
-
-# ----------- Make meta ----------
-MAKEFLAGS	+= --no-print-directory
--include $(DEP) $(DEP_BONUS)
-.PHONY: all bonus clean fclean re title
+include $(realpath ../extra-make/targets_lib.mk)

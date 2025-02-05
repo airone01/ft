@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 07:56:10 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/03 19:59:17 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 13:45:21 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ MILESTONES = $(sort $(foreach job,$(JOBS),$(word 1,$(subst :, ,$(job)))))
 
 default:
 	@$(ECHO) "$(MSG)👀 Please choose a project to build or run 'make all'.\n"
-	@$(ECHO) "\t\t    Run 'make list' to see all available projects.\n"
+	@$(ECHO) "$(MSG)👀 Run 'make list' to see all available projects.\n"
 
 # List all projects organized by milestone
 list:

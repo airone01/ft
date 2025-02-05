@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:45:02 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/04 13:21:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 16:52:30 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ TITLE			= \033[48;5;$(COLOR);30;1m
 RESET			= \033[0m
 GREEN			= \033[1;32m
 # Calculate padding length (you can adjust the total desired width)
-DESIRED_WIDTH	= 14
+DESIRED_WIDTH	= 17
 PADDING_LENGTH	= $(shell echo $$(($(DESIRED_WIDTH) - $(shell echo "$(GPM_FNAME) " | wc -c))))
 PADDING			= $(shell printf '%*s' $(PADDING_LENGTH))
 # Define message with dynamic padding

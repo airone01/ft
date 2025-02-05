@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 01:03:17 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 17:03:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,10 @@
 MINILIBX_SRC	=	$(_SRC_MINILIBX:%=$(MINILIBX_DIR)/%.c)
 MINILIBX		=	$(MINILIBX_DIR)/libmlx_Linux.a
 
+# LD
+LDLAGS	+= -L$(MINILIBX_DIR) -l:libmlx_Linux.a
 # CC
-CFLAGS	+= -L$(MINILIBX_DIR) -l:libmlx_Linux.a
+CFLAGS	+= -I$(MINILIBX_DIR)
 
 # Make target config
 NAME_DEPS_INDIRECT	+= $(MINILIBX)
