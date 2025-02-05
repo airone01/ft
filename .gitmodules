@@ -2,5 +2,5 @@
     path = extra-ps-visualizer
     url = https://github.com/o-reo/push_swap_visualizer
 [submodule "milestone-2-fdf/minilibx-linux"]
-	path = milestone-2-fdf/minilibx-linux
+	path = extra-minilibx
 	url = https://github.com/42Paris/minilibx-linux

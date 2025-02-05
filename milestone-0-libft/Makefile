@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:36:47 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 01:04:33 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,12 +69,6 @@ DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-title:
-	@$(ECHO) "$(MSG)   ___ __   _____\n"
-	@$(ECHO) "$(MSG)  / (_) /  / _/ /_\n"
-	@$(ECHO) "$(MSG) / / / _ \\/ _/ __/\n"
-	@$(ECHO) "$(MSG)/_/_/_.__/_/ \\__/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_lib_bonus.mk) # GPM!
 # GPM: make_target_lib_bonus
