@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:18:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:21:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 // GPM? begin ft_isdigit
 /**
@@ -16,7 +18,7 @@
  * @param	c	Character
  * @returns     Boolean result
  */
-int	ft_isdigit(int c)
+t_bool	ft_isdigit(char c)
 {
 	return (c >= '0' && c <= '9');
 }

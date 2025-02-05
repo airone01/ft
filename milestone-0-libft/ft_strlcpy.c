@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:25:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:11:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
  * @param	size	Number of characters to copy
  * @returns         Total length of the string the function tried to create
  */
-unsigned int	ft_strlcpy(char *dst, const char *src, size_t size)
+unsigned long	ft_strlcpy(char *dst, const char *src, unsigned long size)
 {
-	size_t	i;
+	unsigned long	i;
 
 	i = 0;
 	while (src[i])

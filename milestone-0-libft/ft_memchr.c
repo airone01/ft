@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:21:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:49:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @returns	pointer to the matching byte or NULL if the character does not occur
  * in the given memory area.
  */
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, uint8_t c, size_t n)
 {
 	uint8_t	*se;
 

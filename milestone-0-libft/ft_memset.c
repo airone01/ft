@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:22:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:48:43 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param	n	Size in number of bytes
  * @returns     Pointer to the memory area s
  */
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *s, uint8_t c, size_t n)
 {
 	uint8_t	*pt;
 

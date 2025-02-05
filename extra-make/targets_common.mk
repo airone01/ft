@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 17:05:24 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/05 22:31:32 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ $(OUT_DIR):
 
 $(OUT_DIR)%.o: %.c | Makefile $(OUT_DIR)
 	@$(ECHO) "$(MSG)⏳ $@\n"
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 BNAME_DEPS_INDIRECT = $(NAME_DEPS_INDIRECT)
 
