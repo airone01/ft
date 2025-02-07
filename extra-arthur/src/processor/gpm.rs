@@ -1,5 +1,5 @@
 use super::function::FunctionExtractor;
-use crate::config::push::PreprocessorConfig;
+use crate::config::preprocessor::PreprocessorConfig;
 use crate::error::GpmError;
 use crate::processor::{FileProcessor, FunctionExtractor as FunctionExtractorTrait};
 use regex::Regex;
