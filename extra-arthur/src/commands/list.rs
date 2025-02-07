@@ -1,19 +1,17 @@
-use std::path::PathBuf;
-use regex::Regex;
-use std::fs;
-use std::collections::HashMap;
-use walkdir::WalkDir;
-use prettytable::{Table, Row, Cell, format, row};
+use crossterm::style::Stylize;
 use log::{debug, info};
-use crossterm::style::{Stylize, StyledContent};
+use prettytable::{format, Cell, Row, Table};
+use regex::Regex;
+use std::collections::HashMap;
+use std::fs;
+use std::path::PathBuf;
+use walkdir::WalkDir;
 
-use crate::config::Config;
 use crate::config::push::PushConfigManager;
 use crate::Command;
 
 pub struct List {
     project_name: String,
-    config: Config,
     cwd: PathBuf,
 }
 
@@ -32,7 +30,6 @@ impl List {
     pub fn new(project_name: &str, cwd: PathBuf) -> Self {
         Self {
             project_name: project_name.to_string(),
-            config: Config::load(cwd.clone()).expect("Failed to load config"),
             cwd,
         }
     }
@@ -45,7 +42,8 @@ impl List {
         debug!("Scanning file: {}", path.display());
 
         // Regular expressions for detecting functions and directives
-        let fn_decl = Regex::new(r"^\s*(?:static\s+)?[a-zA-Z0-9_]+\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(")?;
+        let fn_decl =
+            Regex::new(r"^\s*(?:static\s+)?[a-zA-Z0-9_]+\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(")?;
         let gpm_directive = Regex::new(r"(?://|#)\s*GPM[!@]")?;
 
         // Determine file type
@@ -53,7 +51,8 @@ impl List {
         let is_source = path.extension().and_then(|s| s.to_str()) == Some("c");
 
         // Extract filename without extension (likely the function name in 42 projects)
-        let filename = path.file_stem()
+        let filename = path
+            .file_stem()
             .and_then(|s| s.to_str())
             .unwrap_or("")
             .to_string();
@@ -105,9 +104,18 @@ impl List {
         let format = format::FormatBuilder::new()
             .column_separator('│')
             .borders('│')
-            .separator(format::LinePosition::Top, format::LineSeparator::new('─', '┬', '╭', '╮'))
-            .separator(format::LinePosition::Title, format::LineSeparator::new('─', '┼', '├', '┤'))
-            .separator(format::LinePosition::Bottom, format::LineSeparator::new('─', '┴', '╰', '╯'))
+            .separator(
+                format::LinePosition::Top,
+                format::LineSeparator::new('─', '┬', '╭', '╮'),
+            )
+            .separator(
+                format::LinePosition::Title,
+                format::LineSeparator::new('─', '┼', '├', '┤'),
+            )
+            .separator(
+                format::LinePosition::Bottom,
+                format::LineSeparator::new('─', '┴', '╰', '╯'),
+            )
             .padding(1, 1)
             .build();
         table.set_format(format);
@@ -153,18 +161,26 @@ impl List {
         // Print summary
         println!("\n{}", "Summary:".bold());
         println!("Total functions: {}", sorted_fns.len());
-        println!("With headers: {}", sorted_fns.iter().filter(|&(_, info)| info.in_header).count());
-        println!("With GPM directives: {}", sorted_fns.iter().filter(|&(_, info)| info.has_gpm_directive).count());
+        println!(
+            "With headers: {}",
+            sorted_fns
+                .iter()
+                .filter(|&(_, info)| info.in_header)
+                .count()
+        );
+        println!(
+            "With GPM directives: {}",
+            sorted_fns
+                .iter()
+                .filter(|&(_, info)| info.has_gpm_directive)
+                .count()
+        );
     }
 }
 
 impl Command for List {
     fn execute(&mut self) -> anyhow::Result<()> {
-        // Get the project path from configuration
-        let project_path = self
-            .config
-            .get_project_path(&self.project_name)
-            .ok_or_else(|| anyhow::anyhow!("Project not found"))?;
+        let project_path = self.cwd.join(&self.project_name);
 
         info!("Analyzing project at: {}", project_path.display());
 
@@ -180,7 +196,9 @@ impl Command for List {
             let entry = entry?;
             let path = entry.path().to_path_buf();
 
-            if path.is_file() && matches!(path.extension().and_then(|s| s.to_str()), Some("c" | "h")) {
+            if path.is_file()
+                && matches!(path.extension().and_then(|s| s.to_str()), Some("c" | "h"))
+            {
                 let functions = self.scan_file(&path)?;
                 for (name, info) in functions {
                     let existing: &mut FunctionInfo = all_functions.entry(name).or_default();

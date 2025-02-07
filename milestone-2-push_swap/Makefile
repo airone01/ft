@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:38:25 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/07 17:49:32 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,7 @@
 # **************************************************************************** #
 
 include $(realpath ../extra-make/art.mk) # GPM!
-# GPM: make_ansi_color_codes
 COLOR			= $(COLOR_PUSH_SWAP)
-
-# **************************************************************************** #
-#                            COMMON ANSI VARIABLES                             #
-# **************************************************************************** #
-
-# GPM: make_ansi_color_variables
 
 # **************************************************************************** #
 #                                   METADATA                                   #
@@ -40,7 +33,6 @@ OUT_DIR 	= .out/
 # **************************************************************************** #
 
 include $(realpath ../extra-make/commands.mk)
-# GPM: make_commands
 
 # **************************************************************************** #
 #                                    LIBFT                                     #
@@ -57,7 +49,6 @@ GNL			= $(GNL_DIR)/get_next_line.a # GPM!
 # **************************************************************************** #
 
 include $(realpath ../extra-make/flags.mk) # GPM!
-# GPM: make_flags
 CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
 # GPM@ .CFLAGS			+= -I$(LIBFT_DIR)
 
@@ -65,7 +56,6 @@ CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
 #                                   SOURCES                                    #
 # **************************************************************************** #
 
-# GPM: make_src
 include $(realpath ../extra-make/sources.mk) # GPM!
 
 # **************************************************************************** #
@@ -86,7 +76,6 @@ DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.d)
 # **************************************************************************** #
 
 include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
 
 title:
 	@$(ECHO) "$(MSG)                  __\n"
@@ -97,7 +86,6 @@ title:
 	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_bin_libft_gnl_bonus.mk) # GPM!
-# GPM: make_target_bin_libft_bonus
 # GPM!
 visualizer: # GPM!
 	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/ # GPM!
@@ -111,4 +99,3 @@ visualize: visualizer $(NAME) # GPM!
 # **************************************************************************** #
 
 include $(realpath ../extra-make/make_meta.mk) # GPM!
-# GPM: make_make_meta
