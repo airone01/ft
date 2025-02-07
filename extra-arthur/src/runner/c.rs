@@ -11,8 +11,8 @@ use std::{
     time::Instant,
 };
 
-use walkdir::WalkDir;
 use async_trait::async_trait;
+use walkdir::WalkDir;
 
 use super::{IndividualResult, TestCase, TestError, TestResult, TestRunner, TestStatus};
 #[derive(Clone)]
@@ -23,14 +23,14 @@ pub struct CTestRunner {
 
 #[derive(Clone)]
 enum ProjectType {
-    Libft,
+    LibFt,
     GetNextLine,
 }
 
 impl CTestRunner {
     pub fn new(work_dir: PathBuf, project_name: &str) -> Self {
         let project_type = match project_name {
-            "ft" => ProjectType::Libft,
+            "ft" => ProjectType::LibFt,
             "gnl" => ProjectType::GetNextLine,
             _ => panic!("Unsupported project type"),
         };
@@ -52,11 +52,8 @@ impl CTestRunner {
 
         // Add project-specific compilation flags
         match self.project_type {
-            ProjectType::Libft => {
-                command
-                    .arg("-L.")
-                    .arg("-I.")
-                    .arg("-lft");
+            ProjectType::LibFt => {
+                command.arg("-L.").arg("-I.").arg("-lft");
             }
             ProjectType::GetNextLine => {
                 // Find and compile get_next_line source files
@@ -76,10 +73,7 @@ impl CTestRunner {
 
                 // Add source files and include directory
                 command.args(&source_files);
-                command
-                    .arg("-I.")
-                    .arg("-D")
-                    .arg("BUFFER_SIZE=42");
+                command.arg("-I.").arg("-D").arg("BUFFER_SIZE=42");
             }
         }
 

@@ -31,7 +31,7 @@ impl TestError {
             TestError::Compilation(_) => "C".red().bold(),
             TestError::Runtime(_) => "R".red().bold(),
             TestError::FileSystem(_) => "F".red().bold(),
-            TestError::Other(_) => "E".red().bold(),
+            TestError::Other(_) => "E (test is probably broken) ".red().bold(),
         }
     }
 }

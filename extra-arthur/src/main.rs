@@ -9,9 +9,9 @@ use tokio;
 
 use arthur::{
     cli::{Cli, Commands, ProjectCommands},
-    commands::{submit::Submit, test::Test, list::List},
-    projects::{GetNextLineTest, LibftTest, Project},
-    runner::{c::CTestRunner, results::TestResults, run_project_tests, TestLoader, TestRunner},
+    commands::{list::List, submit::Submit, test::Test},
+    projects::{GetNextLineTest, LibFtTest, Project},
+    runner::{c::CTestRunner, run_project_tests},
     Command as _,
 };
 
@@ -84,9 +84,9 @@ async fn main() -> anyhow::Result<()> {
 
             // Load test cases for the project
             match project {
-                Project::Libft => {
+                Project::LibFt => {
                     let runner = CTestRunner::new(cli.cwd.clone(), "ft");
-                    let test_results = run_project_tests(LibftTest::new(), runner).await;
+                    let test_results = run_project_tests(LibFtTest::new(), runner).await;
                     test_results.display_summary();
                 }
                 Project::GetNextLine => {

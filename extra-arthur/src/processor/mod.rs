@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 pub(crate) mod function;
 pub(crate) mod gpm;
 
-pub(crate) trait FileProcessor {
+pub trait FileProcessor {
     fn process_file(&self, input: &Path, output: &Path) -> anyhow::Result<()>;
     fn process_directory(&self, input: &Path, output: &Path) -> anyhow::Result<()>;
 }
