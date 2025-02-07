@@ -1,9 +1,0 @@
-{
-  "apps": [
-    {
-      "name": "quack",
-      "script": "bun",
-      "args": "index.ts"
-    }
-  ]
-}
