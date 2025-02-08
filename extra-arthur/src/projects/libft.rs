@@ -5,7 +5,7 @@ use log::debug;
 
 use crate::runner::{cat_e::CatE, TestCase, TestLoader};
 
-pub struct LibftTest {
+pub struct LibFtTest {
     test_files: Vec<TestFile>,
 }
 
@@ -21,7 +21,7 @@ struct TestInput {
 }
 
 #[async_trait]
-impl TestLoader for LibftTest {
+impl TestLoader for LibFtTest {
     async fn load_tests(&mut self) -> std::io::Result<()> {
         // Existing load_tests implementation
         self.load_tests().await
@@ -33,7 +33,7 @@ impl TestLoader for LibftTest {
     }
 }
 
-impl LibftTest {
+impl LibFtTest {
     pub fn new() -> Self {
         Self { test_files: vec![] }
     }

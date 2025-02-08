@@ -1,5 +1,4 @@
 use crate::config::push::PushConfigManager;
-use crate::config::Config;
 use crate::processor::gpm::GpmProcessor;
 use crate::Command;
 use crossterm::style::Stylize;
@@ -9,7 +8,7 @@ use tempfile::TempDir;
 
 pub struct Test {
     project_name: String,
-    config: Config,
+    cwd: PathBuf,
 }
 
 struct ValidationResults {
@@ -21,15 +20,12 @@ impl Test {
     pub fn new(cwd: PathBuf, project_name: &str) -> Self {
         Self {
             project_name: project_name.to_string(),
-            config: Config::load(cwd).expect("Failed to load config"),
+            cwd,
         }
     }
 
     fn prepare_test(&self) -> anyhow::Result<PathBuf> {
-        let project_path = self
-            .config
-            .get_project_path(&self.project_name)
-            .ok_or_else(|| anyhow::anyhow!("Project not found"))?;
+        let project_path = self.cwd.join(&self.project_name);
 
         // Load push.toml configuration
         let config_manager = PushConfigManager::new();
@@ -60,7 +56,10 @@ impl Test {
 
             // Process or copy the file
             if push_config.submit.preprocessor.enable_gpm
-                && matches!(file.extension().and_then(|s| s.to_str()), Some("c" | "h" | "Makefile" | "makefile"))
+                && matches!(
+                    file.extension().and_then(|s| s.to_str()),
+                    Some("c" | "h" | "Makefile" | "makefile")
+                )
             {
                 processor.process_file(&file, &output_path, &push_config.submit.preprocessor)?;
                 println!("{} GPM directives processed", "✓".green());

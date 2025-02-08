@@ -2,19 +2,17 @@ use std::path::{Path, PathBuf};
 use std::process::Command as ProcessCommand;
 
 use crate::config::push::{PushConfigManager, PushConfiguration};
-use crate::config::Config;
 use crate::processor::gpm::GpmProcessor;
 use crate::Command;
 
 use anyhow::Context;
 use crossterm::style::Stylize;
-use tempfile::TempDir;
 use log::{debug, info, trace};
+use tempfile::TempDir;
 
 pub struct Submit {
     project_name: String,
     target_repo: String,
-    config: Config,
     push_config: Option<PushConfiguration>,
     cwd: PathBuf,
 }
@@ -24,7 +22,6 @@ impl Submit {
         Self {
             project_name: project_name.to_string(),
             target_repo: target_repo.to_string(),
-            config: Config::load(cwd.clone()).expect("Failed to load config"),
             push_config: None,
             cwd,
         }
@@ -110,11 +107,7 @@ impl Submit {
 
     fn prepare_submission(&mut self) -> anyhow::Result<TempDir> {
         // Resolve project path relative to cwd
-        let project_path = self.cwd.join(
-            self.config
-                .get_project_path(&self.project_name)
-                .ok_or_else(|| anyhow::anyhow!("Project not found"))?,
-        );
+        let project_path = self.cwd.join(&self.project_name);
 
         // Load push.toml configuration
         let config_manager = PushConfigManager::new();
@@ -140,8 +133,8 @@ impl Submit {
             // Process or copy the file
             if push_config.submit.preprocessor.enable_gpm
                 && (matches!(file.extension().and_then(|s| s.to_str()), Some("c" | "h"))
-                || file.file_name().and_then(|s| s.to_str()) == Some("Makefile")
-                || file.file_name().and_then(|s| s.to_str()) == Some("makefile"))
+                    || file.file_name().and_then(|s| s.to_str()) == Some("Makefile")
+                    || file.file_name().and_then(|s| s.to_str()) == Some("makefile"))
             {
                 trace!("Applying potential GPM processing to {}", file.display());
                 processor.process_file(&file, &output_path, &push_config.submit.preprocessor)?;
@@ -179,11 +172,7 @@ impl Submit {
 
 impl Command for Submit {
     fn execute(&mut self) -> anyhow::Result<()> {
-        // First load and validate push config
-        let project_path = self
-            .config
-            .get_project_path(&self.project_name)
-            .ok_or_else(|| anyhow::anyhow!("Project not found"))?;
+        let project_path = self.cwd.join(&self.project_name);
 
         let config_manager = PushConfigManager::new();
         let push_config = config_manager.load_push_config(&project_path)?;

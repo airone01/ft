@@ -3,14 +3,7 @@
 # **************************************************************************** #
 
 include $(realpath ../extra-make/art.mk) # GPM!
-# GPM: make_ansi_color_codes
 COLOR			= $(COLOR_GET_NEXT_LINE)
-
-# **************************************************************************** #
-#                            COMMON ANSI VARIABLES                             #
-# **************************************************************************** #
-
-# GPM: make_ansi_color_variables
 
 # **************************************************************************** #
 #                                   METADATA                                   #
@@ -27,14 +20,12 @@ OUT_DIR 	= .out/
 # **************************************************************************** #
 
 include $(realpath ../extra-make/commands.mk) # GPM!
-# GPM: make_commands
 
 # **************************************************************************** #
 #                                    FLAGS                                     #
 # **************************************************************************** #
 
 include $(realpath ../extra-make/flags.mk) # GPM!
-# GPM: make_flags
 CFLAGS			+= -I$(LIBFT_DIR)
 
 # **************************************************************************** #
@@ -49,7 +40,6 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 #                                   SOURCES                                    #
 # **************************************************************************** #
 
-# GPM: make_src
 include $(realpath ../extra-make/sources.mk) # GPM!
 
 # **************************************************************************** #
@@ -69,7 +59,6 @@ DEP_BONUS	= $(_SRC_GNL_BONUS:%=$(OUT_DIR)%.d)
 # **************************************************************************** #
 
 include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
 
 title:
 	@$(ECHO) "$(MSG)             __\n"
@@ -80,15 +69,13 @@ title:
 	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_lib_libft.mk) # GPM!
-# GPM: make_target_lib_libft
-# GPM
-checker: $(OBJ) $(OBJ_TEST) $(LIBFT) # GPM
-	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n" # GPM
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS) # GPM
+# GPM!
+checker: $(OBJ) $(OBJ_TEST) $(LIBFT) # GPM!
+	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n" # GPM!
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_FLAGS) # GPM!
 
 # **************************************************************************** #
 #                                MAKE METADATA                                 #
 # **************************************************************************** #
 
 include $(realpath ../extra-make/make_meta.mk) # GPM!
-# GPM: make_make_meta

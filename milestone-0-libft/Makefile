@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:36:47 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/07 17:47:29 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,7 @@
 # **************************************************************************** #
 
 include $(realpath ../extra-make/art.mk) # GPM!
-# GPM: make_ansi_color_codes
 COLOR			= $(COLOR_LIBFT)
-
-# **************************************************************************** #
-#                            COMMON ANSI VARIABLES                             #
-# **************************************************************************** #
-
-# GPM: make_ansi_color_variables
 
 # **************************************************************************** #
 #                                   METADATA                                   #
@@ -38,20 +31,17 @@ OUT_DIR 	= .out/
 # **************************************************************************** #
 
 include $(realpath ../extra-make/commands.mk) # GPM!
-# GPM: make_commands
 
 # **************************************************************************** #
 #                                    FLAGS                                     #
 # **************************************************************************** #
 
 include $(realpath ../extra-make/flags.mk) # GPM!
-# GPM: make_flags
 
 # **************************************************************************** #
 #                                   SOURCES                                    #
 # **************************************************************************** #
 
-# GPM: make_src
 include $(realpath ../extra-make/sources.mk) # GPM!
 
 # **************************************************************************** #
@@ -67,7 +57,6 @@ DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
 # **************************************************************************** #
 
 include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
 
 title:
 	@$(ECHO) "$(MSG)   ___ __   _____\n"
@@ -77,7 +66,6 @@ title:
 	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/targets_lib_bonus.mk) # GPM!
-# GPM: make_target_lib_bonus
 
 # ----------- Make meta ----------
 MAKEFLAGS	+= --no-print-directory

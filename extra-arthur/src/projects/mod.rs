@@ -4,18 +4,18 @@
 //! - Detecting project type from directory contents
 //! - Loading appropriate test configurations
 //! - Managing project-specific settings
-pub mod libft;
 pub mod gnl;
+pub mod libft;
 
-use log::{trace, info, warn};
+use log::{info, trace, warn};
 use std::{fs, path::Path};
 
-pub use libft::*;
 pub use gnl::*;
+pub use libft::*;
 
 #[derive(Debug)]
 pub enum Project {
-    Libft,
+    LibFt,
     GetNextLine,
     Unknown,
 }
@@ -39,12 +39,15 @@ impl Project {
 
         // For libft, check if libft.h exists
         if files.iter().any(|f| f == "libft.h") {
-            info!("Found libft.h - detected as Libft project");
-            return Project::Libft;
+            info!("Found libft.h - detected as LibFt project");
+            return Project::LibFt;
         }
 
         // Check for get_next_line first (more specific)
-        if files.iter().any(|f| f.contains("get_next_line.h") || f.contains("get_next_line_bonus.h")) {
+        if files
+            .iter()
+            .any(|f| f.contains("get_next_line.h") || f.contains("get_next_line_bonus.h"))
+        {
             info!("Found get_next_line header - detected as Get Next Line project");
             return Project::GetNextLine;
         }
