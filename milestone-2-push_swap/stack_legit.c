@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:00:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/16 16:16:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:10:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
  */
 int	stack_legit(t_stack *stack)
 {
-	ssize_t	size;
+	long	size;
 
 	if (!stack)
 		return (stack_clear_error(stack), 1);
-	size = stack_size(stack);
+	size = (long)stack_size(stack);
 	if (size < 1)
 		return (stack_clear_error(stack), 1);
 	if (size <= 1)

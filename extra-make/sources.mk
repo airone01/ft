@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 19:12:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/10 20:15:34 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ _SRC_LIBFT_COMMON			=	\
 	ft_isascii					\
 	ft_isdigit					\
 	ft_isprint					\
+	ft_isspace					\
 	ft_itoa						\
 	ft_lstat_bonus				\
 	ft_lstadd_back_bonus		\

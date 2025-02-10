@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 16:37:31 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 20:00:13 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/10 20:24:40 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,6 @@ $(NAME): $(OBJ)
 
 $(BNAME): $(OBJ_BONUS) | $(BNAME_DEPS_INDIRECT)
 	@$(ECHO) "$(MSG)🏗️  Building bonuses for $(NAME)\n"
-	@$(CC) $(CFLAGS) -o $(BNAME) $^
+	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(LDFLAGS)
 	@touch .bonus
 	@$(ECHO) "$(SUCCESSB)\n"

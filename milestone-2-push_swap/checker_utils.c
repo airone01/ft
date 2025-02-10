@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 20:15:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/16 16:20:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:20:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-size_t	execute_s(char *line, t_stack **stack_a, t_stack **stack_b)
+long	execute_s(char *line, t_stack **stack_a, t_stack **stack_b)
 {
 	if (!ft_strcmp("sa\n", line))
 		return (sa(*stack_a, 0), 1);
@@ -23,7 +23,7 @@ size_t	execute_s(char *line, t_stack **stack_a, t_stack **stack_b)
 	return (0);
 }
 
-size_t	execute_p(char *line, t_stack **stack_a, t_stack **stack_b)
+long	execute_p(char *line, t_stack **stack_a, t_stack **stack_b)
 {
 	if (!ft_strcmp("pa\n", line))
 		return (pa(stack_a, stack_b, 0), 1);
@@ -32,7 +32,7 @@ size_t	execute_p(char *line, t_stack **stack_a, t_stack **stack_b)
 	return (0);
 }
 
-size_t	execute_r(char *line, t_stack **stack_a, t_stack **stack_b)
+long	execute_r(char *line, t_stack **stack_a, t_stack **stack_b)
 {
 	if (!ft_strcmp("ra\n", line))
 		return (ra(stack_a, 0), 1);
@@ -43,7 +43,7 @@ size_t	execute_r(char *line, t_stack **stack_a, t_stack **stack_b)
 	return (0);
 }
 
-size_t	execute_rr(char *line, t_stack **stack_a, t_stack **stack_b)
+long	execute_rr(char *line, t_stack **stack_a, t_stack **stack_b)
 {
 	if (!ft_strcmp("rra\n", line))
 		return (rra(stack_a, 0), 1);
@@ -57,18 +57,18 @@ size_t	execute_rr(char *line, t_stack **stack_a, t_stack **stack_b)
 /**
  * User is responsible for clearing stack_a
  */
-size_t	execute(t_stack **stack_a)
+long	execute(t_stack **stack_a)
 {
 	t_stack	*stack_b;
-	size_t	detected;
-	size_t	fd;
+	long	detected;
+	long	fd;
 	char	*line;
 
 	fd = 0;
 	stack_b = NULL;
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = get_next_line((int)fd);
 		if (!line)
 			return (stack_clear(stack_b), 1);
 		if (!*line)

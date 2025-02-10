@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 15:25:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/16 16:16:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:11:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static void	get_position(t_stack **stack)
 {
 	t_stack	*tmp;
-	ssize_t	i;
+	long	i;
 
 	i = 0;
 	tmp = *stack;
@@ -31,11 +31,11 @@ static void	get_position(t_stack **stack)
 	}
 }
 
-ssize_t	stack_lowest_pos(t_stack **stack)
+long	stack_lowest_pos(t_stack **stack)
 {
 	t_stack	*tmp;
-	int		lowest_index;
-	int		lowest_pos;
+	long	lowest_index;
+	long	lowest_pos;
 
 	tmp = *stack;
 	lowest_index = INT_MAX;

@@ -6,32 +6,17 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 18:37:35 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/16 16:21:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:18:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <errno.h>
 
-//#include <stdio.h>
-//
-// void	stack_display(t_stack *stack)
-//{
-//	int		i;
-//
-//	i = 0;
-//	printf("Index\tValue\n");
-//    while (stack)
-//	{
-//		printf("%d\t%zd\n", i++, stack->val);
-//		stack = stack->next;
-//	}
-//}
-
 int	run_program(int argc, char **argv)
 {
 	t_stack	*stack_a;
-	size_t	sorted;
+	long	sorted;
 
 	if (!args_legit(argc, argv))
 		return (std_error(), 1);
