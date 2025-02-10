@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/27 19:12:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:43:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
  */
 void	ft_buff_clean(char *buff)
 {
-	size_t	i;
-	size_t	j;
+	long	i;
+	long	j;
 
 	i = 0;
 	while (buff[i] != '\n' && buff[i] != 0)
@@ -35,9 +35,9 @@ void	ft_buff_clean(char *buff)
 	buff[j] = 0;
 }
 
-size_t	is_line(const char *str)
+long	is_line(const char *str)
 {
-	size_t	i;
+	long	i;
 
 	i = 0;
 	while (str && str[i])
@@ -50,7 +50,7 @@ size_t	is_line(const char *str)
 }
 
 char	*ft_strjoin_free(char *left, char buffer[BUFFER_SIZE + 1], char *line,
-		ssize_t bytes_read)
+		long bytes_read)
 {
 	char	*new;
 
@@ -77,7 +77,7 @@ char	*ft_strjoin_free(char *left, char buffer[BUFFER_SIZE + 1], char *line,
 char	*get_next_line(int fd)
 {
 	static char	buffer[FD_SIZE][BUFFER_SIZE + 1];
-	ssize_t		bytes_read;
+	long		bytes_read;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || FD_SIZE <= 0 || fd >= FD_SIZE)

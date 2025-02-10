@@ -41,4 +41,4 @@ include $(realpath ../extra-make/lib_libft.mk)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-include $(realpath ../extra-make/targets_bin.mk)
+include $(realpath ../extra-make/targets_lib.mk)
