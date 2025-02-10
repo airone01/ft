@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:17:07 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/29 16:21:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:50:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief	Exits the program safely with an error number
  */
-void	app_exit_errno(t_app app, size_t errno_p)
+void	app_exit_errno(t_app app, unsigned long errno_p)
 {
-	errno = errno_p;
+	errno = (int)errno_p;
 	app_exit(app);
 }
 

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 16:13:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:53:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "../milestone-0-libft/libft.h"                 // GPM!
 # include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
 # include "../milestone-1-get_next_line/get_next_line.h" // GPM!
+
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>
@@ -43,7 +44,7 @@ typedef struct s_app
 }			t_app;
 
 // Global data functions
-void		app_exit_errno(t_app app, size_t errno_p);
+void		app_exit_errno(t_app app, unsigned long errno_p);
 void		app_exit(t_app app);
 t_app		app_new(char **envp);
 
@@ -62,7 +63,7 @@ char		**cmda_args(t_app *app, char *cmd);
 void		populate_cmdas(t_app *app, int argc, char **argv);
 void		cmda_print(void *content);
 void		cmda_free(void *cmda);
-int			args_valid(t_app *app, size_t argc, char **argv);
+int			args_valid(t_app *app, unsigned long argc, char **argv);
 
 // Path resolution
 char		*path_find_bin(t_app *app, char *path, char *bin);
