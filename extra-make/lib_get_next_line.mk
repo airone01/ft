@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 19:38:25 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/10 20:39:02 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ GNL_SRC	=	$(_SRC_GNL:%=$(GNL_DIR)/%.c)
 GNL		=	$(GNL_DIR)/get_next_line.a
 
 # LD
-LDFLAGS	+= -L$(GNL_DIR) -l:get_next_line.a
+LDFLAGS	:= -L$(GNL_DIR) -l:get_next_line.a $(LDFLAGS)
 # CC
 CFLAGS	+= -I$(GNL_DIR)
 

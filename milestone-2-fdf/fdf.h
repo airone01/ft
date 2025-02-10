@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/04 13:30:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:31:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef FDF_H
+#ifndef FDF_H
 # define FDF_H
 
 # include "../milestone-0-libft/libft.h"                 // GPM!
