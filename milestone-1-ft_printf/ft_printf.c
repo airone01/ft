@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                     _    ⣀⣀⣀⡀⡀⡀⡀⣀⡀⣀⣀⣀⡀  */
-/*   ft_printf.c                                   _ _/ |   ⡇⣶⡆⡇⡾⢏⡭⡵⠀⡇⣶⡆⡇  */
-/*                                                | '_| |_  ⣓⣒⠒⡃⡂⣏⡆⡯⢇⠓⠶⠖⡃  */
-/*   By: elagouch <elagouch@student.42.fr>        |_|_|_(@) ⢻⣊⡞⣪⢳⡗⣳⢤⣈⢍⣰⢖⡇  */
-/*                                                | | |_  ) ⠜⡲⡢⣲⡯⡼⡑⡁⣝⣘⡚⢠⠅  */
-/*   Created: 2024/11/19 13:56:34 by elagouch     |_  _/ /  ⡖⣒⡒⡆⠉⠧⢰⣮⣇⣂⡏⡳⡆  */
-/*   Updated: 2024/11/19 14:00:17 by elagouch       |_/___| ⣇⣛⣃⡇⡿⢤⠤⠾⠡⠹⢝⣚⡁  */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/19 13:56:34 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/10 19:23:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,28 @@
 #include <stddef.h>
 #include <unistd.h>
 
-static ssize_t	pf_display2(va_list *args, const char *format)
+static long	pf_display2(va_list *args, const char *format)
 {
 	if (*format == 'x')
 		return (ft_putnbr_base_ssize_ulong(va_arg(*args, unsigned int),
-				"0123456789abcdef"));
+				(char *)"0123456789abcdef"));
 	else if (*format == 'X')
 		return (ft_putnbr_base_ssize_ulong(va_arg(*args, unsigned int),
-				"0123456789ABCDEF"));
+				(char *)"0123456789ABCDEF"));
 	else if (*format == '%')
 		return (ft_putchar_ssize('%'));
 	return (0);
 }
 
-static ssize_t	pt_display(uintptr_t ptr)
+static long	pt_display(uintptr_t ptr)
 {
 	if (ptr == 0)
-		return (ft_putstr_ssize("(nil)"));
-	return (ft_putstr_ssize("0x") + ft_putnbr_base_ssize_ulong(ptr,
-			"0123456789abcdef"));
+		return (ft_putstr_ssize((char *)"(nil)"));
+	return (ft_putstr_ssize((char *)"0x") + ft_putnbr_base_ssize_ulong(ptr,
+			(char *)"0123456789abcdef"));
 }
 
-static ssize_t	pf_display(va_list *args, const char *format)
+static long	pf_display(va_list *args, const char *format)
 {
 	void	*tmp;
 
@@ -51,10 +51,11 @@ static ssize_t	pf_display(va_list *args, const char *format)
 	else if (*format == 'p')
 		return (pt_display(va_arg(*args, uintptr_t)));
 	else if (*format == 'd' || *format == 'i')
-		return (ft_putnbr_base_ssize_int(va_arg(*args, int), "0123456789"));
+		return (ft_putnbr_base_ssize_int(va_arg(*args, int),
+				(char *)"0123456789"));
 	else if (*format == 'u')
 		return (ft_putnbr_base_ssize_ulong(va_arg(*args, unsigned int),
-				"0123456789"));
+				(char *)"0123456789"));
 	return (pf_display2(args, format));
 }
 
@@ -72,7 +73,7 @@ static ssize_t	pf_display(va_list *args, const char *format)
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	size_t	count;
+	long	count;
 
 	count = 0;
 	va_start(args, format);
@@ -85,5 +86,5 @@ int	ft_printf(const char *format, ...)
 		format++;
 	}
 	va_end(args);
-	return (count);
+	return ((int)count);
 }

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 17:03:03 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/10 19:38:19 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT_SRC	=	$(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
 # LD
-LDLAGS	+= -L$(LIBFT_DIR) -l:libft.a
+LDFLAGS	+= -L$(LIBFT_DIR) -l:libft.a
 # CC
 CFLAGS	+= -I$(LIBFT_DIR)
 

@@ -1,4 +1,16 @@
 # **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/10 19:35:51 by elagouch          #+#    #+#              #
+#    Updated: 2025/02/10 19:40:22 by elagouch         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# **************************************************************************** #
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 
@@ -41,4 +53,4 @@ include $(realpath ../extra-make/lib_libft.mk)
 include $(realpath ../extra-make/targets_common.mk) # GPM!
 # GPM: make_target_common
 
-include $(realpath ../extra-make/targets_bin.mk)
+include $(realpath ../extra-make/targets_lib.mk)

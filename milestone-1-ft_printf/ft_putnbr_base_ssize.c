@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_base_ssize.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:37:33 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/02 18:17:30 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:36:39 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include <limits.h>
 #include <unistd.h>
 
-static size_t	bad_base(char *base)
+static unsigned long	bad_base(char *base)
 {
-	size_t	i;
-	size_t	j;
+	unsigned long	i;
+	unsigned long	j;
 
 	if (!base || !base[0] || !base[1])
 		return (1);
@@ -40,15 +40,15 @@ static size_t	bad_base(char *base)
 	return (0);
 }
 
-ssize_t	ft_putnbr_base_ssize_int(int nbr, char *base)
+long	ft_putnbr_base_ssize_int(int nbr, char *base)
 {
-	ssize_t	count;
-	size_t	base_len;
+	long	base_len;
+	long	count;
 
 	if (bad_base(base))
 		return (0);
 	count = 0;
-	base_len = ft_strlen(base);
+	base_len = (long)ft_strlen(base);
 	if (nbr == INT_MIN)
 	{
 		count += write(1, "-2147483648", 11);
@@ -66,23 +66,23 @@ ssize_t	ft_putnbr_base_ssize_int(int nbr, char *base)
 	return (count);
 }
 
-ssize_t	ft_putnbr_base_ssize_ulong(uintptr_t nbr, char *base)
+long	ft_putnbr_base_ssize_ulong(uintptr_t nbr, char *base)
 {
-	ssize_t	count;
-	size_t	base_len;
+	long	base_len;
+	long	count;
 
 	if (bad_base(base))
 		return (0);
 	count = 0;
-	base_len = ft_strlen(base);
+	base_len = (long)ft_strlen(base);
 	if ((long)nbr < 0)
 	{
 		count += write(1, "-", 1);
 		count += ft_putnbr_base_ssize_ulong(-nbr, base);
 		return (count);
 	}
-	if (nbr >= base_len)
-		count += ft_putnbr_base_ssize_ulong(nbr / base_len, base);
-	count += write(1, &(base[nbr % base_len]), 1);
+	if (nbr >= (uintptr_t)base_len)
+		count += ft_putnbr_base_ssize_ulong(nbr / (uintptr_t)base_len, base);
+	count += write(1, &(base[nbr % (uintptr_t)base_len]), 1);
 	return (count);
 }
