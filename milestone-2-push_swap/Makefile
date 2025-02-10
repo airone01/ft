@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/07 17:49:32 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/10 19:12:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ COLOR			= $(COLOR_PUSH_SWAP)
 
 GPM_MSTONE	= 2
 GPM_NAME	= push_swap
-GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
+GPM_MNAME	= PUSH_SWAP
 NAME		= push_swap
 BNAME		= checker
 OUT_DIR 	= .out/

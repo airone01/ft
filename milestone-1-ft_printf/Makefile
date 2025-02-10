@@ -11,7 +11,7 @@ COLOR			= $(COLOR_FT_PRINTF)
 
 GPM_MSTONE	:= 1
 GPM_NAME	:= ft_printf
-GPM_MNAME	:= PRINTF
+GPM_MNAME	:= FT_PRINTF
 NAME		:= libftprintf.a
 BNAME		:= blibftprintf.a
 OUT_DIR 	:= .out/
