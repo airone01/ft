@@ -1,31 +1,10 @@
-use crate::error::GpmError;
+use crate::{config::text_replacement::TextReplacement, error::GpmError};
 use anyhow::Context;
 use globset::{Glob, GlobSetBuilder};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct FileCopyConfig {
-    /// Source file or glob pattern
-    pub source: String,
-    /// Optional destination path (relative to project root)
-    /// If not specified, maintains same path structure as source
-    pub destination: Option<String>,
-    /// Whether to flatten directory structure when copying
-    #[serde(default)]
-    pub flatten: bool,
-    /// Text replacements to apply during copying
-    #[serde(default)]
-    pub replace: Vec<TextReplacement>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Default)]
-pub struct TextReplacement {
-    /// Text to find
-    pub find: String,
-    /// Text to replace with
-    pub replace_with: String,
-}
+use super::submit::SubmitConfig;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PushConfiguration {
@@ -37,40 +16,6 @@ pub struct PushConfiguration {
 pub struct ProjectInfo {
     pub name: String,
     pub version: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct SubmitConfig {
-    pub files: Vec<String>,
-    pub exclude: Option<Vec<String>>,
-    pub preprocessor: PreprocessorConfig,
-    #[serde(default)]
-    pub hooks: HooksConfig,
-    #[serde(default)]
-    pub validation: ValidationConfig,
-    /// Configuration for copying additional files
-    #[serde(default)]
-    pub copy: Vec<FileCopyConfig>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct PreprocessorConfig {
-    pub enable_gpm: bool,
-    pub function_paths: Vec<PathBuf>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Default)]
-pub struct HooksConfig {
-    pub pre_submit: Option<String>,
-    pub post_submit: Option<String>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Default)]
-pub struct ValidationConfig {
-    #[serde(default)]
-    pub norminette: bool,
-    #[serde(default)]
-    pub make_test: bool,
 }
 
 pub struct PushConfigManager;
@@ -352,33 +297,5 @@ impl PushConfigManager {
                 path.file_name().and_then(|s| s.to_str()),
                 Some("Makefile" | "makefile")
             )
-    }
-}
-
-impl PreprocessorConfig {
-    pub fn validate(&self, project_path: &Path) -> anyhow::Result<()> {
-        if self.enable_gpm {
-            // Validate function paths
-            if self.function_paths.is_empty() {
-                return Err(GpmError::ConfigError(
-                    "No function paths specified while GPM is enabled".into(),
-                )
-                .into());
-            }
-
-            // Check if paths exist relative to project directory
-            for path in &self.function_paths {
-                let full_path = project_path.join(path);
-                if !full_path.exists() {
-                    return Err(GpmError::ConfigError(format!(
-                        "Function path does not exist: {}",
-                        full_path.display()
-                    ))
-                    .into());
-                }
-            }
-        }
-
-        Ok(())
     }
 }

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/15 17:34:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:01:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// Libft
+// LibFt
 size_t	ft_strlen(const char *str);
 size_t	is_line(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);

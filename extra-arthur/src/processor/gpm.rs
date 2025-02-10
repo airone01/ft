@@ -1,5 +1,5 @@
 use super::function::FunctionExtractor;
-use crate::config::push::PreprocessorConfig;
+use crate::config::preprocessor::PreprocessorConfig;
 use crate::error::GpmError;
 use crate::processor::{FileProcessor, FunctionExtractor as FunctionExtractorTrait};
 use regex::Regex;
@@ -70,7 +70,7 @@ impl GpmProcessor {
                         "Function '{}' not found in any search path",
                         func_name
                     ))
-                        .into());
+                    .into());
                 }
             } else if let Some(captures) = self.gpm_strip_comment_regex.captures(line) {
                 // For GPM@ .directives, only keep the content after GPM@
@@ -124,7 +124,9 @@ impl FileProcessor for GpmProcessor {
                 };
 
                 match path.extension().and_then(|s| s.to_str()) {
-                    Some("c" | "h" | "Makefile" | "makefile") => self.process_file(path, &output_path, &config)?,
+                    Some("c" | "h" | "Makefile" | "makefile") => {
+                        self.process_file(path, &output_path, &config)?
+                    }
                     _ => {
                         fs::copy(path, &output_path)?;
                     }
