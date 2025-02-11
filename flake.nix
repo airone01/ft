@@ -17,12 +17,8 @@
           # Node tools
           nodejs_22
           bun
-          nodePackages.prisma
           openssl
           lld
-
-          # Prisma
-          prisma-engines
 
           # Sharp
           stdenv.cc.cc.lib
@@ -41,13 +37,6 @@
           valgrind
         ];
         shellHook = with pkgs; ''
-          # Prisma
-          export PRISMA_SCHEMA_ENGINE_BINARY="${prisma-engines}/bin/schema-engine"
-          export PRISMA_QUERY_ENGINE_BINARY="${prisma-engines}/bin/query-engine"
-          export PRISMA_QUERY_ENGINE_LIBRARY="${prisma-engines}/lib/libquery_engine.node"
-          # https://www.prisma.io/docs/orm/more/under-the-hood/engines
-          #export PRISMA_INTROSPECTION_ENGINE_BINARY="${prisma-engines}/bin/introspection-engine"
-          export PRISMA_FMT_BINARY="${prisma-engines}/bin/prisma-fmt"
           export PATH="$PWD/node_modules/.bin/:$PATH"
           # Sharp
           export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib:"
