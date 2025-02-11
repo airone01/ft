@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 22:43:16 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/10 20:31:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FDF_H
+# define FDF_H
 
-/**
- * Counts the number of nodes in a list.
- * @param	lst	The beginning of the list
- * @returns     The length of the list
- */
-unsigned long	ft_lstsize(t_list *lst)
-{
-	unsigned long	i;
+# include "../milestone-0-libft/libft.h"                 // GPM!
+# include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
+# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
+# include <errno.h>
+# include <error.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
-}
+#endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:20:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:41:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 // GPM? begin ft_itoa
 // GPM? begin ft_itoa_base
-static size_t	get_num_len(int n, const char *b)
+static long	get_num_len(int n, const char *b)
 {
-	size_t	len;
-	size_t	bl;
+	long	len;
+	long	bl;
 	long	num;
 
 	len = 0;
 	if (n <= 0)
 		len = 1;
-	bl = ft_strlen(b);
+	bl = (long)ft_strlen(b);
 	num = n;
 	if (n < 0)
-		num = -(long)n;
+		num = -n;
 	while (num > 0)
 	{
 		num /= bl;
@@ -35,19 +35,19 @@ static size_t	get_num_len(int n, const char *b)
 	return (len);
 }
 
-static void	fill_number(char *s, int n, int len, const char *b)
+static void	fill_number(char *s, int n, long len, const char *b)
 {
-	size_t	bl;
+	long	bl;
 	long	num;
 	int		is_negative;
 
-	bl = ft_strlen(b);
+	bl = (long)ft_strlen(b);
 	is_negative = 0;
 	if (n < 0)
 		is_negative = 1;
 	num = n;
 	if (is_negative)
-		num = -(long)n;
+		num = -n;
 	s[len] = '\0';
 	while (len > is_negative)
 	{
@@ -69,13 +69,13 @@ static void	fill_number(char *s, int n, int len, const char *b)
  */
 char	*ft_itoa_base(int n, const char *b)
 {
-	size_t	len;
+	long	len;
 	char	*s;
 
 	if (!b)
 		return (NULL);
 	len = get_num_len(n, b);
-	s = ft_calloc(len + 1, sizeof(char));
+	s = ft_calloc((size_t)(len + 1), sizeof(char));
 	if (!s)
 		return (0);
 	fill_number(s, n, len, b);

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/07 17:49:32 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/10 19:12:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,59 +23,24 @@ COLOR			= $(COLOR_PUSH_SWAP)
 
 GPM_MSTONE	= 2
 GPM_NAME	= push_swap
-GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
+GPM_MNAME	= PUSH_SWAP
 NAME		= push_swap
 BNAME		= checker
 OUT_DIR 	= .out/
 
 # **************************************************************************** #
-#                                   COMMANDS                                   #
+#                                    LIBS                                      #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/commands.mk)
-
-# **************************************************************************** #
-#                                    LIBFT                                     #
-# **************************************************************************** #
-
-LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
-# GPM@ .LIBFT_DIR	= $(realpath ./libft)
-GNL_DIR		= $(realpath ../milestone-1-get_next_line)# GPM!
-LIBFT		= $(LIBFT_DIR)/libft.a
-GNL			= $(GNL_DIR)/get_next_line.a # GPM!
-
-# **************************************************************************** #
-#                                    FLAGS                                     #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/flags.mk) # GPM!
-CFLAGS			+= -I$(LIBFT_DIR) -I$(GNL_DIR) # GPM!
-# GPM@ .CFLAGS			+= -I$(LIBFT_DIR)
-
-# **************************************************************************** #
-#                                   SOURCES                                    #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/sources.mk) # GPM!
-
-# **************************************************************************** #
-#                                   MAPPING                                    #
-# **************************************************************************** #
-
-SRC_LIBFT	= $(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
-SRC_GNL		= $(_SRC_GNL:%=$(GNL_DIR)/%.c) # GPM!
-SRC			= $(_SRC_PUSH_SWAP:%=%.c)
-SRC_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=%.c)
-OBJ			= $(_SRC_PUSH_SWAP:%=$(OUT_DIR)%.o)
-DEP			= $(_SRC_PUSH_SWAP:%=$(OUT_DIR)%.d)
-OBJ_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.o)
-DEP_BONUS	= $(_SRC_PUSH_SWAP_BONUS:%=$(OUT_DIR)%.d)
+LIBFT_DIR		:= $(realpath ../milestone-0-libft)
+PRINTF_DIR		:= $(realpath ../milestone-1-ft_printf)
+GNL_DIR			:= $(realpath ../milestone-1-get_next_line)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/targets_common.mk) # GPM!
+all: title $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)                  __\n"
@@ -85,17 +50,11 @@ title:
 	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/targets_bin_libft_gnl_bonus.mk) # GPM!
-# GPM!
-visualizer: # GPM!
-	cmake -B ../extra-ps-visualizer/build/ ../extra-ps-visualizer/ # GPM!
-	make -C ../extra-ps-visualizer/build/ # GPM!
-# GPM!
-visualize: visualizer $(NAME) # GPM!
-	../extra-ps-visualizer/build/bin/visualizer $(NAME) # GPM!
+include $(realpath ../extra-make/lib_libft.mk)
+include $(realpath ../extra-make/lib_ft_printf.mk)
+include $(realpath ../extra-make/lib_get_next_line.mk)
 
-# **************************************************************************** #
-#                                MAKE METADATA                                 #
-# **************************************************************************** #
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
-include $(realpath ../extra-make/make_meta.mk) # GPM!
+include $(realpath ../extra-make/targets_bin.mk)

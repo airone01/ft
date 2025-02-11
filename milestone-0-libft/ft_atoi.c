@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <airone01@proton.me>              +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:19:26 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:54:44 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,81 +15,51 @@
 // GPM? begin ft_atoi
 // GPM? begin ft_atol
 /**
- * Checks if the result is an overflow.
- * @param   result  Result
- * @param   nbr     Number
- * @return          Boolean of result
- */
-static int	is_overflow(long long result, int nbr)
-{
-	if ((result > LLONG_MAX / 10) || (result == LLONG_MAX / 10
-			&& nbr > LLONG_MAX % 10))
-		return (1);
-	return (0);
-}
-
-/**
  * Classical atol implementation.
  *
- * @param	nptr	sing to infer number from
+ * @param	str	String to infer number from
  *
- * @returns infered number
- * @returns 0 if failed (or if there was no number)
- *
- * Execution:
- * 1. Skip spaces
- * 2. Skip `+` and registers _at most_ 1 `-` for negative numbers
- * 3. Registers the number digit by digit until any non-decimal char is found
- * 4. Skips the rest of the sing
- *
- * Caveats:
- * - Ignores only white spaces first, then only `+`
- * - Doesn't handle multi-negation
- * - Not "smart"
+ * @returns		Infered number
+ * @returns		0 if failed (or if there was no number)
  */
-long	ft_atol(const char *nptr)
+long	ft_atol(const char *str)
 {
-	unsigned long	count;
-	int				mult;
+	long	val;
+	t_bool	neg;
 
-	count = 0;
-	mult = 1;
-	while ((*nptr >= 9 && *nptr <= 13) || *nptr == ' ')
-		nptr++;
-	if (*nptr == '+' || *nptr == '-')
-		if (*nptr++ == '-')
-			mult *= -1;
-	while (*nptr >= '0' && *nptr <= '9')
+	val = 0;
+	neg = false;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		if (is_overflow(count, *nptr - '0'))
-			return (-1);
-		count = (count * 10) + (*nptr++ - '0');
+		if (*str == '-')
+			neg = true;
+		str++;
 	}
-	return (mult * count);
+	while (ft_isdigit(*str))
+		val = (val * 10) + (*str++ - '0');
+	if (neg)
+		val = -val;
+	return (val);
 }
 // GPM? end ft_atol
 
 /**
  * Infers a number from a sing.
  *
- * @param	nptr	sing to infer number from
+ * @param	str	String to infer number from
  *
- * @returns	infered number
- * @returns	0 if failed (or if there was no number)
- *
- * Execution:
- * 1. Skip spaces
- * 2. Skip `+` and registers _at most_ 1 `-` for negative numbers
- * 3. Registers the number digit by digit until any non-decimal char is found
- * 4. Skips the rest of the sing
- *
- * Caveats:
- * - Ignores only white spaces first, then only `+`
- * - Doesn't handle multi-negation
- * - Not "smart"
+ * @returns		Infered number
+ * @returns		0 if failed (or if there was no number)
  */
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
-	return (ft_atol(nptr));
+	long	val;
+
+	val = ft_atol(str);
+	if (val > INT_MAX || val < INT_MIN)
+		return (0);
+	return ((int)val);
 }
 // GPM? end ft_atoi

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:24:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:08:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@
  * @param	size	Number of characters to copy
  * @returns         Pointer to the destination string dst
  */
-unsigned int	ft_strlcat(char *dst, const char *src, size_t size)
+unsigned long	ft_strlcat(char *dst, const char *src, unsigned long size)
 {
-	size_t	dst_len;
-	size_t	src_len;
-	size_t	i;
+	unsigned long	dst_len;
+	unsigned long	src_len;
+	unsigned long	i;
 
 	src_len = ft_strlen(src);
 	dst_len = ft_strlen(dst);

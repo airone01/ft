@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:17:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:21:43 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 /**
  * Tells if a character is alphanumerical (lowercase or uppercase or numerical
  * digit).
+ *
  * @param	c	Character
  * @returns     Boolean result
  */
-int	ft_isalnum(int c)
+t_bool	ft_isalnum(char c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }

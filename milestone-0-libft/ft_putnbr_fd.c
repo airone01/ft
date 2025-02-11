@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:23:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:00:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	ft_putnbr_fd(int n, int fd)
 	if (n > 9)
 	{
 		ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd(n % 10 + '0', fd);
+		ft_putchar_fd((char)(n % 10) + '0', fd);
 		return ;
 	}
-	ft_putchar_fd(n + '0', fd);
+	ft_putchar_fd((char)n + '0', fd);
 }
 // GPM? end ft_putnbr_fd

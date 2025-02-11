@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:25:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:12:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
  * @returns     The string created from the successive applications of ’f’.
  * 			NULL if the allocation fails.
  */
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned long, char))
 {
-	size_t	len;
-	size_t	i;
-	char	*dst;
+	unsigned long	len;
+	unsigned long	i;
+	char			*dst;
 
 	len = ft_strlen(s);
 	dst = ft_calloc(len + 1, sizeof(char));

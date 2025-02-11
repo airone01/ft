@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 16:37:25 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 22:44:43 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:51:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ static void	main_loop(t_app app, t_list *current_cmd, int *pipe_prev,
 		if (current_cmd->next)
 		{
 			if (pipe(pipe_curr) == -1)
-				app_exit_errno(app, errno);
+				app_exit_errno(app, (unsigned long)errno);
 		}
 		pid = fork();
 		if (pid == -1)
-			app_exit_errno(app, errno);
+			app_exit_errno(app, (unsigned long)errno);
 		if (pid == 0)
 			exec_cmda_child(app, current_cmd, pipe_prev, pipe_curr);
 		else

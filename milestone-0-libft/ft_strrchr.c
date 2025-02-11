@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:26:01 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:01:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @returns     Pointer to the matched character or NULL if the character is
  * not found.
  */
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *s, char c)
 {
 	char	*se;
 

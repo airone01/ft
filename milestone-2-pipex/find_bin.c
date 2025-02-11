@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:56:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/30 16:53:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:51:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_bin(t_app *app, char *bin)
 
 	if (!bin)
 		return (NULL);
-	result = path_find_bin(app, "./", bin);
+	result = path_find_bin(app, (char *)"./", bin);
 	if (result)
 		return (result);
 	result = env_find_bin(app, bin);

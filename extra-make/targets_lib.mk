@@ -5,25 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/22 13:23:23 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
+#    Created: 2025/02/05 16:37:31 by elagouch          #+#    #+#              #
+#    Updated: 2025/02/10 19:06:28 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# **************************************************************************** #
-#                                   TARGETS                                    #
-# **************************************************************************** #
-# GPM? begin make_target_lib
-$(NAME): $(OBJ)
-	@$(ECHO) "$(MSG)🏗️  Building $(NAME)\n"
-	@$(AR) $(NAME) $^
+$(NAME): $(OBJ) | $(NAME_DEPS_INDIRECT)
+	@$(ECHO) "$(MSG)🏗️  Building mandatory for $(NAME)\n"
+	@$(AR) -o $@ $^ $($(NAME)_HEADERS)
 	@$(ECHO) "$(SUCCESS)\n"
-
-clean:
-	@$(ECHO) "$(MSG)🧹 Cleaning the project\n"
-	@$(RM) -r $(OUT_DIR)
-
-fclean: clean
-	@$(ECHO) "$(MSG)🧹 Fcleaning the project\n"
-	@$(RM) $(NAME)
-# GPM? end make_target_lib

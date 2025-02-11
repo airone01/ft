@@ -20,43 +20,19 @@ COLOR			= $(COLOR_LIBFT)
 # **************************************************************************** #
 #                                   METADATA                                   #
 # **************************************************************************** #
-GPM_MSTONE	= 0
-GPM_NAME	= libft
-GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
-NAME		= libft.a
-OUT_DIR 	= .out/
 
-# **************************************************************************** #
-#                                   COMMANDS                                   #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/commands.mk) # GPM!
-
-# **************************************************************************** #
-#                                    FLAGS                                     #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/flags.mk) # GPM!
-
-# **************************************************************************** #
-#                                   SOURCES                                    #
-# **************************************************************************** #
-
-include $(realpath ../extra-make/sources.mk) # GPM!
-
-# **************************************************************************** #
-#                                   MAPPING                                    #
-# **************************************************************************** #
-OBJ			= $(_SRC_LIBFT:%=$(OUT_DIR)%.o)
-DEP			= $(_SRC_LIBFT:%=$(OUT_DIR)%.d)
-OBJ_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.o)
-DEP_BONUS	= $(_SRC_LIBFT_BONUS:%=$(OUT_DIR)%.d)
+GPM_MSTONE	:= 0
+GPM_NAME	:= libft
+GPM_MNAME	:= LIBFT
+NAME		:= libft.a
+BNAME		:= blibft.a
+OUT_DIR 	:= .out/
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/targets_common.mk) # GPM!
+all: title $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)   ___ __   _____\n"
@@ -65,9 +41,7 @@ title:
 	@$(ECHO) "$(MSG)/_/_/_.__/_/ \\__/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/targets_lib_bonus.mk) # GPM!
+include $(realpath ../extra-make/targets_common.mk) # GPM!
+# GPM: make_target_common
 
-# ----------- Make meta ----------
-MAKEFLAGS	+= --no-print-directory
--include $(DEP) $(DEP_BONUS)
-.PHONY: all bonus clean fclean re title
+include $(realpath ../extra-make/targets_lib.mk)

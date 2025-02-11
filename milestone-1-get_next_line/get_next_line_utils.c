@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/15 17:36:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:44:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@
 // Dependency-free implementation
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	s1_len;
-	size_t	s2_len;
-	size_t	i;
-	size_t	j;
+	long	s1_len;
+	long	s2_len;
+	long	i;
+	long	j;
 	char	*str;
 
 	if (!s1)
 		s1 = "";
 	if (!s2)
 		s2 = "";
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	str = (char *)ft_calloc(s1_len + s2_len + 1, sizeof(char));
+	s1_len = (long)ft_strlen(s1);
+	s2_len = (long)ft_strlen(s2);
+	str = (char *)ft_calloc((size_t)(s1_len + s2_len + 1), sizeof(char));
 	if (!str)
 		return (0);
 	i = -1;
