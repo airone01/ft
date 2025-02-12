@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/12 14:58:12 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/12 16:02:28 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,13 +73,13 @@ include $(realpath ../extra-make/sources.mk) # GPM!
 
 GPM_FNAME	= $(GPM_MSTONE)-$(GPM_NAME)
 
-SRC			:= $(_SRC_$(GPM_MNAME)_MANDATORY:%=%.c)
-SRC_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:%=%.c)
-SRC_HEADERS	:= $(_SRC_$(GPM_MNAME)_HEADERS:%=%.h)
-OBJ			:= $(_SRC_$(GPM_MNAME)_MANDATORY:%=$(OUT_DIR)%.o)
-DEP			:= $(_SRC_$(GPM_MNAME)_MANDATORY:%=$(OUT_DIR)%.d)
-OBJ_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:%=$(OUT_DIR)%.o)
-DEP_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:%=$(OUT_DIR)%.d)
+SRC			:= $(_SRC_$(GPM_MNAME)_MANDATORY:$(SRC_DIR)%=%.c)
+SRC_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:$(SRC_DIR)%=%.c)
+SRC_HEADERS	:= $(_SRC_$(GPM_MNAME)_HEADERS:$(SRC_DIR)%=%.h)
+OBJ			:= $(_SRC_$(GPM_MNAME)_MANDATORY:$(SRC_DIR)%=$(OUT_DIR)%.o)
+DEP			:= $(_SRC_$(GPM_MNAME)_MANDATORY:$(SRC_DIR)%=$(OUT_DIR)%.d)
+OBJ_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:$(SRC_DIR)%=$(OUT_DIR)%.o)
+DEP_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:$(SRC_DIR)%=$(OUT_DIR)%.d)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -88,7 +88,7 @@ DEP_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:%=$(OUT_DIR)%.d)
 $(OUT_DIR):
 	@$(MD) $(OUT_DIR)
 
-$(OUT_DIR)%.o: %.c | Makefile $(OUT_DIR)
+$(OUT_DIR)%.o: $(SRC_DIR)%.c | Makefile $(OUT_DIR)
 	@$(ECHO) "$(MSG)⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
