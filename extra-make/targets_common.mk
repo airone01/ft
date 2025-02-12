@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/05 22:31:32 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/12 14:58:12 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,6 @@ CFLAGS	+= -Wwrite-strings
 # Keeps the frame pointer in registers
 # Minor performance cost
 CFLAGS	+= -fno-omit-frame-pointer
-ifeq ($(CC),gcc)
-# Kinda important but not in CC by default
-CFLAGS	+= -Wstringop-truncation
-endif
 
 # Default
 BUILD_ENV ?= dev
@@ -61,7 +57,7 @@ else ifeq ($(BUILD_ENV),prod)
 CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections
 else
 # Else: dev mode
-CFLAGS += -O0 -g3 -fsanitize=address,undefined
+CFLAGS += -O1 -g3 -fsanitize=address,undefined
 endif
 
 # **************************************************************************** #
