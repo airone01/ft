@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:51:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 00:53:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void		app_clear(t_app *app);
 
 // Arguments handling
 void		args_check(int argc, char **argv);
-char		*env_find(char **envp, const char *var);
 
 // File handling
 int			file_open(char *path, char **envp);

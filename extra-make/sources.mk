@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/13 00:51:33 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/13 00:55:21 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_abs						\
 	ft_bzero					\
 	ft_calloc					\
+	ft_env_find					\
 	ft_isalnum					\
 	ft_isalpha					\
 	ft_isascii					\
@@ -152,7 +153,6 @@ _SRC_FDF_COMMON				:=	\
 	app_clear					\
 	app_init					\
 	args_check					\
-	env_find					\
 	error						\
 	error_arg					\
 	error_file					\

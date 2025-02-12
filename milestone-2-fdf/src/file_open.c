@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 22:06:51 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:43:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 00:58:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*resolve_path(char *path, char **envp)
 
 	if (*path == '/')
 		return (ft_strdup(path));
-	cwd = env_find(envp, "PWD=");
+	cwd = ft_env_find(envp, "PWD=");
 	if (cwd)
 	{
 		if (cwd[ft_strlen(cwd) - 1] != '/')

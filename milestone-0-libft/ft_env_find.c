@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_find.c                                         :+:      :+:    :+:   */
+/*   ft_env_find.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:07 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:42:49 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 00:56:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "libft.h"
 
 /**
  * Search for a variable in the environment
@@ -22,7 +22,7 @@
  *
  * If the variable is not found, return NULL and don't error out.
  */
-char	*env_find(char **envp, const char *var)
+char	*ft_env_find(char **envp, const char *var)
 {
 	unsigned long	len;
 	unsigned long	i;
