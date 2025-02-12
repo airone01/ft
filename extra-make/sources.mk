@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 20:15:34 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/11 22:27:29 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                                   SOURCES                                    #
 # **************************************************************************** #
 
-_SRC_LIBFT_COMMON			=	\
+_SRC_LIBFT_COMMON			:=	\
 	ft_atoi						\
 	ft_abs						\
 	ft_bzero					\
@@ -62,30 +62,30 @@ _SRC_LIBFT_COMMON			=	\
 	ft_tolower					\
 	ft_toupper					\
 	ft_substr
-_SRC_LIBFT_MANDATORY		=	\
+_SRC_LIBFT_MANDATORY		:=	\
 	$(_SRC_LIBFT_COMMON)
-_SRC_LIBFT_BONUS			=	\
+_SRC_LIBFT_BONUS			:=	\
 	$(_SRC_LIBFT_COMMON)
 
-_SRC_FT_PRINTF_COMMON		=	\
+_SRC_FT_PRINTF_COMMON		:=	\
 	ft_printf					\
 	ft_putchar					\
 	ft_putnbr_base_ssize		\
 	ft_putstr_ssize
-_SRC_FT_PRINTF_MANDATORY	=	\
+_SRC_FT_PRINTF_MANDATORY	:=	\
 	$(_SRC_FT_PRINTF_COMMON)
-_SRC_FT_PRINTF_BONUS	=		\
+_SRC_FT_PRINTF_BONUS		:=	\
 	$(_SRC_FT_PRINTF_COMMON)
 
-_SRC_GNL_COMMON				=	\
+_SRC_GNL_COMMON				:=	\
 	get_next_line				\
 	get_next_line_utils
-_SRC_GNL_MANDATORY			=	\
+_SRC_GNL_MANDATORY			:=	\
 	$(_SRC_GNL_COMMON)
-_SRC_GNL_BONUS				=	\
+_SRC_GNL_BONUS				:=	\
 	$(_SRC_GNL_COMMON)
 
-_SRC_PUSH_SWAP_COMMOM		=	\
+_SRC_PUSH_SWAP_COMMOM		:=	\
 	args_legit					\
 	mani_swap					\
 	mani_push					\
@@ -114,15 +114,15 @@ _SRC_PUSH_SWAP_COMMOM		=	\
 	stack_size					\
 	stack_sorted				\
 	std_error
-_SRC_PUSH_SWAP_MANDATORY	=	\
+_SRC_PUSH_SWAP_MANDATORY	:=	\
 	push_swap					\
 	$(_SRC_PUSH_SWAP_COMMOM)
-_SRC_PUSH_SWAP_BONUS		=	\
+_SRC_PUSH_SWAP_BONUS		:=	\
 	checker						\
 	checker_utils				\
 	$(_SRC_PUSH_SWAP_COMMOM)
 
-_SRC_PIPEX_COMMON			=	\
+_SRC_PIPEX_COMMON			:=	\
 	app_exit					\
 	app_free					\
 	app_free_utils				\
@@ -140,16 +140,18 @@ _SRC_PIPEX_COMMON			=	\
 	find_bin					\
 	bonus_here_doc				\
 	path_find_bin
-_SRC_PIPEX_MANDATORY		=	\
+_SRC_PIPEX_MANDATORY		:=	\
 	_main						\
 	$(_SRC_PIPEX_COMMON)
-_SRC_PIPEX_BONUS			=	\
+_SRC_PIPEX_BONUS			:=	\
 	_main_bonus					\
 	$(_SRC_PIPEX_COMMON)
 
-_SRC_FDF_COMMON				=	\
+_SRC_FDF_COMMON				:=	\
 	_main
-_SRC_FDF_MANDATORY			=	\
+_SRC_FDF_COMMON				:=	\
+	$(addprefix src/, $(_SRC_FDF_COMMON))
+_SRC_FDF_MANDATORY			:=	\
 	$(_SRC_FDF_COMMON)
-_SRC_FDF_BONUS				=	\
+_SRC_FDF_BONUS				:=	\
 	$(_SRC_FDF_COMMON)
