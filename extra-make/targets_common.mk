@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/12 16:02:28 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/12 16:45:26 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ else ifeq ($(BUILD_ENV),prod)
 CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections
 else
 # Else: dev mode
-CFLAGS += -O1 -g3 -fsanitize=address,undefined
+CFLAGS += -O1 -g3
 endif
 
 # **************************************************************************** #

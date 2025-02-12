@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   error_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:42:22 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/13 00:47:13 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/13 00:49:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	main(int argc, char **argv, char **envp)
+void	print_arg_error(t_error err)
 {
-	t_app	*app;
-	int		fd;
-
-	(void)args_check(argc, argv);
-	fd = file_open(argv[1], envp);
-	app = app_init();
-	app->file_fd = fd;
-	app_clear(app);
-	return (0);
+	if (err == ERR_ARG_COUNT)
+		ft_printf("Usage: ./fdf <filename>\n");
+	else if (err == ERR_ARG_INVALID_FILE)
+		ft_printf("Invalid file provided\n");
 }

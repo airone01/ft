@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/11 22:27:29 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/13 00:51:33 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,7 +148,20 @@ _SRC_PIPEX_BONUS			:=	\
 	$(_SRC_PIPEX_COMMON)
 
 _SRC_FDF_COMMON				:=	\
-	_main
+	_main						\
+	app_clear					\
+	app_init					\
+	args_check					\
+	env_find					\
+	error						\
+	error_arg					\
+	error_file					\
+	error_map					\
+	error_math					\
+	error_memory				\
+	error_mlx					\
+	file_open					\
+	malloc
 _SRC_FDF_COMMON				:=	\
 	$(addprefix src/, $(_SRC_FDF_COMMON))
 _SRC_FDF_MANDATORY			:=	\

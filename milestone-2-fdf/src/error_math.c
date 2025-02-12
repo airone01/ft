@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   error_math.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:42:22 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/13 00:48:52 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/13 00:49:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	main(int argc, char **argv, char **envp)
+void	print_math_error(t_error err)
 {
-	t_app	*app;
-	int		fd;
-
-	(void)args_check(argc, argv);
-	fd = file_open(argv[1], envp);
-	app = app_init();
-	app->file_fd = fd;
-	app_clear(app);
-	return (0);
+	if (err == ERR_MATRIX_OVERFLOW)
+		ft_printf("Matrix calculation overflow\n");
+	else if (err == ERR_INVALID_ROTATION)
+		ft_printf("Invalid rotation value\n");
+	else if (err == ERR_INVALID_SCALE)
+		ft_printf("Invalid scale value\n");
+	else if (err == ERR_INVALID_PROJECTION)
+		ft_printf("Invalid projection type\n");
 }

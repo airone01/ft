@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 20:31:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 00:51:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,68 @@
 # include <error.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+typedef enum e_error
+{
+	ERR_NONE = 0,
+	ERR_ARG_COUNT = 1,
+	ERR_ARG_INVALID_FILE = 2,
+	ERR_FILE_OPEN = 10,
+	ERR_FILE_READ = 11,
+	ERR_FILE_EXTENSION = 12,
+	ERR_FILE_EMPTY = 13,
+	ERR_MALLOC = 20,
+	ERR_MALLOC_MAP = 21,
+	ERR_MALLOC_LINE = 22,
+	ERR_MAP_INVALID_CHAR = 30,
+	ERR_MAP_IRREGULAR = 31,
+	ERR_MAP_TOO_LARGE = 32,
+	ERR_MAP_EMPTY_LINE = 33,
+	ERR_MAP_INVALID_COLOR = 34,
+	ERR_MLX_INIT = 40,
+	ERR_MLX_WINDOW = 41,
+	ERR_MLX_IMAGE = 42,
+	ERR_MATRIX_OVERFLOW = 50,
+	ERR_INVALID_ROTATION = 51,
+	ERR_INVALID_SCALE = 52,
+	ERR_INVALID_PROJECTION = 53,
+}			t_error;
+
+typedef struct s_app
+{
+	void	*win;
+	int		file_fd;
+	int		map_width;
+	int		map_height;
+}			t_app;
+
+// Global app structure
+t_app		*app_init(void);
+
+// Error handling
+void		exit_error(t_app *app, t_error err);
+void		print_memory_error(t_error err);
+void		print_math_error(t_error err);
+void		print_file_error(t_error err);
+void		print_arg_error(t_error err);
+void		print_map_error(t_error err);
+void		print_mlx_error(t_error err);
+
+// Safety
+void		*safe_calloc(t_app *app, unsigned long nmemb, size_t size);
+void		app_clear(t_app *app);
+
+// Arguments handling
+void		args_check(int argc, char **argv);
+char		*env_find(char **envp, const char *var);
+
+// File handling
+int			file_open(char *path, char **envp);
 
 #endif

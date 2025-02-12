@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _main.c                                            :+:      :+:    :+:   */
+/*   args_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:42:22 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/12 16:16:24 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/13 00:23:44 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-int	main(int argc, char **argv, char **envp)
+void	args_check(int argc, char **argv)
 {
-	t_app	*app;
-	int		fd;
-
-	(void)args_check(argc, argv);
-	fd = file_open(argv[1], envp);
-	app = app_init();
-	app->file_fd = fd;
-	app_clear(app);
-	return (0);
+	(void)argv;
+	if (argc != 2)
+		exit_error(NULL, ERR_ARG_COUNT);
 }
