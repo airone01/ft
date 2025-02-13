@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/13 00:55:21 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/13 16:39:41 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -161,7 +161,10 @@ _SRC_FDF_COMMON				:=	\
 	error_memory				\
 	error_mlx					\
 	file_open					\
-	malloc
+	file_sizes					\
+	free_ptrs					\
+	malloc						\
+	map_read
 _SRC_FDF_COMMON				:=	\
 	$(addprefix src/, $(_SRC_FDF_COMMON))
 _SRC_FDF_MANDATORY			:=	\

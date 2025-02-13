@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:53:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:39:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,18 @@ typedef enum e_error
 	ERR_INVALID_PROJECTION = 53,
 }			t_error;
 
+typedef struct s_map
+{
+	int		**matrix;
+	int		width;
+	int		height;
+}			t_map;
+
 typedef struct s_app
 {
+	t_map	map;
 	void	*win;
 	int		file_fd;
-	int		map_width;
-	int		map_height;
 }			t_app;
 
 // Global app structure
@@ -75,12 +81,17 @@ void		print_mlx_error(t_error err);
 
 // Safety
 void		*safe_calloc(t_app *app, unsigned long nmemb, size_t size);
+void		free_ptrs(char **ptrs);
 void		app_clear(t_app *app);
 
 // Arguments handling
 void		args_check(int argc, char **argv);
 
 // File handling
+void		file_sizes(t_app *app, char *file_path, char **envp);
 int			file_open(char *path, char **envp);
+
+// Map handling
+void		map_read(t_app *app, int fd);
 
 #endif
