@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 16:39:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:52:39 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_app
 t_app		*app_init(void);
 
 // Error handling
+void		exit_error_free(t_app *app, t_error err, void *ptr);
 void		exit_error(t_app *app, t_error err);
 void		print_memory_error(t_error err);
 void		print_math_error(t_error err);

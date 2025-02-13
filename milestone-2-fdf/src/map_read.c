@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 16:40:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:14:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,29 @@ static int	*multi_atoi(t_app *app, char **split)
 	return (row);
 }
 
+// static void	debug_strs(char **strs)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while(strs[++i])
+// 		ft_printf("[%d]\t'%s'\n", i, strs[i]);
+// }
+
 static char	**split_line(t_app *app, char *line)
 {
 	char	**split;
 	int		i;
 
 	split = ft_split(line, ' ');
-	if (!split)
-		exit_error(app, ERR_MALLOC_LINE);
+	if (!split || !split[0])
+		exit_error_free(app, ERR_MALLOC_LINE, line);
 	i = 0;
 	while (split[i])
 		i++;
 	i--;
-	if (app->map.width != i)
-	{
-		ft_printf("i: %d\n", i);
-		exit_error(app, ERR_MAP_IRREGULAR);
-	}
+	if (app->map.width != i + 1)
+		exit_error_free(app, ERR_MAP_IRREGULAR, line);
 	return (split);
 }
 
@@ -57,6 +63,7 @@ void	map_read(t_app *app, int fd)
 {
 	char	**strs;
 	char	*line;
+	int		len;
 	int		i;
 
 	app->map.matrix = safe_calloc(app, (unsigned long)app->map.height + 1, sizeof(int *));
@@ -66,6 +73,11 @@ void	map_read(t_app *app, int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
+		if (line[0] == '\n')
+			exit_error_free(app, ERR_MAP_EMPTY_LINE, line);
+		len = (int)ft_strlen(line);
+		if (line[len] == '\n')
+			line[len - 1] = '\0';
 		if (!line[0])
 		{
 			free(line);
@@ -78,10 +90,4 @@ void	map_read(t_app *app, int fd)
 	}
 	app->map.matrix[i] = NULL;
 	app->map.height = i;
-	line = get_next_line(fd);
-	if (line)
-	{
-		free(line);
-		exit_error(app, ERR_MAP_EMPTY_LINE);
-	}
 }

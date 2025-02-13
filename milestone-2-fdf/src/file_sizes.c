@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:48:51 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 14:23:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:54:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	file_sizes(t_app *app, char *file_path, char **envp)
 			if (app->map.width == -1)
 				app->map.width = words;
 			else if (app->map.width != words)
-				exit_error(app, ERR_MAP_IRREGULAR);
+				exit_error_free(app, ERR_MAP_IRREGULAR, line);
 		}
 		free(line);
 	}
