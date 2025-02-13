@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 23:12:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 00:56:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
+t_bool				ft_isalnum(char c);
+t_bool				ft_isalpha(char c);
+t_bool				ft_isascii(char c);
+t_bool				ft_isdigit(char c);
+t_bool				ft_isprint(char c);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
@@ -62,11 +67,6 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(const char *nptr);
 int					ft_toupper(char c);
 int					ft_tolower(char c);
-t_bool				ft_isalnum(char c);
-t_bool				ft_isalpha(char c);
-t_bool				ft_isascii(char c);
-t_bool				ft_isdigit(char c);
-t_bool				ft_isprint(char c);
 
 //	Part 2
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
@@ -84,9 +84,10 @@ char				*ft_itoa_base(int n, const char *b);
 char				*ft_itoa(int n);
 
 // Additional stuff by me
-long				ft_abs(long nb);
-char				*ft_strchr(const char *s, char c);
-long				ft_atol(const char *nptr);
 t_bool				ft_isspace(char c);
+char				*ft_env_find(char **envp, const char *var);
+char				*ft_strchr(const char *s, char c);
+long				ft_abs(long nb);
+long				ft_atol(const char *nptr);
 
 #endif
