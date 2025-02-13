@@ -6,88 +6,127 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 19:14:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:40:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static int	*multi_atoi(t_app *app, char **split)
-{
-	int		*row;
-	int		i;
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+// Helper Functions
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
 
-	row = safe_calloc(app, (unsigned long)app->map.width, sizeof(int));
+/**
+ * @brief Converts an array of string tokens to integer elevation values
+ *
+ * @param ctx Application context
+ * @param tokens Array of string representations of numbers
+ * @return int* Newly allocated array of integers
+ */
+static int	*convert_tokens_to_elevations(t_app *ctx, char **tokens)
+{
+	int	*elevations;
+	int	i;
+
+	elevations = safe_calloc(ctx, ctx->map.width, sizeof(int));
 	i = 0;
-	while (i < app->map.width)
+	while (i < ctx->map.width)
 	{
-		row[i] = ft_atoi(split[i]);
+		elevations[i] = ft_atoi(tokens[i]);
 		i++;
 	}
-	return (row);
-}
-
-// static void	debug_strs(char **strs)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while(strs[++i])
-// 		ft_printf("[%d]\t'%s'\n", i, strs[i]);
-// }
-
-static char	**split_line(t_app *app, char *line)
-{
-	char	**split;
-	int		i;
-
-	split = ft_split(line, ' ');
-	if (!split || !split[0])
-		exit_error_free(app, ERR_MALLOC_LINE, line);
-	i = 0;
-	while (split[i])
-		i++;
-	i--;
-	if (app->map.width != i + 1)
-		exit_error_free(app, ERR_MAP_IRREGULAR, line);
-	return (split);
+	return (elevations);
 }
 
 /**
- * @brief Read the map from the file descriptor
+ * @brief Validates and splits a map line into individual number tokens
  *
- * @param app	The application context
- * @param fd	The file descriptor to read from
+ * @param ctx Application context
+ * @param raw_line Line read from map file
+ * @return char** Array of number tokens (must be freed by caller)
  */
-void	map_read(t_app *app, int fd)
+static char	**split_and_validate_line(t_app *ctx, char *raw_line)
 {
-	char	**strs;
-	char	*line;
-	int		len;
-	int		i;
+	char	**tokens;
+	int		token_count;
 
-	app->map.matrix = safe_calloc(app, (unsigned long)app->map.height + 1, sizeof(int *));
-	i = 0;
-	while (1)
+	tokens = ft_split(raw_line, ' ');
+	if (!tokens || !tokens[0])
+		exit_error_free(ctx, ERR_MAP_EMPTY_LINE, raw_line);
+	token_count = 0;
+	while (tokens[token_count])
+		token_count++;
+	if (ctx->map.width == 0)
+		ctx->map.width = token_count;
+	else if (token_count != ctx->map.width)
+		exit_error_free(ctx, ERR_MAP_IRREGULAR, raw_line);
+	return (tokens);
+}
+
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+// Line Processing
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+
+/**
+ * @brief Processes a single line from the map file
+ *
+ * @param ctx Application context
+ * @param current_line Line to process (may be NULL for EOF)
+ * @param row_index Pointer to current row index (will be incremented)
+ * @return true Line was processed successfully
+ * @return false End of file or termination condition reached
+ */
+static bool	process_map_line(t_app *ctx, char *current_line, int *row_index)
+{
+	char	**tokens;
+	char	*clean_line;
+	size_t	line_len;
+
+	if (!current_line)
+		return (false);
+	line_len = ft_strlen(current_line);
+	clean_line = ft_strtrim(current_line, "\n");
+	free(current_line);
+	if (!clean_line || !*clean_line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (line[0] == '\n')
-			exit_error_free(app, ERR_MAP_EMPTY_LINE, line);
-		len = (int)ft_strlen(line);
-		if (line[len] == '\n')
-			line[len - 1] = '\0';
-		if (!line[0])
-		{
-			free(line);
-			break ;
-		}
-		strs = split_line(app, line);
-		free(line);
-		app->map.matrix[i++] = multi_atoi(app, strs);
-		free_ptrs(strs);
+		free(clean_line);
+		exit_error(ctx, ERR_MAP_EMPTY_LINE);
 	}
-	app->map.matrix[i] = NULL;
-	app->map.height = i;
+	tokens = split_and_validate_line(ctx, clean_line);
+	ctx->map.matrix[*row_index] = convert_tokens_to_elevations(ctx, tokens);
+	free_2d_array((void **)tokens);
+	free(clean_line);
+	(*row_index)++;
+	return (true);
+}
+
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+// Main Map Reading Function
+/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
+
+/**
+ * @brief Reads and parses the map file into a height matrix
+ *
+ * @param ctx Application context
+ * @param fd File descriptor of map file
+ * @note Allocates memory for map matrix. Caller must ensure FD is valid.
+ */
+void	read_map_data(t_app *ctx, int fd)
+{
+	char	*raw_line;
+	int		row_index;
+
+	row_index = 0;
+	while (true)
+	{
+		raw_line = get_next_line(fd);
+		if (!process_map_line(ctx, raw_line, &row_index))
+			break ;
+		ctx->map.height = row_index;
+		if (row_index >= MAX_MAP_HEIGHT)
+			exit_error(ctx, ERR_MAP_TOO_LARGE);
+		ctx->map.matrix = safe_realloc(ctx, ctx->map.matrix,
+				(row_index + 1) * sizeof(int *));
+	}
+	close(fd);
 }
