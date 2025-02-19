@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 12:33:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:55:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
  *
  * @param ctx Application context
  * @param tokens Array of string representations of numbers
- * @return int* Newly allocated array of integers
+ *
+ * @returns	int*	Newly allocated array of integers
  */
 static int	*convert_tokens_to_elevations(t_app *ctx, char **tokens)
 {
@@ -43,7 +44,8 @@ static int	*convert_tokens_to_elevations(t_app *ctx, char **tokens)
  *
  * @param ctx Application context
  * @param raw_line Line read from map file
- * @return char** Array of number tokens (must be freed by caller)
+ *
+ * @returns	char**	Array of number tokens (must be freed by caller)
  */
 static char	**split_and_validate_line(t_app *ctx, char *raw_line)
 {
@@ -52,14 +54,15 @@ static char	**split_and_validate_line(t_app *ctx, char *raw_line)
 
 	tokens = ft_split(raw_line, ' ');
 	if (!tokens || !tokens[0])
+	{
+		free_2d_array((void **)tokens);
 		exit_error_free(ctx, ERR_MAP_EMPTY_LINE, raw_line);
+	}
 	token_count = 0;
 	while (tokens[token_count])
 		token_count++;
 	if (ctx->map.width == 0)
 		ctx->map.width = token_count;
-	else if (token_count != ctx->map.width)
-		exit_error_free(ctx, ERR_MAP_IRREGULAR, raw_line);
 	return (tokens);
 }
 
@@ -73,18 +76,16 @@ static char	**split_and_validate_line(t_app *ctx, char *raw_line)
  * @param ctx Application context
  * @param current_line Line to process (may be NULL for EOF)
  * @param row_index Pointer to current row index (will be incremented)
- * @return true Line was processed successfully
- * @return false End of file or termination condition reached
+ *
+ * @returns	t_bool	Whether the line was successfully processed
  */
 static t_bool	process_map_line(t_app *ctx, char *current_line, int *row_index)
 {
 	char	**tokens;
 	char	*clean_line;
-	size_t	line_len;
 
 	if (!current_line)
 		return (false);
-	line_len = ft_strlen(current_line);
 	clean_line = ft_strtrim(current_line, "\n");
 	free(current_line);
 	if (!clean_line || !*clean_line)
@@ -111,22 +112,19 @@ static t_bool	process_map_line(t_app *ctx, char *current_line, int *row_index)
  * @param fd File descriptor of map file
  * @note Allocates memory for map matrix. Caller must ensure FD is valid.
  */
-void	read_map_data(t_app *ctx, int fd)
+void	read_map_data(t_app *ctx)
 {
 	char	*raw_line;
 	int		row_index;
 
+	if (ctx->file_fd < 0)
+		exit_error(ctx, ERR_FILE_OPEN);
 	row_index = 0;
 	while (true)
 	{
-		raw_line = get_next_line(fd);
+		raw_line = get_next_line(ctx->file_fd);
 		if (!process_map_line(ctx, raw_line, &row_index))
 			break ;
-		ctx->map.height = row_index;
-		if (row_index >= MAX_MAP_HEIGHT)
-			exit_error(ctx, ERR_MAP_TOO_LARGE);
-		ctx->map.matrix = safe_recalloc(ctx, ctx->map.matrix,
-				(unsigned long)(row_index - 1), (unsigned long)row_index);
-		close(fd);
 	}
+	close(ctx->file_fd);
 }

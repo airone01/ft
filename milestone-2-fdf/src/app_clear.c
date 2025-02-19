@@ -6,27 +6,27 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:38:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 16:34:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:37:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static void	clear_matrix(t_app *app)
+static void	clear_matrix(t_app *ctx)
 {
 	int	i;
 
 	i = 0;
-	if (app->map.matrix)
+	if (ctx->map.matrix)
 	{
-		while (app->map.matrix[i])
+		while (i < ctx->map.height)
 		{
-			free(app->map.matrix[i]);
-			app->map.matrix[i] = NULL;
+			free(ctx->map.matrix[i]);
+			ctx->map.matrix[i] = NULL;
 			i++;
 		}
-		free(app->map.matrix);
-		app->map.matrix = NULL;
+		free(ctx->map.matrix);
+		ctx->map.matrix = NULL;
 	}
 }
 

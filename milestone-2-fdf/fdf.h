@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 12:55:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:29:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_app
 t_app		*app_init(void);
 
 // Error handling
-void		exit_error_free(t_app *app, t_error err, void *ptr);
-void		exit_error(t_app *app, t_error err);
+void		exit_error_free(t_app *ctx, t_error err, void *ptr);
+void		exit_error(t_app *ctx, t_error err);
 void		print_memory_error(t_error err);
 void		print_math_error(t_error err);
 void		print_file_error(t_error err);
@@ -85,20 +85,20 @@ void		print_map_error(t_error err);
 void		print_mlx_error(t_error err);
 
 // Safety
-void		*safe_calloc(t_app *app, unsigned long nmemb, size_t size);
-void		*safe_recalloc(t_app *app, void *ptr, unsigned long old_size,
+void		*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
+void		*safe_recalloc(t_app *ctx, void *ptr, unsigned long old_size,
 				unsigned long new_size);
 void		free_2d_array(void **ptrs);
-void		app_clear(t_app *app);
+void		app_clear(t_app *ctx);
 
 // Arguments handling
 void		args_check(int argc, char **argv);
 
 // File handling
-void		file_sizes(t_app *app, char *file_path, char **envp);
+void		file_sizes(t_app *ctx, char *file_path, char **envp);
 int			file_open(char *path, char **envp);
 
 // Map handling
-void		read_map_data(t_app *ctx, int fd);
+void		read_map_data(t_app *ctx);
 
 #endif

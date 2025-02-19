@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:48:51 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 18:54:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:58:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	count_words(char *line)
 {
-	int		words;
-	int		i;
+	int	words;
+	int	i;
 
 	words = 0;
 	i = 0;
@@ -34,32 +34,33 @@ static int	count_words(char *line)
 /**
  * Counts height and width of a map file
  *
- * @param app	The application context
+ * @param ctx	The application context
  * @param path	The path to the file
  */
-void	file_sizes(t_app *app, char *file_path, char **envp)
+void	file_sizes(t_app *ctx, char *file_path, char **envp)
 {
 	char	*line;
 	int		words;
 
 	while (1)
 	{
-		line = get_next_line(app->file_fd);
+		line = get_next_line(ctx->file_fd);
 		if (!line)
 			break ;
 		words = count_words(line);
-		if (words != 0) {
-			app->map.height++;
-			if (app->map.width == -1)
-				app->map.width = words;
-			else if (app->map.width != words)
-				exit_error_free(app, ERR_MAP_IRREGULAR, line);
+		if (words != 0)
+		{
+			ctx->map.height++;
+			if (ctx->map.width == -1)
+				ctx->map.width = words;
+			else if (ctx->map.width != words)
+				exit_error_free(ctx, ERR_MAP_IRREGULAR, line);
 		}
 		free(line);
 	}
-	if (app->map.height == 0)
-		exit_error(app, ERR_FILE_EMPTY);
-	app->map.height++;
-	close(app->file_fd);
-	app->file_fd = file_open(file_path, envp);
+	if (ctx->map.width <= 0)
+		exit_error(ctx, ERR_FILE_EMPTY);
+	ctx->map.height++;
+	close(ctx->file_fd);
+	ctx->file_fd = file_open(file_path, envp);
 }
