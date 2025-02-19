@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/19 15:05:30 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/19 16:02:27 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@
 
 _SRC_LIBFT_COMMON			:=	\
 	ft_atoi						\
-	ft_abs						\
 	ft_bzero					\
 	ft_calloc					\
 	ft_env_find					\
@@ -38,7 +37,6 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_lstmap_bonus				\
 	ft_lstnew_bonus				\
 	ft_lstsize_bonus			\
-	ft_max						\
 	ft_memchr					\
 	ft_memcmp					\
 	ft_memcpy					\
@@ -156,6 +154,7 @@ _SRC_FDF_COMMON				:=	\
 	app_clear					\
 	app_init					\
 	args_check					\
+	bresenham					\
 	error						\
 	error_arg					\
 	error_file					\

@@ -6,12 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:15:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:03:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <float.h> // DBL_EPSILON
+#include <math.h>  // fabs, fmax
 
 /**
  * 	Comparing floats with == or != is dangerous because of floating point
@@ -25,9 +26,9 @@ t_bool	ft_fuzzy_equals(double a, double b)
 	double	diff;
 	double	scale;
 
-	diff = ft_fabs(a - b);
+	diff = fabs(a - b);
 	if (diff < DBL_EPSILON)
 		return (true);
-	scale = ft_fmax(ft_fabs(a), ft_fabs(b));
+	scale = fmax(fabs(a), fabs(b));
 	return (diff < DBL_EPSILON * (1.0 + scale));
 }

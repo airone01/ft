@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:07:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:59:13 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,21 @@ typedef struct s_map
 	int		height;
 }			t_map;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}			t_img;
+
 typedef struct s_app
 {
 	t_map	map;
+	t_img	*img;
 	void	*win;
 	int		file_fd;
 }			t_app;
