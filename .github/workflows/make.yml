@@ -44,6 +44,11 @@ jobs:
         env:
           GIT_TEST_DEBUG: 1
 
+      - name: Install LibBSD
+        if: runner.os == 'Linux'
+        shell: bash
+        run: sudo apt-get install libbsd-dev
+
       - name: Build ${{ matrix.target }} Linux
         if: runner.os == 'Linux'
         shell: bash

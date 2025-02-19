@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:37:33 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:36:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:01:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ long	ft_putnbr_base_ssize_int(int nbr, char *base)
 		return (count);
 	}
 	if (nbr >= (int)base_len)
-		count += ft_putnbr_base_ssize_int(nbr / base_len, base);
+		count += ft_putnbr_base_ssize_int(nbr / (int)base_len, base);
 	count += write(1, &(base[nbr % base_len]), 1);
 	return (count);
 }

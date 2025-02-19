@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 23:12:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:24:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
+t_bool				ft_isalnum(char c);
+t_bool				ft_isalpha(char c);
+t_bool				ft_isascii(char c);
+t_bool				ft_isdigit(char c);
+t_bool				ft_isprint(char c);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
@@ -46,6 +51,7 @@ unsigned long		ft_lstsize(t_list *lst);
 unsigned long		ft_strlcat(char *dst, const char *src, unsigned long size);
 unsigned long		ft_strlcpy(char *dst, const char *src, unsigned long size);
 unsigned long		ft_strlen(const char *str);
+void				*ft_recalloc(void *ptr, size_t old_size, size_t new_size);
 void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 void				*ft_memchr(const void *s, uint8_t c, size_t n);
@@ -62,11 +68,6 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_atoi(const char *nptr);
 int					ft_toupper(char c);
 int					ft_tolower(char c);
-t_bool				ft_isalnum(char c);
-t_bool				ft_isalpha(char c);
-t_bool				ft_isascii(char c);
-t_bool				ft_isdigit(char c);
-t_bool				ft_isprint(char c);
 
 //	Part 2
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
@@ -78,15 +79,16 @@ char				**ft_split(char *str, char c);
 char				*ft_substr(char const *s, unsigned int start,
 						unsigned long len);
 char				*ft_strmapi(char const *s, char (*f)(unsigned long, char));
-char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strtrim(char *s1, char const *set);
 char				*ft_itoa_base(int n, const char *b);
 char				*ft_itoa(int n);
 
 // Additional stuff by me
-long				ft_abs(long nb);
-char				*ft_strchr(const char *s, char c);
-long				ft_atol(const char *nptr);
 t_bool				ft_isspace(char c);
+char				*ft_env_find(char **envp, const char *var);
+char				*ft_strchr(const char *s, char c);
+long				ft_abs(long nb);
+long				ft_atol(const char *nptr);
 
 #endif
