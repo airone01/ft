@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_init.c                                         :+:      :+:    :+:   */
+/*   point_magnitude.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:56:00 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 14:46:10 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/19 14:47:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 /**
- * @brief	Initialize the global app structure.
+ * @brief	Calculate the magnitude of a point using the Pythagorean theorem
+ *
+ * @param	p		Point to calculate the magnitude
+ *
+ * @return	double	Magnitude of the point
  */
-t_app	*app_init(void)
+double	point_magnitude(t_point p)
 {
-	t_app	*app;
-
-	app = safe_calloc(NULL, 1, sizeof(t_app));
-	app->map.height = -1;
-	app->map.width = -1;
-	app->map.matrix = NULL;
-	app->win = NULL;
-	app->file_fd = -1;
-	app->img = NULL;
-	return (app);
+	return (sqrt(p.x * p.x + p.y * p.y));
 }

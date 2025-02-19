@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_init.c                                         :+:      :+:    :+:   */
+/*   point_iso_project.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:56:00 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 14:31:25 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/19 14:52:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 /**
- * @brief	Initialize the global app structure.
+ * @brief	Project a 3D point to a 2D point using isometric projection
+ *
+ * @param	p	3D point
+ *
+ * @return	t_point	2D point
+ *
+ * @note	The arbitrary angle of 30 degrees is used for the isometric
+ * 			projection
  */
-t_app	*app_init(void)
+t_point	iso_project(t_point3d p)
 {
-	t_app	*app;
+	t_point	result;
 
-	app = safe_calloc(NULL, 1, sizeof(t_app));
-	app->map.height = -1;
-	app->map.width = -1;
-	app->map.matrix = NULL;
-	app->win = NULL;
-	app->file_fd = -1;
-	app->img = NULL;
-	return (app);
+	result.x = (p.x - p.y) * cos(0.523599);
+	result.y = -p.z + (p.x + p.y) * sin(0.523599);
+	return (result);
 }

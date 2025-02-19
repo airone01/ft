@@ -3,25 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 18:40:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/14 20:15:31 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/19 16:40:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-// GPM? begin ft_abs
-/**
- * Gets the absolute value
- * @param   nb  Number to get the absolute value of
- * @return      Absolute value of nb
- */
-ssize_t	ft_abs(ssize_t nb)
+long	ft_abs(long n)
 {
-	if (nb < 0)
-		return (-nb);
-	return (nb);
+	if (n < 0)
+		return (-n);
+	return (n);
 }
-// GPM? end ft_abs

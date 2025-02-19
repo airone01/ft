@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_init.c                                         :+:      :+:    :+:   */
+/*   fuzzy_equals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:56:00 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 14:56:47 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/19 16:46:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 /**
- * @brief	Initialize the global app structure.
+ * 	Comparing floats with == or != is dangerous because of floating point
+ *	precision. This function checks if two floats are equal within a certain
+ *	epsilon range.
+ *
+ *	@see	https://stackoverflow.com/a/32334103
  */
-t_app	*app_init(void)
+t_bool	fuzzy_equals(double a, double b)
 {
-	t_app	*app;
+	double	diff;
+	double	scale;
 
-	app = safe_calloc(NULL, 1, sizeof(t_app));
-	app->map.height = -1;
-	app->map.width = -1;
-	app->map.matrix = NULL;
-	app->win = NULL;
-	app->file_fd = -1;
-	app->img = NULL;
-	return (app);
+	diff = fabs(a - b);
+	if (diff < DBL_EPSILON)
+		return (true);
+	scale = fmax(fabs(a), fabs(b));
+	return (diff < DBL_EPSILON * (1.0 + scale));
 }

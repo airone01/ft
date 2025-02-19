@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_init.c                                         :+:      :+:    :+:   */
+/*   point_normalize.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:56:00 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 14:47:23 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/19 16:44:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 /**
- * @brief	Initialize the global app structure.
+ * @brief	Normalize a point
+ *
+ * @param	p	Point to normalize
+ *
+ * @returns	t_point	Normalized point
  */
-t_app	*app_init(void)
+t_point	point_normalize(t_point p)
 {
-	t_app	*app;
+	double	mag;
 
-	app = safe_calloc(NULL, 1, sizeof(t_app));
-	app->map.height = -1;
-	app->map.width = -1;
-	app->map.matrix = NULL;
-	app->win = NULL;
-	app->file_fd = -1;
-	app->img = NULL;
-	return (app);
+	mag = point_magnitude(p);
+	if (fuzzy_equals(mag, 0.0))
+		return (p);
+	return (point_scale(p, 1.0 / mag));
 }

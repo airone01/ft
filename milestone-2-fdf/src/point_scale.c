@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_init.c                                         :+:      :+:    :+:   */
+/*   point_scale.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:56:00 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 14:43:03 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/19 14:43:24 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 /**
- * @brief	Initialize the global app structure.
+ * @brief	Scales a point
+ *
+ * @param	p		Point to scale
+ * @param	scale	Scale factor
+ *
+ * @returns	t_point	Result of the scaling
  */
-t_app	*app_init(void)
+t_point	point_scale(t_point p, double scale)
 {
-	t_app	*app;
+	t_point	result;
 
-	app = safe_calloc(NULL, 1, sizeof(t_app));
-	app->map.height = -1;
-	app->map.width = -1;
-	app->map.matrix = NULL;
-	app->win = NULL;
-	app->file_fd = -1;
-	app->img = NULL;
-	return (app);
+	result.x = p.x * scale;
+	result.y = p.y * scale;
+	return (result);
 }

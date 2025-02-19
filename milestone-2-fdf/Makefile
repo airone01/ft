@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/12 15:58:12 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/19 15:16:21 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ MINILIBX_DIR	:= $(realpath ../extra-minilibx)
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
+
+# Needed because we compile with the math library
+LDFLAGS			:= -lm
 
 all: title $(NAME)
 

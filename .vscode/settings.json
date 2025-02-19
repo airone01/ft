@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.astro": "astro",
         "*.page-template": "vue",
         "*.layout-template": "vue",
         "*.vue": "vue",
@@ -8,6 +9,7 @@
         "format": "c",
         "initializer_list": "c",
         "span": "c",
-        "fdf.h": "c"
+        "fdf.h": "c",
+        "libft.h": "c"
     }
 }

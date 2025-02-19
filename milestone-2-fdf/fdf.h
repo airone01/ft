@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 13:29:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:50:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 
 # ifndef MAX_MAP_HEIGHT
 #  define MAX_MAP_HEIGHT 1000
+# endif
+
+# ifndef DBL_EPSILON
+#  define DBL_EPSILON 2.2204460492503131e-16
 # endif
 
 typedef enum e_error
@@ -64,12 +68,39 @@ typedef struct s_map
 	int		height;
 }			t_map;
 
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}			t_img;
+
 typedef struct s_app
 {
 	t_map	map;
+	t_img	*img;
 	void	*win;
 	int		file_fd;
 }			t_app;
+
+// Isometric point
+typedef struct s_point
+{
+	double	x;
+	double	y;
+}			t_point;
+
+// Point in 3D space
+typedef struct s_point3d
+{
+	double	x;
+	double	y;
+	double	z;
+}			t_point3d;
 
 // Global app structure
 t_app		*app_init(void);
@@ -100,5 +131,20 @@ int			file_open(char *path, char **envp);
 
 // Map handling
 void		read_map_data(t_app *ctx);
+
+// Math
+t_bool		fuzzy_equals(double a, double b);
+
+// Point mamipulation
+t_point		point_add(t_point a, t_point b);
+double		point_distance(t_point a, t_point b);
+double		point_dot(t_point a, t_point b);
+t_point		iso_project(t_point3d p);
+t_point		point_lerp(t_point a, t_point b, double t);
+double		point_magnitude(t_point p);
+t_point		point_normalize(t_point p);
+t_point		point_rotate(t_point p, double angle);
+t_point		point_scale(t_point p, double scale);
+t_point		point_sub(t_point a, t_point b);
 
 #endif
