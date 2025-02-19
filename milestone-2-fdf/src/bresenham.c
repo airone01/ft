@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:07:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:23:44 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	draw_line_img(t_app *ctx, t_point start, t_point end,
 	{
 		if (stat.x >= 0 && stat.x < ctx->map.width && stat.y >= 0
 			&& stat.y < ctx->map.height)
-			put_pixel_to_img(ctx->img, (int)round(stat.x), (int)round(stat.y),
+			put_pixel_to_img(&ctx->img, (int)round(stat.x), (int)round(stat.y),
 				color);
 		stat.x += inc.x;
 		stat.y += inc.y;

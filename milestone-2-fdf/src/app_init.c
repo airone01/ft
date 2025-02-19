@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:56:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:12:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ t_app	*app_init(void)
 	app->map.matrix = NULL;
 	app->win = NULL;
 	app->file_fd = -1;
-	app->img = NULL;
+	app->img.addr = NULL;
+	app->img.img = NULL;
+	app->img.width = 0;
+	app->img.height = 0;
+	app->img.bits_per_pixel = 0;
+	app->img.line_length = 0;
+	app->img.endian = 0;
+	app->mlx = NULL;
 	return (app);
 }

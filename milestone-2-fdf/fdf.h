@@ -6,13 +6,14 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:50:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:12:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include "../extra-minilibx/mlx.h"                      // GPM!
 # include "../milestone-0-libft/libft.h"                 // GPM!
 # include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
 # include "../milestone-1-get_next_line/get_next_line.h" // GPM!
@@ -82,7 +83,8 @@ typedef struct s_img
 typedef struct s_app
 {
 	t_map	map;
-	t_img	*img;
+	t_img	img;
+	void	*mlx;
 	void	*win;
 	int		file_fd;
 }			t_app;
