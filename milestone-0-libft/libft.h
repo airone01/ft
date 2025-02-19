@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:40:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:44:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char				*ft_itoa_base(int n, const char *b);
 char				*ft_itoa(int n);
 
 // Additional stuff by me
-t_bool				ft_fuzzy_equals(double a, double b);
 t_bool				ft_isspace(char c);
 char				*ft_env_find(char **envp, const char *var);
 char				*ft_strchr(const char *s, char c);

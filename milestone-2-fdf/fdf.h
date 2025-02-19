@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:59:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:46:13 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>
+# include <float.h> // DBL_EPSILON
 # include <limits.h>
 # include <math.h>
 # include <stdio.h>
@@ -127,6 +128,9 @@ int			file_open(char *path, char **envp);
 
 // Map handling
 void		read_map_data(t_app *ctx);
+
+// Math
+t_bool		fuzzy_equals(double a, double b);
 
 // Point mamipulation
 t_point		point_add(t_point a, t_point b);

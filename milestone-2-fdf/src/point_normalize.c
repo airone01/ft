@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:47:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 15:08:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:44:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_point	point_normalize(t_point p)
 	double	mag;
 
 	mag = point_magnitude(p);
-	if (ft_fuzzy_equals(mag, 0.0))
+	if (fuzzy_equals(mag, 0.0))
 		return (p);
 	return (point_scale(p, 1.0 / mag));
 }

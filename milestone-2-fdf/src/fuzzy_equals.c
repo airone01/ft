@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fuzzy_equals.c                                  :+:      :+:    :+:   */
+/*   fuzzy_equals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:03:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:46:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <float.h> // DBL_EPSILON
-#include <math.h>  // fabs, fmax
+#include "../fdf.h"
 
 /**
  * 	Comparing floats with == or != is dangerous because of floating point
@@ -21,7 +19,7 @@
  *
  *	@see	https://stackoverflow.com/a/32334103
  */
-t_bool	ft_fuzzy_equals(double a, double b)
+t_bool	fuzzy_equals(double a, double b)
 {
 	double	diff;
 	double	scale;
