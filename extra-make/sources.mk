@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/19 12:39:25 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/19 15:05:30 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_bzero					\
 	ft_calloc					\
 	ft_env_find					\
+	ft_fuzzy_equals				\
 	ft_isalnum					\
 	ft_isalpha					\
 	ft_isascii					\
@@ -37,6 +38,7 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_lstmap_bonus				\
 	ft_lstnew_bonus				\
 	ft_lstsize_bonus			\
+	ft_max						\
 	ft_memchr					\
 	ft_memcmp					\
 	ft_memcpy					\
@@ -165,7 +167,17 @@ _SRC_FDF_COMMON				:=	\
 	file_sizes					\
 	free_2d_array				\
 	malloc						\
-	map_read
+	map_read					\
+	point_add					\
+	point_distance				\
+	point_dot					\
+	point_iso_project			\
+	point_lerp					\
+	point_magnitude				\
+	point_normalize				\
+	point_rotate				\
+	point_scale					\
+	point_sub
 _SRC_FDF_COMMON				:=	\
 	$(addprefix src/, $(_SRC_FDF_COMMON))
 _SRC_FDF_MANDATORY			:=	\
