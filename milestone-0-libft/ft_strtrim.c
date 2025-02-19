@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 14:13:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:17:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_strtrim(char *s1, char const *set)
 
 	if (!s1 || !set)
 		return (NULL);
+	s = s1;
 	start = 0;
 	end = ft_strlen(s1);
 	while (s1[start] && ft_strchr(set, s1[start]))
