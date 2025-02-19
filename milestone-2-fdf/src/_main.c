@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 16:42:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:55:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	map_display(t_app *app)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < app->map.height)
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	app = app_init();
 	app->file_fd = fd;
 	file_sizes(app, argv[1], envp);
-	map_read(app, fd);
+	read_map_data(app, fd);
 	map_display(app);
 	app_clear(app);
 	return (0);

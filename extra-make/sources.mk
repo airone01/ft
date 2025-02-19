@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/13 16:39:41 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/19 12:39:25 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_putendl_fd				\
 	ft_putnbr_fd				\
 	ft_putstr_fd				\
+	ft_recalloc					\
 	ft_split					\
 	ft_strdup					\
 	ft_strrchr					\
@@ -162,7 +163,7 @@ _SRC_FDF_COMMON				:=	\
 	error_mlx					\
 	file_open					\
 	file_sizes					\
-	free_ptrs					\
+	free_2d_array				\
 	malloc						\
 	map_read
 _SRC_FDF_COMMON				:=	\

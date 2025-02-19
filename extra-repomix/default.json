@@ -12,7 +12,7 @@
   "ignore": {
     "useGitignore": true,
     "useDefaultPatterns": true,
-    "customPatterns": []
+    "customPatterns": ["milestone-2-fdf/test_maps/*.fdf", "extra-minilibx/**/*"]
   },
   "security": {
     "enableSecurityCheck": false

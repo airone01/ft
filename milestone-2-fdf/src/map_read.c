@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 19:40:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:33:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	*convert_tokens_to_elevations(t_app *ctx, char **tokens)
 	int	*elevations;
 	int	i;
 
-	elevations = safe_calloc(ctx, ctx->map.width, sizeof(int));
+	elevations = safe_calloc(ctx, (unsigned long)ctx->map.width, sizeof(int));
 	i = 0;
 	while (i < ctx->map.width)
 	{
@@ -76,7 +76,7 @@ static char	**split_and_validate_line(t_app *ctx, char *raw_line)
  * @return true Line was processed successfully
  * @return false End of file or termination condition reached
  */
-static bool	process_map_line(t_app *ctx, char *current_line, int *row_index)
+static t_bool	process_map_line(t_app *ctx, char *current_line, int *row_index)
 {
 	char	**tokens;
 	char	*clean_line;
@@ -125,8 +125,8 @@ void	read_map_data(t_app *ctx, int fd)
 		ctx->map.height = row_index;
 		if (row_index >= MAX_MAP_HEIGHT)
 			exit_error(ctx, ERR_MAP_TOO_LARGE);
-		ctx->map.matrix = safe_realloc(ctx, ctx->map.matrix,
-				(row_index + 1) * sizeof(int *));
+		ctx->map.matrix = safe_recalloc(ctx, ctx->map.matrix,
+				(unsigned long)(row_index - 1), (unsigned long)row_index);
+		close(fd);
 	}
-	close(fd);
 }

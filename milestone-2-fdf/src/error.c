@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:27:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 18:52:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:13:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	exit_error_free(t_app *app, t_error err, void *ptr)
 		free(ptr);
 	exit_error(app, err);
 }
-
 
 /**
  * @brief Exits the program with an error message
@@ -49,5 +48,5 @@ void	exit_error(t_app *app, t_error err)
 		print_mlx_error(err);
 	else if (err >= ERR_MATRIX_OVERFLOW && err <= ERR_INVALID_PROJECTION)
 		print_math_error(err);
-	exit(err);
+	exit((int)err);
 }

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 00:56:11 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:29:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ unsigned long		ft_lstsize(t_list *lst);
 unsigned long		ft_strlcat(char *dst, const char *src, unsigned long size);
 unsigned long		ft_strlcpy(char *dst, const char *src, unsigned long size);
 unsigned long		ft_strlen(const char *str);
+void				*ft_recalloc(void *ptr, size_t old_size, size_t new_size);
 void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 void				*ft_memchr(const void *s, uint8_t c, size_t n);

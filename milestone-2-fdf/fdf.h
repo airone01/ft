@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/13 19:40:30 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:55:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# ifndef MAX_MAP_HEIGHT
+#  define MAX_MAP_HEIGHT 1000
+# endif
 
 typedef enum e_error
 {
@@ -82,7 +86,9 @@ void		print_mlx_error(t_error err);
 
 // Safety
 void		*safe_calloc(t_app *app, unsigned long nmemb, size_t size);
-void		free_ptrs(char **ptrs);
+void		*safe_recalloc(t_app *app, void *ptr, unsigned long old_size,
+				unsigned long new_size);
+void		free_2d_array(void **ptrs);
 void		app_clear(t_app *app);
 
 // Arguments handling
@@ -93,6 +99,6 @@ void		file_sizes(t_app *app, char *file_path, char **envp);
 int			file_open(char *path, char **envp);
 
 // Map handling
-void		map_read(t_app *app, int fd);
+void		read_map_data(t_app *ctx, int fd);
 
 #endif
