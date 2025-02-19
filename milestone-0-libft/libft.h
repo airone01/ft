@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:02:15 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:40:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ t_bool				ft_isspace(char c);
 char				*ft_env_find(char **envp, const char *var);
 char				*ft_strchr(const char *s, char c);
 long				ft_atol(const char *nptr);
+long				ft_abs(long n);
 
 #endif
