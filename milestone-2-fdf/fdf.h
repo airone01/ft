@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:46:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:50:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>
-# include <float.h> // DBL_EPSILON
 # include <limits.h>
 # include <math.h>
 # include <stdio.h>
@@ -30,6 +29,10 @@
 
 # ifndef MAX_MAP_HEIGHT
 #  define MAX_MAP_HEIGHT 1000
+# endif
+
+# ifndef DBL_EPSILON
+#  define DBL_EPSILON 2.2204460492503131e-16
 # endif
 
 typedef enum e_error
