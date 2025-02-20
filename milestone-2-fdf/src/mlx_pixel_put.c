@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:21 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 12:29:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:24:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param	y		Y coordinate of the pixel
  * @param	color	Color of the pixel
  */
-void	my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color)
+void	mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color)
 {
 	char	*dst;
 

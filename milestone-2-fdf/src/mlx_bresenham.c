@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 12:30:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:24:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	is_point_in_bounds(t_app *ctx, t_point point)
  * @param	end			Ending point of the line
  * @param	color		Color of the line
  */
-void	my_draw_line_img(t_app *ctx, t_point start, t_point end,
+void	draw_line_img(t_app *ctx, t_point start, t_point end,
 		unsigned int color)
 {
 	t_line_vars	vars;
@@ -65,7 +65,7 @@ void	my_draw_line_img(t_app *ctx, t_point start, t_point end,
 	vars = init_line_vars(start, end);
 	if (vars.steps < 1 && is_point_in_bounds(ctx, start))
 	{
-		my_mlx_pixel_put(&ctx->img, (int)round(start.x), (int)round(start.y),
+		mlx_pixel_put_img(&ctx->img, (int)round(start.x), (int)round(start.y),
 			color);
 		return ;
 	}
@@ -73,7 +73,7 @@ void	my_draw_line_img(t_app *ctx, t_point start, t_point end,
 	while (i <= vars.steps)
 	{
 		if (is_point_in_bounds(ctx, vars.current))
-			my_mlx_pixel_put(&ctx->img, (int)round(vars.current.x),
+			mlx_pixel_put_img(&ctx->img, (int)round(vars.current.x),
 				(int)round(vars.current.y), color);
 		vars.current.x += vars.delta.x;
 		vars.current.y += vars.delta.y;

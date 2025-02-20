@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 12:29:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:26:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,9 +183,10 @@ t_point		point_scale(t_point p, double scale);
 t_point		point_sub(t_point a, t_point b);
 
 // MLX
-void		my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color);
-void		my_draw_line_img(t_app *ctx, t_point start, t_point end,
+void		mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color);
+void		draw_line_img(t_app *ctx, t_point start, t_point end,
 				unsigned int color);
-void		my_mlx_hooks(t_app *app);
+void		register_hooks(t_app *app);
+int			render_next_frame(t_app *app);
 
 #endif

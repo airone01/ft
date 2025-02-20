@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/20 12:14:46 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/20 14:26:39 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -170,6 +170,7 @@ _SRC_FDF_COMMON				:=	\
 	mlx_bresenham				\
 	mlx_hooks					\
 	mlx_pixel_put				\
+	mlx_render_next_frame		\
 	point_add					\
 	point_distance				\
 	point_dot					\

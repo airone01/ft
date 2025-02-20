@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_hooks.c                                        :+:      :+:    :+:   */
+/*   mlx_render_next_frame.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:25:36 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/20 14:26:17 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-static int	close_hook(t_app *app)
-{
-	app_clear(app);
-	exit(0);
-}
-
-static int	key_hook(int key, t_app *app)
-{
-	if (key == ESC)
-	{
-		app_clear(app);
-		exit(0);
-	}
-	return (0);
-}
-
 /**
- * @brief	Attach mlx hooks to the window
+ * @brief	Renders the next frame
  *
  * @param	app	Application context
  */
-void	register_hooks(t_app *app)
+int	render_next_frame(t_app *app)
 {
-	mlx_hook(app->win, 2, 1L << 0, key_hook, app);
-	mlx_hook(app->win, 17, 0, close_hook, app);
-	mlx_loop_hook(app->win, render_next_frame, app);
+	mlx_put_image_to_window(app->mlx, app->win, app->img.img, 0, 0);
+	return (0);
 }
