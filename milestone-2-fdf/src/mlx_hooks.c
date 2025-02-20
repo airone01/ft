@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:55:01 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:21:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ static int	app_clear_0(t_app *app)
 
 static int	key_hook(int keycode, t_app *app)
 {
-	if (keycode == ESCAPE)
+	if (keycode == KEY_ESCAPE || keycode == KEY_Q)
 		app_clear_0(app);
-	else if (keycode == ARROW_UP)
+	else if (keycode == KEY_W || keycode == KEY_ARROW_UP)
 		app->offset_y -= 10;
-	else if (keycode == ARROW_DOWN)
+	else if (keycode == KEY_S || keycode == KEY_ARROW_DOWN)
 		app->offset_y += 10;
-	else if (keycode == ARROW_LEFT)
+	else if (keycode == KEY_A || keycode == KEY_ARROW_LEFT)
 		app->offset_x -= 10;
-	else if (keycode == ARROW_RIGHT)
+	else if (keycode == KEY_D || keycode == KEY_ARROW_RIGHT)
 		app->offset_x += 10;
-	else if (keycode == PLUS)
+	else if (keycode == KEY_EQUALS || keycode == KEY_NUMPAD_PLUS)
 		app->scale *= 1.1;
-	else if (keycode == MINUS)
+	else if (keycode == KEY_DASH || keycode == KEY_NUMPAD_MINUS)
 		app->scale *= 0.9;
-	else if (keycode == SQUARE_BRACKET_CLOSING)
+	else if (keycode == KEY_SQUARE_BRACKET_CLOSING)
 		app->z_scale *= 1.1;
-	else if (keycode == SQUARE_BRACKET_OPENING)
+	else if (keycode == KEY_SQUARE_BRACKET_OPENING)
 		app->z_scale *= 0.9;
 	return (0);
 }

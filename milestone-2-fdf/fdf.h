@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:47:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:20:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,19 +124,22 @@ enum			e_image
 // Keyboard keys
 enum			e_keyboard
 {
-	W = 119,
-	S = 115,
-	D = 100,
-	A = 97,
-	ARROW_UP = 126,
-	ARROW_DOWN = 125,
-	ARROW_LEFT = 123,
-	ARROW_RIGHT = 124,
-	PLUS = 24,
-	MINUS = 27,
-	SQUARE_BRACKET_CLOSING = 30,
-	SQUARE_BRACKET_OPENING = 33,
-	ESCAPE = 65307,
+	KEY_W = 119,
+	KEY_S = 115,
+	KEY_D = 100,
+	KEY_A = 97,
+	KEY_Q = 113,
+	KEY_ARROW_UP = 65362,
+	KEY_ARROW_DOWN = 65364,
+	KEY_ARROW_LEFT = 65361,
+	KEY_ARROW_RIGHT = 65363,
+	KEY_EQUALS = 61,
+	KEY_DASH = 45,
+	KEY_NUMPAD_PLUS = 65451,
+	KEY_NUMPAD_MINUS = 65453,
+	KEY_SQUARE_BRACKET_OPENING = 91,
+	KEY_SQUARE_BRACKET_CLOSING = 93,
+	KEY_ESCAPE = 65307,
 };
 
 // Colors
