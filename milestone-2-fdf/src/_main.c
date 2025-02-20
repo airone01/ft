@@ -6,30 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 18:55:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 20:44:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
-
-// static void	map_display(t_app *ctx)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < ctx->map.height)
-// 	{
-// 		j = 0;
-// 		while (j < ctx->map.width)
-// 		{
-// 			ft_printf("%d\t", ctx->map.matrix[i][j]);
-// 			j++;
-// 		}
-// 		ft_printf("\n");
-// 		i++;
-// 	}
-// }
 
 static void	manage_mlx(t_app *app)
 {
@@ -39,7 +20,10 @@ static void	manage_mlx(t_app *app)
 	app->img.img = mlx_new_image(app->mlx, app->img.width, app->img.height);
 	app->img.addr = mlx_get_data_addr(app->img.img, &app->img.bits_per_pixel,
 			&app->img.line_length, &app->img.endian);
-	app->win = mlx_new_window(app->mlx, 1920, 1080, (char *)"r1's fdf");
+	app->win = mlx_new_window(app->mlx, IMG_WIDTH, IMG_HEIGHT,
+			(char *)"r1's fdf");
+	if (!app->win)
+		exit_error(app, ERR_MLX_WINDOW);
 	register_hooks(app);
 	mlx_loop(app->mlx);
 }
@@ -58,5 +42,6 @@ int	main(int argc, char **argv, char **envp)
 	find_elevation_bounds(app);
 	manage_mlx(app);
 	app_clear(app);
+	free(app->mlx);
 	return (0);
 }

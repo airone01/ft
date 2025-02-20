@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 19:39:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 20:54:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ static void	render_map_frame(t_app *app)
  */
 int	render_next_frame(t_app *app)
 {
+	if (!app->needs_render)
+		return (0);
 	render_map_frame(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->img.img, 0, 0);
+	app->needs_render = false;
 	return (0);
 }

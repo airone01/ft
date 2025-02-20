@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/19 17:25:39 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/20 20:36:56 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MINILIBX_SRC	=	$(_SRC_MINILIBX:%=$(MINILIBX_DIR)/%.c)
 MINILIBX		=	$(MINILIBX_DIR)/libmlx_Linux.a
 
 # LD
-LDFLAGS	:= -L$(MINILIBX_DIR) -l:libmlx_Linux.a $(LDFLAGS) -lz -lX11 -lXext
+LDFLAGS	:= -L$(MINILIBX_DIR) -lm -lmlx -lXext -lX11 $(LDFLAGS)
 # CC
 CFLAGS	+= -I$(MINILIBX_DIR)
 

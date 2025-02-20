@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 19:42:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 20:52:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_img
 
 typedef struct s_app
 {
+	t_bool		needs_render;
 	double		offset_x;
 	double		offset_y;
 	double		z_scale;
