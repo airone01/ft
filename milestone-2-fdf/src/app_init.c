@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 12:27:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:45:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ t_app	*app_init(void)
 	app->img.bits_per_pixel = 0;
 	app->img.line_length = 0;
 	app->img.endian = 0;
+	app->img.width = IMG_WIDTH;
+	app->img.height = IMG_HEIGHT;
+	app->offset_x = app->img.width / 2;
+	app->offset_y = app->img.height / 3;
+	app->z_scale = 1.0;
+	app->scale = 20.0;
 	app->mlx = NULL;
 	return (app);
 }

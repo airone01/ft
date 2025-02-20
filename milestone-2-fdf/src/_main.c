@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:24:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:55:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,10 @@ static void	manage_mlx(t_app *app)
 	app->mlx = mlx_init();
 	if (!app->mlx)
 		exit_error(app, ERR_MLX_INIT);
-	app->img.img = mlx_new_image(app->mlx, IMG_WIDTH, IMG_HEIGHT);
-	app->img.width = IMG_WIDTH;
-	app->img.height = IMG_HEIGHT;
+	app->img.img = mlx_new_image(app->mlx, app->img.width, app->img.height);
 	app->img.addr = mlx_get_data_addr(app->img.img, &app->img.bits_per_pixel,
 			&app->img.line_length, &app->img.endian);
 	app->win = mlx_new_window(app->mlx, 1920, 1080, (char *)"r1's fdf");
-	draw_line_img(app, (t_point){0, 0}, (t_point){app->img.width,
-		app->img.height}, RED);
-	draw_line_img(app, (t_point){0, app->img.height}, (t_point){app->img.width,
-		0}, GREEN);
-	mlx_put_image_to_window(app->mlx, app->win, app->img.img, 0, 0);
 	register_hooks(app);
 	mlx_loop(app->mlx);
 }
