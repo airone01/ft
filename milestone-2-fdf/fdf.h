@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 16:20:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:42:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_map
 	int			**matrix;
 	int			width;
 	int			height;
+	int			min_elevation;
+	int			max_elevation;
 }				t_map;
 
 typedef struct s_img
@@ -90,6 +92,7 @@ typedef struct s_app
 	t_img		img;
 	void		*mlx;
 	void		*win;
+	int			color_scheme;
 	int			file_fd;
 }				t_app;
 
@@ -140,6 +143,7 @@ enum			e_keyboard
 	KEY_SQUARE_BRACKET_OPENING = 91,
 	KEY_SQUARE_BRACKET_CLOSING = 93,
 	KEY_ESCAPE = 65307,
+	KEY_1 = 49,
 };
 
 // Colors
@@ -166,9 +170,9 @@ void			print_map_error(t_error err);
 void			print_mlx_error(t_error err);
 
 // Safety
-void			*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
 void			*safe_recalloc(t_app *ctx, void *ptr, unsigned long old_size,
 					unsigned long new_size);
+void			*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
 void			free_2d_array(void **ptrs);
 void			app_clear(t_app *ctx);
 
@@ -180,6 +184,7 @@ void			file_sizes(t_app *ctx, char *file_path, char **envp);
 int				file_open(char *path, char **envp);
 
 // Map handling
+void			find_elevation_bounds(t_app *ctx);
 void			read_map_data(t_app *ctx);
 
 // Math
@@ -198,7 +203,10 @@ t_point			point_scale(t_point p, double scale);
 t_point			point_sub(t_point a, t_point b);
 
 // MLX
-unsigned int	color_get(int z1, int z2);
+unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);
+unsigned int	color_get_line(t_app *ctx, int z1, int z2);
+unsigned int	hsv_to_rgb(double h, double s, double v);
+unsigned int	color_get(int z, int min_z, int max_z);
 void			mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color);
 void			draw_line_img(t_app *ctx, t_point start, t_point end,
 					unsigned int color);

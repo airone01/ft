@@ -6,15 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 09:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 13:55:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:55:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
-
-/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
-// Helper Functions
-/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
 
 /**
  * @brief Converts an array of string tokens to integer elevation values
@@ -66,10 +62,6 @@ static char	**split_and_validate_line(t_app *ctx, char *raw_line)
 	return (tokens);
 }
 
-/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
-// Line Processing
-/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
-
 /**
  * @brief Processes a single line from the map file
  *
@@ -100,10 +92,6 @@ static t_bool	process_map_line(t_app *ctx, char *current_line, int *row_index)
 	(*row_index)++;
 	return (true);
 }
-
-/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
-// Main Map Reading Function
-/*━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━*/
 
 /**
  * @brief Reads and parses the map file into a height matrix

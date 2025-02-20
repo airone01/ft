@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 16:21:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:46:30 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	key_hook(int keycode, t_app *app)
 		app->z_scale *= 1.1;
 	else if (keycode == KEY_SQUARE_BRACKET_OPENING)
 		app->z_scale *= 0.9;
+	else if (keycode == KEY_1)
+		app->color_scheme = (app->color_scheme + 1) % 4;
 	return (0);
 }
 

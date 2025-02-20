@@ -6,27 +6,35 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:35:15 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 16:56:20 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:14:49 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../fdf.h"
+
 /**
- * @brief	Get a color based on the average of two z values
+ * @brief	Map value to a color using elevation gradient
  *
- * @param	z1	First z value
- * @param	z2	Second z value
+ * @param	min_z	Mimimum z value
+ * @param	max_z	Maximum z value
  *
  * @returns	unsigned int	Color value
  */
-unsigned int	color_get(int z1, int z2)
+unsigned int	color_get(int z, int min_z, int max_z)
 {
-	int	avg_z;
+	double	ratio;
+	double	hue;
 
-	avg_z = (z1 + z2) / 2;
-	if (avg_z > 125)
-		return (0x00FF0000);
-	else if (avg_z > 0)
-		return (0x0000FF00);
+	if (min_z == max_z)
+		return (0x0000FFFF);
+	ratio = (double)(z - min_z) / (max_z - min_z);
+	if (ratio < 0.25)
+		hue = 240 - (ratio * 4 * 60);
+	else if (ratio < 0.5)
+		hue = 180 - ((ratio - 0.25) * 4 * 60);
+	else if (ratio < 0.75)
+		hue = 120 - ((ratio - 0.5) * 4 * 60);
 	else
-		return (0x000000FF);
+		hue = 60 - ((ratio - 0.75) * 4 * 60);
+	return (hsv_to_rgb(hue, 0.8, 1.0));
 }

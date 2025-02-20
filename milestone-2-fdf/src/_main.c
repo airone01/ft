@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:55:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:55:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	app->map.matrix = safe_calloc(app, (unsigned long)app->map.height,
 			sizeof(int *));
 	read_map_data(app);
+	find_elevation_bounds(app);
 	manage_mlx(app);
 	app_clear(app);
 	return (0);

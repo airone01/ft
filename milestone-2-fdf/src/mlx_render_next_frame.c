@@ -6,11 +6,55 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:55:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:39:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+/**
+ * Helper function to project a 3D point to 2D with scaling and offset
+ */
+static t_point	get_projected_point(int x, int y, t_app *app)
+{
+	t_point3d	point3d;
+	t_point		projected;
+
+	point3d.x = x * app->scale;
+	point3d.y = y * app->scale;
+	point3d.z = app->map.matrix[y][x] * app->z_scale;
+	projected = iso_project(point3d);
+	projected = point_add(projected, (t_point){app->offset_x, app->offset_y});
+	return (projected);
+}
+
+/**
+ * Draws a line to the right neighbor if within bounds
+ */
+static void	draw_right_line(t_app *app, t_point current, int x, int y)
+{
+	t_point	right;
+
+	if (x >= app->map.width - 1)
+		return ;
+	right = get_projected_point(x + 1, y, app);
+	draw_line_img(app, current, right, color_get_line(app,
+			app->map.matrix[y][x], app->map.matrix[y][x + 1]));
+}
+
+/**
+ * Draws a line to the downward neighbor if within bounds
+ */
+static void	draw_down_line(t_app *app, t_point current, int x, int y)
+{
+	t_point	down;
+
+	if (y >= app->map.height - 1)
+		return ;
+	down = get_projected_point(x, y + 1, app);
+	draw_line_img(app, current, down, color_get_line(app, app->map.matrix[y][x],
+			app->map.matrix[y + 1][x]));
+}
 
 /**
  * Main rendering function that draws the map to the image buffer
@@ -22,8 +66,6 @@ static void	render_map_frame(t_app *app)
 	int		x;
 	int		y;
 	t_point	current;
-	t_point	right;
-	t_point	down;
 
 	if (app->img.img)
 		mlx_destroy_image(app->mlx, app->img.img);
@@ -36,31 +78,9 @@ static void	render_map_frame(t_app *app)
 		x = 0;
 		while (x < app->map.width)
 		{
-			current = iso_project((t_point3d){x * app->scale, y * app->scale,
-					app->map.matrix[y][x] * app->z_scale});
-			current = point_add(current, (t_point){app->offset_x,
-					app->offset_y});
-			if (x < app->map.width - 1)
-			{
-				right = iso_project((t_point3d){(x + 1) * app->scale, y
-						* app->scale, app->map.matrix[y][x + 1]
-						* app->z_scale});
-				right = point_add(right, (t_point){app->offset_x,
-						app->offset_y});
-				draw_line_img(app, current, right,
-					color_get(app->map.matrix[y][x], app->map.matrix[y][x
-						+ 1]));
-			}
-			if (y < app->map.height - 1)
-			{
-				down = iso_project((t_point3d){x * app->scale, (y + 1)
-						* app->scale, app->map.matrix[y + 1][x]
-						* app->z_scale});
-				down = point_add(down, (t_point){app->offset_x, app->offset_y});
-				draw_line_img(app, current, down,
-					color_get(app->map.matrix[y][x], app->map.matrix[y
-						+ 1][x]));
-			}
+			current = get_projected_point(x, y, app);
+			draw_right_line(app, current, x, y);
+			draw_down_line(app, current, x, y);
 			x++;
 		}
 		y++;
