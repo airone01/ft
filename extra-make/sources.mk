@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/19 16:45:01 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/20 12:14:46 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,7 +154,6 @@ _SRC_FDF_COMMON				:=	\
 	app_clear					\
 	app_init					\
 	args_check					\
-	bresenham					\
 	error						\
 	error_arg					\
 	error_file					\
@@ -168,6 +167,9 @@ _SRC_FDF_COMMON				:=	\
 	fuzzy_equals				\
 	malloc						\
 	map_read					\
+	mlx_bresenham				\
+	mlx_hooks					\
+	mlx_pixel_put				\
 	point_add					\
 	point_distance				\
 	point_dot					\

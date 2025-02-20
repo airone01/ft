@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 17:12:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:29:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,39 @@ typedef struct s_point3d
 	double	z;
 }			t_point3d;
 
+typedef struct s_line_vars
+{
+	t_point	delta;
+	t_point	current;
+	double	steps;
+}			t_line_vars;
+
+enum		e_image
+{
+	IMG_WIDTH = 1920,
+	IMG_HEIGHT = 1080,
+};
+
+// Keyboard keys
+enum		e_keyboard
+{
+	W = 119,
+	S = 115,
+	D = 100,
+	A = 97,
+	ESC = 65307,
+};
+
+// Colors
+enum		e_colors
+{
+	BLACK = 0x00000000,
+	WHITE = 0x00FFFFFF,
+	RED = 0x00FF0000,
+	GREEN = 0x0000FF00,
+	BLUE = 0x000000FF,
+};
+
 // Global app structure
 t_app		*app_init(void);
 
@@ -148,5 +181,11 @@ t_point		point_normalize(t_point p);
 t_point		point_rotate(t_point p, double angle);
 t_point		point_scale(t_point p, double scale);
 t_point		point_sub(t_point a, t_point b);
+
+// MLX
+void		my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color);
+void		my_draw_line_img(t_app *ctx, t_point start, t_point end,
+				unsigned int color);
+void		my_mlx_hooks(t_app *app);
 
 #endif

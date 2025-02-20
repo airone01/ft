@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_init.c                                         :+:      :+:    :+:   */
+/*   mlx_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 12:27:41 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/20 12:04:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-/**
- * @brief	Initialize the global app structure.
- */
-t_app	*app_init(void)
+int	close_hook(t_app *app)
 {
-	t_app	*app;
+	app_clear(app);
+	exit(0);
+}
 
-	app = safe_calloc(NULL, 1, sizeof(t_app));
-	app->map.height = -1;
-	app->map.width = -1;
-	app->map.matrix = NULL;
-	app->win = NULL;
-	app->file_fd = -1;
-	app->img.addr = NULL;
-	app->img.img = NULL;
-	app->img.bits_per_pixel = 0;
-	app->img.line_length = 0;
-	app->img.endian = 0;
-	app->mlx = NULL;
-	return (app);
+int	key_hook(int key, t_app *app)
+{
+	if (key == ESC)
+	{
+		app_clear(app);
+		exit(0);
+	}
+	return (0);
+}
+
+void	my_mlx_hooks(t_app *app)
+{
+	mlx_hook(app->win, 2, 1L << 0, key_hook, app);
+	mlx_hook(app->win, 17, 0, close_hook, app);
 }
