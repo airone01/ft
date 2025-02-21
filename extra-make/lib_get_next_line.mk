@@ -6,13 +6,11 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 20:39:02 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 10:14:26 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# GNL_DIR		:= $(realpath ../milestone-1-get_next_line)
-# $(call make_lib,GNL,get_next_line,get_next_line)
-
+# GPM? begin make_lib_get_next_line_mk
 GNL_SRC	=	$(_SRC_GNL:%=$(GNL_DIR)/%.c)
 GNL		=	$(GNL_DIR)/get_next_line.a
 
@@ -38,3 +36,4 @@ fclean_get_next_line:
 	@if $(MAKE) -C $(GNL_DIR) -n fclean >/dev/null 2>&1; then \
 		$(MAKE) -C $(GNL_DIR) fclean; \
 	fi
+# GPM? end make_lib_get_next_line_mk

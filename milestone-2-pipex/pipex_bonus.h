@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 15:49:50 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/19 11:35:45 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/21 14:40:57 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/21 14:41:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
-int	ft_strlen(char *str);
+# ifndef PIPEX_PIPES
+#  define PIPEX_PIPES
+#  define PIPEX_PIPES_MIN 1
+#  define PIPEX_PIPES_MAX 1024
+# endif
 
 #endif

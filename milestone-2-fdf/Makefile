@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/20 20:36:31 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 19:17:46 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/art.mk) # GPM!
+include $(realpath ../extra-make/art.mk)# GPM!
 # GPM: make_ansi_color_codes
 COLOR			= $(COLOR_FDF)
 
@@ -43,6 +43,10 @@ MINILIBX_DIR	:= $(realpath ../extra-minilibx)
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
+# Needed because we compile with the math library
+LDFLAGS			:= -lm
+CFLAGS			:= -I.
+
 all: title $(NAME)
 
 title:
@@ -58,6 +62,6 @@ include $(realpath ../extra-make/lib_get_next_line.mk)
 include $(realpath ../extra-make/lib_minilibx.mk)
 
 include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
+# GPM: make_targets_common.mk
 
 include $(realpath ../extra-make/targets_bin.mk)

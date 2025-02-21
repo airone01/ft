@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   pipex_mandatory.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 15:47:37 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/19 11:30:49 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/21 14:40:57 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/21 14:42:43 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#ifndef PIPEX_MANDATORY_H
+# define PIPEX_MANDATORY_H
 
-int	main(int argc, char **argv)
-{
-	(void) argc;
-	printf("%d", ft_strlen(argv[1]));
-}
+# ifndef PIPEX_PIPES
+#  define PIPEX_PIPES
+#  define PIPEX_PIPES_MIN 2
+#  define PIPEX_PIPES_MAX 2
+# endif
+
+#endif

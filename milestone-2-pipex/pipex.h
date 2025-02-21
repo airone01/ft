@@ -6,23 +6,16 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:53:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:42:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# ifndef PIPEX_PIPES
-#  define PIPEX_PIPES
-#  define PIPEX_PIPES_MIN 1
-#  define PIPEX_PIPES_MAX 1024
-# endif
-
-# include "../milestone-0-libft/libft.h"                 // GPM!
-# include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
-# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
-
+# include "ft_printf.h"
+# include "get_next_line.h"
+# include "libft.h"
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>
@@ -51,7 +44,6 @@ t_app		app_new(char **envp);
 // Memory management
 void		free_strings(char **strings);
 void		app_free(t_app app);
-void		free_fds(t_app app);
 void		nothing(void *ptr);
 
 // Environment variables
@@ -63,7 +55,7 @@ char		**cmda_args(t_app *app, char *cmd);
 void		populate_cmdas(t_app *app, int argc, char **argv);
 void		cmda_print(void *content);
 void		cmda_free(void *cmda);
-int			args_valid(t_app *app, unsigned long argc, char **argv);
+int			args_valid(t_app *app, int argc, char **argv);
 
 // Path resolution
 char		*path_find_bin(t_app *app, char *path, char *bin);

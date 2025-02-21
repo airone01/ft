@@ -6,17 +6,17 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/12 16:45:26 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 11:17:36 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# GPM? begin make_target_common
 # **************************************************************************** #
 #                                   COMMANDS                                   #
 # **************************************************************************** #
+# GPM? begin make_targets_common_mk
 
-include $(realpath ../extra-make/commands.mk)
-# GPM: make_commands
+include $(realpath ../extra-make/commands.mk)# GPM!
+# GPM: make_commands_mk
 
 # Standard compilation checks
 CFLAGS	+= -Wall -Werror -Wextra
@@ -64,8 +64,8 @@ endif
 #                                   SOURCES                                    #
 # **************************************************************************** #
 
-# GPM: make_src
-include $(realpath ../extra-make/sources.mk) # GPM!
+include $(realpath ../extra-make/sources.mk)# GPM!
+# GPM: make_sources_mk
 
 # **************************************************************************** #
 #                                   MAPPING                                    #
@@ -104,7 +104,7 @@ fclean: clean $(FCLEAN_TARGETS)
 
 # $(info $(call make_lib,LIBFT,libft,libft))
 
-bonus: $(BNAME)
+bonus: .bonus
 
 -include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory
@@ -112,4 +112,4 @@ MAKEFLAGS	+= --no-print-directory
 .SILENT:	all bonus .bonus	clean fclean re title visualize visualizer
 
 re: fclean all
-# GPM? end make_target_common
+# GPM? end make_targets_common_mk

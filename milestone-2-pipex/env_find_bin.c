@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:40:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:50:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:10:17 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,15 @@
 static char	**env_get_path_dirs(t_app *app)
 {
 	char	*path_var;
-	char	*path_value;
 	char	**path_dirs;
 
 	path_var = env_find(*app, (char *)"PATH=");
 	if (!path_var)
 		app_exit_errno(*app, ENOMEM);
-	path_value = ft_strtrim(path_var, (char *)"PATH=");
-	free(path_var);
-	if (!path_value)
+	if (!path_var)
 		app_exit_errno(*app, ENOMEM);
-	path_dirs = ft_split(path_value, ':');
-	free(path_value);
+	path_dirs = ft_split(path_var, ':');
+	free(path_var);
 	if (!path_dirs)
 		app_exit_errno(*app, ENOMEM);
 	return (path_dirs);
