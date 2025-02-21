@@ -6,13 +6,11 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 20:39:07 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 10:14:43 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# $(call make_lib,LIBFT,libft,libft)
-# $(info $(call make_lib,LIBFT,libft,libft))
-
+# GPM? begin make_lib_libft_mk
 LIBFT_SRC	=	$(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
@@ -38,3 +36,4 @@ fclean_libft:
 	@if $(MAKE) -C $(LIBFT_DIR) -n fclean >/dev/null 2>&1; then \
 		$(MAKE) -C $(LIBFT_DIR) fclean; \
 	fi
+# GPM? end make_lib_libft_mk

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   bonus_here_doc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:52:39 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 16:38:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:46:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int	handle_here_doc(t_app *app, char *limiter)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
-		{
-			ft_printf("[DEBUG] No line\n");
 			break ;
-		}
-		if (ft_strncmp(line, limiter, ft_strlen(line) - 1) == 0)
+		if (ft_strlen(line) > 0 && ft_strncmp(line, limiter,
+				ft_strlen(limiter)) == 0 && (line[ft_strlen(limiter)] == '\n'
+				|| line[ft_strlen(limiter)] == '\0'))
 		{
 			free(line);
 			break ;

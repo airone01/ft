@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:43:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:40:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	ft_buff_clean(buffer[fd]);
-	if (line[0] == '\0')
+	if (bytes_read == 0 && line[0] == '\0')
 		return (free(line), NULL);
 	return (line);
 }

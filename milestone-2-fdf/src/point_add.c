@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:41:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 14:43:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
  * @brief	Adds two points

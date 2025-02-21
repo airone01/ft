@@ -6,14 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:32:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:48:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:14:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	handle_file_opening(t_app *app, int here_doc, unsigned long argc,
-		char **argv)
+static void	handle_file_opening(t_app *app, int here_doc, int argc, char **argv)
 {
 	if (here_doc)
 	{
@@ -44,7 +43,7 @@ static void	handle_file_opening(t_app *app, int here_doc, unsigned long argc,
  * @param	argc	Number of arguments
  * @param	argv	Arguments
  */
-int	args_valid(t_app *app, unsigned long argc, char **argv)
+int	args_valid(t_app *app, int argc, char **argv)
 {
 	int	here_doc;
 

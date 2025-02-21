@@ -6,13 +6,11 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 20:38:56 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 10:14:05 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# PRINTF_DIR		:= $(realpath ../milestone-1-ft_printf)
-# $(call make_lib,PRINTF,ft_printf,libftprintf)
-
+# GPM? begin make_lib_ft_printf_mk
 PRINTF_SRC	=	$(_SRC_PRINTF:%=$(PRINTF_DIR)/%.c)
 PRINTF		=	$(PRINTF_DIR)/libftprintf.a
 
@@ -38,3 +36,4 @@ fclean_ft_printf:
 	@if $(MAKE) -C $(PRINTF_DIR) -n fclean >/dev/null 2>&1; then \
 		$(MAKE) -C $(PRINTF_DIR) fclean; \
 	fi
+# GPM? end make_lib_ft_printf_mk
