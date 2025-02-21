@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 10:50:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:14:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_app		app_new(char **envp);
 // Memory management
 void		free_strings(char **strings);
 void		app_free(t_app app);
-void		free_fds(t_app app);
 void		nothing(void *ptr);
 
 // Environment variables
@@ -62,7 +61,7 @@ char		**cmda_args(t_app *app, char *cmd);
 void		populate_cmdas(t_app *app, int argc, char **argv);
 void		cmda_print(void *content);
 void		cmda_free(void *cmda);
-int			args_valid(t_app *app, unsigned long argc, char **argv);
+int			args_valid(t_app *app, int argc, char **argv);
 
 // Path resolution
 char		*path_find_bin(t_app *app, char *path, char *bin);

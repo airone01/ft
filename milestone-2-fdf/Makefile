@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:09:36 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 11:22:26 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/art.mk) # GPM!
+include $(realpath ../extra-make/art.mk)# GPM!
 # GPM: make_ansi_color_codes
 COLOR			= $(COLOR_FDF)
 

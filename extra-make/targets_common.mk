@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:19:46 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 11:17:36 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,7 @@ fclean: clean $(FCLEAN_TARGETS)
 
 # $(info $(call make_lib,LIBFT,libft,libft))
 
-bonus: $(BNAME)
+bonus: .bonus
 
 -include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory

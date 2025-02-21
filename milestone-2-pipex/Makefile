@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:18:36 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 11:22:26 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/art.mk) # GPM!
+include $(realpath ../extra-make/art.mk)# GPM!
 # GPM: make_art_mk
 COLOR			= $(COLOR_PIPEX)
 
@@ -26,7 +26,7 @@ GPM_MSTONE	= 2
 GPM_NAME	= pipex
 GPM_MNAME	= PIPEX
 NAME		= pipex
-BNAME		= bpipex
+BNAME		= pipex
 OUT_DIR 	= .out/
 
 # **************************************************************************** #

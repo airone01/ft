@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:26:16 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:35:44 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 11:22:26 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/art.mk) # GPM!
+include $(realpath ../extra-make/art.mk)# GPM!
 # GPM: make_ansi_color_codes
 COLOR			= $(COLOR_MINECRAFT)
 
