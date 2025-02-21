@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 23:02:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ static void	draw_down_line(t_app *app, t_point current, int x, int y)
  */
 static void	render_map_frame(t_app *app)
 {
+	t_point	current;
 	int		x;
 	int		y;
-	t_point	current;
 
 	if (app->img.img)
 		mlx_destroy_image(app->mlx, app->img.img);

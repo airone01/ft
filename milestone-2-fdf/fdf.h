@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:34:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 23:02:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
-# endif
-
-# ifndef TRANSLATION_SPEED
-#  define TRANSLATION_SPEED 500
 # endif
 
 typedef enum e_error
@@ -205,15 +201,18 @@ void			app_clear(t_app *ctx);
 void			args_check(int argc, char **argv);
 
 // File handling
+char			*read_entire_file(int fd, size_t *file_size);
 void			file_sizes(t_app *ctx, char *file_path, char **envp);
 int				file_open(char *path, char **envp);
 
 // Map handling
+void			map_parse(t_app *app, char *content);
 void			find_elevation_bounds(t_app *ctx);
-void			read_map_data(t_app *ctx);
+int				**allocate_matrix(int width, int height);
 
 // Math
 t_bool			fuzzy_equals(double a, double b);
+int				fast_atoi(const char **str);
 
 // Point mamipulation
 t_point			point_add(t_point a, t_point b);

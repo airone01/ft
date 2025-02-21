@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:14:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:56:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,23 @@ static void	manage_mlx(t_app *app)
 int	main(int argc, char **argv, char **envp)
 {
 	t_app	*app;
+	char	*file;
+	char	*tmp;
 
 	(void)args_check(argc, argv);
 	app = app_init();
 	app->file_fd = file_open(argv[1], envp);
-	file_sizes(app, argv[1], envp);
-	app->map.matrix = safe_calloc(app, (unsigned long)app->map.height,
-			sizeof(int *));
-	read_map_data(app);
+	file = read_entire_file(app->file_fd, (size_t *)&app->map.width);
+	tmp = file;
+	app->map.height = 1;
+	while (*tmp)
+	{
+		if (*tmp == '\n')
+			app->map.height++;
+		tmp++;
+	}
+	app->map.matrix = allocate_matrix(app->map.width, app->map.height);
+	map_parse(app, file);
 	find_elevation_bounds(app);
 	calculate_initial_scale(app);
 	manage_mlx(app);

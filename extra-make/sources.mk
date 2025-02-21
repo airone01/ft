@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 21:15:33 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 22:27:20 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,13 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_memcpy					\
 	ft_memmove					\
 	ft_memset					\
+	ft_max						\
+	ft_min						\
 	ft_putchar_fd				\
 	ft_putendl_fd				\
 	ft_putnbr_fd				\
 	ft_putstr_fd				\
+	ft_realloc					\
 	ft_recalloc					\
 	ft_split					\
 	ft_strdup					\
@@ -167,14 +170,16 @@ _SRC_FDF_COMMON				:=	\
 	error_math					\
 	error_memory				\
 	error_mlx					\
+	fast_atoi					\
 	file_open					\
-	file_sizes					\
+	file_utils					\
 	free_2d_array				\
 	fuzzy_equals				\
 	initial_scale				\
 	malloc						\
 	map_elevation				\
-	map_read					\
+	map_parse					\
+	map_utils					\
 	mlx_bresenham				\
 	mlx_hooks					\
 	mlx_hooks_key				\

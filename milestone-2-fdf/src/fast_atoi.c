@@ -1,32 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   fast_atoi.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 22:38:16 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/21 21:53:25 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/21 21:57:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "fdf.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+/**
+ * @brief	Faster atoi.
+ *
+ * @param	str		The string to convert.
+ *
+ * @returns	The integer value.
+ */
+int	fast_atoi(const char **str)
+{
+	int	result;
+	int	sign;
 
-# ifndef FD_SIZE
-#  define FD_SIZE 1024
-# endif
-
-# include "libft.h"
-# include <limits.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <unistd.h>
-
-char	*get_next_line(int fd);
-
-#endif
+	result = 0;
+	sign = 1;
+	if (**str == '-')
+	{
+		sign = -1;
+		(*str)++;
+	}
+	while (ft_isdigit(**str))
+	{
+		result = result * 10 + (**str - '0');
+		(*str)++;
+	}
+	return (sign * result);
+}

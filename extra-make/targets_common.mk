@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 11:17:36 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 22:15:09 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ BUILD_ENV ?= dev
 ifeq ($(BUILD_ENV),debug)
 CFLAGS += -O2 -g
 else ifeq ($(BUILD_ENV),prod)
-CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections
+CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections -flto -ffast-math
 else
 # Else: dev mode
 CFLAGS += -O1 -g3
