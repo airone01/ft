@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 19:35:55 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:21:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,25 @@ static t_bool	key_resets_render(int keycode)
 		|| keycode == KEY_NUMPAD_PLUS || keycode == KEY_DASH
 		|| keycode == KEY_NUMPAD_MINUS || keycode == KEY_SQUARE_BRACKET_CLOSING
 		|| keycode == KEY_SQUARE_BRACKET_OPENING || keycode == KEY_1
-		|| keycode == KEY_ESCAPE);
+		|| keycode == KEY_ESCAPE || keycode == KEY_Q || keycode == KEY_E
+		|| keycode == KEY_R || keycode == KEY_F || keycode == KEY_T
+		|| keycode == KEY_G);
 }
 
 void	key_hook2(int keycode, t_app *app)
 {
-	if (keycode == KEY_1)
-		app->color_scheme = (app->color_scheme + 1) % 4;
+	if (keycode == KEY_Q)
+		app->rot_x += 0.1;
+	else if (keycode == KEY_E)
+		app->rot_x -= 0.1;
+	else if (keycode == KEY_R)
+		app->rot_y += 0.1;
+	else if (keycode == KEY_F)
+		app->rot_y -= 0.1;
+	else if (keycode == KEY_T)
+		app->rot_z += 0.1;
+	else if (keycode == KEY_G)
+		app->rot_z -= 0.1;
 }
 
 static int	key_hook(int keycode, t_app *app)
@@ -58,6 +70,8 @@ static int	key_hook(int keycode, t_app *app)
 		app->z_scale *= 1.1;
 	else if (keycode == KEY_SQUARE_BRACKET_OPENING)
 		app->z_scale *= 0.9;
+	else if (keycode == KEY_1)
+		app->color_scheme = (app->color_scheme + 1) % 4;
 	else
 		key_hook2(keycode, app);
 	return (0);

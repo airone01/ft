@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 20:52:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:22:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ typedef struct s_app
 	double		offset_y;
 	double		z_scale;
 	double		scale;
+	double		rot_x;
+	double		rot_y;
+	double		rot_z;
 	t_map		map;
 	t_img		img;
 	void		*mlx;
@@ -133,6 +136,11 @@ enum			e_keyboard
 	KEY_D = 100,
 	KEY_A = 97,
 	KEY_Q = 113,
+	KEY_E = 101,
+	KEY_R = 114,
+	KEY_T = 116,
+	KEY_F = 102,
+	KEY_G = 103,
 	KEY_ARROW_UP = 65362,
 	KEY_ARROW_DOWN = 65364,
 	KEY_ARROW_LEFT = 65361,
@@ -202,6 +210,11 @@ t_point			point_normalize(t_point p);
 t_point			point_rotate(t_point p, double angle);
 t_point			point_scale(t_point p, double scale);
 t_point			point_sub(t_point a, t_point b);
+
+// Point3D manipulation
+t_point3d		rotate_x(t_point3d p, double angle);
+t_point3d		rotate_y(t_point3d p, double angle);
+t_point3d		rotate_z(t_point3d p, double angle);
 
 // MLX
 unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);

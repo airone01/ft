@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 20:54:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:19:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ static t_point	get_projected_point(int x, int y, t_app *app)
 	point3d.x = x * app->scale;
 	point3d.y = y * app->scale;
 	point3d.z = app->map.matrix[y][x] * app->z_scale;
+	point3d = rotate_x(point3d, app->rot_x);
+	point3d = rotate_y(point3d, app->rot_y);
+	point3d = rotate_z(point3d, app->rot_z);
 	projected = iso_project(point3d);
 	projected = point_add(projected, (t_point){app->offset_x, app->offset_y});
 	return (projected);
