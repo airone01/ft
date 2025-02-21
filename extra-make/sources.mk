@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 20:22:57 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 21:07:44 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -155,6 +155,7 @@ _SRC_FDF_COMMON				:=	\
 	app_clear					\
 	app_init					\
 	args_check					\
+	clear_utils					\
 	color_get					\
 	color_get_by_scheme			\
 	color_get_line				\
@@ -175,6 +176,7 @@ _SRC_FDF_COMMON				:=	\
 	map_read					\
 	mlx_bresenham				\
 	mlx_hooks					\
+	mlx_hooks_key				\
 	mlx_pixel_put				\
 	mlx_render_next_frame		\
 	point_add					\

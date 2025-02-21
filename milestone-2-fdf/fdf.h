@@ -6,12 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 20:22:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:05:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+
+// This enables the use of M_PI
+# define _USE_MATH_DEFINES
 
 # include "../extra-minilibx/mlx.h"                      // GPM!
 # include "../milestone-0-libft/libft.h"                 // GPM!
@@ -34,6 +37,14 @@
 
 # ifndef DBL_EPSILON
 #  define DBL_EPSILON 2.2204460492503131e-16
+# endif
+
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
+
+# ifndef TRANSLATION_SPEED
+#  define TRANSLATION_SPEED 500
 # endif
 
 typedef enum e_error
@@ -183,6 +194,7 @@ void			*safe_recalloc(t_app *ctx, void *ptr, unsigned long old_size,
 					unsigned long new_size);
 void			*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
 void			free_2d_array(void **ptrs);
+int				app_clear_0(t_app *app);
 void			app_clear(t_app *ctx);
 
 // Arguments handling
@@ -217,14 +229,19 @@ t_point3d		rotate_y(t_point3d p, double angle);
 t_point3d		rotate_z(t_point3d p, double angle);
 
 // MLX
+void			mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color);
+int				key_hook(int keycode, t_app *app);
+void			register_hooks(t_app *app);
+
+// Rendering
+void			draw_line_img(t_app *ctx, t_point start, t_point end,
+					unsigned int color);
+int				render_next_frame(t_app *app);
+
+// Colors
 unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);
 unsigned int	color_get_line(t_app *ctx, int z1, int z2);
 unsigned int	hsv_to_rgb(double h, double s, double v);
 unsigned int	color_get(int z, int min_z, int max_z);
-void			mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color);
-void			draw_line_img(t_app *ctx, t_point start, t_point end,
-					unsigned int color);
-void			register_hooks(t_app *app);
-int				render_next_frame(t_app *app);
 
 #endif

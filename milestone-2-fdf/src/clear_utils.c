@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_hooks.c                                        :+:      :+:    :+:   */
+/*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:04:14 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/21 20:37:14 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/21 20:37:43 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
-/**
- * @brief	Attach mlx hooks to the window
- *
- * @param	app	Application context
- */
-void	register_hooks(t_app *app)
+int	app_clear_0(t_app *app)
 {
-	mlx_loop_hook(app->mlx, render_next_frame, app);
-	mlx_hook(app->win, 2, 1L << 0, key_hook, app);
-	mlx_hook(app->win, 17, 0, app_clear_0, app);
+	app_clear(app);
+	exit(0);
 }
