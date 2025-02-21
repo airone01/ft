@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 14:17:15 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:30:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,26 @@
  * @param	set	Reference set of the characters to trim
  * @returns     Trimmed string. NULL  if the allocation failed.
  */
-char	*ft_strtrim(char *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
 	size_t	end;
-	char	*s;
+	char	*result;
 
 	if (!s1 || !set)
 		return (NULL);
-	s = s1;
 	start = 0;
-	end = ft_strlen(s1);
 	while (s1[start] && ft_strchr(set, s1[start]))
-	{
-		s1[start] = '\0';
-		s = s1 + start;
 		start++;
-	}
+	if (s1[start] == '\0')
+		return (ft_strdup(""));
+	end = ft_strlen(s1);
 	while (end > start && ft_strchr(set, s1[end - 1]))
-	{
-		s[end - 1] = '\0';
 		end--;
-	}
-	return (s);
+	result = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!result)
+		return (NULL);
+	ft_strlcpy(result, &s1[start], end - start + 1);
+	return (result);
 }
 // GPM? end ft_strtrim
