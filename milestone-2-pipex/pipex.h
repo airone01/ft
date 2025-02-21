@@ -6,18 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:01 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:42:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
-# ifndef PIPEX_PIPES
-#  define PIPEX_PIPES
-#  define PIPEX_PIPES_MIN 1
-#  define PIPEX_PIPES_MAX 1024
-# endif
 
 # include "ft_printf.h"
 # include "get_next_line.h"

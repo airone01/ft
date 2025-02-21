@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:43:48 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 14:40:06 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,7 +130,6 @@ _SRC_PIPEX_COMMON			:=	\
 	app_free_utils				\
 	app_new						\
 	args_cmdas					\
-	args_valid					\
 	cmda_args					\
 	cmda_free					\
 	cmda_print					\
@@ -144,9 +143,11 @@ _SRC_PIPEX_COMMON			:=	\
 	path_find_bin
 _SRC_PIPEX_MANDATORY		:=	\
 	_main						\
+	args_valid					\
 	$(_SRC_PIPEX_COMMON)
 _SRC_PIPEX_BONUS			:=	\
 	_main_bonus					\
+	args_valid_bonus			\
 	$(_SRC_PIPEX_COMMON)
 
 _SRC_FDF_COMMON				:=	\
