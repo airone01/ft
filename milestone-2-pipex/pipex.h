@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:53:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:50:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@
 #  define PIPEX_PIPES_MAX 1024
 # endif
 
-# include "../milestone-0-libft/libft.h"                 // GPM!
-# include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
-# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
-
+# include "ft_printf.h"
+# include "get_next_line.h"
+# include "libft.h"
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>

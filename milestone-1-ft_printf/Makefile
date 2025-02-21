@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 19:35:51 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 19:40:22 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 10:30:41 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 # **************************************************************************** #
 
 include $(realpath ../extra-make/art.mk) # GPM!
+# GPM: make_art_mk
 COLOR			= $(COLOR_FT_PRINTF)
 
 # **************************************************************************** #
@@ -32,7 +33,8 @@ OUT_DIR 	:= .out/
 #                                    LIBS                                      #
 # **************************************************************************** #
 
-LIBFT_DIR		:= $(realpath ../milestone-0-libft)
+LIBFT_DIR		:= $(realpath ../milestone-0-libft)# GPM!
+# GPM@	.LIBFT_DIR	= $(realpath ../libft)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -48,9 +50,15 @@ title:
 	@$(ECHO) "$(MSG)      /___/_/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/lib_libft.mk)
+include $(realpath ../extra-make/lib_libft.mk)# GPM!
+# GPM: make_lib_libft_mk
 
-include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
+# GPM: make_sources_mk
 
-include $(realpath ../extra-make/targets_lib.mk)
+# GPM: make_commands_mk
+
+include $(realpath ../extra-make/targets_common.mk)# GPM!
+# GPM: make_targets_common_mk
+
+include $(realpath ../extra-make/targets_lib.mk)# GPM!
+# GPM: make_targets_lib_mk

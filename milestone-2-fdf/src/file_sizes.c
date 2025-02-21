@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:48:51 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 13:58:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 static int	count_words(char *line)
 {

@@ -2,7 +2,8 @@
 #                               ANSI COLOR CODES                               #
 # **************************************************************************** #
 
-include $(realpath ../extra-make/art.mk) # GPM!
+include $(realpath ../extra-make/art.mk)# GPM!
+# GPM: make_art_mk
 COLOR			= $(COLOR_GET_NEXT_LINE)
 
 # **************************************************************************** #
@@ -21,6 +22,7 @@ OUT_DIR 	:= .out/
 # **************************************************************************** #
 
 LIBFT_DIR		:= $(realpath ../milestone-0-libft)
+# GPM@	.LIBFT_DIR	= $(realpath ../libft)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -36,9 +38,15 @@ title:
 	@$(ECHO) "$(MSG)/___/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/lib_libft.mk)
+include $(realpath ../extra-make/lib_libft.mk)# GPM!
+# GPM: make_lib_libft_mk
 
-include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
+# GPM: make_sources_mk
 
-include $(realpath ../extra-make/targets_lib.mk)
+# GPM: make_commands_mk
+
+include $(realpath ../extra-make/targets_common.mk)# GPM!
+# GPM: make_targets_common_mk
+
+include $(realpath ../extra-make/targets_lib.mk)# GPM!
+# GPM: make_targets_lib_mk

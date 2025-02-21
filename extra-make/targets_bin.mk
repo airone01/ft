@@ -6,10 +6,11 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 16:37:31 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/10 20:24:40 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 10:58:18 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# GPM? begin make_targets_bin_mk
 $(OBJ): | $(NAME_DEPS_INDIRECT)
 $(NAME): $(OBJ)
 	@$(ECHO) "$(MSG)🏗️  Building mandatory for $(NAME)\n"
@@ -21,3 +22,4 @@ $(BNAME): $(OBJ_BONUS) | $(BNAME_DEPS_INDIRECT)
 	@$(CC) $(CFLAGS) -o $(BNAME) $^ $(LDFLAGS)
 	@touch .bonus
 	@$(ECHO) "$(SUCCESSB)\n"
+# GPM? end make_targets_bin_mk

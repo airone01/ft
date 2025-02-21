@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/19 15:16:21 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 10:09:36 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,6 @@ include $(realpath ../extra-make/lib_get_next_line.mk)
 include $(realpath ../extra-make/lib_minilibx.mk)
 
 include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_target_common
+# GPM: make_targets_common.mk
 
 include $(realpath ../extra-make/targets_bin.mk)

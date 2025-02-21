@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 16:07:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /* Helper function to put a pixel in the image buffer */
 static void	put_pixel_to_img(t_img *img, int x, int y, unsigned int color)

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:42:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:57:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 #  define FD_SIZE 1024
 # endif
 
-# include "../milestone-0-libft/libft.h"                 // GPM!
-
+# include "libft.h"
 # include <limits.h>
 # include <stdint.h>
 # include <stdlib.h>
