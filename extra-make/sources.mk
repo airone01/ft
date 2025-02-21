@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 14:40:06 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 19:15:47 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -155,7 +155,10 @@ _SRC_FDF_COMMON				:=	\
 	app_clear					\
 	app_init					\
 	args_check					\
-	bresenham					\
+	color_get					\
+	color_get_by_scheme			\
+	color_get_line				\
+	color_utils					\
 	error						\
 	error_arg					\
 	error_file					\
@@ -168,7 +171,12 @@ _SRC_FDF_COMMON				:=	\
 	free_2d_array				\
 	fuzzy_equals				\
 	malloc						\
+	map_elevation				\
 	map_read					\
+	mlx_bresenham				\
+	mlx_hooks					\
+	mlx_pixel_put				\
+	mlx_render_next_frame		\
 	point_add					\
 	point_distance				\
 	point_dot					\
