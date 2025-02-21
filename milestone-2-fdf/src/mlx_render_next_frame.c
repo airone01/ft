@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 20:19:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
  * Helper function to project a 3D point to 2D with scaling and offset

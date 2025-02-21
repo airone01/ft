@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:24:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
  * Initialize line drawing parameters

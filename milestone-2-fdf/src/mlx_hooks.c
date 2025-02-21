@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:04:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
  * @brief	Attach mlx hooks to the window

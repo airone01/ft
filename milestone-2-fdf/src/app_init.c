@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:06:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:33:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_app	*app_init(void)
 	app->map.width = -1;
 	app->z_scale = 1.0;
 	app->file_fd = -1;
-	app->scale = 20.0;
+	app->scale = 1.0;
 	app->rot_x = 0.0;
 	app->rot_y = 0.0;
 	app->rot_z = 0.0;

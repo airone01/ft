@@ -11,6 +11,8 @@
         "span": "c",
         "fdf.h": "c",
         "libft.h": "c",
-        "pipex_bonus.h": "c"
+        "pipex_bonus.h": "c",
+        "stdio.h": "c",
+        "error.h": "c"
     }
 }

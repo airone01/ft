@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:03:25 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 19:21:55 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
  * @brief	Calculate color for line between two points

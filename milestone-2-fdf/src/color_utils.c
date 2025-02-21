@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:13:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 19:14:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 static unsigned int	get_more_rgb_values(double h, double c, double x, double m);
 

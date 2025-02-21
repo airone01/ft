@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 21:07:44 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/21 21:15:33 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -171,6 +171,7 @@ _SRC_FDF_COMMON				:=	\
 	file_sizes					\
 	free_2d_array				\
 	fuzzy_equals				\
+	initial_scale				\
 	malloc						\
 	map_elevation				\
 	map_read					\

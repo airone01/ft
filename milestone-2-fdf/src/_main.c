@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 19:17:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:14:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 			sizeof(int *));
 	read_map_data(app);
 	find_elevation_bounds(app);
+	calculate_initial_scale(app);
 	manage_mlx(app);
 	app_clear(app);
 	free(app->mlx);

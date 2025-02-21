@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:05:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:34:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 
 # ifndef DBL_EPSILON
 #  define DBL_EPSILON 2.2204460492503131e-16
+# endif
+
+# ifndef DBL_MAX
+#  define DBL_MAX 1.7976931348623157e+308
 # endif
 
 # ifndef M_PI
@@ -236,6 +240,7 @@ void			register_hooks(t_app *app);
 // Rendering
 void			draw_line_img(t_app *ctx, t_point start, t_point end,
 					unsigned int color);
+void			calculate_initial_scale(t_app *app);
 int				render_next_frame(t_app *app);
 
 // Colors
