@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:38:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 11:05:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:55:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	app_clear(t_app *app)
 		if (app->win)
 			mlx_destroy_window(mlx_ptr, app->win);
 	}
+	if (app->file_content)
+		free_2d_array((void **)app->file_content);
 	free(app);
 	if (mlx_ptr)
 	{

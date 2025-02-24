@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 10:51:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:23:59 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ static char	*update_buffer(char *buffer)
 }
 
 /**
- * @brief	Reads the next line from a file descriptor and returns it as a
- * 			string. If the read buff has a line, it will return that line and
- * 			keep the rest of the buff for the next call. If the buff is
- * 			empty, it will read more data from the file descriptor.
- * @param	fd The file descriptor to read from
- * @returns	The next line from the file descriptor or NULL if there is
- * 			nothing more to read or an error occurred
+ * Reads the next line from a file descriptor and returns it as a
+ * string. If the read buff has a line, it will return that line and
+ * keep the rest of the buff for the next call. If the buff is
+ * empty, it will read more data from the file descriptor.
+ *
+ * @param fd The file descriptor to read from
+ * @returns The next line from the file descriptor or NULL if there is
+ * nothing more to read or an error occurred
  */
 char	*get_next_line(int fd)
 {

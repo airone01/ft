@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 22:27:20 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/24 13:22:35 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,9 @@ _SRC_FT_PRINTF_BONUS		:=	\
 
 _SRC_GNL_COMMON				:=	\
 	get_next_line				\
-	get_next_line_utils
+	get_next_line_utils			\
+	files_utils					\
+	files_utils2
 _SRC_GNL_MANDATORY			:=	\
 	$(_SRC_GNL_COMMON)
 _SRC_GNL_BONUS				:=	\
@@ -172,7 +174,6 @@ _SRC_FDF_COMMON				:=	\
 	error_mlx					\
 	fast_atoi					\
 	file_open					\
-	file_utils					\
 	free_2d_array				\
 	fuzzy_equals				\
 	initial_scale				\

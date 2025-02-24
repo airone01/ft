@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 11:34:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:15:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_app
 	double		rot_z;
 	t_map		map;
 	t_img		img;
-	char		*file_content;
+	char		**file_content;
 	void		*mlx;
 	void		*win;
 	int			color_scheme;
@@ -202,7 +202,6 @@ void			app_clear(t_app *ctx);
 void			args_check(int argc, char **argv);
 
 // File handling
-char			*read_entire_file(int fd, size_t *file_size);
 void			file_sizes(t_app *ctx, char *file_path, char **envp);
 int				file_open(char *path, char **envp);
 
