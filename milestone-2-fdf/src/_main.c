@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 16:28:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:46:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	main(int argc, char **argv, char **envp)
 	find_map_width(app);
 	find_map_height(app);
 	app->map.matrix = allocate_matrix(app->map.width, app->map.height);
+	if (!app->map.matrix)
+		exit_error(app, ERR_MALLOC_MAP);
 	map_parse(app);
 	find_elevation_bounds(app);
 	calculate_initial_scale(app);
