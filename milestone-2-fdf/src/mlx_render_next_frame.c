@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 23:02:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:10:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,12 @@ static void	draw_down_line(t_app *app, t_point current, int x, int y)
 			app->map.matrix[y + 1][x]));
 }
 
-/**
- * Main rendering function that draws the map to the image buffer
- *
- * @param	app	Application context
- */
-static void	render_map_frame(t_app *app)
+static void	draw_lines(t_app *app)
 {
 	t_point	current;
 	int		x;
 	int		y;
 
-	if (app->img.img)
-		mlx_destroy_image(app->mlx, app->img.img);
-	app->img.img = mlx_new_image(app->mlx, app->img.width, app->img.height);
-	app->img.addr = mlx_get_data_addr(app->img.img, &app->img.bits_per_pixel,
-			&app->img.line_length, &app->img.endian);
 	y = 0;
 	while (y < app->map.height)
 	{
@@ -99,7 +89,19 @@ int	render_next_frame(t_app *app)
 {
 	if (!app->needs_render)
 		return (0);
-	render_map_frame(app);
+	if (!app->img.img)
+	{
+		app->img.img = mlx_new_image(app->mlx, app->img.width, app->img.height);
+		app->img.addr = mlx_get_data_addr(app->img.img,
+				&app->img.bits_per_pixel, &app->img.line_length,
+				&app->img.endian);
+		ft_memset(app->img.addr, 0, (size_t)(app->img.height
+				* app->img.line_length));
+	}
+	else
+		ft_memset(app->img.addr, 0, (size_t)(app->img.height
+				* app->img.line_length));
+	draw_lines(app);
 	mlx_put_image_to_window(app->mlx, app->win, app->img.img, 0, 0);
 	app->needs_render = false;
 	return (0);
