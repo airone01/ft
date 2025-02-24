@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 23:02:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:34:25 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_app
 	double		rot_z;
 	t_map		map;
 	t_img		img;
+	char		*file_content;
 	void		*mlx;
 	void		*win;
 	int			color_scheme;
@@ -206,7 +207,7 @@ void			file_sizes(t_app *ctx, char *file_path, char **envp);
 int				file_open(char *path, char **envp);
 
 // Map handling
-void			map_parse(t_app *app, char *content);
+void			map_parse(t_app *app);
 void			find_elevation_bounds(t_app *ctx);
 int				**allocate_matrix(int width, int height);
 

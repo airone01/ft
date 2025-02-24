@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:50:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:33:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_app	*app_init(void)
 	app->map.min_elevation = 0;
 	app->map.max_elevation = 0;
 	app->needs_render = true;
+	app->file_content = NULL;
 	app->map.matrix = NULL;
 	app->color_scheme = 0;
 	app->map.height = 0;

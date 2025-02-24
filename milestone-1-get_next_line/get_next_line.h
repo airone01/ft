@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:29:29 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 22:38:16 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:46:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+// Utils
+char	*read_buffer(int fd, char *buffer);
+
+// GNL
 char	*get_next_line(int fd);
 
 #endif

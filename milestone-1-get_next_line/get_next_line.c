@@ -6,63 +6,73 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 09:28:31 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 11:40:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:51:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/**
- * Cleans the buff
- * @param	buff	Buffer
- */
-void	ft_buff_clean(char *buff)
+static char	*extract_line(char *buffer)
 {
-	long	i;
-	long	j;
+	int		i;
+	char	*line;
 
+	if (!buffer[0])
+		return (NULL);
 	i = 0;
-	while (buff[i] != '\n' && buff[i] != 0)
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (buff[i] == '\n')
+	if (buffer[i] == '\n')
 		i++;
+	line = malloc(sizeof(char) * (unsigned long)(i + 1));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		line[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
+}
+
+static char	*get_new_buffer(char *buffer, int i)
+{
+	char	*new_buffer;
+	int		j;
+
+	new_buffer = malloc(sizeof(char) * (ft_strlen(buffer) - (unsigned long)i
+				+ 1));
+	if (!new_buffer)
+	{
+		free(buffer);
+		return (NULL);
+	}
 	j = 0;
-	while (buff[i + j])
-	{
-		buff[j] = buff[i + j];
-		j++;
-	}
-	buff[j] = 0;
+	while (buffer[i])
+		new_buffer[j++] = buffer[i++];
+	new_buffer[j] = '\0';
+	free(buffer);
+	return (new_buffer);
 }
 
-long	is_line(const char *str)
+static char	*update_buffer(char *buffer)
 {
-	long	i;
+	int	i;
 
 	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == '\n' || str[i] == '\0')
-			return (1);
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	}
-	return (0);
-}
-
-char	*ft_strjoin_free(char *left, char buffer[BUFFER_SIZE + 1], char *line,
-		long bytes_read)
-{
-	char	*new;
-
-	if (bytes_read == -1)
+	if (!buffer[i])
 	{
-		ft_memset(buffer, 0, BUFFER_SIZE + 1);
-		return (free(line), NULL);
+		free(buffer);
+		return (NULL);
 	}
-	buffer[bytes_read] = '\0';
-	new = ft_strjoin(left, buffer);
-	free(left);
-	return (new);
+	i++;
+	return (get_new_buffer(buffer, i));
 }
 
 /**
@@ -76,25 +86,26 @@ char	*ft_strjoin_free(char *left, char buffer[BUFFER_SIZE + 1], char *line,
  */
 char	*get_next_line(int fd)
 {
-	static char	buffer[FD_SIZE][BUFFER_SIZE + 1];
-	long		bytes_read;
+	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || FD_SIZE <= 0 || fd >= FD_SIZE)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	bytes_read = 1;
-	line = ft_strdup(buffer[fd]);
+	buffer = read_buffer(fd, buffer);
+	if (!buffer)
+		return (NULL);
+	line = extract_line(buffer);
 	if (!line)
-		return (free(line), NULL);
-	while (bytes_read && is_line(line) == 0)
 	{
-		bytes_read = read(fd, buffer[fd], BUFFER_SIZE);
-		line = ft_strjoin_free(line, buffer[fd], line, bytes_read);
-		if (!line)
-			return (NULL);
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
 	}
-	ft_buff_clean(buffer[fd]);
-	if (bytes_read == 0 && line[0] == '\0')
-		return (free(line), NULL);
+	buffer = update_buffer(buffer);
+	if (!buffer && line[0] == '\0')
+	{
+		free(line);
+		return (NULL);
+	}
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:45:49 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 22:44:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:36:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,24 @@ static char	*append_line(char *content, char *line, size_t *total_len)
 
 static int	get_line_width(char *line)
 {
-	char	**words;
-	int		width;
+	int	width;
+	int	i;
 
-	words = ft_split(line, ' ');
 	width = 0;
-	while (words[width])
+	i = 0;
+	while (line[i] && ft_isspace(line[i]))
+		i++;
+	while (line[i] && line[i] != '\n')
 	{
-		free(words[width]);
-		width++;
+		if (ft_isdigit(line[i]) || line[i] == '-')
+		{
+			width++;
+			while (line[i] && !ft_isspace(line[i]) && line[i] != '\n')
+				i++;
+		}
+		while (line[i] && ft_isspace(line[i]) && line[i] != '\n')
+			i++;
 	}
-	free(words);
 	return (width);
 }
 

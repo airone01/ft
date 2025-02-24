@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 22:56:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:34:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,39 @@ static void	manage_mlx(t_app *app)
 	mlx_loop(app->mlx);
 }
 
+static void	count_height(t_app *app)
+{
+	const char	*file = app->file_content;
+
+	app->map.height = 1;
+	while (*file)
+	{
+		if (*file == '\n')
+		{
+			app->map.height++;
+			while (*file == '\n')
+				file++;
+		}
+		else
+			file++;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_app	*app;
-	char	*file;
-	char	*tmp;
 
 	(void)args_check(argc, argv);
 	app = app_init();
 	app->file_fd = file_open(argv[1], envp);
-	file = read_entire_file(app->file_fd, (size_t *)&app->map.width);
-	tmp = file;
-	app->map.height = 1;
-	while (*tmp)
-	{
-		if (*tmp == '\n')
-			app->map.height++;
-		tmp++;
-	}
+	app->file_content = read_entire_file(app->file_fd,
+			(size_t *)&app->map.width);
+	count_height(app);
 	app->map.matrix = allocate_matrix(app->map.width, app->map.height);
-	map_parse(app, file);
+	map_parse(app);
 	find_elevation_bounds(app);
 	calculate_initial_scale(app);
 	manage_mlx(app);
 	app_clear(app);
-	free(app->mlx);
 	return (0);
 }

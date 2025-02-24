@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:51:04 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 22:28:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:24:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,22 @@
 int	**allocate_matrix(int width, int height)
 {
 	int	**matrix;
-	int	*data;
 	int	i;
 
-	data = ft_calloc((unsigned long)(width * height), sizeof(int));
 	matrix = ft_calloc((unsigned long)height, sizeof(int *));
+	if (!matrix)
+		return (NULL);
 	i = 0;
 	while (i < height)
 	{
-		matrix[i] = &data[i * width];
+		matrix[i] = ft_calloc((unsigned long)width, sizeof(int));
+		if (!matrix[i])
+		{
+			while (--i >= 0)
+				free(matrix[i]);
+			free(matrix);
+			return (NULL);
+		}
 		i++;
 	}
 	return (matrix);
