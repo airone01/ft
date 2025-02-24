@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:49:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 16:24:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:17:55 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,17 @@ static void	validate_line_format(t_app *app, const char *line, int row)
 static void	parse_line(t_app *app, const char *line, int *row)
 {
 	int			col;
-	const char	*ptr = line;
+	const char	*ptr;
+	const char	*end;
 
 	validate_line_format(app, line, *row);
+	ptr = line;
+	end = line + strlen(line);
 	col = 0;
-	while (*ptr)
+	while (ptr < end && *ptr)
 	{
 		process_number(app, &ptr, *row, &col);
-		while (*ptr && ft_isspace(*ptr) && *ptr != '\n')
+		while (ptr < end && *ptr && ft_isspace(*ptr) && *ptr != '\n')
 			ptr++;
 	}
 	(*row)++;

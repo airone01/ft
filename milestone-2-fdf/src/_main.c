@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 16:46:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:20:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ static void	find_map_width(t_app *app)
 int	main(int argc, char **argv, char **envp)
 {
 	t_app	*app;
+	int		fd;
 
 	(void)args_check(argc, argv);
+	fd = file_open(argv[1], envp);
 	app = app_init();
-	app->file_fd = file_open(argv[1], envp);
+	app->file_fd = fd;
 	app->file_content = read_entire_file(app->file_fd);
 	if (!app->file_content)
 		exit_error(app, ERR_FILE_READ);
