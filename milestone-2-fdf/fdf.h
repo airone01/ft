@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 17:26:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:40:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ void			draw_line_img(t_app *ctx, t_point start, t_point end,
 					unsigned int color);
 void			calculate_initial_scale(t_app *app);
 int				render_next_frame(t_app *app);
+void			draw_lines(t_app *app);
 
 // Colors
 unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);
