@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 13:15:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:39:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 // This enables the use of M_PI
 # define _USE_MATH_DEFINES
 
-# include "../extra-minilibx/mlx.h"                      // GPM!
-# include "../milestone-0-libft/libft.h"                 // GPM!
-# include "../milestone-1-ft_printf/ft_printf.h"         // GPM!
-# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
+# include "ft_printf.h"
+# include "get_next_line.h"
+# include "libft.h"
+# include "mlx.h"
 # include <errno.h>
 # include <error.h>
 # include <fcntl.h>
