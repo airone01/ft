@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 16:17:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:28:44 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ int	main(int argc, char **argv, char **envp)
 	app = app_init();
 	app->file_fd = file_open(argv[1], envp);
 	app->file_content = read_entire_file(app->file_fd);
+	if (!app->file_content)
+		exit_error(app, ERR_FILE_READ);
+	if (!app->file_content[0])
+		exit_error(app, ERR_FILE_EMPTY);
 	find_map_width(app);
 	find_map_height(app);
 	app->map.matrix = allocate_matrix(app->map.width, app->map.height);

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:49:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 16:19:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:24:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	validate_line_format(t_app *app, const char *line, int row)
 	col = count_columns_in_line(line);
 	if (col == 0)
 	{
-		ft_printf("Error on line %d: Empty line\n", row);
+		ft_printf("Error on line %d: Empty line\n", row + 1);
 		exit_error(app, ERR_MAP_EMPTY_LINE);
 	}
 	if (app->map.width == -1)
@@ -114,6 +114,4 @@ void	map_parse(t_app *app)
 	}
 	if (row == 0)
 		exit_error(app, ERR_FILE_EMPTY);
-	ft_printf("Map parsing complete: %d rows, %d columns\n", row,
-		app->map.width);
 }
