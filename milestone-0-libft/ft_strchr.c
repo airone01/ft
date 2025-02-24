@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 23:02:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:55:52 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,9 @@
  */
 char	*ft_strchr(const char *s, char c)
 {
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
+	while (*s != (char)c)
+		if (!*s++)
+			return (NULL);
+	return ((char *)s);
 }
 // GPM? end ft_strchr
