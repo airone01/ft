@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/24 13:22:35 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/24 17:27:13 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -180,6 +180,7 @@ _SRC_FDF_COMMON				:=	\
 	malloc						\
 	map_elevation				\
 	map_parse					\
+	map_parse_utils				\
 	map_utils					\
 	mlx_bresenham				\
 	mlx_hooks					\

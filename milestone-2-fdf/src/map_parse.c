@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:49:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 17:17:55 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:22:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,6 @@ static void	process_number(t_app *app, const char **ptr, int row, int *col)
 	while (**ptr && !ft_isspace(**ptr))
 		(*ptr)++;
 	app->map.matrix[row][(*col)++] = val;
-}
-
-static int	count_columns_in_line(const char *line)
-{
-	int			col;
-	const char	*ptr;
-
-	col = 0;
-	ptr = line;
-	while (*ptr && ft_isspace(*ptr))
-		ptr++;
-	if (!*ptr || *ptr == '\n')
-		return (0);
-	while (*ptr)
-	{
-		if (!ft_isspace(*ptr))
-		{
-			col++;
-			while (*ptr && !ft_isspace(*ptr))
-				ptr++;
-		}
-		else
-		{
-			while (*ptr && ft_isspace(*ptr))
-				ptr++;
-		}
-	}
-	return (col);
 }
 
 static void	validate_line_format(t_app *app, const char *line, int row)

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 16:39:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:26:39 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,13 +202,13 @@ void			app_clear(t_app *ctx);
 void			args_check(int argc, char **argv);
 
 // File handling
-void			file_sizes(t_app *ctx, char *file_path, char **envp);
 int				file_open(char *path, char **envp);
 
-// Map handling
-void			map_parse(t_app *app);
-void			find_elevation_bounds(t_app *ctx);
+// Map parsing
 int				**allocate_matrix(int width, int height);
+int				count_columns_in_line(const char *line);
+void			find_elevation_bounds(t_app *ctx);
+void			map_parse(t_app *app);
 
 // Math
 t_bool			fuzzy_equals(double a, double b);
