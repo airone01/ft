@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 13:48:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:04:30 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,12 @@ typedef struct s_img
 	int					height;
 }						t_img;
 
+typedef enum e_projection_type
+{
+	PROJECTION_ISOMETRIC,
+	PROJECTION_CABINET,
+}						t_projection_type;
+
 typedef struct s_app
 {
 	// Color scheme
@@ -106,6 +112,7 @@ typedef struct s_app
 	// Map
 	t_map				map;
 	// Rendering
+	t_projection_type	projection_type;
 	t_bool				needs_render;
 	t_img				img;
 	// Rendering: Offsets
@@ -156,16 +163,17 @@ enum					e_image
 enum					e_keyboard
 {
 	// Letters
-	KEY_W = 119,
-	KEY_S = 115,
-	KEY_D = 100,
 	KEY_A = 97,
-	KEY_Q = 113,
+	KEY_D = 100,
 	KEY_E = 101,
-	KEY_R = 114,
-	KEY_T = 116,
 	KEY_F = 102,
 	KEY_G = 103,
+	KEY_P = 112,
+	KEY_Q = 113,
+	KEY_R = 114,
+	KEY_S = 115,
+	KEY_T = 116,
+	KEY_W = 119,
 	// Arrows
 	KEY_ARROW_UP = 65362,
 	KEY_ARROW_DOWN = 65364,
@@ -312,10 +320,13 @@ t_point					point_scale(t_point p, double scale);
 t_point					point_add(t_point a, t_point b);
 t_point					point_sub(t_point a, t_point b);
 t_point					point_normalize(t_point p);
-t_point					iso_project(t_point3d p);
 double					point_distance(t_point a, t_point b);
 double					point_dot(t_point a, t_point b);
 double					point_magnitude(t_point p);
+
+// Projection
+t_point					cabinet_project(t_point3d p);
+t_point					iso_project(t_point3d p);
 
 // Point3D manipulation
 t_point3d				rotate_x(t_point3d p, double angle);

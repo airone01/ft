@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:13:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 13:50:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:08:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,29 @@ static void	put_scale(t_app *ctx, int y_pos)
 }
 
 /**
+ * @brief Prepare and display projection type text
+ *
+ * @param ctx Application context
+ * @param y_pos Vertical position for the text
+ */
+static void	put_projection_type(t_app *ctx, int y_pos)
+{
+	char	buffer[64];
+	int		i;
+
+	i = 0;
+	while (i < 64)
+		buffer[i++] = '\0';
+	if (ctx->projection_type == PROJECTION_ISOMETRIC)
+		ft_strlcpy(buffer, "Projection: Isometric", 64);
+	else if (ctx->projection_type == PROJECTION_CABINET)
+		ft_strlcpy(buffer, "Projection: Cabinet", 64);
+	else
+		ft_strlcpy(buffer, "Projection: Unknown", 64);
+	put_debug_text(ctx, buffer, y_pos);
+}
+
+/**
  * @brief Display all LOD debug information
  *
  * @param ctx Application context
@@ -88,4 +111,5 @@ void	render_lod_debug(t_app *ctx)
 	put_lod_level(ctx, ctx->lod_level, 40);
 	put_map_size(ctx, 60);
 	put_scale(ctx, 80);
+	put_projection_type(ctx, 100);
 }

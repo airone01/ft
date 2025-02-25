@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:52:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 14:00:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:08:59 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_bool	key_resets_render(int keycode)
 		|| keycode == KEY_ESCAPE || keycode == KEY_Q || keycode == KEY_E
 		|| keycode == KEY_R || keycode == KEY_F || keycode == KEY_T
 		|| keycode == KEY_G || keycode == KEY_F1 || keycode == KEY_F2
-		|| keycode == KEY_F3 || keycode == KEY_F4);
+		|| keycode == KEY_F3 || keycode == KEY_F4 || keycode == KEY_P);
 }
 
 static void	key_hook3(int keycode, t_app *ctx)
@@ -57,6 +57,8 @@ void	key_hook2(int keycode, t_app *ctx)
 		ctx->lod_level = LOD_MEDIUM;
 	else if (keycode == KEY_F4)
 		ctx->lod_level = LOD_HIGH;
+	else if (keycode == KEY_P)
+		ctx->projection_type = (ctx->projection_type + 1) % 2;
 	else
 		key_hook3(keycode, ctx);
 }

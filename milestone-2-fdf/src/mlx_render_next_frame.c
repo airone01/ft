@@ -6,14 +6,19 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 11:21:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:02:54 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /**
- * Helper function to project a 3D point to 2D with scaling and offset
+ * @brief	Project a 3D point to 2D with scaling and offset
+ *
+ * @param x X coordinate
+ * @param y Y coordinate
+ * @param ctx Application context
+ * @return t_point Projected 2D point
  */
 t_point	get_projected_point(int x, int y, t_app *ctx)
 {
@@ -26,7 +31,10 @@ t_point	get_projected_point(int x, int y, t_app *ctx)
 	point3d = rotate_x(point3d, ctx->rot_x);
 	point3d = rotate_y(point3d, ctx->rot_y);
 	point3d = rotate_z(point3d, ctx->rot_z);
-	projected = iso_project(point3d);
+	if (ctx->projection_type == PROJECTION_CABINET)
+		projected = cabinet_project(point3d);
+	else
+		projected = iso_project(point3d);
 	projected = point_add(projected, (t_point){ctx->offset_x, ctx->offset_y});
 	return (projected);
 }
