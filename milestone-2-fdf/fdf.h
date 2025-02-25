@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:16:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:25:13 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ enum					e_keyboard
 	// Numbers
 	KEY_1 = 49,
 	KEY_9 = 57,
-	KEY_0 = 58,
+	KEY_0 = 48,
 	// After numbers
 	KEY_EQUALS = 61,
 	KEY_DASH = 45,

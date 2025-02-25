@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:52:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:18:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:26:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static t_bool	key_resets_render(int keycode)
 		|| keycode == KEY_ESCAPE || keycode == KEY_Q || keycode == KEY_E
 		|| keycode == KEY_R || keycode == KEY_F || keycode == KEY_T
 		|| keycode == KEY_G || keycode == KEY_F1 || keycode == KEY_F2
-		|| keycode == KEY_F3 || keycode == KEY_F4 || keycode == KEY_P);
+		|| keycode == KEY_F3 || keycode == KEY_F4 || keycode == KEY_P
+		|| keycode == KEY_9 || keycode == KEY_0);
 }
 
 static void	key_hook3(int keycode, t_app *ctx)
