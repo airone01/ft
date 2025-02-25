@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 17:40:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:02:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,17 @@ enum			e_colors
 	BLUE = 0x000000FF,
 };
 
+/**
+ * @brief Represents a rectangular section of the map
+ */
+typedef struct s_section
+{
+	int			start_x;
+	int			start_y;
+	int			end_x;
+	int			end_y;
+}				t_section;
+
 // Global app structure
 t_app			*app_init(void);
 
@@ -215,16 +226,17 @@ t_bool			fuzzy_equals(double a, double b);
 int				fast_atoi(const char **str);
 
 // Point mamipulation
-t_point			point_add(t_point a, t_point b);
-double			point_distance(t_point a, t_point b);
-double			point_dot(t_point a, t_point b);
-t_point			iso_project(t_point3d p);
+t_point			get_projected_point(int x, int y, t_app *app);
 t_point			point_lerp(t_point a, t_point b, double t);
-double			point_magnitude(t_point p);
-t_point			point_normalize(t_point p);
 t_point			point_rotate(t_point p, double angle);
 t_point			point_scale(t_point p, double scale);
+t_point			point_add(t_point a, t_point b);
 t_point			point_sub(t_point a, t_point b);
+t_point			point_normalize(t_point p);
+t_point			iso_project(t_point3d p);
+double			point_distance(t_point a, t_point b);
+double			point_dot(t_point a, t_point b);
+double			point_magnitude(t_point p);
 
 // Point3D manipulation
 t_point3d		rotate_x(t_point3d p, double angle);
@@ -242,6 +254,11 @@ void			draw_line_img(t_app *ctx, t_point start, t_point end,
 void			calculate_initial_scale(t_app *app);
 int				render_next_frame(t_app *app);
 void			draw_lines(t_app *app);
+
+// Culling
+t_bool			is_line_outside_viewport(t_point p1, t_point p2, int width,
+					int height);
+t_bool			is_section_outside_viewport(t_app *app, t_section section);
 
 // Colors
 unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);

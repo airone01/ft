@@ -6,27 +6,27 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:47:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 17:47:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:02:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/**
- * @brief Checks if a point is within or near the viewport
- *
- * @param point The point to check
- * @param width Viewport width
- * @param height Viewport height
- * @param margin Extra margin around viewport to prevent edge artifacts
- * @return t_bool True if point is visible or close to visible
- */
-static t_bool	is_point_in_viewport(t_point point, int width, int height,
-		int margin)
-{
-	return (point.x >= -margin && point.x <= width + margin && point.y >=
-		-margin && point.y <= height + margin);
-}
+// /**
+//  * @brief Checks if a point is within or near the viewport
+//  *
+//  * @param point The point to check
+//  * @param width Viewport width
+//  * @param height Viewport height
+//  * @param margin Extra margin around viewport to prevent edge artifacts
+//  * @return t_bool True if point is visible or close to visible
+//  */
+// static t_bool	is_point_in_viewport(t_point point, int width, int height,
+// 		int margin)
+// {
+// 	return (point.x >= -margin && point.x <= width + margin && point.y >=
+// 		-margin && point.y <= height + margin);
+// }
 
 /**
  * @brief Checks if a line is completely outside the viewport
@@ -37,8 +37,7 @@ static t_bool	is_point_in_viewport(t_point point, int width, int height,
  * @param height Viewport height
  * @return t_bool True if line is completely outside and can be culled
  */
-static t_bool	is_line_outside_viewport(t_point p1, t_point p2, int width,
-		int height)
+t_bool	is_line_outside_viewport(t_point p1, t_point p2, int width, int height)
 {
 	if (p1.x < 0 && p2.x < 0)
 		return (true);
@@ -47,6 +46,36 @@ static t_bool	is_line_outside_viewport(t_point p1, t_point p2, int width,
 	if (p1.y < 0 && p2.y < 0)
 		return (true);
 	if (p1.y > height && p2.y > height)
+		return (true);
+	return (false);
+}
+
+/**
+ * @brief Checks if a section of the map is outside the viewport
+ *
+ * @param app Application context
+ * @param section The section to check
+ * @return t_bool True if section is completely outside
+ */
+t_bool	is_section_outside_viewport(t_app *app, t_section section)
+{
+	t_point	corners[4];
+	int		width;
+	int		height;
+
+	width = app->img.width;
+	height = app->img.height;
+	corners[0] = get_projected_point(section.start_x, section.start_y, app);
+	corners[1] = get_projected_point(section.end_x, section.start_y, app);
+	corners[2] = get_projected_point(section.start_x, section.end_y, app);
+	corners[3] = get_projected_point(section.end_x, section.end_y, app);
+	if ((corners[0].x < 0 && corners[1].x < 0 && corners[2].x < 0
+			&& corners[3].x < 0) || (corners[0].x > width
+			&& corners[1].x > width && corners[2].x > width
+			&& corners[3].x > width) || (corners[0].y < 0 && corners[1].y < 0
+			&& corners[2].y < 0 && corners[3].y < 0) || (corners[0].y > height
+			&& corners[1].y > height && corners[2].y > height
+			&& corners[3].y > height))
 		return (true);
 	return (false);
 }
