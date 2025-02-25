@@ -3,6 +3,7 @@
         "*.astro": "astro",
         "*.page-template": "vue",
         "*.layout-template": "vue",
-        "*.vue": "vue"
+        "*.vue": "vue",
+        "sstream": "c"
     }
 }

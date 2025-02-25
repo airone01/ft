@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 10:56:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:21:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	render_next_frame(t_app *ctx)
 	if (ctx->debug_mode & DEBUG_SECTIONS)
 		render_section_debug(ctx);
 	mlx_put_image_to_window(ctx->mlx, ctx->win, ctx->img.img, 0, 0);
+	if (ctx->debug_mode & DEBUG_LOD)
+		render_lod_debug(ctx);
 	ctx->needs_render = false;
 	return (0);
 }

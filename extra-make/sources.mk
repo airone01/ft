@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/25 10:53:53 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/25 12:50:58 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,6 +189,8 @@ _SRC_FDF_COMMON				:=	\
 	mlx_hooks_key				\
 	mlx_pixel_put				\
 	mlx_render_lod				\
+	mlx_render_lod_debug		\
+	mlx_render_lod_debug_utils	\
 	mlx_render_line				\
 	mlx_render_section			\
 	mlx_render_section_debug	\

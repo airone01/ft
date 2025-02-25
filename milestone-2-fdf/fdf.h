@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 10:56:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:50:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,8 +354,14 @@ void					calculate_initial_scale(t_app *ctx);
 // Rendering debug
 void					draw_section_outline(t_app *ctx, t_section section,
 							unsigned int color);
+void					put_debug_number(t_app *ctx, double value, char *label,
+							int y_pos);
+int						append_double(char *str, double val, int max_len);
+void					put_debug_text(t_app *ctx, char *msg, int y_pos);
+int						append_int(char *str, int n, int max_len);
 void					toggle_debug_mode(t_app *ctx, int flag);
 void					render_section_debug(t_app *ctx);
+void					render_lod_debug(t_app *ctx);
 
 // Colors
 unsigned int			color_get_by_scheme(int z, int min_z, int max_z,
