@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:02:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:24:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,32 @@ typedef struct s_img
 
 typedef struct s_app
 {
+	// Color scheme
+	int			color_scheme;
+	// MLX
+	void		*mlx;
+	void		*win;
+	// File
+	char		**file_content;
+	int			file_fd;
+	// Map
+	t_map		map;
+	// Rendering
 	t_bool		needs_render;
+	t_img		img;
+	// Rendering: Offsets
 	double		offset_x;
 	double		offset_y;
+	// Rendering: Scales
 	double		z_scale;
 	double		scale;
+	// Rendering: Rotations
 	double		rot_x;
 	double		rot_y;
 	double		rot_z;
-	t_map		map;
-	t_img		img;
-	char		**file_content;
-	void		*mlx;
-	void		*win;
-	int			color_scheme;
-	int			file_fd;
+	// Rendering: LOD
+	int			lod_level;
+	double		lod_distance_threshold;
 }				t_app;
 
 // Isometric point
@@ -188,6 +199,28 @@ typedef struct s_section
 	int			end_y;
 }				t_section;
 
+enum			e_lod_levels
+{
+	// Every point
+	LOD_HIGH = 1,
+	// Every second point
+	LOD_MEDIUM = 2,
+	// Every fourth point
+	LOD_LOW = 4,
+	// Every eighth point
+	LOD_VERY_LOW = 8
+};
+
+/**
+ * @brief Structure to hold rendering context for LOD connections
+ */
+typedef struct s_render_context
+{
+	t_app		*ctx;
+	t_section	section;
+	int			lod;
+}				t_render_context;
+
 // Global app structure
 t_app			*app_init(void);
 
@@ -206,7 +239,7 @@ void			*safe_recalloc(t_app *ctx, void *ptr, unsigned long old_size,
 					unsigned long new_size);
 void			*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
 void			free_2d_array(void **ptrs);
-int				app_clear_0(t_app *app);
+void			app_clear_0(t_app *ctx);
 void			app_clear(t_app *ctx);
 
 // Arguments handling
@@ -219,14 +252,14 @@ int				file_open(char *path, char **envp);
 int				**allocate_matrix(int width, int height);
 int				count_columns_in_line(const char *line);
 void			find_elevation_bounds(t_app *ctx);
-void			map_parse(t_app *app);
+void			map_parse(t_app *ctx);
 
 // Math
 t_bool			fuzzy_equals(double a, double b);
 int				fast_atoi(const char **str);
 
 // Point mamipulation
-t_point			get_projected_point(int x, int y, t_app *app);
+t_point			get_projected_point(int x, int y, t_app *ctx);
 t_point			point_lerp(t_point a, t_point b, double t);
 t_point			point_rotate(t_point p, double angle);
 t_point			point_scale(t_point p, double scale);
@@ -245,20 +278,21 @@ t_point3d		rotate_z(t_point3d p, double angle);
 
 // MLX
 void			mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color);
-int				key_hook(int keycode, t_app *app);
-void			register_hooks(t_app *app);
+void			key_hook(int keycode, t_app *ctx);
+void			register_hooks(t_app *ctx);
 
 // Rendering
 void			draw_line_img(t_app *ctx, t_point start, t_point end,
 					unsigned int color);
-void			calculate_initial_scale(t_app *app);
-int				render_next_frame(t_app *app);
-void			draw_lines(t_app *app);
+int				get_appropriate_lod(t_app *ctx);
+int				render_next_frame(t_app *ctx);
+void			draw_lines(t_app *ctx);
 
-// Culling
+// Rendering optimization
 t_bool			is_line_outside_viewport(t_point p1, t_point p2, int width,
 					int height);
-t_bool			is_section_outside_viewport(t_app *app, t_section section);
+t_bool			is_section_outside_viewport(t_app *ctx, t_section section);
+void			calculate_initial_scale(t_app *ctx);
 
 // Colors
 unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);

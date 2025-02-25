@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_utils.c                                      :+:      :+:    :+:   */
+/*   mlx_render_lod.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 20:37:14 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:12:41 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/25 09:10:27 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/25 09:24:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /**
- * @brief Clears the context and exits normally
+ * @brief Finds the appropriate LOD depending on the scale
  *
- * @param ctx Application context
+ * @return The appropriate LOD level
  */
-void	app_clear_0(t_app *ctx)
+int	get_appropriate_lod(t_app *ctx)
 {
-	app_clear(ctx);
-	exit(EXIT_SUCCESS);
+	if (ctx->scale < 0.5)
+		return (LOD_VERY_LOW);
+	else if (ctx->scale < 1.0)
+		return (LOD_LOW);
+	else if (ctx->scale < 2.0)
+		return (LOD_MEDIUM);
+	else
+		return (LOD_HIGH);
 }

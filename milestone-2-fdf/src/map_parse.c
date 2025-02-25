@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:49:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/24 17:22:40 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:13:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	process_number(t_app *app, const char **ptr, int row, int *col)
+static void	process_number(t_app *ctx, const char **ptr, int row, int *col)
 {
 	int	val;
 
@@ -23,10 +23,10 @@ static void	process_number(t_app *app, const char **ptr, int row, int *col)
 	val = fast_atoi(ptr);
 	while (**ptr && !ft_isspace(**ptr))
 		(*ptr)++;
-	app->map.matrix[row][(*col)++] = val;
+	ctx->map.matrix[row][(*col)++] = val;
 }
 
-static void	validate_line_format(t_app *app, const char *line, int row)
+static void	validate_line_format(t_app *ctx, const char *line, int row)
 {
 	int	col;
 
@@ -34,31 +34,31 @@ static void	validate_line_format(t_app *app, const char *line, int row)
 	if (col == 0)
 	{
 		ft_printf("Error on line %d: Empty line\n", row + 1);
-		exit_error(app, ERR_MAP_EMPTY_LINE);
+		exit_error(ctx, ERR_MAP_EMPTY_LINE);
 	}
-	if (app->map.width == -1)
-		app->map.width = col;
-	else if (col != app->map.width)
+	if (ctx->map.width == -1)
+		ctx->map.width = col;
+	else if (col != ctx->map.width)
 	{
 		ft_printf("Error on line %d: Got %d columns but expected %d\n", row,
-			col, app->map.width);
-		exit_error(app, ERR_MAP_IRREGULAR);
+			col, ctx->map.width);
+		exit_error(ctx, ERR_MAP_IRREGULAR);
 	}
 }
 
-static void	parse_line(t_app *app, const char *line, int *row)
+static void	parse_line(t_app *ctx, const char *line, int *row)
 {
 	int			col;
 	const char	*ptr;
 	const char	*end;
 
-	validate_line_format(app, line, *row);
+	validate_line_format(ctx, line, *row);
 	ptr = line;
 	end = line + strlen(line);
 	col = 0;
 	while (ptr < end && *ptr)
 	{
-		process_number(app, &ptr, *row, &col);
+		process_number(ctx, &ptr, *row, &col);
 		while (ptr < end && *ptr && ft_isspace(*ptr) && *ptr != '\n')
 			ptr++;
 	}
@@ -68,25 +68,25 @@ static void	parse_line(t_app *app, const char *line, int *row)
 /**
  * @brief	Parses the map content.
  *
- * @param	app		The application context.
+ * @param	ctx		The application context.
  * @param	content	The content of the map file.
  */
-void	map_parse(t_app *app)
+void	map_parse(t_app *ctx)
 {
 	char	**ptr;
 	int		row;
 
-	if (!app->file_content || !*app->file_content)
-		exit_error(app, ERR_FILE_EMPTY);
-	ptr = app->file_content;
+	if (!ctx->file_content || !*ctx->file_content)
+		exit_error(ctx, ERR_FILE_EMPTY);
+	ptr = ctx->file_content;
 	row = 0;
-	app->map.min_elevation = INT_MAX;
-	app->map.max_elevation = INT_MIN;
+	ctx->map.min_elevation = INT_MAX;
+	ctx->map.max_elevation = INT_MIN;
 	while (*ptr)
 	{
-		parse_line(app, *ptr, &row);
+		parse_line(ctx, *ptr, &row);
 		ptr++;
 	}
 	if (row == 0)
-		exit_error(app, ERR_FILE_EMPTY);
+		exit_error(ctx, ERR_FILE_EMPTY);
 }

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:47:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:02:35 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:15:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ t_bool	is_line_outside_viewport(t_point p1, t_point p2, int width, int height)
 /**
  * @brief Checks if a section of the map is outside the viewport
  *
- * @param app Application context
+ * @param ctx Application context
  * @param section The section to check
  * @return t_bool True if section is completely outside
  */
-t_bool	is_section_outside_viewport(t_app *app, t_section section)
+t_bool	is_section_outside_viewport(t_app *ctx, t_section section)
 {
 	t_point	corners[4];
 	int		width;
 	int		height;
 
-	width = app->img.width;
-	height = app->img.height;
-	corners[0] = get_projected_point(section.start_x, section.start_y, app);
-	corners[1] = get_projected_point(section.end_x, section.start_y, app);
-	corners[2] = get_projected_point(section.start_x, section.end_y, app);
-	corners[3] = get_projected_point(section.end_x, section.end_y, app);
+	width = ctx->img.width;
+	height = ctx->img.height;
+	corners[0] = get_projected_point(section.start_x, section.start_y, ctx);
+	corners[1] = get_projected_point(section.end_x, section.start_y, ctx);
+	corners[2] = get_projected_point(section.start_x, section.end_y, ctx);
+	corners[3] = get_projected_point(section.end_x, section.end_y, ctx);
 	if ((corners[0].x < 0 && corners[1].x < 0 && corners[2].x < 0
 			&& corners[3].x < 0) || (corners[0].x > width
 			&& corners[1].x > width && corners[2].x > width
