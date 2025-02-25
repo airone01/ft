@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:47:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:15:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:46:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,35 @@ t_bool	is_line_outside_viewport(t_point p1, t_point p2, int width, int height)
 }
 
 /**
- * @brief Checks if a section of the map is outside the viewport
+ * @brief Determines if an entire section is outside the viewport
  *
  * @param ctx Application context
  * @param section The section to check
- * @return t_bool True if section is completely outside
+ * @return t_bool True if the section is completely outside the viewport
  */
 t_bool	is_section_outside_viewport(t_app *ctx, t_section section)
 {
 	t_point	corners[4];
+	int		margin;
 	int		width;
 	int		height;
 
+	margin = ctx->lod_level * 2;
 	width = ctx->img.width;
 	height = ctx->img.height;
 	corners[0] = get_projected_point(section.start_x, section.start_y, ctx);
 	corners[1] = get_projected_point(section.end_x, section.start_y, ctx);
 	corners[2] = get_projected_point(section.start_x, section.end_y, ctx);
 	corners[3] = get_projected_point(section.end_x, section.end_y, ctx);
-	if ((corners[0].x < 0 && corners[1].x < 0 && corners[2].x < 0
-			&& corners[3].x < 0) || (corners[0].x > width
-			&& corners[1].x > width && corners[2].x > width
-			&& corners[3].x > width) || (corners[0].y < 0 && corners[1].y < 0
-			&& corners[2].y < 0 && corners[3].y < 0) || (corners[0].y > height
-			&& corners[1].y > height && corners[2].y > height
-			&& corners[3].y > height))
+	if ((corners[0].x < -margin && corners[1].x < -margin
+			&& corners[2].x < -margin && corners[3].x < -margin)
+		|| (corners[0].x > width + margin
+			&& corners[1].x > width + margin && corners[2].x > width + margin
+			&& corners[3].x > width + margin) || (corners[0].y < -margin
+			&& corners[1].y < -margin && corners[2].y < -margin
+			&& corners[3].y < -margin) || (corners[0].y > height + margin
+			&& corners[1].y > height + margin && corners[2].y > height + margin
+			&& corners[3].y > height + margin))
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/25 09:56:29 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/25 10:31:54 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,6 +189,7 @@ _SRC_FDF_COMMON				:=	\
 	mlx_pixel_put				\
 	mlx_render_lod				\
 	mlx_render_line				\
+	mlx_render_section			\
 	mlx_render_viewport			\
 	mlx_render_next_frame		\
 	point_add					\

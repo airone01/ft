@@ -6,90 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:40:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:24:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:29:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/**
- * @brief Draws a connection to the right point with LOD
- *
- * @param rc Rendering context
- * @param x Current x position
- * @param y Current y position
- */
-static void	draw_right_connection(t_render_context *rc, int x, int y)
-{
-	t_point	current;
-	t_point	right;
-
-	if (x + rc->lod <= rc->section.end_x && x + rc->lod < rc->ctx->map.width)
-	{
-		current = get_projected_point(x, y, rc->ctx);
-		right = get_projected_point(x + rc->lod, y, rc->ctx);
-		if (!is_line_outside_viewport(current, right, rc->ctx->img.width,
-				rc->ctx->img.height))
-			draw_line_img(rc->ctx, current, right, color_get_line(rc->ctx,
-					rc->ctx->map.matrix[y][x], rc->ctx->map.matrix[y][x
-					+ rc->lod]));
-	}
-}
-
-/**
- * @brief Draws a connection to the down point with LOD
- *
- * @param rc Rendering context
- * @param x Current x position
- * @param y Current y position
- */
-static void	draw_down_connection(t_render_context *rc, int x, int y)
-{
-	t_point	current;
-	t_point	down;
-
-	if (y + rc->lod <= rc->section.end_y && y + rc->lod < rc->ctx->map.height)
-	{
-		current = get_projected_point(x, y, rc->ctx);
-		down = get_projected_point(x, y + rc->lod, rc->ctx);
-		if (!is_line_outside_viewport(current, down, rc->ctx->img.width,
-				rc->ctx->img.height))
-			draw_line_img(rc->ctx, current, down, color_get_line(rc->ctx,
-					rc->ctx->map.matrix[y][x], rc->ctx->map.matrix[y
-					+ rc->lod][x]));
-	}
-}
-
-/**
- * @brief Renders a single section of the map
- *
- * @param ctx Application context
- * @param section The section to render
- */
-static void	render_section(t_app *ctx, t_section section)
-{
-	t_render_context	rc;
-	int					x;
-	int					y;
-
-	rc.ctx = ctx;
-	rc.section = section;
-	rc.lod = ctx->lod_level;
-	if (rc.lod == 0)
-		rc.lod = get_appropriate_lod(ctx);
-	y = section.start_y;
-	while (y <= section.end_y)
-	{
-		x = section.start_x;
-		while (x <= section.end_x)
-		{
-			draw_right_connection(&rc, x, y);
-			draw_down_connection(&rc, x, y);
-			x += rc.lod;
-		}
-		y += rc.lod;
-	}
-}
 
 /**
  * @brief Main drawing function that divides the map into sections
