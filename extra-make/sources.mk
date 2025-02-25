@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/25 10:31:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/25 10:53:53 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -165,6 +165,7 @@ _SRC_FDF_COMMON				:=	\
 	color_get_by_scheme			\
 	color_get_line				\
 	color_utils					\
+	debug_toggle				\
 	error						\
 	error_arg					\
 	error_file					\
@@ -190,6 +191,7 @@ _SRC_FDF_COMMON				:=	\
 	mlx_render_lod				\
 	mlx_render_line				\
 	mlx_render_section			\
+	mlx_render_section_debug	\
 	mlx_render_viewport			\
 	mlx_render_next_frame		\
 	point_add					\

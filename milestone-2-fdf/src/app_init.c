@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:12:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:38:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:55:39 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_app	*app_init(void)
 	t_app	*ctx;
 
 	ctx = safe_calloc(NULL, 1, sizeof(t_app));
+	ctx->debug_mode = DEBUG_NONE;
 	ctx->map.min_elevation = 0;
 	ctx->map.max_elevation = 0;
 	ctx->lod_level = LOD_HIGH;

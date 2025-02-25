@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 10:42:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 10:56:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct s_app
 	// Rendering: LOD
 	int					lod_level;
 	double				lod_distance_threshold;
+	// Rendering: Debug
+	int					debug_mode;
 }						t_app;
 
 // Isometric point
@@ -189,6 +191,8 @@ enum					e_keyboard
 	KEY_F3 = 65472,
 	KEY_F4 = 65473,
 	KEY_F5 = 65474,
+	KEY_F6 = 65475,
+	KEY_F7 = 65476,
 };
 
 // Colors
@@ -255,6 +259,13 @@ typedef struct s_render_section_params
 	int					x;
 	int					y;
 }						t_render_section_params;
+
+typedef enum e_debug_flags
+{
+	DEBUG_NONE = 0,
+	DEBUG_SECTIONS = 1,
+	DEBUG_LOD = 2
+}						t_debug_flags;
 
 // Global app structure
 t_app					*app_init(void);
@@ -339,6 +350,12 @@ t_bool					is_line_outside_viewport(t_point p1, t_point p2,
 t_bool					is_section_outside_viewport(t_app *ctx,
 							t_section section);
 void					calculate_initial_scale(t_app *ctx);
+
+// Rendering debug
+void					draw_section_outline(t_app *ctx, t_section section,
+							unsigned int color);
+void					toggle_debug_mode(t_app *ctx, int flag);
+void					render_section_debug(t_app *ctx);
 
 // Colors
 unsigned int			color_get_by_scheme(int z, int min_z, int max_z,
