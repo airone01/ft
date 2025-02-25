@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/25 09:25:09 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/25 09:56:29 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,6 +183,7 @@ _SRC_FDF_COMMON				:=	\
 	map_parse_utils				\
 	map_utils					\
 	mlx_bresenham				\
+	mlx_bresenham_utils			\
 	mlx_hooks					\
 	mlx_hooks_key				\
 	mlx_pixel_put				\

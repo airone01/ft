@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:24:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:57:24 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,89 +71,90 @@ typedef enum e_error
 	ERR_INVALID_ROTATION = 51,
 	ERR_INVALID_SCALE = 52,
 	ERR_INVALID_PROJECTION = 53,
-}				t_error;
+}					t_error;
 
 typedef struct s_map
 {
-	int			**matrix;
-	int			width;
-	int			height;
-	int			min_elevation;
-	int			max_elevation;
-}				t_map;
+	int				**matrix;
+	int				width;
+	int				height;
+	int				min_elevation;
+	int				max_elevation;
+}					t_map;
 
 typedef struct s_img
 {
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-	int			width;
-	int			height;
-}				t_img;
+	void			*img;
+	char			*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+	int				width;
+	int				height;
+}					t_img;
 
 typedef struct s_app
 {
 	// Color scheme
-	int			color_scheme;
+	int				color_scheme;
 	// MLX
-	void		*mlx;
-	void		*win;
+	void			*mlx;
+	void			*win;
 	// File
-	char		**file_content;
-	int			file_fd;
+	char			**file_content;
+	int				file_fd;
 	// Map
-	t_map		map;
+	t_map			map;
 	// Rendering
-	t_bool		needs_render;
-	t_img		img;
+	t_bool			needs_render;
+	t_img			img;
 	// Rendering: Offsets
-	double		offset_x;
-	double		offset_y;
+	double			offset_x;
+	double			offset_y;
 	// Rendering: Scales
-	double		z_scale;
-	double		scale;
+	double			z_scale;
+	double			scale;
 	// Rendering: Rotations
-	double		rot_x;
-	double		rot_y;
-	double		rot_z;
+	double			rot_x;
+	double			rot_y;
+	double			rot_z;
 	// Rendering: LOD
-	int			lod_level;
-	double		lod_distance_threshold;
-}				t_app;
+	int				lod_level;
+	double			lod_distance_threshold;
+}					t_app;
 
 // Isometric point
 typedef struct s_point
 {
-	double		x;
-	double		y;
-}				t_point;
+	double			x;
+	double			y;
+}					t_point;
 
 // Point in 3D space
 typedef struct s_point3d
 {
-	double		x;
-	double		y;
-	double		z;
-}				t_point3d;
+	double			x;
+	double			y;
+	double			z;
+}					t_point3d;
 
 typedef struct s_line_vars
 {
-	t_point		delta;
-	t_point		current;
-	double		steps;
-}				t_line_vars;
+	t_point			delta;
+	t_point			current;
+	double			steps;
+}					t_line_vars;
 
-enum			e_image
+enum				e_image
 {
 	IMG_WIDTH = 1920,
 	IMG_HEIGHT = 1080,
 };
 
 // Keyboard keys
-enum			e_keyboard
+enum				e_keyboard
 {
+	// Letters
 	KEY_W = 119,
 	KEY_S = 115,
 	KEY_D = 100,
@@ -164,22 +165,34 @@ enum			e_keyboard
 	KEY_T = 116,
 	KEY_F = 102,
 	KEY_G = 103,
+	// Arrows
 	KEY_ARROW_UP = 65362,
 	KEY_ARROW_DOWN = 65364,
 	KEY_ARROW_LEFT = 65361,
 	KEY_ARROW_RIGHT = 65363,
+	// Numbers
+	KEY_1 = 49,
+	// After numbers
 	KEY_EQUALS = 61,
 	KEY_DASH = 45,
+	// Numpad
 	KEY_NUMPAD_PLUS = 65451,
 	KEY_NUMPAD_MINUS = 65453,
+	// Brackets
 	KEY_SQUARE_BRACKET_OPENING = 91,
 	KEY_SQUARE_BRACKET_CLOSING = 93,
+	// Other
 	KEY_ESCAPE = 65307,
-	KEY_1 = 49,
+	// Fn
+	KEY_F1 = 65470,
+	KEY_F2 = 65471,
+	KEY_F3 = 65472,
+	KEY_F4 = 65473,
+	KEY_F5 = 65474,
 };
 
 // Colors
-enum			e_colors
+enum				e_colors
 {
 	BLACK = 0x00000000,
 	WHITE = 0x00FFFFFF,
@@ -193,13 +206,21 @@ enum			e_colors
  */
 typedef struct s_section
 {
-	int			start_x;
-	int			start_y;
-	int			end_x;
-	int			end_y;
-}				t_section;
+	int				start_x;
+	int				start_y;
+	int				end_x;
+	int				end_y;
+}					t_section;
 
-enum			e_lod_levels
+typedef struct s_bresenham_params
+{
+	t_app			*ctx;
+	int				*line;
+	int				*params;
+	unsigned int	color;
+}					t_bresenham_params;
+
+enum				e_lod_levels
 {
 	// Every point
 	LOD_HIGH = 1,
@@ -216,88 +237,96 @@ enum			e_lod_levels
  */
 typedef struct s_render_context
 {
-	t_app		*ctx;
-	t_section	section;
-	int			lod;
-}				t_render_context;
+	t_app			*ctx;
+	t_section		section;
+	int				lod;
+}					t_render_context;
 
 // Global app structure
-t_app			*app_init(void);
+t_app				*app_init(void);
 
 // Error handling
-void			exit_error_free(t_app *ctx, t_error err, void *ptr);
-void			exit_error(t_app *ctx, t_error err);
-void			print_memory_error(t_error err);
-void			print_math_error(t_error err);
-void			print_file_error(t_error err);
-void			print_arg_error(t_error err);
-void			print_map_error(t_error err);
-void			print_mlx_error(t_error err);
+void				exit_error_free(t_app *ctx, t_error err, void *ptr);
+void				exit_error(t_app *ctx, t_error err);
+void				print_memory_error(t_error err);
+void				print_math_error(t_error err);
+void				print_file_error(t_error err);
+void				print_arg_error(t_error err);
+void				print_map_error(t_error err);
+void				print_mlx_error(t_error err);
 
 // Safety
-void			*safe_recalloc(t_app *ctx, void *ptr, unsigned long old_size,
-					unsigned long new_size);
-void			*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
-void			free_2d_array(void **ptrs);
-void			app_clear_0(t_app *ctx);
-void			app_clear(t_app *ctx);
+void				*safe_recalloc(t_app *ctx, void *ptr,
+						unsigned long old_size, unsigned long new_size);
+void				*safe_calloc(t_app *ctx, unsigned long nmemb, size_t size);
+void				free_2d_array(void **ptrs);
+void				app_clear_0(t_app *ctx);
+void				app_clear(t_app *ctx);
 
 // Arguments handling
-void			args_check(int argc, char **argv);
+void				args_check(int argc, char **argv);
 
 // File handling
-int				file_open(char *path, char **envp);
+int					file_open(char *path, char **envp);
 
 // Map parsing
-int				**allocate_matrix(int width, int height);
-int				count_columns_in_line(const char *line);
-void			find_elevation_bounds(t_app *ctx);
-void			map_parse(t_app *ctx);
+int					**allocate_matrix(int width, int height);
+int					count_columns_in_line(const char *line);
+void				find_elevation_bounds(t_app *ctx);
+void				map_parse(t_app *ctx);
 
 // Math
-t_bool			fuzzy_equals(double a, double b);
-int				fast_atoi(const char **str);
+t_bool				fuzzy_equals(double a, double b);
+int					fast_atoi(const char **str);
 
 // Point mamipulation
-t_point			get_projected_point(int x, int y, t_app *ctx);
-t_point			point_lerp(t_point a, t_point b, double t);
-t_point			point_rotate(t_point p, double angle);
-t_point			point_scale(t_point p, double scale);
-t_point			point_add(t_point a, t_point b);
-t_point			point_sub(t_point a, t_point b);
-t_point			point_normalize(t_point p);
-t_point			iso_project(t_point3d p);
-double			point_distance(t_point a, t_point b);
-double			point_dot(t_point a, t_point b);
-double			point_magnitude(t_point p);
+t_point				get_projected_point(int x, int y, t_app *ctx);
+t_point				point_lerp(t_point a, t_point b, double t);
+t_point				point_rotate(t_point p, double angle);
+t_point				point_scale(t_point p, double scale);
+t_point				point_add(t_point a, t_point b);
+t_point				point_sub(t_point a, t_point b);
+t_point				point_normalize(t_point p);
+t_point				iso_project(t_point3d p);
+double				point_distance(t_point a, t_point b);
+double				point_dot(t_point a, t_point b);
+double				point_magnitude(t_point p);
 
 // Point3D manipulation
-t_point3d		rotate_x(t_point3d p, double angle);
-t_point3d		rotate_y(t_point3d p, double angle);
-t_point3d		rotate_z(t_point3d p, double angle);
+t_point3d			rotate_x(t_point3d p, double angle);
+t_point3d			rotate_y(t_point3d p, double angle);
+t_point3d			rotate_z(t_point3d p, double angle);
 
 // MLX
-void			mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color);
-void			key_hook(int keycode, t_app *ctx);
-void			register_hooks(t_app *ctx);
+void				mlx_pixel_put_img(t_img *img, int x, int y,
+						unsigned int color);
+void				key_hook(int keycode, t_app *ctx);
+void				register_hooks(t_app *ctx);
 
 // Rendering
-void			draw_line_img(t_app *ctx, t_point start, t_point end,
-					unsigned int color);
-int				get_appropriate_lod(t_app *ctx);
-int				render_next_frame(t_app *ctx);
-void			draw_lines(t_app *ctx);
+void				draw_line_img(t_app *ctx, t_point start, t_point end,
+						unsigned int color);
+int					get_appropriate_lod(t_app *ctx);
+int					render_next_frame(t_app *ctx);
+void				draw_lines(t_app *ctx);
+
+// Rendering: Bresenham
+void				process_point(t_app *ctx, int x, int y, unsigned int color);
+void				process_x_step(t_bresenham_params p, int *x, int e2);
+void				process_y_step(t_bresenham_params p, int *y, int e2);
+t_bool				is_line_outside_bounds(t_app *ctx, int *line);
 
 // Rendering optimization
-t_bool			is_line_outside_viewport(t_point p1, t_point p2, int width,
-					int height);
-t_bool			is_section_outside_viewport(t_app *ctx, t_section section);
-void			calculate_initial_scale(t_app *ctx);
+t_bool				is_line_outside_viewport(t_point p1, t_point p2, int width,
+						int height);
+t_bool				is_section_outside_viewport(t_app *ctx, t_section section);
+void				calculate_initial_scale(t_app *ctx);
 
 // Colors
-unsigned int	color_get_by_scheme(int z, int min_z, int max_z, int scheme);
-unsigned int	color_get_line(t_app *ctx, int z1, int z2);
-unsigned int	hsv_to_rgb(double h, double s, double v);
-unsigned int	color_get(int z, int min_z, int max_z);
+unsigned int		color_get_by_scheme(int z, int min_z, int max_z,
+						int scheme);
+unsigned int		color_get_line(t_app *ctx, int z1, int z2);
+unsigned int		hsv_to_rgb(double h, double s, double v);
+unsigned int		color_get(int z, int min_z, int max_z);
 
 #endif
