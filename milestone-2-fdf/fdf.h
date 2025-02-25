@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:04:30 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:16:17 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef enum e_projection_type
 {
 	PROJECTION_ISOMETRIC,
 	PROJECTION_CABINET,
+	PROJECTION_CONIC,
 }						t_projection_type;
 
 typedef struct s_app
@@ -114,6 +115,7 @@ typedef struct s_app
 	// Rendering
 	t_projection_type	projection_type;
 	t_bool				needs_render;
+	double				horizon_distance;
 	t_img				img;
 	// Rendering: Offsets
 	double				offset_x;
@@ -181,6 +183,8 @@ enum					e_keyboard
 	KEY_ARROW_RIGHT = 65363,
 	// Numbers
 	KEY_1 = 49,
+	KEY_9 = 57,
+	KEY_0 = 58,
 	// After numbers
 	KEY_EQUALS = 61,
 	KEY_DASH = 45,
@@ -325,6 +329,7 @@ double					point_dot(t_point a, t_point b);
 double					point_magnitude(t_point p);
 
 // Projection
+t_point					conic_project(t_point3d p, t_app *ctx);
 t_point					cabinet_project(t_point3d p);
 t_point					iso_project(t_point3d p);
 

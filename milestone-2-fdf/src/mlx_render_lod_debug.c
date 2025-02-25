@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:13:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:08:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:14:25 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ static void	put_projection_type(t_app *ctx, int y_pos)
 		ft_strlcpy(buffer, "Projection: Isometric", 64);
 	else if (ctx->projection_type == PROJECTION_CABINET)
 		ft_strlcpy(buffer, "Projection: Cabinet", 64);
+	else if (ctx->projection_type == PROJECTION_CONIC)
+		ft_strlcpy(buffer, "Projection: Conic", 64);
 	else
 		ft_strlcpy(buffer, "Projection: Unknown", 64);
 	put_debug_text(ctx, buffer, y_pos);

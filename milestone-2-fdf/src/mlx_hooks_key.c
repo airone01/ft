@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:52:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:08:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:18:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ static void	key_hook3(int keycode, t_app *ctx)
 		toggle_debug_mode(ctx, DEBUG_SECTIONS);
 	else if (keycode == KEY_F7)
 		toggle_debug_mode(ctx, DEBUG_LOD);
+	else if (keycode == KEY_9)
+		ctx->horizon_distance *= 1.1;
+	else if (keycode == KEY_0)
+		ctx->horizon_distance *= 0.9;
 }
 
 void	key_hook2(int keycode, t_app *ctx)
@@ -58,7 +62,7 @@ void	key_hook2(int keycode, t_app *ctx)
 	else if (keycode == KEY_F4)
 		ctx->lod_level = LOD_HIGH;
 	else if (keycode == KEY_P)
-		ctx->projection_type = (ctx->projection_type + 1) % 2;
+		ctx->projection_type = (ctx->projection_type + 1) % 3;
 	else
 		key_hook3(keycode, ctx);
 }

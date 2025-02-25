@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:02:54 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:13:17 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_point	get_projected_point(int x, int y, t_app *ctx)
 	point3d = rotate_z(point3d, ctx->rot_z);
 	if (ctx->projection_type == PROJECTION_CABINET)
 		projected = cabinet_project(point3d);
+	else if (ctx->projection_type == PROJECTION_CONIC)
+		projected = conic_project(point3d, ctx);
 	else
 		projected = iso_project(point3d);
 	projected = point_add(projected, (t_point){ctx->offset_x, ctx->offset_y});
