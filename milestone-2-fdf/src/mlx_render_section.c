@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:04:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 10:42:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:50:24 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void	render_section(t_app *ctx, t_section section)
 	rc.ctx = ctx;
 	rc.section = section;
 	rc.lod = ctx->lod_level;
-	if (rc.lod == 0)
-		rc.lod = get_appropriate_lod(ctx);
 	y = section.start_y;
 	is_edge_x = false;
 	is_edge_y = false;

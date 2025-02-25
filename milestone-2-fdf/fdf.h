@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 12:50:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:48:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ typedef struct s_app
 	double				rot_z;
 	// Rendering: LOD
 	int					lod_level;
-	double				lod_distance_threshold;
 	// Rendering: Debug
 	int					debug_mode;
 }						t_app;
@@ -360,6 +359,7 @@ int						append_double(char *str, double val, int max_len);
 void					put_debug_text(t_app *ctx, char *msg, int y_pos);
 int						append_int(char *str, int n, int max_len);
 void					toggle_debug_mode(t_app *ctx, int flag);
+void					put_thresholds(t_app *ctx, int y_pos);
 void					render_section_debug(t_app *ctx);
 void					render_lod_debug(t_app *ctx);
 
