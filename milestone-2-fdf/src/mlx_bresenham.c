@@ -6,77 +6,88 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:24:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:56:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
- * Initialize line drawing parameters
+ * @brief Initializes Bresenham parameters
  *
- * @param	start		Starting point of the line
- * @param	end			Ending point of the line
- * @return	t_line_vars	Line variables for drawing
+ * @param line Line coordinates in array form [x0, y0, x1, y1]
+ * @param params Output array for parameters [dx, dy, sx, sy, err]
  */
-static t_line_vars	init_line_vars(t_point start, t_point end)
+static void	init_bresenham_params(int *line, int *params)
 {
-	t_line_vars	vars;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
 
-	vars.delta.x = end.x - start.x;
-	vars.delta.y = end.y - start.y;
-	vars.steps = fmax(fabs(vars.delta.x), fabs(vars.delta.y));
-	if (vars.steps > 0)
+	dx = abs(line[2] - line[0]);
+	dy = -abs(line[3] - line[1]);
+	if (line[0] < line[2])
+		sx = 1;
+	else
+		sx = -1;
+	if (line[1] < line[3])
+		sy = 1;
+	else
+		sy = -1;
+	params[0] = dx;
+	params[1] = dy;
+	params[2] = sx;
+	params[3] = sy;
+	params[4] = dx + dy;
+}
+
+/**
+ * @brief Core Bresenham algorithm implementation with integer math
+ *
+ * @param p All parameters needed
+ */
+static void	draw_bresenham_line(t_bresenham_params p)
+{
+	int	e2;
+	int	x;
+	int	y;
+
+	x = p.line[0];
+	y = p.line[1];
+	while (1)
 	{
-		vars.delta.x /= vars.steps;
-		vars.delta.y /= vars.steps;
+		process_point(p.ctx, x, y, p.color);
+		if (x == p.line[2] && y == p.line[3])
+			break ;
+		e2 = 2 * p.params[4];
+		process_x_step(p, &x, e2);
+		process_y_step(p, &y, e2);
+		if (x == p.line[2] && y == p.line[3])
+			break ;
 	}
-	vars.current = start;
-	return (vars);
 }
 
 /**
- * Check if a point is within the image bounds
+ * @brief Draws a line using optimized integer-only Bresenham algorithm
  *
- * @param	ctx			Application context
- * @param	point		Point to check
- * @return	int			1 if in bounds, 0 otherwise
- */
-static int	is_point_in_bounds(t_app *ctx, t_point point)
-{
-	return (point.x >= 0 && point.x < ctx->img.width && point.y >= 0
-		&& point.y < ctx->img.height);
-}
-
-/**
- * Draw a line using Bresenham's algorithm and an image buffer
- *
- * @param	ctx			Application context
- * @param	start		Starting point of the line
- * @param	end			Ending point of the line
- * @param	color		Color of the line
+ * @param ctx Application context
+ * @param start Starting point of the line
+ * @param end Ending point of the line
+ * @param color Color of the line
  */
 void	draw_line_img(t_app *ctx, t_point start, t_point end,
 		unsigned int color)
 {
-	t_line_vars	vars;
-	int			i;
+	int	line[4];
+	int	params[5];
 
-	vars = init_line_vars(start, end);
-	if (vars.steps < 1 && is_point_in_bounds(ctx, start))
-	{
-		mlx_pixel_put_img(&ctx->img, (int)round(start.x), (int)round(start.y),
-			color);
+	line[0] = (int)round(start.x);
+	line[1] = (int)round(start.y);
+	line[2] = (int)round(end.x);
+	line[3] = (int)round(end.y);
+	if (is_line_outside_bounds(ctx, line))
 		return ;
-	}
-	i = 0;
-	while (i <= vars.steps)
-	{
-		if (is_point_in_bounds(ctx, vars.current))
-			mlx_pixel_put_img(&ctx->img, (int)round(vars.current.x),
-				(int)round(vars.current.y), color);
-		vars.current.x += vars.delta.x;
-		vars.current.y += vars.delta.y;
-		i++;
-	}
+	init_bresenham_params(line, params);
+	draw_bresenham_line((t_bresenham_params){ctx, line, params, color});
 }

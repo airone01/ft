@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_hooks.c                                        :+:      :+:    :+:   */
+/*   ft_min.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:18:06 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/21 21:58:22 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/21 22:10:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
 /**
- * @brief	Attach mlx hooks to the window
+ * @brief	Returns the minimum of two longs.
  *
- * @param	ctx	Application context
+ * @param	a	The first long.
+ * @param	b	The second long.
+ *
+ * @returns	The minimum of the two longs.
  */
-void	register_hooks(t_app *ctx)
+long	ft_min(long a, long b)
 {
-	mlx_loop_hook(ctx->mlx, render_next_frame, ctx);
-	mlx_hook(ctx->win, 2, 1L << 0, (int (*)())key_hook, ctx);
-	mlx_hook(ctx->win, 17, 0, (int (*)())app_clear_0, ctx);
+	if (a < b)
+		return (a);
+	return (b);
 }

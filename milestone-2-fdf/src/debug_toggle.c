@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_hooks.c                                        :+:      :+:    :+:   */
+/*   debug_toggle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:18:06 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/25 10:52:39 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/25 10:52:43 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /**
- * @brief	Attach mlx hooks to the window
+ * @brief Toggle a specific debug mode flag
  *
- * @param	ctx	Application context
+ * @param ctx Application context
+ * @param flag The debug flag to toggle
  */
-void	register_hooks(t_app *ctx)
+void	toggle_debug_mode(t_app *ctx, int flag)
 {
-	mlx_loop_hook(ctx->mlx, render_next_frame, ctx);
-	mlx_hook(ctx->win, 2, 1L << 0, (int (*)())key_hook, ctx);
-	mlx_hook(ctx->win, 17, 0, (int (*)())app_clear_0, ctx);
+	if (ctx->debug_mode & flag)
+		ctx->debug_mode &= ~flag;
+	else
+		ctx->debug_mode |= flag;
+	ctx->needs_render = true;
 }

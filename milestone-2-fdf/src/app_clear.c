@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:38:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 19:17:58 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/25 09:11:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,26 @@ static void	clear_matrix(t_app *ctx)
 	}
 }
 
-void	app_clear(t_app *app)
+void	app_clear(t_app *ctx)
 {
 	void	*mlx_ptr;
 
-	if (!app)
+	if (!ctx)
 		return ;
-	mlx_ptr = app->mlx;
-	if (app->file_fd >= 2)
-		close(app->file_fd);
-	clear_matrix(app);
+	mlx_ptr = ctx->mlx;
+	if (ctx->file_fd >= 2)
+		close(ctx->file_fd);
+	clear_matrix(ctx);
 	if (mlx_ptr)
 	{
-		if (app->img.img)
-			mlx_destroy_image(mlx_ptr, app->img.img);
-		if (app->win)
-			mlx_destroy_window(mlx_ptr, app->win);
+		if (ctx->img.img)
+			mlx_destroy_image(mlx_ptr, ctx->img.img);
+		if (ctx->win)
+			mlx_destroy_window(mlx_ptr, ctx->win);
 	}
-	free(app);
+	if (ctx->file_content)
+		free_2d_array((void **)ctx->file_content);
+	free(ctx);
 	if (mlx_ptr)
 	{
 		mlx_destroy_display(mlx_ptr);

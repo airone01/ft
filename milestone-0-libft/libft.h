@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/19 17:31:28 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:28:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void				*ft_recalloc(void *ptr, size_t old_size, size_t new_size);
 void				*ft_memmove(void *dest, const void *src, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 void				*ft_memchr(const void *s, uint8_t c, size_t n);
-void				*ft_calloc(size_t nmemb, size_t size);
+void				*ft_calloc(unsigned long nmemb, size_t size);
 void				*ft_memset(void *s, uint8_t c, size_t n);
 void				*ft_bzero(void *s, size_t n);
 char				*ft_strnstr(const char *big, const char *little,
@@ -86,9 +86,12 @@ char				*ft_itoa(int n);
 
 // Additional stuff by me
 t_bool				ft_isspace(char c);
+void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 char				*ft_env_find(char **envp, const char *var);
 char				*ft_strchr(const char *s, char c);
 long				ft_atol(const char *nptr);
+long				ft_min(long a, long b);
+long				ft_max(long a, long b);
 long				ft_abs(long n);
 
 #endif

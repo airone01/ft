@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_hooks.c                                        :+:      :+:    :+:   */
+/*   fast_atoi.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:18:06 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/21 21:53:25 by elagouch          #+#    #+#             */
+/*   Updated: 2025/02/21 21:57:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 /**
- * @brief	Attach mlx hooks to the window
+ * @brief	Faster atoi.
  *
- * @param	ctx	Application context
+ * @param	str		The string to convert.
+ *
+ * @returns	The integer value.
  */
-void	register_hooks(t_app *ctx)
+int	fast_atoi(const char **str)
 {
-	mlx_loop_hook(ctx->mlx, render_next_frame, ctx);
-	mlx_hook(ctx->win, 2, 1L << 0, (int (*)())key_hook, ctx);
-	mlx_hook(ctx->win, 17, 0, (int (*)())app_clear_0, ctx);
+	int	result;
+	int	sign;
+
+	result = 0;
+	sign = 1;
+	if (**str == '-')
+	{
+		sign = -1;
+		(*str)++;
+	}
+	while (ft_isdigit(**str))
+	{
+		result = result * 10 + (**str - '0');
+		(*str)++;
+	}
+	return (sign * result);
 }

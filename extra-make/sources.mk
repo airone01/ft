@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 19:15:47 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/25 16:16:50 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,13 @@ _SRC_LIBFT_COMMON			:=	\
 	ft_memcpy					\
 	ft_memmove					\
 	ft_memset					\
+	ft_max						\
+	ft_min						\
 	ft_putchar_fd				\
 	ft_putendl_fd				\
 	ft_putnbr_fd				\
 	ft_putstr_fd				\
+	ft_realloc					\
 	ft_recalloc					\
 	ft_split					\
 	ft_strdup					\
@@ -81,7 +84,9 @@ _SRC_FT_PRINTF_BONUS		:=	\
 
 _SRC_GNL_COMMON				:=	\
 	get_next_line				\
-	get_next_line_utils
+	get_next_line_utils			\
+	files_utils					\
+	files_utils2
 _SRC_GNL_MANDATORY			:=	\
 	$(_SRC_GNL_COMMON)
 _SRC_GNL_BONUS				:=	\
@@ -155,10 +160,12 @@ _SRC_FDF_COMMON				:=	\
 	app_clear					\
 	app_init					\
 	args_check					\
+	clear_utils					\
 	color_get					\
 	color_get_by_scheme			\
 	color_get_line				\
 	color_utils					\
+	debug_toggle				\
 	error						\
 	error_arg					\
 	error_file					\
@@ -166,27 +173,42 @@ _SRC_FDF_COMMON				:=	\
 	error_math					\
 	error_memory				\
 	error_mlx					\
+	fast_atoi					\
 	file_open					\
-	file_sizes					\
 	free_2d_array				\
 	fuzzy_equals				\
+	initial_scale				\
 	malloc						\
 	map_elevation				\
-	map_read					\
+	map_parse					\
+	map_parse_utils				\
+	map_utils					\
 	mlx_bresenham				\
+	mlx_bresenham_utils			\
 	mlx_hooks					\
+	mlx_hooks_key				\
 	mlx_pixel_put				\
+	mlx_render_lod				\
+	mlx_render_lod_debug		\
+	mlx_render_lod_debug_utils	\
+	mlx_render_line				\
+	mlx_render_section			\
+	mlx_render_section_debug	\
+	mlx_render_viewport			\
 	mlx_render_next_frame		\
 	point_add					\
 	point_distance				\
 	point_dot					\
 	point_iso_project			\
+	point_cabinet_project		\
 	point_lerp					\
 	point_magnitude				\
 	point_normalize				\
 	point_rotate				\
 	point_scale					\
-	point_sub
+	point_sub					\
+	point_conic_project			\
+	point3d_rotate
 _SRC_FDF_COMMON				:=	\
 	$(addprefix src/, $(_SRC_FDF_COMMON))
 _SRC_FDF_MANDATORY			:=	\

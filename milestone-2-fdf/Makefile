@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 19:17:46 by elagouch         ###   ########.fr        #
+#    Updated: 2025/02/24 13:24:50 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ MINILIBX_DIR	:= $(realpath ../extra-minilibx)
 # Needed because we compile with the math library
 LDFLAGS			:= -lm
 CFLAGS			:= -I.
+# CFLAGS			+= -pg
 
 all: title $(NAME)
 

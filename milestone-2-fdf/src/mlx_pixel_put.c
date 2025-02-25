@@ -6,11 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:00:21 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/20 14:24:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:15:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "fdf.h"
 
 /**
  * @brief	Put a pixel to the image
@@ -23,11 +23,14 @@
 void	mlx_pixel_put_img(t_img *img, int x, int y, unsigned int color)
 {
 	char	*dst;
+	int		pixel_pos;
 
-	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
-	{
-		dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel
-					/ 8));
-		*(unsigned int *)dst = color;
-	}
+	if (!img || !img->addr || x < 0 || x >= img->width || y < 0
+		|| y >= img->height)
+		return ;
+	pixel_pos = y * img->line_length + x * (img->bits_per_pixel / 8);
+	if (pixel_pos < 0 || pixel_pos >= (img->height * img->line_length))
+		return ;
+	dst = img->addr + pixel_pos;
+	*(unsigned int *)dst = color;
 }

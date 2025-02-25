@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:38:09 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:53:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_2d_array(void **ptrs)
 {
 	int	i;
 
+	if (!ptrs)
+		return ;
 	i = 0;
 	while (ptrs[i])
 	{

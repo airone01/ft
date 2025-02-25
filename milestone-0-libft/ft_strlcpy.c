@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 23:11:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:53:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@
  */
 unsigned long	ft_strlcpy(char *dst, const char *src, unsigned long size)
 {
-	unsigned long	i;
+	const char	*src_start = src;
 
-	i = 0;
-	while (src[i])
-		i++;
-	if (size == 0)
-		return (i);
-	size--;
-	while (size-- && *src)
-		*dst++ = *src++;
-	*dst = '\0';
-	return (i);
+	if (size > 0)
+	{
+		while (--size > 0 && *src)
+		{
+			*dst++ = *src++;
+		}
+		*dst = '\0';
+	}
+	while (*src)
+		src++;
+	return ((unsigned long)(src - src_start));
 }
 // GPM? end ft_strlcpy
