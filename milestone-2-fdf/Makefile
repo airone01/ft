@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/24 13:24:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/03 21:16:30 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ LDFLAGS			:= -lm
 CFLAGS			:= -I.
 # CFLAGS			+= -pg
 
-all: title $(NAME)
+all: $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)   ___   _____\n"

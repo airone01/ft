@@ -28,7 +28,7 @@ LIBFT_DIR		:= $(realpath ../milestone-0-libft)
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-all: title $(NAME)
+all: $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)             __\n"

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 13:10:32 by elagouch          #+#    #+#              #
-#    Updated: 2025/01/31 15:36:59 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/03 21:16:30 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ include $(realpath ../extra-make/commands.mk)
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-all: title msg
+all: msg
 clean:
 	@$(RM) title
 fclean: clean
