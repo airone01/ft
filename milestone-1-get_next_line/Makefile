@@ -14,7 +14,7 @@ GPM_MSTONE	:= 1
 GPM_NAME	:= get_next_line
 GPM_MNAME	:= GNL
 NAME		:= get_next_line.a
-BNAME		:= bget_next_line.a
+BNAME		:= get_next_line.a
 OUT_DIR 	:= .out/
 
 # **************************************************************************** #
@@ -22,13 +22,13 @@ OUT_DIR 	:= .out/
 # **************************************************************************** #
 
 LIBFT_DIR		:= $(realpath ../milestone-0-libft)
-# GPM@	.LIBFT_DIR	= $(realpath ../libft)
+# GPM@	.LIBFT_DIR	= $(realpath ./libft)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-all: title $(NAME)
+all: $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)             __\n"

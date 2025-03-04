@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/25 16:16:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 13:08:13 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,7 @@ _SRC_PUSH_SWAP_COMMOM		:=	\
 	stack_sorted				\
 	std_error
 _SRC_PUSH_SWAP_MANDATORY	:=	\
-	push_swap					\
+	_main						\
 	$(_SRC_PUSH_SWAP_COMMOM)
 _SRC_PUSH_SWAP_BONUS		:=	\
 	checker						\

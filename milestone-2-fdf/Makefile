@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/24 13:24:50 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 17:57:06 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 # **************************************************************************** #
 
 include $(realpath ../extra-make/art.mk)# GPM!
-# GPM: make_ansi_color_codes
+# GPM: make_art_mk
 COLOR			= $(COLOR_FDF)
 
 # **************************************************************************** #
@@ -34,10 +34,14 @@ OUT_DIR 	:= .out/
 #                                    LIBS                                      #
 # **************************************************************************** #
 
-LIBFT_DIR		:= $(realpath ../milestone-0-libft)
-PRINTF_DIR		:= $(realpath ../milestone-1-ft_printf)
-GNL_DIR			:= $(realpath ../milestone-1-get_next_line)
-MINILIBX_DIR	:= $(realpath ../extra-minilibx)
+LIBFT_DIR		:= $(realpath ../milestone-0-libft)# GPM!
+PRINTF_DIR		:= $(realpath ../milestone-1-ft_printf)# GPM!
+GNL_DIR			:= $(realpath ../milestone-1-get_next_line)# GPM!
+MINILIBX_DIR	:= $(realpath ../extra-minilibx)# GPM!
+# GPM@	.LIBFT_DIR		:= $(realpath ./libft)
+# GPM@	.PRINTF_DIR		:= $(realpath ./ft_printf)
+# GPM@	.GNL_DIR		:= $(realpath ./get_next_line)
+# GPM@	.MINILIBX_DIR	:= $(realpath ./minilibx)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -46,9 +50,8 @@ MINILIBX_DIR	:= $(realpath ../extra-minilibx)
 # Needed because we compile with the math library
 LDFLAGS			:= -lm
 CFLAGS			:= -I.
-# CFLAGS			+= -pg
 
-all: title $(NAME)
+all: $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)   ___   _____\n"
@@ -57,12 +60,21 @@ title:
 	@$(ECHO) "$(MSG)/_/ \\_,_/_/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/lib_libft.mk)
-include $(realpath ../extra-make/lib_ft_printf.mk)
-include $(realpath ../extra-make/lib_get_next_line.mk)
-include $(realpath ../extra-make/lib_minilibx.mk)
+include $(realpath ../extra-make/lib_libft.mk)# GPM!
+# GPM: make_lib_libft_mk
+include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
+# GPM: make_lib_ft_printf_mk
+include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
+# GPM: make_lib_get_next_line_mk
+include $(realpath ../extra-make/lib_minilibx.mk)# GPM!
+# GPM: make_lib_minilibx_mk
 
-include $(realpath ../extra-make/targets_common.mk) # GPM!
-# GPM: make_targets_common.mk
+# GPM: make_sources_mk
 
-include $(realpath ../extra-make/targets_bin.mk)
+# GPM: make_commands_mk
+
+include $(realpath ../extra-make/targets_common.mk)# GPM!
+# GPM: make_targets_common_mk
+
+include $(realpath ../extra-make/targets_bin.mk)# GPM!
+# GPM: make_targets_bin_mk

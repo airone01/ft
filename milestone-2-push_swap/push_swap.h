@@ -6,15 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:18:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 20:21:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/04 18:04:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../milestone-0-libft/libft.h"                 // GPM!
-# include "../milestone-1-get_next_line/get_next_line.h" // GPM!
+# include "get_next_line.h"
+# include "libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
@@ -101,13 +101,5 @@ char				*get_next_line(int fd);
 
 // ### BONUSES ###
 long				execute(t_stack **stack_a);
-// GPM@ .				ft_abs(long nb);
-
-// ### LIBFT ###
-// GPM@ .long				ft_abs(long nb);
-// GPM@ .void				*ft_calloc(unsigned long nmemb, unsigned long size);
-// GPM@ .char				**ft_split(char *str, char c);
-// GPM@ .long				ft_atol(const char *nptr);
-// GPM@ .int					ft_isdigit(int c);
 
 #endif

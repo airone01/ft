@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 22:15:09 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 18:31:28 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ CFLAGS	+= -Wwrite-strings
 # Keeps the frame pointer in registers
 # Minor performance cost
 CFLAGS	+= -fno-omit-frame-pointer
+# Because MLX doesn't annouce the correct type for an argument
+CFLAGS += -Wno-error=cast-function-type
 
 # Default
 BUILD_ENV ?= dev
@@ -102,14 +104,14 @@ fclean: clean $(FCLEAN_TARGETS)
 	@$(ECHO) "$(MSG)🧹 Fcleaning the project\n"
 	@$(RM) $(NAME) $(BNAME)
 
-# $(info $(call make_lib,LIBFT,libft,libft))
+FORCE:
 
 bonus: .bonus
 
 -include $(DEP) $(DEP_BONUS)
 MAKEFLAGS	+= --no-print-directory
-.PHONY:		all bonus			clean fclean re title visualize visualizer
-.SILENT:	all bonus .bonus	clean fclean re title visualize visualizer
+.PHONY:		all bonus			clean fclean re title visualize visualizer mandatory check-bonus check-mandatory FORCE
+.SILENT:	all bonus .bonus	clean fclean re title visualize visualizer mandatory check-bonus check-mandatory FORCE
 
 re: fclean all
 # GPM? end make_targets_common_mk

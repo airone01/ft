@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 11:50:56 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 18:04:51 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,12 @@ COLOR			= $(COLOR_PIPEX)
 #                                   METADATA                                   #
 # **************************************************************************** #
 
-GPM_MSTONE	= 2
-GPM_NAME	= pipex
-GPM_MNAME	= PIPEX
-NAME		= pipex
-BNAME		= pipex
-OUT_DIR 	= .out/
+GPM_MSTONE	:= 2
+GPM_NAME	:= pipex
+GPM_MNAME	:= PIPEX
+NAME		:= pipex
+BNAME		:= pipex
+OUT_DIR 	:= .out/
 
 # **************************************************************************** #
 #                                    LIBS                                      #
@@ -36,17 +36,15 @@ OUT_DIR 	= .out/
 LIBFT_DIR	= $(realpath ../milestone-0-libft)# GPM!
 PRINTF_DIR	= $(realpath ../milestone-1-ft_printf)# GPM!
 GNL_DIR		= $(realpath ../milestone-1-get_next_line)# GPM!
-# GPM@	.LIBFT_DIR	= $(realpath ./libft)
-# GPM@	.PRINTF_DIR	= $(realpath ./ft_printf)
-# GPM@	.GNL_DIR	= $(realpath ./get_next_line)
+# GPM@	.LIBFT_DIR	:= $(realpath ./libft)
+# GPM@	.PRINTF_DIR	:= $(realpath ./ft_printf)
+# GPM@	.GNL_DIR	:= $(realpath ./get_next_line)
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-CFLAGS			:= -I.
-
-all: title $(NAME)
+all: $(NAME)
 
 title:
 	@$(ECHO) "$(MSG)         _\n"
@@ -56,12 +54,12 @@ title:
 	@$(ECHO) "$(MSG)/_/    /_/\n"
 	@$(ECHO) "$(MSG)\n"
 
+include $(realpath ../extra-make/lib_libft.mk)# GPM!
+# GPM: make_lib_libft_mk
 include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
 # GPM: make_lib_ft_printf_mk
 include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
 # GPM: make_lib_get_next_line_mk
-include $(realpath ../extra-make/lib_libft.mk)# GPM!
-# GPM: make_lib_libft_mk
 
 # GPM: make_sources_mk
 

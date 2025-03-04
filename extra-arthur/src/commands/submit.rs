@@ -153,12 +153,18 @@ impl Submit {
         Ok(temp_dir)
     }
 
-    fn run_hook(&self, command: &str) -> anyhow::Result<()> {
-        info!("{} {}", "Running hook:".blue(), command);
+    fn run_hook(&self, command: &str, working_dir: &Path) -> anyhow::Result<()> {
+        info!(
+            "{} {} (in {})",
+            "Running hook:".blue(),
+            command,
+            working_dir.display()
+        );
 
         let status = ProcessCommand::new("sh")
             .arg("-c")
             .arg(command)
+            .current_dir(working_dir) // Use the specified working directory
             .status()
             .context("Failed to execute hook")?;
 
@@ -177,9 +183,9 @@ impl Command for Submit {
         let config_manager = PushConfigManager::new();
         let push_config = config_manager.load_push_config(&project_path)?;
 
-        // Run pre-submit hook if configured
+        // Run pre-submit hook if configured - this runs in the original project directory
         if let Some(pre_hook) = &push_config.submit.hooks.pre_submit {
-            self.run_hook(pre_hook)?;
+            self.run_hook(pre_hook, &project_path)?;
         }
 
         // Prepare submission files
@@ -188,9 +194,9 @@ impl Command for Submit {
         // Setup git repo and push
         self.setup_git_repo(temp_dir.path(), &self.target_repo)?;
 
-        // Run post-submit hook if configured
+        // Run post-submit hook if configured - this runs in the temporary output directory
         if let Some(post_hook) = &push_config.submit.hooks.post_submit {
-            self.run_hook(post_hook)?;
+            self.run_hook(post_hook, temp_dir.path())?;
         }
 
         info!("Project submitted successfully!");

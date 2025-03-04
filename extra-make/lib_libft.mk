@@ -6,11 +6,15 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:14:43 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 13:03:52 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GPM? begin make_lib_libft_mk
+# **************************************************************************** #
+#                                 lib_libft.mk                                 #
+# **************************************************************************** #
+
 LIBFT_SRC	=	$(_SRC_LIBFT:%=$(LIBFT_DIR)/%.c)
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
@@ -25,15 +29,17 @@ CLEAN_TARGETS		+= clean_libft
 FCLEAN_TARGETS		+= fclean_libft
 
 # Make targets
-$(LIBFT): $(LIBFT_SRC)
+$(LIBFT): FORCE
 	@$(ECHO) "$(MSG)🏗️  Building libft\n"
-	@$(MAKE) -C $(LIBFT_DIR) BUILD_ENV=$(BUILD_ENV)
+	@$(MAKE) -sC $(LIBFT_DIR) BUILD_ENV=$(BUILD_ENV)
+
+FORCE:
 
 clean_libft:
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -sC $(LIBFT_DIR) clean
 
 fclean_libft:
-	@if $(MAKE) -C $(LIBFT_DIR) -n fclean >/dev/null 2>&1; then \
-		$(MAKE) -C $(LIBFT_DIR) fclean; \
+	@if $(MAKE) -sC $(LIBFT_DIR) -n fclean >/dev/null 2>&1; then \
+		$(MAKE) -sC $(LIBFT_DIR) fclean; \
 	fi
 # GPM? end make_lib_libft_mk

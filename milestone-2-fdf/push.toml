@@ -1,20 +1,13 @@
 [project]
-name = "pipex"
+name = "fdf"
 version = "1.0.0"
 
 [submit]
 files = [
 	# C sources
-	"_main*.c",
-	"app_*.c",
-	"args_*.c",
-	"bonus_here_doc.c",
-	"cmda_*.c",
-	"env_*.c",
-	"exec_*.c",
-	"*find_bin.c",
+	"src/*.c",
 	# C headers
-	"*.h",
+	"fdf.h",
 	# Other
 	"Makefile"
 ]
@@ -49,7 +42,6 @@ destination = "ft_printf"
 source = "../milestone-1-ft_printf/*.{c,h}"
 destination = "ft_printf"
 
-
 # **************************************************************************** #
 #                                     GNL                                      #
 # **************************************************************************** #
@@ -59,3 +51,10 @@ destination = "get_next_line"
 [[submit.copy]]
 source = "../milestone-1-get_next_line/*.{c,h}"
 destination = "get_next_line"
+
+# **************************************************************************** #
+#                                     MLX                                      #
+# **************************************************************************** #
+[[submit.copy]]
+source = "../extra-minilibx/"
+destination = "minilibx"
