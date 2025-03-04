@@ -116,7 +116,7 @@ impl PushConfigManager {
         Ok(included)
     }
 
-    // Implementation of copy function
+    // Implementation of copy function with improved glob handling
     pub fn copy_additional_files(
         &self,
         config: &PushConfiguration,
@@ -168,119 +168,252 @@ impl PushConfigManager {
             Ok(())
         }
 
-        // Rest of the implementation remains the same, but use process_and_copy instead
-        for copy_config in &config.submit.copy {
-            // Handle both absolute and relative source paths
-            let source_path = if Path::new(&copy_config.source).is_absolute() {
-                PathBuf::from(&copy_config.source)
-            } else {
-                if copy_config.source.starts_with("../") {
-                    source_base
-                        .parent()
-                        .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?
-                        .join(copy_config.source.strip_prefix("../").unwrap())
-                } else {
-                    source_base.join(&copy_config.source)
+        // Helper function to copy an entire directory
+        fn copy_directory(
+            source_dir: &Path,
+            target_dir: &Path,
+            replacements: &[TextReplacement],
+            config: &PushConfiguration,
+            gpm_processor: &crate::processor::gpm::GpmProcessor,
+            should_process_gpm_fn: &dyn Fn(&Path) -> bool,
+        ) -> anyhow::Result<()> {
+            // Create target directory if it doesn't exist
+            std::fs::create_dir_all(target_dir)?;
+
+            // Walk through the directory
+            for entry in walkdir::WalkDir::new(source_dir) {
+                let entry = entry?;
+                let source_path = entry.path();
+
+                // Calculate relative path from source directory
+                let relative_path = source_path.strip_prefix(source_dir)?;
+                let target_path = target_dir.join(relative_path);
+
+                if source_path.is_file() {
+                    // Process and copy each file
+                    process_and_copy(
+                        source_path,
+                        &target_path,
+                        replacements,
+                        config,
+                        gpm_processor,
+                        should_process_gpm_fn(source_path),
+                    )?;
+                } else if source_path.is_dir() && source_path != source_dir {
+                    // Just create the directory (files will be handled individually)
+                    std::fs::create_dir_all(&target_path)?;
                 }
+            }
+
+            log::debug!(
+                "Copied directory {} to {}",
+                source_dir.display(),
+                target_dir.display()
+            );
+            Ok(())
+        }
+
+        for copy_config in &config.submit.copy {
+            // Check if the pattern contains wildcards
+            let has_wildcards = copy_config.source.contains('*');
+
+            // Resolve the base path and glob pattern
+            let (search_base, pattern_str) = if copy_config.source.starts_with("../") {
+                // For patterns with parent directory references
+                let parent = source_base
+                    .parent()
+                    .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?;
+
+                if has_wildcards {
+                    // Split at the directory containing wildcards
+                    let path_parts: Vec<&str> = copy_config.source.split('/').collect();
+                    let wild_idx = path_parts
+                        .iter()
+                        .position(|p| p.contains('*'))
+                        .unwrap_or(path_parts.len() - 1);
+
+                    // Base path is everything before the wildcard part
+                    let base_parts = &path_parts[..wild_idx];
+                    let pattern_parts = &path_parts[wild_idx..];
+
+                    let mut base_path = parent.to_path_buf();
+                    for part in base_parts.iter().skip(1) {
+                        // skip the ".." part
+                        base_path = base_path.join(part);
+                    }
+
+                    let pattern = pattern_parts.join("/");
+                    (base_path, pattern)
+                } else {
+                    // No wildcards, use the exact path
+                    let path = copy_config.source.strip_prefix("../").unwrap();
+                    (parent.to_path_buf(), path.to_string())
+                }
+            } else if has_wildcards {
+                // For normal paths with wildcards
+                let path_parts: Vec<&str> = copy_config.source.split('/').collect();
+                let wild_idx = path_parts
+                    .iter()
+                    .position(|p| p.contains('*'))
+                    .unwrap_or(path_parts.len() - 1);
+
+                let base_parts = &path_parts[..wild_idx];
+                let pattern_parts = &path_parts[wild_idx..];
+
+                let base_path = if base_parts.is_empty() {
+                    source_base.to_path_buf()
+                } else {
+                    let base_path_str = base_parts.join("/");
+                    source_base.join(base_path_str)
+                };
+
+                let pattern = pattern_parts.join("/");
+                (base_path, pattern)
+            } else {
+                // Normal path without wildcards
+                (source_base.to_path_buf(), copy_config.source.clone())
             };
 
-            // Get the concrete file path if it exists
-            if source_path.exists() {
+            log::debug!(
+                "Resolved search base: {}, pattern: {}",
+                search_base.display(),
+                pattern_str
+            );
+
+            // Handle concrete file/directory path
+            let concrete_path = search_base.join(&pattern_str);
+            if !has_wildcards && concrete_path.exists() {
                 let target_path = if let Some(dest) = &copy_config.destination {
-                    target_base.join(dest).join(
-                        source_path
-                            .file_name()
-                            .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
-                    )
+                    if concrete_path.is_file() {
+                        // For files, append the filename to the destination path
+                        target_base.join(dest).join(
+                            concrete_path
+                                .file_name()
+                                .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
+                        )
+                    } else {
+                        // For directories, use the destination path directly
+                        target_base.join(dest)
+                    }
                 } else {
-                    target_base.join(
-                        source_path
-                            .file_name()
-                            .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
-                    )
+                    if concrete_path.is_file() {
+                        // For files without explicit destination, place at target root
+                        target_base.join(
+                            concrete_path
+                                .file_name()
+                                .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
+                        )
+                    } else {
+                        // For directories without explicit destination, use the directory name
+                        target_base.join(
+                            concrete_path
+                                .file_name()
+                                .ok_or_else(|| anyhow::anyhow!("Invalid directory name"))?,
+                        )
+                    }
                 };
 
-                process_and_copy(
-                    &source_path,
-                    &target_path,
-                    &copy_config.replace,
-                    config,
-                    &gpm_processor,
-                    self.should_process_with_gpm(&source_path),
-                )?;
-            } else {
-                // Handle glob patterns...
-                let pattern = if copy_config.source.starts_with("../") {
-                    let parent = source_base
-                        .parent()
-                        .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?;
-                    parent.join(copy_config.source.strip_prefix("../").unwrap())
+                if concrete_path.is_file() {
+                    process_and_copy(
+                        &concrete_path,
+                        &target_path,
+                        &copy_config.replace,
+                        config,
+                        &gpm_processor,
+                        self.should_process_with_gpm(&concrete_path),
+                    )?;
+                } else if concrete_path.is_dir() {
+                    copy_directory(
+                        &concrete_path,
+                        &target_path,
+                        &copy_config.replace,
+                        config,
+                        &gpm_processor,
+                        &|p| self.should_process_with_gpm(p),
+                    )?;
+                }
+                continue;
+            }
+
+            // Handle glob patterns
+            if has_wildcards {
+                // Create the full pattern for globbing
+                let full_pattern = if pattern_str.starts_with('/') {
+                    format!("{}{}", search_base.display(), pattern_str)
                 } else {
-                    source_base.join(&copy_config.source)
+                    format!("{}/{}", search_base.display(), pattern_str)
                 };
 
-                let glob = globset::Glob::new(
-                    pattern
-                        .to_str()
-                        .ok_or_else(|| anyhow::anyhow!("Invalid path: {}", pattern.display()))?,
-                )?;
-                let matcher = glob.compile_matcher();
+                log::debug!("Using glob pattern: {}", full_pattern);
 
-                // Define base directory for glob search
-                let search_base = if copy_config.source.starts_with("../") {
-                    source_base
-                        .parent()
-                        .ok_or_else(|| anyhow::anyhow!("Cannot resolve parent directory"))?
-                        .to_path_buf()
-                } else {
-                    source_base.to_path_buf()
-                };
+                let glob = globset::GlobBuilder::new(&full_pattern)
+                    .case_insensitive(false)
+                    .literal_separator(false)
+                    .build()?
+                    .compile_matcher();
 
                 // Walk through source directory
                 let mut found_matches = false;
                 for entry in walkdir::WalkDir::new(&search_base) {
                     let entry = entry?;
-                    if !entry.file_type().is_file() {
-                        continue;
-                    }
+                    let path = entry.path();
 
-                    let relative_path = entry
-                        .path()
-                        .strip_prefix(&search_base)?
-                        .to_string_lossy()
-                        .into_owned();
+                    if path.is_file() || path.is_dir() {
+                        let path_str = path.to_string_lossy();
 
-                    if matcher.is_match(&relative_path) {
-                        found_matches = true;
-                        let source_path = entry.path();
-                        let target_path = if let Some(dest) = &copy_config.destination {
-                            if copy_config.flatten {
-                                target_base.join(dest).join(
-                                    source_path
-                                        .file_name()
-                                        .ok_or_else(|| anyhow::anyhow!("Invalid file name"))?,
-                                )
+                        if glob.is_match(&*path_str) {
+                            found_matches = true;
+
+                            // Get relative path for creating target path
+                            let relative_path = path.strip_prefix(&search_base)?;
+
+                            // Determine target path
+                            let target_path = if let Some(dest) = &copy_config.destination {
+                                if copy_config.flatten {
+                                    if path.is_file() {
+                                        target_base.join(dest).join(
+                                            path.file_name().ok_or_else(|| {
+                                                anyhow::anyhow!("Invalid file name")
+                                            })?,
+                                        )
+                                    } else {
+                                        target_base.join(dest).join(path.file_name().ok_or_else(
+                                            || anyhow::anyhow!("Invalid directory name"),
+                                        )?)
+                                    }
+                                } else {
+                                    target_base.join(dest).join(relative_path)
+                                }
                             } else {
-                                target_base.join(dest).join(&relative_path)
-                            }
-                        } else {
-                            target_base.join(&relative_path)
-                        };
+                                target_base.join(relative_path)
+                            };
 
-                        process_and_copy(
-                            source_path,
-                            &target_path,
-                            &copy_config.replace,
-                            config,
-                            &gpm_processor,
-                            self.should_process_with_gpm(source_path),
-                        )?;
+                            if path.is_file() {
+                                process_and_copy(
+                                    path,
+                                    &target_path,
+                                    &copy_config.replace,
+                                    config,
+                                    &gpm_processor,
+                                    self.should_process_with_gpm(path),
+                                )?;
+                            } else if path.is_dir() {
+                                copy_directory(
+                                    path,
+                                    &target_path,
+                                    &copy_config.replace,
+                                    config,
+                                    &gpm_processor,
+                                    &|p| self.should_process_with_gpm(p),
+                                )?;
+                            }
+                        }
                     }
                 }
 
                 if !found_matches {
                     log::warn!(
-                        "No files matched pattern: {} (searched in {})",
+                        "No files or directories matched pattern: {} (searched in {})",
                         copy_config.source,
                         search_base.display()
                     );
