@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 12:30:39 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 18:31:28 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ CFLAGS	+= -Wwrite-strings
 # Keeps the frame pointer in registers
 # Minor performance cost
 CFLAGS	+= -fno-omit-frame-pointer
+# Because MLX doesn't annouce the correct type for an argument
+CFLAGS += -Wno-error=cast-function-type
 
 # Default
 BUILD_ENV ?= dev

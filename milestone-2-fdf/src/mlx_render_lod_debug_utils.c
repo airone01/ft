@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:48:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 12:54:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/04 18:32:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	append_int(char *str, int n, int max_len)
 	tmp = n;
 	while (tmp > 0)
 	{
-		digits[len++] = (tmp % 10) + '0';
+		digits[len++] = (char)((tmp % 10) + '0');
 		tmp /= 10;
 	}
 	while (len > 0 && i < max_len)
