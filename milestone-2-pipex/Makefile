@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 15:25:46 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 18:04:51 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,10 @@ title:
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk
-include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
-# GPM: make_lib_get_next_line_mk
 include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
 # GPM: make_lib_ft_printf_mk
+include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
+# GPM: make_lib_get_next_line_mk
 
 # GPM: make_sources_mk
 

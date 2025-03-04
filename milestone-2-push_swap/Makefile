@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 13:24:34 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 18:03:09 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,19 +54,19 @@ title:
 	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
 	@$(ECHO) "$(MSG)\n"
 
-include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
-# GPM: make_lib_get_next_line_mk
-include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
-# GPM: make_lib_ft_printf_mk
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk
+include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
+# GPM: make_lib_ft_printf_mk
+include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
+# GPM: make_lib_get_next_line_mk
 
 # GPM: make_sources_mk
 
 # GPM: make_commands_mk
 
 include $(realpath ../extra-make/targets_common.mk)# GPM!
-# GPM: make_targets_common.mk
+# GPM: make_targets_common_mk
 
 include $(realpath ../extra-make/targets_bin.mk)# GPM!
 # GPM: make_targets_bin_mk

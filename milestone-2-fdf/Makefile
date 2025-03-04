@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 15:28:56 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 17:57:06 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,11 +62,11 @@ title:
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk
-include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
-# GPM: make_lib_get_next_line_mk
 include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
 # GPM: make_lib_ft_printf_mk
-include $(realpath ../extra-make/lib_minilibx.mk)
+include $(realpath ../extra-make/lib_get_next_line.mk)# GPM!
+# GPM: make_lib_get_next_line_mk
+include $(realpath ../extra-make/lib_minilibx.mk)# GPM!
 # GPM: make_lib_minilibx_mk
 
 # GPM: make_sources_mk
@@ -74,7 +74,7 @@ include $(realpath ../extra-make/lib_minilibx.mk)
 # GPM: make_commands_mk
 
 include $(realpath ../extra-make/targets_common.mk)# GPM!
-# GPM: make_targets_common.mk
+# GPM: make_targets_common_mk
 
-include $(realpath ../extra-make/targets_bin.mk)
+include $(realpath ../extra-make/targets_bin.mk)# GPM!
 # GPM: make_targets_bin_mk

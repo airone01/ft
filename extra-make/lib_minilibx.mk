@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 15:28:14 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 17:46:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FCLEAN_TARGETS		+= fclean_minilibx
 
 # Make targets
 $(MINILIBX): FORCE
+	@chmod +x $(MINILIBX_DIR)/configure
 	@$(ECHO) "$(MSG)🏗️  Building minilibx\n"
 	@$(MAKE) -sC $(MINILIBX_DIR) BUILD_ENV=$(BUILD_ENV)
 

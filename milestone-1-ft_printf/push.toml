@@ -22,7 +22,9 @@ pre_submit = "make fclean > /dev/null"
 [submit.validation]
 norminette = true
 
-########### Lift ###########
+# **************************************************************************** #
+#                                    LibFt                                     #
+# **************************************************************************** #
 [[submit.copy]]
 source = "../milestone-0-libft/ft_strlen.c"
 destination = ""

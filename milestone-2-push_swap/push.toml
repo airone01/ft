@@ -33,16 +33,6 @@ source = "../milestone-0-libft/*.{c,h}"
 destination = "libft"
 
 # **************************************************************************** #
-#                                     GNL                                      #
-# **************************************************************************** #
-[[submit.copy]]
-source = "../milestone-1-get_next_line/Makefile"
-destination = "get_next_line"
-[[submit.copy]]
-source = "../milestone-1-get_next_line/*.{c,h}"
-destination = "get_next_line"
-
-# **************************************************************************** #
 #                                   FtPrintf                                   #
 # **************************************************************************** #
 [[submit.copy]]
@@ -51,3 +41,13 @@ destination = "ft_printf"
 [[submit.copy]]
 source = "../milestone-1-ft_printf/*.{c,h}"
 destination = "ft_printf"
+
+# **************************************************************************** #
+#                                     GNL                                      #
+# **************************************************************************** #
+[[submit.copy]]
+source = "../milestone-1-get_next_line/Makefile"
+destination = "get_next_line"
+[[submit.copy]]
+source = "../milestone-1-get_next_line/*.{c,h}"
+destination = "get_next_line"

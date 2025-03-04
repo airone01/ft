@@ -6,13 +6,14 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/05 16:37:31 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 13:28:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 17:56:03 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GPM? begin make_targets_bin_mk
 $(NAME): $(OBJ) | $(NAME_DEPS_INDIRECT) check-bonus
 	@$(MAKE) title
+#	@$(ECHO) "$(MSG)🏗️  DEBUG: '$(_SRC_FDF_MANDATORY:$(SRC_DIR)%=$(OUT_DIR)%.o)'\n"
 	@$(ECHO) "$(MSG)🏗️  Building mandatory for $(NAME)\n"
 	@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	@$(ECHO) "$(SUCCESS)\n"
