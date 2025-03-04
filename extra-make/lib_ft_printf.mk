@@ -6,11 +6,15 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:14:05 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 11:52:35 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # GPM? begin make_lib_ft_printf_mk
+# **************************************************************************** #
+#                               lib_ft_printf.mk                               #
+# **************************************************************************** #
+
 PRINTF_SRC	=	$(_SRC_PRINTF:%=$(PRINTF_DIR)/%.c)
 PRINTF		=	$(PRINTF_DIR)/libftprintf.a
 
@@ -25,15 +29,15 @@ CLEAN_TARGETS		+= clean_ft_printf
 FCLEAN_TARGETS		+= fclean_ft_printf
 
 # Make targets
-$(PRINTF): $(PRINTF_SRC)
+$(PRINTF): FORCE
 	@$(ECHO) "$(MSG)🏗️  Building ft_printf\n"
-	@$(MAKE) -C $(PRINTF_DIR) BUILD_ENV=$(BUILD_ENV)
+	@$(MAKE) -sC $(PRINTF_DIR) BUILD_ENV=$(BUILD_ENV)
 
 clean_ft_printf:
-	@$(MAKE) -C $(PRINTF_DIR) clean
+	@$(MAKE) -sC $(PRINTF_DIR) clean
 
 fclean_ft_printf:
-	@if $(MAKE) -C $(PRINTF_DIR) -n fclean >/dev/null 2>&1; then \
-		$(MAKE) -C $(PRINTF_DIR) fclean; \
+	@if $(MAKE) -sC $(PRINTF_DIR) -n fclean >/dev/null 2>&1; then \
+		$(MAKE) -sC $(PRINTF_DIR) fclean; \
 	fi
 # GPM? end make_lib_ft_printf_mk
