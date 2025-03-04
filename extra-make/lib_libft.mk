@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 11:52:19 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 13:03:52 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ FCLEAN_TARGETS		+= fclean_libft
 $(LIBFT): FORCE
 	@$(ECHO) "$(MSG)🏗️  Building libft\n"
 	@$(MAKE) -sC $(LIBFT_DIR) BUILD_ENV=$(BUILD_ENV)
+
+FORCE:
 
 clean_libft:
 	@$(MAKE) -sC $(LIBFT_DIR) clean
