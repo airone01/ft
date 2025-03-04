@@ -6,11 +6,11 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 11:53:04 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/04 15:28:14 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# GPM? begin make_lib_minilibx.mk
+# GPM? begin make_lib_minilibx_mk
 # **************************************************************************** #
 #                               lib_minilibx.mk                                #
 # **************************************************************************** #
@@ -40,4 +40,4 @@ fclean_minilibx:
 	@if $(MAKE) -sC $(MINILIBX_DIR) -n fclean >/dev/null 2>&1; then \
 		$(MAKE) -sC $(MINILIBX_DIR) fclean; \
 	fi
-# GPM? end make_lib_minilibx.mk
+# GPM? end make_lib_minilibx_mk
