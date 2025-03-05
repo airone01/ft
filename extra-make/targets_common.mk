@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 18:31:28 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/05 10:33:20 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ CFLAGS	+= -Wshadow
 CFLAGS	+= -Wunused
 # Implicit conversions that may change value
 CFLAGS	+= -Wconversion
-# Implicit conversions between signed and un signed
+# Implicit conversions between signed and unsigned
 CFLAGS	+= -Wsign-conversion
 # Disables pointer arithmetics
 # (no `*ptr++`)

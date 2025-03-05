@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:04:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 13:50:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:24:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,14 @@
 static void	draw_right_connection(t_render_context *rc, int x, int y,
 		t_bool is_edge)
 {
-	t_point	current;
-	t_point	right;
-	int		next_x;
+	t_connection_data	data;
 
 	(void)is_edge;
-	next_x = x + rc->lod;
-	if (next_x < rc->ctx->map.width)
+	if (prepare_right_connection(rc, x, y, &data))
 	{
-		current = get_projected_point(x, y, rc->ctx);
-		right = get_projected_point(next_x, y, rc->ctx);
-		if (!is_line_outside_viewport(current, right, rc->ctx->img.width,
-				rc->ctx->img.height))
-		{
-			draw_line_img(rc->ctx, current, right, color_get_line(rc->ctx,
-					rc->ctx->map.matrix[y][x], rc->ctx->map.matrix[y][next_x]));
-		}
+		draw_line_img(rc->ctx, data.current, data.down,
+			color_get_line((t_color_get_line_params){rc->ctx, data.current_z,
+				data.down_z, data.current_color, data.down_color}));
 	}
 }
 
@@ -53,22 +45,14 @@ static void	draw_right_connection(t_render_context *rc, int x, int y,
 static void	draw_down_connection(t_render_context *rc, int x, int y,
 		t_bool is_edge)
 {
-	t_point	current;
-	t_point	down;
-	int		next_y;
+	t_connection_data	data;
 
 	(void)is_edge;
-	next_y = y + rc->lod;
-	if (next_y < rc->ctx->map.height)
+	if (prepare_down_connection(rc, x, y, &data))
 	{
-		current = get_projected_point(x, y, rc->ctx);
-		down = get_projected_point(x, next_y, rc->ctx);
-		if (!is_line_outside_viewport(current, down, rc->ctx->img.width,
-				rc->ctx->img.height))
-		{
-			draw_line_img(rc->ctx, current, down, color_get_line(rc->ctx,
-					rc->ctx->map.matrix[y][x], rc->ctx->map.matrix[next_y][x]));
-		}
+		draw_line_img(rc->ctx, data.current, data.down,
+			color_get_line((t_color_get_line_params){rc->ctx, data.current_z,
+				data.down_z, data.current_color, data.down_color}));
 	}
 }
 

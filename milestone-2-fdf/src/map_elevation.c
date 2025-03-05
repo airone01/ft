@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:55:53 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:43:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	find_elevation_bounds(t_app *ctx)
 		x = 0;
 		while (x < ctx->map.width)
 		{
-			if (ctx->map.matrix[y][x] < min)
-				min = ctx->map.matrix[y][x];
-			if (ctx->map.matrix[y][x] > max)
-				max = ctx->map.matrix[y][x];
+			if (ctx->map.matrix[y][x].elevation < min)
+				min = ctx->map.matrix[y][x].elevation;
+			if (ctx->map.matrix[y][x].elevation > max)
+				max = ctx->map.matrix[y][x].elevation;
 			x++;
 		}
 		y++;

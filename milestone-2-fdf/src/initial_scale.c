@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:13:22 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:12:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:42:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,14 @@ static void	get_projected_bounds(t_app *ctx, t_point3d *min, t_point3d *max)
 
 	w = ctx->map.width - 1;
 	h = ctx->map.height - 1;
-	corners[0] = (t_point3d){0, 0, ctx->map.matrix[0][0] * ctx->z_scale};
-	corners[1] = (t_point3d){w, 0, ctx->map.matrix[0][w] * ctx->z_scale};
-	corners[2] = (t_point3d){0, h, ctx->map.matrix[h][0] * ctx->z_scale};
-	corners[3] = (t_point3d){w, h, ctx->map.matrix[h][w] * ctx->z_scale};
+	corners[0] = (t_point3d){0, 0, ctx->map.matrix[0][0].elevation
+		* ctx->z_scale};
+	corners[1] = (t_point3d){w, 0, ctx->map.matrix[0][w].elevation
+		* ctx->z_scale};
+	corners[2] = (t_point3d){0, h, ctx->map.matrix[h][0].elevation
+		* ctx->z_scale};
+	corners[3] = (t_point3d){w, h, ctx->map.matrix[h][w].elevation
+		* ctx->z_scale};
 	*min = (t_point3d){DBL_MAX, DBL_MAX, DBL_MAX};
 	*max = (t_point3d){-DBL_MAX, -DBL_MAX, -DBL_MAX};
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:13:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 21:13:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:43:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,16 @@ unsigned int	hsv_to_rgb(double h, double s, double v)
 	x = c * (1 - fabs(fmod(h / 60.0, 2) - 1));
 	m = v - c;
 	return (get_rgb_values(h, c, x, m));
+}
+
+unsigned int	average_color(unsigned int c1, unsigned int c2)
+{
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
+
+	r = ((c1 >> 16 & 0xFF) + (c2 >> 16 & 0xFF)) / 2;
+	g = ((c1 >> 8 & 0xFF) + (c2 >> 8 & 0xFF)) / 2;
+	b = ((c1 & 0xFF) + (c2 & 0xFF)) / 2;
+	return ((r << 16) | (g << 8) | b);
 }
