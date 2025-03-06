@@ -48,6 +48,9 @@ destination = "ft_printf"
 [[submit.copy]]
 source = "../milestone-1-get_next_line/Makefile"
 destination = "get_next_line"
+replace = [
+  { find = "$(realpath ./libft)", replace_with = "$(realpath ../libft)" }
+]
 [[submit.copy]]
 source = "../milestone-1-get_next_line/*.{c,h}"
 destination = "get_next_line"

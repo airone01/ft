@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 17:57:06 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/06 12:05:15 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ GPM_MSTONE	:= 2
 GPM_NAME	:= fdf
 GPM_MNAME	:= FDF
 NAME		:= fdf
-BNAME		:= bfdf
+BNAME		:= fdf
 SRC_DIR		:= src/
 OUT_DIR 	:= .out/
 
