@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:23:05 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/06 12:24:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:46:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	key_hook_int(int keycode, t_app *ctx)
 	return (0);
 }
 
-int app_clear_0_int(t_app *ctx)
+int	app_clear_0_int(t_app *ctx)
 {
 	app_clear_0(ctx);
 	return (0);
