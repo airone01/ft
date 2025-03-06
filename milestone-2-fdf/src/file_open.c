@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 22:06:51 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/06 10:12:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:30:24 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,29 @@ static char	*resolve_path(char *path, char **envp)
  *
  * @param path The name of the file to open
  * @param envp Environment variables
- * @return int File descriptor or exits on error
+ * @return int File descriptor or -1 on error
  */
 int	file_open(char *path, char **envp)
 {
 	int		fd;
 	char	*resolved_path;
+	char	buffer[1];
+	int		read_result;
 
 	if (!path || !*path)
-		exit_error(NULL, ERR_ARG_INVALID_FILE);
+		return (-1);
 	resolved_path = resolve_path(path, envp);
 	if (!resolved_path)
-		exit_error(NULL, ERR_MALLOC);
+		return (-1);
 	fd = open(resolved_path, O_RDONLY);
 	free(resolved_path);
 	if (fd < 0)
-		exit_error(NULL, ERR_FILE_OPEN);
+		return (-1);
+	read_result = (int)read(fd, buffer, 0);
+	if (read_result < 0)
+	{
+		close(fd);
+		return (-1);
+	}
 	return (fd);
 }
