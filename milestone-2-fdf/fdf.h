@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 13:45:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:21:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,8 +356,6 @@ void					parse_token(t_app *ctx, char *token, int row, int *col);
 void					find_elevation_bounds(t_app *ctx);
 void					map_parse(t_app *ctx);
 int						count_columns_in_line(const char *line);
-int						ft_ishexdigit(int c);
-int						hex_value(char c);
 
 // Math
 t_bool					fuzzy_equals(double a, double b);
@@ -399,7 +397,6 @@ t_bool					prepare_right_connection(t_render_context *rc, int x,
 t_bool					prepare_down_connection(t_render_context *rc, int x,
 							int y, t_connection_data *data);
 void					render_section(t_app *ctx, t_section section);
-int						get_appropriate_lod(t_app *ctx);
 int						render_next_frame(t_app *ctx);
 void					draw_lines(t_app *ctx);
 
@@ -426,7 +423,6 @@ int						append_double(char *str, double val, int max_len);
 void					put_debug_text(t_app *ctx, char *msg, int y_pos);
 int						append_int(char *str, int n, int max_len);
 void					toggle_debug_mode(t_app *ctx, int flag);
-void					put_thresholds(t_app *ctx, int y_pos);
 void					render_section_debug(t_app *ctx);
 void					render_lod_debug(t_app *ctx);
 
