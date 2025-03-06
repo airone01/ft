@@ -52,13 +52,19 @@
     <tr align="center">
       <td>0</td>
       <td><a href="/milestone-0-libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
-      <td>✅ <br> (with bonuses)</td>
+      <td>
+        ✅<br>
+        <sub>(with bonuses)</sub>
+      </td>
       <td>125</td>
     </tr>
     <tr align="center">
       <td rowspan="3">1</td>
       <td><a href="/milestone-1-born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
-      <td>✅ <br> (with bonuses)</td>
+      <td>
+        ✅<br>
+        <sub>(with bonuses)</sub>
+      </td>
       <td>125</td>
     </tr>
     <tr align="center">
@@ -74,7 +80,10 @@
     <tr align="center">
       <td rowspan="3">2</td>
       <td><a href="/milestone-2-pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
-      <td>✅</td>
+      <td>
+        ✅<br>
+        <sub>(with bonuses)</sub>
+      </td>
       <td>125</td>
     </tr>
     <tr align="center">
@@ -84,6 +93,15 @@
     </tr>
     <tr align="center">
       <td><a href="/milestone-2-fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfe.png" alt="fdf logo"></a></td>
+      <td>...</td>
+      <td></td>
+    </tr>
+    <tr align="center">
+      <td>3</td>
+      <td>
+          <a href="/milestone-3-minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
+          <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
+      </td>
       <td>...</td>
       <td></td>
     </tr>
