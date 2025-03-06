@@ -6,12 +6,19 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 22:06:51 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:12:56 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+/**
+ * @brief Creates an absolute path when a relative path is provided
+ *
+ * @param path The input path to resolve
+ * @param envp Environment variables
+ * @return char* The resolved path (must be freed by caller)
+ */
 static char	*resolve_path(char *path, char **envp)
 {
 	char	*cwd;
@@ -20,37 +27,40 @@ static char	*resolve_path(char *path, char **envp)
 	if (*path == '/')
 		return (ft_strdup(path));
 	cwd = ft_env_find(envp, "PWD=");
-	if (cwd)
+	if (!cwd)
+		return (ft_strdup(path));
+	if (cwd[ft_strlen(cwd) - 1] != '/')
 	{
-		if (cwd[ft_strlen(cwd) - 1] != '/')
-		{
-			tmp = ft_strjoin(cwd, "/");
-			free(cwd);
-			cwd = tmp;
-		}
-		tmp = ft_strjoin(cwd, path);
+		tmp = ft_strjoin(cwd, "/");
 		free(cwd);
-		return (tmp);
+		if (!tmp)
+			return (NULL);
+		cwd = tmp;
 	}
-	return (ft_strdup(path));
+	tmp = ft_strjoin(cwd, path);
+	free(cwd);
+	return (tmp);
 }
 
 /**
  * @brief Figure out file path, open a file and check for errors
  *
- * @param filename	The name of the file to open
+ * @param path The name of the file to open
+ * @param envp Environment variables
+ * @return int File descriptor or exits on error
  */
 int	file_open(char *path, char **envp)
 {
-	int	fd;
+	int		fd;
+	char	*resolved_path;
 
 	if (!path || !*path)
 		exit_error(NULL, ERR_ARG_INVALID_FILE);
-	path = resolve_path(path, envp);
-	if (!path)
+	resolved_path = resolve_path(path, envp);
+	if (!resolved_path)
 		exit_error(NULL, ERR_MALLOC);
-	fd = open(path, O_RDONLY);
-	free(path);
+	fd = open(resolved_path, O_RDONLY);
+	free(resolved_path);
 	if (fd < 0)
 		exit_error(NULL, ERR_FILE_OPEN);
 	return (fd);
