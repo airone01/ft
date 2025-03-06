@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 18:31:28 by elagouch         ###   ########.fr        #
+#    Updated: 2025/03/06 13:43:09 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ CFLAGS	+= -Wshadow
 CFLAGS	+= -Wunused
 # Implicit conversions that may change value
 CFLAGS	+= -Wconversion
-# Implicit conversions between signed and un signed
+# Implicit conversions between signed and unsigned
 CFLAGS	+= -Wsign-conversion
 # Disables pointer arithmetics
 # (no `*ptr++`)
@@ -47,8 +47,6 @@ CFLAGS	+= -Wwrite-strings
 # Keeps the frame pointer in registers
 # Minor performance cost
 CFLAGS	+= -fno-omit-frame-pointer
-# Because MLX doesn't annouce the correct type for an argument
-CFLAGS += -Wno-error=cast-function-type
 
 # Default
 BUILD_ENV ?= dev
@@ -56,7 +54,7 @@ BUILD_ENV ?= dev
 ifeq ($(BUILD_ENV),debug)
 CFLAGS += -O2 -g
 else ifeq ($(BUILD_ENV),prod)
-CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections -flto -ffast-math
+CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections -ffast-math
 else
 # Else: dev mode
 CFLAGS += -O1 -g3

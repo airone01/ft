@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:25:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:21:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,15 @@ typedef enum e_error
 	ERR_INVALID_PROJECTION = 53,
 }						t_error;
 
+typedef struct s_map_point
+{
+	int					elevation;
+	unsigned int		color;
+}						t_map_point;
+
 typedef struct s_map
 {
-	int					**matrix;
+	t_map_point			**matrix;
 	int					width;
 	int					height;
 	int					min_elevation;
@@ -139,6 +145,43 @@ typedef struct s_point
 	double				x;
 	double				y;
 }						t_point;
+
+typedef struct s_color_get_line_params
+{
+	t_app				*ctx;
+	int					z1;
+	int					z2;
+	unsigned int		color1;
+	unsigned int		color2;
+}						t_color_get_line_params;
+
+typedef struct s_connection_points
+{
+	t_point				current;
+	t_point				down;
+}						t_connection_points;
+
+typedef struct s_connection_colors
+{
+	unsigned int		current;
+	unsigned int		down;
+}						t_connection_colors;
+
+typedef struct s_connection_z
+{
+	int					current;
+	int					down;
+}						t_connection_z;
+
+typedef struct s_connection_data
+{
+	t_point				current;
+	t_point				down;
+	unsigned int		current_color;
+	unsigned int		down_color;
+	int					current_z;
+	int					down_z;
+}						t_connection_data;
 
 // Point in 3D space
 typedef struct s_point3d
@@ -307,10 +350,12 @@ void					args_check(int argc, char **argv);
 int						file_open(char *path, char **envp);
 
 // Map parsing
-int						**allocate_matrix(int width, int height);
-int						count_columns_in_line(const char *line);
+t_map_point				**allocate_matrix(int width, int height);
+t_bool					parse_color(t_app *ctx, char *str, unsigned int *color);
+void					parse_token(t_app *ctx, char *token, int row, int *col);
 void					find_elevation_bounds(t_app *ctx);
 void					map_parse(t_app *ctx);
+int						count_columns_in_line(const char *line);
 
 // Math
 t_bool					fuzzy_equals(double a, double b);
@@ -347,8 +392,11 @@ void					register_hooks(t_app *ctx);
 // Rendering
 void					draw_line_img(t_app *ctx, t_point start, t_point end,
 							unsigned int color);
+t_bool					prepare_right_connection(t_render_context *rc, int x,
+							int y, t_connection_data *data);
+t_bool					prepare_down_connection(t_render_context *rc, int x,
+							int y, t_connection_data *data);
 void					render_section(t_app *ctx, t_section section);
-int						get_appropriate_lod(t_app *ctx);
 int						render_next_frame(t_app *ctx);
 void					draw_lines(t_app *ctx);
 
@@ -375,14 +423,14 @@ int						append_double(char *str, double val, int max_len);
 void					put_debug_text(t_app *ctx, char *msg, int y_pos);
 int						append_int(char *str, int n, int max_len);
 void					toggle_debug_mode(t_app *ctx, int flag);
-void					put_thresholds(t_app *ctx, int y_pos);
 void					render_section_debug(t_app *ctx);
 void					render_lod_debug(t_app *ctx);
 
 // Colors
 unsigned int			color_get_by_scheme(int z, int min_z, int max_z,
 							int scheme);
-unsigned int			color_get_line(t_app *ctx, int z1, int z2);
+unsigned int			average_color(unsigned int c1, unsigned int c2);
+unsigned int			color_get_line(t_color_get_line_params p);
 unsigned int			hsv_to_rgb(double h, double s, double v);
 unsigned int			color_get(int z, int min_z, int max_z);
 

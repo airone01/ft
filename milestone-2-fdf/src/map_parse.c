@@ -6,25 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:49:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:13:01 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:46:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static void	process_number(t_app *ctx, const char **ptr, int row, int *col)
-{
-	int	val;
-
-	while (**ptr && ft_isspace(**ptr))
-		(*ptr)++;
-	if (!**ptr || **ptr == '\n')
-		return ;
-	val = fast_atoi(ptr);
-	while (**ptr && !ft_isspace(**ptr))
-		(*ptr)++;
-	ctx->map.matrix[row][(*col)++] = val;
-}
 
 static void	validate_line_format(t_app *ctx, const char *line, int row)
 {
@@ -46,22 +32,34 @@ static void	validate_line_format(t_app *ctx, const char *line, int row)
 	}
 }
 
+/**
+ * @brief Parse a line from the map file and store values in matrix
+ *
+ * @param ctx Application context
+ * @param line Line to parse
+ * @param row Pointer to current row index
+ */
 static void	parse_line(t_app *ctx, const char *line, int *row)
 {
-	int			col;
-	const char	*ptr;
-	const char	*end;
+	char	**tokens;
+	int		col;
+	int		i;
 
 	validate_line_format(ctx, line, *row);
-	ptr = line;
-	end = line + strlen(line);
+	tokens = ft_split((char *)line, ' ');
+	if (!tokens)
+		exit_error(ctx, ERR_MALLOC);
 	col = 0;
-	while (ptr < end && *ptr)
+	i = 0;
+	while (tokens[i] && col < ctx->map.width)
 	{
-		process_number(ctx, &ptr, *row, &col);
-		while (ptr < end && *ptr && ft_isspace(*ptr) && *ptr != '\n')
-			ptr++;
+		if (tokens[i][0] != '\0')
+		{
+			parse_token(ctx, tokens[i], *row, &col);
+		}
+		i++;
 	}
+	free_2d_array((void **)tokens);
 	(*row)++;
 }
 

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:11:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:31:10 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,20 @@ static void	find_map_height(t_app *ctx)
 	}
 }
 
+/**
+ * @brief Finds the width of the map by counting columns in the first line
+ *
+ * @param ctx Application context
+ */
 static void	find_map_width(t_app *ctx)
 {
-	char	*s;
-	int		count;
-	int		i;
-	t_bool	was_space;
+	int	count;
 
-	i = 0;
-	count = 0;
-	s = ctx->file_content[0];
-	was_space = true;
-	while (s[i] && s[i] != '\n')
-	{
-		if (ft_isspace(s[i]))
-		{
-			was_space = true;
-		}
-		else if (was_space)
-		{
-			count++;
-			was_space = false;
-		}
-		i++;
-	}
+	if (!ctx->file_content || !ctx->file_content[0])
+		exit_error(ctx, ERR_FILE_EMPTY);
+	count = count_columns_in_line(ctx->file_content[0]);
+	if (count <= 0)
+		exit_error(ctx, ERR_MAP_EMPTY_LINE);
 	ctx->map.width = count;
 }
 

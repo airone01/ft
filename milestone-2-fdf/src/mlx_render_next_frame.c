@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:13:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:25:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_point	get_projected_point(int x, int y, t_app *ctx)
 
 	point3d.x = x * ctx->scale;
 	point3d.y = y * ctx->scale;
-	point3d.z = ctx->map.matrix[y][x] * ctx->z_scale;
+	point3d.z = ctx->map.matrix[y][x].elevation * ctx->z_scale;
 	point3d = rotate_x(point3d, ctx->rot_x);
 	point3d = rotate_y(point3d, ctx->rot_y);
 	point3d = rotate_z(point3d, ctx->rot_z);

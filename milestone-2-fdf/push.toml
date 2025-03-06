@@ -23,6 +23,13 @@ pre_submit = "make fclean > /dev/null"
 norminette = true
 
 # **************************************************************************** #
+#                                  Test Maps                                   #
+# **************************************************************************** #
+[[submit.copy]]
+source = "./test_maps/"
+destination = "test_maps"
+
+# **************************************************************************** #
 #                                    LibFt                                     #
 # **************************************************************************** #
 [[submit.copy]]
@@ -48,6 +55,9 @@ destination = "ft_printf"
 [[submit.copy]]
 source = "../milestone-1-get_next_line/Makefile"
 destination = "get_next_line"
+replace = [
+  { find = "$(realpath ./libft)", replace_with = "$(realpath ../libft)" }
+]
 [[submit.copy]]
 source = "../milestone-1-get_next_line/*.{c,h}"
 destination = "get_next_line"
