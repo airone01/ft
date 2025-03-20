@@ -1,0 +1,5 @@
+hotrace_*
+hotrace
+.obs/*
+*.d
+*.o
