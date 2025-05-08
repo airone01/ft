@@ -4,6 +4,7 @@
         "*.page-template": "vue",
         "*.layout-template": "vue",
         "*.vue": "vue",
-        "sstream": "c"
+        "sstream": "c",
+        "lexer.h": "c"
     }
 }

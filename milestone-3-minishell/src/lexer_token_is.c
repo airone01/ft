@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ssize.c                                  :+:      :+:    :+:   */
+/*   lexer_token_is.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 18:28:03 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/08 16:59:17 by elagouch         ###   ########.fr       */
+/*   Created: 2025/03/08 13:58:39 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/06 15:00:13 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <unistd.h>
+#include "minishell.h"
 
-long	ft_putstr_ssize(int fd, char *str)
+/**
+ * @brief Checks if a token is a redirection token
+ *
+ * @param tok Token type to check
+ * @return bool true if token is a redirection, false otherwise
+ */
+bool	token_is_redirection(t_token_type type)
 {
-	if (!str)
-		return (write(fd, "(null)", 6));
-	return (write(fd, str, (size_t)ft_strlen(str)));
+	return (type == TOK_REDIR_FROM || type == TOK_REDIR_TO
+		|| type == TOK_HERE_DOC_FROM || type == TOK_HERE_DOC_TO);
 }

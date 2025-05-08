@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ssize.c                                  :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 18:28:03 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/08 16:59:17 by elagouch         ###   ########.fr       */
+/*   Created: 2025/03/21 09:54:32 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/06 14:00:06 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <unistd.h>
+#include "error.h"
 
-long	ft_putstr_ssize(int fd, char *str)
+/**
+ * @brief Executes the pwd built-in command
+ *
+ * @return int Exit status (0 for success, non-zero for error)
+ */
+int	builtin_pwd(void)
 {
-	if (!str)
-		return (write(fd, "(null)", 6));
-	return (write(fd, str, (size_t)ft_strlen(str)));
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (error(NULL, "pwd", ERR_NO_PWD));
+	ft_printf("%s\n", pwd);
+	free(pwd);
+	return (0);
 }

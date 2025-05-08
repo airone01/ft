@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 07:56:10 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 11:25:16 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/08 16:27:43 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ JOBS	= 			\
 	1:get_next_line	\
 	2:push_swap		\
 	2:pipex			\
-	2:fdf
+	2:fdf			\
+	3:minishell
 JOBS_EXTRA	=				\
 	arthur					\
 	ps-visualizer-minecraft

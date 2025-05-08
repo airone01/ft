@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:45:02 by elagouch          #+#    #+#              #
-#    Updated: 2025/02/21 10:13:22 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/08 16:30:11 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ COLOR_GET_NEXT_LINE	= 198
 COLOR_PUSH_SWAP		= 227
 COLOR_PIPEX			= 160
 COLOR_FDF			= 51
+COLOR_MINISHELL		= 23
 
 # Extra projects
 COLOR_MINECRAFT		= 34

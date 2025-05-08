@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 09:28:13 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/19 16:22:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:58:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-ssize_t	ft_putchar_ssize(char c)
+ssize_t	ft_putchar_ssize(int fd, char c)
 {
-	return (write(1, &c, 1));
+	return (write(fd, &c, 1));
 }

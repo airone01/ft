@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ssize.c                                  :+:      :+:    :+:   */
+/*   free_2d_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 18:28:03 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/08 16:59:17 by elagouch         ###   ########.fr       */
+/*   Created: 2025/02/13 16:38:09 by elagouch          #+#    #+#             */
+/*   Updated: 2025/03/08 15:07:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <unistd.h>
+#include "minishell.h"
 
-long	ft_putstr_ssize(int fd, char *str)
+/**
+ * @brief Frees a NULL-terminated pointer of pointers
+ *
+ * @param ptrs The pointer of pointers to free
+ */
+void	free_2d_array(void **ptrs)
 {
-	if (!str)
-		return (write(fd, "(null)", 6));
-	return (write(fd, str, (size_t)ft_strlen(str)));
+	int	i;
+
+	if (!ptrs)
+		return ;
+	i = 0;
+	while (ptrs[i])
+	{
+		free(ptrs[i]);
+		i++;
+	}
+	free(ptrs);
 }

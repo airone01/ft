@@ -92,18 +92,27 @@
       <td>100</td>
     </tr>
     <tr align="center">
-      <td><a href="/milestone-2-fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfe.png" alt="fdf logo"></a></td>
-      <td>...</td>
-      <td></td>
+      <td><a href="/milestone-2-fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
+      <td>
+        ✅<br>
+        <sub>(with bonuses)</sub>
+      </td>
+      <td>125</td>
     </tr>
     <tr align="center">
-      <td>3</td>
+      <td rowspan=2>3</td>
       <td>
           <a href="/milestone-3-minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
           <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
       </td>
+      <td>✅<br>
+      </td>
+      <td>101</td>
+    </tr>
+    <tr align="center">
+      <td><a href="/milestone-3-philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
+      <td>⌛</td>
       <td>...</td>
-      <td></td>
     </tr>
   </tbody>
 </table>

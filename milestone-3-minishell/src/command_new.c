@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ssize.c                                  :+:      :+:    :+:   */
+/*   command_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 18:28:03 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/08 16:59:17 by elagouch         ###   ########.fr       */
+/*   Created: 2025/03/08 13:48:09 by elagouch          #+#    #+#             */
+/*   Updated: 2025/03/21 10:51:25 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <unistd.h>
+#include "minishell.h"
 
-long	ft_putstr_ssize(int fd, char *str)
+/**
+ * @brief Creates a new command structure
+ *
+ * @return t_command* New initialized command or NULL if allocation fails
+ */
+t_command	*command_new(void)
 {
-	if (!str)
-		return (write(fd, "(null)", 6));
-	return (write(fd, str, (size_t)ft_strlen(str)));
+	t_command	*cmd;
+
+	cmd = (t_command *)malloc(sizeof(t_command));
+	if (!cmd)
+		return (NULL);
+	cmd->args = NULL;
+	cmd->arg_count = 0;
+	cmd->redirection = NULL;
+	cmd->operator = TOK_NONE;
+	cmd->next = NULL;
+	return (cmd);
 }

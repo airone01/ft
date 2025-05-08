@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_ssize.c                                  :+:      :+:    :+:   */
+/*   cleanup_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 18:28:03 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/08 16:59:17 by elagouch         ###   ########.fr       */
+/*   Created: 2025/04/29 17:36:45 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/02 16:22:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <unistd.h>
+#include "minishell.h"
 
-long	ft_putstr_ssize(int fd, char *str)
+/**
+ * @brief Safely frees a string and sets pointer to NULL
+ *
+ * Prevents double free issues by checking if pointer is NULL first.
+ *
+ * @param str Pointer to string pointer to free
+ */
+void	safe_free_str(char **str)
 {
-	if (!str)
-		return (write(fd, "(null)", 6));
-	return (write(fd, str, (size_t)ft_strlen(str)));
+	if (str && *str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 }
