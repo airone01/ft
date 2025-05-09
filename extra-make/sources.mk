@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/08 16:40:59 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/09 15:20:54 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -218,6 +218,7 @@ _SRC_FDF_MANDATORY				:=	\
 _SRC_FDF_BONUS					:=	\
 	$(_SRC_FDF_COMMON)
 _SRC_MINISHELL_COMMON			:=	\
+	_main							\
 	bin_find						\
 	bin_find_path					\
 	bin_find_utils					\
@@ -283,12 +284,19 @@ _SRC_MINISHELL_COMMON			:=	\
 	signals							\
 	token_checker					\
 	token_checker_utils				\
-	validation						\
-	main
+	validation
 _SRC_MINISHELL_COMMON			:=	\
 	$(addprefix src/, $(_SRC_MINISHELL_COMMON))
 _SRC_MINISHELL_MANDATORY		:=	\
 	$(_SRC_MINISHELL_COMMON)
 _SRC_MINISHELL_BONUS			:=	\
 	$(_SRC_MINISHELL_COMMON)
+_SRC_PHILO_COMMON				:=	\
+	_main
+_SRC_PHILO_COMMON				:=	\
+	$(addprefix src/, $(_SRC_PHILO_COMMON))
+_SRC_PHILO_MANDATORY			:=	\
+	$(_SRC_PHILO_COMMON)
+_SRC_PHILO_BONUS				:=	\
+	$(_SRC_PHILO_COMMON)
 # GPM? end make_sources_mk

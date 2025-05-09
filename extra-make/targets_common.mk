@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/06 13:43:09 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/09 15:19:15 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,18 +47,10 @@ CFLAGS	+= -Wwrite-strings
 # Keeps the frame pointer in registers
 # Minor performance cost
 CFLAGS	+= -fno-omit-frame-pointer
-
-# Default
-BUILD_ENV ?= dev
-# Set flags based on environment
-ifeq ($(BUILD_ENV),debug)
-CFLAGS += -O2 -g
-else ifeq ($(BUILD_ENV),prod)
-CFLAGS += -O2 -march=native -ffunction-sections -fdata-sections -ffast-math
-else
-# Else: dev mode
-CFLAGS += -O1 -g3
-endif
+# Destructive optimization
+CFLAGS	+= -O2 -march=native -ffunction-sections -fdata-sections -ffast-math
+# For debugging
+CFLAGS	+= -g3
 
 # **************************************************************************** #
 #                                   SOURCES                                    #

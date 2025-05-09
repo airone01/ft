@@ -73,3 +73,6 @@ target
 
 # Valgrind
 vgcore.*
+
+# VSCode
+**/.vscode/settings.json

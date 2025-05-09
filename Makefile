@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 07:56:10 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/08 16:27:43 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/09 15:07:12 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ JOBS	= 			\
 	2:push_swap		\
 	2:pipex			\
 	2:fdf			\
-	3:minishell
+	3:minishell		\
+	3:philo
 JOBS_EXTRA	=				\
 	arthur					\
 	ps-visualizer-minecraft
