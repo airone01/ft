@@ -6,10 +6,12 @@ on:
     branches: [ "main" ]
     paths:
       - 'pool-c-*/**/*'
+      - '.github/workflows/moulinette.yml'
   pull_request:
     branches: [ "main" ]
     paths:
       - 'pool-c-*/**/*'
+      - '.github/workflows/moulinette.yml'
 
 jobs:
   test:

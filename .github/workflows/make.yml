@@ -6,10 +6,12 @@ on:
     branches: [ "main" ]
     paths:
       - 'milestone-*/**/*'
+      - '.github/workflows/make.yml'
   pull_request:
     branches: [ "main" ]
     paths:
       - 'milestone-*/**/*'
+      - '.github/workflows/make.yml'
 
 jobs:
   build:
