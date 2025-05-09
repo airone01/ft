@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:19:21 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 17:12:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:27:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	init_mutexes(t_ctx *ctx)
 		if (!ctx->mutexes[i])
 			return (_rf(ctx, ENOMEM));
 		code = pthread_mutex_init(ctx->mutexes[i], NULL);
+		if (code)
+			return (_rf(ctx, code));
+		code = pthread_mutex_init(&ctx->print_lock, NULL);
 		if (code)
 			return (_rf(ctx, code));
 		i++;

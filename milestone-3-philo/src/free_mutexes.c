@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:39:19 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 17:00:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:28:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_mutexes(t_ctx *ctx)
 		}
 		i++;
 	}
+	pthread_mutex_destroy(&ctx->print_lock);
 	free(ctx->mutexes);
 	ctx->mutexes = NULL;
 }

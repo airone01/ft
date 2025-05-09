@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 17:57:38 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:42:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 static void	cycle_of_life(t_ctx *ctx, t_philo *philos)
 {
 	pthread_t	monitor;
-	int			status;
+	int			i;
 
-	status = 0;
 	launch_philos(ctx, philos);
-	pthread_create(&monitor, NULL, death_check, NULL);
-	waitpid(-1, &status, 0);
+	pthread_create(&monitor, NULL, (void *(*)(void *))death_check, philos);
+	pthread_join(monitor, NULL);
+	i = 0;
+	while (i < (int)ctx->philos_count)
+	{
+		pthread_join(philos[i].thread, NULL);
+		i++;
+	}
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 17:58:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:30:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <limits.h>    // integer limits
 # include <pthread.h>   // threading
 # include <sys/time.h>  // for gettimeofday
-# include <sys/wait.h>  // for waitpid
+// # include <sys/wait.h>  // for waitpid
 
 // *************************************************************************** #
 //                                 Structures                                  #
@@ -37,6 +37,8 @@ typedef struct s_ctx
 	unsigned long	meals_count;
 	pthread_mutex_t	**mutexes;
 	struct timeval	epoch;
+	pthread_mutex_t	print_lock;
+	t_bool			stop;
 }					t_ctx;
 
 /**
@@ -44,12 +46,13 @@ typedef struct s_ctx
  */
 typedef struct s_philo
 {
-	int				id;
+	unsigned long	id;
 	t_bool			fork_left;
 	t_bool			fork_right;
-	int				last_meal_time;
-	int				meal_count;
+	struct timeval	last_meal;
+	unsigned long	meal_count;
 	pthread_t		thread;
+	t_ctx			*ctx;
 }					t_philo;
 
 // *************************************************************************** #
@@ -68,10 +71,10 @@ int					main(int argc, char **argv);
 /**
  * @brief Checks for the death of philos
  *
- * @param fn idk
- * @return void* idk
+ * @param philos Philosophers
+ * @return void* Unused
  */
-void				*death_check(void *fn);
+void				*death_check(t_philo *philos);
 
 /**
  * @brief Launches the threads
@@ -84,9 +87,9 @@ void				launch_philos(t_ctx *ctx, t_philo *philos);
 /**
  * @brief Routine for each threaad
  *
- * @param fn idk
- * @return void* idk
+ * @param philo Philosopher
+ * @return void* Unused
  */
-void				*routine(void *fn);
+void				*routine(t_philo *philo);
 
 #endif
