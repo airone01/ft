@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/09 17:08:00 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/09 17:55:23 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -294,12 +294,15 @@ _SRC_MINISHELL_BONUS			:=	\
 _SRC_PHILO_COMMON				:=	\
 	_main							\
 	args							\
+	death_check						\
 	free_ctx						\
 	free_mutexes					\
 	free_philos						\
 	init_ctx						\
 	init_mutexes					\
-	init_philos
+	init_philos						\
+	launch_philos					\
+	routine
 _SRC_PHILO_COMMON				:=	\
 	$(addprefix src/, $(_SRC_PHILO_COMMON))
 _SRC_PHILO_MANDATORY			:=	\
