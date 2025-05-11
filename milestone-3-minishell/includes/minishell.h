@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 17:15:54 by maximart          #+#    #+#             */
-/*   Updated: 2025/05/08 16:46:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 00:10:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include "libft.h"             // our printf implementation :-)
 # include <errno.h>             // errno
 # include <fcntl.h>             // file control flags
+# include <stdio.h>             // standard i/o
 # include <readline/history.h>  // rl_ utils
 # include <readline/readline.h> // readline
 # include <signal.h>            // signal-related functions
 # include <stdbool.h>           // for booleans
-# include <stdio.h>             // standard i/o
 # include <stdlib.h>            // standard lib
 # include <string.h>            // string operations
 # include <sys/stat.h>          // stat function for files/directories
