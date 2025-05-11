@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 22:54:44 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,24 @@
  * @returns		Infered number
  * @returns		0 if failed (or if there was no number)
  */
-long	ft_atol(const char *str)
-{
-	long	val;
-	t_bool	neg;
+long	ft_atol(const char *str) {
+  long val;
+  bool neg;
 
-	val = 0;
-	neg = false;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			neg = true;
-		str++;
-	}
-	while (ft_isdigit(*str))
-		val = (val * 10) + (*str++ - '0');
-	if (neg)
-		val = -val;
-	return (val);
+  val = 0;
+  neg = false;
+  while (ft_isspace(*str))
+    str++;
+  if (*str == '+' || *str == '-') {
+    if (*str == '-')
+      neg = true;
+    str++;
+  }
+  while (ft_isdigit(*str))
+    val = (val * 10) + (*str++ - '0');
+  if (neg)
+    val = -val;
+  return (val);
 }
 // GPM? end ft_atol
 
@@ -53,13 +51,12 @@ long	ft_atol(const char *str)
  * @returns		Infered number
  * @returns		0 if failed (or if there was no number)
  */
-int	ft_atoi(const char *str)
-{
-	long	val;
+int	ft_atoi(const char *str) {
+  long val;
 
-	val = ft_atol(str);
-	if (val > INT_MAX || val < INT_MIN)
-		return (0);
-	return ((int)val);
+  val = ft_atol(str);
+  if (val > INT_MAX || val < INT_MIN)
+    return (0);
+  return ((int)val);
 }
 // GPM? end ft_atoi

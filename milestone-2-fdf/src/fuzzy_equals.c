@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  *
  *	@see	https://stackoverflow.com/a/32334103
  */
-t_bool	fuzzy_equals(double a, double b)
+bool	fuzzy_equals(double a, double b)
 {
 	double	diff;
 	double	scale;

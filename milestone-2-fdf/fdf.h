@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:52 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/06 10:21:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ typedef struct s_app
 	t_map				map;
 	// Rendering
 	t_projection_type	projection_type;
-	t_bool				needs_render;
+	bool				needs_render;
 	double				horizon_distance;
 	t_img				img;
 	// Rendering: Offsets
@@ -307,8 +307,8 @@ typedef struct s_render_section_params
 {
 	t_render_context	rc;
 	t_section			section;
-	t_bool				is_edge_x;
-	t_bool				is_edge_y;
+	bool				is_edge_x;
+	bool				is_edge_y;
 	t_app				*ctx;
 	int					x;
 	int					y;
@@ -351,14 +351,14 @@ int						file_open(char *path, char **envp);
 
 // Map parsing
 t_map_point				**allocate_matrix(int width, int height);
-t_bool					parse_color(t_app *ctx, char *str, unsigned int *color);
+bool					parse_color(t_app *ctx, char *str, unsigned int *color);
 void					parse_token(t_app *ctx, char *token, int row, int *col);
 void					find_elevation_bounds(t_app *ctx);
 void					map_parse(t_app *ctx);
 int						count_columns_in_line(const char *line);
 
 // Math
-t_bool					fuzzy_equals(double a, double b);
+bool					fuzzy_equals(double a, double b);
 int						fast_atoi(const char **str);
 
 // Point mamipulation
@@ -392,9 +392,9 @@ void					register_hooks(t_app *ctx);
 // Rendering
 void					draw_line_img(t_app *ctx, t_point start, t_point end,
 							unsigned int color);
-t_bool					prepare_right_connection(t_render_context *rc, int x,
+bool					prepare_right_connection(t_render_context *rc, int x,
 							int y, t_connection_data *data);
-t_bool					prepare_down_connection(t_render_context *rc, int x,
+bool					prepare_down_connection(t_render_context *rc, int x,
 							int y, t_connection_data *data);
 void					render_section(t_app *ctx, t_section section);
 int						render_next_frame(t_app *ctx);
@@ -405,12 +405,12 @@ void					process_point(t_app *ctx, int x, int y,
 							unsigned int color);
 void					process_x_step(t_bresenham_params p, int *x, int e2);
 void					process_y_step(t_bresenham_params p, int *y, int e2);
-t_bool					is_line_outside_bounds(t_app *ctx, int *line);
+bool					is_line_outside_bounds(t_app *ctx, int *line);
 
 // Rendering optimization
-t_bool					is_line_outside_viewport(t_point p1, t_point p2,
+bool					is_line_outside_viewport(t_point p1, t_point p2,
 							int width, int height);
-t_bool					is_section_outside_viewport(t_app *ctx,
+bool					is_section_outside_viewport(t_app *ctx,
 							t_section section);
 void					calculate_initial_scale(t_app *ctx);
 

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:55:50 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:57:45 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
  *
  * @param ctx Application context
  * @param line Line coordinates in array form [x0, y0, x1, y1]
- * @return t_bool True if line is completely outside and can be culled
+ * @return bool True if line is completely outside and can be culled
  */
-t_bool	is_line_outside_bounds(t_app *ctx, int *line)
+bool	is_line_outside_bounds(t_app *ctx, int *line)
 {
 	int	w;
 	int	h;

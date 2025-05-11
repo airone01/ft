@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:43:52 by elagouch          #+#    #+#             */
-/*   Updated: 2024/11/19 11:28:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  *
  * @returns	true or false
  */
-t_bool	bsq_map_valid(char **strs, t_coords *coords)
+bool	bsq_map_valid(char **strs, t_coords *coords)
 {
 	int	i;
 

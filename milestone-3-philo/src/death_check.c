@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:53:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 18:47:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:05:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	grim_reaper_check(t_ctx *ctx, int i)
 
 	current_time = get_current_time();
 	pthread_mutex_lock(&ctx->print_lock);
-	if ((long)(current_time - ctx->philos[i].last_meal) > ctx->death_time)
+	if ((long)(current_time - ctx->philos[i].last_meal) > ctx->death_time
+		/ 1000)
 	{
 		pthread_mutex_lock(&ctx->dead_lock);
 		ctx->stop = 1;
@@ -55,6 +56,20 @@ static bool	chef_gusteau_check(t_ctx *ctx)
 	return (all_ate);
 }
 
+static void	write_thats_all_folks(t_ctx *ctx)
+{
+	char	*s;
+
+	s = ft_itoa((int)ctx->max_meal_count);
+	if (!s)
+		return ;
+	write(STDERR_FILENO, "All philosophers ate the maximum number of meals (",
+		50);
+	write(STDERR_FILENO, s, ft_strlen(s));
+	free(s);
+	write(STDERR_FILENO, ").\n", 3);
+}
+
 void	*death_check(void *arg)
 {
 	t_ctx	*ctx;
@@ -72,8 +87,7 @@ void	*death_check(void *arg)
 			pthread_mutex_lock(&ctx->print_lock);
 			pthread_mutex_lock(&ctx->dead_lock);
 			ctx->stop = true;
-			write(STDERR_FILENO,
-				"All philosophers ate the maximum number of meals\n", 49);
+			write_thats_all_folks(ctx);
 			pthread_mutex_unlock(&ctx->dead_lock);
 			pthread_mutex_unlock(&ctx->print_lock);
 			break ;

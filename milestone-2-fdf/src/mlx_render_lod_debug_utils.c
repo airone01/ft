@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:48:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/04 18:32:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	put_debug_text(t_app *ctx, char *msg, int y_pos)
 	mlx_string_put(ctx->mlx, ctx->win, 10, y_pos, 0x00FFFFFF, msg);
 }
 
-static t_bool	append_int_init(int *n, int *i, int max_len, char *str)
+static bool	append_int_init(int *n, int *i, int max_len, char *str)
 {
 	if (*n == 0)
 	{

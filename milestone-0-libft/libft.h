@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 22:28:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:03:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@
 # include <stdint.h> // SIZE_MAX
 # include <stdlib.h> // malloc, free
 # include <unistd.h> // write
-
-typedef enum e_bool
-{
-	false,
-	true
-}					t_bool;
+# include <stdbool.h> // bool
 
 // Bonuses
 typedef struct s_list
@@ -36,16 +31,16 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
-t_bool				ft_isalnum(char c);
-t_bool				ft_isalpha(char c);
-t_bool				ft_isascii(char c);
-t_bool				ft_isdigit(char c);
-t_bool				ft_isprint(char c);
+bool				ft_isalnum(char c);
+bool				ft_isalpha(char c);
+bool				ft_isascii(char c);
+bool				ft_isdigit(char c);
+bool				ft_isprint(char c);
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
-void				ft_lstadd_front(t_list **lst, t_list *new);
-void				ft_lstadd_back(t_list **lst, t_list *new);
+void				ft_lstadd_front(t_list **lst, t_list *new_list);
+void				ft_lstadd_back(t_list **lst, t_list *new_list);
 unsigned long		ft_lstsize(t_list *lst);
 // Standard C lib
 unsigned long		ft_strlcat(char *dst, const char *src, unsigned long size);
@@ -85,7 +80,7 @@ char				*ft_itoa_base(int n, const char *b);
 char				*ft_itoa(int n);
 
 // Additional stuff by me
-t_bool				ft_isspace(char c);
+bool				ft_isspace(char c);
 void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 char				*ft_env_find(char **envp, const char *var);
 char				*ft_strchr(const char *s, char c);
