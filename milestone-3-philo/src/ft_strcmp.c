@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 08:14:36 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 13:06:20 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 13:06:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "h_main.h"
+#include "philo.h"
 
-bool	char_is_alpha(char c) {
-  return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	return (ft_strncmp(s1, s2, ULLONG_MAX));
 }
-
-bool	char_is_num(char c) { return (c >= '0' && c <= '9'); }

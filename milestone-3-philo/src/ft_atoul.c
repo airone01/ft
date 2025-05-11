@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   ft_atoul.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 08:14:36 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 13:18:43 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 13:48:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "h_main.h"
+#include "philo.h"
 
-bool	char_is_alpha(char c) {
-  return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+unsigned long	ft_atoul(const char *str)
+{
+	unsigned long	val;
+
+	val = 0;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+')
+		str++;
+	while (ft_isdigit(*str))
+		val = (val * 10) + (unsigned long)(*str++ - '0');
+	return (val);
 }
-
-bool	char_is_num(char c) { return (c >= '0' && c <= '9'); }

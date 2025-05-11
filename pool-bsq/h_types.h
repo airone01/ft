@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   h_types.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@42>                     +#+  +:+       +#+        */
+/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:41:58 by elagouch          #+#    #+#             */
-/*   Updated: 2024/10/01 10:55:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef enum e_bool
 {
 	false,
 	true
-}					t_bool;
+}					bool;
 typedef struct s_strsplit_args
 {
 	unsigned long	*i;

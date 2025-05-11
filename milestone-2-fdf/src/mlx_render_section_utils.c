@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:22:21 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 13:23:11 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param x Current x position
  * @param y Current y position
  * @param data Pointer to connection data struct
- * @return t_bool Whether the connection should be drawn
+ * @return bool Whether the connection should be drawn
  */
-t_bool	prepare_right_connection(t_render_context *rc, int x, int y,
+bool	prepare_right_connection(t_render_context *rc, int x, int y,
 		t_connection_data *data)
 {
 	int	next_x;
@@ -46,9 +46,9 @@ t_bool	prepare_right_connection(t_render_context *rc, int x, int y,
  * @param x Current x position
  * @param y Current y position
  * @param data Pointer to connection data struct
- * @return t_bool Whether the connection should be drawn
+ * @return bool Whether the connection should be drawn
  */
-t_bool	prepare_down_connection(t_render_context *rc, int x, int y,
+bool	prepare_down_connection(t_render_context *rc, int x, int y,
 		t_connection_data *data)
 {
 	int	next_y;

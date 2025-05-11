@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   launch_philos.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 08:14:36 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/09 17:38:23 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 16:07:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "h_main.h"
+#include "philo.h"
 
-bool	char_is_alpha(char c) {
-  return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+bool	launch_philos(t_ctx *ctx)
+{
+	int	i;
+
+	i = -1;
+	while (++i < ctx->philos_count)
+	{
+		if (pthread_create(&ctx->philos[i].thread, NULL, routine,
+				&ctx->philos[i]) != 0)
+		{
+			ctx->stop = true;
+			return (true);
+		}
+		if (ctx->philos_count > 1)
+			usleep(3);
+	}
+	return (false);
 }
-
-bool	char_is_num(char c) { return (c >= '0' && c <= '9'); }

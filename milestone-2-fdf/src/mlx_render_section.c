@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:04:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 13:24:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param is_edge Whether the point is on the edge of a section
  */
 static void	draw_right_connection(t_render_context *rc, int x, int y,
-		t_bool is_edge)
+		bool is_edge)
 {
 	t_connection_data	data;
 
@@ -43,7 +43,7 @@ static void	draw_right_connection(t_render_context *rc, int x, int y,
  * @param is_edge Whether the point is on the edge of a section
  */
 static void	draw_down_connection(t_render_context *rc, int x, int y,
-		t_bool is_edge)
+		bool is_edge)
 {
 	t_connection_data	data;
 
@@ -89,8 +89,8 @@ void	render_section(t_app *ctx, t_section section)
 	t_render_context	rc;
 	int					x;
 	int					y;
-	t_bool				is_edge_x;
-	t_bool				is_edge_y;
+	bool				is_edge_x;
+	bool				is_edge_y;
 
 	rc.ctx = ctx;
 	rc.section = section;

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 08:14:36 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 13:06:16 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 13:06:44 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "h_main.h"
+#include "philo.h"
 
-bool	char_is_alpha(char c) {
-  return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+bool	ft_isdigit(char c)
+{
+	return (c >= '0' && c <= '9');
 }
-
-bool	char_is_num(char c) { return (c >= '0' && c <= '9'); }

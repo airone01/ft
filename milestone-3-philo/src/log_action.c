@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   log_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 08:14:36 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 15:51:58 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 17:51:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "h_main.h"
+#include "philo.h"
 
-bool	char_is_alpha(char c) {
-  return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+void	log_action(t_philo *philo, const char *action)
+{
+	unsigned long	l;
+
+	l = get_current_time();
+	if (is_it_over(philo->ctx))
+		return ;
+	pthread_mutex_lock(&philo->ctx->print_lock);
+	if (!is_it_over(philo->ctx))
+		printf("%zu %lu %s\n", l - philo->ctx->epoch, philo->id, action);
+	pthread_mutex_unlock(&philo->ctx->print_lock);
 }
-
-bool	char_is_num(char c) { return (c >= '0' && c <= '9'); }

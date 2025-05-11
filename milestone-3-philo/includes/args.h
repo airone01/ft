@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:07:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 16:08:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 12:49:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
  *
  * @param argc Arguments count
  * @param argv Arguments count
- * @return t_bool Whether valid or not
+ * @return bool Whether valid or not
  */
-t_bool	args(int argc, char **argv);
+bool	args(int argc, char **argv);
 
 #endif

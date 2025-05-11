@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:52:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:26:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static t_bool	key_resets_render(int keycode)
+static bool	key_resets_render(int keycode)
 {
 	return (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A
 		|| keycode == KEY_D || keycode == KEY_ARROW_UP

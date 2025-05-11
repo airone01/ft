@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/05 22:21:43 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param	c	Character
  * @returns     Boolean result
  */
-t_bool	ft_isalnum(char c)
+bool	ft_isalnum(char c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c));
 }
