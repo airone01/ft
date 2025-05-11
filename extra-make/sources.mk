@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/11 13:44:54 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/11 17:38:34 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -296,8 +296,6 @@ _SRC_PHILO_COMMON				:=	\
 	args							\
 	death_check						\
 	free_ctx						\
-	free_mutexes					\
-	free_philos						\
 	ft_atoul						\
 	ft_calloc						\
 	ft_isdigit						\
@@ -305,10 +303,15 @@ _SRC_PHILO_COMMON				:=	\
 	ft_strcmp						\
 	ft_strlen						\
 	ft_strncmp						\
+	ft_usleep						\
 	init_ctx						\
 	init_mutexes					\
 	init_philos						\
+	is_it_over						\
+	launch_big_brother				\
 	launch_philos					\
+	log_action						\
+	philo_utils						\
 	routine
 _SRC_PHILO_COMMON				:=	\
 	$(addprefix src/, $(_SRC_PHILO_COMMON))

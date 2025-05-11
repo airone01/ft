@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 18:42:53 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:39:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,30 @@
 #include "mem.h"
 #include "philo.h"
 
-static void	cycle_of_life(t_ctx *ctx, t_philo *philos)
+static void	wait_threads(t_ctx *ctx, pthread_t *big_brother)
 {
-	pthread_t	monitor;
-	int			i;
+	int	i;
 
-	launch_philos(ctx, philos);
-	pthread_create(&monitor, NULL, (void *(*)(void *))death_check, philos);
-	pthread_join(monitor, NULL);
-	i = 0;
-	while (i < (int)ctx->philos_count)
-	{
-		pthread_join(philos[i].thread, NULL);
-		i++;
-	}
+	i = -1;
+	while (++i < ctx->philos_count)
+		pthread_join(ctx->philos[i].thread, NULL);
+	pthread_join(*big_brother, NULL);
+}
+
+static void	final_coutdown(t_ctx *ctx)
+{
+	int	i;
+
+	i = -1;
+	while (++i < ctx->philos_count)
+		pthread_mutex_destroy(&ctx->forks[i]);
+	pthread_mutex_destroy(&ctx->print_lock);
+	pthread_mutex_destroy(&ctx->dead_lock);
+	free_ctx(ctx);
 }
 
 /**
- * @brief Main entry to the program
+ * @brief Main entry to the ctx
  *
  * @param argc Arguments count
  * @param argv Arguments
@@ -39,22 +45,24 @@ static void	cycle_of_life(t_ctx *ctx, t_philo *philos)
  */
 int	main(int argc, char **argv)
 {
-	int		code;
-	t_ctx	*ctx;
-	t_philo	*philos;
+	pthread_t	big_brother;
+	t_ctx		*ctx;
+	int			code;
 
 	if (args(argc, argv))
 		return (1);
 	ctx = init_ctx(argc, argv);
 	if (!ctx)
 		return (EXIT_FAILURE);
-	philos = init_philos(ctx);
 	code = init_mutexes(ctx);
 	if (code)
 		return (code);
-	gettimeofday(&ctx->epoch, NULL);
-	cycle_of_life(ctx, philos);
-	free_philos(philos);
-	free_ctx(ctx);
+	init_philos(ctx);
+	if (launch_philos(ctx))
+		return (EXIT_FAILURE);
+	if (launch_big_brother(ctx, &big_brother))
+		return (EXIT_FAILURE);
+	wait_threads(ctx, &big_brother);
+	final_coutdown(ctx);
 	return (EXIT_SUCCESS);
 }

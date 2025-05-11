@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philos.c                                      :+:      :+:    :+:   */
+/*   is_it_over.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:30:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 16:53:51 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 15:58:19 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 16:58:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// last_meal is set during launch_philos
-void	init_philos(t_ctx *ctx)
+bool	is_it_over(t_ctx *ctx)
 {
-	int	i;
+	bool	result;
 
-	i = 0;
-	while (i < ctx->philos_count)
-	{
-		ctx->philos[i].id = i + 1;
-		ctx->philos[i].meal_count = 0;
-		ctx->philos[i].last_meal = ctx->epoch;
-		ctx->philos[i].fork_right = &ctx->forks[i];
-		ctx->philos[i].fork_left = &ctx->forks[(i + 1) % ctx->philos_count];
-		ctx->philos[i].ctx = ctx;
-		i++;
-	}
+	pthread_mutex_lock(&ctx->dead_lock);
+	result = ctx->stop;
+	pthread_mutex_unlock(&ctx->dead_lock);
+	return (result);
 }

@@ -6,58 +6,77 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:53:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 13:09:39 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:03:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static long	time_diff_ms(struct timeval *start, struct timeval *end)
+/**
+ * @brief Checks if a philo died
+ */
+static int	grim_reaper_check(t_ctx *ctx, int i)
 {
-	return ((end->tv_sec - start->tv_sec) * 1000 + (end->tv_usec
-			- start->tv_usec) / 1000);
+	size_t	current_time;
+
+	current_time = get_current_time();
+	pthread_mutex_lock(&ctx->print_lock);
+	if ((long)(current_time - ctx->philos[i].last_meal) > ctx->death_time)
+	{
+		pthread_mutex_lock(&ctx->dead_lock);
+		ctx->stop = 1;
+		printf("%zu %lu died\n", current_time - ctx->epoch, ctx->philos[i].id);
+		pthread_mutex_unlock(&ctx->dead_lock);
+		pthread_mutex_unlock(&ctx->print_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&ctx->print_lock);
+	return (0);
 }
 
-void	*death_check(t_philo *philos)
+/**
+ * @brief Checks if all philos are full (meaning they ate)
+ */
+static bool	chef_gusteau_check(t_ctx *ctx)
 {
-	unsigned int	i;
-	struct timeval	now;
-	long			timestamp;
-	t_ctx			*ctx;
-	int				full_count;
+	long	i;
+	bool	all_ate;
 
-	ctx = philos[0].ctx;
+	i = -1;
+	all_ate = true;
+	while (++i < ctx->philos_count)
+	{
+		if (ctx->philos[i].meal_count < ctx->max_meal_count
+			|| ctx->max_meal_count == -1)
+			all_ate = false;
+	}
+	return (all_ate);
+}
+
+void	*death_check(void *arg)
+{
+	t_ctx	*ctx;
+	int		i;
+
+	ctx = (t_ctx *)arg;
 	while (1)
 	{
-		i = 0;
-		full_count = 0;
-		while (i < ctx->philos_count)
-		{
-			gettimeofday(&now, NULL);
-			if (time_diff_ms(&philos[i].last_meal,
-					&now) > (long)ctx->death_time)
-			{
-				pthread_mutex_lock(&ctx->print_lock);
-				timestamp = time_diff_ms(&ctx->epoch, &now);
-				if (!ctx->stop)
-					printf("%ld %lu died\n", timestamp, philos[i].id);
-				ctx->stop = true;
-				pthread_mutex_unlock(&ctx->print_lock);
+		i = -1;
+		while (++i < ctx->philos_count)
+			if (grim_reaper_check(ctx, i))
 				return (NULL);
-			}
-			if (ctx->meals_count > 0
-				&& philos[i].meal_count >= ctx->meals_count)
-				full_count++;
-			i++;
-		}
-		if (ctx->meals_count > 0 && full_count == (int)ctx->philos_count)
+		if (chef_gusteau_check(ctx))
 		{
 			pthread_mutex_lock(&ctx->print_lock);
+			pthread_mutex_lock(&ctx->dead_lock);
 			ctx->stop = true;
+			write(STDERR_FILENO,
+				"All philosophers ate the maximum number of meals\n", 49);
+			pthread_mutex_unlock(&ctx->dead_lock);
 			pthread_mutex_unlock(&ctx->print_lock);
-			return (NULL);
+			break ;
 		}
-		usleep(1000);
+		usleep(1);
 	}
 	return (NULL);
 }

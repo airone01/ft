@@ -6,21 +6,27 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:38:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 18:11:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 16:07:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	launch_philos(t_ctx *ctx, t_philo *philos)
+bool	launch_philos(t_ctx *ctx)
 {
-	unsigned int	i;
+	int	i;
 
-	i = 0;
-	while (i < ctx->philos_count)
+	i = -1;
+	while (++i < ctx->philos_count)
 	{
-		pthread_create(&philos[i].thread, NULL, (void *(*)(void *))routine,
-			&philos[i]);
-		i++;
+		if (pthread_create(&ctx->philos[i].thread, NULL, routine,
+				&ctx->philos[i]) != 0)
+		{
+			ctx->stop = true;
+			return (true);
+		}
+		if (ctx->philos_count > 1)
+			usleep(3);
 	}
+	return (false);
 }

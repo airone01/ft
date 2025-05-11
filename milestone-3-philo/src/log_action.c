@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_mutexes.c                                     :+:      :+:    :+:   */
+/*   log_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:39:19 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 12:53:12 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 15:51:58 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 17:51:26 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_mutexes(t_ctx *ctx)
+void	log_action(t_philo *philo, const char *action)
 {
-	unsigned int	i;
-	int				code;
+	unsigned long	l;
 
-	if (!ctx->mutexes)
+	l = get_current_time();
+	if (is_it_over(philo->ctx))
 		return ;
-	i = 0;
-	while (i < ctx->philos_count)
-	{
-		if (ctx->mutexes[i])
-		{
-			code = pthread_mutex_destroy(ctx->mutexes[i]);
-			if (code)
-				printf(
-					"Failed to destroy mutex #%d. Code is %d\n", i, code);
-			free(ctx->mutexes[i]);
-			ctx->mutexes[i] = NULL;
-		}
-		i++;
-	}
-	pthread_mutex_destroy(&ctx->print_lock);
-	free(ctx->mutexes);
-	ctx->mutexes = NULL;
+	pthread_mutex_lock(&philo->ctx->print_lock);
+	if (!is_it_over(philo->ctx))
+		printf("%zu %lu %s\n", l - philo->ctx->epoch, philo->id, action);
+	pthread_mutex_unlock(&philo->ctx->print_lock);
 }

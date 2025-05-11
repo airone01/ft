@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_philos.c                                      :+:      :+:    :+:   */
+/*   launch_big_brother.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 17:05:35 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 17:06:44 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 16:10:47 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 17:08:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_philos(t_philo *philos)
+bool	launch_big_brother(t_ctx *ctx, pthread_t *big_brother)
 {
-	free(philos);
+	if (pthread_create(big_brother, NULL, death_check, ctx) != 0)
+	{
+		ctx->stop = 1;
+		return (true);
+	}
+	return (false);
 }
