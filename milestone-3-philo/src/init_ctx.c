@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:07:16 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 17:11:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:42:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	init_ctx_atol(t_ctx *ctx, int argc, char **argv)
 		ctx->sleep_time = tmp * 1000;
 	if (argc == 6)
 		ctx->max_meal_count = (long)ft_atoul(argv[5]);
+	else
+		ctx->max_meal_count = -1;
 	ctx->epoch = get_current_time();
 }
 

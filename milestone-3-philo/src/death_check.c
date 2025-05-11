@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:53:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 18:03:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:47:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ static bool	chef_gusteau_check(t_ctx *ctx)
 	all_ate = true;
 	while (++i < ctx->philos_count)
 	{
+		pthread_mutex_lock(&ctx->print_lock);
 		if (ctx->philos[i].meal_count < ctx->max_meal_count
 			|| ctx->max_meal_count == -1)
 			all_ate = false;
+		pthread_mutex_unlock(&ctx->print_lock);
 	}
 	return (all_ate);
 }
