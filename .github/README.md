@@ -12,6 +12,7 @@
     <a href="https://github.com/airone01/ft/actions/workflows/make.yml"><img alt="Make workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/make.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
     <a href="https://github.com/airone01/ft/actions/workflows/norminette.yml"><img alt="Norminette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/norminette.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
     <a href="https://github.com/airone01/ft/actions/workflows/moulinette.yml"><img alt="Moulinette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/moulinette.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <img src="https://wakatime.com/badge/github/airone01/ft.svg?style=flat-square" alt="Wakatime project time">
   </p>
 </div>
 
