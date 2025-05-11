@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:39:19 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 18:28:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 12:53:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_mutexes(t_ctx *ctx)
 		{
 			code = pthread_mutex_destroy(ctx->mutexes[i]);
 			if (code)
-				ft_printf_fd(STDERR_FILENO,
+				printf(
 					"Failed to destroy mutex #%d. Code is %d\n", i, code);
 			free(ctx->mutexes[i]);
 			ctx->mutexes[i] = NULL;

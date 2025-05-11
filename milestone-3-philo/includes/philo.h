@@ -6,19 +6,23 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 18:30:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:13:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "ft_printf.h" // my printf
-# include "libft.h"     // my standard lib
-# include <errno.h>     // for error types such as ENOMEM
-# include <limits.h>    // integer limits
-# include <pthread.h>   // threading
-# include <sys/time.h>  // for gettimeofday
+# include "std.h"      // my standard functions
+# include <errno.h>    // for error types such as ENOMEM
+# include <limits.h>   // integer limits
+# include <pthread.h>  // threading
+# include <stdbool.h>  // booleans
+# include <stdint.h>   // for SIZE_MAX
+# include <stdio.h>    // printf
+# include <stdlib.h>   // standard lib
+# include <sys/time.h> // for gettimeofday
+# include <unistd.h>   // usleep
 // # include <sys/wait.h>  // for waitpid
 
 // *************************************************************************** #
@@ -38,7 +42,7 @@ typedef struct s_ctx
 	pthread_mutex_t	**mutexes;
 	struct timeval	epoch;
 	pthread_mutex_t	print_lock;
-	t_bool			stop;
+	bool			stop;
 }					t_ctx;
 
 /**
@@ -47,8 +51,8 @@ typedef struct s_ctx
 typedef struct s_philo
 {
 	unsigned long	id;
-	t_bool			fork_left;
-	t_bool			fork_right;
+	bool			fork_left;
+	bool			fork_right;
 	struct timeval	last_meal;
 	unsigned long	meal_count;
 	pthread_t		thread;

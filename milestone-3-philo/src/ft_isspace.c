@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.h                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:07:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 12:49:32 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 13:18:58 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 13:19:10 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARGS_H
-# define ARGS_H
+#include "philo.h"
 
-# include "philo.h"
-
-/**
- * @brief Checks if the arguments passed to the app are valid
- *
- * @param argc Arguments count
- * @param argv Arguments count
- * @return bool Whether valid or not
- */
-bool	args(int argc, char **argv);
-
-#endif
+bool	ft_isspace(char c)
+{
+	return (c == ' ' || (c >= '\t' && c <= '\r'));
+}

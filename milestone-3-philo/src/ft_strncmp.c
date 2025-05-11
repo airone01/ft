@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.h                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:07:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 12:49:32 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 12:55:44 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 12:56:11 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARGS_H
-# define ARGS_H
+#include "philo.h"
 
-# include "philo.h"
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned int	i;
 
-/**
- * @brief Checks if the arguments passed to the app are valid
- *
- * @param argc Arguments count
- * @param argv Arguments count
- * @return bool Whether valid or not
- */
-bool	args(int argc, char **argv);
-
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (i < n)
+	{
+		if (s1[i] != s2[i] || !s1[i] || !s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:53:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/09 18:41:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:09:39 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*death_check(t_philo *philos)
 	{
 		i = 0;
 		full_count = 0;
-		while (i < philos[0].ctx->philos_count)
+		while (i < ctx->philos_count)
 		{
 			gettimeofday(&now, NULL);
 			if (time_diff_ms(&philos[i].last_meal,
@@ -39,7 +39,8 @@ void	*death_check(t_philo *philos)
 			{
 				pthread_mutex_lock(&ctx->print_lock);
 				timestamp = time_diff_ms(&ctx->epoch, &now);
-				ft_printf("%ld %d died\n", timestamp, philos[i].id);
+				if (!ctx->stop)
+					printf("%ld %lu died\n", timestamp, philos[i].id);
 				ctx->stop = true;
 				pthread_mutex_unlock(&ctx->print_lock);
 				return (NULL);
@@ -49,7 +50,7 @@ void	*death_check(t_philo *philos)
 				full_count++;
 			i++;
 		}
-		if (full_count == (int)ctx->philos_count && ctx->meals_count > 0)
+		if (ctx->meals_count > 0 && full_count == (int)ctx->philos_count)
 		{
 			pthread_mutex_lock(&ctx->print_lock);
 			ctx->stop = true;

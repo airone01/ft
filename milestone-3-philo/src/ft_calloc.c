@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.h                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:07:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 12:49:32 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 13:14:37 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 13:14:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARGS_H
-# define ARGS_H
+#include "philo.h"
 
-# include "philo.h"
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	size_t			total;
+	void			*ptr;
+	unsigned char	*p;
+	size_t			i;
 
-/**
- * @brief Checks if the arguments passed to the app are valid
- *
- * @param argc Arguments count
- * @param argv Arguments count
- * @return bool Whether valid or not
- */
-bool	args(int argc, char **argv);
-
-#endif
+	if (size != 0 && nmemb > SIZE_MAX / size)
+		return (NULL);
+	total = nmemb * size;
+	ptr = malloc(total);
+	if (!ptr)
+		return (NULL);
+	p = ptr;
+	i = 0;
+	while (i < total)
+	{
+		p[i] = 0;
+		i++;
+	}
+	return (ptr);
+}

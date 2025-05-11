@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/09 13:22:22 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/09 15:14:17 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/11 12:46:45 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,15 +30,6 @@ BNAME		:=
 SRC_DIR		:= src/
 OUT_DIR 	:= .out/
 
-# **************************************************************************** #
-#                                    LIBS                                      #
-# **************************************************************************** #
-
-LIBFT_DIR		:= $(realpath ../milestone-0-libft)# GPM!
-PRINTF_DIR		:= $(realpath ../milestone-1-ft_printf)# GPM!
-# GPM@	.LIBFT_DIR	= $(realpath ./libft)
-# GPM@	.PRINTF_DIR	= $(realpath ./ft_printf)
-
 CFLAGS			:= -Iincludes
 
 # **************************************************************************** #
@@ -54,11 +45,6 @@ title:
 	@$(ECHO) "$(MSG) / .__/_//_/_/_/\\___/___/\\___/ .__/_//_/\\__/_/ /___/ \n"
 	@$(ECHO) "$(MSG)/_/                         /_/ \n"
 	@$(ECHO) "$(MSG)\n"
-
-include $(realpath ../extra-make/lib_libft.mk)# GPM!
-# GPM: make_lib_libft_mk
-include $(realpath ../extra-make/lib_ft_printf.mk)# GPM!
-# GPM: make_lib_ft_printf_mk
 
 # GPM: make_sources_mk
 

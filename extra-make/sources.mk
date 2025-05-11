@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/09 17:55:23 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/11 13:44:54 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -298,6 +298,13 @@ _SRC_PHILO_COMMON				:=	\
 	free_ctx						\
 	free_mutexes					\
 	free_philos						\
+	ft_atoul						\
+	ft_calloc						\
+	ft_isdigit						\
+	ft_isspace						\
+	ft_strcmp						\
+	ft_strlen						\
+	ft_strncmp						\
 	init_ctx						\
 	init_mutexes					\
 	init_philos						\

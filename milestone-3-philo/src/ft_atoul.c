@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.h                                             :+:      :+:    :+:   */
+/*   ft_atoul.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 16:07:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 12:49:32 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 13:18:43 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 13:48:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ARGS_H
-# define ARGS_H
+#include "philo.h"
 
-# include "philo.h"
+unsigned long	ft_atoul(const char *str)
+{
+	unsigned long	val;
 
-/**
- * @brief Checks if the arguments passed to the app are valid
- *
- * @param argc Arguments count
- * @param argv Arguments count
- * @return bool Whether valid or not
- */
-bool	args(int argc, char **argv);
-
-#endif
+	val = 0;
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '+')
+		str++;
+	while (ft_isdigit(*str))
+		val = (val * 10) + (unsigned long)(*str++ - '0');
+	return (val);
+}
