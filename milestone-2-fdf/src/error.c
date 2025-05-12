@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 16:27:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 10:31:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * @brief Frees a pointer, and exits the program with an error message
  *
- * @param ctx	The app structure
+ * @param ctx	Context
  * @param err	The error code
  */
-void	exit_error_free(t_app *ctx, t_error err, void *ptr)
+void	exit_error_free(t_ctx *ctx, t_error err, void *ptr)
 {
 	if (ptr)
 		free(ptr);
@@ -28,13 +28,13 @@ void	exit_error_free(t_app *ctx, t_error err, void *ptr)
 /**
  * @brief Exits the program with an error message
  *
- * @param ctx	The app structure
+ * @param ctx	Context
  * @param err	The error code
  */
-void	exit_error(t_app *ctx, t_error err)
+void	exit_error(t_ctx *ctx, t_error err)
 {
 	if (ctx)
-		app_clear(ctx);
+		ctx_clear(ctx);
 	ft_printf("Error: ");
 	if (err >= ERR_ARG_COUNT && err <= ERR_ARG_INVALID_FILE)
 		print_arg_error(err);

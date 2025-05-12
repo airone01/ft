@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/08 16:42:17 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/09 15:14:58 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:09:49 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ GPM_NAME	:= minishell
 GPM_MNAME	:= MINISHELL
 NAME		:= minishell
 BNAME		:=
-SRC_DIR		:= src/
+SRC_DIR 	:= src/
 OUT_DIR 	:= .out/
 
 # **************************************************************************** #
@@ -40,7 +40,6 @@ PRINTF_DIR		:= $(realpath ../milestone-1-ft_printf)# GPM!
 # GPM@	.PRINTF_DIR	= $(realpath ./ft_printf)
 
 LDFLAGS			:= -lreadline
-CFLAGS			:= -Iincludes
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -53,7 +52,6 @@ title:
 	@$(ECHO) "$(MSG)  __ _  (_)__  (_)__ / /  ___ / / /\n"
 	@$(ECHO) "$(MSG) /  ' \\/ / _ \\/ (_-</ _ \\/ -_) / /\n"
 	@$(ECHO) "$(MSG)/_/_/_/_/_//_/_/___/_//_/\\__/_/_/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk

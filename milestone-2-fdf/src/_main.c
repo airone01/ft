@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:28:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 13:31:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	manage_mlx(t_app *ctx)
+static void	manage_mlx(t_ctx *ctx)
 {
 	ctx->mlx = mlx_init();
 	if (!ctx->mlx)
@@ -28,7 +28,7 @@ static void	manage_mlx(t_app *ctx)
 	mlx_loop(ctx->mlx);
 }
 
-static void	find_map_height(t_app *ctx)
+static void	find_map_height(t_ctx *ctx)
 {
 	char	**file;
 
@@ -45,9 +45,9 @@ static void	find_map_height(t_app *ctx)
 /**
  * @brief Finds the width of the map by counting columns in the first line
  *
- * @param ctx Application context
+ * @param ctx Context
  */
-static void	find_map_width(t_app *ctx)
+static void	find_map_width(t_ctx *ctx)
 {
 	int	count;
 
@@ -61,12 +61,12 @@ static void	find_map_width(t_app *ctx)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_app	*ctx;
+	t_ctx	*ctx;
 	int		fd;
 
 	(void)args_check(argc, argv);
 	fd = file_open(argv[1], envp);
-	ctx = app_init();
+	ctx = ctx_init();
 	ctx->file_fd = fd;
 	ctx->file_content = read_entire_file(ctx->file_fd);
 	if (!ctx->file_content)
@@ -82,6 +82,6 @@ int	main(int argc, char **argv, char **envp)
 	find_elevation_bounds(ctx);
 	calculate_initial_scale(ctx);
 	manage_mlx(ctx);
-	app_clear(ctx);
+	ctx_clear(ctx);
 	return (0);
 }

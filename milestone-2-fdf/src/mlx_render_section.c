@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:04:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ static void	render_section_loop(t_render_section_params p)
 /**
  * @brief Renders a single section of the map with proper edge connections
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param section The section to render
  */
-void	render_section(t_app *ctx, t_section section)
+void	render_section(t_ctx *ctx, t_section section)
 {
 	t_render_context	rc;
 	int					x;

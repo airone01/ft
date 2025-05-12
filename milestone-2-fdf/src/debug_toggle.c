@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:52:39 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 10:52:43 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * @brief Toggle a specific debug mode flag
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param flag The debug flag to toggle
  */
-void	toggle_debug_mode(t_app *ctx, int flag)
+void	toggle_debug_mode(t_ctx *ctx, int flag)
 {
 	if (ctx->debug_mode & flag)
 		ctx->debug_mode &= ~flag;

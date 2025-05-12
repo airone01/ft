@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:47:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ bool	is_line_outside_viewport(t_point p1, t_point p2, int width, int height)
 /**
  * @brief Determines if an entire section is outside the viewport
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param section The section to check
  * @return bool True if the section is completely outside the viewport
  */
-bool	is_section_outside_viewport(t_app *ctx, t_section section)
+bool	is_section_outside_viewport(t_ctx *ctx, t_section section)
 {
 	t_point	corners[4];
 	int		margin;

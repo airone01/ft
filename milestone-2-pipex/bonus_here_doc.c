@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:52:39 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 11:46:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  *
  * @returns	The file descriptor of the pipe
  */
-int	handle_here_doc(t_app *app, char *limiter)
+int	handle_here_doc(t_ctx *app, char *limiter)
 {
 	char	*line;
 

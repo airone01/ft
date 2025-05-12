@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 13:25:00 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:26:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
  *
  * @param x X coordinate
  * @param y Y coordinate
- * @param ctx Application context
+ * @param ctx Context
  * @return t_point Projected 2D point
  */
-t_point	get_projected_point(int x, int y, t_app *ctx)
+t_point	get_projected_point(int x, int y, t_ctx *ctx)
 {
 	t_point3d	point3d;
 	t_point		projected;
@@ -44,9 +44,9 @@ t_point	get_projected_point(int x, int y, t_app *ctx)
 /**
  * @brief Renders the next frame
  *
- * @param ctx	Application context
+ * @param ctx	Context
  */
-int	render_next_frame(t_app *ctx)
+int	render_next_frame(t_ctx *ctx)
 {
 	if (!ctx->needs_render)
 		return (0);

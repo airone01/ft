@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 16:37:25 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/10 19:51:12 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_cmda_parent(t_list **current_cmd, int *pipe_prev, int *pipe_curr)
 	*current_cmd = (*current_cmd)->next;
 }
 
-static void	main_loop(t_app app, t_list *current_cmd, int *pipe_prev,
+static void	main_loop(t_ctx app, t_list *current_cmd, int *pipe_prev,
 		int *pipe_curr)
 {
 	pid_t	pid;
@@ -57,7 +57,7 @@ static void	main_loop(t_app app, t_list *current_cmd, int *pipe_prev,
 	}
 }
 
-void	exec_cmdas(t_app app)
+void	exec_cmdas(t_ctx app)
 {
 	t_list	*current_cmd;
 	int		pipe_prev[2];

@@ -1,0 +1,33 @@
+[project]
+name = "philo"
+version = "1.0.0"
+
+[submit]
+files = [
+	# C sources
+	"src/*",
+	# C headers
+	"includes/*",
+	# Other
+	"Makefile"
+]
+
+[submit.preprocessor]
+enable_gpm = true
+function_paths = ["src"]
+
+[submit.hooks]
+pre_submit = "make fclean > /dev/null"
+
+[submit.validation]
+norminette = true
+
+# **************************************************************************** #
+#                                    LibFt                                     #
+# **************************************************************************** #
+[[submit.copy]]
+source = "../milestone-0-libft/Makefile"
+destination = "libft"
+[[submit.copy]]
+source = "../milestone-0-libft/*.{c,h}"
+destination = "libft"

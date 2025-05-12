@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:37:14 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:12:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * @brief Clears the context and exits normally
  *
- * @param ctx Application context
+ * @param ctx Context
  */
-void	app_clear_0(t_app *ctx)
+void	ctx_clear_0(t_ctx *ctx)
 {
-	app_clear(ctx);
+	ctx_clear(ctx);
 	exit(EXIT_SUCCESS);
 }

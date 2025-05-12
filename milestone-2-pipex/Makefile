@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 18:04:51 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:08:46 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ title:
 	@$(ECHO) "$(MSG)  / _ \\/ / _ \\/ -_) \\ /\n"
 	@$(ECHO) "$(MSG) / .__/_/ .__/\\__/_\\_\\ \n"
 	@$(ECHO) "$(MSG)/_/    /_/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk

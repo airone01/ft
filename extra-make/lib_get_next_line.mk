@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 11:52:47 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:03:04 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ GNL		=	$(GNL_DIR)/get_next_line.a
 # LD
 LDFLAGS	:= -L$(GNL_DIR) -l:get_next_line.a $(LDFLAGS)
 # CC
-CFLAGS	+= -I$(GNL_DIR)
+CFLAGS	+= -I$(GNL_DIR)/includes
 
 # Make target config
 NAME_DEPS_INDIRECT	+= $(GNL)

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/11 17:38:34 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:18:01 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@
 _SRC_LIBFT_COMMON				:=	\
 	ft_abs							\
 	ft_atoi							\
+	ft_atol							\
+	ft_atoul						\
 	ft_bzero						\
 	ft_calloc						\
 	ft_env_find						\
@@ -30,6 +32,7 @@ _SRC_LIBFT_COMMON				:=	\
 	ft_itoa							\
 	ft_lstadd_back_bonus			\
 	ft_lstadd_front_bonus			\
+	ft_lstat_bonus					\
 	ft_lstclear_bonus				\
 	ft_lstdelone_bonus				\
 	ft_lstiter_bonus				\
@@ -37,12 +40,12 @@ _SRC_LIBFT_COMMON				:=	\
 	ft_lstmap_bonus					\
 	ft_lstnew_bonus					\
 	ft_lstsize_bonus				\
+	ft_max							\
 	ft_memchr						\
 	ft_memcmp						\
 	ft_memcpy						\
 	ft_memmove						\
 	ft_memset						\
-	ft_max							\
 	ft_min							\
 	ft_putchar_fd					\
 	ft_putendl_fd					\
@@ -51,22 +54,26 @@ _SRC_LIBFT_COMMON				:=	\
 	ft_realloc						\
 	ft_recalloc						\
 	ft_split						\
-	ft_strdup						\
-	ft_strrchr						\
 	ft_strchr						\
 	ft_strcmp						\
+	ft_strdup						\
 	ft_striteri						\
 	ft_strjoin						\
 	ft_strlcat						\
 	ft_strlcpy						\
 	ft_strlen						\
 	ft_strmapi						\
-	ft_strnstr						\
 	ft_strncmp						\
+	ft_strnstr						\
+	ft_strrchr						\
+	ft_strtol						\
+	ft_strtoul						\
 	ft_strtrim						\
+	ft_substr						\
 	ft_tolower						\
-	ft_toupper						\
-	ft_substr
+	ft_toupper
+_SRC_LIBFT_COMMON				:=	\
+	$(addprefix src/, $(_SRC_LIBFT_COMMON))
 _SRC_LIBFT_MANDATORY			:=	\
 	$(_SRC_LIBFT_COMMON)
 _SRC_LIBFT_BONUS				:=	\
@@ -74,9 +81,11 @@ _SRC_LIBFT_BONUS				:=	\
 
 _SRC_FT_PRINTF_COMMON			:=	\
 	ft_printf						\
-	ft_putchar					\
+	ft_putchar						\
 	ft_putnbr_base_ssize			\
 	ft_putstr_ssize
+_SRC_FT_PRINTF_COMMON			:=	\
+	$(addprefix src/, $(_SRC_FT_PRINTF_COMMON))
 _SRC_FT_PRINTF_MANDATORY		:=	\
 	$(_SRC_FT_PRINTF_COMMON)
 _SRC_FT_PRINTF_BONUS			:=	\
@@ -87,6 +96,8 @@ _SRC_GNL_COMMON					:=	\
 	get_next_line_utils				\
 	files_utils						\
 	files_utils2
+_SRC_GNL_COMMON					:=	\
+	$(addprefix src/, $(_SRC_GNL_COMMON))
 _SRC_GNL_MANDATORY				:=	\
 	$(_SRC_GNL_COMMON)
 _SRC_GNL_BONUS					:=	\
@@ -124,10 +135,14 @@ _SRC_PUSH_SWAP_COMMOM			:=	\
 _SRC_PUSH_SWAP_MANDATORY		:=	\
 	_main							\
 	$(_SRC_PUSH_SWAP_COMMOM)
+_SRC_PUSH_SWAP_MANDATORY		:=	\
+	$(addprefix src/, $(_SRC_PUSH_SWAP_MANDATORY))
 _SRC_PUSH_SWAP_BONUS			:=	\
 	checker							\
 	checker_utils					\
 	$(_SRC_PUSH_SWAP_COMMOM)
+_SRC_PUSH_SWAP_BONUS			:=	\
+	$(addprefix src/, $(_SRC_PUSH_SWAP_BONUS))
 
 _SRC_PIPEX_COMMON				:=	\
 	app_exit						\
@@ -157,8 +172,6 @@ _SRC_PIPEX_BONUS				:=	\
 
 _SRC_FDF_COMMON					:=	\
 	_main							\
-	app_clear						\
-	app_init						\
 	args_check						\
 	clear_utils						\
 	color_get						\
@@ -166,6 +179,8 @@ _SRC_FDF_COMMON					:=	\
 	color_get_line					\
 	color_parsing					\
 	color_utils						\
+	ctx_clear						\
+	ctx_init						\
 	debug_toggle					\
 	error							\
 	error_arg						\
@@ -217,6 +232,7 @@ _SRC_FDF_MANDATORY				:=	\
 	$(_SRC_FDF_COMMON)
 _SRC_FDF_BONUS					:=	\
 	$(_SRC_FDF_COMMON)
+
 _SRC_MINISHELL_COMMON			:=	\
 	_main							\
 	bin_find						\

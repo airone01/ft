@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 16:46:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ Note:	The bonus part of this program includes here_doc, which waits for user
  */
 int	main(int argc, char **argv, char **envp)
 {
-	t_app	app;
+	t_ctx	app;
 
 	app = app_new(envp);
 	args_valid(&app, argc, argv);

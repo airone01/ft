@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 13:03:52 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:03:01 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBFT		=	$(LIBFT_DIR)/libft.a
 # LD
 LDFLAGS	:= -L$(LIBFT_DIR) -l:libft.a $(LDFLAGS)
 # CC
-CFLAGS	+= -I$(LIBFT_DIR)
+CFLAGS	+= -I$(LIBFT_DIR)/includes
 
 # Make target config
 NAME_DEPS_INDIRECT	+= $(LIBFT)

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:52:18 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 12:32:31 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-char	**cmda_args(t_app *app, char *cmd)
+char	**cmda_args(t_ctx *app, char *cmd)
 {
 	char	**args;
 	char	*bin_og;

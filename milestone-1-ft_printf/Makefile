@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 19:35:51 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/03 21:16:30 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:08:31 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ GPM_NAME	:= ft_printf
 GPM_MNAME	:= FT_PRINTF
 NAME		:= libftprintf.a
 BNAME		:= blibftprintf.a
+SRC_DIR 	:= src/
 OUT_DIR 	:= .out/
 
 # **************************************************************************** #
@@ -48,7 +49,6 @@ title:
 	@$(ECHO) "$(MSG) / _/ __/   / _ \/ __/ / _ \\/ __/ _/\n"
 	@$(ECHO) "$(MSG)/_/ \__/___/ .__/_/ /_/_//_/\\__/_/\n"
 	@$(ECHO) "$(MSG)      /___/_/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk

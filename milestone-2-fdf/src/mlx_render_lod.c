@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:10:27 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 13:49:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /**
  * @brief Displays numeric LOD debug info using mlx_string_put
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param value Numeric value to display
  * @param label Label text
  * @param y_pos Vertical position for the text
  */
-void	put_debug_number(t_app *ctx, double value, char *label, int y_pos)
+void	put_debug_number(t_ctx *ctx, double value, char *label, int y_pos)
 {
 	char	num_str[16];
 	char	full_str[64];

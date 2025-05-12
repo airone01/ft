@@ -15,6 +15,7 @@ GPM_NAME	:= get_next_line
 GPM_MNAME	:= GNL
 NAME		:= get_next_line.a
 BNAME		:= get_next_line.a
+SRC_DIR 	:= src/
 OUT_DIR 	:= .out/
 
 # **************************************************************************** #
@@ -36,7 +37,6 @@ title:
 	@$(ECHO) "$(MSG) / _ \`/ _ \/ /\n"
 	@$(ECHO) "$(MSG) \_, /_//_/_/\n"
 	@$(ECHO) "$(MSG)/___/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk

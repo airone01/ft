@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:44:12 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 09:56:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ static void	draw_bresenham_line(t_bresenham_params p)
 /**
  * @brief Draws a line using optimized integer-only Bresenham algorithm
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param start Starting point of the line
  * @param end Ending point of the line
  * @param color Color of the line
  */
-void	draw_line_img(t_app *ctx, t_point start, t_point end,
+void	draw_line_img(t_ctx *ctx, t_point start, t_point end,
 		unsigned int color)
 {
 	int	line[4];

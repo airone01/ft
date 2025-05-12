@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:13:07 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/12 22:02:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  * If the variable is not found, return NULL and don't error out.
  */
-char	*env_find(t_app app, char *var)
+char	*env_find(t_ctx app, char *var)
 {
 	size_t	i;
 	size_t	len;

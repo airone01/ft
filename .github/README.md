@@ -124,7 +124,9 @@
 
 ### [`Minecraft push_swap visualizer`](https://github.com/airone01/ft/tree/main/extra-push-swap-visualizer-minecraft)
 
-A program to flex on your friends by visualizing your push_swap algorithm in Minecraft. It uses [Valence](https://valence.rs/) to control the game packets and visualize the sorting algorithm on your `1.20.1` client.
+A program to flex on your friends by visualizing your push_swap algorithm in
+Minecraft. It uses [Valence](https://valence.rs/) to control the game packets
+and visualize the sorting algorithm on your `1.20.1` client.
 
 ![In-game screenshot](/.github/assets/screenshot_1.webp)
 
@@ -133,14 +135,35 @@ A program to flex on your friends by visualizing your push_swap algorithm in Min
 ### [`Arthur`](/extra-arthur/README.md)
 
 > [!WARNING]
-> GPM and Arthur were never meant to be used by anyone other than me. They are tools designed for my workflow that I use to manage my projects in this monorepo.
-> They could break your stuff.
+> GPM and Arthur were never meant to be used by anyone other than me. They are
+> tools designed for my workflow that I use to manage my projects in this
+> monorepo. They could break your stuff.
 
-Arthur is a test runner for 42 projects implementing the core functionnalities (and more) of the now-defunct GPM.
-- The test runner runs tests on your project and displays the results in a nice and readable format. Currently, it supports `libft`.
-- The project manager handles file manipulation before pushing a project for validation on the 42 intra. This allows me to keep all the deps clean internally in this repo.
+Arthur is a test runner for 42 projects implementing the core functionnalities
+(and more) of the now-defunct GPM.
+
+- The test runner runs tests on your project and displays the results in a nice
+  and readable format. Currently, it supports `libft`.
+- The project manager handles file manipulation before pushing a project for
+  validation on the 42 intra. This allows me to keep all the deps clean
+  internally in this repo.
 
 More info [`here`](/extra-arthur/README.md).
+
+### [`FDF generator`](/extra-fdf-bmp-converter/README.md)
+
+A simple script to convert a BMP image into a fdf file. It currently only works
+for bitmap images smaller than 255 * 255, because I don't really know how to
+reliably get the width of the image in the header. To run the script, simply
+type :
+
+```sh
+python main.py your_file.bmp
+```
+
+You can convert PNG images to BMP using `convert` from
+[ImageMagick](https://imagemagick.org/), or online using
+[EzGIF](https://ezgif.com/png-to-bmp).
 
 ## Additional stuff/notes
 
@@ -148,24 +171,34 @@ More info [`here`](/extra-arthur/README.md).
 
 ### ~~`GPM`~~ replaced by [Arthur](#arthur)
 
-Git Project Manager (GPM) was a bash script that helped me manage my projects in this monorepo.
-I have re-implemented its core functionnalities (and more) in [Arthur](#arthur).
+Git Project Manager (GPM) was a bash script that helped me manage my projects in
+this monorepo. I have re-implemented its core functionnalities (and more) in
+[Arthur](#arthur).
 
 ### Direnv
 
-This project's dev dependencies are managed using `nix-direnv`. If you don't know what NixOS is, you probably don't have to care about that though.
+This project's dev dependencies are managed using `nix-direnv`. If you don't
+know what NixOS is, you probably don't have to care about that though.
 
 ### Ford
 
-`ford` was a quick and dirty test runner I made for my projects during the pool. It's now deprecated in favor of [Arthur](#arthur).
+`ford` was a quick and dirty test runner I made for my projects during the pool.
+It's now deprecated in favor of [Arthur](#arthur).
 
 ### Make
 
-You can build all of the projects that use Make using `make all` (at the repo root).
+You can build all of the projects that use Make using `make all` (at the repo
+root).
 
-Additionally, you can list them with `make list` build one with `make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
+Additionally, you can list them with `make list` build one with
+`make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
 
-### Note for myself
+## License
+
+This project is licensed under the [MIT License](LICENSE). See the
+[LICENSE](LICENSE) file for details.
+
+## Note for myself
 
 ```bash
 alias reload="rm -rf ~/goinfre/test && cd ~/ft && cargo r --package arthur -- p s milestone-2-fdf https://github.com/airone01/gpm-test && git clone https://github.com/airone01/gpm-test ~/goinfre/test && cd ~/goinfre/test && make all bonus"

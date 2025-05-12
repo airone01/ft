@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 12:48:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:21:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /**
  * @brief Display LOD information text line by line
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param msg Message text to display
  * @param y_pos Vertical position for the text
  */
-void	put_debug_text(t_app *ctx, char *msg, int y_pos)
+void	put_debug_text(t_ctx *ctx, char *msg, int y_pos)
 {
 	mlx_string_put(ctx->mlx, ctx->win, 10, y_pos, 0x00FFFFFF, msg);
 }

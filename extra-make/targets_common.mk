@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/09 15:19:15 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:27:47 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,8 @@ CFLAGS	+= -fno-omit-frame-pointer
 CFLAGS	+= -O2 -march=native -ffunction-sections -fdata-sections -ffast-math
 # For debugging
 CFLAGS	+= -g3
+# Header dir
+CFLAGS	+= -Iincludes
 
 # **************************************************************************** #
 #                                   SOURCES                                    #

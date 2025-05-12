@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:40:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 11:10:17 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Gets directories from the PATH variable
  */
-static char	**env_get_path_dirs(t_app *app)
+static char	**env_get_path_dirs(t_ctx *app)
 {
 	char	*path_var;
 	char	**path_dirs;
@@ -42,7 +42,7 @@ static char	**env_get_path_dirs(t_app *app)
  *
  * @exception	ENOMEM if malloc fails
  */
-char	*env_find_bin(t_app *app, char *bin)
+char	*env_find_bin(t_ctx *app, char *bin)
 {
 	char	**path_dirs;
 	char	**og_path_dirs;
