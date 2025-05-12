@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:55:53 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 12:43:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief	Reads the minimum and maximum elevation values from the map matrix
  *
- * @param	ctx	Application context
+ * @param	ctx	Context
  */
-void	find_elevation_bounds(t_app *ctx)
+void	find_elevation_bounds(t_ctx *ctx)
 {
 	int	min;
 	int	max;

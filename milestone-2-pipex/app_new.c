@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:15:01 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 16:13:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief	Initializes the app structure
  */
-t_app	app_new(char **envp)
+t_ctx	app_new(char **envp)
 {
-	t_app	app;
+	t_ctx	app;
 
 	app.cmdas = NULL;
 	app.fd_file_in = -1;

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 18:03:09 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:28:56 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ GPM_NAME	:= push_swap
 GPM_MNAME	:= PUSH_SWAP
 NAME		:= push_swap
 BNAME		:= checker
+SRC_DIR 	:= src/
 OUT_DIR 	:= .out/
 
 # **************************************************************************** #
@@ -52,7 +53,6 @@ title:
 	@$(ECHO) "$(MSG)  / _ \\/ // (_-</ _ \\   (_-< |/|/ / _ \`/ _ \\ \n"
 	@$(ECHO) "$(MSG) / .__/\_,_/___/_//_/__/___/__,__/\\_,_/ .__/\n"
 	@$(ECHO) "$(MSG)/_/                /___/             /_/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk

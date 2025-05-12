@@ -6,7 +6,7 @@
 
 ### Whole project
 
-```shell
+```sh
 make
 ```
 
@@ -14,12 +14,12 @@ make
 
 ### Against tester
 
-```shell
+```sh
 bash ./tester.sh
 ```
 
 ### Visually
 
-```shell
+```sh
 make visualize
 ```

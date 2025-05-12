@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:49:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 13:46:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	validate_line_format(t_app *ctx, const char *line, int row)
+static void	validate_line_format(t_ctx *ctx, const char *line, int row)
 {
 	int	col;
 
@@ -35,11 +35,11 @@ static void	validate_line_format(t_app *ctx, const char *line, int row)
 /**
  * @brief Parse a line from the map file and store values in matrix
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param line Line to parse
  * @param row Pointer to current row index
  */
-static void	parse_line(t_app *ctx, const char *line, int *row)
+static void	parse_line(t_ctx *ctx, const char *line, int *row)
 {
 	char	**tokens;
 	int		col;
@@ -66,10 +66,10 @@ static void	parse_line(t_app *ctx, const char *line, int *row)
 /**
  * @brief	Parses the map content.
  *
- * @param	ctx		The application context.
+ * @param	ctx		The Context.
  * @param	content	The content of the map file.
  */
-void	map_parse(t_app *ctx)
+void	map_parse(t_ctx *ctx)
 {
 	char	**ptr;
 	int		row;

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:13:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 16:14:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /**
  * @brief Prepare and display LOD level text
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param lod Current LOD level
  * @param y_pos Vertical position for the text
  */
-static void	put_lod_level(t_app *ctx, int lod, int y_pos)
+static void	put_lod_level(t_ctx *ctx, int lod, int y_pos)
 {
 	char	buffer[64];
 	int		i;
@@ -36,10 +36,10 @@ static void	put_lod_level(t_app *ctx, int lod, int y_pos)
 /**
  * @brief Prepare and display map dimensions
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param y_pos Vertical position for the text
  */
-static void	put_map_size(t_app *ctx, int y_pos)
+static void	put_map_size(t_ctx *ctx, int y_pos)
 {
 	char	buffer[64];
 	int		i;
@@ -61,10 +61,10 @@ static void	put_map_size(t_app *ctx, int y_pos)
 /**
  * @brief Prepare and display scale value
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param y_pos Vertical position for the text
  */
-static void	put_scale(t_app *ctx, int y_pos)
+static void	put_scale(t_ctx *ctx, int y_pos)
 {
 	char	buffer[64];
 	int		i;
@@ -81,10 +81,10 @@ static void	put_scale(t_app *ctx, int y_pos)
 /**
  * @brief Prepare and display projection type text
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param y_pos Vertical position for the text
  */
-static void	put_projection_type(t_app *ctx, int y_pos)
+static void	put_projection_type(t_ctx *ctx, int y_pos)
 {
 	char	buffer[64];
 	int		i;
@@ -106,9 +106,9 @@ static void	put_projection_type(t_app *ctx, int y_pos)
 /**
  * @brief Display all LOD debug information
  *
- * @param ctx Application context
+ * @param ctx Context
  */
-void	render_lod_debug(t_app *ctx)
+void	render_lod_debug(t_ctx *ctx)
 {
 	put_lod_level(ctx, ctx->lod_level, 40);
 	put_map_size(ctx, 60);

@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 14:07:33 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/03 21:16:30 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:09:45 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ GPM_NAME	:= libft
 GPM_MNAME	:= LIBFT
 NAME		:= libft.a
 BNAME		:= blibft.a
+SRC_DIR 	:= src/
 OUT_DIR 	:= .out/
 
 # **************************************************************************** #
@@ -40,7 +41,6 @@ title:
 	@$(ECHO) "$(MSG)  / (_) /  / _/ /_\n"
 	@$(ECHO) "$(MSG) / / / _ \\/ _/ __/\n"
 	@$(ECHO) "$(MSG)/_/_/_.__/_/ \\__/\n"
-	@$(ECHO) "$(MSG)\n"
 
 # GPM: make_sources_mk
 

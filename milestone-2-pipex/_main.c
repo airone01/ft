@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:08:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  */
 int	main(int argc, char **argv, char **envp)
 {
-	t_app	app;
+	t_ctx	app;
 
 	app = app_new(envp);
 	args_valid(&app, argc, argv);

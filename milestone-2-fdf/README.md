@@ -6,6 +6,6 @@
 
 ### Whole project
 
-```shell
+```sh
 make
 ```

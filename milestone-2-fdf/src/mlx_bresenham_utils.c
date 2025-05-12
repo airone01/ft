@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 09:55:50 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /**
  * @brief Checks if the line is completely outside valid rendering bounds
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param line Line coordinates in array form [x0, y0, x1, y1]
  * @return bool True if line is completely outside and can be culled
  */
-bool	is_line_outside_bounds(t_app *ctx, int *line)
+bool	is_line_outside_bounds(t_ctx *ctx, int *line)
 {
 	int	w;
 	int	h;
@@ -36,12 +36,12 @@ bool	is_line_outside_bounds(t_app *ctx, int *line)
 /**
  * @brief Processes a single point in the Bresenham line
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param x X-coordinate to render
  * @param y Y-coordinate to render
  * @param color Line color
  */
-void	process_point(t_app *ctx, int x, int y, unsigned int color)
+void	process_point(t_ctx *ctx, int x, int y, unsigned int color)
 {
 	if (x >= 0 && x < ctx->img.width && y >= 0 && y < ctx->img.height)
 		mlx_pixel_put_img(&ctx->img, x, y, color);

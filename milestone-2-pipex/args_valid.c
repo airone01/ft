@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:32:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 14:44:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param	argc	Number of arguments
  * @param	argv	Arguments
  */
-int	args_valid(t_app *app, int argc, char **argv)
+int	args_valid(t_ctx *app, int argc, char **argv)
 {
 	if (argc != 5)
 		app_exit_errno(*app, EINVAL);

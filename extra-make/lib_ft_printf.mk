@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/04 22:21:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/04 11:52:35 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:03:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ PRINTF		=	$(PRINTF_DIR)/libftprintf.a
 # LD
 LDFLAGS	:= -L$(PRINTF_DIR) -l:libftprintf.a $(LDFLAGS)
 # CC
-CFLAGS	+= -I$(PRINTF_DIR)
+CFLAGS	+= -I$(PRINTF_DIR)/includes
 
 # Make target config
 NAME_DEPS_INDIRECT	+= $(PRINTF)

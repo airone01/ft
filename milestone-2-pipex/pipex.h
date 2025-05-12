@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:09:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/21 14:42:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,44 +34,44 @@ typedef struct s_app
 	// t_list of char*
 	t_list	*cmdas;
 	char	**envp;
-}			t_app;
+}			t_ctx;
 
 // Global data functions
-void		app_exit_errno(t_app app, unsigned long errno_p);
-void		app_exit(t_app app);
-t_app		app_new(char **envp);
+void		app_exit_errno(t_ctx app, unsigned long errno_p);
+void		app_exit(t_ctx app);
+t_ctx		app_new(char **envp);
 
 // Memory management
 void		free_strings(char **strings);
-void		app_free(t_app app);
+void		app_free(t_ctx app);
 void		nothing(void *ptr);
 
 // Environment variables
-char		*env_find(t_app app, char *var);
-char		*env_find_bin(t_app *app, char *bin);
+char		*env_find(t_ctx app, char *var);
+char		*env_find_bin(t_ctx *app, char *bin);
 
 // Arguments parsing
-char		**cmda_args(t_app *app, char *cmd);
-void		populate_cmdas(t_app *app, int argc, char **argv);
+char		**cmda_args(t_ctx *app, char *cmd);
+void		populate_cmdas(t_ctx *app, int argc, char **argv);
 void		cmda_print(void *content);
 void		cmda_free(void *cmda);
-int			args_valid(t_app *app, int argc, char **argv);
+int			args_valid(t_ctx *app, int argc, char **argv);
 
 // Path resolution
-char		*path_find_bin(t_app *app, char *path, char *bin);
-char		*find_bin(t_app *app, char *bin);
+char		*path_find_bin(t_ctx *app, char *path, char *bin);
+char		*find_bin(t_ctx *app, char *bin);
 
 // Execution
-void		exec_cmdas(t_app app);
-void		exec_cmda_child(t_app app, t_list *current_cmd, int *pipe_prev,
+void		exec_cmdas(t_ctx app);
+void		exec_cmda_child(t_ctx app, t_list *current_cmd, int *pipe_prev,
 				int *pipe_curr);
 
 // Execution: file descriptors
-int			get_fd_in(t_app app, t_list *fd_pipes, int cmd_index);
-int			get_fd_out(t_app app, t_list *fd_pipes, int cmd_index,
+int			get_fd_in(t_ctx app, t_list *fd_pipes, int cmd_index);
+int			get_fd_out(t_ctx app, t_list *fd_pipes, int cmd_index,
 				int cmd_count);
 
 // Bonus
-int			handle_here_doc(t_app *app, char *limiter);
+int			handle_here_doc(t_ctx *app, char *limiter);
 
 #endif

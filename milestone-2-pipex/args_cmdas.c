@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:46:10 by elagouch          #+#    #+#             */
-/*   Updated: 2025/01/31 16:30:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:14:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-void	populate_cmdas(t_app *app, int argc, char **argv)
+void	populate_cmdas(t_ctx *app, int argc, char **argv)
 {
 	t_list	*tmp;
 	char	**args;

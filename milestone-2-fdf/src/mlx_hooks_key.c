@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:52:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool	key_resets_render(int keycode)
 		|| keycode == KEY_9 || keycode == KEY_0);
 }
 
-static void	key_hook3(int keycode, t_app *ctx)
+static void	key_hook3(int keycode, t_ctx *ctx)
 {
 	if (keycode == KEY_F6)
 		toggle_debug_mode(ctx, DEBUG_SECTIONS);
@@ -40,7 +40,7 @@ static void	key_hook3(int keycode, t_app *ctx)
 		ctx->horizon_distance *= 0.9;
 }
 
-void	key_hook2(int keycode, t_app *ctx)
+void	key_hook2(int keycode, t_ctx *ctx)
 {
 	if (keycode == KEY_Q)
 		ctx->rot_x += 0.1;
@@ -72,14 +72,14 @@ void	key_hook2(int keycode, t_app *ctx)
  * @brief Main hook for when key is pressed
  *
  * @param keycode Key
- * @param ctx Application context
+ * @param ctx Context
  */
-void	key_hook(int keycode, t_app *ctx)
+void	key_hook(int keycode, t_ctx *ctx)
 {
 	if (key_resets_render(keycode))
 		ctx->needs_render = true;
 	if (keycode == KEY_ESCAPE)
-		app_clear_0(ctx);
+		ctx_clear_0(ctx);
 	else if (keycode == KEY_W || keycode == KEY_ARROW_UP)
 		ctx->offset_y -= 10;
 	else if (keycode == KEY_S || keycode == KEY_ARROW_DOWN)

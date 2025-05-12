@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 10:50:07 by elagouch          #+#    #+#             */
-/*   Updated: 2025/02/25 10:51:38 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /**
  * @brief Draws a rectangle outline for a section boundary
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param section Section to draw outline for
  * @param color Color of the outline
  */
-void	draw_section_outline(t_app *ctx, t_section section, unsigned int color)
+void	draw_section_outline(t_ctx *ctx, t_section section, unsigned int color)
 {
 	t_point	corners[4];
 	int		i;
@@ -39,9 +39,9 @@ void	draw_section_outline(t_app *ctx, t_section section, unsigned int color)
 /**
  * @brief Renders debug visualization of section boundaries
  *
- * @param ctx Application context
+ * @param ctx Context
  */
-void	render_section_debug(t_app *ctx)
+void	render_section_debug(t_ctx *ctx)
 {
 	t_section	section;
 	int			section_start_y;

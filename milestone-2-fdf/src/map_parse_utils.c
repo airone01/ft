@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:22:42 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ int	count_columns_in_line(const char *line)
 /**
  * @brief Process a token to extract elevation and optional color
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param token Token string to process
  * @param row Current row being processed
  * @param col Pointer to current column index
  */
-void	parse_token(t_app *ctx, char *token, int row, int *col)
+void	parse_token(t_ctx *ctx, char *token, int row, int *col)
 {
 	int				val;
 	unsigned int	color;

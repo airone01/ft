@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 21:13:22 by elagouch          #+#    #+#             */
-/*   Updated: 2025/03/05 12:42:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	process_corner(t_point3d corner, t_app *ctx, t_point3d *min,
+static void	process_corner(t_point3d corner, t_ctx *ctx, t_point3d *min,
 		t_point3d *max)
 {
 	t_point3d	p;
@@ -33,7 +33,7 @@ static void	process_corner(t_point3d corner, t_app *ctx, t_point3d *min,
 		max->y = proj.y;
 }
 
-static void	get_projected_bounds(t_app *ctx, t_point3d *min, t_point3d *max)
+static void	get_projected_bounds(t_ctx *ctx, t_point3d *min, t_point3d *max)
 {
 	int			w;
 	int			h;
@@ -57,7 +57,7 @@ static void	get_projected_bounds(t_app *ctx, t_point3d *min, t_point3d *max)
 		process_corner(corners[i], ctx, min, max);
 }
 
-static void	adjust_scale(t_app *ctx, t_point3d *min, t_point3d *max)
+static void	adjust_scale(t_ctx *ctx, t_point3d *min, t_point3d *max)
 {
 	int		i;
 	double	width;
@@ -76,7 +76,7 @@ static void	adjust_scale(t_app *ctx, t_point3d *min, t_point3d *max)
 	}
 }
 
-static void	set_initial_offsets(t_app *ctx, t_point3d min, t_point3d max)
+static void	set_initial_offsets(t_ctx *ctx, t_point3d min, t_point3d max)
 {
 	ctx->offset_x = (IMG_WIDTH - (max.x + min.x)) / 2;
 	ctx->offset_y = (IMG_HEIGHT - (max.y + min.y)) / 2;
@@ -85,9 +85,9 @@ static void	set_initial_offsets(t_app *ctx, t_point3d min, t_point3d max)
 /**
  * @brief	Calculates the initial scale of the map.
  *
- * @param	ctx		The application context.
+ * @param	ctx		The Context.
  */
-void	calculate_initial_scale(t_app *ctx)
+void	calculate_initial_scale(t_ctx *ctx)
 {
 	t_point3d	min;
 	t_point3d	max;

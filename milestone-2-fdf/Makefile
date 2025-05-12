@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:28:38 by elagouch          #+#    #+#              #
-#    Updated: 2025/03/06 12:05:15 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 02:29:10 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,13 +43,15 @@ MINILIBX_DIR	:= $(realpath ../extra-minilibx)# GPM!
 # GPM@	.GNL_DIR		:= $(realpath ./get_next_line)
 # GPM@	.MINILIBX_DIR	:= $(realpath ./minilibx)
 
+# The MLX does not support parameters in callbacks otherwise
+CFLAGS		+= -Wno-incompatible-pointer-types
+
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
 # Needed because we compile with the math library
 LDFLAGS			:= -lm
-CFLAGS			:= -I.
 
 all: $(NAME)
 
@@ -58,7 +60,6 @@ title:
 	@$(ECHO) "$(MSG)  / _/__/ / _/\n"
 	@$(ECHO) "$(MSG) / _/ _  / _/\n"
 	@$(ECHO) "$(MSG)/_/ \\_,_/_/\n"
-	@$(ECHO) "$(MSG)\n"
 
 include $(realpath ../extra-make/lib_libft.mk)# GPM!
 # GPM: make_lib_libft_mk

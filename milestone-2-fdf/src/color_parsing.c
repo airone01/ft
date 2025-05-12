@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:18:30 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:01:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 02:19:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ bool	validate_hex_format(char *str) {
 /**
  * @brief Parse color value from hex string with validation
  *
- * @param ctx Application context
+ * @param ctx Context
  * @param str Color string to parse
  * @param color Pointer to store parsed color
  * @return bool Success or failure
  */
-bool	parse_color(t_app *ctx, char *str, unsigned int *color) {
+bool	parse_color(t_ctx *ctx, char *str, unsigned int *color) {
   unsigned int result;
   int i;
   int digit_val;
