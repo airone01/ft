@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/22 13:20:59 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/12 02:27:47 by elagouch         ###   ########.fr        #
+#    Updated: 2025/05/12 13:31:39 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ DEP_BONUS	:= $(_SRC_$(GPM_MNAME)_BONUS:$(SRC_DIR)%=$(OUT_DIR)%.d)
 $(OUT_DIR):
 	@$(MD) $(OUT_DIR)
 
-$(OUT_DIR)%.o: $(SRC_DIR)%.c | Makefile $(OUT_DIR)
+$(OUT_DIR)%.o: $(SRC_DIR)%.c Makefile | $(OUT_DIR)
 	@$(ECHO) "$(MSG)⏳ $@\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 

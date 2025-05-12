@@ -6,15 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 18:58:38 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:06:01 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft.h"    // GPM!
-
+# include "libft.h" // GPM!
+// GPM!
 # include "std.h"      // my standard functions
 # include <errno.h>    // for error types such as ENOMEM
 # include <limits.h>   // integer limits

@@ -5,29 +5,19 @@ version = "1.0.0"
 [submit]
 files = [
 	# C sources
-	"src/*",
+	"src/*.c",
 	# C headers
-	"includes/*",
+	"includes/*.h",
 	# Other
 	"Makefile"
 ]
 
 [submit.preprocessor]
 enable_gpm = true
-function_paths = ["src"]
+function_paths = ["."]
 
 [submit.hooks]
-pre_submit = "make fclean > /dev/null"
+temp_prepare = "mkdir philo && mv Makefile src includes philo/"
 
 [submit.validation]
 norminette = true
-
-# **************************************************************************** #
-#                                    LibFt                                     #
-# **************************************************************************** #
-[[submit.copy]]
-source = "../milestone-0-libft/Makefile"
-destination = "libft"
-[[submit.copy]]
-source = "../milestone-0-libft/*.{c,h}"
-destination = "libft"

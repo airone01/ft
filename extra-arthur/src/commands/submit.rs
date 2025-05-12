@@ -191,6 +191,11 @@ impl Command for Submit {
         // Prepare submission files
         let temp_dir = self.prepare_submission()?;
 
+        // Run temp_prepare hook if configured - this runs in the temp directory BEFORE git operations
+        if let Some(temp_prepare_hook) = &push_config.submit.hooks.temp_prepare {
+            self.run_hook(temp_prepare_hook, temp_dir.path())?;
+        }
+
         // Setup git repo and push
         self.setup_git_repo(temp_dir.path(), &self.target_repo)?;
 
