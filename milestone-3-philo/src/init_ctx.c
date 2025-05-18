@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:07:16 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 18:42:07 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:09:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_ctx	*init_ctx(int argc, char **argv)
 	init_ctx_atol(ctx, argc, argv);
 	if (init_ctx_check_zero(ctx, argc))
 		return (NULL);
-	ctx->forks = ft_calloc((size_t)ctx->philos_count, sizeof(pthread_mutex_t));
+	ctx->forks = ft_calloc((size_t)ctx->philos_count, sizeof(t_fork));
 	if (!ctx->forks)
 	{
 		free_ctx(ctx);

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:37:54 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 18:01:49 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:15:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@ void	take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->fork_right);
+		pthread_mutex_lock(&philo->fork_right->mutex);
+		philo->fork_right->in_use = true;
+		philo->fork_right->owner_id = philo->id;
 		log_action(philo, "has taken a fork");
-		pthread_mutex_lock(philo->fork_left);
+		pthread_mutex_lock(&philo->fork_left->mutex);
+		philo->fork_left->in_use = true;
+		philo->fork_left->owner_id = philo->id;
 		log_action(philo, "has taken a fork");
 	}
 	else
 	{
-		pthread_mutex_lock(philo->fork_left);
+		pthread_mutex_lock(&philo->fork_left->mutex);
+		philo->fork_left->in_use = true;
+		philo->fork_left->owner_id = philo->id;
 		log_action(philo, "has taken a fork");
-		pthread_mutex_lock(philo->fork_right);
+		pthread_mutex_lock(&philo->fork_right->mutex);
+		philo->fork_right->in_use = true;
+		philo->fork_right->owner_id = philo->id;
 		log_action(philo, "has taken a fork");
 	}
 }
@@ -40,12 +48,37 @@ void	update_philo(t_philo *philo)
 	ft_usleep((unsigned long)philo->ctx->meal_time, philo);
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
+		philo->fork_right->in_use = false;
+		philo->fork_right->owner_id = -1;
+		pthread_mutex_unlock(&philo->fork_right->mutex);
+		philo->fork_left->in_use = false;
+		philo->fork_left->owner_id = -1;
+		pthread_mutex_unlock(&philo->fork_left->mutex);
 	}
 	else
 	{
-		pthread_mutex_unlock(philo->fork_left);
-		pthread_mutex_unlock(philo->fork_right);
+		philo->fork_left->in_use = false;
+		philo->fork_left->owner_id = -1;
+		pthread_mutex_unlock(&philo->fork_left->mutex);
+		philo->fork_right->in_use = false;
+		philo->fork_right->owner_id = -1;
+		pthread_mutex_unlock(&philo->fork_right->mutex);
 	}
+}
+
+unsigned long	calculate_thinking_time(t_philo *philo)
+{
+	unsigned long	thinking_time;
+
+	thinking_time = 0;
+	thinking_time = ((unsigned long)philo->ctx->death_time / 1000
+			- (unsigned long)philo->ctx->meal_time / 1000
+			- (unsigned long)philo->ctx->sleep_time / 1000) / 2;
+	if (philo->id % 2 == 0)
+		thinking_time = (unsigned long)((double)thinking_time * 0.9);
+	else
+		thinking_time = (unsigned long)((double)thinking_time * 1.1);
+	if (thinking_time < 1)
+		thinking_time = 1;
+	return (thinking_time * 1000);
 }

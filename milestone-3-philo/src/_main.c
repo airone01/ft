@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 17:39:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:13:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	final_coutdown(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->philos_count)
-		pthread_mutex_destroy(&ctx->forks[i]);
+		pthread_mutex_destroy(&ctx->forks[i].mutex);
 	pthread_mutex_destroy(&ctx->print_lock);
 	pthread_mutex_destroy(&ctx->dead_lock);
 	free_ctx(ctx);
