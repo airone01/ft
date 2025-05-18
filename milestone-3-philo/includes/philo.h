@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:34:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:20:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 # include <sys/time.h> // for gettimeofday
 # include <unistd.h>   // usleep
 // # include <sys/wait.h>  // for waitpid
+
+# define FG_RED "\x1b[31m"
+# define FG_GREEN "\x1b[32m"
+# define FG_YELLOW "\x1b[33m"
+# define NC "\x1b[0m"
 
 // *************************************************************************** #
 //                                 Structures                                  #
@@ -89,6 +94,14 @@ typedef struct s_ctx
  * @return int Return status
  */
 int					main(int argc, char **argv);
+
+/**
+ * @brief Calculates the time each philo has to think
+ *
+ * @param philo Philosopher
+ * @return unsigned long Time to think
+ */
+unsigned long		calculate_thinking_time(t_philo *philo);
 
 /**
  * @brief Checks for the death of philosophers

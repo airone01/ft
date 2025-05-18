@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:37:54 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:34:42 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:07:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,21 @@ void	update_philo(t_philo *philo)
 		philo->fork_right->in_use = false;
 		pthread_mutex_unlock(&philo->fork_right->mutex);
 	}
+}
+
+unsigned long	calculate_thinking_time(t_philo *philo)
+{
+	unsigned long	thinking_time;
+
+	thinking_time = 0;
+	thinking_time = ((unsigned long)philo->ctx->death_time / 1000
+			- (unsigned long)philo->ctx->meal_time / 1000
+			- (unsigned long)philo->ctx->sleep_time / 1000) / 2;
+	if (philo->id % 2 == 0)
+		thinking_time = (unsigned long)((double)thinking_time * 0.9);
+	else
+		thinking_time = (unsigned long)((double)thinking_time * 1.1);
+	if (thinking_time < 1)
+		thinking_time = 1;
+	return (thinking_time * 1000);
 }

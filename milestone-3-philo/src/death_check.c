@@ -6,15 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:53:56 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 19:05:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:16:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief Checks if a philo died
- */
+/*
+** Checks if a philo died
+*/
 static int	grim_reaper_check(t_ctx *ctx, int i)
 {
 	size_t	current_time;
@@ -35,9 +35,9 @@ static int	grim_reaper_check(t_ctx *ctx, int i)
 	return (0);
 }
 
-/**
- * @brief Checks if all philos are full (meaning they ate)
- */
+/*
+** Checks if all philos are full (meaning they all ate)
+*/
 static bool	chef_gusteau_check(t_ctx *ctx)
 {
 	long	i;
@@ -56,6 +56,9 @@ static bool	chef_gusteau_check(t_ctx *ctx)
 	return (all_ate);
 }
 
+/*
+** When all philos are full, this writes some info to stderr.
+*/
 static void	write_thats_all_folks(t_ctx *ctx)
 {
 	char	*s;
@@ -63,11 +66,11 @@ static void	write_thats_all_folks(t_ctx *ctx)
 	s = ft_itoa((int)ctx->max_meal_count);
 	if (!s)
 		return ;
-	write(STDERR_FILENO, "All philosophers ate the maximum number of meals (",
-		50);
+	write(STDERR_FILENO,
+		FG_GREEN "All philosophers ate the maximum number of meals (", 55);
 	write(STDERR_FILENO, s, ft_strlen(s));
 	free(s);
-	write(STDERR_FILENO, ").\n", 3);
+	write(STDERR_FILENO, ").\n" NC, 7);
 }
 
 void	*death_check(void *arg)

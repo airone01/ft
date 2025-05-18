@@ -6,14 +6,22 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 13:13:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:50:04 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** This file contains the main entrypoint of this philo implementation, and some
+** utilities that go along with it.
+*/
 
 #include "args.h"
 #include "mem.h"
 #include "philo.h"
 
+/*
+** Join to wait on all the threads
+*/
 static void	wait_threads(t_ctx *ctx, pthread_t *big_brother)
 {
 	int	i;
@@ -24,7 +32,10 @@ static void	wait_threads(t_ctx *ctx, pthread_t *big_brother)
 	pthread_join(*big_brother, NULL);
 }
 
-static void	final_coutdown(t_ctx *ctx)
+/*
+** Clears at the end of the program
+*/
+static void	final_free(t_ctx *ctx)
 {
 	int	i;
 
@@ -63,6 +74,6 @@ int	main(int argc, char **argv)
 	if (launch_big_brother(ctx, &big_brother))
 		return (EXIT_FAILURE);
 	wait_threads(ctx, &big_brother);
-	final_coutdown(ctx);
+	final_free(ctx);
 	return (EXIT_SUCCESS);
 }

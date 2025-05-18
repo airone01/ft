@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:07:16 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 13:09:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:15:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static bool	init_ctx_check_zero(t_ctx *ctx, int argc)
 	if (ctx->philos_count == 0 || ctx->death_time == 0 || ctx->meal_time == 0
 		|| ctx->sleep_time == 0 || (argc == 6 && ctx->max_meal_count == 0))
 	{
-		printf("Error: All arguments must be greater than 0.\n");
+		write(STDERR_FILENO,
+			FG_RED "Error: All arguments must be greater than 0.\n" NC, 54);
 		free_ctx(ctx);
 		return (true);
 	}

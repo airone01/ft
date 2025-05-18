@@ -6,15 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:35:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:08:24 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * Handle the case where there is only one philosopher
- */
+/*
+** Handle the case where there is only one philosopher
+*/
 static void	*take_fork_and_return(t_philo *philo)
 {
 	log_action(philo, "has taken a fork");
@@ -42,6 +42,7 @@ void	*routine(void *arg)
 		if (is_it_over(philo->ctx))
 			break ;
 		log_action(philo, "is thinking");
+		ft_usleep(calculate_thinking_time(philo), philo);
 	}
 	return (NULL);
 }
