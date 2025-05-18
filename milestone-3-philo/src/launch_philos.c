@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:38:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 16:07:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:33:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ bool	launch_philos(t_ctx *ctx)
 			ctx->stop = true;
 			return (true);
 		}
-		if (ctx->philos_count > 1)
-			usleep(3);
 	}
 	return (false);
 }

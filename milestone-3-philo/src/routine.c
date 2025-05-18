@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 13:13:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:35:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	*take_fork_and_return(t_philo *philo)
 
 void	*routine(void *arg)
 {
-	t_philo			*philo;
-	unsigned long	thinking_time;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->ctx->philos_count == 1)
@@ -43,8 +42,6 @@ void	*routine(void *arg)
 		if (is_it_over(philo->ctx))
 			break ;
 		log_action(philo, "is thinking");
-		thinking_time = calculate_thinking_time(philo);
-		ft_usleep(thinking_time, philo);
 	}
 	return (NULL);
 }

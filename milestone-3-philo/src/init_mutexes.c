@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:19:21 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 13:06:55 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:28:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	init_mutexes(t_ctx *ctx)
 			return (1);
 		}
 		ctx->forks[i].in_use = false;
-		ctx->forks[i].owner_id = -1;
 	}
 	return (0);
 }
