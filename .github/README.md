@@ -101,7 +101,7 @@
       <td>125</td>
     </tr>
     <tr align="center">
-      <td rowspan=2>3</td>
+      <td rowspan=3>3</td>
       <td>
           <a href="/milestone-3-minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
           <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
@@ -112,6 +112,14 @@
     </tr>
     <tr align="center">
       <td><a href="/milestone-3-philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
+      <td>⌛</td>
+      <td>...</td>
+    </tr>
+    <tr align="center">
+      <td>
+          <a href="/milestone-3-cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3de.png" alt="cub3d logo"></a><br>
+          <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
+      </td>
       <td>⌛</td>
       <td>...</td>
     </tr>
