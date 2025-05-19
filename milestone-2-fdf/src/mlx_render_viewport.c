@@ -71,8 +71,9 @@ bool	is_section_outside_viewport(t_ctx *ctx, t_section section)
 	corners[1] = get_projected_point(section.end_x, section.start_y, ctx);
 	corners[2] = get_projected_point(section.start_x, section.end_y, ctx);
 	corners[3] = get_projected_point(section.end_x, section.end_y, ctx);
-	if ((corners[0].x < -margin && corners[1].x < -margin && corners[2].x <
-			-margin && corners[3].x < -margin) || (corners[0].x > width + margin
+	if ((corners[0].x < -margin && corners[1].x < -margin && corners[2].x
+			< -margin && corners[3].x < -margin) || (corners[0].x > width
+			+ margin
 			&& corners[1].x > width + margin && corners[2].x > width + margin
 			&& corners[3].x > width + margin) || (corners[0].y < -margin
 			&& corners[1].y < -margin && corners[2].y < -margin

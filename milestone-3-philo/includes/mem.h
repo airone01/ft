@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:05:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 17:38:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:06:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 # define MEM_H
 
 # include "philo.h"
-
-/**
- * @brief Frees the context and returns a given return status
- *
- * @param ctx Context
- * @param code Return status
- * @return int Return status
- */
-int		_rf(t_ctx *ctx, int status);
 
 /**
  * @brief Frees the app context
@@ -48,9 +39,9 @@ t_ctx	*init_ctx(int argc, char **argv);
  * @see pthread_mutex_destroy(3)
  *
  * @param ctx Context
- * @return int 0 on success, any of the given error codes on failure
+ * @return bool true on failure, false otherwise
  */
-int		init_mutexes(t_ctx *ctx);
+bool	init_mutexes(t_ctx *ctx);
 
 /**
  * @brief Allocates the array for philosophers

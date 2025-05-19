@@ -6,15 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 16:57:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:44:13 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * Handle the case where there is only one philosopher
- */
+/*
+** Handle the case where there is only one philosopher
+*/
 static void	*take_fork_and_return(t_philo *philo)
 {
 	log_action(philo, "has taken a fork");
@@ -22,15 +22,32 @@ static void	*take_fork_and_return(t_philo *philo)
 	return (NULL);
 }
 
+/*
+** Waits for all philosophers
+*/
+static void	wait_all_philos(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->ctx->start_mutex);
+	philo->ctx->threads_ready++;
+	if (philo->ctx->threads_ready == philo->ctx->philos_count)
+		philo->ctx->simulation_started = true;
+	pthread_mutex_unlock(&philo->ctx->start_mutex);
+	while (!philo->ctx->simulation_started)
+		usleep(100);
+}
+
 void	*routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	wait_all_philos(philo);
 	if (philo->ctx->philos_count == 1)
 		return (take_fork_and_return(philo));
+	if (philo->id % 2 == 0 || philo->id == 1)
+		log_action(philo, "is thinking");
 	if (philo->id % 2 == 0)
-		usleep(1);
+		ft_usleep(calculate_thinking_time(philo), philo);
 	while (!is_it_over(philo->ctx))
 	{
 		take_forks(philo);
@@ -42,6 +59,7 @@ void	*routine(void *arg)
 		if (is_it_over(philo->ctx))
 			break ;
 		log_action(philo, "is thinking");
+		ft_usleep(calculate_thinking_time(philo), philo);
 	}
 	return (NULL);
 }

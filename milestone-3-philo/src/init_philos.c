@@ -6,13 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:30:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 16:53:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 13:10:23 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// last_meal is set during launch_philos
+/*
+** `last_meal` is set during launch_philos, not here
+*/
 void	init_philos(t_ctx *ctx)
 {
 	int	i;

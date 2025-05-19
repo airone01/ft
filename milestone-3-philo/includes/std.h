@@ -6,16 +6,17 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 12:54:48 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 13:47:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:05:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STD_H
 # define STD_H
 
-# include <aio.h>
-# include <limits.h>
-# include <stdbool.h>
+# include <aio.h>     // size_t, ssize_t
+# include <limits.h>  // max vals
+# include <stdbool.h> // bool
+# include <stdint.h>  // uint8_t
 
 /**
  * @brief Converts a string to an unsigned long integer.
@@ -65,6 +66,27 @@ bool			ft_isdigit(char c);
  * @return true if @p c is a space character, false otherwise.
  */
 bool			ft_isspace(char c);
+
+/**
+ * @brief Converts an integer to a string.
+ *
+ * @param n Integer to convert.
+ * @return char* Newly allocated string containing the number, or NULL if
+ *               allocation fails.
+ *
+ * @note Handles negative numbers. Caller must free the returned string.
+ */
+char			*ft_itoa(int n);
+
+/**
+ * @brief Fills a memory area with a constant byte.
+ *
+ * @param s Memory area to fill.
+ * @param c Byte value to set (interpreted as uint8_t).
+ * @param n Number of bytes to fill.
+ * @return void* Pointer to the memory area.
+ */
+void			*ft_memset(void *s, uint8_t c, size_t n);
 
 /**
  * @brief Calculates the length of a null-terminated string.

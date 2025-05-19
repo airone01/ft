@@ -6,15 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 18:58:38 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:03:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft.h"    // GPM!
-
+# include "libft.h" // GPM!
+// GPM!
 # include "std.h"      // my standard functions
 # include <errno.h>    // for error types such as ENOMEM
 # include <limits.h>   // integer limits
@@ -25,11 +25,24 @@
 # include <stdlib.h>   // standard lib
 # include <sys/time.h> // for gettimeofday
 # include <unistd.h>   // usleep
-// # include <sys/wait.h>  // for waitpid
+
+# define FG_RED "\x1b[31m"
+# define FG_GREEN "\x1b[32m"
+# define FG_YELLOW "\x1b[33m"
+# define NC "\x1b[0m"
 
 // *************************************************************************** #
 //                                 Structures                                  #
 // *************************************************************************** #
+
+/**
+ * @brief Information about a fork
+ */
+typedef struct s_fork
+{
+	pthread_mutex_t	mutex;
+	bool			in_use;
+}					t_fork;
 
 /**
  * @brief Informations about a philosopher
@@ -41,8 +54,8 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	pthread_t		thread;
 	struct s_ctx	*ctx;
-	pthread_mutex_t	*fork_right;
-	pthread_mutex_t	*fork_left;
+	t_fork			*fork_right;
+	t_fork			*fork_left;
 }					t_philo;
 
 /**
@@ -59,13 +72,16 @@ typedef struct s_ctx
 	// Mutexes
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	dead_lock;
-	pthread_mutex_t	*forks;
+	t_fork			*forks;
 	// Start time
 	unsigned long	epoch;
 	// Philosophers
 	t_philo			*philos;
 	// Mission control
 	bool			stop;
+	pthread_mutex_t	start_mutex;
+	int				threads_ready;
+	bool			simulation_started;
 }					t_ctx;
 
 // *************************************************************************** #
@@ -80,6 +96,14 @@ typedef struct s_ctx
  * @return int Return status
  */
 int					main(int argc, char **argv);
+
+/**
+ * @brief Calculates the time each philo has to think
+ *
+ * @param philo Philosopher
+ * @return unsigned long Time to think
+ */
+unsigned long		calculate_thinking_time(t_philo *philo);
 
 /**
  * @brief Checks for the death of philosophers

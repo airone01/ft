@@ -6,12 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:08:33 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 13:29:26 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/18 15:22:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+** We just strncmp because this is litterally what the function is used for :-)
+*/
 static bool	is_valid_number_length(char *str)
 {
 	const char	*max_ulong = "18446744073709551615";
@@ -28,28 +31,44 @@ static bool	is_valid_number_length(char *str)
 	return (true);
 }
 
-static bool	is_valid_number(char *str)
+static bool	contains_invalid_chars(char *str)
 {
 	int	j;
 
 	j = 0;
-	if (ft_strlen(str) == 0)
-	{
-		printf("Error: argument is empty\n");
-		return (false);
-	}
 	while (str[j])
 	{
 		if (!ft_isdigit(str[j]))
 		{
-			printf("Error: '%s' contains non-numeric characters\n", str);
+			write(STDERR_FILENO, FG_RED "Error: '", 13);
+			write(STDERR_FILENO, str, ft_strlen(str));
+			write(STDERR_FILENO,
+				FG_RED "' contains non-numeric characters\n" NC, 38);
 			return (false);
 		}
 		j++;
 	}
+	return (true);
+}
+
+/*
+** Checks if a number argument is valid
+*/
+static bool	is_valid_number(char *str)
+{
+	if (ft_strlen(str) == 0)
+	{
+		write(STDERR_FILENO, FG_RED "Error: argument is empty\n" NC, 34);
+		return (false);
+	}
+	if (!contains_invalid_chars(str))
+		return (false);
 	if (!is_valid_number_length(str))
 	{
-		printf("Error: '%s' is out of range for a long integer\n", str);
+		write(STDERR_FILENO, FG_RED "Error: '", 13);
+		write(STDERR_FILENO, str, ft_strlen(str));
+		write(STDERR_FILENO, FG_RED "' is out of range for a long integer\n" NC,
+			41);
 		return (false);
 	}
 	return (true);
@@ -61,8 +80,9 @@ bool	args(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Usage: <philos count> <death time> ");
-		printf("<meal time> <sleep time> [meals count]\n");
+		write(STDERR_FILENO,
+			FG_YELLOW "Usage: <philos count> <death time> <meal time>", 51);
+		write(STDERR_FILENO, " <sleep time> [meals count]\n" NC, 32);
 		return (true);
 	}
 	i = 1;
