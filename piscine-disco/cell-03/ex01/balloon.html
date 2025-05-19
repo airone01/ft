@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EX01</title>
+
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .balloon {
+      border-radius: 100%;
+      aspect-ratio: 1/1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="balloon" onclick="onClicked()" onmouseleave="onMouseLeave()" />
+  <script>
+    // Registering
+    const balloon = document.querySelector('.balloon');
+    let color = 0;
+    const colors = ['red', 'green', 'blue'];
+    balloon.style.backgroundColor = colors[color];
+    balloon.style.width = "200px";
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    const changeWidth = (widthFunction) => {
+      const pixels = balloon.style.width.replaceAll('px', '');
+      let width = widthFunction(Number(pixels));
+      // console.trace(`Calculated width: ${width} from ${Number(pixels)}`);
+      if (width < 200) width = 200;
+      balloon.style.width = `${width}px`
+    }
+
+    const onClicked = () => {
+      // Width
+      changeWidth((width) => width * 1.1);
+
+      // Color
+      color++;
+      color %= 3;
+      console.log(color);
+      balloon.style.backgroundColor = colors[color];
+
+      // Boom
+      if (balloon.offsetWidth > 420) {
+        changeWidth(() => 200);
+        color = 0;
+        balloon.style.backgroundColor = colors[color];
+      }
+    }
+
+    const onMouseLeave = () => {
+      changeWidth((width) => width - 5);
+    }
+  </script>
+</body>
+
+</html>

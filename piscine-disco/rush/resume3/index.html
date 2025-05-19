@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Sigmar&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="../nav.js"></script>
+  <link rel="stylesheet" href="jkcss.css">
+  <title>CV Joker</title>
+</head>
+
+<body>
+  <nav>
+    <div>
+      <a class="nav-button" href="#jkfond"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2c-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+        </svg></a>
+      <a class="nav-button" href="#jkexperience_competences"><svg xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0Z" />
+        </svg></a>
+      <a class="nav-button" href="#jkcontact"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 9c-1.5 1.5-3 3.2-3 5.5A5.5 5.5 0 0 0 7.5 20c1.8 0 3-.5 4.5-2c1.5 1.5 2.7 2 4.5 2a5.5 5.5 0 0 0 5.5-5.5c0-2.3-1.5-4-3-5.5l-7-7zm7 9v4" />
+        </svg></a>
+    </div>
+  </nav>
+  <div id="jkfond" class="jkcarre">
+    <div class="jklayer3">
+      <img class="jkrond"
+        src="https://static.wikia.nocookie.net/dcanimated/images/b/b4/Joker_%28JL%29.png/revision/latest?cb=20210308172002">
+    </div>
+    <div class="jktexte" id="jktitre">
+      <h1>Joker - Grand méchant de Gotham City</h1>
+    </div>
+    <img id="jkillustration"
+      src="https://static.wikia.nocookie.net/character-stats-and-profiles/images/0/0b/5pdGUhB.png/revision/latest/scale-to-width-down/496?cb=20230418214444"
+      height="15%" width="15%">
+    <table cellspacing=80px>
+      <td>
+        <div class="jkexperience" id="jkexperience_competences">
+          <h1 style="font-size:80px">Expérience</h1>
+          <br />
+          <ul id="jkexploits">
+            <li>Exterminer la Chine</li>
+            <li>Tuer les parents de Batman</li>
+            <li>Rendre fou un homme en une journée</li>
+            <li>Tuer Robin</li>
+            <li>Manipuler Spiderman</li>
+            <li>Prendre des bébés en otage</li>
+            <li>Maltraiter Harley Queen</li>
+            <li>Devenir une figure populaire pour la lutte des classes</li>
+            <li>Rendre Barbara Gordon paraplégique</li>
+            <li>Tuer Jason Todd</li>
+          </ul>
+        </div>
+      </td>
+      <span class="jkvertical_line"></span>
+      <td>
+        <div class="jkcompetences">
+          <h1 style="font-size:80px">Compétences</h1>
+          <br />
+          <ul id="jkexploits">
+            <li>Manipulation</li>
+            <li>Connaissance sciences chimiques</li>
+            <li>Connaissance des arts</li>
+            <li>Immunisé contre certains poisons</li>
+            <li>Stratégie</li>
+            <li>Sait se servir de divers gadgets</li>
+            <li>Humour</li>
+            <li>Sait manier une arme</li>
+          </ul>
+        </div>
+      </td>
+    </table>
+  </div>
+  </div>
+  <section id="contact">
+    <div class="container">
+      <h2 class="fade-in">Détruisons Gotham ensemble !</h2>
+
+      <div class="grid">
+        <div class="card fade-in">
+          <div class="card-body">
+            <h3 class="card-title">Fais moi une blague</h3>
+            <form>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Pseudo</span>
+                </label>
+                <input type="text" placeholder="Comment tu te fais appeler" class="input" />
+              </div>
+
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">email</span>
+                </label>
+                <input type="email" placeholder="A qui je m'adressse" class="input" />
+              </div>
+
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Sujet</span>
+                </label>
+                <input type="text" placeholder="Pourquoi tu veux me voir" class="input" />
+              </div>
+
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Message</span>
+                </label>
+                <textarea class="textarea" placeholder="Ce que tu veux"></textarea>
+              </div>
+
+              <div class="form-control">
+                <button class="btn btn-primary">Envoyer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="space-y-8 fade-in">
+          <div class="card">
+            <div class="card-body">
+              <h3 id="jkcontact" class="card-title">Si tu veux me contacter</h3>
+
+              <div class="space-y-6">
+                <div class="flex items-start">
+                  <div class="bg-base-200 p-3 rounded-full mr-4">
+                    <i class="fa-solid fa-envelope text-xl text-primary"></i>
+                  </div>
+                  <div>
+                    <h4>Mon email</h4>
+                    <p>joker@gmail.com</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="bg-base-200 p-3 rounded-full mr-4">
+                    <i class="fa-solid fa-location-dot text-xl text-primary"></i>
+                  </div>
+                  <div>
+                    <h4>Localisation</h4>
+                    <p>Gotham</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="bg-base-200 p-3 rounded-full mr-4">
+                    <i class="fa-solid fa-clock text-xl text-primary"></i>
+                  </div>
+                  <div>
+                    <h4>Temps de transmission du message</h4>
+                    <p>Indéfinis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Viens découvrir mes blagues !</h3>
+
+              <div class="flex justify-center gap-6">
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-linkedin-in text-xl"></i>
+                </a>
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-dribbble text-xl"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<style>
+  nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+
+  nav>div {
+    background-color: rgb(151, 194, 172);
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25rem;
+  }
+
+  nav>div>a {
+    width: 4rem;
+    aspect-ratio: 1/1;
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav>div>a>svg {
+    width: 3rem;
+  }
+
+  .rubik-dirt-regular {
+    font-family: "Rubik Dirt", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .jklayer3 {
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    top: -200px;
+  }
+
+  .jkrond {
+    height: 500px;
+    width: 500px;
+    border-radius: 50%;
+    border: 20px solid;
+    border-color: rgb(151, 194, 172);
+  }
+
+  .jkcarre {
+    background:
+      center center / 200px 2000px no-repeat,
+      center no-repeat,
+      rgb(187, 169, 206);
+  }
+
+  html {
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+  }
+
+  body {
+    height: 100%;
+    width: 100%;
+  }
+
+  #jkfond {
+    position: relative;
+    z-index: 1;
+    height: 3000px;
+    width: 2000px;
+    margin: 50px;
+    margin-top: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("https://img.freepik.com/free-vector/pop-art-comic-zooming-lines-expression-background_84443-22011.jpg");
+    background-size: cover;
+    border: 20px solid #ff0000;
+    border-color: rgb(151, 194, 172);
+  }
+
+  .jktexte {
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    top: -200px;
+    font-size: 60px;
+    font-family: "Rubik Dirt", serif;
+    color: rgb(255, 255, 255);
+  }
+
+  #jkillustration {
+    position: absolute;
+    z-index: 5;
+    left: 6%;
+    bottom: 65%;
+  }
+
+  .jkexperience {
+    position: relative;
+    z-index: 3;
+    left: 20px;
+    color: rgb(255, 255, 255);
+  }
+
+  #jkexploits {
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+  }
+
+  .jkvertical_line {
+    position: absolute;
+    z-index: 4;
+    border-right: 18px solid rgb(151, 194, 172);
+    left: 57%;
+    bottom: 39%;
+    height: 25%;
+  }
+
+  .jkcompetences {
+    position: relative;
+    z-index: 3;
+    left: 20px;
+    color: rgb(255, 255, 255);
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</html>

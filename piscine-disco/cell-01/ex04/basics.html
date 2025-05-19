@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Basics</title>
+    <style>
+    body {
+      background: pink;
+    }
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 4rem;
+    }
+    .stores {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .stores > * {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    img {
+      aspect-ratio: 1/1;
+      width: 300px;
+      object-fit: cover;
+    }
+    .card {
+      background: oklch(0.892 0.058 10.001);
+      border-radius: 1rem;
+      overflow: hidden;
+      border: solid 0.2rem oklch(0.81 0.117 11.638);
+    }
+    p {
+      margin-right: 5rem;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>LÄMP</h1>
+    <div class="stores">
+
+      <div class="card">
+        <img src="./aquarium.jpg" alt="">
+        <a href="https://bde42.sumupstore.com/">
+          <h2>Shop BDE 42 Lyon</h2>
+        </a>
+      </div>
+
+      <div class="card">
+        <img src="https://www.fangamer.com/cdn/shop/products/product_undertale_vinyl_box_set_front_photo.png?crop=center&height=600&v=1691700392&width=900" alt="">
+        <a href="https://www.fangamer.com/collections/undertale">
+          <h2>UNDERTALE Shop</h2>
+        </a>
+      </div>
+
+    </div>
+    <hr />
+    <p align="right">© elagouch 2025</p>
+  </body>
+</html>

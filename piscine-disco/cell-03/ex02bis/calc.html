@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EX02</title>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+</head>
+
+<body>
+  <form class="calc" onsubmit="onClick()">
+    <input type="text" name="lnumber" id="lnumber" value="0" required />
+    <select name="operator" id="operator" required>
+      <option value="plus">+</option>
+      <option value="minus">-</option>
+      <option value="mult">*</option>
+      <option value="div">/</option>
+      <option value="mod">%</option>
+    </select>
+    <input type="text" name="rnumber" id="rnumber" value="0" required />
+    <input type="submit" value="Try me!">
+  </form>
+  <script>
+    const reminder = () => {
+      setTimeout(() => {
+        reminder();
+        alert('Please, use me...');
+      }, 30000);
+    }
+    reminder();
+
+    const onClick = () => {
+      event.preventDefault();
+      const lNumber = Number($('#lnumber').val());
+      const rNumber = Number($('#rnumber').val());
+      const operator = $('#operator').val();
+
+      let message = '';
+      let consoleAsWell = true;
+
+      if (['div', 'mod'].includes(operator) && rNumber === 0)
+        message = "It's over 9000!";
+      else if (lNumber < 0 || rNumber < 0 || isNaN(lNumber) || isNaN(rNumber)) {
+        consoleAsWell = false;
+        message = 'Error :(';
+      }
+      else if (operator === 'plus')
+        message = (lNumber + rNumber).toString();
+      else if (operator === 'minus')
+        message = (lNumber - rNumber).toString();
+      else if (operator === 'mult')
+        message = (lNumber * rNumber).toString();
+      else if (operator === 'div')
+        message = (lNumber / rNumber).toString();
+      else if (operator === 'mod')
+        message = (lNumber % rNumber).toString();
+
+      if (consoleAsWell) {
+        console.log(message);
+      }
+      alert(message);
+    }
+  </script>
+</body>
+
+</html>

@@ -4,11 +4,8 @@ version = "1.0.1"
 
 [submit]
 files = [
-	# C sources
 	"*.c",
-	# C headers
 	"push_swap.h",
-	# Other
 	"Makefile"
 ]
 

@@ -1,0 +1,9 @@
+.todo_element {
+  border: 1px solid black;
+}
+
+#btns {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}

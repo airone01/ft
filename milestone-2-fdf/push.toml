@@ -4,11 +4,8 @@ version = "1.0.0"
 
 [submit]
 files = [
-	# C sources
 	"src/*.c",
-	# C headers
 	"fdf.h",
-	# Other
 	"Makefile"
 ]
 
