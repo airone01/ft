@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notorious Villains | Portfolio Collection</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.9/daisyui.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.9/themes.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    .villain-card {
+      transition: all 0.3s ease;
+    }
+
+    .villain-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    .bg-villain {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    .villain-1-accent {
+      background: linear-gradient(135deg, #8a0303 0%, #b80000 100%);
+    }
+
+    .villain-2-accent {
+      background: linear-gradient(135deg, #400080 0%, #6a0dad 100%);
+    }
+
+    .villain-3-accent {
+      background: linear-gradient(135deg, #004d40 0%, #00796b 100%);
+    }
+  </style>
+</head>
+
+<body class="bg-villain min-h-screen">
+  <div class="container mx-auto px-4 py-12">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-white mb-4">NOTORIOUS VILLAINS</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">Enter the shadows and discover the masterminds behind the
+        world's most ingenious schemes.</p>
+      <div class="mt-6 flex justify-center">
+        <div class="badge badge-lg bg-red-700 border-red-700 mx-1">DANGEROUS</div>
+        <div class="badge badge-lg bg-purple-700 border-purple-700 mx-1">BRILLIANT</div>
+        <div class="badge badge-lg bg-teal-700 border-teal-700 mx-1">NOTORIOUS</div>
+      </div>
+    </header>
+
+    <!-- Villain Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <!-- Villain 1 -->
+      <div class="villain-card card glass">
+        <figure class="px-6 pt-6">
+          <div class="w-full h-64 bg-gray-800 rounded-xl overflow-hidden flex items-center justify-center">
+            <img
+              src="https://static.wikia.nocookie.net/dcanimated/images/b/b4/Joker_%28JL%29.png/revision/latest?cb=20210308172002"
+              alt="The Joker" class="object-cover w-full h-full" />
+          </div>
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title text-2xl text-white">The Joker</h2>
+          <p class="text-gray-300 mb-4">Chaos incarnate with an unpredictable nature and a wicked sense of humor.
+            Gotham's most feared criminal mastermind.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="badge badge-sm">Chaos</div>
+            <div class="badge badge-sm">Psychology</div>
+            <div class="badge badge-sm">Criminal Genius</div>
+          </div>
+          <div class="card-actions justify-end">
+            <button class="btn villain-1-accent text-white border-0 hover:brightness-110"
+              onclick="window.location.href='resume3/index.html'">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Villain 2 -->
+      <div class="villain-card card glass">
+        <figure class="px-6 pt-6">
+          <div class="w-full h-64 bg-gray-800 rounded-xl overflow-hidden flex items-center justify-center">
+            <img
+              src="https://media.vogue.fr/photos/609c0405de22532a74a2c0a4/4:3/w_5972,h_4479,c_limit/Cruella-Beauty-vogue-credit-Disney-2.jpg"
+              alt="Cruella" class="object-cover w-full h-full" />
+          </div>
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title text-2xl text-white">Cruella</h2>
+          <p class="text-gray-300 mb-4">Fashion-obsessed villain with a flair for the dramatic and a particular fondness
+            for spotted fur coats.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="badge badge-sm">Fashion</div>
+            <div class="badge badge-sm">Manipulation</div>
+            <div class="badge badge-sm">Ruthless</div>
+          </div>
+          <div class="card-actions justify-end">
+            <button class="btn villain-2-accent text-white border-0 hover:brightness-110"
+              onclick="window.location.href='resume2/index.html'">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Villain 3 -->
+      <div class="villain-card card glass">
+        <figure class="px-6 pt-6">
+          <div class="w-full h-64 bg-gray-800 rounded-xl overflow-hidden flex items-center justify-center">
+            <img src="https://i.pinimg.com/736x/b3/f7/f2/b3f7f234c16bb6350c55c56a998153d3.jpg" alt="Ariane Yeong"
+              class="object-cover object-top w-full h-full" />
+          </div>
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title text-2xl text-white">Ariane Yeong</h2>
+          <p class="text-gray-300 mb-4">Corporate saboteur with unmatched intelligence and manipulation skills. Brings
+            down companies from the inside.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="badge badge-sm">Corporate Espionage</div>
+            <div class="badge badge-sm">Manipulation</div>
+            <div class="badge badge-sm">Strategic Genius</div>
+          </div>
+          <div class="card-actions justify-end">
+            <button class="btn villain-3-accent text-white border-0 hover:brightness-110"
+              onclick="window.location.href='resume1/index.html'">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer comes right after the cards -->
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-gray-400">
+      <p>© 2025 Villains Collective | For entertainment purposes only</p>
+      <p class="text-sm mt-2">No heroes were harmed in the making of this portfolio</p>
+    </footer>
+  </div>
+</body>
+
+</html>

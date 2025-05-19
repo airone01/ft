@@ -1,0 +1,18 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  height: 100%;
+}
+td {
+  padding: 0 1rem;
+  background: #f9c4af;
+  width: 50%;
+}
+td:first-child {
+  background: #c3c77e;
+  border-right: 1px solid black;
+}

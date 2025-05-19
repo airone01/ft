@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EX02</title>
+</head>
+
+<body>
+  <form class="calc" onsubmit="onClick()">
+    <input type="text" name="lnumber" id="lnumber" value="0" required />
+    <select name="operator" id="operator" required>
+      <option value="plus">+</option>
+      <option value="minus">-</option>
+      <option value="mult">*</option>
+      <option value="div">/</option>
+      <option value="mod">%</option>
+    </select>
+    <input type="text" name="rnumber" id="rnumber" value="0" required />
+    <input type="submit" value="Try me!">
+  </form>
+  <script>
+    const reminder = () => {
+      setTimeout(() => {
+        reminder();
+        alert('Please, use me...');
+      }, 30000);
+    }
+    reminder();
+
+    const lNumberInput = document.querySelector('#lnumber');
+    const rNumberInput = document.querySelector('#rnumber');
+    const operatorSelect = document.querySelector('#operator');
+
+    const onClick = () => {
+      event.preventDefault();
+      const lNumberValue = Number(lNumberInput.value);
+      const rNumberValue = Number(rNumberInput.value);
+      const lNumber = lNumberValue === NaN ? 0 : lNumberValue;
+      const rNumber = rNumberValue === NaN ? 0 : rNumberValue;
+      const operator = operatorSelect.value;
+
+      let message = '';
+      let consoleAsWell = true;
+
+      if (['div', 'mod'].includes(operator) && rNumber === 0)
+        message = "It's over 9000!";
+      else if (lNumber < 0 || rNumber < 0) {
+        consoleAsWell = false;
+        message = 'Error :(';
+      }
+      else if (operator === 'plus')
+        message = (lNumber + rNumber).toString();
+      else if (operator === 'minus')
+        message = (lNumber - rNumber).toString();
+      else if (operator === 'mult')
+        message = (lNumber * rNumber).toString();
+      else if (operator === 'div')
+        message = (lNumber / rNumber).toString();
+      else if (operator === 'mod')
+        message = (lNumber % rNumber).toString();
+
+      console.log(message);
+      alert(message);
+    }
+  </script>
+</body>
+
+</html>

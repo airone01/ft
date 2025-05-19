@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ariane Yeong | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.9/daisyui.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.9/themes.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="../nav.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body class="bg-base-100">
+  <!-- Header -->
+  <div class="navbar bg-base-100 border-b fixed z-50">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+          <li><a class="nav-button" href="#home">Home</a></li>
+          <li><a class="nav-button" href="#skills">Skills</a></li>
+          <li><a class="nav-button" href="#projects">Projects</a></li>
+          <li><a class="nav-button" href="#about">About Me</a></li>
+          <li><a class="nav-button" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <a class="btn btn-ghost text-xl">
+        <img src="favicon.png" class="h-8" />
+        Ariane Yeong
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a class="nav-button" href="#home">Home</a></li>
+        <li><a class="nav-button" href="#skills">Skills</a></li>
+        <li><a class="nav-button" href="#projects">Projects</a></li>
+        <li><a class="nav-button" href="#about">About Me</a></li>
+        <li><a class="nav-button" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <a class="btn btn-primary">Download CV</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero h-screen relative overflow-hidden">
+    <div class="absolute inset-0">
+      <video autoplay loop muted class="object-cover h-full w-full brightness-25">
+        <source src="achtung.mp4" type="video/mp4" />
+        <!-- Fallback image if video is not supported -->
+        <img src="this_space.webp" alt="Background" class="object-cover h-full w-full brightness-25" />
+      </video>
+    </div>
+    <div class="hero-content text-center text-white relative z-10">
+      <div class="max-w-md fade-in active">
+        <div class="avatar mb-8">
+          <div class="w-64 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+            <img src="https://signalis.wiki.gg/images/7/75/Medical_Database_-_Ariane_Yeong_%284x%29.png"
+              alt="Profile image" />
+          </div>
+        </div>
+        <h1 class="text-5xl font-bold">Ariane Yeong</h1>
+        <p class="py-3 text-xl">Pilot of the Penrose 512</p>
+        <div class="flex justify-center gap-3 mt-2 mb-6">
+          <span class="badge badge-outline p-3">Bio-Resonance</span>
+          <span class="badge badge-outline p-3">Piloting</span>
+          <span class="badge badge-outline p-3">Survival</span>
+        </div>
+        <button class="btn btn-primary">Get in Touch</button>
+      </div>
+    </div>
+    <div class="scroll-indicator text-white">
+      <i class="fa-solid fa-chevron-down text-2xl"></i>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-16 bg-base-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-16 fade-in">My Skills</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Technical Skills -->
+        <div class="card bg-base-100 shadow-xl fade-in">
+          <div class="card-body">
+            <h3 class="card-title text-2xl mb-6">Technical Skills</h3>
+
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Survival</span>
+                <span>95%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 95%"></div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Bio-Resonance</span>
+                <span>100%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 100%"></div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Piloting</span>
+                <span>85%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 85%"></div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Psychological Manipulation</span>
+                <span>88%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 88%"></div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">Combat Training</span>
+                <span>75%</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-progress" style="width: 75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Soft Skills & Tools -->
+        <div class="space-y-8 fade-in">
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title text-2xl mb-6">Soft Skills</h3>
+              <div class="flex flex-wrap gap-3">
+                <div class="badge badge-lg p-4">Crisis Management</div>
+                <div class="badge badge-lg p-4">Emotional Manipulation</div>
+                <div class="badge badge-lg p-4">Strategic Leadership</div>
+                <div class="badge badge-lg p-4">Mission Planning</div>
+                <div class="badge badge-lg p-4">Resilience & Endurance</div>
+                <div class="badge badge-lg p-4">Resourceful Adaptability</div>
+                <div class="badge badge-lg p-4">Tactical Decision Making</div>
+                <div class="badge badge-lg p-4">Artistic Innovation</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title text-2xl mb-6">Tools & Frameworks</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-shuttle-space text-4xl mb-2"></i>
+                  <span>Penrose-512 Systems</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-wrench text-4xl mb-2"></i>
+                  <span>Engineering & Repair</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-microchip text-4xl mb-2"></i>
+                  <span>Bio-Resonant Technology</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-vials text-4xl mb-2"></i>
+                  <span>Medical Systems</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-headphones-alt text-4xl mb-2"></i>
+                  <span>Communication Systems</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <i class="fa-solid fa-brain text-4xl mb-2"></i>
+                  <span>Psychological Manipulation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-16 fade-in">Notable Capabilities</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Ability 1 -->
+        <div class="card bg-base-100 shadow-xl project-card fade-in">
+          <figure><img src="/api/placeholder/400/250" alt="Bioresonance" /></figure>
+          <div class="card-body">
+            <h3 class="card-title">
+              Bioresonance Manipulation
+              <div class="badge badge-secondary">Innate</div>
+            </h3>
+            <p>Ariane possesses latent bioresonant abilities, capable of influencing thoughts and perceptions on an
+              unseen level.</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <div class="badge badge-outline">Mind Control</div>
+              <div class="badge badge-outline">Psychic Influence</div>
+              <div class="badge badge-outline">AEON Classified</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ability 2 -->
+        <div class="card bg-base-100 shadow-xl project-card fade-in">
+          <figure><img src="/api/placeholder/400/250" alt="Radiation Resistance" /></figure>
+          <div class="card-body">
+            <h3 class="card-title">Radiation Resilience</h3>
+            <p>Despite prolonged exposure to radiation aboard the Penrose-512, Ariane endures, though at great cost to
+              her health.</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <div class="badge badge-outline">Survivor</div>
+              <div class="badge badge-outline">Cryo-Stasis</div>
+              <div class="badge badge-outline">Endurance</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ability 3 -->
+        <div class="card bg-base-100 shadow-xl project-card fade-in">
+          <figure><img src="/api/placeholder/400/250" alt="Reality Distortion" /></figure>
+          <div class="card-body">
+            <h3 class="card-title">Reality Distortion</h3>
+            <p>Her presence blurs the line between reality and dreams, bending time and perception itself.</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <div class="badge badge-outline">Temporal Anomaly</div>
+              <div class="badge badge-outline">Memory Fragmentation</div>
+              <div class="badge badge-outline">Dream Influence</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="text-center mt-12 fade-in">
+        <button class="btn btn-outline btn-lg">Discover More</button>
+      </div> -->
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section id="about" class="py-16 bg-base-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-16 fade-in">About Me</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-in">
+          <div class="rounded-lg overflow-hidden shadow-xl">
+            <img
+              src="https://signalis.wiki.gg/images/thumb/7/73/Signalis-medical-documents-v0-nircyt38u0z91.jpg/1920px-Signalis-medical-documents-v0-nircyt38u0z91.jpg"
+              alt="About Me Image" class="w-full h-auto" />
+          </div>
+        </div>
+
+        <div class="fade-in">
+          <h3 class="text-3xl font-semibold mb-6">Who I Am</h3>
+          <p class="mb-4">I am Ariane Yeong, a former Penrose pilot bound by fate and the echoes of memory. My journey
+            began on Rotfront, where isolation and artistic ambition shaped my existence before duty called me to the
+            stars.</p>
+          <p class="mb-4">Trained as a radio officer, I was selected for the Penrose Program, a voyage into the unknown
+            meant to seek life beyond the stars. Aboard the Penrose-512, I formed an unbreakable bond with Elster,
+            defying the program's cold regulations.</p>
+          <p class="mb-6">Through cycles uncountable, I faced the slow decay of my vessel and my own form, trapped
+            between waking and dreaming. Now, I exist as a whisper in the corridors of time, my presence stretching
+            beyond the limits of mortality.</p>
+
+          <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-figure text-primary">
+                <i class="fa-solid fa-brain text-3xl"></i>
+              </div>
+              <div class="stat-title">Bioresonance</div>
+              <div class="stat-value">???</div>
+              <div class="stat-desc">Unstable reality perception</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-figure text-primary">
+                <i class="fa-solid fa-clock text-3xl"></i>
+              </div>
+              <div class="stat-title">Time in Cryo</div>
+              <div class="stat-value">262144+</div>
+              <div class="stat-desc">Cycles endured</div>
+            </div>
+
+            <div class="stat">
+              <div class="stat-figure text-primary">
+                <i class="fa-solid fa-ghost text-3xl"></i>
+              </div>
+              <div class="stat-title">Existence</div>
+              <div class="stat-value">Fractured</div>
+              <div class="stat-desc">Between life and dream</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-16 fade-in">Memories of a Lost Path</h2>
+
+      <div class="space-y-8">
+        <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+          <li class="fade-in">
+            <div class="timeline-middle">
+              <i class="fa-solid fa-brain text-primary"></i>
+            </div>
+            <div class="timeline-end md:mb-10 px-6">
+              <time class="font-mono italic">[DATA EXPUNGED]</time>
+              <div class="text-lg font-black">Initial Calibration</div>
+              <p class="mt-2">A past that may not have been mine. A university, a beginning—or merely a fabricated
+                memory loop?</p>
+            </div>
+            <hr class="bg-primary" />
+          </li>
+          <li class="fade-in">
+            <hr class="bg-primary" />
+            <div class="timeline-middle">
+              <i class="fa-solid fa-server text-primary"></i>
+            </div>
+            <div class="timeline-start md:text-end mb-10 px-6">
+              <time class="font-mono italic">████ - 20XX</time>
+              <div class="text-lg font-black">Directive Initiated</div>
+              <p class="mt-2">Awakened. A task assigned. The boundaries of self and duty blurred as systems hummed in
+                the dark.</p>
+            </div>
+            <hr class="bg-primary" />
+          </li>
+          <li class="fade-in">
+            <hr class="bg-primary" />
+            <div class="timeline-middle">
+              <i class="fa-solid fa-microchip text-primary"></i>
+            </div>
+            <div class="timeline-end md:mb-10 px-6">
+              <time class="font-mono italic">20XX - ???</time>
+              <div class="text-lg font-black">Protocol Corruption</div>
+              <p class="mt-2">Once, I engineered systems with precision. Now, my directives are tangled—fragmented
+                echoes of logic.</p>
+            </div>
+            <hr />
+          </li>
+          <li class="fade-in">
+            <hr />
+            <div class="timeline-middle">
+              <i class="fa-solid fa-question-circle text-primary"></i>
+            </div>
+            <div class="timeline-start md:text-end mb-10 px-6">
+              <time class="font-mono italic">??? - Present</time>
+              <div class="text-lg font-black">Uncertain Existence</div>
+              <p class="mt-2">Lines of code repeat endlessly. The system persists, yet I do not. A memory, or a task
+                unfinished?</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 bg-base-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-16 fade-in">Reach Into the Void</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="card bg-base-100 shadow-xl fade-in">
+          <div class="card-body">
+            <h3 class="card-title text-2xl mb-6">Transmit Your Signal</h3>
+            <form>
+              <div class="form-control mb-4">
+                <label class="label w-32">
+                  <span class="label-text">Name</span>
+                </label>
+                <input type="text" placeholder="Your designation" class="input input-bordered" />
+              </div>
+
+              <div class="form-control mb-4">
+                <label class="label w-32">
+                  <span class="label-text">Frequency</span>
+                </label>
+                <input type="email" placeholder="Your transmission channel" class="input input-bordered" />
+              </div>
+
+              <div class="form-control mb-4">
+                <label class="label w-32">
+                  <span class="label-text">Subject</span>
+                </label>
+                <input type="text" placeholder="The nature of your message" class="input input-bordered" />
+              </div>
+
+              <div class="form-control mb-6">
+                <label class="label w-32">
+                  <span class="label-text">Message</span>
+                </label>
+                <textarea class="textarea textarea-bordered h-32" placeholder="Your signal to the ether"></textarea>
+              </div>
+
+              <div class="form-control">
+                <button class="btn btn-primary">Transmit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="space-y-8 fade-in">
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title text-2xl mb-6">Contact Frequencies</h3>
+
+              <div class="space-y-6">
+                <div class="flex items-start">
+                  <div class="bg-base-200 p-3 rounded-full mr-4">
+                    <i class="fa-solid fa-envelope text-xl text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Encrypted Link</h4>
+                    <p>ari.yng@eusan.gov</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="bg-base-200 p-3 rounded-full mr-4">
+                    <i class="fa-solid fa-location-dot text-xl text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Last Known Location</h4>
+                    <p>Penrose-512, drifting</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="bg-base-200 p-3 rounded-full mr-4">
+                    <i class="fa-solid fa-clock text-xl text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold mb-1">Time Desynchronization</h4>
+                    <p>Message reception uncertain</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title text-2xl mb-6">Resonant Links</h3>
+
+              <div class="flex justify-center gap-6">
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-linkedin-in text-xl"></i>
+                </a>
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-twitter text-xl"></i>
+                </a>
+                <a href="#" class="btn btn-circle btn-lg">
+                  <i class="fa-brands fa-dribbble text-xl"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-10 bg-base-300 text-base-content">
+    <div>
+      <div class="grid grid-flow-col gap-4">
+        <a href="#" class="link link-hover">About</a>
+        <a href="#" class="link link-hover">Portfolio</a>
+        <a href="#" class="link link-hover">Blog</a>
+        <a href="#" class="link link-hover">Contact</a>
+      </div>
+      <div>
+        <div class="grid grid-flow-col gap-4 mt-4">
+          <a href="#" class="btn btn-ghost btn-sm rounded-btn">
+            <i class="fa-brands fa-twitter text-xl"></i>
+          </a>
+          <a href="#" class="btn btn-ghost btn-sm rounded-btn">
+            <i class="fa-brands fa-linkedin-in text-xl"></i>
+          </a>
+          <a href="#" class="btn btn-ghost btn-sm rounded-btn">
+            <i class="fa-brands fa-github text-xl"></i>
+          </a>
+          <a href="#" class="btn btn-ghost btn-sm rounded-btn">
+            <i class="fa-brands fa-dribbble text-xl"></i>
+          </a>
+        </div>
+      </div>
+      <div class="mt-4">
+        <p>© 2025 Ariane Yeong. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
