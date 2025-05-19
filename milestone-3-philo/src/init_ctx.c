@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:07:16 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 15:15:03 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:04:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ t_ctx	*init_ctx(int argc, char **argv)
 		free_ctx(ctx);
 		return (NULL);
 	}
+	ctx->threads_ready = 0;
+	ctx->simulation_started = false;
 	ctx->stop = false;
 	return (ctx);
 }

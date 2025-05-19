@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 15:08:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:22:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,22 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	pthread_mutex_lock(&philo->ctx->start_mutex);
+	philo->ctx->threads_ready++;
+	if (philo->ctx->threads_ready == philo->ctx->philos_count)
+		philo->ctx->simulation_started = true;
+	pthread_mutex_unlock(&philo->ctx->start_mutex);
+	while (!philo->ctx->simulation_started)
+		usleep(100);
 	if (philo->ctx->philos_count == 1)
 		return (take_fork_and_return(philo));
+	if (philo->id == 1)
+		log_action(philo, "is thinking");
 	if (philo->id % 2 == 0)
-		usleep(1000);
+	{
+		log_action(philo, "is thinking");
+		ft_usleep(calculate_thinking_time(philo), philo);
+	}
 	while (!is_it_over(philo->ctx))
 	{
 		take_forks(philo);

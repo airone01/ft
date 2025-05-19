@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 15:20:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:03:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <stdlib.h>   // standard lib
 # include <sys/time.h> // for gettimeofday
 # include <unistd.h>   // usleep
-// # include <sys/wait.h>  // for waitpid
 
 # define FG_RED "\x1b[31m"
 # define FG_GREEN "\x1b[32m"
@@ -80,6 +79,9 @@ typedef struct s_ctx
 	t_philo			*philos;
 	// Mission control
 	bool			stop;
+	pthread_mutex_t	start_mutex;
+	int				threads_ready;
+	bool			simulation_started;
 }					t_ctx;
 
 // *************************************************************************** #

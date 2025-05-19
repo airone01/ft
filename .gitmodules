@@ -4,3 +4,6 @@
 [submodule "milestone-2-fdf/minilibx-linux"]
 	path = extra-minilibx
 	url = https://github.com/42Paris/minilibx-linux
+[submodule "extra-philosophers-visualizer"]
+	path = extra-philo-visualizer
+	url = https://github.com/SimonCROS/philosophers-visualizer

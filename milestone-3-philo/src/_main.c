@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:50:04 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:09:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	final_free(t_ctx *ctx)
 		pthread_mutex_destroy(&ctx->forks[i].mutex);
 	pthread_mutex_destroy(&ctx->print_lock);
 	pthread_mutex_destroy(&ctx->dead_lock);
+	pthread_mutex_destroy(&ctx->start_mutex);
 	free_ctx(ctx);
 }
 
