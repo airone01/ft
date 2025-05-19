@@ -1,6 +1,8 @@
 <div align="center">
-	<img src="https://github.com/ayogun/42-project-badges/raw/main/covers/cover-fdf-bonus.png" />
+	<h1><b>fdf</b> (with bonuses)</h1>
 </div>
+
+![Four screenshots of the fdf project](/.github/assets/fdf.png)
 
 ## Build
 

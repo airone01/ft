@@ -1,14 +1,11 @@
 [project]
 name = "philo"
-version = "1.0.0"
+version = "1.1.0"
 
 [submit]
 files = [
-	# C sources
 	"src/*.c",
-	# C headers
 	"includes/*.h",
-	# Other
 	"Makefile"
 ]
 

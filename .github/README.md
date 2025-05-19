@@ -153,7 +153,7 @@ More info [`here`](/extra-arthur/README.md).
 ### [`FDF generator`](/extra-fdf-bmp-converter/README.md)
 
 A simple script to convert a BMP image into a fdf file. It currently only works
-for bitmap images smaller than 255 * 255, because I don't really know how to
+for bitmap images smaller than 255 \* 255, because I don't really know how to
 reliably get the width of the image in the header. To run the script, simply
 type :
 
