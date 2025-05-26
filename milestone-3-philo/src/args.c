@@ -43,7 +43,7 @@ static bool	contains_invalid_chars(char *str)
 			write(STDERR_FILENO, FG_RED "Error: '", 13);
 			write(STDERR_FILENO, str, ft_strlen(str));
 			write(STDERR_FILENO,
-				FG_RED "' contains non-numeric characters\n" NC, 38);
+				FG_RED "' contains non-numeric characters\n" NC, 43);
 			return (false);
 		}
 		j++;

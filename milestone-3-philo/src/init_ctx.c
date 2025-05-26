@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:07:16 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/19 12:04:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:46:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ static void	init_ctx_atol(t_ctx *ctx, int argc, char **argv)
 
 static bool	init_ctx_check_zero(t_ctx *ctx, int argc)
 {
-	if (ctx->philos_count == 0 || ctx->death_time == 0 || ctx->meal_time == 0
-		|| ctx->sleep_time == 0 || (argc == 6 && ctx->max_meal_count == 0))
+	if (ctx->philos_count == 0 || (argc == 6 && ctx->max_meal_count == 0))
 	{
 		write(STDERR_FILENO,
-			FG_RED "Error: All arguments must be greater than 0.\n" NC, 54);
+			FG_RED "Error: Philos and meals counts arguments must be"
+			" greater than 0.\n" NC,
+			74);
 		free_ctx(ctx);
 		return (true);
 	}

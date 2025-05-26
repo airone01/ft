@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:10:28 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/19 12:03:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:44:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,10 @@ bool				is_it_over(t_ctx *ctx);
  * stopped and the function returns true to indicate failure.
  *
  * @param ctx Pointer to the simulation context.
+ * @param created_threads Number of threads that were actually created
  * @return true if an error occurred during thread creation, false on success.
  */
-bool				launch_philos(t_ctx *ctx);
+bool				launch_philos(t_ctx *ctx, int *created_threads);
 
 /**
  * @brief Launches the monitoring thread for the simulation.

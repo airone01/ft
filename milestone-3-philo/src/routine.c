@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:40:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/19 13:44:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:24:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,22 @@ static void	*take_fork_and_return(t_philo *philo)
 */
 static void	wait_all_philos(t_philo *philo)
 {
+	bool	started;
+
 	pthread_mutex_lock(&philo->ctx->start_mutex);
 	philo->ctx->threads_ready++;
 	if (philo->ctx->threads_ready == philo->ctx->philos_count)
 		philo->ctx->simulation_started = true;
+	started = philo->ctx->simulation_started;
 	pthread_mutex_unlock(&philo->ctx->start_mutex);
-	while (!philo->ctx->simulation_started)
-		usleep(100);
+	while (!started)
+	{
+		pthread_mutex_lock(&philo->ctx->start_mutex);
+		started = philo->ctx->simulation_started;
+		pthread_mutex_unlock(&philo->ctx->start_mutex);
+		if (!started)
+			usleep(100);
+	}
 }
 
 void	*routine(void *arg)

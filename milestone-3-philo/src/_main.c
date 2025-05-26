@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/26 11:39:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:44:55 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,57 +31,60 @@ static void	cleanup_mutexes(t_ctx *ctx)
 	pthread_mutex_destroy(&ctx->start_mutex);
 }
 
-/*
-** Join to wait on all the threads
-*/
-static void	wait_threads(t_ctx *ctx, pthread_t *big_brother)
+static void	wait_threads(t_ctx *ctx, pthread_t *big_brother, int philo_count)
 {
 	int	i;
 
 	i = -1;
-	while (++i < ctx->philos_count)
+	while (++i < philo_count)
 		pthread_join(ctx->philos[i].thread, NULL);
-	pthread_join(*big_brother, NULL);
+	if (big_brother)
+		pthread_join(*big_brother, NULL);
 }
 
-/*
-** Clears at the end of the program
-*/
-static void	final_free(t_ctx *ctx)
+static void	emergency_stop(t_ctx *ctx)
 {
-	cleanup_mutexes(ctx);
-	free_ctx(ctx);
+	pthread_mutex_lock(&ctx->dead_lock);
+	ctx->stop = true;
+	pthread_mutex_unlock(&ctx->dead_lock);
+	pthread_mutex_lock(&ctx->start_mutex);
+	ctx->simulation_started = true;
+	pthread_mutex_unlock(&ctx->start_mutex);
 }
 
 int	main(int argc, char **argv)
 {
 	pthread_t	big_brother;
 	t_ctx		*ctx;
-	int			code;
+	int			created_threads;
 
 	if (args(argc, argv))
-		return (1);
+		return (EXIT_FAILURE);
 	ctx = init_ctx(argc, argv);
 	if (!ctx)
 		return (EXIT_FAILURE);
-	code = init_mutexes(ctx);
-	if (code)
+	if (init_mutexes(ctx))
 		return (EXIT_FAILURE);
 	init_philos(ctx);
-	if (launch_philos(ctx))
+	created_threads = 0;
+	if (launch_philos(ctx, &created_threads))
 	{
+		emergency_stop(ctx);
+		wait_threads(ctx, NULL, created_threads);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);
 		return (EXIT_FAILURE);
 	}
 	if (launch_big_brother(ctx, &big_brother))
 	{
-		ctx->stop = true;
-		wait_threads(ctx, &big_brother);
-		final_free(ctx);
+		emergency_stop(ctx);
+		wait_threads(ctx, &big_brother, (int)ctx->philos_count);
+		cleanup_mutexes(ctx);
+		free_ctx(ctx);
 		return (EXIT_FAILURE);
 	}
-	wait_threads(ctx, &big_brother);
-	final_free(ctx);
+	wait_threads(ctx, &big_brother, (int)ctx->philos_count);
+	cleanup_mutexes(ctx);
+	free_ctx(ctx);
 	return (EXIT_SUCCESS);
 }
