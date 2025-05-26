@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:38:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:33:16 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:39:39 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ bool	launch_philos(t_ctx *ctx)
 				&ctx->philos[i]) != 0)
 		{
 			ctx->stop = true;
+			while (--i >= 0)
+				pthread_join(ctx->philos[i].thread, NULL);
 			return (true);
 		}
 	}
