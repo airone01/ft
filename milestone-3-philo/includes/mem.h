@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:05:26 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/19 12:06:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:32:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ t_ctx	*init_ctx(int argc, char **argv);
  * @see pthread_mutex_destroy(3)
  *
  * @param ctx Context
- * @return bool true on failure, false otherwise
+ * @return true on failure
+ * @return false on success otherwise
  */
 bool	init_mutexes(t_ctx *ctx);
 

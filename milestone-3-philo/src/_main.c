@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:09:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/26 15:44:55 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:45:49 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,28 @@ static void	emergency_stop(t_ctx *ctx)
 	pthread_mutex_unlock(&ctx->start_mutex);
 }
 
+static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
+		pthread_t *big_brother)
+{
+	if (launch_philos(ctx, created_threads))
+	{
+		emergency_stop(ctx);
+		wait_threads(ctx, NULL, *created_threads);
+		cleanup_mutexes(ctx);
+		free_ctx(ctx);
+		return (true);
+	}
+	if (launch_big_brother(ctx, big_brother))
+	{
+		emergency_stop(ctx);
+		wait_threads(ctx, big_brother, (int)ctx->philos_count);
+		cleanup_mutexes(ctx);
+		free_ctx(ctx);
+		return (true);
+	}
+	return (false);
+}
+
 int	main(int argc, char **argv)
 {
 	pthread_t	big_brother;
@@ -67,22 +89,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	init_philos(ctx);
 	created_threads = 0;
-	if (launch_philos(ctx, &created_threads))
-	{
-		emergency_stop(ctx);
-		wait_threads(ctx, NULL, created_threads);
-		cleanup_mutexes(ctx);
-		free_ctx(ctx);
+	if (launch_long_stuff(ctx, &created_threads, &big_brother))
 		return (EXIT_FAILURE);
-	}
-	if (launch_big_brother(ctx, &big_brother))
-	{
-		emergency_stop(ctx);
-		wait_threads(ctx, &big_brother, (int)ctx->philos_count);
-		cleanup_mutexes(ctx);
-		free_ctx(ctx);
-		return (EXIT_FAILURE);
-	}
 	wait_threads(ctx, &big_brother, (int)ctx->philos_count);
 	cleanup_mutexes(ctx);
 	free_ctx(ctx);
