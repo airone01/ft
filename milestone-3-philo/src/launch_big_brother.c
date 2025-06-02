@@ -16,7 +16,7 @@ bool	launch_big_brother(t_ctx *ctx, pthread_t *big_brother)
 {
 	if (pthread_create(big_brother, NULL, death_check, ctx) != 0)
 	{
-		ctx->stop = 1;
+		ctx->stop = true;
 		return (true);
 	}
 	return (false);

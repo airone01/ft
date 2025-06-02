@@ -11,32 +11,21 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "std.h"
+#include <limits.h>
+#include <unistd.h>
 
 static void	init_ctx_atol(t_ctx *ctx, int argc, char **argv)
 {
-	long	tmp;
-
 	ctx->philos_count = (long)ft_atoul(argv[1]);
-	tmp = (long)ft_atoul(argv[2]);
-	if (tmp > LONG_MAX / 1000)
-		ctx->death_time = LONG_MAX;
-	else
-		ctx->death_time = tmp * 1000;
-	tmp = (long)ft_atoul(argv[3]);
-	if (tmp > LONG_MAX / 1000)
-		ctx->meal_time = LONG_MAX;
-	else
-		ctx->meal_time = tmp * 1000;
-	tmp = (long)ft_atoul(argv[4]);
-	if (tmp > LONG_MAX / 1000)
-		ctx->sleep_time = LONG_MAX;
-	else
-		ctx->sleep_time = tmp * 1000;
+	ctx->death_time = (long)ft_atoul(argv[2]);
+	ctx->meal_time = (long)ft_atoul(argv[3]);
+	ctx->sleep_time = (long)ft_atoul(argv[4]);
 	if (argc == 6)
 		ctx->max_meal_count = (long)ft_atoul(argv[5]);
 	else
 		ctx->max_meal_count = -1;
-	ctx->epoch = get_current_time();
+	ctx->epoch = get_time(TIMEE_US);
 }
 
 static bool	init_ctx_check_zero(t_ctx *ctx, int argc)
@@ -75,7 +64,5 @@ t_ctx	*init_ctx(int argc, char **argv)
 		free_ctx(ctx);
 		return (NULL);
 	}
-	ctx->threads_ready = 0;
-	ctx->stop = false;
 	return (ctx);
 }

@@ -326,7 +326,6 @@ _SRC_PHILO_COMMON				:=	\
 	init_ctx						\
 	init_mutexes					\
 	init_philos						\
-	is_it_over						\
 	launch_big_brother				\
 	launch_philos					\
 	philo_utils						\

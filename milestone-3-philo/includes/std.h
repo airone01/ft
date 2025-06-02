@@ -13,9 +13,9 @@
 #ifndef STD_H
 # define STD_H
 
-# include <aio.h>     // size_t, ssize_t
 # include <limits.h>  // max vals
 # include <stdbool.h> // bool
+# include <stddef.h>  // size_t, ssize_t
 # include <stdint.h>  // uint8_t
 
 /**

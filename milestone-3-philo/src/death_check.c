@@ -11,22 +11,30 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "std.h"
 #include <stdint.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
 ** Checks if a philo died
 ** /!\ There may be a data race here
+**
+** Update: there is a timing problem since 44c942a here, and the death message
+** does not appear to print.
+** Last working commit was 12c0d34.
+** TODO: fix that
 */
 static int	grim_reaper_check(t_ctx *ctx, int i)
 {
-	size_t	current_time;
+	long	current_time;
 
-	current_time = get_current_time();
-	if ((long)(current_time - ctx->philos[i].last_meal) > ctx->death_time
-		/ 1000)
+	current_time = get_time(TIMEE_US);
+	// printf("diff: %ld, death: %ld\n", current_time - ctx->philos[i].last_meal, ctx->death_time);
+	if ((current_time - ctx->philos[i].last_meal) / 1000 > ctx->death_time)
 	{
-		mtx_set(&ctx->dead_lock, (uint8_t *)&ctx->stop, 1); /* TODO: handle return val here */
-		log_action(&ctx->philos[i], "died");
+		log_action(&ctx->philos[i], MSG_DEATH);
+		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 		return (1);
 	}
 	return (0);
@@ -44,11 +52,11 @@ static bool	chef_gusteau_check(t_ctx *ctx)
 	all_ate = true;
 	while (++i < ctx->philos_count)
 	{
-		pthread_mutex_lock(&ctx->print_lock);
+		pthread_mutex_lock(&ctx->print_mtx);
 		if (ctx->philos[i].meal_count < ctx->max_meal_count
 			|| ctx->max_meal_count == -1)
 			all_ate = false;
-		pthread_mutex_unlock(&ctx->print_lock);
+		pthread_mutex_unlock(&ctx->print_mtx);
 	}
 	return (all_ate);
 }
@@ -63,11 +71,13 @@ static void	write_thats_all_folks(t_ctx *ctx)
 	s = ft_itoa((int)ctx->max_meal_count);
 	if (!s)
 		return ;
+	pthread_mutex_lock(&ctx->print_mtx);
 	write(STDERR_FILENO,
 		FG_GREEN "All philosophers ate the maximum number of meals (", 55);
 	write(STDERR_FILENO, s, ft_strlen(s));
 	free(s);
 	write(STDERR_FILENO, ").\n" NC, 7);
+	pthread_mutex_unlock(&ctx->print_mtx);
 }
 
 void	*death_check(void *arg)
@@ -76,23 +86,20 @@ void	*death_check(void *arg)
 	int		i;
 
 	ctx = (t_ctx *)arg;
-	while (1)
+	wait_all_philos(ctx);
+	while (true)
 	{
 		i = -1;
 		while (++i < ctx->philos_count)
 			if (grim_reaper_check(ctx, i))
-				return (NULL);
+				break ;
 		if (chef_gusteau_check(ctx))
 		{
-			pthread_mutex_lock(&ctx->print_lock);
-			pthread_mutex_lock(&ctx->dead_lock);
-			ctx->stop = true;
+			mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 			write_thats_all_folks(ctx);
-			pthread_mutex_unlock(&ctx->dead_lock);
-			pthread_mutex_unlock(&ctx->print_lock);
 			break ;
 		}
-		usleep(1);
+		usleep(ARBITRARY_USLEEP_TIME);
 	}
 	return (NULL);
 }

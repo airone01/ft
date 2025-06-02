@@ -16,6 +16,10 @@
 */
 
 #include "philo.h"
+#include <bits/types/struct_timeval.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <unistd.h>
 
 static void	cleanup_mutexes(t_ctx *ctx)
 {
@@ -24,8 +28,8 @@ static void	cleanup_mutexes(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->philos_count)
 		pthread_mutex_destroy(&ctx->forks[i].mutex);
-	pthread_mutex_destroy(&ctx->print_lock);
-	pthread_mutex_destroy(&ctx->dead_lock);
+	pthread_mutex_destroy(&ctx->print_mtx);
+	pthread_mutex_destroy(&ctx->ctx_mtx);
 }
 
 static void	wait_threads(t_ctx *ctx, pthread_t *big_brother, int philo_count)
@@ -48,7 +52,7 @@ static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 {
 	if (launch_philos(ctx, created_threads))
 	{
-		mtx_set(&ctx->dead_lock, (uint8_t *)&ctx->stop, true);
+		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 		wait_threads(ctx, NULL, *created_threads);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);
@@ -56,7 +60,7 @@ static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 	}
 	if (launch_big_brother(ctx, big_brother))
 	{
-		mtx_set(&ctx->dead_lock, (uint8_t *)&ctx->stop, true);
+		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 		wait_threads(ctx, big_brother, (int)ctx->philos_count);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);
@@ -67,10 +71,16 @@ static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 
 int	main(int argc, char **argv)
 {
-	pthread_t	big_brother;
-	t_ctx		*ctx;
-	int			created_threads;
+	pthread_t		big_brother;
+	t_ctx			*ctx;
+	int				created_threads;
+	struct timeval	tv;
 
+	if (gettimeofday(&tv, NULL))
+	{
+		write(STDERR_FILENO, "gettimeofday() error\n", 21);
+		return (EXIT_FAILURE);
+	}
 	if (args(argc, argv))
 		return (EXIT_FAILURE);
 	ctx = init_ctx(argc, argv);

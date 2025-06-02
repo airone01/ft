@@ -11,30 +11,37 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <sys/time.h>
+#include <unistd.h>
+#include <stdio.h>
 
-unsigned long	get_current_time(void)
+long	get_time(t_time_code code)
 {
 	struct timeval	time;
+	long			s;
+	long			us;
 
-	if (gettimeofday(&time, NULL) == -1)
-	{
-		write(2, "gettimeofday() error\n", 22);
-		return (0);
-	}
-	return ((unsigned long)((time.tv_usec / 1000) + (time.tv_sec * 1000)));
+	gettimeofday(&time, NULL);
+	s = time.tv_sec;
+	us = time.tv_usec;
+	if (code == TIMEE_S)
+		return (s + (us / (long)1e6));
+	if (code == TIMEE_MS)
+		return ((s * (long)1e3) + (us / (long)1e3));
+	if (code == TIMEE_US)
+		return ((s * (long)1e6) + us);
+	return (-1);
 }
 
-void	ft_usleep(unsigned long microseconds, t_philo *philo)
+void	ft_usleep(long wait_time, t_philo *philo)
 {
-	unsigned long	start;
-	unsigned long	wait_time;
+	long	start;
 
-	start = get_current_time();
-	wait_time = microseconds / 1000;
-	while ((get_current_time() - start) < wait_time)
+	start = get_time(TIMEE_MS);
+	while ((get_time(TIMEE_MS) - start) < wait_time)
 	{
-		if (is_it_over(philo->ctx))
+		if (philo && mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 			return ;
-		usleep(1);
+		usleep(ARBITRARY_USLEEP_TIME);
 	}
 }

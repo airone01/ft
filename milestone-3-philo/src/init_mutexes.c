@@ -32,9 +32,9 @@ static void	destroy_all_mutexes(t_ctx *ctx, int fork_count, int flags)
 	if (fork_count > 0)
 		destroy_fork_mutexes(ctx, fork_count);
 	if (flags & 1)
-		pthread_mutex_destroy(&ctx->print_lock);
+		pthread_mutex_destroy(&ctx->print_mtx);
 	if (flags & 2)
-		pthread_mutex_destroy(&ctx->dead_lock);
+		pthread_mutex_destroy(&ctx->ctx_mtx);
 }
 
 static bool	init_fork_mutexes(t_ctx *ctx)
@@ -56,12 +56,12 @@ static bool	init_fork_mutexes(t_ctx *ctx)
 
 bool	init_mutexes(t_ctx *ctx)
 {
-	if (pthread_mutex_init(&ctx->print_lock, NULL) != 0)
+	if (pthread_mutex_init(&ctx->print_mtx, NULL) != 0)
 	{
 		free_ctx(ctx);
 		return (true);
 	}
-	if (pthread_mutex_init(&ctx->dead_lock, NULL) != 0)
+	if (pthread_mutex_init(&ctx->ctx_mtx, NULL) != 0)
 	{
 		destroy_all_mutexes(ctx, 0, 1);
 		free_ctx(ctx);

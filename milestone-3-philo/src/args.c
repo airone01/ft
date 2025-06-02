@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "std.h"
+#include <unistd.h>
 
 /*
 ** We just strncmp because this is litterally what the function is used for :-)

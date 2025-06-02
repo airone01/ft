@@ -14,57 +14,48 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void	log_action(t_philo *philo, const char *action)
 {
-	unsigned long	l;
+	long	us;
 
-	l = get_current_time();
-	if (is_it_over(philo->ctx))
+	us = get_time(TIMEE_US);
+	if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 		return ;
-	pthread_mutex_lock(&philo->ctx->print_lock);
-	printf("%zu %lu %s\n", l - philo->ctx->epoch, philo->id, action);
-	pthread_mutex_unlock(&philo->ctx->print_lock);
+	pthread_mutex_lock(&philo->ctx->print_mtx);
+	printf("%zu %lu %s\n", (us - philo->ctx->epoch) / 1000, philo->id, action);
+	pthread_mutex_unlock(&philo->ctx->print_mtx);
 }
 
-int	mtx_get(pthread_mutex_t *mtx, uint8_t *origin, uint8_t *dest)
+bool	mtx_get_bool(pthread_mutex_t *mtx, bool *origin)
 {
-	int	code;
+	bool dest;
 
-	code = pthread_mutex_lock(mtx);
-	if (code)
-	{
-		write(STDERR_FILENO, "There was an error locking a mutex.\n", 36);
-		return (code);
-	}
-	*dest = *origin;
-	code = pthread_mutex_unlock(mtx);
-	if (code)
-	{
-		write(STDERR_FILENO, "There was an error locking a mutex.\n", 36);
-		return (code);
-	}
-	return (0);
+	pthread_mutex_lock(mtx);
+	dest = *origin;
+	pthread_mutex_unlock(mtx);
+	return (dest);
 }
 
-int	mtx_set(pthread_mutex_t *mtx, uint8_t *dest, uint8_t val)
+void	mtx_set_bool(pthread_mutex_t *mtx, bool *dest, bool val)
 {
-	int	code;
-
-	code = pthread_mutex_lock(mtx);
-	if (code)
-	{
-		write(STDERR_FILENO, "There was an error locking a mutex.\n", 36);
-		return (code);
-	}
+	pthread_mutex_lock(mtx);
 	*dest = val;
-	code = pthread_mutex_unlock(mtx);
-	if (code)
-	{
-		write(STDERR_FILENO, "There was an error locking a mutex.\n", 36);
-		return (code);
-	}
-	return (0);
+	pthread_mutex_unlock(mtx);
+}
+
+void	mtx_set_long(pthread_mutex_t *mtx, long *dest, long val)
+{
+	pthread_mutex_lock(mtx);
+	*dest = val;
+	pthread_mutex_unlock(mtx);
+}
+
+void	mtx_increment_long(pthread_mutex_t *mtx, long *dest)
+{
+	pthread_mutex_lock(mtx);
+	*dest += 1;
+	pthread_mutex_unlock(mtx);
 }

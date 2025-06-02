@@ -13,30 +13,46 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft.h"    // GPM!
-# include "std.h"      // my standard functions
-# include <limits.h>   // integer limits
-# include <pthread.h>  // threading
-# include <stdbool.h>  // booleans
-# include <stdint.h>   // for SIZE_MAX
-# include <sys/time.h> // for gettimeofday
-# include <unistd.h>   // usleep
+# include <pthread.h>  // pthread_*
+# include <stdbool.h>  // bool
+# include <stdint.h>   // uint8_t
 
 # define FG_RED "\x1b[31m"
 # define FG_GREEN "\x1b[32m"
 # define FG_YELLOW "\x1b[33m"
 # define NC "\x1b[0m"
 
+# define MSG_TAKEN "has taken a fork"
+# define MSG_THINK "is thinking"
+# define MSG_SLEEP "is sleeping"
+# define MSG_EATIN "is eating"
+# define MSG_DEATH "died"
+
+# define ARBITRARY_USLEEP_TIME 100
+
+// *************************************************************************** #
+//                                   Enums                                     #
+// *************************************************************************** #
+
+typedef enum e_time_code {
+	TIMEE_S,
+	TIMEE_MS,
+	TIMEE_US,
+}					t_time_code;
+
 // *************************************************************************** #
 //                                 Structures                                  #
 // *************************************************************************** #
+
+typedef pthread_mutex_t	t_mtx; // Alias
+typedef struct s_ctx	t_ctx; // Avoids compilation errors
 
 /**
  * @brief Information about a fork
  */
 typedef struct s_fork
 {
-	pthread_mutex_t	mutex;
+	t_mtx			mutex;
 	bool			in_use;
 }					t_fork;
 
@@ -46,10 +62,11 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	long			id;
+	t_mtx			meal_mtx;
 	long			meal_count;
-	unsigned long	last_meal;
+	long			last_meal;
 	pthread_t		thread;
-	struct s_ctx	*ctx;
+	t_ctx			*ctx;
 	t_fork			*fork_right;
 	t_fork			*fork_left;
 }					t_philo;
@@ -57,7 +74,7 @@ typedef struct s_philo
 /**
  * @brief Contains basic app info (parsed through arguments)
  */
-typedef struct s_ctx
+struct s_ctx
 {
 	// CLI arguments
 	long			philos_count;
@@ -66,17 +83,19 @@ typedef struct s_ctx
 	long			sleep_time;
 	long			max_meal_count;
 	// Mutexes
-	pthread_mutex_t	print_lock;
-	pthread_mutex_t	dead_lock;
+	t_mtx			print_mtx;
+	t_mtx			ctx_mtx;
+	// Forks
 	t_fork			*forks;
 	// Start time
-	unsigned long	epoch;
+	long			epoch;
 	// Philosophers
 	t_philo			*philos;
 	// Mission control
 	bool			stop;
+	bool			all_threads_ready; // TODO
 	int				threads_ready;
-}					t_ctx;
+};
 
 // *************************************************************************** #
 //                            Function Prototypes                              #
@@ -101,20 +120,14 @@ int					main(int argc, char **argv);
 bool				args(int argc, char **argv);
 
 /**
- * @brief Calculates the time each philo has to think
- *
- * @param philo Philosopher
- * @return unsigned long Time to think
- */
-unsigned long		calculate_thinking_time(t_philo *philo);
-
-/**
  * @brief Checks for the death of philosophers
  *
  * @param arg Argument
  * @return void* Unused
  */
 void				*death_check(void *arg);
+
+void	eat(t_philo *philo);
 
 /**
  * @brief Frees the app context
@@ -134,14 +147,15 @@ void				free_ctx(t_ctx *ctx);
  * @param philo Pointer to the philosopher, used to access the simulation
  *              context.
  */
-void				ft_usleep(unsigned long milliseconds, t_philo *philo);
+void				ft_usleep(long milliseconds, t_philo *philo);
 
 /**
- * @brief Get the current time in epoch unsigned long format
+ * @brief Get the current epoch long of seconds, ms, or us.
  *
- * @return long Time
+ * @param code Enum value of what you want, TIMEE_S, MS or US.
+ * @return long Value depending on what we asked for with code
  */
-unsigned long		get_current_time(void);
+long				get_time(t_time_code code);
 
 /**
  * @brief Initializes the context from the arguments
@@ -172,17 +186,6 @@ bool				init_mutexes(t_ctx *ctx);
  * @param ctx Context
  */
 void				init_philos(t_ctx *ctx);
-
-/**
- * @brief Checks whether the simulation has been marked as over.
- *
- * Safely reads the shared simulation stop flag using a mutex to ensure
- * thread-safe access.
- *
- * @param ctx Pointer to the simulation context.
- * @return true if the simulation is over, false otherwise.
- */
-bool				is_it_over(t_ctx *ctx);
 
 /**
  * @brief Launches philosopher threads to start the simulation.
@@ -226,8 +229,8 @@ void				log_action(t_philo *philo, const char *action);
 /**
  * @brief Gets a value while avoiding data races
  *
- * @param mtx Mutex, i.e. &ctx->dead_lock
- * @param origin Pointer to the value, i.e. (uint8_t)&ctx->stop
+ * @param mtx Mutex
+ * @param origin Pointer to the value
  * @param dest Pointer to where the value will be written.
  *
  * @return On success, zero
@@ -235,13 +238,14 @@ void				log_action(t_philo *philo, const char *action);
  *
  * @see Man pthread_mutex_destroy.3
  */
-int					mtx_get(pthread_mutex_t *mtx, uint8_t *origin,
-						uint8_t *dest);
+// int					mtx_get(t_mtx *mtx, void *origin,
+// 						void *dest);
+bool					mtx_get_bool(t_mtx *mtx, bool *origin);
 
 /**
  * @brief Sets a value while avoiding data races
  *
- * @param mtx Mutex, i.e. &ctx->dead_lock
+ * @param mtx Mutex
  * @param dest Pointer to where the value will be written.
  * @param val Value to set
  *
@@ -250,7 +254,10 @@ int					mtx_get(pthread_mutex_t *mtx, uint8_t *origin,
  *
  * @see Man pthread_mutex_destroy.3
  */
-int					mtx_set(pthread_mutex_t *mtx, uint8_t *dest, uint8_t val);
+// int					mtx_set(t_mtx *mtx, void *dest, void *val);
+void					mtx_set_bool(t_mtx *mtx, bool *dest, bool val);
+void					mtx_set_long(t_mtx *mtx, long *dest, long val);
+void					mtx_increment_long(t_mtx *mtx, long *dest);
 
 /**
  * @brief Routine for each threaad
@@ -260,28 +267,6 @@ int					mtx_set(pthread_mutex_t *mtx, uint8_t *dest, uint8_t val);
  */
 void				*routine(void *arg);
 
-/**
- * @brief Acquires both forks needed by the philosopher to eat.
- *
- * This function locks the forks (usually represented by mutexes) associated
- * with the philosopher. The order of locking may depend on the philosopher's
- * ID to avoid deadlocks.
- *
- * @param philo Pointer to the philosopher attempting to take the forks.
- */
-void				take_forks(t_philo *philo);
-
-/**
- * @brief Updates a philosopher's state after taking forks and begins the eating
- *        phase.
- *
- * This function logs that the philosopher is eating, updates the time of the
- * last meal and the meal count (with synchronization), then sleeps for the
- * duration of the eating period. Afterward, it releases the forks in an
- * order based on the philosopher's ID to help prevent deadlocks.
- *
- * @param philo Pointer to the philosopher whose state is being updated.
- */
-void				update_philo(t_philo *philo);
+void				wait_all_philos(t_ctx *ctx);
 
 #endif

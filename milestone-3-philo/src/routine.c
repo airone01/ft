@@ -11,63 +11,66 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 /*
 ** Handle the case where there is only one philosopher
 */
 static void	*take_fork_and_return(t_philo *philo)
 {
-	log_action(philo, "has taken a fork");
-	ft_usleep((unsigned long)philo->ctx->death_time, philo);
+	log_action(philo, MSG_TAKEN);
+	ft_usleep(philo->ctx->death_time, philo);
 	return (NULL);
 }
 
 /*
 ** Waits for all philosophers
 ** Not using mtx_set here as it's way too many operations
+**
+** TODO: Use all_threads_ready
 */
-static void	wait_all_philos(t_philo *philo)
+void	wait_all_philos(t_ctx *ctx)
 {
 	bool	started;
 
-	pthread_mutex_lock(&philo->ctx->dead_lock);
-	philo->ctx->threads_ready++;
-	started = philo->ctx->threads_ready == philo->ctx->philos_count;
-	pthread_mutex_unlock(&philo->ctx->dead_lock);
+	pthread_mutex_lock(&ctx->ctx_mtx);
+	ctx->threads_ready++;
+	if (ctx->threads_ready == ctx->philos_count)
+		ctx->all_threads_ready = true;
+	started = ctx->all_threads_ready;
+	pthread_mutex_unlock(&ctx->ctx_mtx);
 	while (!started)
 	{
-		pthread_mutex_lock(&philo->ctx->dead_lock);
-		started = philo->ctx->threads_ready == philo->ctx->philos_count;
-		pthread_mutex_unlock(&philo->ctx->dead_lock);
+		started = mtx_get_bool(&ctx->ctx_mtx, &ctx->all_threads_ready);
 		if (!started)
-			ft_usleep(100, NULL);
+			ft_usleep(50, NULL);
 	}
 }
 
+/*
+** TODO
+** We can consider returning the value of the stop var oin log_action and
+** ft_usleep to avoid (un)locking the mutex two times here.
+*/
 void	*routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	wait_all_philos(philo);
+	wait_all_philos(philo->ctx);
 	if (philo->ctx->philos_count == 1)
 		return (take_fork_and_return(philo));
-	if (philo->id % 2 == 0 || philo->id == 1)
-		log_action(philo, "is thinking");
-	if (philo->id % 2 == 0)
-		ft_usleep(calculate_thinking_time(philo), philo);
-	while (!is_it_over(philo->ctx))
+	log_action(philo, MSG_THINK);
+	while (!mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 	{
-		take_forks(philo);
-		update_philo(philo);
-		if (is_it_over(philo->ctx))
+		// if (philo->id % 2 == 0)
+		// 	usleep(ARBITRARY_USLEEP_TIME);
+		eat(philo);
+		if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 			break ;
-		log_action(philo, "is sleeping");
-		ft_usleep((unsigned long)philo->ctx->sleep_time, philo);
-		if (is_it_over(philo->ctx))
-			break ;
-		log_action(philo, "is thinking");
-		ft_usleep(calculate_thinking_time(philo), philo);
+		log_action(philo, MSG_SLEEP);
+		ft_usleep(philo->ctx->sleep_time, philo);
+		log_action(philo, MSG_THINK);
 	}
 	return (NULL);
 }
