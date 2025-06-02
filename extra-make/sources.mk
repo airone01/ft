@@ -322,13 +322,13 @@ _SRC_PHILO_COMMON				:=	\
 	ft_strlen						\
 	ft_strncmp						\
 	ft_usleep						\
+	get_set							\
 	init_ctx						\
 	init_mutexes					\
 	init_philos						\
 	is_it_over						\
 	launch_big_brother				\
 	launch_philos					\
-	log_action						\
 	philo_utils						\
 	routine
 _SRC_PHILO_COMMON				:=	\

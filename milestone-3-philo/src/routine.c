@@ -24,24 +24,23 @@ static void	*take_fork_and_return(t_philo *philo)
 
 /*
 ** Waits for all philosophers
+** Not using mtx_set here as it's way too many operations
 */
 static void	wait_all_philos(t_philo *philo)
 {
 	bool	started;
 
-	pthread_mutex_lock(&philo->ctx->start_mutex);
+	pthread_mutex_lock(&philo->ctx->dead_lock);
 	philo->ctx->threads_ready++;
-	if (philo->ctx->threads_ready == philo->ctx->philos_count)
-		philo->ctx->simulation_started = true;
-	started = philo->ctx->simulation_started;
-	pthread_mutex_unlock(&philo->ctx->start_mutex);
+	started = philo->ctx->threads_ready == philo->ctx->philos_count;
+	pthread_mutex_unlock(&philo->ctx->dead_lock);
 	while (!started)
 	{
-		pthread_mutex_lock(&philo->ctx->start_mutex);
-		started = philo->ctx->simulation_started;
-		pthread_mutex_unlock(&philo->ctx->start_mutex);
+		pthread_mutex_lock(&philo->ctx->dead_lock);
+		started = philo->ctx->threads_ready == philo->ctx->philos_count;
+		pthread_mutex_unlock(&philo->ctx->dead_lock);
 		if (!started)
-			usleep(100);
+			ft_usleep(100, NULL);
 	}
 }
 

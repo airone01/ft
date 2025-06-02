@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mem.h"
 #include "philo.h"
 
 static void	destroy_fork_mutexes(t_ctx *ctx, int count)
@@ -25,6 +24,9 @@ static void	destroy_fork_mutexes(t_ctx *ctx, int count)
 	}
 }
 
+/*
+** To avoid having a lot of boolean args, we use a flag system here
+*/
 static void	destroy_all_mutexes(t_ctx *ctx, int fork_count, int flags)
 {
 	if (fork_count > 0)
@@ -33,8 +35,6 @@ static void	destroy_all_mutexes(t_ctx *ctx, int fork_count, int flags)
 		pthread_mutex_destroy(&ctx->print_lock);
 	if (flags & 2)
 		pthread_mutex_destroy(&ctx->dead_lock);
-	if (flags & 4)
-		pthread_mutex_destroy(&ctx->start_mutex);
 }
 
 static bool	init_fork_mutexes(t_ctx *ctx)
@@ -67,15 +67,9 @@ bool	init_mutexes(t_ctx *ctx)
 		free_ctx(ctx);
 		return (true);
 	}
-	if (pthread_mutex_init(&ctx->start_mutex, NULL) != 0)
-	{
-		destroy_all_mutexes(ctx, 0, 3);
-		free_ctx(ctx);
-		return (true);
-	}
 	if (init_fork_mutexes(ctx))
 	{
-		destroy_all_mutexes(ctx, 0, 7);
+		destroy_all_mutexes(ctx, 0, 3);
 		free_ctx(ctx);
 		return (true);
 	}

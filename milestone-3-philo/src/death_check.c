@@ -11,27 +11,24 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdint.h>
 
 /*
 ** Checks if a philo died
+** /!\ There may be a data race here
 */
 static int	grim_reaper_check(t_ctx *ctx, int i)
 {
 	size_t	current_time;
 
 	current_time = get_current_time();
-	pthread_mutex_lock(&ctx->print_lock);
 	if ((long)(current_time - ctx->philos[i].last_meal) > ctx->death_time
 		/ 1000)
 	{
-		pthread_mutex_lock(&ctx->dead_lock);
-		ctx->stop = 1;
-		printf("%zu %lu died\n", current_time - ctx->epoch, ctx->philos[i].id);
-		pthread_mutex_unlock(&ctx->dead_lock);
-		pthread_mutex_unlock(&ctx->print_lock);
+		mtx_set(&ctx->dead_lock, (uint8_t *)&ctx->stop, 1); /* TODO: handle return val here */
+		log_action(&ctx->philos[i], "died");
 		return (1);
 	}
-	pthread_mutex_unlock(&ctx->print_lock);
 	return (0);
 }
 

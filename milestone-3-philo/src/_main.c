@@ -15,8 +15,6 @@
 ** utilities that go along with it.
 */
 
-#include "args.h"
-#include "mem.h"
 #include "philo.h"
 
 static void	cleanup_mutexes(t_ctx *ctx)
@@ -28,7 +26,6 @@ static void	cleanup_mutexes(t_ctx *ctx)
 		pthread_mutex_destroy(&ctx->forks[i].mutex);
 	pthread_mutex_destroy(&ctx->print_lock);
 	pthread_mutex_destroy(&ctx->dead_lock);
-	pthread_mutex_destroy(&ctx->start_mutex);
 }
 
 static void	wait_threads(t_ctx *ctx, pthread_t *big_brother, int philo_count)
@@ -42,22 +39,16 @@ static void	wait_threads(t_ctx *ctx, pthread_t *big_brother, int philo_count)
 		pthread_join(*big_brother, NULL);
 }
 
-static void	emergency_stop(t_ctx *ctx)
-{
-	pthread_mutex_lock(&ctx->dead_lock);
-	ctx->stop = true;
-	pthread_mutex_unlock(&ctx->dead_lock);
-	pthread_mutex_lock(&ctx->start_mutex);
-	ctx->simulation_started = true;
-	pthread_mutex_unlock(&ctx->start_mutex);
-}
-
+/*
+** We don't handle the result of mtx_set, but tbh we're quitting the app int
+** this case so there really isn't anything we can do.
+*/
 static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 		pthread_t *big_brother)
 {
 	if (launch_philos(ctx, created_threads))
 	{
-		emergency_stop(ctx);
+		mtx_set(&ctx->dead_lock, (uint8_t *)&ctx->stop, true);
 		wait_threads(ctx, NULL, *created_threads);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);
@@ -65,7 +56,7 @@ static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 	}
 	if (launch_big_brother(ctx, big_brother))
 	{
-		emergency_stop(ctx);
+		mtx_set(&ctx->dead_lock, (uint8_t *)&ctx->stop, true);
 		wait_threads(ctx, big_brother, (int)ctx->philos_count);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);
@@ -83,9 +74,7 @@ int	main(int argc, char **argv)
 	if (args(argc, argv))
 		return (EXIT_FAILURE);
 	ctx = init_ctx(argc, argv);
-	if (!ctx)
-		return (EXIT_FAILURE);
-	if (init_mutexes(ctx))
+	if (!ctx || init_mutexes(ctx))
 		return (EXIT_FAILURE);
 	init_philos(ctx);
 	created_threads = 0;

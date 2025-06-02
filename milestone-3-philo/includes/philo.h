@@ -13,16 +13,12 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft.h" // GPM!
-// GPM!
+# include "libft.h"    // GPM!
 # include "std.h"      // my standard functions
-# include <errno.h>    // for error types such as ENOMEM
 # include <limits.h>   // integer limits
 # include <pthread.h>  // threading
 # include <stdbool.h>  // booleans
 # include <stdint.h>   // for SIZE_MAX
-# include <stdio.h>    // printf
-# include <stdlib.h>   // standard lib
 # include <sys/time.h> // for gettimeofday
 # include <unistd.h>   // usleep
 
@@ -79,9 +75,7 @@ typedef struct s_ctx
 	t_philo			*philos;
 	// Mission control
 	bool			stop;
-	pthread_mutex_t	start_mutex;
 	int				threads_ready;
-	bool			simulation_started;
 }					t_ctx;
 
 // *************************************************************************** #
@@ -98,6 +92,15 @@ typedef struct s_ctx
 int					main(int argc, char **argv);
 
 /**
+ * @brief Checks if the arguments passed to the app are valid
+ *
+ * @param argc Arguments count
+ * @param argv Arguments count
+ * @return bool Whether valid or not
+ */
+bool				args(int argc, char **argv);
+
+/**
  * @brief Calculates the time each philo has to think
  *
  * @param philo Philosopher
@@ -112,6 +115,13 @@ unsigned long		calculate_thinking_time(t_philo *philo);
  * @return void* Unused
  */
 void				*death_check(void *arg);
+
+/**
+ * @brief Frees the app context
+ *
+ * @param ctx Context
+ */
+void				free_ctx(t_ctx *ctx);
 
 /**
  * @brief Sleeps for a given number of milliseconds, with early exit if the
@@ -132,6 +142,36 @@ void				ft_usleep(unsigned long milliseconds, t_philo *philo);
  * @return long Time
  */
 unsigned long		get_current_time(void);
+
+/**
+ * @brief Initializes the context from the arguments
+ *
+ * @param argc Arguments count
+ * @param argv Arguments
+ * @return t_ctx* Context
+ */
+t_ctx				*init_ctx(int argc, char **argv);
+
+/**
+ * @brief Allocates the array for mutextes and initializes each mutex
+ * @note In case of failure with any of the following errors, this function
+ * frees what it has access to, so ctx with free_ctx and the mutextes with.
+ * @throw EAGAIN, ENOMEM, EPERM, EINVAL
+ * @see pthread_mutex_destroy(3)
+ *
+ * @param ctx Context
+ * @return true on failure
+ * @return false on success otherwise
+ */
+bool				init_mutexes(t_ctx *ctx);
+
+/**
+ * @brief Allocates the array for philosophers
+ * @note The array is not NULL-terminated. Use ctx->philos_count
+ *
+ * @param ctx Context
+ */
+void				init_philos(t_ctx *ctx);
 
 /**
  * @brief Checks whether the simulation has been marked as over.
@@ -182,6 +222,35 @@ bool				launch_big_brother(t_ctx *ctx, pthread_t *big_brother);
 	"is thinking").
  */
 void				log_action(t_philo *philo, const char *action);
+
+/**
+ * @brief Gets a value while avoiding data races
+ *
+ * @param mtx Mutex, i.e. &ctx->dead_lock
+ * @param origin Pointer to the value, i.e. (uint8_t)&ctx->stop
+ * @param dest Pointer to where the value will be written.
+ *
+ * @return On success, zero
+ * @return Otherwise the error code given by pthread_mutex_lock or unlock.
+ *
+ * @see Man pthread_mutex_destroy.3
+ */
+int					mtx_get(pthread_mutex_t *mtx, uint8_t *origin,
+						uint8_t *dest);
+
+/**
+ * @brief Sets a value while avoiding data races
+ *
+ * @param mtx Mutex, i.e. &ctx->dead_lock
+ * @param dest Pointer to where the value will be written.
+ * @param val Value to set
+ *
+ * @return On success, zero
+ * @return Otherwise the error code given by pthread_mutex_lock or unlock.
+ *
+ * @see Man pthread_mutex_destroy.3
+ */
+int					mtx_set(pthread_mutex_t *mtx, uint8_t *dest, uint8_t val);
 
 /**
  * @brief Routine for each threaad

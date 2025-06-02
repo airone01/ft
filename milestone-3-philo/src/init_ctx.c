@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mem.h"
 #include "philo.h"
 
 static void	init_ctx_atol(t_ctx *ctx, int argc, char **argv)
@@ -77,7 +76,6 @@ t_ctx	*init_ctx(int argc, char **argv)
 		return (NULL);
 	}
 	ctx->threads_ready = 0;
-	ctx->simulation_started = false;
 	ctx->stop = false;
 	return (ctx);
 }
