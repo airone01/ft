@@ -73,7 +73,7 @@ static void	take_fork(t_philo *philo, t_fork *f1, t_fork *f2)
 void	eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		take_fork(philo, philo->fork_right, philo->fork_left);
-	else
 		take_fork(philo, philo->fork_left, philo->fork_right);
+	else
+		take_fork(philo, philo->fork_right, philo->fork_left);
 }

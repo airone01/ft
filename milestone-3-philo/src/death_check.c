@@ -12,6 +12,7 @@
 
 #include "philo.h"
 #include "std.h"
+#include <pthread.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -25,19 +26,18 @@
 ** Last working commit was 12c0d34.
 ** TODO: fix that
 */
-static int	grim_reaper_check(t_ctx *ctx, int i)
+static bool	grim_reaper_check(t_ctx *ctx, int i)
 {
 	long	current_time;
 
 	current_time = get_time(TIMEE_US);
-	// printf("diff: %ld, death: %ld\n", current_time - ctx->philos[i].last_meal, ctx->death_time);
 	if ((current_time - ctx->philos[i].last_meal) / 1000 > ctx->death_time)
 	{
 		log_action(&ctx->philos[i], MSG_DEATH);
 		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
-		return (1);
+		return (true);
 	}
-	return (0);
+	return (false);
 }
 
 /*
@@ -89,17 +89,19 @@ void	*death_check(void *arg)
 	wait_all_philos(ctx);
 	while (true)
 	{
+		if (mtx_get_bool(&ctx->ctx_mtx, &ctx->stop))
+			break;
 		i = -1;
 		while (++i < ctx->philos_count)
 			if (grim_reaper_check(ctx, i))
-				break ;
+				return (NULL);
 		if (chef_gusteau_check(ctx))
 		{
 			mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 			write_thats_all_folks(ctx);
 			break ;
 		}
-		usleep(ARBITRARY_USLEEP_TIME);
+		usleep(1000);
 	}
 	return (NULL);
 }
