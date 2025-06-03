@@ -14,35 +14,38 @@
 #include "std.h"
 #include <pthread.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-/*
-** Checks if a philo died
-** /!\ There may be a data race here
-**
-** Update: there is a timing problem since 44c942a here, and the death message
-** does not appear to print.
-** Last working commit was 12c0d34.
-** TODO: fix that
-*/
 static bool	grim_reaper_check(t_ctx *ctx, int i)
 {
+	long	last_meal_time;
 	long	current_time;
+	bool	died;
 
+	died = false;
 	current_time = get_time(TIMEE_US);
-	if ((current_time - ctx->philos[i].last_meal) / 1000 > ctx->death_time)
+	pthread_mutex_lock(&ctx->philos[i].meal_mtx);
+	last_meal_time = ctx->philos[i].last_meal;
+	pthread_mutex_unlock(&ctx->philos[i].meal_mtx);
+	if ((current_time - last_meal_time) / 1000 > ctx->death_time)
 	{
-		log_action(&ctx->philos[i], MSG_DEATH);
-		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
-		return (true);
+		pthread_mutex_lock(&ctx->print_mtx);
+		if (!mtx_get_bool(&ctx->ctx_mtx, &ctx->stop))
+		{
+			printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000,
+				ctx->philos[i].id, MSG_DEATH);
+			died = true;
+		}
+		pthread_mutex_unlock(&ctx->print_mtx);
+
+		if (died)
+			mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 	}
-	return (false);
+	return (died);
 }
 
-/*
-** Checks if all philos are full (meaning they all ate)
-*/
 static bool	chef_gusteau_check(t_ctx *ctx)
 {
 	long	i;
@@ -52,11 +55,11 @@ static bool	chef_gusteau_check(t_ctx *ctx)
 	all_ate = true;
 	while (++i < ctx->philos_count)
 	{
-		pthread_mutex_lock(&ctx->print_mtx);
+		pthread_mutex_lock(&ctx->philos[i].meal_mtx);
 		if (ctx->philos[i].meal_count < ctx->max_meal_count
 			|| ctx->max_meal_count == -1)
 			all_ate = false;
-		pthread_mutex_unlock(&ctx->print_mtx);
+		pthread_mutex_unlock(&ctx->philos[i].meal_mtx);
 	}
 	return (all_ate);
 }
