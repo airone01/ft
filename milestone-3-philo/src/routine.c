@@ -43,14 +43,13 @@ void	wait_all_philos(t_ctx *ctx)
 	{
 		started = mtx_get_bool(&ctx->ctx_mtx, &ctx->all_threads_ready);
 		if (!started)
-			ft_usleep(50, NULL);
+			ft_usleep(5, NULL);
 	}
 }
 
 /*
-** TODO
-** We can consider returning the value of the stop var oin log_action and
-** ft_usleep to avoid (un)locking the mutex two times here.
+** Here we return the result of the stop flag in log_action to avoid having
+** to (un)lock too many times.
 */
 void	*routine(void *arg)
 {
@@ -63,14 +62,12 @@ void	*routine(void *arg)
 	log_action(philo, MSG_THINK);
 	while (!mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 	{
-		// if (philo->id % 2 == 0)
-		// 	usleep(ARBITRARY_USLEEP_TIME);
 		eat(philo);
-		if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+		if (log_action(philo, MSG_SLEEP))
 			break ;
-		log_action(philo, MSG_SLEEP);
 		ft_usleep(philo->ctx->sleep_time, philo);
-		log_action(philo, MSG_THINK);
+		if (log_action(philo, MSG_THINK))
+			break ;
 	}
 	return (NULL);
 }

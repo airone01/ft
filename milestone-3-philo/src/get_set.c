@@ -17,21 +17,22 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	log_action(t_philo *philo, const char *action)
+bool	log_action(t_philo *philo, const char *action)
 {
 	long	us;
 
 	us = get_time(TIMEE_US);
 	if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
-		return ;
+		return (true);
 	pthread_mutex_lock(&philo->ctx->print_mtx);
 	printf("%zu %lu %s\n", (us - philo->ctx->epoch) / 1000, philo->id, action);
 	pthread_mutex_unlock(&philo->ctx->print_mtx);
+	return (false);
 }
 
 bool	mtx_get_bool(pthread_mutex_t *mtx, bool *origin)
 {
-	bool dest;
+	bool	dest;
 
 	pthread_mutex_lock(mtx);
 	dest = *origin;

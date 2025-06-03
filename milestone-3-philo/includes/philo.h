@@ -34,7 +34,8 @@
 //                                   Enums                                     #
 // *************************************************************************** #
 
-typedef enum e_time_code {
+typedef enum e_time_code
+{
 	TIMEE_S,
 	TIMEE_MS,
 	TIMEE_US,
@@ -127,7 +128,7 @@ bool				args(int argc, char **argv);
  */
 void				*death_check(void *arg);
 
-void	eat(t_philo *philo);
+void				eat(t_philo *philo);
 
 /**
  * @brief Frees the app context
@@ -222,9 +223,9 @@ bool				launch_big_brother(t_ctx *ctx, pthread_t *big_brother);
  *
  * @param philo Pointer to the philosopher structure.
  * @param action Description of the action to log (e.g., "is eating",
-	"is thinking").
+ * "is thinking").
  */
-void				log_action(t_philo *philo, const char *action);
+bool				log_action(t_philo *philo, const char *action);
 
 /**
  * @brief Gets a value while avoiding data races
@@ -238,9 +239,9 @@ void				log_action(t_philo *philo, const char *action);
  *
  * @see Man pthread_mutex_destroy.3
  */
-// int					mtx_get(t_mtx *mtx, void *origin,
-// 						void *dest);
-bool					mtx_get_bool(t_mtx *mtx, bool *origin);
+// int				mtx_get(t_mtx *mtx, void *origin,
+// 					void *dest);
+bool				mtx_get_bool(t_mtx *mtx, bool *origin);
 
 /**
  * @brief Sets a value while avoiding data races
@@ -254,10 +255,10 @@ bool					mtx_get_bool(t_mtx *mtx, bool *origin);
  *
  * @see Man pthread_mutex_destroy.3
  */
-// int					mtx_set(t_mtx *mtx, void *dest, void *val);
-void					mtx_set_bool(t_mtx *mtx, bool *dest, bool val);
-void					mtx_set_long(t_mtx *mtx, long *dest, long val);
-void					mtx_increment_long(t_mtx *mtx, long *dest);
+// int				mtx_set(t_mtx *mtx, void *dest, void *val);
+void				mtx_set_bool(t_mtx *mtx, bool *dest, bool val);
+void				mtx_set_long(t_mtx *mtx, long *dest, long val);
+void				mtx_increment_long(t_mtx *mtx, long *dest);
 
 /**
  * @brief Routine for each threaad

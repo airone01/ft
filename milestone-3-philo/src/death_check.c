@@ -39,7 +39,6 @@ static bool	grim_reaper_check(t_ctx *ctx, int i)
 			died = true;
 		}
 		pthread_mutex_unlock(&ctx->print_mtx);
-
 		if (died)
 			mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
 	}
@@ -93,7 +92,7 @@ void	*death_check(void *arg)
 	while (true)
 	{
 		if (mtx_get_bool(&ctx->ctx_mtx, &ctx->stop))
-			break;
+			break ;
 		i = -1;
 		while (++i < ctx->philos_count)
 			if (grim_reaper_check(ctx, i))

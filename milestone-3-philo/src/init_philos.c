@@ -28,6 +28,13 @@ void	init_philos(t_ctx *ctx)
 		ctx->philos[i].fork_right = &ctx->forks[i];
 		ctx->philos[i].fork_left = &ctx->forks[(i + 1) % ctx->philos_count];
 		ctx->philos[i].ctx = ctx;
+		if (pthread_mutex_init(&ctx->philos[i].meal_mtx, NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&ctx->philos[i].meal_mtx);
+			return;
+		}
 		i++;
 	}
+	i++;
 }
