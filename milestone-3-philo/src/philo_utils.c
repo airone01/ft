@@ -59,6 +59,11 @@ static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 	}
 }
 
+/*
+** Note that we do not care about the result of log_action at the end
+** of this function, because all the steps done after it need to be done
+** regardless of the stop flag.
+*/
 void	eat(t_philo *philo)
 {
 	t_fork	*first;
@@ -91,9 +96,7 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->meal_mtx);
 	log_action(philo, MSG_EATIN);
 	ft_usleep(philo->ctx->meal_time, philo);
-	pthread_mutex_lock(&philo->meal_mtx);
-	philo->meal_count++;
-	pthread_mutex_unlock(&philo->meal_mtx);
+	mx_ilong(&philo->meal_mtx, &philo->meal_count);
 	release_fork(first);
 	release_fork(second);
 }
