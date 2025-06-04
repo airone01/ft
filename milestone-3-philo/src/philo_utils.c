@@ -26,13 +26,6 @@ static bool	try_take_fork(t_fork *fork)
 	return (success);
 }
 
-static void release_fork(t_fork *fork)
-{
-    pthread_mutex_lock(&fork->mutex);
-    fork->in_use = false;
-    pthread_mutex_unlock(&fork->mutex);
-}
-
 static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 {
 	bool	stop;
@@ -60,9 +53,11 @@ static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 }
 
 /*
-** Note that we do not care about the result of log_action at the end
+** Note 1: We do not care about the result of log_action at the end
 ** of this function, because all the steps done after it need to be done
 ** regardless of the stop flag.
+**
+** Note 2: the mx_sbool calls are us releasing the forks (◕‿◕✿)
 */
 void	eat(t_philo *philo)
 {
@@ -87,8 +82,8 @@ void	eat(t_philo *philo)
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	if (stop)
 	{
-		release_fork(first);
-		release_fork(second);
+		mx_sbool(&first->mutex, &first->in_use, false);
+		mx_sbool(&second->mutex, &second->in_use, false);
 		return;
 	}
 	pthread_mutex_lock(&philo->meal_mtx);
@@ -97,6 +92,6 @@ void	eat(t_philo *philo)
 	log_action(philo, MSG_EATIN);
 	ft_usleep(philo->ctx->meal_time, philo);
 	mx_ilong(&philo->meal_mtx, &philo->meal_count);
-	release_fork(first);
-	release_fork(second);
+	mx_sbool(&first->mutex, &first->in_use, false);
+	mx_sbool(&second->mutex, &second->in_use, false);
 }
