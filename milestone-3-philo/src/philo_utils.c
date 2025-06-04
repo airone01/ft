@@ -18,11 +18,11 @@ static bool	try_take_fork(t_fork *fork)
 {
 	bool	success;
 
-	pthread_mutex_lock(&fork->mutex);
+	pthread_mutex_lock(&fork->mtx);
 	success = !fork->in_use;
 	if (success)
 		fork->in_use = true;
-	pthread_mutex_unlock(&fork->mutex);
+	pthread_mutex_unlock(&fork->mtx);
 	return (success);
 }
 
@@ -82,8 +82,8 @@ void	eat(t_philo *philo)
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	if (stop)
 	{
-		mx_sbool(&first->mutex, &first->in_use, false);
-		mx_sbool(&second->mutex, &second->in_use, false);
+		mx_sbool(&first->mtx, &first->in_use, false);
+		mx_sbool(&second->mtx, &second->in_use, false);
 		return;
 	}
 	pthread_mutex_lock(&philo->meal_mtx);
@@ -92,6 +92,6 @@ void	eat(t_philo *philo)
 	log_action(philo, MSG_EATIN);
 	ft_usleep(philo->ctx->meal_time, philo);
 	mx_ilong(&philo->meal_mtx, &philo->meal_count);
-	mx_sbool(&first->mutex, &first->in_use, false);
-	mx_sbool(&second->mutex, &second->in_use, false);
+	mx_sbool(&first->mtx, &first->in_use, false);
+	mx_sbool(&second->mtx, &second->in_use, false);
 }

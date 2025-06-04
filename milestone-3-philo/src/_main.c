@@ -27,7 +27,7 @@ static void	cleanup_mutexes(t_ctx *ctx)
 
 	i = -1;
 	while (++i < ctx->philos_count)
-		pthread_mutex_destroy(&ctx->forks[i].mutex);
+		pthread_mutex_destroy(&ctx->forks[i].mtx);
 	pthread_mutex_destroy(&ctx->print_mtx);
 	pthread_mutex_destroy(&ctx->ctx_mtx);
 }

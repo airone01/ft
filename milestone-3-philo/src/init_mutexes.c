@@ -19,7 +19,7 @@ static void	destroy_fork_mutexes(t_ctx *ctx, int count)
 	i = 0;
 	while (i < count)
 	{
-		pthread_mutex_destroy(&ctx->forks[i].mutex);
+		pthread_mutex_destroy(&ctx->forks[i].mtx);
 		i++;
 	}
 }
@@ -44,7 +44,7 @@ static bool	init_fork_mutexes(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->philos_count)
 	{
-		if (pthread_mutex_init(&ctx->forks[i].mutex, NULL) != 0)
+		if (pthread_mutex_init(&ctx->forks[i].mtx, NULL) != 0)
 		{
 			destroy_fork_mutexes(ctx, i);
 			return (true);

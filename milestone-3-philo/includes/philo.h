@@ -53,7 +53,7 @@ typedef struct s_ctx	t_ctx; // Avoids compilation errors
  */
 typedef struct s_fork
 {
-	t_mtx			mutex;
+	t_mtx			mtx;
 	bool			in_use;
 }					t_fork;
 
