@@ -11,17 +11,14 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <unistd.h>
+#include <stdio.h> // printf()
 
 /*
-** As of the commit after c5ae792, this no longer glitches with the death
+** As of 5c8fd67, this no longer glitches with the death
 ** message because we lock print_mtx and ctx_mtx at the same time.
 ** A side effect of that was slowing down the program when there are a large
-** amount of philosophers. I'm working on it.
+** amount of philosophers.
+** It should now be fast enough on Lyon's DELL PCs.
 */
 bool	log_action(t_philo *philo, const char *action)
 {

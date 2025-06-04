@@ -12,11 +12,9 @@
 
 #include "philo.h"
 #include "std.h"
-#include <pthread.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <stdio.h>  // printf()
+#include <stdlib.h> // free()
+#include <unistd.h> // write(), usleep(), STDERR_FILENO
 
 static bool	grim_reaper_check(t_ctx *ctx, int i)
 {

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 #include "std.h"
-#include <unistd.h>
+#include <unistd.h> // write(), STDERR_FILENO,
 
 /*
 ** We just strncmp because this is litterally what the function is used for :-)

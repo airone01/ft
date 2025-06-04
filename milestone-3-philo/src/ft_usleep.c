@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <sys/time.h>
-#include <unistd.h>
-#include <stdio.h>
+#include <sys/time.h> // struct timeval, gettimeofday()
+#include <unistd.h>   // usleep()
 
 long	get_time(t_time_code code)
 {

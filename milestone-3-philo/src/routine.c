@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
 
 /*
 ** Handle the case where there is only one philosopher

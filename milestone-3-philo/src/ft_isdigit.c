@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "std.h"
 
-bool	ft_isdigit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
+// GPM: ft_isdigit

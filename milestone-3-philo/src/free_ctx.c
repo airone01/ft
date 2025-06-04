@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdlib.h>
+#include <stdlib.h> // free()
 
 void	free_ctx(t_ctx *ctx)
 {

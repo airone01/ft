@@ -16,10 +16,9 @@
 */
 
 #include "philo.h"
-#include <bits/types/struct_timeval.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <unistd.h>
+#include <stdlib.h>   // EXIT_*
+#include <sys/time.h> // gettimeofday()
+#include <unistd.h>   // write()
 
 static void	cleanup_mutexes(t_ctx *ctx)
 {

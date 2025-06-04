@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
-#include <unistd.h>
+#include <unistd.h> // usleep()
 
 static bool	try_take_fork(t_fork *fork)
 {

@@ -12,8 +12,7 @@
 
 #include "philo.h"
 #include "std.h"
-#include <limits.h>
-#include <unistd.h>
+#include <unistd.h> // write, STDERR_FILENO
 
 static void	init_ctx_atol(t_ctx *ctx, int argc, char **argv)
 {

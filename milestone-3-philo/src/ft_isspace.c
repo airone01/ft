@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "std.h"
 
-bool	ft_isspace(char c)
-{
-	return (c == ' ' || (c >= '\t' && c <= '\r'));
-}
+// GPM: ft_isspace
