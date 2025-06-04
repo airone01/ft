@@ -17,17 +17,26 @@
 #include <stdio.h>
 #include <unistd.h>
 
+/*
+** As of the commit after c5ae792, this no longer glitches with the death
+** message because we lock print_mtx and ctx_mtx at the same time.
+** A side effect of that is slowing down the program when there are a large
+** amount of philosophers.
+*/
 bool	log_action(t_philo *philo, const char *action)
 {
 	long	ms;
 
 	ms = get_time(TIMEE_US);
-	if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
-		return (true);
 	pthread_mutex_lock(&philo->ctx->print_mtx);
-	printf("%zu %lu %s\n", (ms - philo->ctx->epoch) / 1000, philo->id, action);
-	pthread_mutex_unlock(&philo->ctx->print_mtx);
-	return (false);
+    if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	{
+        pthread_mutex_unlock(&philo->ctx->print_mtx);
+        return (true);
+    }
+    printf("%zu %lu %s\n", (ms - philo->ctx->epoch) / 1000, philo->id, action);
+    pthread_mutex_unlock(&philo->ctx->print_mtx);
+    return (false);
 }
 
 bool	mtx_get_bool(pthread_mutex_t *mtx, bool *origin)

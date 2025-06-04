@@ -30,7 +30,6 @@ static bool	grim_reaper_check(t_ctx *ctx, int i)
 		printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000, ctx->philos[i].id,
 			MSG_DEATH);
 		pthread_mutex_unlock(&ctx->philos[i].ctx->print_mtx);
-		log_action(&ctx->philos[i], MSG_DEATH);
 		return (true);
 	}
 	return (false);
