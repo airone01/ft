@@ -19,13 +19,13 @@
 
 bool	log_action(t_philo *philo, const char *action)
 {
-	long	us;
+	long	ms;
 
-	us = get_time(TIMEE_US);
+	ms = get_time(TIMEE_US);
 	if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 		return (true);
 	pthread_mutex_lock(&philo->ctx->print_mtx);
-	printf("%zu %lu %s\n", (us - philo->ctx->epoch) / 1000, philo->id, action);
+	printf("%zu %lu %s\n", (ms - philo->ctx->epoch) / 1000, philo->id, action);
 	pthread_mutex_unlock(&philo->ctx->print_mtx);
 	return (false);
 }

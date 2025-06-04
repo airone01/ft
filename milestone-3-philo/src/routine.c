@@ -60,6 +60,8 @@ void	*routine(void *arg)
 	if (philo->ctx->philos_count == 1)
 		return (take_fork_and_return(philo));
 	log_action(philo, MSG_THINK);
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->ctx->meal_time / 10, philo);
 	while (!mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
 	{
 		eat(philo);

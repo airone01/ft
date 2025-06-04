@@ -20,29 +20,20 @@
 
 static bool	grim_reaper_check(t_ctx *ctx, int i)
 {
-	long	last_meal_time;
 	long	current_time;
-	bool	died;
 
-	died = false;
 	current_time = get_time(TIMEE_US);
-	pthread_mutex_lock(&ctx->philos[i].meal_mtx);
-	last_meal_time = ctx->philos[i].last_meal;
-	pthread_mutex_unlock(&ctx->philos[i].meal_mtx);
-	if ((current_time - last_meal_time) / 1000 > ctx->death_time)
+	if ((current_time - ctx->philos[i].last_meal) / 1000 > ctx->death_time)
 	{
-		pthread_mutex_lock(&ctx->print_mtx);
-		if (!mtx_get_bool(&ctx->ctx_mtx, &ctx->stop))
-		{
-			printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000,
-				ctx->philos[i].id, MSG_DEATH);
-			died = true;
-		}
-		pthread_mutex_unlock(&ctx->print_mtx);
-		if (died)
-			mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
+		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
+		pthread_mutex_lock(&ctx->philos[i].ctx->print_mtx);
+		printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000, ctx->philos[i].id,
+			MSG_DEATH);
+		pthread_mutex_unlock(&ctx->philos[i].ctx->print_mtx);
+		log_action(&ctx->philos[i], MSG_DEATH);
+		return (true);
 	}
-	return (died);
+	return (false);
 }
 
 static bool	chef_gusteau_check(t_ctx *ctx)
