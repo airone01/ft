@@ -20,16 +20,18 @@
 /*
 ** As of the commit after c5ae792, this no longer glitches with the death
 ** message because we lock print_mtx and ctx_mtx at the same time.
-** A side effect of that is slowing down the program when there are a large
-** amount of philosophers.
+** A side effect of that was slowing down the program when there are a large
+** amount of philosophers. I'm working on it.
 */
 bool	log_action(t_philo *philo, const char *action)
 {
+	bool	stop;
 	long	ms;
 
 	ms = get_time(TIMEE_US);
 	pthread_mutex_lock(&philo->ctx->print_mtx);
-    if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+    if (stop)
 	{
         pthread_mutex_unlock(&philo->ctx->print_mtx);
         return (true);
@@ -39,31 +41,28 @@ bool	log_action(t_philo *philo, const char *action)
     return (false);
 }
 
-bool	mtx_get_bool(pthread_mutex_t *mtx, bool *origin)
+void	mx_gbool(pthread_mutex_t *mtx, bool *origin, bool *dest)
 {
-	bool	dest;
-
 	pthread_mutex_lock(mtx);
-	dest = *origin;
+	*dest = *origin;
 	pthread_mutex_unlock(mtx);
-	return (dest);
 }
 
-void	mtx_set_bool(pthread_mutex_t *mtx, bool *dest, bool val)
+void	mx_sbool(pthread_mutex_t *mtx, bool *dest, bool val)
 {
 	pthread_mutex_lock(mtx);
 	*dest = val;
 	pthread_mutex_unlock(mtx);
 }
 
-void	mtx_set_long(pthread_mutex_t *mtx, long *dest, long val)
+void	mx_slong(pthread_mutex_t *mtx, long *dest, long val)
 {
 	pthread_mutex_lock(mtx);
 	*dest = val;
 	pthread_mutex_unlock(mtx);
 }
 
-void	mtx_increment_long(pthread_mutex_t *mtx, long *dest)
+void	mx_ilong(pthread_mutex_t *mtx, long *dest)
 {
 	pthread_mutex_lock(mtx);
 	*dest += 1;

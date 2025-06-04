@@ -52,7 +52,7 @@ static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 {
 	if (launch_philos(ctx, created_threads))
 	{
-		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
+		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 		wait_threads(ctx, NULL, *created_threads);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);
@@ -60,7 +60,7 @@ static bool	launch_long_stuff(t_ctx *ctx, int *created_threads,
 	}
 	if (launch_big_brother(ctx, big_brother))
 	{
-		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
+		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 		wait_threads(ctx, big_brother, (int)ctx->philos_count);
 		cleanup_mutexes(ctx);
 		free_ctx(ctx);

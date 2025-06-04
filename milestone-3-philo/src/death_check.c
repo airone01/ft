@@ -25,7 +25,7 @@ static bool	grim_reaper_check(t_ctx *ctx, int i)
 	current_time = get_time(TIMEE_US);
 	if ((current_time - ctx->philos[i].last_meal) / 1000 > ctx->death_time)
 	{
-		mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
+		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 		pthread_mutex_lock(&ctx->philos[i].ctx->print_mtx);
 		printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000, ctx->philos[i].id,
 			MSG_DEATH);
@@ -75,13 +75,15 @@ static void	write_thats_all_folks(t_ctx *ctx)
 void	*death_check(void *arg)
 {
 	t_ctx	*ctx;
+	bool	stop;
 	int		i;
 
 	ctx = (t_ctx *)arg;
 	wait_all_philos(ctx);
 	while (true)
 	{
-		if (mtx_get_bool(&ctx->ctx_mtx, &ctx->stop))
+		mx_gbool(&ctx->ctx_mtx, &ctx->stop, &stop);
+		if (stop)
 			break ;
 		i = -1;
 		while (++i < ctx->philos_count)
@@ -89,7 +91,7 @@ void	*death_check(void *arg)
 				return (NULL);
 		if (chef_gusteau_check(ctx))
 		{
-			mtx_set_bool(&ctx->ctx_mtx, &ctx->stop, true);
+			mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 			write_thats_all_folks(ctx);
 			break ;
 		}

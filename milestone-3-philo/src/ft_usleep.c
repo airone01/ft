@@ -42,12 +42,17 @@ long	get_time(t_time_code code)
 void	ft_usleep(long wait_time, t_philo *philo)
 {
 	long	start;
+	bool	stop;
 
 	start = get_time(TIMEE_MS);
 	while ((get_time(TIMEE_MS) - start) < wait_time)
 	{
-		if (philo && mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
-			break ;
+		if (philo)
+		{
+			mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+			if (stop)
+				break ;
+		}
 		if ((double)(wait_time - get_time(TIMEE_US)) > 1e3)
 			usleep((unsigned int)wait_time);
 		else

@@ -41,7 +41,7 @@ void	wait_all_philos(t_ctx *ctx)
 	pthread_mutex_unlock(&ctx->ctx_mtx);
 	while (!started)
 	{
-		started = mtx_get_bool(&ctx->ctx_mtx, &ctx->all_threads_ready);
+		mx_gbool(&ctx->ctx_mtx, &ctx->all_threads_ready, &started);
 		if (!started)
 			ft_usleep(5, NULL);
 	}
@@ -54,6 +54,7 @@ void	wait_all_philos(t_ctx *ctx)
 void	*routine(void *arg)
 {
 	t_philo	*philo;
+	bool	stop;
 
 	philo = (t_philo *)arg;
 	wait_all_philos(philo->ctx);
@@ -62,7 +63,8 @@ void	*routine(void *arg)
 	log_action(philo, MSG_THINK);
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->ctx->meal_time / 10, philo);
-	while (!mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+	while (!stop)
 	{
 		eat(philo);
 		if (log_action(philo, MSG_SLEEP))

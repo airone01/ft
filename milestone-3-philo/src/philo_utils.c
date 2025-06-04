@@ -35,7 +35,10 @@ static void release_fork(t_fork *fork)
 
 static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 {
-	while (!mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	bool	stop;
+
+	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+	while (!stop)
 	{
 		if (try_take_fork(f1))
 		{
@@ -44,7 +47,8 @@ static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 		}
 		usleep(ARBITRARY_USLEEP_TIME);
 	}
-	while (!mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+	while (!stop)
 	{
 		if (try_take_fork(f2))
 		{
@@ -59,8 +63,10 @@ void	eat(t_philo *philo)
 {
 	t_fork	*first;
 	t_fork	*second;
+	bool	stop;
 
-	if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+	if (stop)
 		return;
 	if (philo->id % 2 == 0)
 	{
@@ -73,7 +79,8 @@ void	eat(t_philo *philo)
 		second = philo->fork_left;
 	}
 	take_forks(philo, first, second);
-	if (mtx_get_bool(&philo->ctx->ctx_mtx, &philo->ctx->stop))
+	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
+	if (stop)
 	{
 		release_fork(first);
 		release_fork(second);

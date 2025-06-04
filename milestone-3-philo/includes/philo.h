@@ -128,6 +128,11 @@ bool				args(int argc, char **argv);
  */
 void				*death_check(void *arg);
 
+/**
+ * @brief Behavior of a philo eating a meal
+ *
+ * @param philo Philo
+ */
 void				eat(t_philo *philo);
 
 /**
@@ -231,37 +236,47 @@ bool				log_action(t_philo *philo, const char *action);
  * @brief Gets a value while avoiding data races
  *
  * @param mtx Mutex
- * @param origin Pointer to the value
+ * @param origin Pointer to the value to get
  * @param dest Pointer to where the value will be written.
- *
- * @return On success, zero
- * @return Otherwise the error code given by pthread_mutex_lock or unlock.
  *
  * @see Man pthread_mutex_destroy.3
  */
-// int				mtx_get(t_mtx *mtx, void *origin,
-// 					void *dest);
-bool				mtx_get_bool(t_mtx *mtx, bool *origin);
+void				mx_gbool(t_mtx *mtx, bool *origin, bool *dest);
 
 /**
- * @brief Sets a value while avoiding data races
+ * @brief Sets a boolean value after locking a mutex
  *
  * @param mtx Mutex
  * @param dest Pointer to where the value will be written.
  * @param val Value to set
  *
- * @return On success, zero
- * @return Otherwise the error code given by pthread_mutex_lock or unlock.
+ * @see Man pthread_mutex_destroy.3
+ */
+void				mx_sbool(t_mtx *mtx, bool *dest, bool val);
+
+/**
+ * @brief Sets a long value after locking a mutex
+ *
+ * @param mtx Mutex
+ * @param dest Pointer to where the value will be written.
+ * @param val Value to set
  *
  * @see Man pthread_mutex_destroy.3
  */
-// int				mtx_set(t_mtx *mtx, void *dest, void *val);
-void				mtx_set_bool(t_mtx *mtx, bool *dest, bool val);
-void				mtx_set_long(t_mtx *mtx, long *dest, long val);
-void				mtx_increment_long(t_mtx *mtx, long *dest);
+void				mx_slong(t_mtx *mtx, long *dest, long val);
 
 /**
- * @brief Routine for each threaad
+ * @brief Increments a long value after locking a mutex
+ *
+ * @param mtx Mutex
+ * @param dest Pointer to where the value will be written.
+ *
+ * @see Man pthread_mutex_destroy.3
+ */
+void				mx_ilong(t_mtx *mtx, long *dest);
+
+/**
+ * @brief Routine for each thread
  *
  * @param arg Argument
  * @return void* Unused
