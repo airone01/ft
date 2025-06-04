@@ -31,14 +31,14 @@ bool	log_action(t_philo *philo, const char *action)
 	ms = get_time(TIMEE_US);
 	pthread_mutex_lock(&philo->ctx->print_mtx);
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
-    if (stop)
+	if (stop)
 	{
-        pthread_mutex_unlock(&philo->ctx->print_mtx);
-        return (true);
-    }
-    printf("%zu %lu %s\n", (ms - philo->ctx->epoch) / 1000, philo->id, action);
-    pthread_mutex_unlock(&philo->ctx->print_mtx);
-    return (false);
+		pthread_mutex_unlock(&philo->ctx->print_mtx);
+		return (true);
+	}
+	printf("%zu %lu %s\n", (ms - philo->ctx->epoch) / 1000, philo->id, action);
+	pthread_mutex_unlock(&philo->ctx->print_mtx);
+	return (false);
 }
 
 void	mx_gbool(pthread_mutex_t *mtx, bool *origin, bool *dest)

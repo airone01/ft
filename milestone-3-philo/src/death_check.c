@@ -27,8 +27,8 @@ static bool	grim_reaper_check(t_ctx *ctx, int i)
 	{
 		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 		pthread_mutex_lock(&ctx->philos[i].ctx->print_mtx);
-		printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000, ctx->philos[i].id,
-			MSG_DEATH);
+		printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000,
+			ctx->philos[i].id, MSG_DEATH);
 		pthread_mutex_unlock(&ctx->philos[i].ctx->print_mtx);
 		return (true);
 	}

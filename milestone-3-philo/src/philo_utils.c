@@ -36,7 +36,7 @@ static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 		if (try_take_fork(f1))
 		{
 			log_action(philo, MSG_TAKEN);
-			break;
+			break ;
 		}
 		usleep(ARBITRARY_USLEEP_TIME);
 	}
@@ -46,9 +46,23 @@ static void	take_forks(t_philo *philo, t_fork *f1, t_fork *f2)
 		if (try_take_fork(f2))
 		{
 			log_action(philo, MSG_TAKEN);
-			break;
+			break ;
 		}
 		usleep(ARBITRARY_USLEEP_TIME);
+	}
+}
+
+static void	choose_forks(t_philo *philo, t_fork **first, t_fork **second)
+{
+	if (philo->id % 2 == 0)
+	{
+		*first = philo->fork_left;
+		*second = philo->fork_right;
+	}
+	else
+	{
+		*first = philo->fork_right;
+		*second = philo->fork_left;
 	}
 }
 
@@ -67,25 +81,12 @@ void	eat(t_philo *philo)
 
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	if (stop)
-		return;
-	if (philo->id % 2 == 0)
-	{
-		first = philo->fork_left;
-		second = philo->fork_right;
-	}
-	else
-	{
-		first = philo->fork_right;
-		second = philo->fork_left;
-	}
+		return ;
+	choose_forks(philo, &first, &second);
 	take_forks(philo, first, second);
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	if (stop)
-	{
-		mx_sbool(&first->mtx, &first->in_use, false);
-		mx_sbool(&second->mtx, &second->in_use, false);
-		return;
-	}
+		return ;
 	pthread_mutex_lock(&philo->meal_mtx);
 	philo->last_meal = get_time(TIMEE_US);
 	pthread_mutex_unlock(&philo->meal_mtx);

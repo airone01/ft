@@ -32,7 +32,7 @@ void	init_philos(t_ctx *ctx)
 		{
 			while (--i >= 0)
 				pthread_mutex_destroy(&ctx->philos[i].meal_mtx);
-			return;
+			return ;
 		}
 		i++;
 	}
