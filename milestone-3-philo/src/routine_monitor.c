@@ -10,13 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** This file is where all the logic of the philos dying lies.
+*/
+
 #include "philo.h"
 #include "std.h"
 #include <stdio.h>  // printf()
 #include <stdlib.h> // free()
 #include <unistd.h> // write(), usleep(), STDERR_FILENO
 
-static bool	grim_reaper_check(t_ctx *ctx, int i)
+/*
+** This checks if
+*/
+static bool	are_philos_alive(t_ctx *ctx, int i)
 {
 	long	current_time;
 
@@ -33,28 +40,29 @@ static bool	grim_reaper_check(t_ctx *ctx, int i)
 	return (false);
 }
 
-static bool	chef_gusteau_check(t_ctx *ctx)
+static bool	are_philos_full(t_ctx *ctx)
 {
+	bool	all_full;
 	long	i;
-	bool	all_ate;
 
 	i = -1;
-	all_ate = true;
+	all_full = true;
 	while (++i < ctx->philos_count)
 	{
 		pthread_mutex_lock(&ctx->philos[i].meal_mtx);
 		if (ctx->philos[i].meal_count < ctx->max_meal_count
 			|| ctx->max_meal_count == -1)
-			all_ate = false;
+			all_full = false;
 		pthread_mutex_unlock(&ctx->philos[i].meal_mtx);
 	}
-	return (all_ate);
+	return (all_full);
 }
 
 /*
-** When all philos are full, this writes some info to stderr.
+** When all philos are full, this writes some info to stderr to make sure
+** it is displayed even if you redirect STDOUT.
 */
-static void	write_thats_all_folks(t_ctx *ctx)
+static void	write_green_message(t_ctx *ctx)
 {
 	char	*s;
 
@@ -70,7 +78,7 @@ static void	write_thats_all_folks(t_ctx *ctx)
 	pthread_mutex_unlock(&ctx->print_mtx);
 }
 
-void	*death_check(void *arg)
+void	*routine_monitor(void *arg)
 {
 	t_ctx	*ctx;
 	bool	stop;
@@ -85,12 +93,12 @@ void	*death_check(void *arg)
 			break ;
 		i = -1;
 		while (++i < ctx->philos_count)
-			if (grim_reaper_check(ctx, i))
+			if (are_philos_alive(ctx, i))
 				return (NULL);
-		if (chef_gusteau_check(ctx))
+		if (are_philos_full(ctx))
 		{
 			mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
-			write_thats_all_folks(ctx);
+			write_green_message(ctx);
 			break ;
 		}
 		usleep(1000);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_usleep.c                                        :+:      :+:    :+:   */
+/*   std_usleep.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -38,7 +38,7 @@ long	get_time(t_time_code code)
 ** - usleep most of the time to not consume CPU
 ** - we loop over for last microsecs
 */
-void	ft_usleep(long wait_time, t_philo *philo)
+void	std_usleep(long wait_time, t_philo *philo)
 {
 	long	start;
 	bool	stop;

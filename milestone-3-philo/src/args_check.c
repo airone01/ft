@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   args_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** The goal of this file is not to parse per say the cli args, but to verify
+** them without allocating anything. This is mainly done with strlen and strcmp.
+*/
+
 #include "philo.h"
 #include "std.h"
 #include <unistd.h> // write(), STDERR_FILENO,
+
+/*
+** This is just to avoid unreadable code
+*/
+static void	write_combined_err(const char *s1, const char *s2, const char *s3)
+{
+	write(STDERR_FILENO, s1, ft_strlen(s1));
+	write(STDERR_FILENO, s2, ft_strlen(s2));
+	write(STDERR_FILENO, s3, ft_strlen(s3));
+}
 
 /*
 ** We just strncmp because this is litterally what the function is used for :-)
@@ -67,16 +82,13 @@ static bool	is_valid_number(char *str)
 		return (false);
 	if (!is_valid_number_length(str))
 	{
-		write(STDERR_FILENO, FG_RED "Error: '", 13);
-		write(STDERR_FILENO, str, ft_strlen(str));
-		write(STDERR_FILENO, FG_RED "' is out of range for a long integer\n" NC,
-			41);
+		write_combined_err(FG_RED ERR_COLON, str, ERR_RANGE NC);
 		return (false);
 	}
 	return (true);
 }
 
-bool	args(int argc, char **argv)
+bool	args_check(int argc, char **argv)
 {
 	int	i;
 

@@ -17,16 +17,20 @@
 # include <stdbool.h>  // bool
 # include <stdint.h>   // uint8_t
 
-# define FG_RED "\x1b[31m"
-# define FG_GREEN "\x1b[32m"
-# define FG_YELLOW "\x1b[33m"
-# define NC "\x1b[0m"
+# define FG_RED "\x1b[31m"    // 5
+# define FG_GREEN "\x1b[32m"  // 5
+# define FG_YELLOW "\x1b[33m" // 5
+# define NC "\x1b[0m"         // 4
 
 # define MSG_TAKEN "has taken a fork"
 # define MSG_THINK "is thinking"
 # define MSG_SLEEP "is sleeping"
 # define MSG_EATIN "is eating"
 # define MSG_DEATH "died"
+
+# define ERR_COLON "Error: '"
+# define ERR_RANGE "' is out of range for a long integer\n"
+# define ERR_GTIME "Error: gettimeofday() error\n"
 
 # define ARBITRARY_USLEEP_TIME 100
 
@@ -92,6 +96,13 @@ struct s_ctx
 	long			epoch;
 	// Philosophers
 	t_philo			*philos;
+	// Destruction
+	int				philos_created;
+	int				philos_launched;
+	bool			monitor_launched;
+	int				fork_mtx_created;
+	bool			ctx_mtx_created;
+	bool			print_mtx_created;
 	// Mission control
 	bool			stop;
 	bool			all_threads_ready; // TODO
@@ -118,15 +129,16 @@ int					main(int argc, char **argv);
  * @param argv Arguments count
  * @return bool Whether valid or not
  */
-bool				args(int argc, char **argv);
+bool				args_check(int argc, char **argv);
 
-/**
- * @brief Checks for the death of philosophers
+/*
+ * @brief Parses the cli arguments without checking them
  *
- * @param arg Argument
- * @return void* Unused
+ * @param ctx Context
+ * @param argc Cli arguments count
+ * @param argc Cli arguments
  */
-void				*death_check(void *arg);
+void				args_parse(t_ctx *ctx, int argc, char **argv);
 
 /**
  * @brief Behavior of a philo eating a meal
@@ -141,19 +153,6 @@ void				eat(t_philo *philo);
  * @param ctx Context
  */
 void				free_ctx(t_ctx *ctx);
-
-/**
- * @brief Sleeps for a given number of milliseconds, with early exit if the
- *        simulation ends.
- *
- * This function behaves like a standard sleep but periodically checks whether
- * the simulation is over. If so, it exits early to avoid unnecessary blocking.
- *
- * @param milliseconds Duration to sleep, in milliseconds.
- * @param philo Pointer to the philosopher, used to access the simulation
- *              context.
- */
-void				ft_usleep(long milliseconds, t_philo *philo);
 
 /**
  * @brief Get the current epoch long of seconds, ms, or us.
@@ -190,8 +189,10 @@ bool				init_mutexes(t_ctx *ctx);
  * @note The array is not NULL-terminated. Use ctx->philos_count
  *
  * @param ctx Context
+ * @return false if succeded
+ * @return true if failed
  */
-void				init_philos(t_ctx *ctx);
+bool				init_philos(t_ctx *ctx);
 
 /**
  * @brief Launches philosopher threads to start the simulation.
@@ -201,10 +202,9 @@ void				init_philos(t_ctx *ctx);
  * stopped and the function returns true to indicate failure.
  *
  * @param ctx Pointer to the simulation context.
- * @param created_threads Number of threads that were actually created
  * @return true if an error occurred during thread creation, false on success.
  */
-bool				launch_philos(t_ctx *ctx, int *created_threads);
+bool				launch_philos(t_ctx *ctx);
 
 /**
  * @brief Launches the monitoring thread for the simulation.
@@ -217,7 +217,7 @@ bool				launch_philos(t_ctx *ctx, int *created_threads);
  * @param big_brother Master thread
  * @return true if thread creation failed, false on success.
  */
-bool				launch_big_brother(t_ctx *ctx, pthread_t *big_brother);
+bool				launch_monitor(t_ctx *ctx, pthread_t *big_brother);
 
 /**
  * @brief Logs an action performed by a philosopher.
@@ -283,6 +283,32 @@ void				mx_ilong(t_mtx *mtx, long *dest);
  */
 void				*routine(void *arg);
 
+/**
+ * @brief Checks for the death of philosophers
+ *
+ * @param arg Argument
+ * @return void* Unused
+ */
+void				*routine_monitor(void *arg);
+
+/**
+ * @brief Sleeps for a given number of milliseconds, with early exit if the
+ *        simulation ends.
+ *
+ * This function behaves like a standard sleep but periodically checks whether
+ * the simulation is over. If so, it exits early to avoid unnecessary blocking.
+ *
+ * @param milliseconds Duration to sleep, in milliseconds.
+ * @param philo Pointer to the philosopher, used to access the simulation
+ *              context.
+ */
+void				std_usleep(long milliseconds, t_philo *philo);
+
+/*
+ * @brief Loops until all philos are ready or the program should stop
+ *
+ * @param ctx Context
+ */
 void				wait_all_philos(t_ctx *ctx);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*   routine_eat.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -90,7 +90,7 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_time(TIMEE_US);
 	pthread_mutex_unlock(&philo->meal_mtx);
 	log_action(philo, MSG_EATIN);
-	ft_usleep(philo->ctx->meal_time, philo);
+	std_usleep(philo->ctx->meal_time, philo);
 	mx_ilong(&philo->meal_mtx, &philo->meal_count);
 	mx_sbool(&first->mtx, &first->in_use, false);
 	mx_sbool(&second->mtx, &second->in_use, false);

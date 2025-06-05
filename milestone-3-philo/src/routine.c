@@ -18,7 +18,7 @@
 static void	*take_fork_and_return(t_philo *philo)
 {
 	log_action(philo, MSG_TAKEN);
-	ft_usleep(philo->ctx->death_time, philo);
+	std_usleep(philo->ctx->death_time, philo);
 	return (NULL);
 }
 
@@ -42,7 +42,7 @@ void	wait_all_philos(t_ctx *ctx)
 	{
 		mx_gbool(&ctx->ctx_mtx, &ctx->all_threads_ready, &started);
 		if (!started)
-			ft_usleep(5, NULL);
+			std_usleep(5, NULL);
 	}
 }
 
@@ -61,14 +61,14 @@ void	*routine(void *arg)
 		return (take_fork_and_return(philo));
 	log_action(philo, MSG_THINK);
 	if (philo->id % 2 == 0)
-		ft_usleep(philo->ctx->meal_time / 10, philo);
+		std_usleep(philo->ctx->meal_time / 10, philo);
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	while (!stop)
 	{
 		eat(philo);
 		if (log_action(philo, MSG_SLEEP))
 			break ;
-		ft_usleep(philo->ctx->sleep_time, philo);
+		std_usleep(philo->ctx->sleep_time, philo);
 		if (log_action(philo, MSG_THINK))
 			break ;
 	}

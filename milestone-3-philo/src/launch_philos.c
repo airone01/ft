@@ -12,18 +12,17 @@
 
 #include "philo.h"
 
-bool	launch_philos(t_ctx *ctx, int *created_threads)
+bool	launch_philos(t_ctx *ctx)
 {
 	int	i;
 
 	i = -1;
-	*created_threads = 0;
 	while (++i < ctx->philos_count)
 	{
 		if (pthread_create(&ctx->philos[i].thread, NULL, routine,
 				&ctx->philos[i]) != 0)
 			return (true);
-		(*created_threads)++;
+		ctx->philos_launched++;
 	}
 	return (false);
 }

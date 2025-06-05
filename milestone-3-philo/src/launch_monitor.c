@@ -1,15 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   launch_monitor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/11 13:06:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/11 13:06:21 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/11 16:10:47 by elagouch          #+#    #+#             */
+/*   Updated: 2025/05/11 17:08:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "std.h"
+#include "philo.h"
 
-// GPM: ft_strcmp
+bool	launch_monitor(t_ctx *ctx, pthread_t *big_brother)
+{
+	if (pthread_create(big_brother, NULL, routine_monitor, ctx) != 0)
+	{
+		ctx->stop = true;
+		return (true);
+	}
+	ctx->monitor_launched = true;
+	return (false);
+}

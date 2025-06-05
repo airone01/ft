@@ -14,19 +14,6 @@
 #include "std.h"
 #include <unistd.h> // write, STDERR_FILENO
 
-static void	init_ctx_atol(t_ctx *ctx, int argc, char **argv)
-{
-	ctx->philos_count = (long)ft_atoul(argv[1]);
-	ctx->death_time = (long)ft_atoul(argv[2]);
-	ctx->meal_time = (long)ft_atoul(argv[3]);
-	ctx->sleep_time = (long)ft_atoul(argv[4]);
-	if (argc == 6)
-		ctx->max_meal_count = (long)ft_atoul(argv[5]);
-	else
-		ctx->max_meal_count = -1;
-	ctx->epoch = get_time(TIMEE_US);
-}
-
 static bool	init_ctx_check_zero(t_ctx *ctx, int argc)
 {
 	if (ctx->philos_count == 0 || (argc == 6 && ctx->max_meal_count == 0))
@@ -48,7 +35,7 @@ t_ctx	*init_ctx(int argc, char **argv)
 	ctx = ft_calloc(1, sizeof(t_ctx));
 	if (!ctx)
 		return (NULL);
-	init_ctx_atol(ctx, argc, argv);
+	args_parse(ctx, argc, argv);
 	if (init_ctx_check_zero(ctx, argc))
 		return (NULL);
 	ctx->forks = ft_calloc((size_t)ctx->philos_count, sizeof(t_fork));

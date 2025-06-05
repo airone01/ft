@@ -15,7 +15,7 @@
 /*
 ** `last_meal` is set during launch_philos, not here
 */
-void	init_philos(t_ctx *ctx)
+bool	init_philos(t_ctx *ctx)
 {
 	int	i;
 
@@ -23,18 +23,18 @@ void	init_philos(t_ctx *ctx)
 	while (i < ctx->philos_count)
 	{
 		ctx->philos[i].id = i + 1;
-		ctx->philos[i].meal_count = 0;
 		ctx->philos[i].last_meal = ctx->epoch;
 		ctx->philos[i].fork_right = &ctx->forks[i];
 		ctx->philos[i].fork_left = &ctx->forks[(i + 1) % ctx->philos_count];
 		ctx->philos[i].ctx = ctx;
+		ctx->philos_created++;
 		if (pthread_mutex_init(&ctx->philos[i].meal_mtx, NULL) != 0)
 		{
-			while (--i >= 0)
-				pthread_mutex_destroy(&ctx->philos[i].meal_mtx);
-			return ;
+			free_ctx(ctx);
+			return (true);
 		}
 		i++;
 	}
 	i++;
+	return (false);
 }

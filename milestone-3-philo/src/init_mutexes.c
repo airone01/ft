@@ -12,30 +12,8 @@
 
 #include "philo.h"
 
-static void	destroy_fork_mutexes(t_ctx *ctx, int count)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		pthread_mutex_destroy(&ctx->forks[i].mtx);
-		i++;
-	}
-}
-
-/*
-** To avoid having a lot of boolean args, we use a flag system here
-*/
-static void	destroy_all_mutexes(t_ctx *ctx, int fork_count, int flags)
-{
-	if (fork_count > 0)
-		destroy_fork_mutexes(ctx, fork_count);
-	if (flags & 1)
-		pthread_mutex_destroy(&ctx->print_mtx);
-	if (flags & 2)
-		pthread_mutex_destroy(&ctx->ctx_mtx);
-}
+/* I don't care enough for this to have its own header entry */
+void	destroy_fork_mutexes(t_ctx *ctx);
 
 static bool	init_fork_mutexes(t_ctx *ctx)
 {
@@ -44,11 +22,12 @@ static bool	init_fork_mutexes(t_ctx *ctx)
 	i = -1;
 	while (++i < ctx->philos_count)
 	{
-		if (pthread_mutex_init(&ctx->forks[i].mtx, NULL) != 0)
+		if (pthread_mutex_init(&ctx->forks[i].mtx, NULL))
 		{
-			destroy_fork_mutexes(ctx, i);
+			destroy_fork_mutexes(ctx);
 			return (true);
 		}
+		ctx->fork_mtx_created = i;
 		ctx->forks[i].in_use = false;
 	}
 	return (false);
@@ -56,20 +35,10 @@ static bool	init_fork_mutexes(t_ctx *ctx)
 
 bool	init_mutexes(t_ctx *ctx)
 {
-	if (pthread_mutex_init(&ctx->print_mtx, NULL) != 0)
+	if (pthread_mutex_init(&ctx->print_mtx, NULL)
+		|| pthread_mutex_init(&ctx->ctx_mtx, NULL)
+		|| init_fork_mutexes(ctx))
 	{
-		free_ctx(ctx);
-		return (true);
-	}
-	if (pthread_mutex_init(&ctx->ctx_mtx, NULL) != 0)
-	{
-		destroy_all_mutexes(ctx, 0, 1);
-		free_ctx(ctx);
-		return (true);
-	}
-	if (init_fork_mutexes(ctx))
-	{
-		destroy_all_mutexes(ctx, 0, 3);
 		free_ctx(ctx);
 		return (true);
 	}
