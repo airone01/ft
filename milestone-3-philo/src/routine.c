@@ -22,12 +22,6 @@ static void	*take_fork_and_return(t_philo *philo)
 	return (NULL);
 }
 
-/*
-** Waits for all philosophers
-** Not using mtx_set here as it's way too many operations
-**
-** TODO: Use all_threads_ready
-*/
 void	wait_all_philos(t_ctx *ctx)
 {
 	bool	started;
@@ -49,6 +43,10 @@ void	wait_all_philos(t_ctx *ctx)
 /*
 ** Here we return the result of the stop flag in log_action to avoid having
 ** to (un)lock too many times.
+**
+** Note: to patch the issue of the 3rd philo being stolen its fork by the 1st,
+** we use this weird trick (tbh it's duct tape but it works) which sleeps for
+** a very specific amout of time after thinking. wtf. I don't question it.
 */
 void	*routine(void *arg)
 {
