@@ -72,7 +72,7 @@ static bool	is_valid_number(char *str)
 {
 	if (ft_strlen(str) == 0)
 	{
-		write(STDERR_FILENO, FG_RED ERR_NOARG NC, ERR_LEN_BASE + ERR_LEN_NOARG);
+		write(STDERR_FILENO, FG_RED ERR_COLON ERR_NOARG NC, ERR_LEN_BASE + ERR_LEN_NOARG);
 		return (false);
 	}
 	if (!contains_invalid_chars(str))
@@ -91,7 +91,7 @@ bool	args_check(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		write(STDERR_FILENO, FG_YELLOW ERR_USAG1 ERR_USAG2 NC,
+		write(STDERR_FILENO, FG_YELLOW ERR_COLON ERR_USAG1 ERR_USAG2 NC,
 			ERR_LEN_BASE + ERR_LEN_USAGE);
 		return (true);
 	}
