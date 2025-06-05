@@ -85,10 +85,12 @@ void	eat(t_philo *philo)
 	take_forks(philo, first, second);
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	if (stop)
+	{
+		mx_sbool(&first->mtx, &first->in_use, false);
+		mx_sbool(&second->mtx, &second->in_use, false);
 		return ;
-	pthread_mutex_lock(&philo->meal_mtx);
-	philo->last_meal = get_time(TIMEE_US);
-	pthread_mutex_unlock(&philo->meal_mtx);
+	}
+	mx_slong(&philo->meal_mtx, &philo->last_meal, get_time(TIMEE_US));
 	log_action(philo, MSG_EATIN);
 	std_usleep(philo->ctx->meal_time, philo);
 	mx_ilong(&philo->meal_mtx, &philo->meal_count);

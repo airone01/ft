@@ -71,6 +71,8 @@ void	*routine(void *arg)
 		std_usleep(philo->ctx->sleep_time, philo);
 		if (log_action(philo, MSG_THINK))
 			break ;
+		if (philo->ctx->philos_count == 3)
+			std_usleep((philo->id * 7) % 17, philo);
 	}
 	return (NULL);
 }
