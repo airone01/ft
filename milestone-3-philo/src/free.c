@@ -15,6 +15,7 @@
 */
 
 #include "philo.h"
+#include <stdio.h>
 #include <stdlib.h> // free()
 
 void	destroy_fork_mutexes(t_ctx *ctx)

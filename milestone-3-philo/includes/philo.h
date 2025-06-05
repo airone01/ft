@@ -17,10 +17,10 @@
 # include <stdbool.h>  // bool
 # include <stdint.h>   // uint8_t
 
-# define FG_RED "\x1b[31m"    // 5
-# define FG_GREEN "\x1b[32m"  // 5
-# define FG_YELLOW "\x1b[33m" // 5
-# define NC "\x1b[0m"         // 4
+# define FG_RED "\x1b[31m"
+# define FG_GREEN "\x1b[32m"
+# define FG_YELLOW "\x1b[33m"
+# define NC "\x1b[0m"
 
 # define MSG_TAKEN "has taken a fork"
 # define MSG_THINK "is thinking"
@@ -28,9 +28,30 @@
 # define MSG_EATIN "is eating"
 # define MSG_DEATH "died"
 
-# define ERR_COLON "Error: '"
+# define ERR_USAG1 "Usage: <philos count> <death time> <meal time> <sleep time>"
+# define ERR_USAG2 " [meals count]\n"
+# define ERR_COLON "Error: "
 # define ERR_RANGE "' is out of range for a long integer\n"
-# define ERR_GTIME "Error: gettimeofday() error\n"
+# define ERR_NONUM "' contains non-numeric characters\n"
+# define ERR_GTIME "gettimeofday() error\n"
+# define ERR_PHILC "Philos and meals arguments must be greater than 0.\n"
+# define ERR_MALLC "malloc() failed. Is your RAM full?\n"
+# define ERR_NOARG "argument is empty\n"
+# define ERR_MUTXC "pthread_mutex_init() failed\n"
+# define ERR_LUNCH "failed to launch thread(s)\n"
+
+// FG_RED + ERR_COLON + NC = 16
+
+# define ERR_LEN_BASE 16
+
+# define ERR_LEN_USAGE 74
+# define ERR_LEN_GTIME 21
+# define ERR_LEN_NONUM 34
+# define ERR_LEN_MALLC 35
+# define ERR_LEN_PHILC 51
+# define ERR_LEN_NOARG 18
+# define ERR_LEN_MUTXC 28
+# define ERR_LEN_LUNCH 27
 
 # define ARBITRARY_USLEEP_TIME 100
 

@@ -39,6 +39,7 @@ static bool	launch_all_the_things(t_ctx *ctx, pthread_t *big_brother)
 {
 	if (launch_philos(ctx))
 	{
+		write(STDERR_FILENO, FG_RED ERR_COLON ERR_LUNCH NC, ERR_LEN_BASE + ERR_LEN_LUNCH);
 		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 		wait_threads(ctx, NULL);
 		free_ctx(ctx);
@@ -46,6 +47,7 @@ static bool	launch_all_the_things(t_ctx *ctx, pthread_t *big_brother)
 	}
 	if (launch_monitor(ctx, big_brother))
 	{
+		write(STDERR_FILENO, FG_RED ERR_COLON ERR_LUNCH NC, ERR_LEN_BASE + ERR_LEN_LUNCH);
 		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
 		wait_threads(ctx, big_brother);
 		free_ctx(ctx);
@@ -66,7 +68,8 @@ static bool	ensure_time(void)
 
 	if (gettimeofday(&tv, NULL))
 	{
-		write(STDERR_FILENO, FG_RED ERR_GTIME NC, 37);
+		write(STDERR_FILENO, FG_RED ERR_COLON ERR_GTIME NC,
+			ERR_LEN_BASE + ERR_LEN_GTIME);
 		return (true);
 	}
 	return (false);

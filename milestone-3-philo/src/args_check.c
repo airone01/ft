@@ -57,10 +57,7 @@ static bool	contains_invalid_chars(char *str)
 	{
 		if (!ft_isdigit(str[j]))
 		{
-			write(STDERR_FILENO, FG_RED "Error: '", 13);
-			write(STDERR_FILENO, str, ft_strlen(str));
-			write(STDERR_FILENO,
-				FG_RED "' contains non-numeric characters\n" NC, 43);
+			write_combined_err(FG_RED ERR_COLON "'", str, ERR_NONUM NC);
 			return (false);
 		}
 		j++;
@@ -75,7 +72,7 @@ static bool	is_valid_number(char *str)
 {
 	if (ft_strlen(str) == 0)
 	{
-		write(STDERR_FILENO, FG_RED "Error: argument is empty\n" NC, 34);
+		write(STDERR_FILENO, FG_RED ERR_NOARG NC, ERR_LEN_BASE + ERR_LEN_NOARG);
 		return (false);
 	}
 	if (!contains_invalid_chars(str))
@@ -94,9 +91,8 @@ bool	args_check(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		write(STDERR_FILENO,
-			FG_YELLOW "Usage: <philos count> <death time> <meal time>", 51);
-		write(STDERR_FILENO, " <sleep time> [meals count]\n" NC, 32);
+		write(STDERR_FILENO, FG_YELLOW ERR_USAG1 ERR_USAG2 NC,
+			ERR_LEN_BASE + ERR_LEN_USAGE);
 		return (true);
 	}
 	i = 1;
