@@ -61,7 +61,7 @@ void	*routine(void *arg)
 		return (take_fork_and_return(philo));
 	log_action(philo, MSG_THINK);
 	if (philo->id % 2 == 0)
-		std_usleep(philo->ctx->meal_time / 10, philo);
+		std_usleep(philo->ctx->meal_time / 100, philo);
 	mx_gbool(&philo->ctx->ctx_mtx, &philo->ctx->stop, &stop);
 	while (!stop)
 	{
