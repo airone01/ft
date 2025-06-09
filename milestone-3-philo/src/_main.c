@@ -32,8 +32,8 @@ static void	wait_threads(t_ctx *ctx, pthread_t *big_brother)
 }
 
 /*
-** We don't handle the result of mtx_set, but tbh we're quitting the app int
-** this case so there really isn't anything we can do.
+** We don't handle the result of mtx_set, but tbh exit is forbidden so there
+** really isn't anything we can do.
 */
 static bool	launch_all_the_things(t_ctx *ctx, pthread_t *big_brother)
 {
