@@ -65,14 +65,12 @@ static bool	contains_invalid_chars(char *str)
 	return (true);
 }
 
-/*
-** Checks if a number argument is valid
-*/
 static bool	is_valid_number(char *str)
 {
 	if (ft_strlen(str) == 0)
 	{
-		write(STDERR_FILENO, FG_RED ERR_COLON ERR_NOARG NC, ERR_LEN_BASE + ERR_LEN_NOARG);
+		write(STDERR_FILENO, FG_RED ERR_COLON ERR_NOARG NC,
+			ERR_LEN_BASE + ERR_LEN_NOARG);
 		return (false);
 	}
 	if (!contains_invalid_chars(str))

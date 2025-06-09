@@ -321,6 +321,7 @@ _SRC_PHILO_COMMON				:=	\
 	routine							\
 	routine_eat						\
 	routine_monitor					\
+	std_is							\
 	std_mem							\
 	std_num							\
 	std_str							\
