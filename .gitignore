@@ -76,3 +76,7 @@ vgcore.*
 
 # VSCode
 **/.vscode/settings.json
+
+## Bear/CMake
+**/.cache/
+

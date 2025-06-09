@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:38:23 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:33:16 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:43:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ bool	launch_philos(t_ctx *ctx)
 	{
 		if (pthread_create(&ctx->philos[i].thread, NULL, routine,
 				&ctx->philos[i]) != 0)
-		{
-			ctx->stop = true;
 			return (true);
-		}
+		ctx->philos_launched++;
 	}
 	return (false);
 }

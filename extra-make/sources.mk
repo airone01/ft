@@ -309,28 +309,23 @@ _SRC_MINISHELL_BONUS			:=	\
 	$(_SRC_MINISHELL_COMMON)
 _SRC_PHILO_COMMON				:=	\
 	_main							\
-	args							\
-	death_check						\
-	free_ctx						\
-	ft_atoul						\
-	ft_calloc						\
-	ft_isdigit						\
-	ft_isspace						\
-	ft_itoa							\
-	ft_memset						\
-	ft_strcmp						\
-	ft_strlen						\
-	ft_strncmp						\
-	ft_usleep						\
+	args_check						\
+	args_parse						\
+	free							\
 	init_ctx						\
 	init_mutexes					\
 	init_philos						\
-	is_it_over						\
-	launch_big_brother				\
+	launch_monitor					\
 	launch_philos					\
-	log_action						\
-	philo_utils						\
-	routine
+	mtx_ops							\
+	routine							\
+	routine_eat						\
+	routine_monitor					\
+	std_is							\
+	std_mem							\
+	std_num							\
+	std_str							\
+	std_usleep
 _SRC_PHILO_COMMON				:=	\
 	$(addprefix src/, $(_SRC_PHILO_COMMON))
 _SRC_PHILO_MANDATORY			:=	\

@@ -10,92 +10,98 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** This file is where all the logic of the philos dying lies.
+*/
+
 #include "philo.h"
+#include "std.h"
+#include <stdio.h>  // printf()
+#include <stdlib.h> // free()
+#include <unistd.h> // write(), usleep(), STDERR_FILENO
 
 /*
-** Checks if a philo died
+** This checks if
 */
-static int	grim_reaper_check(t_ctx *ctx, int i)
+static bool	are_philos_alive(t_ctx *ctx, int i)
 {
-	size_t	current_time;
+	long	current_time;
 
-	current_time = get_current_time();
-	pthread_mutex_lock(&ctx->print_lock);
-	if ((long)(current_time - ctx->philos[i].last_meal) > ctx->death_time
-		/ 1000)
+	current_time = get_time(TIMEE_US);
+	if ((current_time - ctx->philos[i].last_meal) / 1000 > ctx->death_time)
 	{
-		pthread_mutex_lock(&ctx->dead_lock);
-		ctx->stop = 1;
-		printf("%zu %lu died\n", current_time - ctx->epoch, ctx->philos[i].id);
-		pthread_mutex_unlock(&ctx->dead_lock);
-		pthread_mutex_unlock(&ctx->print_lock);
-		return (1);
+		mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
+		pthread_mutex_lock(&ctx->philos[i].ctx->print_mtx);
+		printf("%zu %lu %s\n", (current_time - ctx->epoch) / 1000,
+			ctx->philos[i].id, MSG_DEATH);
+		pthread_mutex_unlock(&ctx->philos[i].ctx->print_mtx);
+		return (true);
 	}
-	pthread_mutex_unlock(&ctx->print_lock);
-	return (0);
+	return (false);
 }
 
-/*
-** Checks if all philos are full (meaning they all ate)
-*/
-static bool	chef_gusteau_check(t_ctx *ctx)
+static bool	are_philos_full(t_ctx *ctx)
 {
+	bool	all_full;
 	long	i;
-	bool	all_ate;
 
 	i = -1;
-	all_ate = true;
+	all_full = true;
 	while (++i < ctx->philos_count)
 	{
-		pthread_mutex_lock(&ctx->print_lock);
+		pthread_mutex_lock(&ctx->philos[i].meal_mtx);
 		if (ctx->philos[i].meal_count < ctx->max_meal_count
 			|| ctx->max_meal_count == -1)
-			all_ate = false;
-		pthread_mutex_unlock(&ctx->print_lock);
+			all_full = false;
+		pthread_mutex_unlock(&ctx->philos[i].meal_mtx);
 	}
-	return (all_ate);
+	return (all_full);
 }
 
 /*
-** When all philos are full, this writes some info to stderr.
+** When all philos are full, this writes some info to stderr to make sure
+** it is displayed even if you redirect STDOUT.
 */
-static void	write_thats_all_folks(t_ctx *ctx)
+static void	write_green_message(t_ctx *ctx)
 {
 	char	*s;
 
 	s = ft_itoa((int)ctx->max_meal_count);
 	if (!s)
 		return ;
+	pthread_mutex_lock(&ctx->print_mtx);
 	write(STDERR_FILENO,
 		FG_GREEN "All philosophers ate the maximum number of meals (", 55);
 	write(STDERR_FILENO, s, ft_strlen(s));
 	free(s);
 	write(STDERR_FILENO, ").\n" NC, 7);
+	pthread_mutex_unlock(&ctx->print_mtx);
 }
 
-void	*death_check(void *arg)
+void	*routine_monitor(void *arg)
 {
 	t_ctx	*ctx;
+	bool	stop;
 	int		i;
 
 	ctx = (t_ctx *)arg;
-	while (1)
+	wait_all_philos(ctx);
+	while (true)
 	{
+		mx_gbool(&ctx->ctx_mtx, &ctx->stop, &stop);
+		if (stop)
+			break ;
 		i = -1;
 		while (++i < ctx->philos_count)
-			if (grim_reaper_check(ctx, i))
+			if (are_philos_alive(ctx, i))
 				return (NULL);
-		if (chef_gusteau_check(ctx))
+		if (are_philos_full(ctx))
 		{
-			pthread_mutex_lock(&ctx->print_lock);
-			pthread_mutex_lock(&ctx->dead_lock);
-			ctx->stop = true;
-			write_thats_all_folks(ctx);
-			pthread_mutex_unlock(&ctx->dead_lock);
-			pthread_mutex_unlock(&ctx->print_lock);
+			mx_sbool(&ctx->ctx_mtx, &ctx->stop, true);
+			write_green_message(ctx);
 			break ;
 		}
-		usleep(1);
+		usleep(1000);
 	}
 	return (NULL);
 }
