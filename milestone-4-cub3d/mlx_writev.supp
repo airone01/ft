@@ -1,0 +1,59 @@
+# MLX is bugged and doesn't really conform to what X11 awaits of it, resulting in a bad writev.
+# This file fixes it.
+
+{
+   mlx_writev_uninit_vector0
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   obj:*/libxcb.so*
+   obj:*/libX11.so*
+   ...
+   fun:mlx_*
+}
+
+{
+   mlx_writev_uninit_general
+   Memcheck:Param
+   writev(vector[...])
+   fun:writev
+   obj:*/libxcb.so*
+   obj:*/libX11.so*
+}
+
+{
+   mlx_anti_resize_writev
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   ...
+   fun:mlx_int_anti_resize_win
+}
+
+{
+   mlx_new_window_writev
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   ...
+   fun:mlx_new_window
+}
+
+{
+   xcb_writev_uninit
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   fun:*
+   obj:*/libxcb.so*
+   fun:xcb_writev
+}
+
+{
+   x11_send_writev
+   Memcheck:Param
+   writev(vector[0])
+   fun:writev
+   ...
+   fun:_XSend
+}

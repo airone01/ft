@@ -1,0 +1,21 @@
+NO ../../textures/prototype_red.xpm
+SO ../../textures/prototype_blue.xpm
+WE ../../textures/prototype_yellow.xpm
+EA ../../textures/prototype_green.xpm
+
+F 20,20,20
+C 200,200,200
+
+11111
+10001
+10S01
+10001
+10001
+10001
+11E01
+10001
+10001
+10001
+10001
+10001
+11111

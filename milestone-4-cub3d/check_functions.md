@@ -1,0 +1,67 @@
+# Mandatory
+
+- [x] atan2@GLIBC_2.2.5
+- [?] calloc@GLIBC_2.2.5
+- [x] close@GLIBC_2.2.5
+- [x] cos@GLIBC_2.2.5
+- [x] exit@GLIBC_2.2.5
+- [x] floor@GLIBC_2.2.5
+- [x] free@GLIBC_2.2.5
+- [?] getenv@GLIBC_2.2.5
+- [?] gethostname@GLIBC_2.2.5
+- [x] gettimeofday@GLIBC_2.2.5
+- [?] lseek@GLIBC_2.2.5
+- [x] malloc@GLIBC_2.2.5
+- [?] memset@GLIBC_2.2.5
+- [?] mmap@GLIBC_2.2.5
+- [?] munmap@GLIBC_2.2.5
+- [x] open@GLIBC_2.2.5
+- [?] puts@GLIBC_2.2.5
+- [x] read@GLIBC_2.2.5
+- [?] shmat@GLIBC_2.2.5
+- [?] shmctl@GLIBC_2.2.5
+- [?] shmdt@GLIBC_2.2.5
+- [?] shmget@GLIBC_2.2.5
+- [x] sin@GLIBC_2.2.5
+- [x] sqrt@GLIBC_2.2.5
+- [?] strcasecmp@GLIBC_2.2.5
+- [?] strlen@GLIBC_2.2.5
+- [?] strncmp@GLIBC_2.2.5
+- [?] strtol@GLIBC_2.2.5
+- [x] tan@GLIBC_2.2.5
+- [x] write@GLIBC_2.2.5
+
+# Bonus
+
+- [ ] abs@GLIBC_2.2.5			<!-- !!! -->
+- [x] atan2@GLIBC_2.2.5
+- [?] calloc@GLIBC_2.2.5
+- [x] close@GLIBC_2.2.5
+- [x] cos@GLIBC_2.2.5
+- [x] exit@GLIBC_2.2.5
+- [x] floor@GLIBC_2.2.5
+- [x] free@GLIBC_2.2.5
+- [?] getenv@GLIBC_2.2.5
+- [?] gethostname@GLIBC_2.2.5
+- [x] gettimeofday@GLIBC_2.2.5
+- [?] lseek@GLIBC_2.2.5
+- [x] malloc@GLIBC_2.2.5
+- [?] memset@GLIBC_2.2.5
+- [?] mmap@GLIBC_2.2.5
+- [?] munmap@GLIBC_2.2.5
+- [x] open@GLIBC_2.2.5
+- [?] puts@GLIBC_2.2.5
+- [x] read@GLIBC_2.2.5
+- [?] shmat@GLIBC_2.2.5
+- [?] shmctl@GLIBC_2.2.5
+- [?] shmdt@GLIBC_2.2.5
+- [?] shmget@GLIBC_2.2.5
+- [x] sin@GLIBC_2.2.5
+- [ ] snprintf@GLIBC_2.2.5		<!-- !!! -->
+- [x] sqrt@GLIBC_2.2.5
+- [?] strcasecmp@GLIBC_2.2.5
+- [?] strlen@GLIBC_2.2.5
+- [?] strncmp@GLIBC_2.2.5
+- [?] strtol@GLIBC_2.2.5
+- [x] tan@GLIBC_2.2.5
+- [x] write@GLIBC_2.2.5

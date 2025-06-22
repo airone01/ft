@@ -1,0 +1,27 @@
+/* XPM */
+static char *az54c_3erbb[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 5 1 ",
+"  c None",
+". c #0B280F",
+"X c #1A3612",
+"o c #2E4D17",
+"O c #3F5711",
+/* pixels */
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"           O    ",
+"           OX   ",
+"  o        o    ",
+"  O    O   O o  ",
+"  o.   oX  o o  ",
+"o X.   OX Oo Xo ",
+". X. o .X OXo X ",
+".X. .Xo.Oo.oX XO",
+".X.X.o.oO..o.X.."
+};

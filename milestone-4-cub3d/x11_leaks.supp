@@ -1,0 +1,153 @@
+# X11 lib leaks still reachable data. This is intended and we cannot patch it, just suppress the errors.
+
+# X11 Library leaks
+{
+   X11_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   XCB_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libxcb.so*
+}
+
+{
+   Xcursor_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libXcursor.so*
+}
+
+{
+   Xext_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libXext.so*
+}
+
+# X11 initialization leaks
+{
+   XOpenDisplay_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:XOpenDisplay
+}
+
+{
+   XGetDefault_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XGetDefault
+}
+
+{
+   Xrm_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:Xrm*
+}
+
+{
+   Xlc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_Xlc*
+}
+
+# Mouse/cursor related leaks
+{
+   XcursorSupportsARGB_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XcursorSupportsARGB
+}
+
+{
+   XcursorNoticeCreateBitmap_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XcursorNoticeCreateBitmap
+}
+
+{
+   XCreatePixmap_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XCreatePixmap
+}
+
+{
+   XCreateBitmapFromData_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XCreateBitmapFromData
+}
+
+# Dynamic linker leaks
+{
+   dlopen_cache_lookup
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_dl_load_cache_lookup
+}
+
+{
+   dlopen_new_object
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_dl_new_object
+}
+
+{
+   dlopen_check_versions
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_dl_check_map_versions
+}
+
+{
+   dlopen_worker_general
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dl_open_worker_begin
+}
+
+# General system library suppressions
+{
+   system_strdup_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   obj:/lib*/ld-*.so*
+}
+
+{
+   system_calloc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:/lib*/ld-*.so*
+}

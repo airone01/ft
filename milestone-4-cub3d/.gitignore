@@ -1,0 +1,12 @@
+obj
+*.a
+*.o
+minilibx-linux/
+cub3d
+cub3d_bonus
+cub3d_extra
+.vscode/
+*.xml
+*.txt
+compile_commands.json
+.cache/
