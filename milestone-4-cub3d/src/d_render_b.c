@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   d_render_b.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:43 by elagouch         ###   ########.fr       */
+/*   Created: 2025/06/17 14:36:51 by elagouch          #+#    #+#             */
+/*   Updated: 2025/06/23 14:04:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_abs
-long	ft_abs(long n)
+#include "cub3d.h"
+#include "door_bonus.h"
+#include "fps_extra.h"
+#include "minimap_bonus.h"
+#include "sprite_bonus.h"
+
+void	handle_render_bonus_features(t_data *data)
 {
-	if (n < 0)
-		return (-n);
-	return (n);
+	draw_minimap(data);
+	update_door_animations(data);
+	update_sprite_animations(data);
 }
-// GPM? end ft_abs
+
+void	handle_render_extra_features(t_data *data)
+{
+	update_fps_counter(data);
+	display_fps(data);
+}

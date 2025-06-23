@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   p_validation_b.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:43 by elagouch         ###   ########.fr       */
+/*   Created: 2025/06/17 14:54:20 by elagouch          #+#    #+#             */
+/*   Updated: 2025/06/23 14:08:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_abs
-long	ft_abs(long n)
+#include "cub3d.h"
+#include "ft_printf.h"
+
+bool	check_bonus_textures(t_data *data)
 {
-	if (n < 0)
-		return (-n);
-	return (n);
+	if (!data->texture_door)
+	{
+		ft_printf(RED "Error\nMissing door texture (D)\n" RESET);
+		return (true);
+	}
+	if (!data->texture_sprite)
+	{
+		ft_printf(RED "Error\nMissing sprite texture (P)\n" RESET);
+		return (true);
+	}
+	return (false);
 }
-// GPM? end ft_abs

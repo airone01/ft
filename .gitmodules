@@ -7,6 +7,3 @@
 [submodule "extra-philosophers-visualizer"]
 	path = extra-philo-visualizer
 	url = https://github.com/SimonCROS/philosophers-visualizer
-[submodule "milestone-4-cub3d/minilibx-linux"]
-	path = milestone-4-cub3d/minilibx-linux
-	url = https://github.com/42paris/minilibx-linux

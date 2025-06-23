@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/16 16:05:45 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/12 13:25:05 by elagouch         ###   ########.fr        #
+#    Updated: 2025/06/23 14:21:40 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ _SRC_LIBFT_COMMON				:=	\
 	ft_bzero						\
 	ft_calloc						\
 	ft_env_find						\
+	ft_fabs							\
+	ft_feq							\
+	ft_fmax							\
 	ft_isalnum						\
 	ft_isalpha						\
 	ft_isascii						\
@@ -332,4 +335,81 @@ _SRC_PHILO_MANDATORY			:=	\
 	$(_SRC_PHILO_COMMON)
 _SRC_PHILO_BONUS				:=	\
 	$(_SRC_PHILO_COMMON)
+
+_SRC_CUB3D_COMMON				:=	\
+	3_main							\
+	d_math							\
+	d_draw							\
+	d_draw2							\
+	d_render						\
+	m_free							\
+	m_utils							\
+	p_color							\
+	p_color_utils					\
+	p_file							\
+	p_map							\
+	p_map_check						\
+	p_flood_fill					\
+	p_map_utils						\
+	p_texture						\
+	p_texture_cardinal				\
+	p_validation					\
+	l_init							\
+	l_mlx							\
+	l_mov							\
+	l_mov_rot						\
+	r_horizontal					\
+	r_raycasting					\
+	r_utils							\
+	r_vertical						\
+	t_texture						\
+	u_path							\
+	u_texture
+_SRC_CUB3D_MANDATORY			:=	\
+	3_main_m						\
+	d_render_m						\
+	i_system_m						\
+	i_system_m2						\
+	j_system_m						\
+	p_map_m							\
+	p_validation_m					\
+	l_mlx_m							\
+	l_mov_m							\
+	t_texture_m						\
+	u_map_chars_m					\
+	u_texture_m						\
+	$(_SRC_CUB3D_COMMON)
+_SRC_CUB3D_MANDATORY			:=	\
+	$(addprefix src/, $(_SRC_CUB3D_MANDATORY))
+_SRC_CUB3D_BONUS				:=	\
+	3_main_b						\
+	i_system_b						\
+	i_system_b2						\
+	d_render_b						\
+	f_fps							\
+	j_animation_b					\
+	j_animation_b2					\
+	j_render_b						\
+	j_render_b2						\
+	j_system_b						\
+	j_utils_b						\
+	n_draw							\
+	n_draw_utils					\
+	n_grid							\
+	n_minimap						\
+	n_player						\
+	n_utils							\
+	o_buttons						\
+	o_init							\
+	o_mouse							\
+	p_map_b							\
+	p_validation_b					\
+	l_mlx_b							\
+	l_mov_b							\
+	t_texture_b						\
+	u_map_chars_b					\
+	u_texture_b						\
+	$(_SRC_CUB3D_COMMON)
+_SRC_CUB3D_BONUS				:=	\
+	$(addprefix src/, $(_SRC_CUB3D_BONUS))
 # GPM? end make_sources_mk

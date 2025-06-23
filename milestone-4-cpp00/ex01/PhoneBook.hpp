@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:43 by elagouch         ###   ########.fr       */
+/*   Created: 2025/06/22 12:58:10 by elagouch          #+#    #+#             */
+/*   Updated: 2025/06/22 14:36:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_abs
-long	ft_abs(long n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
-// GPM? end ft_abs
+#include "Contact.hpp"
+
+class PhoneBook {
+
+private:
+  Contact _contacts[8];
+  int _count;
+  int _next_index;
+
+public:
+  PhoneBook();
+  ~PhoneBook();
+
+  Contact getFirstContact();
+  Contact getContact(int id);
+  void addContact(Contact contact);
+  bool isFull();
+
+private:
+  void _incrAllContacts();
+};

@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:43 by elagouch         ###   ########.fr       */
+/*   Created: 2025/06/22 13:01:41 by elagouch          #+#    #+#             */
+/*   Updated: 2025/06/22 14:35:54 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_abs
-long	ft_abs(long n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
-// GPM? end ft_abs
+#include <string>
+
+class Contact {
+
+private:
+  std::string _first_name;
+  std::string _last_name;
+  std::string _nickname;
+  std::string _phone;
+  std::string _secret;
+
+public:
+  Contact(std::string first_name, std::string last_name, std::string nickname,
+          std::string phone, std::string secret);
+  Contact();
+  ~Contact();
+
+  std::string getFirstName();
+};
