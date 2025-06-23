@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 16:31:43 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/18 13:37:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:11:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	draw_line_pixels(t_data *data, t_ray *ray, t_texture *texture,
 	int		tex_y;
 
 	step = 1.0 * texture->height / ray->line_height;
-	tex_pos = (ray->draw_start - (double)data->win_height / 2 + (double)ray->line_height / 2)
-		* step;
+	tex_pos = (ray->draw_start - (double)data->win_height / 2
+			+ (double)ray->line_height / 2) * step;
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{

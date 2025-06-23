@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:12:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 14:04:56 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:09:03 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 */
 static double	get_time_diff(struct timeval *start, struct timeval *end)
 {
-	return ((double)(end->tv_sec - start->tv_sec) + (double)(end->tv_usec - start->tv_usec)
-		/ 1000000.0);
+	return ((double)(end->tv_sec - start->tv_sec) + (double)(end->tv_usec
+		- start->tv_usec) / 1000000.0);
 }
 
 void	update_fps_counter(t_data *data)

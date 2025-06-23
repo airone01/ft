@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:41:53 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 14:08:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:09:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	init_sprite_system(t_data *data)
 {
 	data->sprite_sys.capacity = 100;
 	data->sprite_sys.count = 0;
-	data->sprite_sys.sprites = ft_calloc((unsigned long)data->sprite_sys.capacity,
+	data->sprite_sys.sprites = ft_calloc((size_t)data->sprite_sys.capacity,
 			sizeof(t_sprite));
-	data->sprite_sys.render_order = ft_calloc((unsigned long)data->sprite_sys.capacity,
+	data->sprite_sys.render_order = ft_calloc((size_t)data->sprite_sys.capacity,
 			sizeof(int));
 	if (!data->sprite_sys.sprites || !data->sprite_sys.render_order)
 	{

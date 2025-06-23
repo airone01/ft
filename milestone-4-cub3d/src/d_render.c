@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 18:10:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/20 19:25:13 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:12:52 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	render_frame(t_data *data)
 	double			elapsed;
 
 	gettimeofday(&now, NULL);
-	elapsed = ((double)(now.tv_sec - data->last_frame.tv_sec) + (double)(now.tv_usec
-				- data->last_frame.tv_usec) / 1000000.0);
+	elapsed = ((double)(now.tv_sec - data->last_frame.tv_sec)
+			+ (double)(now.tv_usec - data->last_frame.tv_usec) / 1000000.0);
 	data->delta_time = elapsed;
 	data->last_frame = now;
 	data->player.move_speed = BASE_MOVE_SPEED * data->delta_time;
@@ -39,8 +39,8 @@ void	render_frame(t_data *data)
 	if (data->player.rot_speed > 0.15)
 		data->player.rot_speed = 0.15;
 	move_player(data, &data->player, data->map);
-	ft_memset(data->img.addr, 0, (size_t)data->win_width * (size_t)data->win_height
-		* (size_t)(data->img.bits_per_pixel / 8));
+	ft_memset(data->img.addr, 0, (size_t)data->win_width
+		* (size_t)data->win_height * (size_t)(data->img.bits_per_pixel / 8));
 	grid_raycasting(data);
 	render_sprites(data);
 	handle_render_bonus_features(data);
