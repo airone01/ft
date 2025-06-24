@@ -24,7 +24,7 @@ t_point	point_normalize(t_point p)
 	double	mag;
 
 	mag = point_magnitude(p);
-	if (fuzzy_equals(mag, 0.0))
+	if (ft_feq(mag, 0.0))
 		return (p);
 	return (point_scale(p, 1.0 / mag));
 }

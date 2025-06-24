@@ -195,7 +195,6 @@ _SRC_FDF_COMMON					:=	\
 	fast_atoi						\
 	file_open						\
 	free_2d_array					\
-	fuzzy_equals					\
 	initial_scale					\
 	malloc							\
 	map_elevation					\
