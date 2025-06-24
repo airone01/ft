@@ -44,6 +44,9 @@ MINILIBX_DIR	:= $(realpath ../extra-minilibx)# GPM!
 # GPM@	.GNL_DIR		:= $(realpath ./get_next_line)
 # GPM@	.MINILIBX_DIR	:= $(realpath ./minilibx)
 
+# The MLX does not support parameters in callbacks otherwise
+CFLAGS		+= -Wno-incompatible-pointer-types
+
 # **************************************************************************** #
 #                                   TARGETS                                    #
 # **************************************************************************** #
