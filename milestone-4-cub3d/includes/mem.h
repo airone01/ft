@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 /*
-** This file is named `mem.h` because there already is a `memory.h` in the\
+** This file is named `mem.h` because there already is a `memory.h` in the
 ** standard lib.
 */
 
