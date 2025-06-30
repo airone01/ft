@@ -30,4 +30,4 @@ jobs:
         python3 -m pip install norminette
 
     - name: Run norminette
-      run: norminette milestone-{0,1,2,3,4}-*
+      run: norminette milestone-{0,1,2,3,4}-*/**/*.{h,c} | tee /dev/tty | (! grep -q "Error")
