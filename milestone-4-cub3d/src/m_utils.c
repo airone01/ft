@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   m_utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:43 by elagouch         ###   ########.fr       */
+/*   Created: 2025/05/16 17:59:05 by maximart          #+#    #+#             */
+/*   Updated: 2025/06/18 13:38:46 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_abs
-long	ft_abs(long n)
+#include "libft.h"
+#include "mem.h"
+
+bool	init_map_buffer(t_map_buffer *buffer)
 {
-	if (n < 0)
-		return (-n);
-	return (n);
+	buffer->capacity = 50;
+	buffer->count = 0;
+	buffer->max_width = 0;
+	buffer->lines = ft_calloc((unsigned long)buffer->capacity, sizeof(char *));
+	return (buffer->lines == NULL);
 }
-// GPM? end ft_abs

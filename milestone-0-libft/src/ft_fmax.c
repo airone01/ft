@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_fmax.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:42:43 by elagouch         ###   ########.fr       */
+/*   Created: 2025/06/23 13:52:53 by elagouch          #+#    #+#             */
+/*   Updated: 2025/06/23 14:01:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_abs
-long	ft_abs(long n)
+// GPM? begin ft_fmax
+double	ft_fmax(double a, double b)
 {
-	if (n < 0)
-		return (-n);
-	return (n);
+	if (a > b)
+		return (a);
+	return (b);
 }
-// GPM? end ft_abs
+// GPM? end ft_fmax

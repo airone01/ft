@@ -1,5 +1,5 @@
-maps/*
-libft/*
-minilibx-linux/*
-obj/*
+libft/
+minilibx-linux/
+.out/
+assets/
 *.xpm

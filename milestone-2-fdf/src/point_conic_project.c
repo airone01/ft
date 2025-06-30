@@ -27,7 +27,7 @@ t_point	conic_project(t_point3d p, t_ctx *ctx)
 	double	distance;
 
 	distance = ctx->horizon_distance;
-	if (fuzzy_equals(p.z + distance, 0.0))
+	if (ft_feq(p.z + distance, 0.0))
 		z_factor = 1.0;
 	else
 		z_factor = distance / (p.z + distance);

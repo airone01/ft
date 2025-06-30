@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 15:32:24 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:50:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:54:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+# define DBL_EPSILON 2.2204460492503131e-16 // <float.h> is forbidden by norm
 
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// Bonuses ////////////////////////////////////
@@ -498,8 +500,55 @@ char				*ft_itoa(int n);
 char				*ft_itoa_base(int n, const char *b);
 
 ////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////// Number ////////////////////////////////////
+///////////////////////////////////// Math /////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Computes the absolute value of a long integer.
+ *
+ * @param n The long integer whose absolute value is to be computed.
+ * @return The absolute value of the input long integer.
+ */
+long				ft_abs(long n);
+
+/**
+ * @brief Finds an absolute number
+ *
+ * @param n Number
+ * @return float Absolute value of n
+ */
+double				ft_fabs(double n);
+
+/**
+ * Comparing floats with == or != is dangerous because of floating point
+ * precision. This function checks if two floats are equal within a certain
+ * epsilon range.
+ *
+ * @param a First float to compare
+ * @param b Second float to compare
+ * @return bool Equality result
+ *
+ * @see	https://stackoverflow.com/a/32334103
+ */
+bool				ft_feq(double a, double b);
+
+/**
+ * @brief Finds the maximum of two doubles.
+ *
+ * @param a The first double.
+ * @param b The second double.
+ * @return long The larger of the two input values.
+ */
+double				ft_fmax(double a, double b);
+
+/**
+ * @brief Finds the maximum of two longs.
+ *
+ * @param a The first long.
+ * @param b The second long.
+ * @return long The larger of the two input values.
+ */
+long				ft_max(long a, long b);
 
 /**
  * @brief Returns the minimum of two longs.
@@ -509,23 +558,6 @@ char				*ft_itoa_base(int n, const char *b);
  * @return long The smaller of the two input values.
  */
 long				ft_min(long a, long b);
-
-/**
- * @brief Returns the maximum of two longs.
- *
- * @param a The first long.
- * @param b The second long.
- * @return long The larger of the two input values.
- */
-long				ft_max(long a, long b);
-
-/**
- * @brief Computes the absolute value of a long integer.
- *
- * @param n The long integer whose absolute value is to be computed.
- * @return The absolute value of the input long integer.
- */
-long				ft_abs(long n);
 
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// Extra ////////////////////////////////////
