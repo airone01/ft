@@ -45,16 +45,6 @@ bool	check_texture_completeness(t_data *data)
 
 bool	check_color_completeness(t_data *data)
 {
-	if (data->floor_color.red < 0 || data->floor_color.red > 255)
-	{
-		ft_printf(RED "Error\nInvalid floor color configuration\n" RESET);
-		return (true);
-	}
-	if (data->ceil_color.red < 0 || data->ceil_color.red > 255)
-	{
-		ft_printf(RED "Error\nInvalid ceiling color configuration\n" RESET);
-		return (true);
-	}
 	return (false);
 }
 

@@ -108,7 +108,6 @@ void add_contact(PhoneBook *pb) {
     return;
   }
 
-  std::cin.ignore(); // to avoid problems with getline after :-)
   std::cout << "Darkest secret: ";
   if (!std::getline(std::cin, secret)) {
     std::cout << std::endl;
