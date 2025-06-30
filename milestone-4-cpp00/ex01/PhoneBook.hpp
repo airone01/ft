@@ -27,6 +27,7 @@ public:
   Contact getContact(int id);
   void addContact(Contact contact);
   bool isFull();
+  int getCount();
 
 private:
   void _incrAllContacts();

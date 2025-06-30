@@ -12,11 +12,11 @@
 
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook(): _count(0), _next_index(0) {}
+PhoneBook::PhoneBook() : _count(0), _next_index(0) {}
 
-Contact PhoneBook::getFirstContact() {
-	return _contacts[_next_index];
-}
+PhoneBook::~PhoneBook() {}
+
+Contact PhoneBook::getFirstContact() { return _contacts[_next_index]; }
 
 Contact PhoneBook::getContact(int id) { return _contacts[id]; }
 
@@ -28,3 +28,5 @@ void PhoneBook::addContact(Contact contact) {
 }
 
 bool PhoneBook::isFull() { return _count >= 8; }
+
+int PhoneBook::getCount() { return _count; }

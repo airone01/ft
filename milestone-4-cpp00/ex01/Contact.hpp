@@ -28,4 +28,10 @@ public:
   ~Contact();
 
   std::string getFirstName();
+  std::string getLastName();
+  std::string getNickname();
+  std::string getPhone();
+  std::string getSecret();
+
+  bool isEmpty();
 };

@@ -44,6 +44,7 @@ JOBS	= 			\
 	2:fdf			\
 	3:minishell		\
 	3:philo			\
+	4:cpp00			\
 	4:cub3d
 JOBS_EXTRA	=				\
 	arthur					\

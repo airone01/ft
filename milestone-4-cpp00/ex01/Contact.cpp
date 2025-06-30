@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Contact.hpp"
+#include <cstring>
 #include <string>
 
 Contact::Contact(std::string f, std::string l, std::string n, std::string p,
@@ -21,3 +22,12 @@ Contact::Contact()
 Contact::~Contact() {}
 
 std::string Contact::getFirstName() { return _first_name; }
+std::string Contact::getLastName() { return _last_name; }
+std::string Contact::getNickname() { return _nickname; }
+std::string Contact::getPhone() { return _phone; }
+std::string Contact::getSecret() { return _secret; }
+
+bool Contact::isEmpty() {
+  return (_first_name.size() + _last_name.size() + _nickname.size() +
+          _phone.size() + _secret.size() <= 0);
+}
