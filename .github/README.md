@@ -127,10 +127,18 @@
       <td>100</td>
     </tr>
     <tr align="center">
-      <td rowspan=1>4</td>
+      <td rowspan=2>4</td>
       <td>
-          <a href="/milestone-3-cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3de.png" alt="cub3d logo"></a><br>
+          <a href="/milestone-4-cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br>
           <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
+      </td>
+      <td>✅</td>
+      <td>125</td>
+    </tr>
+    <tr align="center">
+      <td>
+          <a href="/milestone-4-cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppn.png" alt="CPP logo"></a></a><br>
+          <sub>CPP 00</sub>
       </td>
       <td>⌛</td>
       <td>...</td>
