@@ -12,6 +12,7 @@
 
 #include "PhoneBook.hpp"
 #include <cstdio>
+#include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <ostream>
@@ -24,6 +25,7 @@ void display_contacts(PhoneBook *pb);
 std::string truncate_field(const std::string &field);
 void display_contact_details(Contact &contact);
 void search_contacts(PhoneBook *pb);
+void quit_app(PhoneBook *pb);
 
 int main() {
   PhoneBook *pb = new PhoneBook();
@@ -42,8 +44,7 @@ void main_menu(PhoneBook *pb) {
 
     if (!std::getline(std::cin, inln)) {
       // EOF detected (Ctrl+D)
-      std::cout << std::endl;
-      break;
+      quit_app(pb);
     }
 
     if (inln == "ADD") {
@@ -51,11 +52,17 @@ void main_menu(PhoneBook *pb) {
     } else if (inln == "SEARCH") {
       search_contacts(pb);
     } else if (inln == "EXIT") {
-      break;
+      quit_app(pb);
     } else {
       std::cout << std::endl << inln << ": invalid command." << std::endl;
     }
   } while (true);
+}
+
+void quit_app(PhoneBook *pb) {
+  std::cout << std::endl;
+  delete pb;
+  std::exit(0);
 }
 
 void add_contact(PhoneBook *pb) {
@@ -86,32 +93,27 @@ void add_contact(PhoneBook *pb) {
 
   std::cout << std::endl << "First name: ";
   if (!std::getline(std::cin, first_name)) {
-    std::cout << std::endl;
-    return;
+    quit_app(pb);
   }
 
   std::cout << "Last name: ";
   if (!std::getline(std::cin, last_name)) {
-    std::cout << std::endl;
-    return;
+    quit_app(pb);
   }
 
   std::cout << "Nickname: ";
   if (!std::getline(std::cin, nickname)) {
-    std::cout << std::endl;
-    return;
+    quit_app(pb);
   }
 
   std::cout << "Phone number: ";
   if (!std::getline(std::cin, phone)) {
-    std::cout << std::endl;
-    return;
+    quit_app(pb);
   }
 
   std::cout << "Darkest secret: ";
   if (!std::getline(std::cin, secret)) {
-    std::cout << std::endl;
-    return;
+    quit_app(pb);
   }
   std::cout << std::endl;
 
@@ -149,7 +151,8 @@ void search_contacts(PhoneBook *pb) {
               << "Enter contact index to view details (" << pb->getCount()
               << " contacts): ";
     std::string inln;
-    std::getline(std::cin, inln);
+    if (!std::getline(std::cin, inln))
+		quit_app(pb);
     std::istringstream iss(inln);
     iss >> index;
     if (iss.fail()) {
