@@ -45,6 +45,7 @@ bool	check_texture_completeness(t_data *data)
 
 bool	check_color_completeness(t_data *data)
 {
+	(void) data;
 	return (false);
 }
 
