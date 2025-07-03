@@ -14,6 +14,7 @@
 #include <cstring>
 #include <string>
 
+// Constructors & destructor
 Contact::Contact(std::string f, std::string l, std::string n, std::string p,
                  std::string s)
     : _first_name(f), _last_name(l), _nickname(n), _phone(p), _secret(s) {}
@@ -21,6 +22,7 @@ Contact::Contact()
     : _first_name(""), _last_name(""), _nickname(""), _phone(""), _secret("") {}
 Contact::~Contact() {}
 
+// Getters
 std::string Contact::getFirstName() { return _first_name; }
 std::string Contact::getLastName() { return _last_name; }
 std::string Contact::getNickname() { return _nickname; }
