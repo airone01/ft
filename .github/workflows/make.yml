@@ -70,21 +70,10 @@ jobs:
             JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^
 
   build:
-    name: ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
-    runs-on: ${{ matrix.os }}
+    name: Build Changed Projects
+    runs-on: ubuntu-22.04
     needs: detect-changes
     if: needs.detect-changes.outputs.changed-projects != '[]'
-
-    strategy:
-      matrix:
-        os: [ubuntu-22.04]
-        arch: [x86_64]
-        target: ${{ fromJson(needs.detect-changes.outputs.changed-projects) }}
-        include:
-          # Linux builds
-          - os: ubuntu-22.04
-            arch: x86_64
-            shell: bash
 
     steps:
       # Configure Git to handle special characters before checkout
@@ -104,14 +93,20 @@ jobs:
           GIT_TEST_DEBUG: 1
 
       - name: Install LibBSD
-        if: runner.os == 'Linux'
         shell: bash
         run: sudo apt-get install libbsd-dev
 
-      - name: Build ${{ matrix.target }} Linux
-        if: runner.os == 'Linux'
+      - name: Build Changed Projects
         shell: bash
-        run: make ${{ matrix.target }} | jq -R -s -c 'split("\n")[:-1]')
+        run: |
+          CHANGED_PROJECTS='${{ needs.detect-changes.outputs.changed-projects }}'
+          echo "Building projects: $CHANGED_PROJECTS"
+
+          # Parse JSON array and build each project
+          echo "$CHANGED_PROJECTS" | jq -r '.[]' | while read -r project; do
+            echo "Building project: $project"
+            make "$project"
+          done | jq -R -s -c 'split("\n")[:-1]')
           else
             JSON_ARRAY="[]"
           fi
