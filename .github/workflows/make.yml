@@ -5,24 +5,82 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'milestone-*/**/*'
+      - 'milestone-*/**/*.c'
+      - 'milestone-*/**/*.cpp'
+      - 'milestone-*/**/*.cc'
+      - 'milestone-*/**/*.cxx'
+      - 'milestone-*/**/*.h'
+      - 'milestone-*/**/*.hpp'
+      - 'milestone-*/**/*.hh'
+      - 'milestone-*/**/*.hxx'
+      - 'milestone-*/**/Makefile'
+      - 'milestone-*/**/makefile'
       - '.github/workflows/make.yml'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'milestone-*/**/*'
+      - 'milestone-*/**/*.c'
+      - 'milestone-*/**/*.cpp'
+      - 'milestone-*/**/*.cc'
+      - 'milestone-*/**/*.cxx'
+      - 'milestone-*/**/*.h'
+      - 'milestone-*/**/*.hpp'
+      - 'milestone-*/**/*.hh'
+      - 'milestone-*/**/*.hxx'
+      - 'milestone-*/**/Makefile'
+      - 'milestone-*/**/makefile'
       - '.github/workflows/make.yml'
 
 jobs:
+  # Job to detect which projects have changed
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed-projects: ${{ steps.changes.outputs.changed-projects }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed projects
+        id: changes
+        shell: bash
+        run: |
+          # Get list of changed files
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          else
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          fi
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          # Extract unique project names from changed files
+          CHANGED_PROJECTS=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
+
+          # Convert to JSON array for matrix
+          if [ -n "$CHANGED_PROJECTS" ]; then
+            JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^$' | jq -R -s -c 'split("\n")[:-1]')
+          else
+            JSON_ARRAY="[]"
+          fi
+
+          echo "Changed projects: $CHANGED_PROJECTS"
+          echo "JSON array: $JSON_ARRAY"
+          echo "changed-projects=$JSON_ARRAY" >> $GITHUB_OUTPUT
+
   build:
     name: ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
     runs-on: ${{ matrix.os }}
+    needs: detect-changes
+    if: needs.detect-changes.outputs.changed-projects != '[]'
 
     strategy:
       matrix:
         os: [ubuntu-22.04]
         arch: [x86_64]
-        target: [libft, ft_printf, get_next_line, pipex, push_swap, fdf, minishell, philo, cub3d]
+        target: ${{ fromJson(needs.detect-changes.outputs.changed-projects) }}
         include:
           # Linux builds
           - os: ubuntu-22.04
