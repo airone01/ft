@@ -19,21 +19,21 @@
 #include <sstream>
 #include <string>
 
-void main_menu(PhoneBook *pb);
-void add_contact(PhoneBook *pb);
-void display_contacts(PhoneBook *pb);
+void main_menu(PhoneBook &pb);
+void add_contact(PhoneBook &pb);
+void display_contacts(PhoneBook &pb);
 std::string truncate_field(const std::string &field);
 void display_contact_details(Contact &contact);
-void search_contacts(PhoneBook *pb);
-void quit_app(PhoneBook *pb);
+void search_contacts(PhoneBook &pb);
+void quit_app();
 
 int main() {
-  PhoneBook *pb = new PhoneBook();
+  PhoneBook pb;
   main_menu(pb);
   return 0;
 }
 
-void main_menu(PhoneBook *pb) {
+void main_menu(PhoneBook &pb) {
   std::string inln;
   do {
     std::cout << std::endl << "PhoneBook menu options:" << std::endl;
@@ -44,7 +44,7 @@ void main_menu(PhoneBook *pb) {
 
     if (!std::getline(std::cin, inln)) {
       // EOF detected (Ctrl+D)
-      quit_app(pb);
+      quit_app();
     }
 
     if (inln == "ADD") {
@@ -52,26 +52,25 @@ void main_menu(PhoneBook *pb) {
     } else if (inln == "SEARCH") {
       search_contacts(pb);
     } else if (inln == "EXIT") {
-      quit_app(pb);
+      quit_app();
     } else {
       std::cout << std::endl << inln << ": invalid command." << std::endl;
     }
   } while (true);
 }
 
-void quit_app(PhoneBook *pb) {
+void quit_app() {
   std::cout << std::endl;
-  delete pb;
   std::exit(0);
 }
 
-void add_contact(PhoneBook *pb) {
+void add_contact(PhoneBook &pb) {
   std::string inln;
 
-  if (pb->isFull()) {
+  if (pb.isFull()) {
     std::cout << std::endl
               << "PhoneBook is full, adding a new contact will remove '"
-              << pb->getFirstContact().getFirstName() << "', confirm? [y/n] ";
+              << pb.getFirstContact().getFirstName() << "', confirm? [y/n] ";
 
     if (!std::getline(std::cin, inln)) {
       std::cout << std::endl;
@@ -93,36 +92,36 @@ void add_contact(PhoneBook *pb) {
 
   std::cout << std::endl << "First name: ";
   if (!std::getline(std::cin, first_name)) {
-    quit_app(pb);
+    quit_app();
   }
 
   std::cout << "Last name: ";
   if (!std::getline(std::cin, last_name)) {
-    quit_app(pb);
+    quit_app();
   }
 
   std::cout << "Nickname: ";
   if (!std::getline(std::cin, nickname)) {
-    quit_app(pb);
+    quit_app();
   }
 
   std::cout << "Phone number: ";
   if (!std::getline(std::cin, phone)) {
-    quit_app(pb);
+    quit_app();
   }
 
   std::cout << "Darkest secret: ";
   if (!std::getline(std::cin, secret)) {
-    quit_app(pb);
+    quit_app();
   }
   std::cout << std::endl;
 
   Contact new_contact(first_name, last_name, nickname, phone, secret);
-  pb->addContact(new_contact);
+  pb.addContact(new_contact);
 }
 
-void search_contacts(PhoneBook *pb) {
-  if (pb->getCount() == 0) {
+void search_contacts(PhoneBook &pb) {
+  if (pb.getCount() == 0) {
     std::cout << std::endl << "No contacts in phonebook." << std::endl;
     return;
   }
@@ -133,8 +132,8 @@ void search_contacts(PhoneBook *pb) {
             << std::setw(10) << "Nickname" << "|" << std::endl;
   std::cout << "|----------|----------|----------|----------|" << std::endl;
 
-  for (int i = 0; i < pb->getCount(); i++) {
-    Contact contact = pb->getContact(i);
+  for (int i = 0; i < pb.getCount(); i++) {
+    Contact contact = pb.getContact(i);
     if (!contact.isEmpty()) {
       std::cout << "|" << std::setw(10) << i << "|" << std::setw(10)
                 << truncate_field(contact.getFirstName()) << "|"
@@ -150,13 +149,14 @@ void search_contacts(PhoneBook *pb) {
   do {
     std::cout << std::endl
               << "Enter contact index to view details (0-"
-              << (pb->getCount() - 1) << "): ";
+              << (pb.getCount() - 1) << "): ";
     std::string inln;
 
     if (!std::getline(std::cin, inln)) {
-      quit_app(pb);
+      quit_app();
     }
 
+    // input is empty
     if (inln.empty()) {
       std::cout << "Please enter a number." << std::endl;
       continue;
@@ -172,9 +172,9 @@ void search_contacts(PhoneBook *pb) {
     }
 
     // check if index is in valid range
-    if (index < 0 || index >= pb->getCount()) {
+    if (index < 0 || index >= pb.getCount()) {
       std::cout << "Index out of range. Please enter a number between 0 and "
-                << (pb->getCount() - 1) << "." << std::endl;
+                << (pb.getCount() - 1) << "." << std::endl;
       continue;
     }
 
@@ -182,7 +182,7 @@ void search_contacts(PhoneBook *pb) {
 
   } while (!valid_input);
 
-  Contact selected_contact = pb->getContact(index);
+  Contact selected_contact = pb.getContact(index);
   if (selected_contact.isEmpty()) {
     std::cout << "No contact at this index." << std::endl;
     return;
@@ -200,9 +200,9 @@ std::string truncate_field(const std::string &field) {
 
 void display_contact_details(Contact &contact) {
   std::cout << std::endl << "Contact Details:" << std::endl;
-  std::cout << "First Name: " << contact.getFirstName() << std::endl;
-  std::cout << "Last Name: " << contact.getLastName() << std::endl;
-  std::cout << "Nickname: " << contact.getNickname() << std::endl;
-  std::cout << "Phone: " << contact.getPhone() << std::endl;
+  std::cout << "    First Name: " << contact.getFirstName() << std::endl;
+  std::cout << "     Last Name: " << contact.getLastName() << std::endl;
+  std::cout << "      Nickname: " << contact.getNickname() << std::endl;
+  std::cout << "         Phone: " << contact.getPhone() << std::endl;
   std::cout << "Darkest Secret: " << contact.getSecret() << std::endl;
 }
