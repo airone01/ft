@@ -17,7 +17,6 @@ on:
       - 'milestone-*/**/makefile'
       - '.github/workflows/make.yml'
   pull_request:
-    branches: [ "main" ]
     paths:
       - 'milestone-*/**/*.c'
       - 'milestone-*/**/*.cpp'
@@ -68,52 +67,6 @@ jobs:
           # Convert to JSON array for matrix
           if [ -n "$CHANGED_PROJECTS" ]; then
             JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^
-
-  build:
-    name: Build Changed Projects
-    runs-on: ubuntu-22.04
-    needs: detect-changes
-    if: needs.detect-changes.outputs.changed-projects != '[]'
-
-    steps:
-      # Configure Git to handle special characters before checkout
-      - name: Configure Git
-        shell: bash
-        run: |
-          git config --global core.protectNTFS false
-          git config --global core.quotePath false
-          git config --global core.safecrlf false
-
-      # Modified checkout with special handling
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: recursive
-        env:
-          GIT_TEST_DEBUG: 1
-
-      - name: Install LibBSD
-        shell: bash
-        run: sudo apt-get install libbsd-dev
-
-      - name: Build Changed Projects
-        shell: bash
-        run: |
-          CHANGED_PROJECTS='${{ needs.detect-changes.outputs.changed-projects }}'
-          echo "Building projects: $CHANGED_PROJECTS"
-
-          # Parse JSON array and build each project
-          echo "$CHANGED_PROJECTS" | jq -r '.[]' | while read -r project; do
-            echo "Building project: $project"
-            make "$project"
-          done | jq -R -s -c 'split("\n")[:-1]')
-          else
-            JSON_ARRAY="[]"
-          fi
-
-          echo "Changed projects: '$CHANGED_PROJECTS'"
-          echo "JSON array: $JSON_ARRAY"
-          echo "changed-projects=$JSON_ARRAY" >> $GITHUB_OUTPUT
 
   build:
     name: ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
