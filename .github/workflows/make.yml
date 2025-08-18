@@ -64,9 +64,17 @@ jobs:
             CHANGED_PROJECTS=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ' | sed 's/ $//')
           fi
 
+          echo "Changed projects: $CHANGED_PROJECTS"
+
           # Convert to JSON array for matrix
           if [ -n "$CHANGED_PROJECTS" ]; then
-            JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^
+            JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^$' | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//' | sed 's/^/[/' | sed 's/$/]/')
+          else
+            JSON_ARRAY="[]"
+          fi
+
+          echo "JSON array: $JSON_ARRAY"
+          echo "changed-projects=$JSON_ARRAY" >> $GITHUB_OUTPUT
 
   build:
     name: ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
