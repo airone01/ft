@@ -31,7 +31,6 @@ on:
       - '.github/workflows/make.yml'
 
 jobs:
-  # Job to detect which projects have changed
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
@@ -58,12 +57,22 @@ jobs:
           echo "Changed files:"
           echo "$CHANGED_FILES"
 
-          # Extract unique project names from changed files
-          CHANGED_PROJECTS=""
-          if [ -n "$CHANGED_FILES" ]; then
-            MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
-            if [ -n "$MILESTONE_FILES" ]; then
-              CHANGED_PROJECTS=$(echo "$MILESTONE_FILES" | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ' | sed 's/ $//')
+          # Check if workflow file changed
+          WORKFLOW_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.github/workflows/make\.yml$' || true)
+
+          if [ -n "$WORKFLOW_CHANGED" ]; then
+            echo "Workflow file changed - building all projects"
+            # Find all milestone projects
+            ALL_PROJECTS=$(find . -maxdepth 1 -type d -name 'milestone-*' | sed 's|./milestone-||' | sort 2>/dev/null || echo "")
+            CHANGED_PROJECTS="$ALL_PROJECTS"
+          else
+            # Extract unique project names from changed milestone files only
+            CHANGED_PROJECTS=""
+            if [ -n "$CHANGED_FILES" ]; then
+              MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
+              if [ -n "$MILESTONE_FILES" ]; then
+                CHANGED_PROJECTS=$(echo "$MILESTONE_FILES" | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ' | sed 's/ $//')
+              fi
             fi
           fi
 
@@ -71,7 +80,7 @@ jobs:
 
           # Convert to JSON array for matrix
           if [ -n "$CHANGED_PROJECTS" ]; then
-            JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^$' | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//' | sed 's/^/[/' | sed 's/$/]/')
+            JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^$' | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//' | sed 's/$/]/' | sed 's/^/[/')
           else
             JSON_ARRAY="[]"
           fi
