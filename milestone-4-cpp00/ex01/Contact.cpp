@@ -31,5 +31,6 @@ std::string Contact::getSecret() { return _secret; }
 
 bool Contact::isEmpty() {
   return (_first_name.size() + _last_name.size() + _nickname.size() +
-          _phone.size() + _secret.size() <= 0);
+              _phone.size() + _secret.size() <=
+          0);
 }

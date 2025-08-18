@@ -33,13 +33,13 @@ Account::~Account(void) {
 
 // Static functions
 void Account::_displayTimestamp(void) {
-    time_t now = time(NULL);
-    struct tm* t = localtime(&now);
+  time_t now = time(NULL);
+  struct tm *t = localtime(&now);
 
-    char buffer[20]; // big enough
-    strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", t);
+  char buffer[20]; // big enough
+  strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", t);
 
-    std::cout << "[" << buffer << "] ";
+  std::cout << "[" << buffer << "] ";
 }
 void Account::displayAccountsInfos(void) {
   Account::_displayTimestamp();
