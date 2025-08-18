@@ -12,6 +12,9 @@
 
 #include <string>
 
+#ifndef __CONTACT_HPP__
+#define __CONTACT_HPP__
+
 class Contact {
 
 private:
@@ -35,3 +38,5 @@ public:
 
   bool isEmpty();
 };
+
+#endif // !__CONTACT_HPP__

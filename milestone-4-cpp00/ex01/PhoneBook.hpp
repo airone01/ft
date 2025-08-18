@@ -12,6 +12,9 @@
 
 #include "Contact.hpp"
 
+#ifndef __PHONEBOOK_HPP__
+#define __PHONEBOOK_HPP__
+
 class PhoneBook {
 
 private:
@@ -32,3 +35,5 @@ public:
 private:
   void _incrAllContacts();
 };
+
+#endif // !__PHONEBOOK_HPP__
