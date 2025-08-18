@@ -144,30 +144,43 @@ void search_contacts(PhoneBook *pb) {
     }
   }
 
-  bool fail = true;
   int index;
+  bool valid_input = false;
+
   do {
     std::cout << std::endl
-              << "Enter contact index to view details (" << pb->getCount()
-              << " contacts): ";
+              << "Enter contact index to view details (0-"
+              << (pb->getCount() - 1) << "): ";
     std::string inln;
-    if (!std::getline(std::cin, inln))
-		quit_app(pb);
+
+    if (!std::getline(std::cin, inln)) {
+      quit_app(pb);
+    }
+
+    if (inln.empty()) {
+      std::cout << "Please enter a number." << std::endl;
+      continue;
+    }
+
     std::istringstream iss(inln);
     iss >> index;
-    if (iss.fail()) {
-      std::cout << "Bad number." << std::endl;
-    } else {
-      fail = false;
-    }
-  } while (fail);
 
-  if (std::cin.fail() || index < 0 || index >= pb->getCount()) {
-    std::cin.clear();
-    std::cin.ignore(1000, '\n');
-    std::cout << "Invalid index." << std::endl;
-    return;
-  }
+    // parsing failed or there are leftover characters
+    if (iss.fail() || !iss.eof()) {
+      std::cout << "Invalid input. Please enter a valid number." << std::endl;
+      continue;
+    }
+
+    // check if index is in valid range
+    if (index < 0 || index >= pb->getCount()) {
+      std::cout << "Index out of range. Please enter a number between 0 and "
+                << (pb->getCount() - 1) << "." << std::endl;
+      continue;
+    }
+
+    valid_input = true;
+
+  } while (!valid_input);
 
   Contact selected_contact = pb->getContact(index);
   if (selected_contact.isEmpty()) {
