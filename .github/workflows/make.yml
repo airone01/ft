@@ -130,4 +130,4 @@ jobs:
       - name: Build ${{ matrix.target }} Linux
         if: runner.os == 'Linux'
         shell: bash
-        run: make ${{ matrix.target }}
+        run: make -C milestone-${{ matrix.target }}
