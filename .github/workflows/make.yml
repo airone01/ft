@@ -61,7 +61,10 @@ jobs:
           # Extract unique project names from changed files
           CHANGED_PROJECTS=""
           if [ -n "$CHANGED_FILES" ]; then
-            CHANGED_PROJECTS=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ' | sed 's/ $//')
+            MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
+            if [ -n "$MILESTONE_FILES" ]; then
+              CHANGED_PROJECTS=$(echo "$MILESTONE_FILES" | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ' | sed 's/ $//')
+            fi
           fi
 
           echo "Changed projects: $CHANGED_PROJECTS"
