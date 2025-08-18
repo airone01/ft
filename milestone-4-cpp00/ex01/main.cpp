@@ -117,11 +117,11 @@ void search_contacts(PhoneBook &pb) {
     return;
   }
 
-  std::cout << std::endl;
-  std::cout << "|" << std::setw(10) << "Index" << "|" << std::setw(10)
+  std::cout << std::endl
+            << "|" << std::setw(10) << "Index" << "|" << std::setw(10)
             << "First Name" << "|" << std::setw(10) << "Last Name" << "|"
-            << std::setw(10) << "Nickname" << "|" << std::endl;
-  std::cout << "|----------|----------|----------|----------|" << std::endl;
+            << std::setw(10) << "Nickname" << "|" << std::endl
+            << "|----------|----------|----------|----------|" << std::endl;
 
   for (int i = 0; i < pb.getCount(); i++) {
     Contact contact = pb.getContact(i);
