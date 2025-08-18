@@ -64,6 +64,22 @@ void quit_app() {
   std::exit(0);
 }
 
+std::string ask(std::string prompt) {
+  std::string response;
+  bool loop = true;
+  do {
+    std::cout << std::endl << prompt;
+    if (!std::getline(std::cin, response)) {
+      quit_app();
+    }
+    if (response.empty()) {
+      std::cout << "This cannot be empty. Try again." << std::endl;
+    } else
+      loop = false;
+  } while (loop);
+  return response;
+}
+
 void add_contact(PhoneBook &pb) {
   std::string inln;
 
@@ -84,36 +100,11 @@ void add_contact(PhoneBook &pb) {
     }
   }
 
-  std::string first_name;
-  std::string last_name;
-  std::string nickname;
-  std::string phone;
-  std::string secret;
-
-  std::cout << std::endl << "First name: ";
-  if (!std::getline(std::cin, first_name)) {
-    quit_app();
-  }
-
-  std::cout << "Last name: ";
-  if (!std::getline(std::cin, last_name)) {
-    quit_app();
-  }
-
-  std::cout << "Nickname: ";
-  if (!std::getline(std::cin, nickname)) {
-    quit_app();
-  }
-
-  std::cout << "Phone number: ";
-  if (!std::getline(std::cin, phone)) {
-    quit_app();
-  }
-
-  std::cout << "Darkest secret: ";
-  if (!std::getline(std::cin, secret)) {
-    quit_app();
-  }
+  std::string first_name = ask("First name: ");
+  std::string last_name = ask("Last name: ");
+  std::string nickname = ask("Nickname: ");
+  std::string phone = ask("Phone number: ");
+  std::string secret = ask("Darkest secret: ");
   std::cout << std::endl;
 
   Contact new_contact(first_name, last_name, nickname, phone, secret);
