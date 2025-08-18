@@ -42,8 +42,8 @@ void main_menu(PhoneBook &pb) {
     std::cout << "EXIT   Quit the app" << std::endl;
     std::cout << "> ";
 
+    // eof
     if (!std::getline(std::cin, inln)) {
-      // EOF detected (Ctrl+D)
       quit_app();
     }
 
@@ -88,9 +88,9 @@ void add_contact(PhoneBook &pb) {
               << "PhoneBook is full, adding a new contact will remove '"
               << pb.getFirstContact().getFirstName() << "', confirm? [y/n] ";
 
+    // eof
     if (!std::getline(std::cin, inln)) {
-      std::cout << std::endl;
-      return;
+      quit_app();
     }
 
     if (inln == "y" || inln == "Y") {
