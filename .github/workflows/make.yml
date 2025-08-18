@@ -83,7 +83,7 @@ jobs:
     name: ${{ matrix.target }} [${{ matrix.os }}-${{ matrix.arch }}]
     runs-on: ${{ matrix.os }}
     needs: detect-changes
-    if: needs.detect-changes.outputs.changed-projects != '[]'
+    if: needs.detect-changes.outputs.changed-projects != '[]' || github.event_name == 'workflow_dispatch'
 
     strategy:
       matrix:
