@@ -12,9 +12,12 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-# C/C++ files
-[*.{c,h,cpp}]
+# C files
+[*.{c,h}]
 indent_style = tab
+
+[*.{cpp,hpp}]
+indent_size = 2
 
 # Makefiles
 [{*.mk,Makefile}]
