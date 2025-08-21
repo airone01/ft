@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:41:18 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/20 12:58:25 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:23:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,10 @@ public:
 private:
   const std::string _name;
 };
+
+// newZombie.cpp
+Zombie *newZombie(std::string name);
+// randomChump.cpp
+void randomChump(std::string name);
 
 #endif // !__ZOMBIE_HPP__
