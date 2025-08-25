@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 12:35:35 by elagouch          #+#    #+#              #
-#    Updated: 2025/06/22 12:41:36 by elagouch         ###   ########.fr        #
+#    Updated: 2025/08/25 14:32:23 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,11 +56,11 @@ ex03: title
 	@$(ECHO) "$(MSG)🏗️  Building ex03: Unnecessary violence\n"
 	@$(MAKE) -sC ex03
 
-ex03: title
+ex04: title
 	@$(ECHO) "$(MSG)🏗️  Building ex04: Sed is for losers\n"
 	@$(MAKE) -sC ex04
 
-ex03: title
+ex05: title
 	@$(ECHO) "$(MSG)🏗️  Building ex02: Harl 2.0\n"
 	@$(MAKE) -sC ex05
 
