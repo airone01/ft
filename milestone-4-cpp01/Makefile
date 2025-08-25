@@ -38,7 +38,7 @@ CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-all: ex00 ex01 ex02 ex03
+all: ex00 ex01 ex02 ex03 ex04 ex05
 
 ex00: title
 	@$(ECHO) "$(MSG)🏗️  Building ex00: BraiiiiiiinnnzzzZ\n"
@@ -53,8 +53,16 @@ ex02: title
 	@$(MAKE) -sC ex02
 
 ex03: title
-	@$(ECHO) "$(MSG)🏗️  Building ex02: Unnecessary violence\n"
+	@$(ECHO) "$(MSG)🏗️  Building ex03: Unnecessary violence\n"
 	@$(MAKE) -sC ex03
+
+ex03: title
+	@$(ECHO) "$(MSG)🏗️  Building ex04: Sed is for losers\n"
+	@$(MAKE) -sC ex04
+
+ex03: title
+	@$(ECHO) "$(MSG)🏗️  Building ex02: Harl 2.0\n"
+	@$(MAKE) -sC ex05
 
 title:
 	@$(ECHO) "$(MSG)                ___ ___\n"
