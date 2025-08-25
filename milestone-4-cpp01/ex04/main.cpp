@@ -6,28 +6,41 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 14:33:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/25 16:28:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:41:58 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fstream>
 #include <iostream>
 
+// The funny thing that happens here is that if you're not careful, the func can
+// replace text by strings that are contained in the search text, creating an
+// infinite loop. I had to adapt the func to take care of that.
 std::string replaceStrStr(std::string &str, const std::string &find,
                           const std::string &replaceBy) {
+  if (find.empty()) {
+    return str;
+  }
+
   // No pointer arithmetics bc we can just use strings and a pos var
   // Also we need this to be a size_t otherwise C++ complains
+  std::string result;
   size_t pos = 0;
+  size_t found_pos;
 
   // std::string.find() returns npos when not found
-  while ((pos = str.find(find)) != std::string::npos) {
-    std::string before = str.substr(0, pos);
-    std::string after = str.substr(pos + find.length());
-    str = before + replaceBy + after;
+  while ((found_pos = str.find(find, pos)) != std::string::npos) {
+    result += str.substr(pos, found_pos - pos);
+    result += replaceBy;
 
-    pos += replaceBy.length();
+    pos = found_pos + find.length();
   }
-  return (str);
+
+  // Append any remaining text
+  result += str.substr(pos);
+
+  str = result;
+  return str;
 }
 
 /*
@@ -43,10 +56,17 @@ int main(int argc, char *argv[]) {
   std::string find(argv[2]);
   std::string replaceBy(argv[3]);
 
-  // Reading input
+  // Arg checking
+  if (inFileName.empty()) {
+    std::cerr << "`filename` must not be empty." << std::endl;
+  }
+  if (find.empty()) {
+    std::cerr << "`s1` must not be empty." << std::endl;
+  }
+
+  // I/O
   std::string inFileLine;
   std::ifstream inFile(inFileName.c_str());
-
   std::ofstream outFile((outFileName).c_str());
 
   if (!inFile.is_open()) {
