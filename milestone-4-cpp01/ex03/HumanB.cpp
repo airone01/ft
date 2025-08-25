@@ -23,7 +23,10 @@ HumanB::HumanB(const HumanB &other)
 HumanB::HumanB(const std::string &name) : _name(name), _weapon(NULL) {}
 
 // Destructor
-HumanB::~HumanB() {}
+HumanB::~HumanB() {
+  if (_weapon)
+    delete _weapon;
+}
 
 // Assignment operator
 HumanB &HumanB::operator=(const HumanB &other) {
@@ -35,7 +38,7 @@ HumanB &HumanB::operator=(const HumanB &other) {
 }
 
 // Setters
-void HumanB::setWeapon(Weapon weapon) { _weapon = &weapon; }
+void HumanB::setWeapon(Weapon weapon) { _weapon = new Weapon(weapon); }
 
 // Methods
 void HumanB::attack() {
