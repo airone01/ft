@@ -6,22 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 14:33:32 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/25 16:02:10 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:28:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fstream>
 #include <iostream>
-
-std::string replaceStrStrFromTo(const std::string &original, const int pos,
-                                const int len, const std::string &newStr) {
-  std::string final(original);
-
-  for (int i = pos; i < len; i++) {
-    final[i] = newStr[i - len - 1];
-  }
-  return final;
-}
 
 std::string replaceStrStr(std::string &str, const std::string &find,
                           const std::string &replaceBy) {
@@ -31,7 +21,10 @@ std::string replaceStrStr(std::string &str, const std::string &find,
 
   // std::string.find() returns npos when not found
   while ((pos = str.find(find)) != std::string::npos) {
-    str = replaceStrStrFromTo(str, pos, find.length(), replaceBy);
+    std::string before = str.substr(0, pos);
+    std::string after = str.substr(pos + find.length());
+    str = before + replaceBy + after;
+
     pos += replaceBy.length();
   }
   return (str);
@@ -69,10 +62,10 @@ int main(int argc, char *argv[]) {
   // Reading, processing and writing
   while (getline(inFile, inFileLine)) {
     outFile << replaceStrStr(inFileLine, find, replaceBy);
-    if (inFile.peek() == EOF) // If we finished
-      break;
-    outFile << std::endl;
+    if (inFile.peek() != EOF)
+      outFile << std::endl;
   }
+  outFile << std::endl;
 
   inFile.close();
   outFile.close();
