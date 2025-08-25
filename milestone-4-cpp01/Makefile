@@ -61,7 +61,7 @@ ex04: title
 	@$(MAKE) -sC ex04
 
 ex05: title
-	@$(ECHO) "$(MSG)🏗️  Building ex02: Harl 2.0\n"
+	@$(ECHO) "$(MSG)🏗️  Building ex05: Harl 2.0\n"
 	@$(MAKE) -sC ex05
 
 title:
