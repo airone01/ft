@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 07:56:10 by elagouch          #+#    #+#              #
-#    Updated: 2025/05/12 12:12:32 by elagouch         ###   ########.fr        #
+#    Updated: 2025/08/26 17:27:30 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ JOBS	= 			\
 	3:philo			\
 	4:cpp00			\
 	4:cpp01			\
+	4:cpp02			\
 	4:cub3d
 JOBS_EXTRA	=				\
 	arthur					\
