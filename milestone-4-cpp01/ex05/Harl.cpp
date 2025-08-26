@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:27:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/25 14:12:20 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:56:34 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Harl::Harl() {};
 // Destructor
 Harl::~Harl() {};
 
-// // Assignment operator
+// // Copy asignment operator
 // Harl &Harl::operator=(const Harl &other) { return *this; };
 
 // Methods

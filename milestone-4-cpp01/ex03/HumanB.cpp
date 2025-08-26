@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:33:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/21 18:03:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:56:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ HumanB::~HumanB() {
     delete _weapon;
 }
 
-// Assignment operator
+// Copy asignment operator
 HumanB &HumanB::operator=(const HumanB &other) {
   if (this != &other) {
     _name = other._name;

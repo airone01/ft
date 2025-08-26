@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:33:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/21 17:47:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:56:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ HumanA::HumanA(const std::string &name, const Weapon &weapon)
 // Destructor
 HumanA::~HumanA() {}
 
-// Assignement operator
+// Copy asignment operator
 HumanA &HumanA::operator=(const HumanA &other) {
   if (this != &other) {
     _name = other._name;
