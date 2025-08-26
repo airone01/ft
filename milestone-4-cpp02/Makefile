@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 12:35:35 by elagouch          #+#    #+#              #
-#    Updated: 2025/08/25 14:32:23 by elagouch         ###   ########.fr        #
+#    Updated: 2025/08/26 19:16:05 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 #                                   TARGETS                                    #
 # **************************************************************************** #
 
-all: ex00 ex01 ex02 ex03 ex04 ex05
+all: ex00 ex01 ex02
 
 ex00: title
 	@$(ECHO) "$(MSG)🏗️  Building ex00: My First Class in Orthodox Canonical Form\n"
@@ -65,14 +65,12 @@ clean:
 	@$(MAKE) -sC ex00 clean
 	@$(MAKE) -sC ex01 clean
 	@$(MAKE) -sC ex02 clean
-	@$(MAKE) -sC ex03 clean
 
 fclean:
 	@$(ECHO) "$(MSG)🧹 Fcleaning cpp00\n"
 	@$(MAKE) -sC ex00 fclean
 	@$(MAKE) -sC ex01 fclean
 	@$(MAKE) -sC ex02 fclean
-	@$(MAKE) -sC ex03 fclean
 
 re: fclean all
 
