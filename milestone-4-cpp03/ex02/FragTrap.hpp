@@ -6,12 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:35:49 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/27 16:11:15 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:17:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __SCAVTRAP_HPP__
-#define __SCAVTRAP_HPP__
+#ifndef __FRAGTRAP_HPP__
+#define __FRAGTRAP_HPP__
 
 #include "ClapTrap.hpp"
 
@@ -30,4 +30,4 @@ public:
   void highFivesGuys(void);
 };
 
-#endif // !__SCAVTRAP_HPP__
+#endif // !__FRAGTRAP_HPP__
