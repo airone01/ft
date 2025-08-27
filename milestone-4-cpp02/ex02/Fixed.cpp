@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 16:40:04 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/26 19:11:55 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:36:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ float Fixed::toFloat(void) const {
 // Setters
 void Fixed::setRawBits(const int newVal) { _val = newVal; }
 
+// Operator overloads: comparison
 inline bool Fixed::operator>(const Fixed &other) const {
   return (this->toFloat() > other.toFloat());
 }
@@ -62,7 +63,7 @@ inline bool Fixed::operator<=(const Fixed &other) const {
 inline bool Fixed::operator>=(const Fixed &other) const {
   return ((this == &other) || (this > &other));
 }
-
+// Operator overloads: arithmetics
 Fixed Fixed::operator+(const Fixed &other) const {
   const Fixed res(this->toFloat() + other.toFloat());
   return res;
@@ -79,7 +80,7 @@ Fixed Fixed::operator/(const Fixed &other) const {
   const Fixed res(this->toFloat() / other.toFloat());
   return res;
 }
-
+// Operator overloads: unary
 Fixed &Fixed::operator++() {
   _val++;
   return (*this);
@@ -98,7 +99,13 @@ Fixed Fixed::operator--(int) {
   _val--;
   return (old);
 }
+// Operator overloads: ostream
+std::ostream &operator<<(std::ostream &os, const Fixed &other) {
+  os << other.toFloat();
+  return os;
+}
 
+// Public methods
 Fixed &Fixed::min(Fixed &a, Fixed &b) {
   if (a < b)
     return (a);
@@ -118,9 +125,4 @@ const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
   if (a > b)
     return (a);
   return (b);
-}
-
-std::ostream &operator<<(std::ostream &os, const Fixed &other) {
-  os << other.toFloat();
-  return os;
 }
