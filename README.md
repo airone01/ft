@@ -6,7 +6,7 @@
 <!-- By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+       -->
 <!--                                              +#+#+#+#+#+   +#+          -->
 <!-- Created: 2025/06/24 11:17:13 by elagouch          #+#    #+#            -->
-<!-- Updated: 2025/06/24 11:17:25 by elagouch         ###   ########.fr      -->
+<!-- Updated: 2025/08/27 16:59:50 by elagouch         ###   ########.fr      -->
 <!--                                                                         -->
 <!-- *********************************************************************** -->
 
@@ -143,7 +143,7 @@
       <tr align="center">
         <td>
             <a href="/milestone-4-cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppn.png" alt="CPP logo"></a></a><br>
-            <sub>CPP 00</sub>
+            <sub>CPP 00-04</sub>
         </td>
         <td>⌛</td>
         <td>...</td>
@@ -216,7 +216,7 @@ know what NixOS is, you probably don't have to care about that though.
 
 ### Ford
 
-`ford` was a quick and dirty test runner I made for my projects during the pool.
+`ford` was a quick and dirty test runner I made for my projects during the piscine.
 It's now deprecated in favor of [Arthur](#arthur).
 
 ### Make
