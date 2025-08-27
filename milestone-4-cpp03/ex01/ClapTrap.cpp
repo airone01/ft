@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:28:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/27 15:49:57 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:54:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ void ClapTrap::takeDamage(unsigned int damage) {
   std::cout << "ClapTrap " << _name << " takes " << damage << " DMG (-"
             << _hitPoints << " -> " << _hitPoints - damage << " HP)."
             << std::endl;
-  if (_hitPoints - damage < 0)
-    _hitPoints = 0;
-  else
-    _hitPoints -= damage;
+  _hitPoints -= damage;
 }
 void ClapTrap::beRepaired(unsigned int repaired) {
   if (_energyPoints > 0) {
