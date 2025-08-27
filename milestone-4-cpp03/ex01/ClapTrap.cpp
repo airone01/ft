@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:28:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/27 15:54:29 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/08/27 16:05:36 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
 
 // Public methods
 void ClapTrap::attack(const std::string &target) {
-  if (_energyPoints > 0) {
+  if (_energyPoints > 0 && _hitPoints > 0) {
     _energyPoints--;
     std::cout << "ClapTrap " << _name << " attacks " << target << " (-"
               << _attackDamage << " DMG)." << std::endl;
   } else {
-    std::cout << "ClapTrap " << _name << " tries to attack but is out of EP!"
+    std::cout << "ClapTrap " << _name << " tries to attack but is out of EP/HP!"
               << std::endl;
   }
 }
@@ -65,18 +65,19 @@ void ClapTrap::takeDamage(unsigned int damage) {
   std::cout << "ClapTrap " << _name << " takes " << damage << " DMG (-"
             << _hitPoints << " -> " << _hitPoints - damage << " HP)."
             << std::endl;
-  _hitPoints -= damage;
+  if (_hitPoints <= damage)
+    _hitPoints = 0;
+  else
+    _hitPoints -= damage;
 }
 void ClapTrap::beRepaired(unsigned int repaired) {
-  if (_energyPoints > 0) {
+  if (_energyPoints > 0 && _hitPoints > 0) {
     _energyPoints--;
     _hitPoints += repaired;
-    if (_hitPoints > 10)
-      _hitPoints = 10;
     std::cout << "ClapTrap " << _name << " repairs itself (+" << repaired
               << " -> " << _hitPoints << " HP)." << std::endl;
   } else {
     std::cout << "ClapTrap " << _name
-              << " tries to repair itself but is out of EP!" << std::endl;
+              << " tries to repair itself but is out of EP/HP!" << std::endl;
   }
 }
