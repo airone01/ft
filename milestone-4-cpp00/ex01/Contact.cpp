@@ -22,6 +22,18 @@ Contact::Contact()
     : _first_name(""), _last_name(""), _nickname(""), _phone(""), _secret("") {}
 Contact::~Contact() {}
 
+// "I don't trust the compiler" ahh operator
+Contact &Contact::operator=(const Contact &other) {
+  if (this != &other) {
+    _first_name = other._first_name;
+    _last_name = other._last_name;
+    _nickname = other._nickname;
+    _phone = other._phone;
+    _secret = other._secret;
+  }
+  return *this;
+}
+
 // Getters
 std::string Contact::getFirstName() { return _first_name; }
 std::string Contact::getLastName() { return _last_name; }

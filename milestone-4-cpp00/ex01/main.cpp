@@ -21,7 +21,6 @@
 
 void main_menu(PhoneBook &pb);
 void add_contact(PhoneBook &pb);
-void display_contacts(PhoneBook &pb);
 std::string truncate_field(const std::string &field);
 void display_contact_details(Contact &contact);
 void search_contacts(PhoneBook &pb);

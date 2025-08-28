@@ -30,6 +30,8 @@ public:
   Contact();
   ~Contact();
 
+  Contact &operator=(const Contact &other);
+
   std::string getFirstName();
   std::string getLastName();
   std::string getNickname();
