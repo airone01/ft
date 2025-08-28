@@ -18,9 +18,9 @@ PhoneBook::~PhoneBook() {}
 
 Contact PhoneBook::getFirstContact() { return _contacts[_next_index]; }
 
-Contact PhoneBook::getContact(int id) { return _contacts[id]; }
+Contact PhoneBook::getContact(const int &id) { return _contacts[id]; }
 
-void PhoneBook::addContact(Contact contact) {
+void PhoneBook::addContact(const Contact &contact) {
   _contacts[_next_index] = contact;
   _next_index = (_next_index + 1) % 8;
   if (_count < 8)

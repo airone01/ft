@@ -23,17 +23,14 @@ private:
   int _next_index;
 
 public:
-  PhoneBook();
-  ~PhoneBook();
+  PhoneBook(void);
+  ~PhoneBook(void);
 
-  Contact getFirstContact();
-  Contact getContact(int id);
-  void addContact(Contact contact);
-  bool isFull();
-  int getCount();
-
-private:
-  void _incrAllContacts();
+  Contact getFirstContact(void);
+  Contact getContact(const int &id);
+  void addContact(const Contact &contact);
+  bool isFull(void);
+  int getCount(void);
 };
 
 #endif // !__PHONEBOOK_HPP__
