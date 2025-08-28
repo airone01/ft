@@ -1,0 +1,21 @@
+[project]
+name = "cpp00"
+version = "1.0.0"
+
+[submit]
+files = [
+  "ex0*/*{c,h}pp",
+  "ex0*/Makefile",
+  "ex0*/.gitignore",
+	"Makefile"
+]
+
+[submit.preprocessor]
+enable_gpm = true
+function_paths = ["."]
+
+[submit.hooks]
+temp_prepare = "echo '*.o' >> .gitignore"
+
+[submit.validation]
+norminette = false
