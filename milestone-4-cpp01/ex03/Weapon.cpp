@@ -23,10 +23,7 @@ Weapon::Weapon(const std::string &type) : _type(type) {}
 Weapon::~Weapon() {}
 
 // Getters
-std::string Weapon::getType(void) { return _type; }
+std::string &Weapon::getType(void) { return _type; }
 
 // Setters
-void Weapon::setType(const std::string &newType) {
-  _type = newType;
-}
-
+void Weapon::setType(const std::string &newType) { _type = newType; }
