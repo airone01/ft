@@ -26,7 +26,7 @@ public:
 
   HumanB &operator=(const HumanB &);
 
-  void setWeapon(Weapon);
+  void setWeapon(Weapon &);
 
   void attack();
 

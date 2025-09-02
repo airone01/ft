@@ -38,7 +38,7 @@ HumanB &HumanB::operator=(const HumanB &other) {
 }
 
 // Setters
-void HumanB::setWeapon(Weapon weapon) { _weapon = new Weapon(weapon); }
+void HumanB::setWeapon(Weapon &weapon) { _weapon = &weapon; }
 
 // Methods
 void HumanB::attack() {
