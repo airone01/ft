@@ -166,24 +166,6 @@ and visualize the sorting algorithm on your `1.20.1` client.
 
 <img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
-### [`Arthur`](/extra-arthur/README.md)
-
-> [!WARNING]
-> GPM and Arthur were never meant to be used by anyone other than me. They are
-> tools designed for my workflow that I use to manage my projects in this
-> monorepo. They could break your stuff.
-
-Arthur is a test runner for 42 projects implementing the core functionnalities
-(and more) of the now-defunct GPM.
-
-- The test runner runs tests on your project and displays the results in a nice
-  and readable format. Currently, it supports `libft`.
-- The project manager handles file manipulation before pushing a project for
-  validation on the 42 intra. This allows me to keep all the deps clean
-  internally in this repo.
-
-More info [`here`](/extra-arthur/README.md).
-
 ### [`FDF generator`](/extra-fdf-bmp-converter/README.md)
 
 A simple script to convert a BMP image into a fdf file. It currently only works
@@ -201,23 +183,10 @@ You can convert PNG images to BMP using `convert` from
 
 ## Additional stuff/notes
 
-<img alt="Bash logo" src="https://skillicons.dev/icons?i=bash" align="right" />
-
-### ~~`GPM`~~ replaced by [Arthur](#arthur)
-
-Git Project Manager (GPM) was a bash script that helped me manage my projects in
-this monorepo. I have re-implemented its core functionnalities (and more) in
-[Arthur](#arthur).
-
 ### Direnv
 
 This project's dev dependencies are managed using `nix-direnv`. If you don't
 know what NixOS is, you probably don't have to care about that though.
-
-### Ford
-
-`ford` was a quick and dirty test runner I made for my projects during the piscine.
-It's now deprecated in favor of [Arthur](#arthur).
 
 ### Make
 

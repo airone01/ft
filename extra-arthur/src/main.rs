@@ -1,17 +1,13 @@
-use std::process;
-
 use anyhow::Ok;
 use clap::Parser as _;
 use colored::*;
 use env_logger::Env;
-use log::{debug, error, info};
+use log::info;
 use tokio;
 
 use arthur::{
     cli::{Cli, Commands, ProjectCommands},
-    commands::{list::List, submit::Submit, test::Test},
-    projects::{GetNextLineTest, LibFtTest, Project},
-    runner::{c::CTestRunner, run_project_tests},
+    commands::{list::List, submit::Submit},
     Command as _,
 };
 
@@ -63,38 +59,8 @@ async fn main() -> anyhow::Result<()> {
             ProjectCommands::Doctor { project_name } => {
                 println!("Running doctor on project {}", project_name);
             }
-            ProjectCommands::Test { project_name } => {
-                println!("Testing project at {}", project_name);
-                Test::new(cli.cwd, &project_name).execute()?;
-            }
             ProjectCommands::List { project_name } => {
                 List::new(&project_name, cli.cwd).execute()?;
-            }
-        },
-        Commands::Test => {
-            // Detect project type
-            let project = Project::detect(&cli.cwd);
-            debug!("Project detection result: {:?}", project);
-
-            // Early exit if project type is unknown
-            if matches!(project, Project::Unknown) {
-                error!("No supported project detected in the current directory");
-                process::exit(1);
-            }
-
-            // Load test cases for the project
-            match project {
-                Project::LibFt => {
-                    let runner = CTestRunner::new(cli.cwd.clone(), "ft");
-                    let test_results = run_project_tests(LibFtTest::new(), runner).await;
-                    test_results.display_summary();
-                }
-                Project::GetNextLine => {
-                    let runner = CTestRunner::new(cli.cwd.clone(), "gnl");
-                    let test_results = run_project_tests(GetNextLineTest::new(), runner).await;
-                    test_results.display_summary();
-                }
-                Project::Unknown => unreachable!(),
             }
         }
     }

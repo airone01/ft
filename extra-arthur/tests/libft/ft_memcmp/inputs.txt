@@ -1,4 +1,0 @@
-Hello|0
-hello|-32
-Hella|14
-Hell|111
