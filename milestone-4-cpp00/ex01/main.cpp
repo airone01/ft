@@ -11,13 +11,9 @@
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-#include <cstdio>
-#include <cstdlib>
-#include <iomanip>
-#include <iostream>
-#include <ostream>
-#include <sstream>
-#include <string>
+#include <iomanip>  // std::setw
+#include <iostream> // std::cout and std::endl
+#include <sstream>  // streams (for int parsing during SEARCH)
 
 void main_menu(PhoneBook &pb);
 bool add_contact(PhoneBook &pb);

@@ -13,7 +13,6 @@
 #include "Account.hpp"
 #include <ctime>
 #include <iostream>
-#include <ostream>
 
 // Constructors & destructor
 Account::Account(int initial_deposit)
