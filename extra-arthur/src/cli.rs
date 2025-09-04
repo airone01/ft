@@ -25,10 +25,6 @@ pub enum Commands {
         #[command(subcommand)]
         command: ProjectCommands,
     },
-
-    /// Test commands
-    #[command(alias = "t")]
-    Test,
 }
 
 #[derive(Subcommand)]
@@ -46,13 +42,6 @@ pub enum ProjectCommands {
     /// Run doctor on project
     #[command(alias = "d")]
     Doctor {
-        /// Name of the project
-        project_name: String,
-    },
-
-    /// Test project
-    #[command(alias = "t")]
-    Test {
         /// Name of the project
         project_name: String,
     },

@@ -1,4 +1,0 @@
-W|Found at position: 6
-o|Found at position: 4
-z|Not found
-\0|Not found
