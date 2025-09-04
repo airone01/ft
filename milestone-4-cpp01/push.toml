@@ -1,12 +1,14 @@
 [project]
-name = "cpp00"
-version = "1.0.3"
+name = "cpp01"
+version = "1.0.0"
 
 [submit]
 files = [
   "ex*/*{c,h}pp",
   "ex*/Makefile",
-  "ex*/.gitignore"
+  "ex*/.gitignore",
+  "ex04/compare.sh",
+  "ex04/luden.txt"
 ]
 
 [submit.preprocessor]
