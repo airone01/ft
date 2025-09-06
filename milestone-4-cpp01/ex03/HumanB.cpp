@@ -23,10 +23,7 @@ HumanB::HumanB(const HumanB &other)
 HumanB::HumanB(const std::string &name) : _name(name), _weapon(NULL) {}
 
 // Destructor
-HumanB::~HumanB() {
-  if (_weapon)
-    delete _weapon;
-}
+HumanB::~HumanB() {}
 
 // Copy asignment operator
 HumanB &HumanB::operator=(const HumanB &other) {

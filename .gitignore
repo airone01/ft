@@ -57,7 +57,7 @@ dkms.conf
 *.bonus
 
 # LLMs
-repomix-output.txt
+repomix-output.*
 
 # nix-direnv
 .direnv/
