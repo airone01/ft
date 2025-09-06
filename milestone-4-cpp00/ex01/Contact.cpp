@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Contact.hpp"
-#include <cstring>
 #include <string>
 
 // Constructors & destructor
