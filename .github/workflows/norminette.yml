@@ -15,6 +15,9 @@ on:
       - 'milestone-*/**/*.h'
       - '.github/workflows/norminette.yml'
 
+env:
+  PROJECTS: "0 1 2 3"
+
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
@@ -29,7 +32,7 @@ jobs:
         id: changes
         shell: bash
         run: |
-          # Get changed files
+          # Gather changed files
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} 2>/dev/null || echo "")
           elif [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ] && [ -n "${{ github.event.before }}" ]; then
@@ -41,32 +44,34 @@ jobs:
           echo "Changed files:"
           echo "$CHANGED_FILES"
 
-          # Workflow changes ⇒ run all configured projects
           WORKFLOW_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.github/workflows/norminette\.yml$' || true)
           if [ -n "$WORKFLOW_CHANGED" ]; then
-            # List only the projects we care about
-            ALL_PROJECTS="0 1 2 3 4"
-            CHANGED_PROJECTS="$ALL_PROJECTS"
+            # All whitelisted projects
+            CHANGED_PROJECTS="${PROJECTS}"
           else
-            # Extract which milestone projects changed
             CHANGED_PROJECTS=""
             if [ -n "$CHANGED_FILES" ]; then
               MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
               if [ -n "$MILESTONE_FILES" ]; then
-                CHANGED_PROJECTS=$(echo "$MILESTONE_FILES" | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ' | sed 's/ $//')
+                CANDIDATES=$(echo "$MILESTONE_FILES" | sed 's|milestone-\([^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
+                for p in $CANDIDATES; do
+                  if [[ " ${PROJECTS} " == *" $p "* ]]; then
+                    CHANGED_PROJECTS="$CHANGED_PROJECTS $p"
+                  fi
+                done
+                CHANGED_PROJECTS=$(echo "$CHANGED_PROJECTS" | xargs -n1 | sort -u | tr '\n' ' ')
               fi
             fi
           fi
 
-          echo "Changed projects: $CHANGED_PROJECTS"
+          echo "Changed filtered projects: $CHANGED_PROJECTS"
 
-          # Convert to JSON for matrix
           if [ -n "$CHANGED_PROJECTS" ]; then
             JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^$' | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//' | sed 's/$/]/' | sed 's/^/[/')
           else
             JSON_ARRAY="[]"
           fi
-          echo "JSON array: $JSON_ARRAY"
+
           echo "changed-projects=$JSON_ARRAY" >> $GITHUB_OUTPUT
 
   norminette:
@@ -87,4 +92,8 @@ jobs:
           python3 -m pip install --upgrade pip setuptools
           python3 -m pip install norminette
       - name: Run norminette on milestone-${{ matrix.target }}
-        run: norminette milestone-${{ matrix.target }}/**/*.{h,c} | tee /dev/tty | (! grep -q "Error")
+        run: |
+          norminette milestone-${{ matrix.target }}/**/*.{h,c} | tee norminette.log
+          if grep -q "Error" norminette.log; then
+            exit 1
+          fi
