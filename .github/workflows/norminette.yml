@@ -16,7 +16,7 @@ on:
       - '.github/workflows/norminette.yml'
 
 env:
-  PROJECTS: "0 1 2 3"
+  PROJECTS: "milestone-0 milestone-1 milestone-2 milestone-3"
 
 jobs:
   detect-changes:
@@ -53,9 +53,9 @@ jobs:
             if [ -n "$CHANGED_FILES" ]; then
               MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
               if [ -n "$MILESTONE_FILES" ]; then
-                CANDIDATES=$(echo "$MILESTONE_FILES" | sed 's|\(milestone-[^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
+                CANDIDATES=$(echo "$MILESTONE_FILES" | sed 's|^\(milestone-[^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
                 for p in $CANDIDATES; do
-                  if [[ " ${PROJECTS} " == *" $p "* ]]; then
+                  if [[ " $PROJECTS " == *" $p "* ]]; then
                     CHANGED_PROJECTS="$CHANGED_PROJECTS $p"
                   fi
                 done
