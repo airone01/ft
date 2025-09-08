@@ -93,7 +93,7 @@ jobs:
           python3 -m pip install norminette
       - name: Run norminette on milestone-${{ matrix.target }}
         run: |
-          norminette milestone-${{ matrix.target }}/**/*.{h,c} | tee norminette.log
+          norminette milestone-${{ matrix.target }}-*/ | tee norminette.log
           if grep -q "Error" norminette.log; then
             exit 1
           fi
