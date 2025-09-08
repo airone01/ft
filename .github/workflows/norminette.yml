@@ -93,6 +93,7 @@ jobs:
           python3 -m pip install norminette
       - name: Run norminette on ${{ matrix.project }}
         run: |
+          shopt -s globstar
           norminette ${{ matrix.project }}/**/*.{h,c} | tee norminette.log
           if grep -q "Error" norminette.log; then
             exit 1
