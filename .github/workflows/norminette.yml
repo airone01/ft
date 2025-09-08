@@ -5,29 +5,96 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'milestone-*/**/*'
+      - 'milestone-*/**/*.c'
+      - 'milestone-*/**/*.h'
       - '.github/workflows/norminette.yml'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'milestone-*/**/*'
+      - 'milestone-*/**/*.c'
+      - 'milestone-*/**/*.h'
       - '.github/workflows/norminette.yml'
 
+env:
+  PROJECTS: "milestone-0-libft milestone-1-ft_printf milestone-1-get_next_line milestone-2-fdf milestone-2-pipex milestone-2-push_swap milestone-3-minishell milestone-3-philo"
+
 jobs:
-  norminette:
-    runs-on: ubuntu-22.04
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed-projects: ${{ steps.changes.outputs.changed-projects }}
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Detect changed projects
+        id: changes
+        shell: bash
+        run: |
+          # Gather changed files
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} 2>/dev/null || echo "")
+          elif [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ] && [ -n "${{ github.event.before }}" ]; then
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} 2>/dev/null || echo "")
+          else
+            CHANGED_FILES=$(find . -path './milestone-*' -type f \( -name '*.c' -o -name '*.h' \) | sed 's|^\./||' 2>/dev/null || echo "")
+          fi
 
-    - name: Install norminette
-      run: |
-        python3 -m pip install --upgrade pip setuptools
-        python3 -m pip install norminette
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
 
-    - name: Run norminette
-      run: norminette milestone-{0,1,2,3,4}-*/**/*.{h,c} | tee /dev/tty | (! grep -q "Error")
+          WORKFLOW_CHANGED=$(echo "$CHANGED_FILES" | grep -E '\.github/workflows/norminette\.yml$' || true)
+          if [ -n "$WORKFLOW_CHANGED" ]; then
+            # All whitelisted projects
+            CHANGED_PROJECTS="${PROJECTS}"
+          else
+            CHANGED_PROJECTS=""
+            if [ -n "$CHANGED_FILES" ]; then
+              MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
+              if [ -n "$MILESTONE_FILES" ]; then
+                CANDIDATES=$(echo "$MILESTONE_FILES" | sed 's|^\(milestone-[^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
+                for p in $CANDIDATES; do
+                  if [[ " $PROJECTS " == *" $p "* ]]; then
+                    CHANGED_PROJECTS="$CHANGED_PROJECTS $p"
+                  fi
+                done
+                CHANGED_PROJECTS=$(echo "$CHANGED_PROJECTS" | xargs -n1 | sort -u | tr '\n' ' ')
+              fi
+            fi
+          fi
+
+          echo "Changed filtered projects: $CHANGED_PROJECTS"
+
+          if [ -n "$CHANGED_PROJECTS" ]; then
+            JSON_ARRAY=$(echo "$CHANGED_PROJECTS" | tr ' ' '\n' | grep -v '^$' | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//' | sed 's/$/]/' | sed 's/^/[/')
+          else
+            JSON_ARRAY="[]"
+          fi
+
+          echo "changed-projects=$JSON_ARRAY" >> $GITHUB_OUTPUT
+
+  norminette:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.changed-projects != '[]' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.detect-changes.outputs.changed-projects) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install norminette
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install norminette
+      - name: Run norminette on ${{ matrix.project }}
+        run: |
+          shopt -s globstar
+          norminette ${{ matrix.project }}/**/*.{h,c} | tee norminette.log
+          if grep -q "Error" norminette.log; then
+            exit 1
+          fi
