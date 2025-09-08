@@ -16,7 +16,7 @@ on:
       - '.github/workflows/norminette.yml'
 
 env:
-  PROJECTS: "milestone-0-libft milestone-1-ft_printf milestone-1-get_next_line milestone-2-fdf milestone-2-pipex milestone-2-push-swap milestone-3-minishell milestone-3-philo"
+  PROJECTS: "milestone-0-libft milestone-1-ft_printf milestone-1-get_next_line milestone-2-fdf milestone-2-pipex milestone-2-push_swap milestone-3-minishell milestone-3-philo"
 
 jobs:
   detect-changes:
