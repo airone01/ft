@@ -1,45 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*   WrongAnimal.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 16:20:39 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 14:55:45 by elagouch         ###   ########.fr       */
+/*   Created: 2025/09/10 14:43:39 by elagouch          #+#    #+#             */
+/*   Updated: 2025/09/10 14:55:38 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
+#include "WrongAnimal.hpp"
 #include <iostream>
 #include <ostream>
 
 // Default constructor
-Animal::Animal(void) : _type("Animal") {
+WrongAnimal::WrongAnimal(): _type("WrongAnimal") {
   std::cout << _type << " constructed (default constructor)" << std::endl;
-};
+}
 // Parameterized constructors
-Animal::Animal(const std::string &type) : _type(type) {
+WrongAnimal::WrongAnimal(const std::string &type) : _type(type) {
   std::cout << _type << " constructed (parameterized constructor)" << std::endl;
 }
 // Copy constructor
-Animal::Animal(const Animal &other) : _type(other._type) {
+WrongAnimal::WrongAnimal(const WrongAnimal &other) : _type(other._type) {
   std::cout << _type << " constructed (copy constructor)" << std::endl;
-};
+}
 // Destructor
-Animal::~Animal(void) { std::cout << _type << " died :'(" << std::endl; }
+WrongAnimal::~WrongAnimal() { std::cout << _type << " died :'(" << std::endl; }
 
 // Copy asignment operator
-Animal &Animal::operator=(const Animal &other) {
-  if (this != &other)
+WrongAnimal &WrongAnimal::operator=(const WrongAnimal &other) {
+  if (this != &other) {
     this->_type = other.getType();
+  }
   return (*this);
 }
 
 // Getters
-const std::string Animal::getType(void) const { return _type; }
+const std::string WrongAnimal::getType(void) const { return _type; }
 
 // Private functions
-void Animal::makeSound(void) const {
-  std::cout << "I don't know what animal sound to make!" << std::endl;
+void WrongAnimal::makeSound(void) const {
+  std::cout << "I don't know what wrong animal sound to make!" << std::endl;
 }

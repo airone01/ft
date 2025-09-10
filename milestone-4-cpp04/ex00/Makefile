@@ -6,14 +6,14 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 16:24:29 by elagouch          #+#    #+#              #
-#    Updated: 2025/09/10 12:51:13 by elagouch         ###   ########.fr        #
+#    Updated: 2025/09/10 14:54:08 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= animals
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -g
-SRC			= main.cpp Animal.cpp Cat.cpp Dog.cpp
+SRC			= main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 OBJ			= $(SRC:.cpp=.o)
 
 all: $(NAME)

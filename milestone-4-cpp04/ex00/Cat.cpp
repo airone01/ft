@@ -21,6 +21,13 @@ Cat::Cat(const Cat &other) : Animal(other) {};
 // Destructor
 Cat::~Cat(void) {}
 
+// Copy assignment operator
+Cat &Cat::operator=(const Cat &other) {
+  if (this != &other)
+    Animal::operator=(other);
+  return *this;
+}
+
 // Getters
 const std::string Cat::getType(void) const { return _type; }
 
