@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/22 12:35:35 by elagouch          #+#    #+#              #
-#    Updated: 2025/06/22 12:41:36 by elagouch         ###   ########.fr        #
+#    Updated: 2025/09/10 12:43:07 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ COLOR			= 250;119;85
 # **************************************************************************** #
 
 GPM_MSTONE	:= 4
-GPM_NAME	:= cpp00
-GPM_MNAME	:= CPP00
+GPM_NAME	:= cpp04
+GPM_MNAME	:= CPP04
 
 # **************************************************************************** #
 #                                   COMMANDS                                   #
@@ -39,23 +39,23 @@ include $(realpath ../extra-make/commands.mk)
 all: ex00 ex01 ex02
 
 ex00: title
-	@$(ECHO) "$(MSG)🏗️  Building ex00: Megaphone\n"
+	@$(ECHO) "$(MSG)🏗️  Building ex00: Polymorphism\n"
 	@$(MAKE) -sC ex00
 
 ex01: title
-	@$(ECHO) "$(MSG)🏗️  Building ex01: My Awesome PhoneBook\n"
+	@$(ECHO) "$(MSG)🏗️  Building ex01: I don’t want to set the world on fire\n"
 	@$(MAKE) -sC ex01
 
 ex02: title
-	@$(ECHO) "$(MSG)🏗️  Building ex02: The Job Of Your Dreams\n"
+	@$(ECHO) "$(MSG)🏗️  Building ex02: Abstract class\n"
 	@$(MAKE) -sC ex02
 
 title:
-	@$(ECHO) "$(MSG)                ___  ___\n"
-	@$(ECHO) "$(MSG) _______  ___  / _ \\/ _ \\ \n"
-	@$(ECHO) "$(MSG)/ __/ _ \\/ _ \\/ // / // /\n"
-	@$(ECHO) "$(MSG)\__/ .__/ .__/\\___/\\___/\n"
-	@$(ECHO) "$(MSG)  /_/  /_/\n"
+	@$(ECHO) "$(MSG)                ___  ____ \n"
+	@$(ECHO) "$(MSG) _______  ___  / _ \\/ / / \n"
+	@$(ECHO) "$(MSG)/ __/ _ \\/ _ \\/ // /_  _/ \n"
+	@$(ECHO) "$(MSG)\\__/ .__/ .__/\\___/ /_/   \n"
+	@$(ECHO) "$(MSG)  /_/  /_/                \n"
 	@$(ECHO) "$(MSG) \n"
 
 clean:

@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.cpp                                            :+:      :+:    :+:   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:00:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
+/*   Updated: 2025/09/10 12:59:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cat.hpp"
-#include <iostream>
-#include <ostream>
+#ifndef __DOG_HPP__
+#define __DOG_HPP__
 
-// Default constructor
-Cat::Cat(void) : Animal("Cat") {};
-// Copy constructor
-Cat::Cat(const Cat &other) : Animal(other) {};
-// Destructor
-Cat::~Cat(void) {}
+#include "Animal.hpp"
 
-// Getters
-const std::string Cat::getType(void) const { return _type; }
+class Dog : public Animal {
 
-// Private functions
-void Cat::makeSound(void) const { std::cout << "Meow!" << std::endl; }
+public:
+  Dog(void);
+  Dog(const Dog &);
+  ~Dog(void);
+  // vitual forces to run the destructor of the base class Animal.
+  // this avoids leaks.
+
+  Dog &operator=(const Dog &);
+
+  const std::string getType(void) const;
+
+  void makeSound(void) const;
+};
+
+#endif // !__DOG_HPP__
