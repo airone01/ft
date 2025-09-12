@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 12:59:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:38:40 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define __DOG_HPP__
 
 #include "Animal.hpp"
+#include "Brain.hpp"
 
 class Dog : public Animal {
 

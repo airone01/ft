@@ -6,14 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:01:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:37:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ANIMAL_HPP__
 #define __ANIMAL_HPP__
 
-#include "Brain.hpp"
 #include <string>
 
 class Animal {
@@ -32,7 +31,6 @@ public:
 
 protected:
   std::string _type;
-  Brain *_brain;
 };
 
 #endif // !__ANIMAL_HPP__

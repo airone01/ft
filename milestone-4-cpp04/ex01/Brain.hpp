@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:16:13 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 15:18:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:19:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,10 @@
 class Brain {
 public:
   Brain();
-  Brain(Brain const &other);
+  Brain(Brain const &);
   ~Brain();
 
-  Brain &operator=(const Brain &other);
-
-  void setIdea(int index, const std::string &idea);
-  const std::string &getIdea(int index) const;
-  void printIdeas(int count = 5) const;
+  Brain &operator=(const Brain &);
 
 private:
   std::string _ideas[100];

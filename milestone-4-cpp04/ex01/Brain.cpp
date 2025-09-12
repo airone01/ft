@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:16:59 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 15:18:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:22:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,3 @@ Brain &Brain::operator=(const Brain &other) {
   return *this;
 }
 
-// Utility methods
-void Brain::setIdea(int index, const std::string &idea) {
-  if (index >= 0 && index < 100) {
-    _ideas[index] = idea;
-  }
-}
-
-const std::string &Brain::getIdea(int index) const {
-  if (index >= 0 && index < 100) {
-    return _ideas[index];
-  }
-  static std::string empty = "";
-  return empty;
-}
-
-void Brain::printIdeas(int count) const {
-  if (count > 100)
-    count = 100;
-  std::cout << "Brain ideas: ";
-  for (int i = 0; i < count; i++) {
-    if (i > 0)
-      std::cout << ", ";
-    std::cout << "\"" << _ideas[i] << "\"";
-  }
-  std::cout << std::endl;
-}
