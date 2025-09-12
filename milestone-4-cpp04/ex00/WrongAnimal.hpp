@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 12:58:50 by elagouch         ###   ########.fr       */
+/*   Created: 2025/09/10 14:28:14 by elagouch          #+#    #+#             */
+/*   Updated: 2025/09/10 15:04:00 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_HPP__
-#define __CAT_HPP__
+#ifndef __WRONGANIMAL_HPP__
+#define __WRONGANIMAL_HPP__
 
-#include "Animal.hpp"
+#include <string>
 
-class Cat : public Animal {
-
+class WrongAnimal {
 public:
-  Cat(void);
-  Cat(const Cat &);
-  virtual ~Cat(void);
-  // vitual forces to run the destructor of the base class Animal.
-  // this avoids leaks.
+  WrongAnimal();
+  WrongAnimal(const std::string &);
+  WrongAnimal(const WrongAnimal &);
+  ~WrongAnimal(); // not virtual
 
-  Cat &operator=(const Cat &);
+  WrongAnimal &operator=(const WrongAnimal &obj);
 
   const std::string getType(void) const;
 
-  void makeSound(void) const;
+  void makeSound(void) const; // not virtual
+
+protected:
+  std::string _type;
 };
 
-#endif // !__CAT_HPP__
+#endif // !__WRONGANIMAL_HPP__

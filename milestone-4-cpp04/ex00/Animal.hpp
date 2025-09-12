@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/08 18:41:51 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/10 13:01:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ public:
   Animal(void);
   Animal(const std::string &);
   Animal(const Animal &);
-  ~Animal(void);
+  virtual ~Animal(void);
 
   Animal &operator=(const Animal &);
 
-  void makeSound(void);
+  const std::string getType(void) const;
+
+  virtual void makeSound(void) const;
 
 protected:
   std::string _type;

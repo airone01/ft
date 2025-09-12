@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 12:58:50 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:37:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_HPP__
-#define __CAT_HPP__
+#ifndef __ANIMAL_HPP__
+#define __ANIMAL_HPP__
 
-#include "Animal.hpp"
+#include <string>
 
-class Cat : public Animal {
+class Animal {
 
 public:
-  Cat(void);
-  Cat(const Cat &);
-  virtual ~Cat(void);
-  // vitual forces to run the destructor of the base class Animal.
-  // this avoids leaks.
+  Animal(void);
+  Animal(const std::string &);
+  Animal(const Animal &);
+  virtual ~Animal(void);
 
-  Cat &operator=(const Cat &);
+  Animal &operator=(const Animal &);
 
   const std::string getType(void) const;
 
-  void makeSound(void) const;
+  virtual void makeSound(void) const;
+
+protected:
+  std::string _type;
 };
 
-#endif // !__CAT_HPP__
+#endif // !__ANIMAL_HPP__

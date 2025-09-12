@@ -54,6 +54,7 @@ COLOR_CUB3D			= 251;138;79
 COLOR_MINECRAFT		= 252;172;61
 COLOR_ARTHUR		= 251;188;47
 
+# GPM? begin make_art_mk_ansi
 # **************************************************************************** #
 #                            COMMON ANSI VARIABLES                             #
 # **************************************************************************** #
@@ -72,4 +73,6 @@ MSG				= $(TITLE) $(GPM_FNAME) $(PADDING)$(RESET) ${}
 SUCCESS			= $(MSG)$(GREEN)✅ Successfully built! 🚀$(RESET)
 SUCCESSB		= $(MSG)$(GREEN)✅ Successfully built bonuses! 🚀$(RESET)
 
+# GPM? end make_art_mk_ansi
 # GPM? end make_art_mk
+

@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.cpp                                            :+:      :+:    :+:   */
+/*   Brain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:00:47 by elagouch         ###   ########.fr       */
+/*   Created: 2025/09/10 15:16:59 by elagouch          #+#    #+#             */
+/*   Updated: 2025/09/12 16:22:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cat.hpp"
+#include "Brain.hpp"
 #include <iostream>
 #include <ostream>
 
 // Default constructor
-Cat::Cat(void) : Animal("Cat") {};
+Brain::Brain() {
+  std::cout << "Brain : Default Constructor Called" << std::endl;
+}
 // Copy constructor
-Cat::Cat(const Cat &other) : Animal(other) {};
+Brain::Brain(Brain const &other) {
+  for (int i = 0; i < 100; i++) {
+    _ideas[i] = other._ideas[i];
+  }
+}
 // Destructor
-Cat::~Cat(void) {}
+Brain::~Brain() { std::cout << "Brain : Destructor Called" << std::endl; }
 
 // Copy assignment operator
-Cat &Cat::operator=(const Cat &other) {
-  if (this != &other)
-    Animal::operator=(other);
+Brain &Brain::operator=(const Brain &other) {
+  std::cout << "Copy Assignment Operator Called" << std::endl;
+  if (this != &other) {
+    for (int i = 0; i < 100; i++) {
+      _ideas[i] = other._ideas[i];
+    }
+  }
   return *this;
 }
 
-// Getters
-const std::string Cat::getType(void) const { return _type; }
-
-// Private functions
-void Cat::makeSound(void) const { std::cout << "Meow!" << std::endl; }

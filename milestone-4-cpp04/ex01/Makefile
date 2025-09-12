@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/22 12:00:00 by elagouch          #+#    #+#              #
-#    Updated: 2025/09/12 16:57:14 by elagouch         ###   ########.fr        #
+#    Created: 2025/09/08 16:24:29 by elagouch          #+#    #+#              #
+#    Updated: 2025/09/12 16:39:21 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= phonebook
+NAME		= animals
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMD -MP
-SRC			= main.cpp PhoneBook.cpp Contact.cpp
+SRC			= main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp
 OBJ			= $(SRC:.cpp=.o)
 
 all: $(NAME)

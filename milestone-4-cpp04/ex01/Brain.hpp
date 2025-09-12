@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 15:42:20 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 12:58:50 by elagouch         ###   ########.fr       */
+/*   Created: 2025/09/10 15:16:13 by elagouch          #+#    #+#             */
+/*   Updated: 2025/09/12 16:19:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_HPP__
-#define __CAT_HPP__
+#ifndef _Brain_HPP_
+#define _Brain_HPP_
 
-#include "Animal.hpp"
+#include <string>
 
-class Cat : public Animal {
-
+class Brain {
 public:
-  Cat(void);
-  Cat(const Cat &);
-  virtual ~Cat(void);
-  // vitual forces to run the destructor of the base class Animal.
-  // this avoids leaks.
+  Brain();
+  Brain(Brain const &);
+  ~Brain();
 
-  Cat &operator=(const Cat &);
+  Brain &operator=(const Brain &);
 
-  const std::string getType(void) const;
-
-  void makeSound(void) const;
+private:
+  std::string _ideas[100];
 };
 
-#endif // !__CAT_HPP__
+#endif

@@ -15,21 +15,26 @@
 #include <ostream>
 
 // Default constructor
-Cat::Cat(void) : Animal("Cat") {};
+Cat::Cat(void) : Animal("Cat") { _brain = new Brain(); };
 // Copy constructor
-Cat::Cat(const Cat &other) : Animal(other) {};
+Cat::Cat(const Cat &other) : Animal(other) {
+  _brain = new Brain(*other._brain);
+};
 // Destructor
-Cat::~Cat(void) {}
+Cat::~Cat(void) { delete _brain; }
 
 // Copy assignment operator
 Cat &Cat::operator=(const Cat &other) {
-  if (this != &other)
+  if (this != &other) {
     Animal::operator=(other);
+    *_brain = *other._brain;
+  }
   return *this;
 }
 
 // Getters
 const std::string Cat::getType(void) const { return _type; }
+Brain *Cat::getBrain(void) const { return _brain; }
 
 // Private functions
 void Cat::makeSound(void) const { std::cout << "Meow!" << std::endl; }

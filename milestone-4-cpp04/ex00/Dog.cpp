@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.cpp                                            :+:      :+:    :+:   */
+/*   Dog.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:00:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/10 13:00:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cat.hpp"
+#include "Dog.hpp"
 #include <iostream>
 #include <ostream>
 
 // Default constructor
-Cat::Cat(void) : Animal("Cat") {};
+Dog::Dog(void) : Animal("Dog") {};
 // Copy constructor
-Cat::Cat(const Cat &other) : Animal(other) {};
+Dog::Dog(const Dog &other) : Animal(other) {};
 // Destructor
-Cat::~Cat(void) {}
+Dog::~Dog(void) {}
 
 // Copy assignment operator
-Cat &Cat::operator=(const Cat &other) {
+Dog &Dog::operator=(const Dog &other) {
   if (this != &other)
     Animal::operator=(other);
   return *this;
 }
 
 // Getters
-const std::string Cat::getType(void) const { return _type; }
+const std::string Dog::getType(void) const { return _type; }
 
 // Private functions
-void Cat::makeSound(void) const { std::cout << "Meow!" << std::endl; }
+void Dog::makeSound(void) const { std::cout << "Woof!" << std::endl; }

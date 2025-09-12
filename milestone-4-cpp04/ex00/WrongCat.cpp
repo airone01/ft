@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.cpp                                            :+:      :+:    :+:   */
+/*   WrongCat.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:00:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/09/10 15:02:20 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cat.hpp"
+#include "WrongCat.hpp"
 #include <iostream>
 #include <ostream>
 
 // Default constructor
-Cat::Cat(void) : Animal("Cat") {};
+WrongCat::WrongCat(void) : WrongAnimal("WrongCat") {};
 // Copy constructor
-Cat::Cat(const Cat &other) : Animal(other) {};
+WrongCat::WrongCat(const WrongCat &other) : WrongAnimal(other) {};
 // Destructor
-Cat::~Cat(void) {}
+WrongCat::~WrongCat(void) {}
 
 // Copy assignment operator
-Cat &Cat::operator=(const Cat &other) {
+WrongCat &WrongCat::operator=(const WrongCat &other) {
   if (this != &other)
-    Animal::operator=(other);
+    WrongAnimal::operator=(other);
   return *this;
 }
 
 // Getters
-const std::string Cat::getType(void) const { return _type; }
+const std::string WrongCat::getType(void) const { return _type; }
 
 // Private functions
-void Cat::makeSound(void) const { std::cout << "Meow!" << std::endl; }
+void WrongCat::makeSound(void) const { std::cout << "Wrong Meow!" << std::endl; }

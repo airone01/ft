@@ -6,7 +6,7 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 17:01:11 by elagouch          #+#    #+#              #
-#    Updated: 2025/08/21 17:01:43 by elagouch         ###   ########.fr        #
+#    Updated: 2025/09/12 16:57:42 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 
-%.o: %.cpp
+%.o: %.cpp Makefile
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
