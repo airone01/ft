@@ -6,14 +6,14 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 16:24:29 by elagouch          #+#    #+#              #
-#    Updated: 2025/09/08 18:29:30 by elagouch         ###   ########.fr        #
+#    Updated: 2025/09/12 16:39:59 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= animals
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
-SRC			= main.cpp Animal.cpp Cat.cpp
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMD -MP
+SRC			= main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 OBJ			= $(SRC:.cpp=.o)
 
 all: $(NAME)
@@ -21,16 +21,18 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 
-%.o: %.cpp
+%.o: %.cpp Makefile
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(SRC:.cpp=.d)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+-include $(SRC:.cpp=.d)
 
 .PHONY: all clean fclean re
 

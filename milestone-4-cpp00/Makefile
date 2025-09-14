@@ -15,7 +15,7 @@
 # **************************************************************************** #
 
 include $(realpath ../extra-make/art.mk)# GPM!
-# GPM: make_art_mk
+# GPM: make_art_mk_ansi
 COLOR			= 250;119;85
 
 # **************************************************************************** #
@@ -31,8 +31,6 @@ GPM_MNAME	:= CPP00
 # **************************************************************************** #
 
 include $(realpath ../extra-make/commands.mk)
-CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 # **************************************************************************** #
 #                                   TARGETS                                    #
@@ -53,30 +51,26 @@ ex02: title
 	@$(MAKE) -sC ex02
 
 title:
-	@$(ECHO) "$(MSG)                 ___  ___\n"
-	@$(ECHO) "$(MSG)  _______  ___  / _ \\/ _ \\ \n"
-	@$(ECHO) "$(MSG) / __/ _ \\/ _ \\/ // / // /\n"
-	@$(ECHO) "$(MSG) \__/ .__/ .__/\\___/\\___/\n"
-	@$(ECHO) "$(MSG)   /_/  /_/\n"
+	@$(ECHO) "$(MSG)                ___  ___\n"
+	@$(ECHO) "$(MSG) _______  ___  / _ \\/ _ \\ \n"
+	@$(ECHO) "$(MSG)/ __/ _ \\/ _ \\/ // / // /\n"
+	@$(ECHO) "$(MSG)\__/ .__/ .__/\\___/\\___/\n"
+	@$(ECHO) "$(MSG)  /_/  /_/\n"
 	@$(ECHO) "$(MSG) \n"
 
 clean:
-	@$(ECHO) "$(MSG)🧹 Cleaning cpp00\n"
+	@$(ECHO) "$(MSG)🧹 Cleaning $(GPM_NAME)\n"
 	@$(MAKE) -sC ex00 clean
 	@$(MAKE) -sC ex01 clean
 	@$(MAKE) -sC ex02 clean
 
 fclean:
-	@$(ECHO) "$(MSG)🧹 Fcleaning cpp00\n"
+	@$(ECHO) "$(MSG)🧹 Fcleaning $(GPM_NAME)\n"
 	@$(MAKE) -sC ex00 fclean
 	@$(MAKE) -sC ex01 fclean
 	@$(MAKE) -sC ex02 fclean
 
 re: fclean all
-
-# GPM: make_sources_mk
-
-# GPM: make_commands_mk
 
 MAKEFLAGS	+= --no-print-directory
 .PHONY: all clean fclean re title ex00 ex01 ex02
