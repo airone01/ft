@@ -6,13 +6,13 @@
 #    By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/26 16:35:49 by elagouch          #+#    #+#              #
-#    Updated: 2025/09/12 16:54:00 by elagouch         ###   ########.fr        #
+#    Updated: 2025/09/14 12:38:44 by elagouch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= fixed
 CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMP -MP
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMD -MP
 SRC			= main.cpp Fixed.cpp
 OBJ			= $(SRC:.cpp=.o)
 
