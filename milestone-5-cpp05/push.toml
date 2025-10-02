@@ -1,5 +1,5 @@
 [project]
-name = "cpp01"
+name = "cpp04"
 version = "1.0.0"
 
 [submit]
@@ -7,8 +7,6 @@ files = [
   "ex*/*{c,h}pp",
   "ex*/Makefile",
   "ex*/.gitignore",
-  "ex04/compare.sh",
-  "ex04/luden.txt",
   ".gitignore"
 ]
 

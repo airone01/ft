@@ -48,6 +48,8 @@ JOBS	= 			\
 	4:cpp01			\
 	4:cpp02			\
 	4:cpp03			\
+	4:cpp04			\
+	5:cpp05			\
 	4:cub3d
 JOBS_EXTRA	=				\
 	arthur					\

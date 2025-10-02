@@ -6,15 +6,13 @@ version = "1.0.3"
 files = [
   "ex*/*{c,h}pp",
   "ex*/Makefile",
-  "ex*/.gitignore"
+  "ex*/.gitignore",
+  ".gitignore"
 ]
 
 [submit.preprocessor]
 enable_gpm = false
 function_paths = []
-
-[submit.hooks]
-temp_prepare = "echo '*.o' >> .gitignore"
 
 [submit.validation]
 norminette = false
