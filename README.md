@@ -6,7 +6,7 @@
 <!-- By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+       -->
 <!--                                              +#+#+#+#+#+   +#+          -->
 <!-- Created: 2025/06/24 11:17:13 by elagouch          #+#    #+#            -->
-<!-- Updated: 2025/08/27 16:59:50 by elagouch         ###   ########.fr      -->
+<!-- Updated: 2025/10/03 14:00:45 by elagouch         ###   ########.fr      -->
 <!--                                                                         -->
 <!-- *********************************************************************** -->
 
@@ -142,11 +142,13 @@
       </tr>
       <tr align="center">
         <td>
-            <a href="/milestone-4-cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppn.png" alt="CPP logo"></a></a><br>
+            <a href="/milestone-4-cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a></a><br>
             <sub>CPP 00-04</sub>
         </td>
-        <td>⌛</td>
-        <td>...</td>
+        <td>✅<br/>
+          <sub>(various grades)</sub>
+        </td>
+        <td>?</td>
       </tr>
     </tbody>
   </table>
@@ -201,8 +203,3 @@ Additionally, you can list them with `make list` build one with
 This project is licensed under the [MIT License](/LICENSE). See the
 [LICENSE](/LICENSE) file for details.
 
-## Note for myself
-
-```bash
-alias reload="rm -rf ~/goinfre/test && cd ~/ft && cargo r --package arthur -- p s milestone-2-fdf https://github.com/airone01/gpm-test && git clone https://github.com/airone01/gpm-test ~/goinfre/test && cd ~/goinfre/test && make all bonus"
-```
