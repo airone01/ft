@@ -1,0 +1,52 @@
+# This allows other packages to depend on targets in this package
+package(default_visibility = ["//visibility:public"])
+
+# Common compiler flags for all C projects
+CC_COPTS = [
+    "-Wall",
+    "-Werror",
+    "-Wextra",
+    "-Wpedantic",
+    "-Wshadow",
+    "-Wunused",
+    "-Wconversion",
+    "-Wsign-conversion",
+    "-Wpointer-arith",
+    "-Wformat=2",
+    "-Wfloat-equal",
+    "-Wwrite-strings",
+    "-fno-omit-frame-pointer",
+    "-O2",
+    "-march=native",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-ffast-math",
+    "-g3",
+]
+
+# Common compiler flags for C++ projects
+CXX_COPTS = [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-std=c++98",
+    "-g3",
+]
+
+# Export these as filegroups so they can be used in other BUILD files
+exports_files([
+    "WORKSPACE",
+    "MODULE.bazel",
+])
+
+# Convenience alias to build all core projects
+alias(
+    name = "all-core",
+    actual = "//all:core",
+)
+
+# Convenience alias to build all extra projects
+alias(
+    name = "all-extra",
+    actual = "//all:extra",
+)

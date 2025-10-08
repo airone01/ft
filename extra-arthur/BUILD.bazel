@@ -1,0 +1,11 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+rust_binary(
+    name = "arthur",
+    srcs = glob(["src/**/*.rs"]),
+    edition = "2021",
+    visibility = ["//visibility:public"],
+    deps = [
+        # Add Rust dependencies here from Cargo.toml
+    ],
+)

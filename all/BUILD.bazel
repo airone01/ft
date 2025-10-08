@@ -1,0 +1,91 @@
+# Convenience targets to build groups of projects
+
+# Build all milestone 0 projects
+filegroup(
+    name = "milestone-0",
+    srcs = [
+        "//milestone-0-libft:libft",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build all milestone 1 projects
+filegroup(
+    name = "milestone-1",
+    srcs = [
+        "//milestone-1-ft_printf:ft_printf",
+        "//milestone-1-get_next_line:get_next_line",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build all milestone 2 projects
+filegroup(
+    name = "milestone-2",
+    srcs = [
+        "//milestone-2-fdf:fdf",
+        "//milestone-2-pipex:pipex",
+        "//milestone-2-push_swap:push_swap",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build all milestone 3 projects
+filegroup(
+    name = "milestone-3",
+    srcs = [
+        "//milestone-3-minishell:minishell",
+        "//milestone-3-philo:philo",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build all milestone 4 (C++) projects
+filegroup(
+    name = "milestone-4",
+    srcs = [
+        "//milestone-4-cpp00/ex00:megaphone",
+        "//milestone-4-cpp00/ex01:phonebook",
+        "//milestone-4-cpp00/ex02:bank",
+        "//milestone-4-cpp01/ex00:brainz",
+        "//milestone-4-cpp01/ex01:more_brainz",
+        "//milestone-4-cpp01/ex02:htib",
+        "//milestone-4-cpp01/ex03:uv",
+        "//milestone-4-cpp01/ex04:sed",
+        "//milestone-4-cpp01/ex05:harl",
+        "//milestone-4-cpp02/ex00:fixed",
+        "//milestone-4-cpp02/ex01:fixed",
+        "//milestone-4-cpp02/ex02:fixed",
+        "//milestone-4-cpp03/ex00:claptrap",
+        "//milestone-4-cpp03/ex01:scavtrap",
+        "//milestone-4-cpp03/ex02:fragtrap",
+        "//milestone-4-cpp04/ex00:animals",
+        "//milestone-4-cpp04/ex01:animals",
+        "//milestone-4-cpp04/ex02:abstract",
+        "//milestone-4-cub3d:cub3d",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build all core projects
+filegroup(
+    name = "core",
+    srcs = [
+        ":milestone-0",
+        ":milestone-1",
+        ":milestone-2",
+        ":milestone-3",
+        ":milestone-4",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Build all extra projects
+filegroup(
+    name = "extra",
+    srcs = [
+        "//extra-arthur:arthur",
+        "//extra-ps-visualizer-minecraft:ps-visualizer-minecraft",
+    ],
+    visibility = ["//visibility:public"],
+)

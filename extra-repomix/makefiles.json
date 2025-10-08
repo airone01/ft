@@ -9,7 +9,9 @@
     "copyToClipboard": false
   },
   "include": [
-    "**/{*.mk,Makefile}"
+    "**/{*.mk,Makefile}",
+    "**/WORKSPACE",
+    "**/*.{bazel,bzl,bazelrc}"
   ],
   "ignore": {
     "useDefaultPatterns": true,

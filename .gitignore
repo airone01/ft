@@ -80,3 +80,6 @@ vgcore.*
 ## Bear/CMake
 **/.cache/
 
+# bazel
+bazel-*
+
