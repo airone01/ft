@@ -108,7 +108,7 @@ int					append_line(t_file_content *content, char *line);
 int					expand_capacity(t_file_content *content);
 
 /* Libft utils */
-void				ft_putendl_fd(char *s, int fd);
+void				ft_putendl_fd(const char *s, int fd);
 void				*ft_calloc(size_t nmemb, size_t size);
 char				*ft_strdup(const char *s);
 char				*ft_strjoin(char const *s1, char const *s2);

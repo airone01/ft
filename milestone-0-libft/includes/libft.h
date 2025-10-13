@@ -232,7 +232,7 @@ int					ft_toupper(char c);
  * @param fd The file descriptor on which to write.
  * @return void
  */
-void				ft_putendl_fd(char *s, int fd);
+void				ft_putendl_fd(const char *s, int fd);
 
 /**
  * @brief Outputs a character to the specified file descriptor.

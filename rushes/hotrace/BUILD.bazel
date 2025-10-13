@@ -1,0 +1,8 @@
+load("//:copts.bzl", "CC_COPTS")
+
+cc_binary(
+    name = "hotrace",
+    srcs = glob(["*.c", "hotrace.h"]),
+    copts = CC_COPTS + ["-Wno-sign-conversion"],
+    visibility = ["//visibility:public"],
+)
