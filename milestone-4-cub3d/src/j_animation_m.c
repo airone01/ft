@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-bool	load_sprite_textures(t_data *data, t_sprite *sprite, t_sprite_type type)
+bool	load_sprite_textures(t_data *data, t_sprite *sprite, t_sprite_system type)
 {
 	(void)data;
 	(void)sprite;

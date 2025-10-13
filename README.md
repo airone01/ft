@@ -198,40 +198,6 @@ root).
 Additionally, you can list them with `make list` build one with
 `make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
 
-## Minilibx
-
-The minilibx fails to compile on the 42 Lyon school computers at the time of writing, because they do not have `libxpm-dev`.
-This can be compiling from source like indicated bellow.
-
-1. Create directories for local installation
-```
-mkdir -p ~/local/lib ~/local/include
-```
-
-2. Download libXpm source
-```
-cd ~/src  # or any temp directory
-wget https://www.x.org/releases/individual/lib/libXpm-3.5.17.tar.gz
-tar -xzf libXpm-3.5.17.tar.gz
-cd libXpm-3.5.17
-```
-
-4. Configure (with local prefix)
-`./configure --prefix=$HOME/local`
-
-5. Install
-```
-make
-make install
-```
-
-6. Make it discovereable
-Include this in your `~/.zshrc` or similar
-```
-export LD_LIBRARY_PATH=$HOME/local/lib:$LD_LIBRARY_PATH
-export PATH=$HOME/local/bin:$PATH
-```
-
 ## License
 
 This project is licensed under the [MIT License](/LICENSE). See the

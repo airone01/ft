@@ -1,9 +1,9 @@
 load("//:copts.bzl", "CC_COPTS")
 
 cc_library(
-    name = "get_next_line",
-    srcs = ["src/**/*.c"],
-    hdrs = ["includes/**/*.h"],
+    name = "gnl",
+    srcs = glob(["src/**/*.c"]),
+    hdrs = glob(["includes/**/*.h"]),
     copts = CC_COPTS,
     includes = ["includes"],
     visibility = ["//visibility:public"],

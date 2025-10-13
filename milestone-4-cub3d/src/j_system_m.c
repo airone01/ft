@@ -26,8 +26,3 @@ void	update_sprite_animations(t_data *data)
 {
 	(void)data;
 }
-
-void	render_sprites(t_data *data)
-{
-	(void)data;
-}

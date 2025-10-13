@@ -9,18 +9,16 @@ cc_library(
         "-std=gnu89",
         "-w",  # Suppress warnings for external library
         "-O3",
-        "-I" + "localinclude",  # Add local XPM headers
+        "-include", "xpm.h",
     ],
     includes = ["."],
     linkopts = [
         "-lm",
         "-lXext",
         "-lX11",
-        "-lXpm",
-        "-L/home/elagouch/local/lib",  # Local lib path
-        "-Wl,-rpath,/home/elagouch/local/lib",  # Runtime library path
     ],
     linkstatic = True,
     visibility = ["//visibility:public"],
+    deps = [ "//central/libXpm:xpm" ],
 )
 

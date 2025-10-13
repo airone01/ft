@@ -83,7 +83,7 @@ int	mouse_move_handler(int x, int y, t_data *data)
 	center_x = (int)(data->win_width * 0.5);
 	center_y = (int)(data->win_height * 0.5);
 	delta_x = mouse_get_delta(x, y);
-	if (delta_x != 0.0)
+	if (delta_x > 0.00000001)
 		mouse_rotate_camera(&data->player, delta_x);
 	if (abs(x - center_x) > 50 || abs(y - center_y) > 50)
 		mouse_recenter(data);
