@@ -1,23 +1,25 @@
 cc_library(
     name = "mlx",
-    srcs = glob(
-        ["mlx*.c"],
-        exclude = ["mlx_lib_xpm.c", "mlx_xpm.c"],  # Exclude XPM files
-    ),
-    hdrs = ["mlx.h", "mlx_int.h"],
-    deps = [
-        "@x11//:x11",
-        "@xext//:xext",
-        "@xorg_proto//:xorg_proto",
-        "@xpm//:xpm",
-        "@zlib//:zlib",
-        "@libbsd//:libbsd",
+    srcs = glob(["*.c"]),
+    hdrs = [
+        "mlx.h",
+        "mlx_int.h",
     ],
     copts = [
         "-std=gnu89",
-        "-w",  # Suppress all warnings
+        "-w",  # Suppress warnings for external library
+        "-O3",
+        "-I" + "localinclude",  # Add local XPM headers
     ],
-    linkopts = ["-lm"],
+    includes = ["."],
+    linkopts = [
+        "-lm",
+        "-lXext",
+        "-lX11",
+        "-lXpm",
+        "-L/home/elagouch/local/lib",  # Local lib path
+        "-Wl,-rpath,/home/elagouch/local/lib",  # Runtime library path
+    ],
     linkstatic = True,
     visibility = ["//visibility:public"],
 )

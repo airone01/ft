@@ -2,10 +2,13 @@ load("//:copts.bzl", "CC_COPTS")
 
 cc_binary(
     name = "cub3d",
-	srcs = glob(["{src/*.c,includes/*.h}"]),
-	# srcs = ["src/3_main_b.c", "src/3_main.c", "src/3_main_m.c", "src/d_draw2.c", "src/d_draw.c", "src/d_math.c", "src/d_render_b.c", "src/d_render.c", "src/d_render_m.c", "src/f_fps.c", "src/i_system_b2.c", "src/i_system_b.c", "src/i_system_m2.c", "src/i_system_m.c", "src/j_animation_b2.c", "src/j_animation_b.c", "src/j_animation_m.c", "src/j_render_b2.c", "src/j_render_b.c", "src/j_render_m.c", "src/j_system_b.c", "src/j_system_m.c", "src/j_utils_b.c", "src/l_init.c", "src/l_mlx_b.c", "src/l_mlx.c", "src/l_mlx_m.c", "src/l_mov_b.c", "src/l_mov.c", "src/l_mov_m.c", "src/l_mov_rot.c", "src/m_free.c", "src/m_utils.c", "src/n_draw.c", "src/n_draw_utils.c", "src/n_grid.c", "src/n_minimap.c", "src/n_player.c", "src/n_utils.c", "src/o_buttons.c", "src/o_init.c", "src/o_mouse.c", "src/p_color.c", "src/p_color_utils.c", "src/p_file.c", "src/p_flood_fill.c", "src/p_map_b.c", "src/p_map.c", "src/p_map_check.c", "src/p_map_m.c", "src/p_map_utils.c", "src/p_texture.c", "src/p_texture_cardinal.c", "src/p_validation_b.c", "src/p_validation.c", "src/p_validation_m.c", "src/r_horizontal.c", "src/r_raycasting.c", "src/r_utils.c", "src/r_vertical.c", "src/t_texture_b.c", "src/t_texture.c", "src/t_texture_m.c", "src/u_map_chars_b.c", "src/u_map_chars_m.c", "src/u_path.c", "src/u_texture_b.c", "src/u_texture.c", "src/u_texture_m.c", "includes/cub3d.h", "includes/door_bonus.h", "includes/draw.h", "includes/fps_extra.h", "includes/mem.h", "includes/minimap_bonus.h", "includes/mouse_bonus.h", "includes/parsing.h", "includes/player.h", "includes/pproc.h", "includes/raycasting.h", "includes/sprite_bonus.h", "includes/texture.h", "includes/utils.h"],
+	srcs = glob(["src/**/*.c", "includes/**/*.h"]),
     copts = CC_COPTS,
     includes = ["includes"],
     visibility = ["//visibility:public"],
-    deps = ["//milestone-0-libft:libft", "//extra-minilibx"],
+    deps = [
+		"//milestone-0-libft:libft", 
+		"//milestone-1-ft_printf:ft_printf", 
+        "//central/minilibx:mlx",
+	],
 )

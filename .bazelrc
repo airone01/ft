@@ -55,6 +55,14 @@ build:verbose --subcommands
 build:verbose --verbose_failures
 
 # ============================================================================
+# Headers Config
+# ============================================================================
+
+build --copt=-I$HOME/local/include
+build --linkopt=-L$HOME/local/lib
+build --linkopt=-Wl,-rpath,$HOME/local/lib
+
+# ============================================================================
 # Default Config
 # ============================================================================
 
