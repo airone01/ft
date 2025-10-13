@@ -1,0 +1,24 @@
+cc_library(
+    name = "mlx",
+    srcs = glob(
+        ["mlx*.c"],
+        exclude = ["mlx_lib_xpm.c", "mlx_xpm.c"],  # Exclude XPM files
+    ),
+    hdrs = ["mlx.h", "mlx_int.h"],
+    deps = [
+        "@x11//:x11",
+        "@xext//:xext",
+        "@xorg_proto//:xorg_proto",
+        "@xpm//:xpm",
+        "@zlib//:zlib",
+        "@libbsd//:libbsd",
+    ],
+    copts = [
+        "-std=gnu89",
+        "-w",  # Suppress all warnings
+    ],
+    linkopts = ["-lm"],
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+)
+
