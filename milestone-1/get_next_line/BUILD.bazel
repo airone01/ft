@@ -1,0 +1,11 @@
+load("//:copts.bzl", "CC_COPTS")
+
+cc_library(
+    name = "get_next_line",
+    srcs = glob(["src/**/*.c"]),
+    hdrs = glob(["includes/**/*.h"]),
+    copts = CC_COPTS,
+    includes = ["includes"],
+    visibility = ["//visibility:public"],
+    deps = ["//milestone-0/libft:libft"],
+)

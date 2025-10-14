@@ -1,0 +1,12 @@
+load("//:copts.bzl", "CC_COPTS")
+
+cc_binary(
+    name = "philosophers",
+    srcs = glob(["src/**/*.c", "includes/**/*.h"]),
+    includes = ["includes"],
+    copts = CC_COPTS,
+    visibility = ["//visibility:public"],
+    deps = [
+      "//milestone-0/libft:libft",
+    ],
+)

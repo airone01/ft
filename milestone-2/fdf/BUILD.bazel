@@ -1,0 +1,18 @@
+load("//:copts.bzl", "CC_COPTS")
+
+cc_binary(
+    name = "fdf",
+    srcs = glob(["src/*.c", "includes/**/*.h"]),
+    copts = CC_COPTS + [
+        "-Wno-incompatible-pointer-types",
+        "-Wno-cast-function-type",
+    ],
+    includes = ["includes"],
+    deps = [
+        "//milestone-0/libft:libft",
+        "//milestone-1/ft_printf:ft_printf",
+        "//milestone-1/get_next_line:get_next_line",
+        "//central/minilibx:mlx",
+    ],
+    visibility = ["//visibility:public"],
+)

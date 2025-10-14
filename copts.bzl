@@ -1,6 +1,5 @@
 """Common compiler options for the entire monorepo."""
 
-# Standard C compiler flags
 CC_COPTS = [
     "-Wall",
     "-Werror",
@@ -23,7 +22,6 @@ CC_COPTS = [
     "-g3",
 ]
 
-# Standard C++ compiler flags (C++98 compatible)
 CXX_COPTS = [
     "-Wall",
     "-Wextra",
@@ -43,5 +41,4 @@ MLX_LINKOPTS = [
     "-lmlx",
     "-lXext",
     "-lX11",
-    "-lm",
-]
+] + MATH_LINKOPTS

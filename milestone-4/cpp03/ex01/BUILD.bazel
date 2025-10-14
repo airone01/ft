@@ -1,0 +1,10 @@
+load("//:copts.bzl", "CXX_COPTS")
+
+cc_binary(
+    name = "scavtrap",
+    srcs = glob(["src/*.cpp", "includes/*.hpp"]),
+    includes = ["includes"],
+    copts = CXX_COPTS,
+    visibility = ["//visibility:public"],
+)
+

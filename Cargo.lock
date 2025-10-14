@@ -1568,7 +1568,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "mc_push_swap"
+name = "mcps"
 version = "0.1.0"
 dependencies = [
  "clap",

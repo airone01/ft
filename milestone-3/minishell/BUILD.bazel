@@ -1,0 +1,14 @@
+load("//:copts.bzl", "CC_COPTS")
+load("//:copts.bzl", "READLINE_LINKOPTS")
+
+cc_binary(
+    name = "minishell",
+    srcs = glob(["src/**/*.c", "includes/**/*.h"]),
+    includes = ["includes"],
+    copts = CC_COPTS,
+    linkopts = READLINE_LINKOPTS,
+    visibility = ["//visibility:public"],
+    deps = [
+      "//milestone-1/ft_printf:ft_printf",
+    ]
+)
