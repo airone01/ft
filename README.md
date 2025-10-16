@@ -181,7 +181,7 @@ You can build all of the projects in this monorepo using [Bazel](https://bazel.b
 
 Building all projects at the same time without cache takes around 20s on the slowest 4-threads school computers. On the fastest (DELL), it takes at worse 7 seconds.
 
-<script src="https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.js" id="asciicast-Q60Ii24GuotRy8JJRdH2NMJxf" async="true"></script>
+[![asciicast](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
 
 ### Direnv
 
