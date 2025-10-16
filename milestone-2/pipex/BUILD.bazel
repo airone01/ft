@@ -1,4 +1,4 @@
-load("//:copts.bzl", "CC_COPTS")
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
 
 config_setting(
     name = "bonus_mode",

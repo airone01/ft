@@ -1,5 +1,5 @@
-load("//:copts.bzl", "CC_COPTS")
-load("//:copts.bzl", "READLINE_LINKOPTS")
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+load("//:tools/bazel/copts.bzl", "READLINE_LINKOPTS")
 
 cc_binary(
     name = "minishell",

@@ -1,4 +1,4 @@
-load("//:copts.bzl", "CXX_COPTS")
+load("//:tools/bazel/copts.bzl", "CXX_COPTS")
 
 cc_binary(
     name = "harl",

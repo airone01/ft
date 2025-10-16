@@ -1,15 +1,3 @@
-<!-- *********************************************************************** -->
-<!--                                                                         -->
-<!--                                                      :::      ::::::::  -->
-<!-- README.md                                          :+:      :+:    :+:  -->
-<!--                                                  +:+ +:+         +:+    -->
-<!-- By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+       -->
-<!--                                              +#+#+#+#+#+   +#+          -->
-<!-- Created: 2025/06/24 11:17:13 by elagouch          #+#    #+#            -->
-<!-- Updated: 2025/10/03 14:00:45 by elagouch         ###   ########.fr      -->
-<!--                                                                         -->
-<!-- *********************************************************************** -->
-
 <div align="center">
     <h1>ft</h1>
 </div>
@@ -40,11 +28,11 @@
 
 [Projects]: #projects
 [Extra tools/projects]: #extra-toolsprojects
-[Additional stuff/notes]: #additional-stuffnotes
+[Additional notes]: #additional-notes
 
 **[<kbd> <br> Projects <br> </kbd>][Projects]**
 **[<kbd> <br> Extra tools/projects <br> </kbd>][Extra tools/projects]**
-**[<kbd> <br> Additional stuff/notes <br> </kbd>][Additional stuff/notes]**
+**[<kbd> <br> Additional notes <br> </kbd>][Additional notes]**
 
 </p></div>
 
@@ -158,17 +146,17 @@
 
 <img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
-### [`Minecraft push_swap visualizer`](https://github.com/airone01/ft/tree/main/extra-push-swap-visualizer-minecraft)
+### [`Minecraft push_swap visualizer`](./tools/push-swap-visualizer-minecraft/README.md)
 
 A program to flex on your friends by visualizing your push_swap algorithm in
 Minecraft. It uses [Valence](https://valence.rs/) to control the game packets
 and visualize the sorting algorithm on your `1.20.1` client.
 
-![In-game screenshot](/.github/assets/screenshot_1.webp)
+![In-game screenshot](./.github/assets/screenshot_1.webp)
 
 <img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
-### [`FDF generator`](/extra-fdf-bmp-converter/README.md)
+### [`FDF generator`](./external-tools/fdf-bmp-converter/README.md)
 
 A simple script to convert a BMP image into a fdf file. It currently only works
 for bitmap images smaller than 255 \* 255, because I don't really know how to
@@ -179,27 +167,28 @@ type :
 python main.py your_file.bmp
 ```
 
-You can convert PNG images to BMP using `convert` from
-[ImageMagick](https://imagemagick.org/), or online using
-[EzGIF](https://ezgif.com/png-to-bmp).
+You can convert PNG images to BMP using `convert` using [ImageMagick](https://imagemagick.org/), or online with [EzGIF](https://ezgif.com/png-to-bmp).
 
-## Additional stuff/notes
+## Additional notes
 
 ### Direnv
 
 This project's dev dependencies are managed using `nix-direnv`. If you don't
 know what NixOS is, you probably don't have to care about that though.
 
-### Make
+### Bazel
 
-You can build all of the projects that use Make using `make all` (at the repo
-root).
+You can build all of the projects in this monorepo using [Bazel](https://bazel.build/).
 
-Additionally, you can list them with `make list` build one with
-`make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
+- Run `bazel query ...` to list all projects
+- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`, [I configured aliases](./BUILD.bazel)).
+- Most importantly, run `bazel build //...` to make all projects at once (as well as the required external libs).
+
+Building all projects at the same time without cache takes around 20s on the slowest 4-core school computers. On the fastest (DELL), it's around 6 seconds.
+
+[![Asciicast demo of full repo build](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
 
 ## License
 
-This project is licensed under the [MIT License](/LICENSE). See the
-[LICENSE](/LICENSE) file for details.
+This project is licensed under the [MIT License](/LICENSE). See the [LICENSE](/LICENSE) file for details.
 
