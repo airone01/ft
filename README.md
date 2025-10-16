@@ -171,11 +171,6 @@ You can convert PNG images to BMP using `convert` using [ImageMagick](https://im
 
 ## Additional notes
 
-### Direnv
-
-This project's dev dependencies are managed using `nix-direnv`. If you don't
-know what NixOS is, you probably don't have to care about that though.
-
 ### Bazel
 
 You can build all of the projects in this monorepo using [Bazel](https://bazel.build/).
@@ -184,9 +179,14 @@ You can build all of the projects in this monorepo using [Bazel](https://bazel.b
 - Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`, [I configured aliases](./BUILD.bazel)).
 - Most importantly, run `bazel build //...` to make all projects at once (as well as the required external libs).
 
-Building all projects at the same time without cache takes around 20s on the slowest 4-core school computers. On the fastest (DELL), it's around 6 seconds.
+Building all projects at the same time without cache takes around 20s on the slowest 4-threads school computers. On the fastest (DELL), it takes at worse 7 seconds.
 
-[![Asciicast demo of full repo build](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
+<script src="https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.js" id="asciicast-Q60Ii24GuotRy8JJRdH2NMJxf" async="true"></script>
+
+### Direnv
+
+This project's dev dependencies are managed using `nix-direnv`. If you don't
+know what NixOS is, you probably don't have to care about that though.
 
 ## License
 
