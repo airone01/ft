@@ -6,13 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:00:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:05:28 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:12:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_isascii
 int	ft_isascii(int c)
 {
 	return (c <= 127 && c >= 0);
 }
-// GPM? end ft_isascii

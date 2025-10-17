@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:28:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 00:37:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:13:48 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_atol
 long	ft_atol(const char *str)
 {
 	long	val;
@@ -34,4 +33,3 @@ long	ft_atol(const char *str)
 		val = -val;
 	return (val);
 }
-// GPM? end ft_atol

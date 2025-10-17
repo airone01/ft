@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 19:07:41 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:30:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:08:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_strmapi
 char	*ft_strmapi(char const *s, char (*f)(unsigned long, char))
 {
 	unsigned long	len;
@@ -31,4 +30,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned long, char))
 	}
 	return (dst);
 }
-// GPM? end ft_strmapi

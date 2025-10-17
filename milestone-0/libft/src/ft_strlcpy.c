@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:30:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:08:38 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_strlcpy
 unsigned long	ft_strlcpy(char *dst, const char *src, unsigned long size)
 {
 	const char	*src_start = src;
@@ -29,4 +28,3 @@ unsigned long	ft_strlcpy(char *dst, const char *src, unsigned long size)
 		src++;
 	return ((unsigned long)(src - src_start));
 }
-// GPM? end ft_strlcpy

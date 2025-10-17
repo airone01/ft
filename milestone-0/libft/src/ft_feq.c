@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:47 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:51:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:13:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_feq
 bool	ft_feq(double a, double b)
 {
 	double	diff;
@@ -24,4 +23,3 @@ bool	ft_feq(double a, double b)
 	scale = ft_fmax(ft_fabs(a), ft_fabs(b));
 	return (diff < DBL_EPSILON * (1.0 + scale));
 }
-// GPM? end ft_feq

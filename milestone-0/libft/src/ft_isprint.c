@@ -6,13 +6,11 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:06:46 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:12:47 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_isprint
 int	ft_isprint(int c)
 {
 	return (c >= 32 && c <= 126);
 }
-// GPM? end ft_isprint

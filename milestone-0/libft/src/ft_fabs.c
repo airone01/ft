@@ -6,15 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:40:58 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 13:52:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:13:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? end ft_fabs
 double	ft_fabs(double n)
 {
 	if (n < 0)
 		return (-n);
 	return (n);
 }
-// GPM? end ft_fabs

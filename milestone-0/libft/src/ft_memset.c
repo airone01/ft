@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:16:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:32 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_memset
 void	*ft_memset(void *s, uint8_t c, size_t n)
 {
 	uint8_t	*pt;
@@ -28,4 +27,3 @@ void	*ft_memset(void *s, uint8_t c, size_t n)
 	}
 	return (s);
 }
-// GPM? end ft_memset

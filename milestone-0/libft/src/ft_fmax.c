@@ -6,15 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:52:53 by elagouch          #+#    #+#             */
-/*   Updated: 2025/06/23 14:01:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:13:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// GPM? begin ft_fmax
 double	ft_fmax(double a, double b)
 {
 	if (a > b)
 		return (a);
 	return (b);
 }
-// GPM? end ft_fmax

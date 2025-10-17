@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:30:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:08:52 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_strdup
 char	*ft_strdup(const char *s)
 {
 	size_t	i;
@@ -29,4 +28,3 @@ char	*ft_strdup(const char *s)
 	}
 	return ((char *)dst);
 }
-// GPM? end ft_strdup

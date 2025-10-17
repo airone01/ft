@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:16:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:38 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_memcpy
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	const uint8_t	*src2;
@@ -29,4 +28,3 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-// GPM? end ft_memcpy

@@ -6,13 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:25:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:11:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_strlen
+#if defined(__x86_64__) || defined(_M_X64)
+
+// Fast x64 implementation
 unsigned long	ft_strlen(const char *str)
 {
 	const unsigned long	*long_ptr;
@@ -38,4 +40,17 @@ unsigned long	ft_strlen(const char *str)
 		char_ptr++;
 	return ((unsigned long)(char_ptr - str));
 }
-// GPM? end ft_strlen
+
+#else
+
+// Portable implementation
+unsigned long	ft_strlen(const char *str)
+{
+	const char	*s;
+
+	s = str;
+	while (*s)
+		s++;
+	return ((unsigned long)(s - str));
+}
+#endif

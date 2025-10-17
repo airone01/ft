@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:23:15 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_split
 static size_t	count_words(const char *str, char c)
 {
 	size_t	count;
@@ -90,4 +89,3 @@ char	**ft_split(char *str, char c)
 	split[i] = NULL;
 	return (split);
 }
-// GPM? end ft_split

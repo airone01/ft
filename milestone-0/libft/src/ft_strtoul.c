@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 00:37:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:57:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:08:17 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_strtoul
 static int	ft_get_digit_ul(char c)
 {
 	if (c >= '0' && c <= '9')
@@ -93,4 +92,3 @@ unsigned long	ft_strtoul(const char *nptr, char **endptr, int base)
 		*endptr = (char *)str;
 	return (result);
 }
-// GPM? end ft_strtoul

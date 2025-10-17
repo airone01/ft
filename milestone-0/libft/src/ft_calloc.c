@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 00:58:54 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:13:33 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_calloc
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
@@ -24,4 +23,3 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (0);
 	return (ft_memset(ptr, 0, size * nmemb));
 }
-// GPM? end ft_calloc

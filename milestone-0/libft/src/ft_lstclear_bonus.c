@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:56:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:11:02 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:12:07 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// No doxygen because this is only used for libft bonuses.
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*tmp;

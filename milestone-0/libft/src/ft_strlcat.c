@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:30:48 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:08:42 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_strlcat
 unsigned long	ft_strlcat(char *dst, const char *src, unsigned long size)
 {
 	unsigned long	dst_len;
@@ -32,4 +31,3 @@ unsigned long	ft_strlcat(char *dst, const char *src, unsigned long size)
 	dst[dst_len + i] = '\0';
 	return (dst_len + src_len);
 }
-// GPM? end ft_strlcat

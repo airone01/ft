@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:19:01 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:19 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_putnbr_fd
 void	ft_putnbr_fd(int n, int fd)
 {
 	if (n == -2147483648)
@@ -34,4 +33,3 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	ft_putchar_fd((char)n + '0', fd);
 }
-// GPM? end ft_putnbr_fd

@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:28:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:22:59 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:05 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_recalloc
 void	*ft_recalloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
@@ -29,4 +28,3 @@ void	*ft_recalloc(void *ptr, size_t old_size, size_t new_size)
 	}
 	return (new_ptr);
 }
-// GPM? end ft_recalloc

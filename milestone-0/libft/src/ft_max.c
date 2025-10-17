@@ -6,17 +6,15 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:00:01 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:13:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_max
 long	ft_max(long a, long b)
 {
 	if (a > b)
 		return (a);
 	return (b);
 }
-// GPM? end ft_max

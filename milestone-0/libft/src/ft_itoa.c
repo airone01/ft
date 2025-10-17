@@ -6,14 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:09:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:12:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_itoa
-// GPM? begin ft_itoa_base
 static long	get_num_len(int n, const char *b)
 {
 	long	len;
@@ -73,10 +71,8 @@ char	*ft_itoa_base(int n, const char *b)
 	fill_number(s, n, len, b);
 	return (s);
 }
-// GPM? end ft_itoa_base
 
 char	*ft_itoa(int n)
 {
 	return (ft_itoa_base(n, "0123456789"));
 }
-// GPM? end ft_itoa

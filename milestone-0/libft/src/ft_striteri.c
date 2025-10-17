@@ -6,13 +6,12 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:49:11 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/12 01:30:36 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:08:50 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// GPM? begin ft_striteri
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
 	unsigned int	i;
@@ -21,4 +20,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 	while (*s)
 		f(i++, s++);
 }
-// GPM? end ft_striteri
