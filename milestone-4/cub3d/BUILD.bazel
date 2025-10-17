@@ -1,22 +1,64 @@
 load("//:tools/bazel/copts.bzl", "CC_COPTS")
 
-config_setting(
-    name = "bonus_mode",
-    define_values = {"mode": "bonus"},
+### Note:
+### This BUILD file has a mandatory-bonus ("extra") configuration.
+# config_setting(
+#     name = "bonus_mode",
+#     define_values = {"mode": "bonus"},
+# )
+#
+# cc_binary(
+#     name = "cub3d",
+#     srcs = glob(
+#         ["src/*.c"],
+#         exclude = [
+#             "src/*_b.c", "src/*_b2.c", # Exclude bonus
+#             "src/*_m.c", "src/*_m2.c", # Exclude mandatory-specific
+#         ],
+#     ) + select({
+#         ":bonus_mode": glob(["src/*_b.c", "src/*_b2.c"]),
+#         "//conditions:default": glob(["src/*_m.c", "src/*_m2.c"]),
+#     }) + glob(["includes/**/*.h"]),
+#     copts = CC_COPTS + [
+#         "-Wno-incompatible-pointer-types",
+#         "-Wno-cast-function-type",
+#     ],
+#     includes = ["includes"],
+#     deps = [
+#         "//milestone-0/libft:libft",
+#         "//milestone-1/ft_printf:ft_printf",
+#         "//milestone-1/get_next_line:get_next_line",
+#         "//central/minilibx:mlx",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
+
+cc_binary(
+	name = "cub3d",
+	srcs = glob(
+		[ "src/*.c", "includes/*.h" ],
+		exclude = [ "src/*_b.c", "src/*_b2.c" ],
+	),
+    copts = CC_COPTS + [
+        "-Wno-incompatible-pointer-types",
+        "-Wno-cast-function-type",
+    ],
+    includes = ["includes"],
+    deps = [
+        "//milestone-0/libft:libft",
+        "//milestone-1/ft_printf:ft_printf",
+        "//milestone-1/get_next_line:get_next_line",
+        "//central/minilibx:mlx",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 cc_binary(
-    name = "cub3d",
-    srcs = glob(
-        ["src/*.c"],
-        exclude = [
-            "src/*_b.c", "src/*_b2.c", # Exclude bonus
-            "src/*_m.c", "src/*_m2.c", # Exclude mandatory-specific
-        ],
-    ) + select({
-        ":bonus_mode": glob(["src/*_b.c", "src/*_b2.c"]),
-        "//conditions:default": glob(["src/*_m.c", "src/*_m2.c"]),
-    }) + glob(["includes/**/*.h"]),
+	name = "cub3d-bonus",
+	srcs = glob(
+		[ "src/*.c", "includes/*.h" ],
+		exclude = [ "src/*_m.c", "src/*_m2.c" ],
+	),
     copts = CC_COPTS + [
         "-Wno-incompatible-pointer-types",
         "-Wno-cast-function-type",

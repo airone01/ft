@@ -8,7 +8,5 @@ MODULE.bazel.lock
 LICENSE
 
 # So as not to get all projects
-quack*
-piscine-*
 external-tools/
 

@@ -56,4 +56,8 @@ alias(
     name = "cub3d",
     actual = "//milestone-4/cub3d:cub3d",
 )
+alias(
+    name = "cub3d-bonus",
+    actual = "//milestone-4/cub3d:cub3d-bonus",
+)
 
