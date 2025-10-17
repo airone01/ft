@@ -1,0 +1,15 @@
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+
+cc_binary(
+    name = "push_swap",
+    srcs = glob(
+		["src/**/*.c", "includes/**/*.h"],
+		exclude = ["src/checker.c"]
+	),
+    includes = ["includes"],
+    copts = CC_COPTS,
+    visibility = ["//visibility:public"],
+	deps = [
+		"//milestone-1/get_next_line:get_next_line",
+	],
+)

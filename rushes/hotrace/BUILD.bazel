@@ -1,0 +1,9 @@
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+
+cc_binary(
+    name = "hotrace",
+    srcs = glob(["src/**/*.c", "includes/**/*.h"]),
+    includes = ["includes"],
+    copts = CC_COPTS + ["-Wno-sign-conversion"],
+    visibility = ["//visibility:public"],
+)

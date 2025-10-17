@@ -1,0 +1,63 @@
+# This allows other packages to depend on targets in this package
+package(default_visibility = ["//visibility:public"])
+
+###############################################################################
+#                                   ALIASES                                   #
+###############################################################################
+
+### CENTRAL
+alias(
+    name = "mlx",
+    actual = "//central/minilibx:mlx",
+)
+
+### MILESTONE 0
+alias(
+    name = "libft",
+    actual = "//milestone-0/libft:libft",
+)
+
+### MILESTONE 1
+alias(
+    name = "ft_printf",
+    actual = "//milestone-1/ft_printf:ft_printf",
+)
+alias(
+    name = "get_next_line",
+    actual = "//milestone-1/get_next_line:get_next_line",
+)
+
+### MILESTONE 2
+alias(
+    name = "fdf",
+    actual = "//milestone-2/fdf:fdf",
+)
+alias(
+    name = "pipex",
+    actual = "//milestone-2/pipex:pipex",
+)
+alias(
+    name = "push_swap",
+    actual = "//milestone-2/push_swap:push_swap",
+)
+
+### MILESTONE 3
+alias(
+    name = "minishell",
+    actual = "//milestone-3/minishell:minishell",
+)
+alias(
+    name = "philosophers",
+    actual = "//milestone-3/philosophers:philosophers",
+)
+
+### MILESTONE 4
+alias(
+    name = "cub3d",
+    actual = "//milestone-4/cub3d:cub3d",
+)
+alias(
+    name = "cub3d-bonus",
+    actual = "//milestone-4/cub3d:cub3d-bonus",
+)
+

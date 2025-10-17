@@ -1,0 +1,9 @@
+load("//:tools/bazel/copts.bzl", "CXX_COPTS")
+
+cc_binary(
+    name = "htib",
+    srcs = glob(["src/*.cpp"]),
+    copts = CXX_COPTS,
+    visibility = ["//visibility:public"],
+)
+

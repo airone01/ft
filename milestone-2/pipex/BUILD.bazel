@@ -1,0 +1,27 @@
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+
+config_setting(
+    name = "bonus_mode",
+    define_values = {"mode": "bonus"},
+)
+
+cc_binary(
+    name = "pipex",
+    srcs = glob(
+        ["src/*.c"],
+        exclude = [
+            "src/args_valid_bonus.c", "src/_main_bonus.c", # Exclude bonus
+            "src/args_valid.c", "src/_main.c", # Exclude mandatory-specific
+        ],
+    ) + select({
+        ":bonus_mode": glob(["src/*_bonus.c"]),
+        "//conditions:default": ["src/args_valid.c", "src/_main.c"],
+    }) + glob(["includes/**/*.h"]),
+    includes = ["includes"],
+    copts = CC_COPTS,
+    visibility = ["//visibility:public"],
+    deps = [
+      "//milestone-1/ft_printf:ft_printf",
+      "//milestone-1/get_next_line:get_next_line",
+    ],
+)
