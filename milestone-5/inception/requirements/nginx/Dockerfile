@@ -1,3 +1,5 @@
+ARG SITE_NAME=elagouch.42.fr
+
 ################################################################################
 #                                    BUILD                                     #
 ################################################################################
@@ -33,5 +35,5 @@ RUN apk add --no-cache "curl=8.14.1-r2"
 # meta
 CMD ["nginx", "-g", "daemon off;"]
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD curl -sS --fail https://localhost:443/health --cacert /etc/ssl/certs/nginx-selfsigned.crt || exit 1
+  CMD curl -sS --fail https://$SITE_NAME:443/health --cacert /etc/ssl/certs/nginx-selfsigned.crt || exit 1
 
