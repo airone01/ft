@@ -14,9 +14,14 @@ done
 
 echo "Running DB setup SQL commands..."
 
+if [ ! -f /run/secrets/mysql_password ]; then
+  echo "INCEPTION: MYSQL PASSWORD FILE NOT FOUND!"
+  exit 1
+fi
+
 export MYSQL_PASSWORD=$(cat /run/secrets/mysql_password);
 
-/usr/bin/mariadb -uroot -p$MYSQL_PASSWORD --socket=$MARIADB_SOCKET -e "
+/usr/bin/mariadb -uroot --socket=$MARIADB_SOCKET -e "
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
 CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 CREATE USER IF NOT EXISTS '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';

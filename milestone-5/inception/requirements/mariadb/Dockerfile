@@ -2,7 +2,7 @@
 #                                     RUN                                      #
 ################################################################################
 
-FROM alpine:3.22.2 AS runner
+FROM alpine:3.23.0 AS runner
 
 ARG MYSQL_USER=wpuser
 ARG MYSQL_DATABASE=wp
@@ -11,7 +11,7 @@ ENV MYSQL_USER=$MYSQL_USER
 ENV MYSQL_DATABASE=$MYSQL_DATABASE
 ENV MARIADB_SOCKET=$MARIADB_SOCKET
 
-RUN apk add --no-cache "mariadb=~11.4.8" "mariadb-client=~11.4.8"
+RUN apk add --no-cache "mariadb=~11" "mariadb-client=~11"
 # opted out mariadb-client
 
 RUN mkdir -p /app /data

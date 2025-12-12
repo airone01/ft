@@ -2,15 +2,15 @@
 #                                    BUILD                                     #
 ################################################################################
 
-FROM alpine:3.22.2 AS builder
+FROM alpine:3.23.0 AS builder
 
 RUN mkdir -p /var/www/html/wordpress
 
-RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+# RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/testing/testing" >> /etc/apk/repositories
 RUN apk add --no-cache \
-    "curl=8.14.1-r2" \
-    "php85-fpm@testing=~8.5.0" "php85@testing=~8.5.0" "php85-phar@testing=~8.5.0" \
-    "php85-openssl@testing" "php85-mysqli@testing"
+    "curl=~8" \
+    "php85-fpm=~8.5.0" "php85=~8.5.0" "php85-phar=~8.5.0" \
+    "php85-openssl=~8.5.0" "php85-mysqli=~8.5.0"
 
 # RUN ln -s /usr/bin/php85 /usr/bin/php
 
@@ -24,7 +24,7 @@ RUN php85 -d memory_limit=256M /tmp/wp-cli.phar core download --path=/var/www/ht
 #                                     RUN                                      #
 ################################################################################
 
-FROM alpine:3.22.2 AS runner
+FROM alpine:3.23.0 AS runner
 
 ARG MYSQL_USER=wpuser
 ARG MYSQL_DATABASE=wp
@@ -49,11 +49,11 @@ COPY --from=builder /var/www/html/wordpress /var/www/html/wordpress
 COPY entrypoint.sh /app/entrypoint.sh
 COPY lighttpd.conf /app/lighttpd.conf
 
-RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+# RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/testing/testing" >> /etc/apk/repositories
 RUN apk add --no-cache \
-    "php85-fpm@testing=~8.5.0" "php85@testing=~8.5.0" "php85-phar@testing=~8.5.0" \
-    "php85-openssl@testing=~8.5.0" "php85-mysqli@testing=~8.5.0" "php85-cgi@testing=~8.5.0" \
-    "php85-iconv@testing=~8.5.0" \
+    "php85-fpm=~8.5.0" "php85=~8.5.0" "php85-phar=~8.5.0" \
+    "php85-openssl=~8.5.0" "php85-mysqli=~8.5.0" "php85-cgi=~8.5.0" \
+    "php85-iconv=~8.5.0" \
     "lighttpd=~1.4.82"
 
 CMD ["sh", "/app/entrypoint.sh"]
