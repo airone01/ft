@@ -28,9 +28,9 @@ FROM alpine:3.23.0 AS runner
 
 ARG MYSQL_USER=wpuser
 ARG MYSQL_DATABASE=wp
-ARG INCEPTION_HOST_DB=ft_mariadb 
-ARG WP_ADMIN_USER=admin
-ARG WP_ADMIN_EMAIL=admin@admin.com
+ARG INCEPTION_HOST_DB=inception_mariadb 
+ARG WP_ADMIN_USER=supervisor
+ARG WP_ADMIN_EMAIL=supervisor@supervisor.com
 ARG WP_SITE_NAME="Inception's Wordpress"
 ARG SITE_NAME=elagouch.42.fr
 ENV MYSQL_USER=$MYSQL_USER
@@ -41,20 +41,31 @@ ENV WP_ADMIN_EMAIL=$WP_ADMIN_EMAIL
 ENV WP_SITE_NAME=$WP_SITE_NAME
 ENV SITE_NAME=$SITE_NAME
 
-RUN mkdir -p /app /var/cache/lighttpd/uploads
+RUN mkdir -p /app
 WORKDIR /app 
 
 COPY --from=builder /tmp/wp-cli.phar /app/wp-cli
 COPY --from=builder /var/www/html/wordpress /var/www/html/wordpress
 COPY entrypoint.sh /app/entrypoint.sh
-COPY lighttpd.conf /app/lighttpd.conf
 
 # RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/testing/testing" >> /etc/apk/repositories
 RUN apk add --no-cache \
     "php85-fpm=~8.5.0" "php85=~8.5.0" "php85-phar=~8.5.0" \
     "php85-openssl=~8.5.0" "php85-mysqli=~8.5.0" "php85-cgi=~8.5.0" \
-    "php85-iconv=~8.5.0" \
-    "lighttpd=~1.4.82"
+    "php85-iconv=~8.5.0"
+
+# 2. Configure PHP-FPM to listen on port 9000
+RUN sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php85/php-fpm.d/www.conf
+
+# 3. FIX: Ensure listen.allowed_clients is commented out!
+# If it is uncommented, it restricts access to localhost, causing the 502 error.
+# This command ensures the line starts with a semicolon (;).
+RUN sed -i 's/^listen.allowed_clients/;listen.allowed_clients/g' /etc/php85/php-fpm.d/www.conf
+
+# # listen on all interfaces
+# RUN sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php85/php-fpm.d/www.conf
+# # ensure we allow all clients
+# RUN sed -i 's/;listen.allowed_clients/listen.allowed_clients/g' /etc/php85/php-fpm.d/www.conf
 
 CMD ["sh", "/app/entrypoint.sh"]
 

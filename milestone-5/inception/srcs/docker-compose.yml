@@ -1,28 +1,30 @@
 services:
   nginx:
-    image: ft_nginx:latest
+    image: inception_nginx:latest
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
-    container_name: ft_nginx
+    container_name: inception_nginx
     depends_on:
       - wordpress
     networks:
       - net
     restart: always
     ports:
-      - "3000:443"
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html/wordpress
     develop:
       watch:
         - action: rebuild
           path: ./requirements/nginx
 
   mariadb:
-    image: ft_mariadb:latest
+    image: inception_mariadb:latest
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
-    container_name: ft_mariadb
+    container_name: inception_mariadb
     volumes:
       - mariadb:/data
       - ./secrets/mysql_password.txt:/run/secrets/mysql_password:ro
@@ -35,16 +37,16 @@ services:
           path: ./requirements/mariadb
 
   wordpress:
-    image: ft_wordpress:latest
+    image: inception_wordpress:latest
     build:
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
-    container_name: ft_wordpress
+    container_name: inception_wordpress
     depends_on:
       mariadb:
         condition: service_healthy
     volumes:
-      - wordpress:/data
+      - wordpress:/var/www/html/wordpress
       - ./secrets/mysql_password.txt:/run/secrets/mysql_password:ro
       - ./secrets/wordpress_admin_password.txt:/run/secrets/wordpress_admin_password:ro
     networks:
@@ -63,14 +65,14 @@ networks:
 volumes:
   mariadb:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $HOME/data/mariadb
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: $HOME/data/mariadb
   wordpress:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: $HOME/data/wordpress
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: $HOME/data/wordpress
 

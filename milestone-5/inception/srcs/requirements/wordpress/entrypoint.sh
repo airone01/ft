@@ -24,6 +24,5 @@ else
   echo "wp-config.php already exists, skipping config creation."
 fi
 
-php-fpm85 -D # bg
-exec lighttpd -D -f /app/lighttpd.conf # fg
+exec /usr/sbin/php-fpm85 -F
 
