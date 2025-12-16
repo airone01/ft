@@ -2,7 +2,7 @@
 #                                    BUILD                                     #
 ################################################################################
 
-FROM alpine:3.23.0 AS builder
+FROM alpine:3.22.2 AS builder
 
 RUN mkdir -p /var/www/html/wordpress
 
@@ -24,7 +24,7 @@ RUN php85 -d memory_limit=256M /tmp/wp-cli.phar core download --path=/var/www/ht
 #                                     RUN                                      #
 ################################################################################
 
-FROM alpine:3.23.0 AS runner
+FROM alpine:3.22.2 AS runner
 
 ARG MYSQL_USER=wpuser
 ARG MYSQL_DATABASE=wp

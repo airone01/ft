@@ -29,7 +29,12 @@ GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
 GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'localhost';
 FLUSH PRIVILEGES;" 2>&1 | tee /dev/stderr
 
-echo "DB setup complete."
-
+echo "DB setup complete. Shutting down temp instance..."
+/usr/bin/mariadb-admin --socket=$MARIADB_SOCKET -u root shutdown
 wait $PID
+
+echo "Starting MariaDB as PID 1..."
+# replace the current shell process with mariadb
+# mariadb becomes PID 1 and receives signals from Docker
+exec /usr/bin/mariadbd --datadir=/data --user=root --socket=$MARIADB_SOCKET
 

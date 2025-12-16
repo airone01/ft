@@ -2,7 +2,7 @@
 #                                     RUN                                      #
 ################################################################################
 
-FROM alpine:3.23.0 AS runner
+FROM alpine:3.22.2 AS runner
 
 ARG MYSQL_USER=wpuser
 ARG MYSQL_DATABASE=wp
