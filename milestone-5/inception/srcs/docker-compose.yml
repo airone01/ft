@@ -8,7 +8,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - inception_net
+      - net
     restart: always
     ports:
       - "443:443"
@@ -29,7 +29,7 @@ services:
       - mariadb:/data
       - ./secrets/mysql_password.txt:/run/secrets/mysql_password:ro
     networks:
-      - inception_net
+      - net
     restart: always
     develop:
       watch:
@@ -50,7 +50,7 @@ services:
       - ./secrets/mysql_password.txt:/run/secrets/mysql_password:ro
       - ./secrets/wordpress_admin_password.txt:/run/secrets/wordpress_admin_password:ro
     networks:
-      - inception_net
+      - net
     restart: always
     develop:
       watch:
