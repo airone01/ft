@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: nginx:latest
+    image: inception_nginx:latest
     build:
       context: ./requirements/nginx/
       dockerfile: Dockerfile
@@ -20,7 +20,7 @@ services:
           path: ./requirements/nginx
 
   mariadb:
-    image: mariadb:latest
+    image: inception_mariadb:latest
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
@@ -37,7 +37,7 @@ services:
           path: ./requirements/mariadb
 
   wordpress:
-    image: wordpress:latest
+    image: inception_wordpress:latest
     build:
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
