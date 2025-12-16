@@ -11,9 +11,9 @@ if [ ! -f "$WP_CONFIG" ]; then
   export MYSQL_PASSWORD="$(cat /run/secrets/mysql_password)"
   export WP_ADMIN_PASSWORD="$(cat /run/secrets/wordpress_admin_password)"
 
-  php85 /app/wp-cli config create --dbhost=$INCEPTION_HOST_DB --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --path="$WP_PATH"
+  php84 /app/wp-cli config create --dbhost=$INCEPTION_HOST_DB --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --path="$WP_PATH"
 
-  php85 /app/wp-cli core install \
+  php84 /app/wp-cli core install \
     --url="https://$SITE_NAME" \
     --title="$WP_SITE_NAME" \
     --admin_user="$WP_ADMIN_USER" \
@@ -24,5 +24,5 @@ else
   echo "wp-config.php already exists, skipping config creation."
 fi
 
-exec /usr/sbin/php-fpm85 -F
+exec /usr/sbin/php-fpm84 -F
 
