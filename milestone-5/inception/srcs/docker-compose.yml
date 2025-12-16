@@ -1,0 +1,77 @@
+services:
+  nginx:
+    image: nginx:latest
+    build:
+      context: ./requirements/nginx/
+      dockerfile: Dockerfile
+    container_name: nginx
+    depends_on:
+      - wordpress
+    networks:
+      - net
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/html/wordpress
+    develop:
+      watch:
+        - action: rebuild
+          path: ./requirements/nginx
+
+  mariadb:
+    image: mariadb:latest
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: Dockerfile
+    container_name: mariadb
+    volumes:
+      - mariadb:/data
+      - ./secrets/mysql_password.txt:/run/secrets/mysql_password:ro
+    networks:
+      - net
+    restart: always
+    develop:
+      watch:
+        - action: rebuild
+          path: ./requirements/mariadb
+
+  wordpress:
+    image: wordpress:latest
+    build:
+      context: ./requirements/wordpress/
+      dockerfile: Dockerfile
+    container_name: wordpress
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - wordpress:/var/www/html/wordpress
+      - ./secrets/mysql_password.txt:/run/secrets/mysql_password:ro
+      - ./secrets/wordpress_admin_password.txt:/run/secrets/wordpress_admin_password:ro
+    networks:
+      - net
+    restart: always
+    develop:
+      watch:
+        - action: rebuild
+          path: ./requirements/wordpress
+
+networks:
+  net:
+    name: inception_net
+    driver: bridge
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/mariadb
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/wordpress
