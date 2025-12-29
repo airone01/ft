@@ -6,11 +6,12 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:22:17 by elagouch          #+#    #+#             */
-/*   Updated: 2025/10/01 16:00:12 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/12/29 12:45:14 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include <iostream>
 
 // canonical
@@ -57,6 +58,16 @@ void Bureaucrat::decrementGrade(void) {
   if (_grade >= 150)
     throw GradeTooLowException();
   _grade++;
+}
+
+void Bureaucrat::signForm(Form &fm) {
+  try {
+    fm.beSigned(*this);
+    std::cout << this->getName() << " signed " << fm;
+  } catch (GradeTooLowException e) {
+    std::cout << this->getName() << " couldn't sign " << fm << " because "
+              << e.what();
+  }
 }
 
 // exceptions

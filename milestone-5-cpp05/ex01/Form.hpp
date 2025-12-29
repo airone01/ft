@@ -6,16 +6,17 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 11:50:42 by elagouch          #+#    #+#             */
-/*   Updated: 2025/12/29 12:21:45 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/12/29 12:44:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef __FORM_HPP__
-#define __FORM_HPP__
 
 #include "Bureaucrat.hpp"
 #include <exception>
 #include <ostream>
+#include <string>
+
+#ifndef __FORM_HPP__
+#define __FORM_HPP__
 
 class Form {
 public:
@@ -25,14 +26,14 @@ public:
   ~Form();
   Form &operator=(const Form &);
 
-  Form(const int minSigningGrade, int minExecutionGrade);
+  Form(std::string name, const int minSigningGrade, int minExecutionGrade);
 
+  std::string getName() const;
   bool isSigned() const;
   int getMinSigningGrade() const;
   int getMinExecutionGrade() const;
 
-  void beSigned(const Bureaucrat &);
-  void signForm(const Bureaucrat &bc);
+  void beSigned(Bureaucrat &);
 
   // exceptions
   class GradeTooHighException : public std::exception {
@@ -45,6 +46,7 @@ public:
   };
 
 private:
+  std::string _name;
   bool _signed;
   const int _minSigningGrade;
   const int _minExecutionGrade;

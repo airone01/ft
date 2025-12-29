@@ -6,18 +6,19 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:15:44 by elagouch          #+#    #+#             */
-/*   Updated: 2025/12/29 12:01:52 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/12/29 12:38:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef __BUREAUCRAT_HPP__
-#define __BUREAUCRAT_HPP__
 
 #include <exception>
 #include <string>
 
-class Bureaucrat {
+#ifndef __BUREAUCRAT_HPP__
+#define __BUREAUCRAT_HPP__
 
+class Form;
+
+class Bureaucrat {
 public:
   // canonical
   Bureaucrat();
@@ -35,6 +36,7 @@ public:
   // setters
   void incrementGrade(void);
   void decrementGrade(void);
+  void signForm(Form &fm);
 
   // exceptions
   class GradeTooHighException : public std::exception {
