@@ -6,95 +6,61 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:54:40 by elagouch          #+#    #+#             */
-/*   Updated: 2025/10/01 16:00:05 by elagouch         ###   ########.fr       */
+/*   Updated: 2025/12/29 12:47:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
 #include <iostream>
+#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-int main() {
-  // Test valid construction and printing
-  try {
-    Bureaucrat bob("Bob", 75);
-    std::cout << bob << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+int main()
+{
+	std::cout << "--- TEST 1: Form Construction (Bounds) ---" << std::endl;
+	try {
+		Form invalid("Invalid", 0, 100); // Grade too high
+	} catch (std::exception &e) {
+		std::cout << "Exception caught: " << e.what() << std::endl;
+	}
 
-  // Test grade too high in constructor
-  try {
-    Bureaucrat alice("Alice", 0);
-    std::cout << alice << std::endl;
-  } catch (Bureaucrat::GradeTooHighException &e) {
-    std::cerr << "Caught GradeTooHighException: " << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+	try {
+		Form invalid("Invalid", 151, 100); // Grade too low
+	} catch (std::exception &e) {
+		std::cout << "Exception caught: " << e.what() << std::endl;
+	}
 
-  // Test grade too low in constructor
-  try {
-    Bureaucrat charlie("Charlie", 151);
-    std::cout << charlie << std::endl;
-  } catch (Bureaucrat::GradeTooLowException &e) {
-    std::cerr << "Caught GradeTooLowException: " << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+	std::cout << "\n--- TEST 2: Signing - Failure Case ---" << std::endl;
+	try {
+		Bureaucrat bob("Bob", 100);
+		Form taxForm("Tax Form", 50, 100); // Requires 50 to sign
 
-  // Test increment grade (should decrease number)
-  try {
-    Bureaucrat dave("Dave", 3);
-    std::cout << "Before increment: " << dave << std::endl;
-    dave.incrementGrade();
-    std::cout << "After increment: " << dave << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+		std::cout << bob << std::endl;
+		std::cout << taxForm << std::endl;
 
-  // Test increment beyond limit
-  try {
-    Bureaucrat eve("Eve", 1);
-    std::cout << "Before increment: " << eve << std::endl;
-    eve.incrementGrade();
-    std::cout << "After increment: " << eve << std::endl;
-  } catch (Bureaucrat::GradeTooHighException &e) {
-    std::cerr << "Caught GradeTooHighException: " << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+		// Bob (100) tries to sign Tax Form (50) -> Should fail
+		bob.signForm(taxForm);
+	} catch (std::exception &e) {
+		std::cout << "Unexpected crash: " << e.what() << std::endl;
+	}
 
-  // Test decrement grade (should increase number)
-  try {
-    Bureaucrat frank("Frank", 150);
-    std::cout << "Before decrement: " << frank << std::endl;
-    frank.decrementGrade();
-    std::cout << "After decrement: " << frank << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+	std::cout << "\n--- TEST 3: Signing - Success Case ---" << std::endl;
+	try {
+		Bureaucrat alice("Alice", 10);
+		Form contract("Contract", 50, 50); // Requires 50 to sign
 
-  // Test decrement beyond limit
-  try {
-    Bureaucrat grace("Grace", 150);
-    std::cout << "Before decrement: " << grace << std::endl;
-    grace.decrementGrade();
-    std::cout << "After decrement: " << grace << std::endl;
-  } catch (Bureaucrat::GradeTooLowException &e) {
-    std::cerr << "Caught GradeTooLowException: " << e.what() << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+		std::cout << alice << std::endl;
+		std::cout << contract << std::endl;
 
-  // Test edge cases: min and max grades
-  try {
-    Bureaucrat minGrade("Min", 150);
-    std::cout << minGrade << std::endl;
-    Bureaucrat maxGrade("Max", 1);
-    std::cout << maxGrade << std::endl;
-  } catch (std::exception &e) {
-    std::cerr << "Unexpected exception: " << e.what() << std::endl;
-  }
+		// Alice (10) tries to sign Contract (50) -> Should succeed
+		alice.signForm(contract);
 
-  return 0;
+		std::cout << "Form status after signing: " << contract << std::endl;
+
+		// Try signing again (logic usually allows it, but Form stays signed)
+		alice.signForm(contract);
+	} catch (std::exception &e) {
+		std::cout << "Unexpected crash: " << e.what() << std::endl;
+	}
+
+	return 0;
 }
