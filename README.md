@@ -54,7 +54,7 @@
     <tbody>
       <tr align="center">
         <td>0</td>
-        <td><a href="/milestone-0-libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
+        <td><a href="/milestone-0/libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -63,7 +63,7 @@
       </tr>
       <tr align="center">
         <td rowspan="3">1</td>
-        <td><a href="/milestone-1-born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
+        <td><a href="/milestone-1/born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -71,18 +71,18 @@
         <td>125</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-1-ft_printf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png" alt="ft_printf logo"></a></td>
+        <td><a href="/milestone-1/ft_printf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png" alt="ft_printf logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-1-get_next_line/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png" alt="get_next_line logo"></a></td>
+        <td><a href="/milestone-1/get_next_line/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png" alt="get_next_line logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
         <td rowspan="3">2</td>
-        <td><a href="/milestone-2-pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
+        <td><a href="/milestone-2/pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -90,12 +90,12 @@
         <td>125</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-2-push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swape.png" alt="push_swap logo"></a></td>
+        <td><a href="/milestone-2/push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swape.png" alt="push_swap logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-2-fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
+        <td><a href="/milestone-2/fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -105,21 +105,21 @@
       <tr align="center">
         <td rowspan=2>3</td>
         <td>
-            <a href="/milestone-3-minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
+            <a href="/milestone-3/minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>✅</td>
         <td>101</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-3-philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
+        <td><a href="/milestone-3/philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td rowspan=2>4</td>
+        <td rowspan=3>4</td>
         <td>
-            <a href="/milestone-4-cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br>
+            <a href="/milestone-4/cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>
@@ -130,13 +130,29 @@
       </tr>
       <tr align="center">
         <td>
-            <a href="/milestone-4-cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a></a><br>
+            <a href="/milestone-4/cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br>
             <sub>CPP 00-04</sub>
         </td>
         <td>✅<br/>
           <sub>(various grades)</sub>
         </td>
-        <td>?</td>
+        <td>N/A</td>
+      </tr>
+      <tr align="center">
+        <td>
+            <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/netpracticee.png" alt="NetPractice logo"><br>
+        </td>
+        <td>✅</td>
+        <td>100</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="1">5</td>
+        <td>
+            <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
+            <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+        </td>
+        <td>✅</td>
+        <td>125</td>
       </tr>
     </tbody>
   </table>
