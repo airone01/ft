@@ -20,6 +20,14 @@ if [ ! -f "$WP_CONFIG" ]; then
     --admin_password="$WP_ADMIN_PASSWORD" \
     --admin_email="$WP_ADMIN_EMAIL" \
     --path="$WP_PATH"
+
+  php84 /app/wp-cli user create jane jane@example.com --role=editor --user_pass="SecurePass123!" \
+    --path="$WP_PATH"
+
+  # mocks emails for phpemailer
+  php84 /app/wp-cli plugin install stop-emails --activate \
+    --path="$WP_PATH"
+
 else
   echo "wp-config.php already exists, skipping config creation."
 fi
