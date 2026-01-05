@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 11:50:42 by elagouch          #+#    #+#             */
-/*   Updated: 2025/12/29 12:44:12 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:14:38 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ public:
   };
 
 private:
-  std::string _name;
+  const std::string _name;
   bool _signed;
   const int _minSigningGrade;
   const int _minExecutionGrade;

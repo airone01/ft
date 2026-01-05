@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:22:17 by elagouch          #+#    #+#             */
-/*   Updated: 2025/12/29 12:45:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:14:12 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void Bureaucrat::signForm(Form &fm) {
   try {
     fm.beSigned(*this);
     std::cout << this->getName() << " signed " << fm;
-  } catch (GradeTooLowException e) {
+  } catch (std::exception &e) {
+    // need to catch GradeTooLowException from both classes, otherwise it might
+    // slip through and crash the app
     std::cout << this->getName() << " couldn't sign " << fm << " because "
               << e.what();
   }

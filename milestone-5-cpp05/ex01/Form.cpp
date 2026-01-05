@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 11:53:34 by elagouch          #+#    #+#             */
-/*   Updated: 2025/12/29 12:44:14 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:15:21 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ Form::~Form() {}
 
 Form &Form::operator=(const Form &other) {
   if (this != &other) {
-    _name = other._name;
     _signed = other._signed;
   }
   return *this;
@@ -67,6 +66,9 @@ const char *Form::GradeTooLowException::what(void) const throw() {
 
 // ostream overload
 std::ostream &operator<<(std::ostream &os, const Form &fm) {
-  os << fm.getName();
+  os << "Form " << fm.getName()
+     << ", signed: " << (fm.isSigned() ? "yes" : "no")
+     << ", sign grade: " << fm.getMinSigningGrade()
+     << ", exec grade: " << fm.getMinExecutionGrade();
   return os;
 };
