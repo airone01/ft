@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:54:40 by elagouch          #+#    #+#             */
-/*   Updated: 2025/12/29 12:47:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:11:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main()
 		// Bob (100) tries to sign Tax Form (50) -> Should fail
 		bob.signForm(taxForm);
 	} catch (std::exception &e) {
-		std::cout << "Unexpected crash: " << e.what() << std::endl;
+		std::cout << "Expected crash: " << e.what() << std::endl;
 	}
 
 	std::cout << "\n--- TEST 3: Signing - Success Case ---" << std::endl;
