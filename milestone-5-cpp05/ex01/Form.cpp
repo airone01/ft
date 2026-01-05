@@ -6,13 +6,14 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 11:53:34 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/05 10:29:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/05 13:40:22 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
 #include <iostream>
+#include <ostream>
 
 Form::Form()
     : _name("Formulaire A38"), _signed(false), _minSigningGrade(150),
@@ -69,6 +70,6 @@ std::ostream &operator<<(std::ostream &os, const Form &fm) {
   os << "Form " << fm.getName()
      << ", signed: " << (fm.isSigned() ? "yes" : "no")
      << ", sign grade: " << fm.getMinSigningGrade()
-     << ", exec grade: " << fm.getMinExecutionGrade();
+     << ", exec grade: " << fm.getMinExecutionGrade() << std::endl;
   return os;
 };
