@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/29 11:50:42 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/05 10:29:33 by elagouch         ###   ########.fr       */
+/*   Created: 2025/09/29 18:15:44 by elagouch          #+#    #+#             */
+/*   Updated: 2026/01/05 10:36:53 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
 #include <exception>
-#include <ostream>
 #include <string>
 
-#ifndef __FORM_HPP__
-#define __FORM_HPP__
+#ifndef __BUREAUCRAT_HPP__
+#define __BUREAUCRAT_HPP__
 
-class Form {
+class AForm;
+
+class Bureaucrat {
 public:
   // canonical
-  Form();
-  Form(const Form &);
-  ~Form();
-  Form &operator=(const Form &);
+  Bureaucrat();
+  Bureaucrat(const Bureaucrat &);
+  ~Bureaucrat();
+  Bureaucrat &operator=(const Bureaucrat &);
 
-  Form(std::string name, int minSigningGrade, int minExecutionGrade);
+  // parameterized constructors
+  Bureaucrat(const std::string name, int grade);
 
-  std::string getName() const;
-  bool isSigned() const;
-  int getMinSigningGrade() const;
-  int getMinExecutionGrade() const;
+  // getters
+  const std::string getName(void) const;
+  int getGrade(void) const;
 
-  void beSigned(Bureaucrat &);
+  // setters
+  void incrementGrade(void);
+  void decrementGrade(void);
+  void signForm(AForm &fm);
+  void executeForm(AForm const &form);
 
   // exceptions
   class GradeTooHighException : public std::exception {
@@ -47,12 +51,10 @@ public:
 
 private:
   const std::string _name;
-  bool _signed;
-  const int _minSigningGrade;
-  const int _minExecutionGrade;
+  int _grade;
 };
 
 // ostream overload
-std::ostream &operator<<(std::ostream &os, const Form &);
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &);
 
-#endif // !__FORM_HPP__
+#endif // !__BUREAUCRAT_HPP__

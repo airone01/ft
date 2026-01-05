@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 11:53:34 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/05 10:29:27 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:30:31 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 #include <iostream>
 
-Form::Form()
+AForm::AForm()
     : _name("Formulaire A38"), _signed(false), _minSigningGrade(150),
       _minExecutionGrade(150) {}
 
-Form::Form(const Form &other)
+AForm::AForm(const AForm &other)
     : _name(other._name), _signed(other._signed),
       _minSigningGrade(other._minSigningGrade),
       _minExecutionGrade(other._minExecutionGrade) {}
 
-Form::~Form() {}
+AForm::~AForm() {}
 
-Form &Form::operator=(const Form &other) {
+AForm &AForm::operator=(const AForm &other) {
   if (this != &other) {
     _signed = other._signed;
   }
   return *this;
 }
 
-Form::Form(std::string name, int minSigningGrade, int minExecutionGrade)
+AForm::AForm(std::string name, int minSigningGrade, int minExecutionGrade)
     : _name(name), _signed(false), _minSigningGrade(minSigningGrade),
       _minExecutionGrade(minExecutionGrade) {
   if (minSigningGrade < 1 || minExecutionGrade < 1)
@@ -41,31 +41,35 @@ Form::Form(std::string name, int minSigningGrade, int minExecutionGrade)
     throw GradeTooLowException();
 }
 
-std::string Form::getName() const { return this->_name; }
+std::string AForm::getName() const { return this->_name; }
 
-bool Form::isSigned() const { return this->_signed; }
+bool AForm::isSigned() const { return this->_signed; }
 
-int Form::getMinSigningGrade() const { return this->_minSigningGrade; }
+int AForm::getMinSigningGrade() const { return this->_minSigningGrade; }
 
-int Form::getMinExecutionGrade() const { return this->_minExecutionGrade; }
+int AForm::getMinExecutionGrade() const { return this->_minExecutionGrade; }
 
-void Form::beSigned(Bureaucrat &bc) {
+void AForm::beSigned(Bureaucrat &bc) {
   if (bc.getGrade() > this->getMinSigningGrade())
     throw GradeTooLowException();
   this->_signed = true;
 }
 
 // exceptions
-const char *Form::GradeTooHighException::what(void) const throw() {
+const char *AForm::GradeTooHighException::what(void) const throw() {
   return "Grade is too high!";
 }
 
-const char *Form::GradeTooLowException::what(void) const throw() {
+const char *AForm::GradeTooLowException::what(void) const throw() {
   return "Grade is too low!";
 }
 
+const char *AForm::FormNotSignedException::what() const throw() {
+  return "Form is not signed!";
+}
+
 // ostream overload
-std::ostream &operator<<(std::ostream &os, const Form &fm) {
+std::ostream &operator<<(std::ostream &os, const AForm &fm) {
   os << "Form " << fm.getName()
      << ", signed: " << (fm.isSigned() ? "yes" : "no")
      << ", sign grade: " << fm.getMinSigningGrade()
