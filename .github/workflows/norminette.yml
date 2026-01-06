@@ -21,8 +21,10 @@ env:
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
+
     outputs:
       changed-projects: ${{ steps.changes.outputs.changed-projects }}
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,11 +78,15 @@ jobs:
 
   norminette:
     needs: detect-changes
+
     if: needs.detect-changes.outputs.changed-projects != '[]' || github.event_name == 'workflow_dispatch'
+
     runs-on: ubuntu-22.04
+
     strategy:
       matrix:
         project: ${{ fromJson(needs.detect-changes.outputs.changed-projects) }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python

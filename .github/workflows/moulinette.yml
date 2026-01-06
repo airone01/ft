@@ -5,17 +5,18 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'piscine/c-*/**/*'
+      - 'piscine-c/c-*/**/*'
       - '.github/workflows/moulinette.yml'
   pull_request:
     branches: [ "main" ]
     paths:
-      - 'piscine/c-*/**/*'
+      - 'piscine-c/c-*/**/*'
       - '.github/workflows/moulinette.yml'
 
 jobs:
   test:
     runs-on: ubuntu-22.04
+
     strategy:
       matrix:
         c_project: [ '00', '01', '03', '04', '06', '07', '08' ]
@@ -29,6 +30,6 @@ jobs:
 
       - name: Run mini-moulinette tests
         run: |
-          mv piscine/c-${{ matrix.c_project }} C${{ matrix.c_project }}
+          mv piscine-c/c-${{ matrix.c_project }} C${{ matrix.c_project }}
           cd C${{ matrix.c_project }}/
           !($HOME/mini-moulinette/mini-moul.sh|tee /dev/tty|grep -q FAIL)
