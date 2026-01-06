@@ -1,15 +1,3 @@
-<!-- *********************************************************************** -->
-<!--                                                                         -->
-<!--                                                      :::      ::::::::  -->
-<!-- README.md                                          :+:      :+:    :+:  -->
-<!--                                                  +:+ +:+         +:+    -->
-<!-- By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+       -->
-<!--                                              +#+#+#+#+#+   +#+          -->
-<!-- Created: 2025/06/24 11:17:13 by elagouch          #+#    #+#            -->
-<!-- Updated: 2025/08/27 16:59:50 by elagouch         ###   ########.fr      -->
-<!--                                                                         -->
-<!-- *********************************************************************** -->
-
 <div align="center">
     <h1>ft</h1>
 </div>
@@ -40,11 +28,11 @@
 
 [Projects]: #projects
 [Extra tools/projects]: #extra-toolsprojects
-[Additional stuff/notes]: #additional-stuffnotes
+[Additional notes]: #additional-notes
 
 **[<kbd> <br> Projects <br> </kbd>][Projects]**
 **[<kbd> <br> Extra tools/projects <br> </kbd>][Extra tools/projects]**
-**[<kbd> <br> Additional stuff/notes <br> </kbd>][Additional stuff/notes]**
+**[<kbd> <br> Additional notes <br> </kbd>][Additional notes]**
 
 </p></div>
 
@@ -66,7 +54,7 @@
     <tbody>
       <tr align="center">
         <td>0</td>
-        <td><a href="/milestone-0-libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
+        <td><a href="/milestone-0/libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -75,7 +63,7 @@
       </tr>
       <tr align="center">
         <td rowspan="3">1</td>
-        <td><a href="/milestone-1-born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
+        <td><a href="/milestone-1/born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -83,18 +71,18 @@
         <td>125</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-1-ft_printf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png" alt="ft_printf logo"></a></td>
+        <td><a href="/milestone-1/ft_printf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png" alt="ft_printf logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-1-get_next_line/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png" alt="get_next_line logo"></a></td>
+        <td><a href="/milestone-1/get_next_line/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png" alt="get_next_line logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
         <td rowspan="3">2</td>
-        <td><a href="/milestone-2-pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
+        <td><a href="/milestone-2/pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -102,12 +90,12 @@
         <td>125</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-2-push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swape.png" alt="push_swap logo"></a></td>
+        <td><a href="/milestone-2/push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swape.png" alt="push_swap logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-2-fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
+        <td><a href="/milestone-2/fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
         <td>
           ✅<br>
           <sub>(with bonuses)</sub>
@@ -117,21 +105,21 @@
       <tr align="center">
         <td rowspan=2>3</td>
         <td>
-            <a href="/milestone-3-minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
+            <a href="/milestone-3/minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>✅</td>
         <td>101</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-3-philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
+        <td><a href="/milestone-3/philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td rowspan=2>4</td>
+        <td rowspan=3>4</td>
         <td>
-            <a href="/milestone-4-cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br>
+            <a href="/milestone-4/cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>
@@ -142,11 +130,29 @@
       </tr>
       <tr align="center">
         <td>
-            <a href="/milestone-4-cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppn.png" alt="CPP logo"></a></a><br>
+            <a href="/milestone-4/cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br>
             <sub>CPP 00-04</sub>
         </td>
-        <td>⌛</td>
-        <td>...</td>
+        <td>✅<br/>
+          <sub>(various grades)</sub>
+        </td>
+        <td>N/A</td>
+      </tr>
+      <tr align="center">
+        <td>
+            <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/netpracticee.png" alt="NetPractice logo"><br>
+        </td>
+        <td>✅</td>
+        <td>100</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="1">5</td>
+        <td>
+            <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
+            <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+        </td>
+        <td>✅</td>
+        <td>125</td>
       </tr>
     </tbody>
   </table>
@@ -156,17 +162,17 @@
 
 <img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
-### [`Minecraft push_swap visualizer`](https://github.com/airone01/ft/tree/main/extra-push-swap-visualizer-minecraft)
+### [`Minecraft push_swap visualizer`](./tools/push-swap-visualizer-minecraft/README.md)
 
 A program to flex on your friends by visualizing your push_swap algorithm in
 Minecraft. It uses [Valence](https://valence.rs/) to control the game packets
 and visualize the sorting algorithm on your `1.20.1` client.
 
-![In-game screenshot](/.github/assets/screenshot_1.webp)
+![In-game screenshot](./.github/assets/screenshot_1.webp)
 
 <img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
-### [`FDF generator`](/extra-fdf-bmp-converter/README.md)
+### [`FDF generator`](./external-tools/fdf-bmp-converter/README.md)
 
 A simple script to convert a BMP image into a fdf file. It currently only works
 for bitmap images smaller than 255 \* 255, because I don't really know how to
@@ -177,32 +183,28 @@ type :
 python main.py your_file.bmp
 ```
 
-You can convert PNG images to BMP using `convert` from
-[ImageMagick](https://imagemagick.org/), or online using
-[EzGIF](https://ezgif.com/png-to-bmp).
+You can convert PNG images to BMP using `convert` using [ImageMagick](https://imagemagick.org/), or online with [EzGIF](https://ezgif.com/png-to-bmp).
 
-## Additional stuff/notes
+## Additional notes
+
+### Bazel
+
+You can build all of the projects in this monorepo using [Bazel](https://bazel.build/).
+
+- Run `bazel query ...` to list all projects
+- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`, [I configured aliases](./BUILD.bazel)).
+- Most importantly, run `bazel build //...` to make all projects at once (as well as the required external libs).
+
+Building all projects at the same time without cache takes around 20s on the slowest 4-threads school computers. On the fastest (DELL), it takes at worse 7 seconds.
+
+[![asciicast](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
 
 ### Direnv
 
 This project's dev dependencies are managed using `nix-direnv`. If you don't
 know what NixOS is, you probably don't have to care about that though.
 
-### Make
-
-You can build all of the projects that use Make using `make all` (at the repo
-root).
-
-Additionally, you can list them with `make list` build one with
-`make <PROJECT>`, and clean them all with `make clean` and `make fclean`.
-
 ## License
 
-This project is licensed under the [MIT License](/LICENSE). See the
-[LICENSE](/LICENSE) file for details.
+This project is licensed under the [MIT License](/LICENSE). See the [LICENSE](/LICENSE) file for details.
 
-## Note for myself
-
-```bash
-alias reload="rm -rf ~/goinfre/test && cd ~/ft && cargo r --package arthur -- p s milestone-2-fdf https://github.com/airone01/gpm-test && git clone https://github.com/airone01/gpm-test ~/goinfre/test && cd ~/goinfre/test && make all bonus"
-```

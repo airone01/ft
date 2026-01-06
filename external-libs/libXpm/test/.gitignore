@@ -1,0 +1,6 @@
+#               Add & Override for this directory and its subdirectories
+XpmCreate
+XpmMisc
+XpmRead
+*.log
+*.trs

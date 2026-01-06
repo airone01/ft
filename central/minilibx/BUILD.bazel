@@ -1,0 +1,24 @@
+cc_library(
+    name = "mlx",
+    srcs = glob(["*.c"]),
+    hdrs = [
+        "mlx.h",
+        "mlx_int.h",
+    ],
+    copts = [
+        "-std=gnu89",
+        "-w",  # Suppress warnings for external library
+        "-O3",
+        "-include", "xpm.h",
+    ],
+    includes = ["."],
+    linkopts = [
+        "-lm",
+        "-lXext",
+        "-lX11",
+    ],
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+    deps = [ "//external-libs/libXpm:xpm" ],
+)
+

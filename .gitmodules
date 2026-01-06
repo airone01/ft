@@ -1,9 +1,0 @@
-[submodule "milestone-2-push_swap/push_swap_visualizer"]
-    path = extra-ps-visualizer
-    url = https://github.com/o-reo/push_swap_visualizer
-[submodule "milestone-2-fdf/minilibx-linux"]
-	path = extra-minilibx
-	url = https://github.com/42Paris/minilibx-linux
-[submodule "extra-philosophers-visualizer"]
-	path = extra-philo-visualizer
-	url = https://github.com/SimonCROS/philosophers-visualizer

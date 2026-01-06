@@ -2,10 +2,11 @@
 Cargo.lock
 package-lock.json
 flake.lock
+MODULE.bazel.lock
 
 # Other
 LICENSE
 
 # So as not to get all projects
-quack*
-piscine-*
+external-tools/
+

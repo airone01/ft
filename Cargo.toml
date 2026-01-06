@@ -1,4 +1,4 @@
 [workspace]
-members = ["extra-arthur", "extra-ps-visualizer-minecraft"]
+members = ["tools/push-swap-visualizer-minecraft"]
 exclude = []
 resolver = "2"

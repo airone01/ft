@@ -1,0 +1,10 @@
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+
+cc_library(
+    name = "libft",
+    srcs = glob(["src/**/*.c"]),
+    hdrs = ["includes/libft.h"],
+    includes = ["includes"],
+    copts = CC_COPTS,
+    visibility = ["//visibility:public"],
+)

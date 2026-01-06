@@ -4,7 +4,7 @@
 root = true
 
 # Default settings
-[{Makefile,*.{html,css,scss,jsx,tsx,vue,svelte,astro,gitmodules,c,h,cpp,mk,nix,yaml,yml,json,toml,sh,ts,js,}}]
+[{Makefile,*.{html,css,scss,jsx,tsx,vue,svelte,astro,gitmodules,c,h,cpp,mk,nix,yaml,yml,json,toml,sh,ts,js,BAZEL}}]
 indent_style = space
 indent_size = 4
 end_of_line = lf

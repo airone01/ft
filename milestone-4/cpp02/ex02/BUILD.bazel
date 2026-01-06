@@ -1,0 +1,10 @@
+load("//:tools/bazel/copts.bzl", "CXX_COPTS")
+
+cc_binary(
+    name = "fixed",
+    srcs = glob(["src/*.cpp", "includes/*.hpp"]),
+    includes = ["includes"],
+    copts = CXX_COPTS,
+    visibility = ["//visibility:public"],
+)
+

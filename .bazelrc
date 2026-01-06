@@ -1,0 +1,63 @@
+# ============================================================================
+# Build Settings
+# ============================================================================
+
+# Use C++17 for better compatibility (can override per-target)
+build --cxxopt=-std=c++98
+build --host_cxxopt=-std=c++98
+
+# Enable color output
+build --color=yes
+
+# Show detailed test output
+test --test_output=errors
+
+# Use a reasonable number of jobs
+build --jobs=auto
+
+# ============================================================================
+# Performance Settings
+# ============================================================================
+
+# Enable build event protocol for better caching
+build --build_event_json_file=build_events.json
+
+# Optimize for local development
+build:dev --compilation_mode=dbg
+build:dev --strip=never
+
+# Optimize for release builds
+build:release --compilation_mode=opt
+build:release --strip=always
+
+# ============================================================================
+# Platform-specific Settings
+# ============================================================================
+
+# Linux specific
+build:linux --cxxopt=-fPIC
+build:linux --copt=-fPIC
+
+# macOS specific
+build:macos --cxxopt=-fPIC
+build:macos --copt=-fPIC
+
+# ============================================================================
+# Convenience Configs
+# ============================================================================
+
+# Fast build (minimal optimization, useful for testing)
+build:fast --compilation_mode=fastbuild
+
+# Verbose output for debugging
+build:verbose --announce_rc
+build:verbose --subcommands
+build:verbose --verbose_failures
+
+# ============================================================================
+# Default Config
+# ============================================================================
+
+# Try to load a local configuration file (not in version control)
+try-import %workspace%/.bazelrc.local
+

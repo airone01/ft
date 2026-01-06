@@ -1,0 +1,19 @@
+###############################################################################
+# Bazel now uses Bzlmod by default to manage external dependencies.           #
+#                                                                             #
+# For more details, please check                                              #
+# https://github.com/bazelbuild/bazel/issues/18958                            #
+###############################################################################
+
+module(
+    name = "ft",
+    version = "1.0.0",
+)
+
+# bazel_dep(name = "platforms", version = "0.0.11")
+# bazel_dep(name = "rules_shell", version = "0.6.1")
+# bazel_dep(name = "rules_cc", version = "0.2.9")
+
+# note: i'm not configuring the rust crates in bazel, as cargo is good enough
+# for my use-case.
+

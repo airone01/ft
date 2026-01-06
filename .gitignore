@@ -80,3 +80,7 @@ vgcore.*
 ## Bear/CMake
 **/.cache/
 
+# bazel
+bazel-*
+build_events.json
+
