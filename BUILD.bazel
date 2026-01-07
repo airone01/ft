@@ -60,4 +60,76 @@ alias(
     name = "cub3d-bonus",
     actual = "//milestone-4/cub3d:cub3d-bonus",
 )
+alias(
+  name = "cpp00-ex00",
+  actual = "//milestone-4/cpp00/ex00:megaphone"
+)
+alias(
+  name = "cpp00-ex01",
+  actual = "//milestone-4/cpp00/ex01:phonebook"
+)
+alias(
+  name = "cpp00-ex02",
+  actual = "//milestone-4/cpp00/ex02:bank"
+)
+alias(
+  name = "cpp01-ex00",
+  actual = "//milestone-4/cpp01/ex00:brainz"
+)
+alias(
+  name = "cpp01-ex01",
+  actual = "//milestone-4/cpp01/ex01:more_brainz"
+)
+alias(
+  name = "cpp01-ex02",
+  actual = "//milestone-4/cpp01/ex02:htib"
+)
+alias(
+  name = "cpp01-ex03",
+  actual = "//milestone-4/cpp01/ex03:uv"
+)
+alias(
+  name = "cpp01-ex04",
+  actual = "//milestone-4/cpp01/ex04:sed"
+)
+alias(
+  name = "cpp01-ex05",
+  actual = "//milestone-4/cpp01/ex05:harl"
+)
+alias(
+  name = "cpp02-ex00",
+  actual = "//milestone-4/cpp02/ex00:fixed"
+)
+alias(
+  name = "cpp02-ex01",
+  actual = "//milestone-4/cpp02/ex01:fixed"
+)
+alias(
+  name = "cpp02-ex02",
+  actual = "//milestone-4/cpp02/ex02:fixed"
+)
+alias(
+  name = "cpp03-ex00",
+  actual = "//milestone-4/cpp03/ex00:claptrap"
+)
+alias(
+  name = "cpp03-ex01",
+  actual = "//milestone-4/cpp03/ex01:scavtrap"
+)
+alias(
+  name = "cpp03-ex02",
+  actual = "//milestone-4/cpp03/ex02:fragtrap"
+)
+alias(
+  name = "cpp04-ex00",
+  actual = "//milestone-4/cpp04/ex00:animals"
+)
+alias(
+  name = "cpp04-ex01",
+  actual = "//milestone-4/cpp04/ex01:animals"
+)
+alias(
+  name = "cpp04-ex02",
+  actual = "//milestone-4/cpp04/ex02:abstract"
+)
 
