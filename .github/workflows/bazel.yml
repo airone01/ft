@@ -39,6 +39,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          autoconf \
+          automake \
+          libtool \
+          pkg-config \
+          xutils-dev \
+          libx11-dev \
+          x11proto-dev
+
+    - name: Generate libXpm config.h
+      run: |
+        cd external-libs/libXpm
+        autoreconf -vfi
+        ./configure
+
     - name: Cache Bazel
       uses: actions/cache@v4
       with:
