@@ -49,7 +49,7 @@ jobs:
           pkg-config \
           xutils-dev \
           libx11-dev \
-          x11proto-dev \\
+          x11proto-dev \
           libxext-dev
 
     - name: Generate libXpm config.h
