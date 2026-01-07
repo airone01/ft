@@ -11,14 +11,21 @@ cc_library(
         "-O3",
         "-include", "xpm.h",
     ],
-    includes = ["."],
+    includes = [
+        ".",
+        "/usr/include",
+    ],
     linkopts = [
         "-lm",
         "-lXext",
         "-lX11",
+        "-lXrandr",
+        "-L/usr/lib/x86_64-linux-gnu",
     ],
     linkstatic = True,
     visibility = ["//visibility:public"],
-    deps = [ "//external-libs/libXpm:xpm" ],
+    deps = [
+        "//external-libs/libXpm:xpm",
+    ],
 )
 

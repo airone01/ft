@@ -16,13 +16,15 @@ on:
       - '.github/workflows/norminette.yml'
 
 env:
-  PROJECTS: "milestone-0-libft milestone-1-ft_printf milestone-1-get_next_line milestone-2-fdf milestone-2-pipex milestone-2-push_swap milestone-3-minishell milestone-3-philo"
+  PROJECTS: "milestone-0/libft milestone-1/ft_printf milestone-1/get_next_line milestone-2/fdf milestone-2/pipex milestone-2/push_swap milestone-3/minishell milestone-3/philosophers"
 
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
+
     outputs:
       changed-projects: ${{ steps.changes.outputs.changed-projects }}
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -76,11 +78,15 @@ jobs:
 
   norminette:
     needs: detect-changes
+
     if: needs.detect-changes.outputs.changed-projects != '[]' || github.event_name == 'workflow_dispatch'
+
     runs-on: ubuntu-22.04
+
     strategy:
       matrix:
         project: ${{ fromJson(needs.detect-changes.outputs.changed-projects) }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
