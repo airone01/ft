@@ -9,10 +9,9 @@
     <a href="https://github.com/airone01/ft/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/airone01/ft?style=flat-square&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" /></a>
     <a href="https://github.com/airone01/ft/issues"><img alt="Issues" src="https://img.shields.io/github/issues/airone01/ft?style=flat-square&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" /></a>
     <a href="https://github.com/airone01/ft"><img alt="Repo Size" src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41" /></a><br />
-    <a href="https://github.com/airone01/ft/actions/workflows/make.yml"><img alt="Make workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/make.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <a href="https://github.com/airone01/ft/actions/workflows/norminette.yml"><img alt="Norminette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/norminette.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <a href="https://github.com/airone01/ft/actions/workflows/moulinette.yml"><img alt="Moulinette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/moulinette.yml?style=flat-square&logo=github&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <img src="https://wakatime.com/badge/github/airone01/ft.svg?style=flat-square" alt="Wakatime project time">
+    <a href="https://github.com/airone01/ft/actions/workflows/make.yml"><img alt="Bazel workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/bazel.yml?style=flat-square&logo=bazel&logoColor=D9E0EE&labelColor=302D41" /></a>
+    <a href="https://github.com/airone01/ft/actions/workflows/norminette.yml"><img alt="Norminette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/norminette.yml?style=flat-square&logo=42&logoColor=D9E0EE&labelColor=302D41&label=norm" /></a>
+    <img src="https://wakatime.com/badge/github/airone01/ft.svg?style=flat-square&logoColor=D9E0EE&labelColor=302D41" alt="Wakatime project time">
   </p>
 </div>
 
@@ -146,13 +145,20 @@
         <td>100</td>
       </tr>
       <tr align="center">
-        <td rowspan="1">5</td>
+        <td rowspan="2">5</td>
         <td>
             <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
-            <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+            <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
         </td>
         <td>✅</td>
         <td>125</td>
+      </tr>
+      <tr align="center">
+        <td>
+            <a href="/milestone-5/inception/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/inceptione.png" alt="inception logo"><br/>
+        </td>
+        <td>✅</td>
+        <td>90</td>
       </tr>
     </tbody>
   </table>
