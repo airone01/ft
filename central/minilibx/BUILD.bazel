@@ -11,7 +11,10 @@ cc_library(
         "-O3",
         "-include", "xpm.h",
     ],
-    includes = ["."],
+    includes = [
+        ".",
+        "/usr/include",
+    ],
     linkopts = [
         "-lm",
         "-lXext",
