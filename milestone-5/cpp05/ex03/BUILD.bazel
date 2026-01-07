@@ -1,0 +1,10 @@
+load("//:tools/bazel/copts.bzl", "CXX_COPTS")
+
+cc_binary(
+    name = "intern",
+    srcs = glob(["**/*.cpp", "**/*.hpp"]),
+    includes = ["."],
+    copts = CXX_COPTS,
+    visibility = ["//visibility:public"],
+)
+

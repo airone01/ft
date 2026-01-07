@@ -133,3 +133,21 @@ alias(
   actual = "//milestone-4/cpp04/ex02:abstract"
 )
 
+### MILESTONE 5
+alias(
+  name = "cpp05-ex00",
+  actual = "//milestone-5/cpp05/ex00:bureaucrat"
+)
+alias(
+  name = "cpp05-ex01",
+  actual = "//milestone-5/cpp05/ex01:forms"
+)
+alias(
+  name = "cpp05-ex02",
+  actual = "//milestone-5/cpp05/ex02:28B"
+)
+alias(
+  name = "cpp05-ex03",
+  actual = "//milestone-5/cpp05/ex03:intern"
+)
+
