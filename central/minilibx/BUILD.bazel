@@ -23,6 +23,8 @@ cc_library(
     ],
     linkstatic = True,
     visibility = ["//visibility:public"],
-    deps = [ "//external-libs/libXpm:xpm" ],
+    deps = [
+        "//external-libs/libXpm:xpm",
+    ],
 )
 

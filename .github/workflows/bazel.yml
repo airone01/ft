@@ -50,7 +50,8 @@ jobs:
           xutils-dev \
           libx11-dev \
           x11proto-dev \
-          libxext-dev
+          libxext-dev \
+          libxrandr-dev
 
     - name: Generate libXpm config.h
       run: |
