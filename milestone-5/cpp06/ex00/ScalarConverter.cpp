@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/09 14:12:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:40:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cmath>
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <ios>
@@ -71,7 +72,14 @@ bool is_char(const std::string &s) {
 bool is_number(const std::string &s) {
   std::istringstream ss(s);
   double d;
-  return ss >> std::noskipws >> d && ss.eof();
+  if (!(ss >> d))
+    return false; // parse failed
+  if (ss.eof())   // we're at eof, this is a clean double
+    return true;
+  char remaining;
+  ss >> remaining;
+  std::cerr << ss.peek() << std::endl;
+  return (remaining == 'f' && ss.eof()); // char was f and the last char
 }
 
 /**
@@ -146,10 +154,10 @@ void ScalarConverter::convert(const std::string &s) {
       std::cerr << e.what() << std::endl;
     }
   } else if (is_number(s)) { // general number
-    std::istringstream ss(s);
-    if (!(ss >> std::noskipws >> d && ss.eof()))
-      st = reset_all_statuses(false);
-    if (d >= std::numeric_limits<float>::min() &&
+    d = std::strtod(s.c_str(), NULL);
+    // float's ::min() and ::max() are asymetrical. ::min() returns 0, hence
+    // `-`.
+    if (d >= -std::numeric_limits<float>::max() &&
         d <= std::numeric_limits<float>::max())
       f = static_cast<float>(d);
     else
