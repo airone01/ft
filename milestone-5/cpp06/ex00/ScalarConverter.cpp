@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/09 14:40:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:17:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ bool is_number(const std::string &s) {
     return true;
   char remaining;
   ss >> remaining;
-  std::cerr << ss.peek() << std::endl;
   return (remaining == 'f' && ss.eof()); // char was f and the last char
 }
 
