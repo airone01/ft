@@ -10,7 +10,9 @@ public:
 private:
   // 98 doesn't have `= delete` so this will do
   ScalarConverter();
+  ScalarConverter(const ScalarConverter &);
   ~ScalarConverter();
+  ScalarConverter &operator=(const ScalarConverter &);
 };
 
 #endif // !SCALARCONVERTER_HPP

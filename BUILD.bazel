@@ -154,4 +154,8 @@ alias(
   name = "cpp06-ex00",
   actual = "//milestone-5/cpp06/ex00:converter"
 )
+alias(
+  name = "cpp06-ex01",
+  actual = "//milestone-5/cpp06/ex01:serializer"
+)
 
