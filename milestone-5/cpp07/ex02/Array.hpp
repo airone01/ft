@@ -37,6 +37,12 @@ public:
     }
   }
 
+  T &operator[](unsigned int index) {
+    if (index >= _size) {
+      throw std::out_of_range("Array index out of bound, exiting");
+    }
+    return _elems[index];
+  }
   const T &operator[](unsigned int index) const {
     if (index >= _size) {
       throw std::out_of_range("Array index out of bound, exiting");
