@@ -178,4 +178,8 @@ alias (
   name = "cpp08-ex00",
   actual = "//milestone-5/cpp08/ex00:easyfind"
 )
+alias (
+  name = "cpp08-ex01",
+  actual = "//milestone-5/cpp08/ex01:span"
+)
 
