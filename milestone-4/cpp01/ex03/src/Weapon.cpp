@@ -6,14 +6,14 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:22:21 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/21 17:25:24 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:34:16 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Weapon.hpp"
 
 // Default constructor
-Weapon::Weapon() : _type("lightsaber") {};
+Weapon::Weapon() : _type("lightsaber") {}
 // Copy constructor
 Weapon::Weapon(const Weapon &other) : _type(other._type) {}
 // Parameterized import

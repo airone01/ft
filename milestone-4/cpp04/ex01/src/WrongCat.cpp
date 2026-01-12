@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 15:02:20 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:32:10 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <ostream>
 
 // Default constructor
-WrongCat::WrongCat(void) : WrongAnimal("WrongCat") {};
+WrongCat::WrongCat(void) : WrongAnimal("WrongCat") {}
 // Copy constructor
-WrongCat::WrongCat(const WrongCat &other) : WrongAnimal(other) {};
+WrongCat::WrongCat(const WrongCat &other) : WrongAnimal(other) {}
 // Destructor
 WrongCat::~WrongCat(void) {}
 

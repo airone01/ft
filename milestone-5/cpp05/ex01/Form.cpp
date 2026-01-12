@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 11:53:34 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/05 13:40:22 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:41:02 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,4 @@ std::ostream &operator<<(std::ostream &os, const Form &fm) {
      << ", sign grade: " << fm.getMinSigningGrade()
      << ", exec grade: " << fm.getMinExecutionGrade() << std::endl;
   return os;
-};
+}

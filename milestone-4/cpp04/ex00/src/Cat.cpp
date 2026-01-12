@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:00:47 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:36:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <ostream>
 
 // Default constructor
-Cat::Cat(void) : Animal("Cat") {};
+Cat::Cat(void) : Animal("Cat") {}
 // Copy constructor
-Cat::Cat(const Cat &other) : Animal(other) {};
+Cat::Cat(const Cat &other) : Animal(other) {}
 // Destructor
 Cat::~Cat(void) {}
 

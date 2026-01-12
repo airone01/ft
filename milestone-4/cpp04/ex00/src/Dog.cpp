@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 13:00:21 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:39:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <ostream>
 
 // Default constructor
-Dog::Dog(void) : Animal("Dog") {};
+Dog::Dog(void) : Animal("Dog") {}
 // Copy constructor
-Dog::Dog(const Dog &other) : Animal(other) {};
+Dog::Dog(const Dog &other) : Animal(other) {}
 // Destructor
 Dog::~Dog(void) {}
 

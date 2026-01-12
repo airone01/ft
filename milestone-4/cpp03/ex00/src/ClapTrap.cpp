@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:28:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/27 16:22:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:38:29 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ ClapTrap::ClapTrap()
       _attackDamage(0) {
   std::cout << "ClapTrap " << _name << " was created! (default constructor)"
             << std::endl;
-};
+}
 // Parameterized constructor
 ClapTrap::ClapTrap(const std::string &name)
     : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0) {

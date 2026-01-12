@@ -26,6 +26,7 @@ CXX_COPTS = [
     "-Wall",
     "-Wextra",
     "-Werror",
+    "-Wpedantic",
     "-std=c++98",
     "-g3",
 ]

@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:38:55 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/27 16:15:23 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:34:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ FragTrap::FragTrap() : ClapTrap("INAC") {
   std::cout << "FragTrap " << _name
             << " was created from a ClapTrap! (default constructor)"
             << std::endl;
-};
+}
 // Parameterized constructor
 FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
   _hitPoints = 100;

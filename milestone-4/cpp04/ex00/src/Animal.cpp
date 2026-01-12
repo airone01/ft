@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 16:20:39 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/10 14:55:45 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:38:57 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // Default constructor
 Animal::Animal(void) : _type("Animal") {
   std::cout << _type << " constructed (default constructor)" << std::endl;
-};
+}
 // Parameterized constructors
 Animal::Animal(const std::string &type) : _type(type) {
   std::cout << _type << " constructed (parameterized constructor)" << std::endl;
@@ -25,7 +25,7 @@ Animal::Animal(const std::string &type) : _type(type) {
 // Copy constructor
 Animal::Animal(const Animal &other) : _type(other._type) {
   std::cout << _type << " constructed (copy constructor)" << std::endl;
-};
+}
 // Destructor
 Animal::~Animal(void) { std::cout << _type << " died :'(" << std::endl; }
 
