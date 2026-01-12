@@ -12,7 +12,7 @@ public:
   ~Array<T>() { delete[] _elems; }
 
   Array<T> &operator=(const Array<T> &other) {
-    if (*this == &other)
+    if (this == &other)
       return *this;
     delete[] _elems;
     _size = other._size;
