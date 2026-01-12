@@ -47,7 +47,7 @@ void identify(Base *p) {
  * @note Subject says pointers are forbidden in this function
  */
 void identify(Base &p) {
-  std::cout << "identify(Base *): ";
+  std::cout << "identify(Base &): ";
   Base base;
   try {
     base = dynamic_cast<A &>(p);
