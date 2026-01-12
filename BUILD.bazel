@@ -166,4 +166,8 @@ alias(
   name = "cpp07-ex00",
   actual = "//milestone-5/cpp07/ex00:tmpls"
 )
+alias(
+  name = "cpp07-ex01",
+  actual = "//milestone-5/cpp07/ex01:iter"
+)
 
