@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/09 17:17:08 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 10:13:18 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void ScalarConverter::convert(const std::string &s) {
       f = static_cast<float>(d);
       st.c = false;
       st.i = false;
-    } catch (const std::runtime_error &e) {
+    } catch (const std::exception &e) {
       std::cerr << e.what() << std::endl;
     }
   } else if (is_number(s)) { // general number

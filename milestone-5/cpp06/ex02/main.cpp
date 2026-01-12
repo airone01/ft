@@ -8,7 +8,7 @@
 
 /*
  * @see https://stackoverflow.com/a/332086/11609642
- * @note typeinfo is forbiddn
+ * @note type_info is forbidden
  */
 
 /**
@@ -18,32 +18,15 @@ Base *generate(void) {
   srand((unsigned)time(NULL));
   int idx = rand() % 3;
 
-  Base b = Base();
-  Base *p = &b;
-
   switch (idx) {
-  case 0: {
-    A a;
-    p = dynamic_cast<Base *>(&a);
-    break;
-  }
-  case 1: {
-    B b;
-    p = dynamic_cast<Base *>(&b);
-    break;
-  }
-  case 2: {
-    C c;
-    p = dynamic_cast<Base *>(&c);
-    break;
-  }
+  case 0:
+    return new A;
+  case 1:
+    return new B;
+  case 2:
   default:
-    std::cerr << "number err" << std::endl;
-    p = 0;
-    break;
+    return new C;
   }
-
-  return p;
 }
 
 /**
@@ -65,16 +48,27 @@ void identify(Base *p) {
  */
 void identify(Base &p) {
   std::cout << "identify(Base *): ";
-  if (dynamic_cast<A *>(p))
+  Base base;
+  try {
+    base = dynamic_cast<A &>(p);
     std::cout << "Type is A" << std::endl;
-  else if (dynamic_cast<B *>(p))
+  } catch (const std::exception &e) {
+  }
+  try {
+    base = dynamic_cast<B &>(p);
     std::cout << "Type is B" << std::endl;
-  else if (dynamic_cast<C *>(p))
+  } catch (const std::exception &e) {
+  }
+  try {
+    base = dynamic_cast<C &>(p);
     std::cout << "Type is C" << std::endl;
+  } catch (const std::exception &e) {
+  }
 }
 
 int main(void) {
   Base *p = generate();
   identify(p);
+  identify(*p);
   return 0;
 }
