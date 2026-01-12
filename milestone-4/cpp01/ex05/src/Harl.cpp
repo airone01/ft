@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 13:27:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/26 16:56:34 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:35:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ const Harl::LevelEntry Harl::levels[] = {
 };
 
 // Default constructor
-Harl::Harl() {};
+Harl::Harl() {}
 // // Copy constructor
 // Harl::Harl(const Harl &other) {};
 
 // Destructor
-Harl::~Harl() {};
+Harl::~Harl() {}
 
 // // Copy asignment operator
 // Harl &Harl::operator=(const Harl &other) { return *this; };

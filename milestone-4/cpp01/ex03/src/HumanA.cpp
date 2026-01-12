@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:33:45 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/26 16:56:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:34:51 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <ostream>
 
 // Default constructor
-HumanA::HumanA() : _name("Bruce"), _weapon("machine gun") {};
+HumanA::HumanA() : _name("Bruce"), _weapon("machine gun") {}
 // Copy constructor
 HumanA::HumanA(const HumanA &other)
     : _name(other._name), _weapon(other._weapon) {}
@@ -39,4 +39,4 @@ HumanA &HumanA::operator=(const HumanA &other) {
 void HumanA::attack() {
   std::cout << _name << " attacks with their " << _weapon.getType()
             << std::endl;
-};
+}

@@ -9,9 +9,9 @@ private:
   unsigned int _size;
 
 public:
-  ~Array<T>() { delete[] _elems; }
+  ~Array() { delete[] _elems; }
 
-  Array<T> &operator=(const Array<T> &other) {
+  Array &operator=(const Array<T> &other) {
     if (this == &other)
       return *this;
     delete[] _elems;
@@ -22,15 +22,15 @@ public:
     return *this;
   }
 
-  Array<T>(const Array<T> &other) : _size(other._size) {
+  Array(const Array<T> &other) : _size(other._size) {
     _elems = new T[_size];
     for (unsigned int i = 0; i < _size; i++)
       _elems[i] = other._elems[i];
   }
 
   // hmm O_O
-  Array<T>() : _elems(new T[0]), _size(0) {}
-  Array<T>(unsigned int n) : _size(n) {
+  Array() : _elems(new T[0]), _size(0) {}
+  Array(unsigned int n) : _size(n) {
     _elems = new T[n];
     for (unsigned int i = 0; i < n; i++) {
       _elems[i] = T();

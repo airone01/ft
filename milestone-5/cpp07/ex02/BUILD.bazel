@@ -1,7 +1,7 @@
 load("//:tools/bazel/copts.bzl", "CXX_COPTS")
 
 cc_binary(
-    name = "iter",
+    name = "array",
     srcs = glob(["**/*.cpp", "**/*.hpp"]),
     includes = ["."],
     copts = CXX_COPTS,

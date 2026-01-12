@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 16:40:04 by elagouch          #+#    #+#             */
-/*   Updated: 2025/08/26 17:24:19 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:35:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ const int Fixed::_bits = 8;
 // Default constructor
 Fixed::Fixed() : _val(0) {
   std::cout << "Default constructor called" << std::endl;
-};
+}
 // Copy constructor
 Fixed::Fixed(const Fixed &other) : _val(other._val) {
   std::cout << "Copy constructor called" << std::endl;
 }
 // Destructor
-Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; };
+Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; }
 
 // Copy asignment operator
 Fixed &Fixed::operator=(const Fixed &other) {
@@ -33,7 +33,7 @@ Fixed &Fixed::operator=(const Fixed &other) {
     setRawBits(other.getRawBits());
   }
   return *this;
-};
+}
 
 // Getters
 int Fixed::getRawBits(void) const {

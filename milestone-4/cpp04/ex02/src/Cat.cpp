@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:30:00 by elagouch          #+#    #+#             */
-/*   Updated: 2025/09/14 12:33:32 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:38:44 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <ostream>
 
 // Default constructor
-Cat::Cat(void) : AAnimal("Cat") { _brain = new Brain(); };
+Cat::Cat(void) : AAnimal("Cat") { _brain = new Brain(); }
 // Copy constructor
 Cat::Cat(const Cat &other) : AAnimal(other) {
   _brain = new Brain(*other._brain);
-};
+}
 // Destructor
 Cat::~Cat(void) { delete _brain; }
 

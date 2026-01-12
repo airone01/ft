@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:22:17 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/05 10:38:06 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/12 17:41:45 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 // canonical
 
-Bureaucrat::Bureaucrat() : _name("Leslie Knope"), _grade(100) {};
+Bureaucrat::Bureaucrat() : _name("Leslie Knope"), _grade(100) {}
 
 Bureaucrat::Bureaucrat(const Bureaucrat &other)
-    : _name(other._name), _grade(other._grade) {};
+    : _name(other._name), _grade(other._grade) {}
 
-Bureaucrat::~Bureaucrat() {};
+Bureaucrat::~Bureaucrat() {}
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {
   if (this != &other) {
@@ -38,7 +38,7 @@ Bureaucrat::Bureaucrat(const std::string name, int grade)
     throw GradeTooHighException();
   if (grade > 150)
     throw GradeTooLowException();
-};
+}
 
 // getters
 
@@ -97,4 +97,4 @@ const char *Bureaucrat::GradeTooLowException::what(void) const throw() {
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bc) {
   os << bc.getName() << ", bureaucrat grade " << bc.getGrade() << ".";
   return os;
-};
+}
