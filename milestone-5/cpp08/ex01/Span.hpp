@@ -10,9 +10,9 @@ private:
 
 public:
   Span(unsigned int max);
-  // Span(const Span &);
-  // ~Span();
-  // Span &operator=(const Span &);
+  Span(const Span &);
+  ~Span();
+  Span &operator=(const Span &);
 
   /**
    * @throws exception
@@ -27,6 +27,11 @@ public:
    * @throws exception
    */
   int longestSpan() const;
+
+  /**
+   * @brief sets element `i` (0 to `end`) to the result of given function `f`
+   */
+  void populate(unsigned int end, int (*f)(unsigned int i));
 };
 
 #endif // !SPAN_HPP
