@@ -42,11 +42,11 @@ int Span::shortestSpan() const {
   for (unsigned int i = 0; i < tmp.size(); i++) {
     if (sz <= i + 1)
       continue;
-    int dst = std::abs(tmp[i] - tmp[i + 1]);
-    if (dst == 0)
+    int dist = std::abs(tmp[i] - tmp[i + 1]);
+    if (dist == 0)
       return 0;
-    if (dst < sd)
-      sd = dst;
+    if (dist < sd)
+      sd = dist;
   }
 
   return sd;
@@ -68,11 +68,3 @@ int Span::longestSpan() const {
 
   return std::abs(small - big);
 }
-
-// void Span::populate(unsigned int end, int (*f)(unsigned int i)) {
-//   for (unsigned int i = 0; i < end; i++)
-//     if (_elems.size() <= i)
-//       _elems.push_back(f(i));
-//     else
-//       _elems[i] = f(i);
-// }
