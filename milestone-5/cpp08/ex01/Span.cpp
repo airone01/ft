@@ -1,7 +1,6 @@
 #include "Span.hpp"
 #include <algorithm>
 #include <cmath>
-#include <iostream>
 #include <limits>
 #include <stdexcept>
 #include <vector>
@@ -40,10 +39,10 @@ int Span::shortestSpan() const {
   std::sort(tmp.begin(), tmp.end());
 
   unsigned long sz = tmp.size();
-  for (unsigned int i = 0; i < _elems.size(); i++) {
-    if (sz <= i)
+  for (unsigned int i = 0; i < tmp.size(); i++) {
+    if (sz <= i + 1)
       continue;
-    int dst = std::abs(_elems[i] - _elems[i + 1]);
+    int dst = std::abs(tmp[i] - tmp[i + 1]);
     if (dst == 0)
       return 0;
     if (dst < sd)
@@ -70,10 +69,10 @@ int Span::longestSpan() const {
   return std::abs(small - big);
 }
 
-void Span::populate(unsigned int end, int (*f)(unsigned int i)) {
-  for (unsigned int i = 0; i < end; i++)
-    if (_elems.size() <= i)
-      _elems.push_back(f(i));
-    else
-      _elems[i] = f(i);
-}
+// void Span::populate(unsigned int end, int (*f)(unsigned int i)) {
+//   for (unsigned int i = 0; i < end; i++)
+//     if (_elems.size() <= i)
+//       _elems.push_back(f(i));
+//     else
+//       _elems[i] = f(i);
+// }

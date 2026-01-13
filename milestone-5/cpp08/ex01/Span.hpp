@@ -1,6 +1,8 @@
 #ifndef SPAN_HPP
 #define SPAN_HPP
 
+#include <iterator>
+#include <stdexcept>
 #include <vector>
 
 class Span {
@@ -29,9 +31,14 @@ public:
   int longestSpan() const;
 
   /**
-   * @brief sets element `i` (0 to `end`) to the result of given function `f`
+   * @brief reproduces the behavior of `::insert` but safe
    */
-  void populate(unsigned int end, int (*f)(unsigned int i));
+  template <typename InputIt> void insert(InputIt begin, InputIt end) {
+    unsigned long dist = static_cast<unsigned long>(std::distance(begin, end));
+    if (_elems.size() + dist > _max)
+      throw std::out_of_range("not enough space in Span to add this range");
+    _elems.insert(_elems.end(), begin, end);
+  }
 };
 
 #endif // !SPAN_HPP
