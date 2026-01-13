@@ -1,5 +1,7 @@
 #include "Span.hpp"
+#include <algorithm>
 #include <cmath>
+#include <iostream>
 #include <limits>
 #include <stdexcept>
 #include <vector>
@@ -24,44 +26,48 @@ void Span::addNumber(int n) {
   _elems.push_back(n);
 }
 
+/**
+ * @note optimized by pre-sorting and then checking the distance between
+ * neighbors
+ */
 int Span::shortestSpan() const {
   int sd = std::numeric_limits<int>::max();
 
   if (_elems.size() <= 1)
     throw std::out_of_range("not enough elements to calculate a Span");
 
+  std::vector<int> tmp = _elems;
+  std::sort(tmp.begin(), tmp.end());
+
+  unsigned long sz = tmp.size();
   for (unsigned int i = 0; i < _elems.size(); i++) {
-    for (unsigned int j = 0; j < _elems.size(); j++) {
-      if (i == j)
-        continue;
-      int dst = std::abs(_elems[i] - _elems[j]);
-      if (dst == 0)
-        return 0;
-      if (dst < sd)
-        sd = dst;
-    }
+    if (sz <= i)
+      continue;
+    int dst = std::abs(_elems[i] - _elems[i + 1]);
+    if (dst == 0)
+      return 0;
+    if (dst < sd)
+      sd = dst;
   }
 
   return sd;
 }
 
 int Span::longestSpan() const {
-  int sd = 0;
+  int small = std::numeric_limits<int>::max();
+  int big = std::numeric_limits<int>::min();
 
   if (_elems.size() <= 1)
     throw std::out_of_range("not enough elements to calculate a Span");
 
   for (unsigned int i = 0; i < _elems.size(); i++) {
-    for (unsigned int j = 0; j < _elems.size(); j++) {
-      if (i == j)
-        continue;
-      int dst = std::abs(_elems[i] - _elems[j]);
-      if (dst > sd)
-        sd = dst;
-    }
+    if (_elems[i] > big)
+      big = _elems[i];
+    if (_elems[i] < small)
+      small = _elems[i];
   }
 
-  return sd;
+  return std::abs(small - big);
 }
 
 void Span::populate(unsigned int end, int (*f)(unsigned int i)) {

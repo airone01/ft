@@ -20,7 +20,7 @@ int main(void) {
   Span sp1 = Span(20000);
   sp1.populate(20000, &pop_num);
   display_res(sp1);
-  std::cout << "observation: smallest should be 1 and biggest 20000-1=19999"
+  std::cout << "observation: smallest should be 1 and biggest 20k-1"
             << std::endl
             << std::endl;
 
@@ -31,7 +31,7 @@ int main(void) {
   Span sp2 = Span(10000);
   sp2.populate(10000, &pop_rand);
   display_res(sp2);
-  std::cout << "observation: smallest should be 0 and biggest close to 10k"
+  std::cout << "observation: smallest should be 0 and biggest close to 10k-1"
             << std::endl
             << std::endl;
 
@@ -43,7 +43,8 @@ int main(void) {
   for (unsigned int i = 0; i < 1000; i++)
     sp3.addNumber(static_cast<int>(std::rand() % 10000));
   display_res(sp3);
-  std::cout << "observation: smallest should be 0 and biggest close to 10k"
+  std::cout << "observation: smallest and biggest should be close to 0 and 10k "
+               "respectively"
             << std::endl
             << std::endl;
 
