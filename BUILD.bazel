@@ -174,4 +174,16 @@ alias(
   name = "cpp07-ex02",
   actual = "//milestone-5/cpp07/ex02:array"
 )
+alias (
+  name = "cpp08-ex00",
+  actual = "//milestone-5/cpp08/ex00:easyfind"
+)
+alias (
+  name = "cpp08-ex01",
+  actual = "//milestone-5/cpp08/ex01:span"
+)
+alias (
+  name = "cpp08-ex02",
+  actual = "//milestone-5/cpp08/ex02:mutated"
+)
 
