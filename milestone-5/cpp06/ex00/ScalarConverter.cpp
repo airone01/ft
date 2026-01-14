@@ -6,12 +6,11 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 11:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/12 10:13:18 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:25:28 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
-#include <algorithm>
 #include <cctype>
 #include <cmath>
 #include <cstdio>
@@ -21,9 +20,7 @@
 #include <iostream>
 #include <limits>
 #include <sstream>
-#include <stdexcept>
 #include <string>
-#include <vector>
 
 /**
  * @brief This allows keeping track of what has been converted successfully
@@ -36,29 +33,18 @@ typedef struct s_scalar_status {
 } t_scalar_status;
 
 /**
- * @brief Generic function to check if element is part of a vector
- * @note Templates are funny
- * @note I love TypeScript :-)
- */
-template <typename T> bool is_any(const std::vector<T> &v, const T &x) {
-  return (std::find(v.begin(), v.end(), x) != v.end());
-}
-
-/**
- * @brief Checks if s is a number keyword (i.e. "+inff") by leveraging is_any
- * with a vector.
- * @note I wish we had `{1, 2, 3}`, but we can't have nice things in C++ 98.
+ * @brief Checks if s is a number keyword (i.e. "+inff") using standard arrays
  */
 bool is_number_keyword(const std::string &s) {
-  std::vector<std::string> keywords;
-  keywords.push_back("-inff");
-  keywords.push_back("+inff");
-  keywords.push_back("nanf");
-  keywords.push_back("-inf");
-  keywords.push_back("+inf");
-  keywords.push_back("nan");
+  const std::string keywords[] = {"-inff", "+inff", "nanf",
+                                  "-inf",  "+inf",  "nan"};
+  const int count = 6;
 
-  return (is_any(keywords, s));
+  for (int i = 0; i < count; ++i) {
+    if (s == keywords[i])
+      return true;
+  }
+  return false;
 }
 
 bool is_char(const std::string &s) {
@@ -70,15 +56,18 @@ bool is_char(const std::string &s) {
  * valid number
  */
 bool is_number(const std::string &s) {
-  std::istringstream ss(s);
-  double d;
-  if (!(ss >> d))
-    return false; // parse failed
-  if (ss.eof())   // we're at eof, this is a clean double
+  if (s.empty())
+    return false;
+
+  char *endptr;
+  std::strtod(s.c_str(), &endptr);
+  // clean/double
+  if (*endptr == '\0')
     return true;
-  char remaining;
-  ss >> remaining;
-  return (remaining == 'f' && ss.eof()); // char was f and the last char
+  // float
+  if (*endptr == 'f' && *(endptr + 1) == '\0')
+    return true;
+  return false;
 }
 
 /**
@@ -86,29 +75,33 @@ bool is_number(const std::string &s) {
  */
 void display_all(const t_scalar_status &st, const char &c, const int &i,
                  const float &f, const double &d) {
-  std::string no_conv = "(impossible)";
+  std::string no_conv = "impossible";
 
   std::cout << "char:   ";
-  if (st.c)
+  if (st.c) {
     if (std::isprint(c))
-      std::cout << c << std::endl;
+      std::cout << "'" << c << "'" << std::endl;
     else
-      std::cout << "(non displayable)" << std::endl;
-  else
+      std::cout << "Non displayable" << std::endl;
+  } else {
     std::cout << no_conv << std::endl;
+  }
+
   std::cout << "int:    ";
   if (st.i)
     std::cout << i << std::endl;
   else
     std::cout << no_conv << std::endl;
+
   std::cout << "float:  ";
   if (st.f)
     std::cout << std::fixed << std::setprecision(1) << f << "f" << std::endl;
   else
     std::cout << no_conv << std::endl;
+
   std::cout << "double: ";
   if (st.d)
-    std::cout << d << std::endl;
+    std::cout << std::fixed << std::setprecision(1) << d << std::endl;
   else
     std::cout << no_conv << std::endl;
 }
@@ -135,39 +128,39 @@ void ScalarConverter::convert(const std::string &s) {
   t_scalar_status st = reset_all_statuses(true);
   char c = '0';
   int i = 0;
-  float f = 0;
-  double d = 0;
+  float f = 0.0f;
+  double d = 0.0;
 
   if (is_char(s)) { // char
     c = s[0];
     i = static_cast<int>(c);
     f = static_cast<float>(c);
     d = static_cast<double>(c);
-  } else if (is_number_keyword(s)) { // float/double
-    try {
-      d = std::atof(s.c_str());
-      f = static_cast<float>(d);
-      st.c = false;
-      st.i = false;
-    } catch (const std::exception &e) {
-      std::cerr << e.what() << std::endl;
-    }
+  } else if (is_number_keyword(s)) { // pseudo-literals
+    d = std::atof(s.c_str());
+    f = static_cast<float>(d);
+    st.c = false;
+    st.i = false;
   } else if (is_number(s)) { // general number
     d = std::strtod(s.c_str(), NULL);
-    // float's ::min() and ::max() are asymetrical. ::min() returns 0, hence
-    // `-`.
+
+    // note: numeric_limits<float>::max() is positive.
     if (d >= -std::numeric_limits<float>::max() &&
         d <= std::numeric_limits<float>::max())
       f = static_cast<float>(d);
+    else if (std::isinf(d)) // Handle infinity from strtod
+      f = static_cast<float>(d);
     else
       st.f = false;
-    if (d >= std::numeric_limits<int>::min() &&
-        d <= std::numeric_limits<int>::max())
+
+    if (d >= static_cast<double>(std::numeric_limits<int>::min()) &&
+        d <= static_cast<double>(std::numeric_limits<int>::max()))
       i = static_cast<int>(d);
     else
       st.i = false;
-    if (d >= std::numeric_limits<char>::min() &&
-        d <= std::numeric_limits<char>::max())
+
+    if (d >= static_cast<double>(std::numeric_limits<char>::min()) &&
+        d <= static_cast<double>(std::numeric_limits<char>::max()))
       c = static_cast<char>(d);
     else
       st.c = false;
