@@ -14,6 +14,7 @@ Span::Span(const Span &other)
 
 Span &Span::operator=(const Span &other) {
   if (this != &other) {
+    this->_max = other._max;
     this->_elems = other._elems; // std::vector can handle itself
   }
   return *this;
