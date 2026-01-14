@@ -39,11 +39,8 @@ int Span::shortestSpan() const {
   std::vector<int> tmp = _elems;
   std::sort(tmp.begin(), tmp.end());
 
-  unsigned long sz = tmp.size();
-  for (unsigned int i = 0; i < tmp.size(); i++) {
-    if (sz <= i + 1)
-      continue;
-    int dist = std::abs(tmp[i] - tmp[i + 1]);
+  for (std::vector<int>::iterator it = tmp.begin(); it != tmp.end() - 1; it++) {
+    int dist = std::abs(*(it + 1) - *it);
     if (dist == 0)
       return 0;
     if (dist < sd)
@@ -53,19 +50,17 @@ int Span::shortestSpan() const {
   return sd;
 }
 
+/**
+ * @note usage of stl's algos to find shortest span
+ */
 int Span::longestSpan() const {
-  int small = std::numeric_limits<int>::max();
-  int big = std::numeric_limits<int>::min();
-
   if (_elems.size() <= 1)
     throw std::out_of_range("not enough elements to calculate a Span");
 
-  for (unsigned int i = 0; i < _elems.size(); i++) {
-    if (_elems[i] > big)
-      big = _elems[i];
-    if (_elems[i] < small)
-      small = _elems[i];
-  }
+  std::vector<int>::const_iterator min_it =
+      std::min_element(_elems.begin(), _elems.end());
+  std::vector<int>::const_iterator max_it =
+      std::max_element(_elems.begin(), _elems.end());
 
-  return std::abs(small - big);
+  return *max_it - *min_it;
 }
