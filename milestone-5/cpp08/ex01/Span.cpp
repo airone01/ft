@@ -40,11 +40,11 @@ int Span::shortestSpan() const {
   std::sort(tmp.begin(), tmp.end());
 
   for (std::vector<int>::iterator it = tmp.begin(); it != tmp.end() - 1; it++) {
-    int dist = std::abs(*(it + 1) - *it);
+    long dist = std::abs(static_cast<long>(*(it + 1)) - static_cast<long>(*it));
     if (dist == 0)
       return 0;
     if (dist < sd)
-      sd = dist;
+      sd = static_cast<int>(dist);
   }
 
   return sd;
@@ -62,5 +62,6 @@ int Span::longestSpan() const {
   std::vector<int>::const_iterator max_it =
       std::max_element(_elems.begin(), _elems.end());
 
-  return *max_it - *min_it;
+  return static_cast<int>(static_cast<long>(*max_it) -
+                          static_cast<long>(*min_it));
 }
