@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    "milestone-0/libft": {
+      "release-type": "simple",
+      "package-name": "libft"
+    },
+    "milestone-1/ft_printf": {
+      "release-type": "simple",
+      "package-name": "ft_printf"
+    },
+    "milestone-1/get_next_line": {
+      "release-type": "simple",
+      "package-name": "get_next_line"
+    },
+    "milestone-2/fdf": {
+      "release-type": "simple",
+      "package-name": "fdf"
+    },
+    "milestone-2/pipex": {
+      "release-type": "simple",
+      "package-name": "pipex"
+    },
+    "milestone-2/push_swap": {
+      "release-type": "simple",
+      "package-name": "push_swap"
+    },
+    "milestone-3/minishell": {
+      "release-type": "simple",
+      "package-name": "minishell"
+    },
+    "milestone-3/philosophers": {
+      "release-type": "simple",
+      "package-name": "philosophers"
+    },
+    "milestone-4/cub3d": {
+      "release-type": "simple",
+      "package-name": "cub3d"
+    },
+    "rushes/hotrace": {
+      "release-type": "simple",
+      "package-name": "hotrace"
+    },
+    "tools/push-swap-visualizer-minecraft": {
+      "release-type": "rust",
+      "package-name": "push-swap-visualizer"
+    }
+  }
+}
