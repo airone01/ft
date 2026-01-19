@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/05 10:30:43 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/05 10:33:36 by elagouch         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef __SHRUBBERYCREATIONFORM_HPP__
 #define __SHRUBBERYCREATIONFORM_HPP__
 
