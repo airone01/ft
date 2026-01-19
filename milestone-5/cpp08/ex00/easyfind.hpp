@@ -6,7 +6,7 @@
 /**
  * @throws out_of_range
  */
-template <typename T> int easyfind(T v, const int &el) {
+template <class T> int easyfind(T v, const int &el) {
   for (unsigned int i = 0; i < v.size(); i++)
     if (v[i] == el)
       return v[i];
