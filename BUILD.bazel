@@ -186,4 +186,8 @@ alias (
   name = "cpp08-ex02",
   actual = "//milestone-5/cpp08/ex02:mutated"
 )
+alias (
+  name = "cpp09-ex00",
+  actual = "//milestone-5/cpp09/ex00:btc"
+)
 
