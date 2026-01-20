@@ -19,5 +19,5 @@ jobs:
           # use the manifest approach for monorepos
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
