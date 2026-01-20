@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
+#include <sys/stat.h>
+#include <unistd.h>
 
 BitcoinExchange::BitcoinExchange() {}
 
@@ -18,6 +20,9 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 
+/**
+ * @brief trims whitespaces from a line
+ */
 std::string BitcoinExchange::_trim(const std::string &str) {
   size_t first = str.find_first_not_of(" \t");
   if (std::string::npos == first)
@@ -26,7 +31,29 @@ std::string BitcoinExchange::_trim(const std::string &str) {
   return str.substr(first, (last - first + 1));
 }
 
+bool is_file(const std::string &filename) {
+  struct stat s;
+  if (stat(filename.c_str(), &s) == 0) {
+    // S_ISDIR checks mode bit
+    if (s.st_mode & S_IFREG)
+      return true;
+    return false;
+  }
+  return false;
+}
+
+void check_file(const std::string &filename) {
+  if (access(filename.c_str(), R_OK) != 0)
+    throw std::runtime_error("path could not be read");
+  if (!is_file(filename))
+    throw std::runtime_error("path is not a file");
+}
+
+/**
+ * @brief reads and load a database file to memory
+ */
 void BitcoinExchange::loadDatabase(const std::string &filename) {
+  check_file(filename);
   std::ifstream file(filename.c_str());
   if (!file.is_open())
     throw std::runtime_error("could not open database file.");
@@ -107,29 +134,21 @@ float BitcoinExchange::_getExchangeRate(const std::string &date) {
 }
 
 void BitcoinExchange::processInput(const std::string &filename) {
+  check_file(filename);
   std::ifstream file(filename.c_str());
-  if (!file.is_open()) {
-    std::cout << "Error: could not open file." << std::endl;
-    return;
-  }
+  if (!file.is_open())
+    throw std::runtime_error("could not open query file.");
 
   std::string line;
-  // Read first line to check for header, but purely relying on format check is
-  // safer logic inside the loop handles lines.
-  std::getline(file, line);
-  if (line != "date | value") {
-    // If the first line isn't the header, we reset to beginning (optional,
-    // but strictly strict inputs usually have the header)
-    // For safety, let's just ignore the first line if it looks like a header
-  }
-
+  bool first = true;
   while (std::getline(file, line)) {
-    if (line.empty())
+    if (line.empty() || (first && line == "date | value"))
       continue;
+    first = false;
 
     size_t pipePos = line.find('|');
     if (pipePos == std::string::npos) {
-      std::cout << "Error: bad input => " << line << std::endl;
+      std::cout << "error: bad input \"" << line << "\"" << std::endl;
       continue;
     }
 
@@ -137,24 +156,24 @@ void BitcoinExchange::processInput(const std::string &filename) {
     std::string valueStr = _trim(line.substr(pipePos + 1));
 
     if (!_isValidDate(date)) {
-      std::cout << "Error: bad input => " << date << std::endl;
+      std::cout << "error: bad input \"" << date << "\"" << std::endl;
       continue;
     }
 
     float value;
     if (!_isValidValue(valueStr, value)) {
-      std::cout << "Error: bad input => " << valueStr << std::endl;
+      std::cout << "error: bad input \"" << valueStr << "\""<< std::endl;
       continue;
     }
 
     if (value < 0) {
-      std::cout << "Error: not a positive number." << std::endl;
+      std::cout << "error: not a positive number." << std::endl;
       continue;
     }
 
     // Constraint: value must be between 0 and 1000
     if (value > 1000.0f) {
-      std::cout << "Error: too large a number." << std::endl;
+      std::cout << "error: too large a number." << std::endl;
       continue;
     }
 
