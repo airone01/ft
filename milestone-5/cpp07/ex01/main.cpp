@@ -1,17 +1,16 @@
 #include "iter.hpp"
 #include <iostream>
-#include <vector>
 
 void my_print(int e) { std::cout << "iterating " << e << std::endl; }
 
 int main(void) {
-  std::vector<int> v;
-  v.push_back(1);
-  v.push_back(2);
-  v.push_back(3);
-  v.push_back(42);
+  int v[4];
+  v[0] = 1;
+  v[1] = 2;
+  v[2] = 3;
+  v[3] = 42;
 
-  iter(&v[0], static_cast<int>(v.size()), my_print);
+  iter(&v[0], 4, my_print);
 
   return 0;
 }

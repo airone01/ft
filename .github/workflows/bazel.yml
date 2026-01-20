@@ -3,32 +3,9 @@ name: Bazel CI
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
-    paths:
-      - 'milestone-*/**/*.c'
-      - 'milestone-*/**/*.cpp'
-      - 'milestone-*/**/*.cc'
-      - 'milestone-*/**/*.cxx'
-      - 'milestone-*/**/*.h'
-      - 'milestone-*/**/*.hpp'
-      - 'milestone-*/**/*.hh'
-      - 'milestone-*/**/*.hxx'
-      - 'milestone-*/**/*.bazel'
-      - 'milestone-*/**/*.lock'
-      - '.github/workflows/bazel.yml'
+    branches:
+      - main
   pull_request:
-    paths:
-      - 'milestone-*/**/*.c'
-      - 'milestone-*/**/*.cpp'
-      - 'milestone-*/**/*.cc'
-      - 'milestone-*/**/*.cxx'
-      - 'milestone-*/**/*.h'
-      - 'milestone-*/**/*.hpp'
-      - 'milestone-*/**/*.hh'
-      - 'milestone-*/**/*.hxx'
-      - 'milestone-*/**/*.bazel'
-      - 'milestone-*/**/*.lock'
-      - '.github/workflows/bazel.yml'
 
 jobs:
   build:

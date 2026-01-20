@@ -33,7 +33,7 @@ public:
   /**
    * @brief reproduces the behavior of `::insert` but safe
    */
-  template <typename InputIt> void insert(InputIt begin, InputIt end) {
+  template <class InputIt> void insert(InputIt begin, InputIt end) {
     unsigned long dist = static_cast<unsigned long>(std::distance(begin, end));
     if (_elems.size() + dist > _max)
       throw std::out_of_range("not enough space in Span to add this range");

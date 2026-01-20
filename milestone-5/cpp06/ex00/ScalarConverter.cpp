@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/09 11:51:00 by elagouch          #+#    #+#             */
-/*   Updated: 2026/01/14 16:25:28 by elagouch         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ScalarConverter.hpp"
 #include <cctype>
 #include <cmath>
@@ -19,7 +7,6 @@
 #include <ios>
 #include <iostream>
 #include <limits>
-#include <sstream>
 #include <string>
 
 /**
