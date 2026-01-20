@@ -1,6 +1,66 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": {
+    "piscine-c/shell00": {
+      "release-type": "simple",
+      "package-name": "piscine-c-shell00"
+    },
+    "piscine-c/shell01": {
+      "release-type": "simple",
+      "package-name": "piscine-c-shell01"
+    },
+    "piscine-c/c00": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c00"
+    },
+    "piscine-c/c01": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c01"
+    },
+    "piscine-c/c02": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c02"
+    },
+    "piscine-c/c03": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c03"
+    },
+    "piscine-c/c04": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c04"
+    },
+    "piscine-c/c05": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c05"
+    },
+    "piscine-c/c06": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c06"
+    },
+    "piscine-c/c07": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c07"
+    },
+    "piscine-c/c08": {
+      "release-type": "simple",
+      "package-name": "piscine-c-c08"
+    },
+    "piscine-c/rush00": {
+      "release-type": "simple",
+      "package-name": "piscine-c-rush00"
+    },
+    "piscine-c/rush01": {
+      "release-type": "simple",
+      "package-name": "piscine-c-rush01"
+    },
+    "piscine-c/rush02": {
+      "release-type": "simple",
+      "package-name": "piscine-c-rush02"
+    },
+    "piscine-c/bsq": {
+      "release-type": "simple",
+      "package-name": "piscine-c-bsq"
+    },
     "milestone-0/libft": {
       "release-type": "simple",
       "package-name": "libft"
@@ -36,6 +96,46 @@
     "milestone-4/cub3d": {
       "release-type": "simple",
       "package-name": "cub3d"
+    },
+    "milestone-4/cpp00": {
+      "release-type": "simple",
+      "package-name": "cpp00"
+    },
+    "milestone-4/cpp01": {
+      "release-type": "simple",
+      "package-name": "cpp01"
+    },
+    "milestone-4/cpp02": {
+      "release-type": "simple",
+      "package-name": "cpp02"
+    },
+    "milestone-4/cpp03": {
+      "release-type": "simple",
+      "package-name": "cpp03"
+    },
+    "milestone-4/cpp04": {
+      "release-type": "simple",
+      "package-name": "cpp04"
+    },
+    "milestone-5/cpp05": {
+      "release-type": "simple",
+      "package-name": "cpp05"
+    },
+    "milestone-5/cpp06": {
+      "release-type": "simple",
+      "package-name": "cpp06"
+    },
+    "milestone-5/cpp07": {
+      "release-type": "simple",
+      "package-name": "cpp07"
+    },
+    "milestone-5/cpp08": {
+      "release-type": "simple",
+      "package-name": "cpp08"
+    },
+    "milestone-5/inception": {
+      "release-type": "simple",
+      "package-name": "inception"
     },
     "rushes/hotrace": {
       "release-type": "simple",
