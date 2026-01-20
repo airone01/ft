@@ -1,13 +1,13 @@
 {
-  "milestone-0/libft": "1.0.0",
-  "milestone-1/ft_printf": "1.0.0",
-  "milestone-1/get_next_line": "1.0.0",
-  "milestone-2/fdf": "1.0.0",
-  "milestone-2/pipex": "1.0.0",
-  "milestone-2/push_swap": "1.0.0",
-  "milestone-3/minishell": "1.0.0",
-  "milestone-3/philosophers": "1.0.0",
-  "milestone-4/cub3d": "1.0.0",
-  "rushes/hotrace": "1.0.0",
-  "tools/push-swap-visualizer-minecraft": "0.1.0"
+  "milestone-0/libft": "2.0.0",
+  "milestone-1/ft_printf": "2.0.0",
+  "milestone-1/get_next_line": "2.0.0",
+  "milestone-2/fdf": "2.0.0",
+  "milestone-2/pipex": "2.0.0",
+  "milestone-2/push_swap": "2.0.0",
+  "milestone-3/minishell": "2.0.0",
+  "milestone-3/philosophers": "2.0.0",
+  "milestone-4/cub3d": "2.0.0",
+  "rushes/hotrace": "2.0.0",
+  "tools/push-swap-visualizer-minecraft": "1.0.0"
 }
