@@ -1,10 +1,13 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("//:tools/bazel/copts.bzl", "CXX_COPTS")
 
 cc_binary(
     name = "claptrap",
-    srcs = glob(["src/*.cpp", "includes/*.hpp"]),
-    includes = ["includes"],
+    srcs = glob([
+        "src/*.cpp",
+        "includes/*.hpp",
+    ]),
     copts = CXX_COPTS,
+    includes = ["includes"],
     visibility = ["//visibility:public"],
 )
-

@@ -1,3 +1,4 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("//:tools/bazel/copts.bzl", "CXX_COPTS")
 
 cc_binary(
@@ -6,4 +7,3 @@ cc_binary(
     copts = CXX_COPTS,
     visibility = ["//visibility:public"],
 )
-

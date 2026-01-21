@@ -1,3 +1,4 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//:tools/bazel/copts.bzl", "CC_COPTS")
 
 cc_library(
@@ -7,5 +8,5 @@ cc_library(
     copts = CC_COPTS,
     includes = ["includes"],
     visibility = ["//visibility:public"],
-    deps = ["//milestone-0/libft:libft"],
+    deps = ["//milestone-0/libft"],
 )
