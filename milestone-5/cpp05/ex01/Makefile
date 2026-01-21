@@ -18,7 +18,8 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
-re: fclean all
+re: fclean
+	$(MAKE) all
 
 -include $(SRC:.cpp=.d)
 

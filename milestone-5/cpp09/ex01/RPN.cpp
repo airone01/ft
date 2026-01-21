@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <stack>
-#include <sys/types.h>
 
 #define RPN_CHARS_DIGIT "0123456789"
 #define RPN_CHARS_OP "+-*/"
@@ -21,11 +20,11 @@ RPN RPN::operator=(const RPN &) { return *this; }
  * @note using a bool table and casting chars to uint allows us to avoid having
  * to use a map
  */
-ssize_t my_count(const std::string &s, const std::string &charset) {
+long my_count(const std::string &s, const std::string &charset) {
   bool allowed[256] = {};
   for (std::string::size_type i = 0; i < charset.size(); i++)
     allowed[static_cast<unsigned int>(charset[i])] = true;
-  ssize_t count = 0;
+  long count = 0;
   for (std::string::size_type i = 0; i < s.size(); i++)
     if (allowed[static_cast<unsigned int>(s[i])])
       count++;
@@ -48,7 +47,7 @@ void RPN::parse(const std::string &str) {
 
   std::string::difference_type digCount = my_count(str, RPN_CHARS_DIGIT);
   std::string::difference_type opCount = my_count(str, RPN_CHARS_OP);
-  if ((opCount < 1) || (opCount != (digCount - 1)))
+  if ((opCount == 0 && digCount != 1) || (opCount != (digCount - 1)))
     throw InvalidRpnException();
 
   std::stack<long> st;
@@ -58,6 +57,8 @@ void RPN::parse(const std::string &str) {
     if (std::string(" \t").find_first_of(smStr) != std::string::npos)
       continue;
     if (std::string(RPN_CHARS_OP).find_first_of(smStr) != std::string::npos) {
+      if (st.size() < 2)
+        throw InvalidRpnException();
       long x = st.top();
       st.pop();
       long y = st.top();
@@ -82,15 +83,15 @@ void RPN::parse(const std::string &str) {
       st.push(static_cast<long>(*it - '0'));
   }
 
-  std::cerr << st.top() << std::endl;
+  std::cout << st.top() << std::endl;
 }
 
 const char *RPN::IllegalCharacterException::what() const throw() {
-  return "illegal character in inverted Polish mathematical expression";
+  return "illegal character in inverted polish mathematical expression";
 }
 
 const char *RPN::InvalidRpnException::what() const throw() {
-  return "invalid Polish mathematical expression";
+  return "invalid inverted polish mathematical expression";
 }
 
 const char *RPN::DivByZeroException::what() const throw() {
