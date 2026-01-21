@@ -1,3 +1,5 @@
+#include "RPN.hpp"
+#include <exception>
 #include <iostream>
 
 int main(int argc, char *argv[]) {
@@ -6,10 +8,11 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  if (std::string(argv[1]).find_first_not_of(" \t0123456789+-*/") !=
-      std::string::npos) {
-    std::cerr << "error: illegal character" << std::endl;
-    return 1;
+  RPN r;
+  try {
+    r.parse(argv[1]);
+  } catch (const std::exception &e) {
+    std::cerr << "error: " << e.what() << std::endl;
   }
 
   return 0;
