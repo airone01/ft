@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/airone01/ft/compare/cpp08-v1.0.0...cpp08-v1.0.1) (2026-01-21)
+
+
+### Performance Improvements
+
+* **cpp08:** minor perf fix ([#107](https://github.com/airone01/ft/issues/107)) ([f29bc0b](https://github.com/airone01/ft/commit/f29bc0b003cd463f17a7488205ca311c6d10365e))
+
 ## 1.0.0 (2026-01-20)
 
 
