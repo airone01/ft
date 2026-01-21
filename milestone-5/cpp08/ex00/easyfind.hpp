@@ -16,7 +16,7 @@
  * @throws out_of_range
  * @param c container
  */
-template <class T> int easyfind(T c, const int &el) {
+template <class T> int easyfind(T &c, int el) {
   typename T::iterator it = std::find(c.begin(), c.end(), el);
   if (it == c.end())
     throw std::out_of_range("could not find value.");
