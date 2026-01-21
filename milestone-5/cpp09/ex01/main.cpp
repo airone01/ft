@@ -8,9 +8,8 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  RPN r;
   try {
-    r.parse(argv[1]);
+    RPN::parse(argv[1]);
   } catch (const std::exception &e) {
     std::cerr << "error: " << e.what() << std::endl;
   }

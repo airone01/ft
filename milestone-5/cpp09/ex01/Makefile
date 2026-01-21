@@ -1,7 +1,7 @@
 NAME		= RPN
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMD -MP
-CXXFLAGS	+= -Wconversion -pedantic
+CXXFLAGS	+= -Wconversion -pedantic -g3
 SRC			= main.cpp RPN.cpp
 OBJ			= $(SRC:.cpp=.o)
 
