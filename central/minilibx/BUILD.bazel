@@ -1,3 +1,5 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
 cc_library(
     name = "mlx",
     srcs = glob(["*.c"]),
@@ -9,7 +11,8 @@ cc_library(
         "-std=gnu89",
         "-w",  # Suppress warnings for external library
         "-O3",
-        "-include", "xpm.h",
+        "-include",
+        "xpm.h",
     ],
     includes = [
         ".",
@@ -28,4 +31,3 @@ cc_library(
         "//external-libs/libXpm:xpm",
     ],
 )
-
