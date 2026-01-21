@@ -31,6 +31,11 @@ public:
   public:
     virtual const char* what() const throw();
   };
+
+  class DivByZeroException: public std::exception {
+  public:
+    virtual const char* what() const throw();
+  };
 };
 
 #endif // !RPN_HPP
