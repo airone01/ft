@@ -1,11 +1,11 @@
 """System library dependencies for non-Nix environments"""
 
-load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 load("@bazel_tools//tools/build_defs/repo:local.bzl", "new_local_repository")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def load_dependencies():
     """Load system-installed X11 libraries"""
-    
+
     maybe(
         new_local_repository,
         name = "x11",
@@ -19,7 +19,7 @@ cc_library(
 )
 """,
     )
-    
+
     maybe(
         new_local_repository,
         name = "xext",
@@ -33,7 +33,7 @@ cc_library(
 )
 """,
     )
-    
+
     maybe(
         new_local_repository,
         name = "xorg_proto",
@@ -46,7 +46,7 @@ cc_library(
 )
 """,
     )
-    
+
     maybe(
         new_local_repository,
         name = "xpm",
@@ -60,7 +60,7 @@ cc_library(
 )
 """,
     )
-    
+
     maybe(
         new_local_repository,
         name = "zlib",
@@ -74,7 +74,7 @@ cc_library(
 )
 """,
     )
-    
+
     maybe(
         new_local_repository,
         name = "libbsd",

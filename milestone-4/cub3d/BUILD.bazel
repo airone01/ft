@@ -1,3 +1,4 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("//:tools/bazel/copts.bzl", "CC_COPTS")
 
 ### Note:
@@ -34,41 +35,53 @@ load("//:tools/bazel/copts.bzl", "CC_COPTS")
 # )
 
 cc_binary(
-	name = "cub3d",
-	srcs = glob(
-		[ "src/*.c", "includes/*.h" ],
-		exclude = [ "src/*_b.c", "src/*_b2.c" ],
-	),
+    name = "cub3d",
+    srcs = glob(
+        [
+            "src/*.c",
+            "includes/*.h",
+        ],
+        exclude = [
+            "src/*_b.c",
+            "src/*_b2.c",
+        ],
+    ),
     copts = CC_COPTS + [
         "-Wno-incompatible-pointer-types",
         "-Wno-cast-function-type",
     ],
     includes = ["includes"],
-    deps = [
-        "//milestone-0/libft:libft",
-        "//milestone-1/ft_printf:ft_printf",
-        "//milestone-1/get_next_line:get_next_line",
-        "//central/minilibx:mlx",
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        "//central/minilibx:mlx",
+        "//milestone-0/libft",
+        "//milestone-1/ft_printf",
+        "//milestone-1/get_next_line",
+    ],
 )
 
 cc_binary(
-	name = "cub3d-bonus",
-	srcs = glob(
-		[ "src/*.c", "includes/*.h" ],
-		exclude = [ "src/*_m.c", "src/*_m2.c" ],
-	),
+    name = "cub3d-bonus",
+    srcs = glob(
+        [
+            "src/*.c",
+            "includes/*.h",
+        ],
+        exclude = [
+            "src/*_m.c",
+            "src/*_m2.c",
+        ],
+    ),
     copts = CC_COPTS + [
         "-Wno-incompatible-pointer-types",
         "-Wno-cast-function-type",
     ],
     includes = ["includes"],
-    deps = [
-        "//milestone-0/libft:libft",
-        "//milestone-1/ft_printf:ft_printf",
-        "//milestone-1/get_next_line:get_next_line",
-        "//central/minilibx:mlx",
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        "//central/minilibx:mlx",
+        "//milestone-0/libft",
+        "//milestone-1/ft_printf",
+        "//milestone-1/get_next_line",
+    ],
 )

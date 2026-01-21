@@ -22,6 +22,7 @@ alias(
     name = "ft_printf",
     actual = "//milestone-1/ft_printf:ft_printf",
 )
+
 alias(
     name = "get_next_line",
     actual = "//milestone-1/get_next_line:get_next_line",
@@ -32,10 +33,12 @@ alias(
     name = "fdf",
     actual = "//milestone-2/fdf:fdf",
 )
+
 alias(
     name = "pipex",
     actual = "//milestone-2/pipex:pipex",
 )
+
 alias(
     name = "push_swap",
     actual = "//milestone-2/push_swap:push_swap",
@@ -46,6 +49,7 @@ alias(
     name = "minishell",
     actual = "//milestone-3/minishell:minishell",
 )
+
 alias(
     name = "philosophers",
     actual = "//milestone-3/philosophers:philosophers",
@@ -56,135 +60,106 @@ alias(
     name = "cub3d",
     actual = "//milestone-4/cub3d:cub3d",
 )
+
 alias(
     name = "cub3d-bonus",
     actual = "//milestone-4/cub3d:cub3d-bonus",
 )
+
 alias(
-  name = "cpp00-ex00",
-  actual = "//milestone-4/cpp00/ex00:megaphone"
+    name = "cpp00-ex00",
+    actual = "//milestone-4/cpp00/ex00:megaphone",
 )
+
 alias(
-  name = "cpp00-ex01",
-  actual = "//milestone-4/cpp00/ex01:phonebook"
+    name = "cpp00-ex01",
+    actual = "//milestone-4/cpp00/ex01:phonebook",
 )
+
 alias(
-  name = "cpp00-ex02",
-  actual = "//milestone-4/cpp00/ex02:bank"
+    name = "cpp00-ex02",
+    actual = "//milestone-4/cpp00/ex02:bank",
 )
+
 alias(
-  name = "cpp01-ex00",
-  actual = "//milestone-4/cpp01/ex00:brainz"
+    name = "cpp01-ex00",
+    actual = "//milestone-4/cpp01/ex00:brainz",
 )
+
 alias(
-  name = "cpp01-ex01",
-  actual = "//milestone-4/cpp01/ex01:more_brainz"
+    name = "cpp01-ex01",
+    actual = "//milestone-4/cpp01/ex01:more_brainz",
 )
+
 alias(
-  name = "cpp01-ex02",
-  actual = "//milestone-4/cpp01/ex02:htib"
+    name = "cpp01-ex02",
+    actual = "//milestone-4/cpp01/ex02:htib",
 )
+
 alias(
-  name = "cpp01-ex03",
-  actual = "//milestone-4/cpp01/ex03:uv"
+    name = "cpp01-ex03",
+    actual = "//milestone-4/cpp01/ex03:uv",
 )
+
 alias(
-  name = "cpp01-ex04",
-  actual = "//milestone-4/cpp01/ex04:sed"
+    name = "cpp01-ex04",
+    actual = "//milestone-4/cpp01/ex04:sed",
 )
+
 alias(
-  name = "cpp01-ex05",
-  actual = "//milestone-4/cpp01/ex05:harl"
+    name = "cpp01-ex05",
+    actual = "//milestone-4/cpp01/ex05:harl",
 )
+
 alias(
-  name = "cpp02-ex00",
-  actual = "//milestone-4/cpp02/ex00:fixed"
+    name = "cpp02-ex00",
+    actual = "//milestone-4/cpp02/ex00:fixed",
 )
+
 alias(
-  name = "cpp02-ex01",
-  actual = "//milestone-4/cpp02/ex01:fixed"
+    name = "cpp02-ex01",
+    actual = "//milestone-4/cpp02/ex01:fixed",
 )
+
 alias(
-  name = "cpp02-ex02",
-  actual = "//milestone-4/cpp02/ex02:fixed"
+    name = "cpp02-ex02",
+    actual = "//milestone-4/cpp02/ex02:fixed",
 )
+
 alias(
-  name = "cpp03-ex00",
-  actual = "//milestone-4/cpp03/ex00:claptrap"
+    name = "cpp03-ex00",
+    actual = "//milestone-4/cpp03/ex00:claptrap",
 )
+
 alias(
-  name = "cpp03-ex01",
-  actual = "//milestone-4/cpp03/ex01:scavtrap"
+    name = "cpp03-ex01",
+    actual = "//milestone-4/cpp03/ex01:scavtrap",
 )
+
 alias(
-  name = "cpp03-ex02",
-  actual = "//milestone-4/cpp03/ex02:fragtrap"
+    name = "cpp03-ex02",
+    actual = "//milestone-4/cpp03/ex02:fragtrap",
 )
+
 alias(
-  name = "cpp04-ex00",
-  actual = "//milestone-4/cpp04/ex00:animals"
+    name = "cpp04-ex00",
+    actual = "//milestone-4/cpp04/ex00:animals",
 )
+
 alias(
-  name = "cpp04-ex01",
-  actual = "//milestone-4/cpp04/ex01:animals"
+    name = "cpp04-ex01",
+    actual = "//milestone-4/cpp04/ex01:animals",
 )
+
 alias(
-  name = "cpp04-ex02",
-  actual = "//milestone-4/cpp04/ex02:abstract"
+    name = "cpp04-ex02",
+    actual = "//milestone-4/cpp04/ex02:abstract",
 )
 
 ### MILESTONE 5
 alias(
-  name = "cpp05-ex00",
-  actual = "//milestone-5/cpp05/ex00:bureaucrat"
-)
-alias(
-  name = "cpp05-ex01",
-  actual = "//milestone-5/cpp05/ex01:forms"
-)
-alias(
-  name = "cpp05-ex02",
-  actual = "//milestone-5/cpp05/ex02:28B"
-)
-alias(
-  name = "cpp05-ex03",
-  actual = "//milestone-5/cpp05/ex03:intern"
-)
-alias(
-  name = "cpp06-ex00",
-  actual = "//milestone-5/cpp06/ex00:converter"
-)
-alias(
-  name = "cpp06-ex01",
-  actual = "//milestone-5/cpp06/ex01:serializer"
-)
-alias(
-  name = "cpp06-ex02",
-  actual = "//milestone-5/cpp06/ex02:id"
-)
-alias(
-  name = "cpp07-ex00",
-  actual = "//milestone-5/cpp07/ex00:tmpls"
-)
-alias(
-  name = "cpp07-ex01",
-  actual = "//milestone-5/cpp07/ex01:iter"
-)
-alias(
-  name = "cpp07-ex02",
-  actual = "//milestone-5/cpp07/ex02:array"
-)
-alias (
-  name = "cpp08-ex00",
-  actual = "//milestone-5/cpp08/ex00:easyfind"
-)
-alias (
-  name = "cpp08-ex01",
-  actual = "//milestone-5/cpp08/ex01:span"
-)
-alias (
-  name = "cpp08-ex02",
-  actual = "//milestone-5/cpp08/ex02:mutated"
+    name = "cpp05-ex00",
+    actual = "//milestone-5/cpp05/ex00:bureaucrat",
 )
 alias (
   name = "cpp09-ex00",
@@ -195,3 +170,62 @@ alias (
   actual = "//milestone-5/cpp09/ex01:RPN"
 )
 
+alias(
+    name = "cpp05-ex01",
+    actual = "//milestone-5/cpp05/ex01:forms",
+)
+
+alias(
+    name = "cpp05-ex02",
+    actual = "//milestone-5/cpp05/ex02:28B",
+)
+
+alias(
+    name = "cpp05-ex03",
+    actual = "//milestone-5/cpp05/ex03:intern",
+)
+
+alias(
+    name = "cpp06-ex00",
+    actual = "//milestone-5/cpp06/ex00:converter",
+)
+
+alias(
+    name = "cpp06-ex01",
+    actual = "//milestone-5/cpp06/ex01:serializer",
+)
+
+alias(
+    name = "cpp06-ex02",
+    actual = "//milestone-5/cpp06/ex02:id",
+)
+
+alias(
+    name = "cpp07-ex00",
+    actual = "//milestone-5/cpp07/ex00:tmpls",
+)
+
+alias(
+    name = "cpp07-ex01",
+    actual = "//milestone-5/cpp07/ex01:iter",
+)
+
+alias(
+    name = "cpp07-ex02",
+    actual = "//milestone-5/cpp07/ex02:array",
+)
+
+alias(
+    name = "cpp08-ex00",
+    actual = "//milestone-5/cpp08/ex00:easyfind",
+)
+
+alias(
+    name = "cpp08-ex01",
+    actual = "//milestone-5/cpp08/ex01:span",
+)
+
+alias(
+    name = "cpp08-ex02",
+    actual = "//milestone-5/cpp08/ex02:mutated",
+)
