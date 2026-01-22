@@ -15,6 +15,7 @@ private:
   float _getExchangeRate(const std::string &date);
 
 public:
+  // OCF
   BitcoinExchange();
   BitcoinExchange(const BitcoinExchange &other);
   BitcoinExchange &operator=(const BitcoinExchange &other);

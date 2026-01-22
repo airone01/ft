@@ -1,0 +1,35 @@
+#include "PmergeMe.hpp"
+#include <exception>
+#include <iostream>
+
+int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    std::cerr << "usage: " << argv[0] << " <positive integer sequence>"
+              << std::endl;
+    return 1;
+  }
+
+  try {
+    // parse
+    PmergeMe p(argv[1]);
+
+    std::cout << "Before (vec): " << p.getVector() << std::endl;
+    std::cout << "Before (deq): " << p.getDeque() << std::endl;
+
+    // TODO: timer start
+    p.sortVector();
+    // TODO: timer end
+
+    // TODO: timer start
+    // TODO: FJ sort deq
+    // TODO: timer end
+
+    std::cout << "After  (vec): " << p.getVector() << std::endl;
+    std::cout << "After  (dec): " << p.getDeque() << std::endl;
+  } catch (const std::exception &e) {
+    std::cerr << "error: " << e.what() << std::endl;
+    return 1;
+  }
+
+  return 0;
+}
