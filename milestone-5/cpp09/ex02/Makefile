@@ -22,6 +22,12 @@ fclean: clean
 re: fclean
 	$(MAKE) all
 
+run10: $(NAME)
+	@./$(NAME) "$$(shuf -i 1-10 -n 10|tr '\n' ' ')"
+
+run10k: $(NAME)
+	@./$(NAME) "$$(shuf -i 1-10000 -n 10000|tr '\n' ' ')"
+
 -include $(SRC:.cpp=.d)
 
 .PHONY: all clean fclean re

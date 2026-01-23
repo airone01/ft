@@ -8,16 +8,14 @@
 #include <sched.h>
 #include <sstream>
 #include <string>
-#include <vector>
 
 /**
- * @tparam _C container type
- * @tparam _A STD allocator
+ * @tparam _C container type, defaults to `std::vector`
  */
-template <template <class, class> class _C, class _A> class PmergeMe {
+template <class _C> class PmergeMe {
 public:
   // OCF
-  PmergeMe() : _data(_C<unsigned long, _A>()) {}
+  PmergeMe() : _data(_C()) {}
   PmergeMe(const PmergeMe &o) : _data(o._data) {}
   PmergeMe operator=(const PmergeMe &o) {
     if (this != &o)
@@ -26,9 +24,9 @@ public:
   }
   ~PmergeMe() {}
 
-  PmergeMe(_C<unsigned long, _A> &data) : _data(data) {}
+  PmergeMe(_C &data) : _data(data) {}
 
-  PmergeMe(const std::string &str) : _data(_C<unsigned long, _A>()) {
+  PmergeMe(const std::string &str) : _data(_C()) {
     if (str.empty() ||
         (str.find_first_not_of(" \t0123456789") != std::string::npos))
       throw InvalidInputException();
@@ -39,27 +37,33 @@ public:
       _data.push_back(n);
   }
 
-  /* cannot forward CData def here, hence why writing all the types manually */
+  void sort() {
+    _C indices;
+    for (size_t i = 0; i < _data.size(); i++)
+      indices.push_back(i);
+    _C sortedIndices = sortIndices(indices, _data);
+    _C reconstructedData;
+    for (size_t i = 0; i < sortedIndices.size(); i++)
+      reconstructedData.push_back(_data[sortedIndices[i]]);
+    _data = reconstructedData;
+  }
 
-  const std::vector<ulong> &getData() const { return _data; }
+  const _C &getData() const { return _data; }
 
   class InvalidInputException : public std::exception {
     virtual const char *what() const throw() { return "invalid input"; };
   };
 
 private:
-  typedef _C<unsigned long, _A> CData;
-  typedef _C<size_t, _A> CIndice;
-
-  CData _data;
+  _C _data;
 
   struct CompareIndices {
-    const CData &_data;
-    CompareIndices(const CData &data) : _data(data) {}
+    const _C &_data;
+    CompareIndices(const _C &data) : _data(data) {}
     bool operator()(size_t a, size_t b) const { return _data[a] < _data[b]; }
   };
 
-  CIndice sortIndices(CIndice &indices, CData &data) {
+  _C sortIndices(_C &indices, _C &data) {
     if (indices.size() < 2)
       return indices;
 
@@ -73,8 +77,8 @@ private:
     }
 
     // pairing
-    CIndice winners;
-    CIndice pairs(data.size());
+    _C winners;
+    _C pairs(data.size());
     for (size_t i = 0; i + 1 < indices.size(); i += 2) {
       ulong idxA = indices[i];
       ulong idxB = indices[i + 1];
@@ -89,16 +93,16 @@ private:
     }
 
     // rec
-    CIndice sortedWinners = sortIndices(winners, data);
+    _C sortedWinners = sortIndices(winners, data);
 
     // insertion
-    CIndice finalChain = sortedWinners;
+    _C finalChain = sortedWinners;
     // immediatly insert first
     finalChain.insert(finalChain.begin(), pairs[sortedWinners[0]]);
 
     // jacobsthal loop
     size_t nPending = sortedWinners.size() - 1;
-    CData jacob = genJacobsthal(indices.size());
+    _C jacob = genJacobsthal(indices.size());
     size_t lastJacobIdx = 0;
     for (size_t i = 0; i < jacob.size(); i++) {
       size_t currentJacobIdx = jacob[i];
@@ -112,7 +116,7 @@ private:
 
         // this might not be the fastest because we binary search the whole
         // stack instead of stopping early
-        typename CData::iterator pos =
+        typename _C::iterator pos =
             std::upper_bound(finalChain.begin(), finalChain.end(), loserIdx,
                              CompareIndices(data));
 
@@ -123,24 +127,13 @@ private:
 
     // restore straggler
     if (hasStraggler) {
-      typename CData::iterator pos =
+      typename _C::iterator pos =
           std::upper_bound(finalChain.begin(), finalChain.end(), stragglerIdx,
                            CompareIndices(data));
       finalChain.insert(pos, stragglerIdx);
     }
 
     return finalChain;
-  }
-
-  void sort() {
-    CIndice indices;
-    for (size_t i = 0; i < _data.size(); i++)
-      indices.push_back(i);
-    CIndice sortedIndices = sortIndices(indices, _data);
-    CData reconstructedData;
-    for (size_t i = 0; i < sortedIndices.size(); i++)
-      reconstructedData.push_back(_data[sortedIndices[i]]);
-    _data = reconstructedData;
   }
 
   /**
@@ -151,8 +144,8 @@ private:
    * @see https://oeis.org/A001045
    * @see https://en.wikipedia.org/wiki/Jacobsthal_number
    */
-  _C<ulong, _A> genJacobsthal(size_t len) {
-    _C<ulong, _A> j;
+  _C genJacobsthal(size_t len) {
+    _C j;
     if (len > 0)
       j.push_back(0);
     if (len > 1)
