@@ -11,9 +11,9 @@ int main(int argc, char *argv[]) {
 
   try {
     // parse
-    PmergeMe p(argv[1]);
+    PmergeMe<std::vector> p(argv[1]);
 
-    std::cout << "Before: " << p.getVector() << std::endl;
+    std::cout << "Before: " << p.getData() << std::endl;
 
     // TODO: timer start
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     // TODO: FJ sort deq
     // TODO: timer end
 
-    std::cout << "After : " << p.getVector() << std::endl;
+    std::cout << "After : " << p.getData() << std::endl;
     // TODO: display time taken for vec
     // TODO: display time taken for deq
   } catch (const std::exception &e) {

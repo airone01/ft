@@ -2,76 +2,64 @@
 #define PMERGEME_HPP
 
 #include <algorithm>
-#include <deque>
+#include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <sched.h>
+#include <sstream>
 #include <string>
 #include <vector>
 
-typedef unsigned long ulong;
-
 /**
  * @tparam _C container type
  * @tparam _A STD allocator
  */
-template <template <class, class> class _C, class _A> struct CompareIndices {
-  const _C<ulong, _A> &_data;
-  CompareIndices<_C, _A>(const _C<ulong, _A> &data) : _data(data) {}
-  bool operator()(size_t a, size_t b) const { return _data[a] < _data[b]; }
-};
-
-/**
- * @tparam _C container type
- * @tparam _A STD allocator
- *
- * @note a(n) = a(n-1) + 2*a(n-2), with a(0) = 0, a(1) = 1; also a(n) = nearest
- * integer to 2^n/3
- * @TODO optimize
- *
- * @see https://oeis.org/A001045
- * @see https://en.wikipedia.org/wiki/Jacobsthal_number
- */
-template <template <class, class> class _C, class _A>
-_C<ulong, _A> genJacobsthal(size_t len) {
-  _C<ulong, _A> j;
-  if (len > 0)
-    j.push_back(0);
-  if (len > 1)
-    j.push_back(1);
-  ulong pprev = 0;
-  ulong prev = 1;
-  for (ulong n = 2; n < len; n++) {
-    ulong tmp = prev + 2 * pprev;
-    j.push_back(tmp);
-    pprev = prev;
-    prev = tmp;
-  }
-  return j;
-}
-
-class PmergeMe {
-private:
-  std::vector<ulong> _vec;
-  std::deque<ulong> _deq;
-
+template <template <class, class> class _C, class _A> class PmergeMe {
 public:
   // OCF
-  PmergeMe();
-  PmergeMe(const PmergeMe &);
-  PmergeMe operator=(const PmergeMe &);
-  ~PmergeMe();
+  PmergeMe() : _data(_C<unsigned long, _A>()) {}
+  PmergeMe(const PmergeMe &o) : _data(o._data) {}
+  PmergeMe operator=(const PmergeMe &o) {
+    if (this != &o)
+      _data = o._data;
+    return *this;
+  }
+  ~PmergeMe() {}
 
-  PmergeMe(const std::string &s);
+  PmergeMe(_C<unsigned long, _A> &data) : _data(data) {}
 
-  void sortVector();
-  void sortDeque();
+  PmergeMe(const std::string &str) : _data(_C<unsigned long, _A>()) {
+    if (str.empty() ||
+        (str.find_first_not_of(" \t0123456789") != std::string::npos))
+      throw InvalidInputException();
 
-  /**
-   * @tparam _C container type
-   * @tparam _A STD allocator
-   */
-  template <template <class, class> class _C, class _A>
-  _C<size_t, _A> sortIndices(_C<size_t, _A> &indices, _C<ulong, _A> &data) {
+    std::istringstream iss(str);
+    unsigned long n;
+    while (iss >> n)
+      _data.push_back(n);
+  }
+
+  /* cannot forward CData def here, hence why writing all the types manually */
+
+  const std::vector<ulong> &getData() const { return _data; }
+
+  class InvalidInputException : public std::exception {
+    virtual const char *what() const throw() { return "invalid input"; };
+  };
+
+private:
+  typedef _C<unsigned long, _A> CData;
+  typedef _C<size_t, _A> CIndice;
+
+  CData _data;
+
+  struct CompareIndices {
+    const CData &_data;
+    CompareIndices(const CData &data) : _data(data) {}
+    bool operator()(size_t a, size_t b) const { return _data[a] < _data[b]; }
+  };
+
+  CIndice sortIndices(CIndice &indices, CData &data) {
     if (indices.size() < 2)
       return indices;
 
@@ -85,8 +73,8 @@ public:
     }
 
     // pairing
-    _C<ulong, _A> winners;
-    _C<ulong, _A> pairs(data.size());
+    CIndice winners;
+    CIndice pairs(data.size());
     for (size_t i = 0; i + 1 < indices.size(); i += 2) {
       ulong idxA = indices[i];
       ulong idxB = indices[i + 1];
@@ -101,16 +89,16 @@ public:
     }
 
     // rec
-    _C<size_t, _A> sortedWinners = sortIndices(winners, data);
+    CIndice sortedWinners = sortIndices(winners, data);
 
     // insertion
-    _C<size_t, _A> finalChain = sortedWinners;
+    CIndice finalChain = sortedWinners;
     // immediatly insert first
     finalChain.insert(finalChain.begin(), pairs[sortedWinners[0]]);
 
     // jacobsthal loop
     size_t nPending = sortedWinners.size() - 1;
-    _C<ulong, _A> jacob = genJacobsthal<_C, _A>(indices.size());
+    CData jacob = genJacobsthal(indices.size());
     size_t lastJacobIdx = 0;
     for (size_t i = 0; i < jacob.size(); i++) {
       size_t currentJacobIdx = jacob[i];
@@ -124,9 +112,9 @@ public:
 
         // this might not be the fastest because we binary search the whole
         // stack instead of stopping early
-        typename _C<ulong, _A>::iterator pos =
+        typename CData::iterator pos =
             std::upper_bound(finalChain.begin(), finalChain.end(), loserIdx,
-                             CompareIndices<_C, _A>(data));
+                             CompareIndices(data));
 
         finalChain.insert(pos, loserIdx);
       }
@@ -135,60 +123,65 @@ public:
 
     // restore straggler
     if (hasStraggler) {
-      typename _C<ulong, _A>::iterator pos =
+      typename CData::iterator pos =
           std::upper_bound(finalChain.begin(), finalChain.end(), stragglerIdx,
-                           CompareIndices<_C, _A>(data));
+                           CompareIndices(data));
       finalChain.insert(pos, stragglerIdx);
     }
 
     return finalChain;
   }
 
-  /**
-   * @tparam _C container type
-   * @tparam _A STD allocator
-   */
-  template <template <class, class> class _C, class _A>
-  void sort(_C<ulong, _A> &c) {
-    _C<size_t, _A> indices;
-    for (size_t i = 0; i < c.size(); i++)
+  void sort() {
+    CIndice indices;
+    for (size_t i = 0; i < _data.size(); i++)
       indices.push_back(i);
-
-    _C<size_t, _A> sortedIndices = sortIndices(indices, c);
-
-    _C<ulong, _A> reconstructedData;
+    CIndice sortedIndices = sortIndices(indices, _data);
+    CData reconstructedData;
     for (size_t i = 0; i < sortedIndices.size(); i++)
-      reconstructedData.push_back(c[sortedIndices[i]]);
-
-    c = reconstructedData;
+      reconstructedData.push_back(_data[sortedIndices[i]]);
+    _data = reconstructedData;
   }
 
-  const std::vector<ulong> &getVector() const;
-  const std::deque<ulong> &getDeque() const;
-
-  class InvalidInputException : public std::exception {
-    virtual const char *what() const throw();
-  };
+  /**
+   * @note a(n) = a(n-1) + 2*a(n-2), with a(0) = 0, a(1) = 1; also a(n) =
+   * nearest integer to 2^n/3
+   * @todo optimize
+   *
+   * @see https://oeis.org/A001045
+   * @see https://en.wikipedia.org/wiki/Jacobsthal_number
+   */
+  _C<ulong, _A> genJacobsthal(size_t len) {
+    _C<ulong, _A> j;
+    if (len > 0)
+      j.push_back(0);
+    if (len > 1)
+      j.push_back(1);
+    ulong pprev = 0;
+    ulong prev = 1;
+    for (ulong n = 2; n < len; n++) {
+      ulong tmp = prev + 2 * pprev;
+      j.push_back(tmp);
+      pprev = prev;
+      prev = tmp;
+    }
+    return j;
+  }
 };
 
 /**
  * @brief formats a container for an ostream
  * @note this exists because `fmt` and other solutions don't exist in 98
- * @note the template shenanigans are to indicate to the compiler to accept only
- * containers for arg `c`
  * @note tested with `std::vector` and `std::deque`
  */
-template <template <typename, typename> class Container, typename Alloc>
-std::ostream &operator<<(std::ostream &os,
-                         const Container<unsigned long, Alloc> &c) {
-  typename Container<unsigned long, Alloc>::const_iterator it = c.begin();
+template <template <typename, typename> class _C, typename _A>
+std::ostream &operator<<(std::ostream &os, const _C<unsigned long, _A> &c) {
+  typename _C<unsigned long, _A>::const_iterator it = c.begin();
   os << "[";
   while (it != c.end()) {
     os << *it;
-    if (++it != c.end()) {
+    if (++it != c.end())
       os << ",";
-      // os << std::endl;
-    }
   }
   os << "]";
   return os;
