@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
 #include <algorithm>
+#include <cstddef>
 #include <cstdlib>
 #include <deque>
 #include <iostream>
@@ -8,6 +9,15 @@
 #include <string>
 #include <utility>
 #include <vector>
+
+// this is sneaky
+struct CompareIndices {
+  const std::vector<unsigned long> &_data;
+
+  CompareIndices(const std::vector<unsigned long> &data) : _data(data) {}
+
+  bool operator()(size_t a, size_t b) const { return _data[a] < _data[b]; }
+};
 
 PmergeMe::PmergeMe()
     : _vec(std::vector<unsigned long>()), _deq(std::deque<unsigned long>()) {}
@@ -85,67 +95,64 @@ bool binarySearch(std::vector<unsigned long> &v, unsigned long target) {
 // in pairs each pair has lower number first, bigger last
 typedef std::pair<unsigned long, unsigned long> myPair;
 
-std::vector<unsigned long> sortVector(std::vector<unsigned long> vec) {
-  if (vec.size() < 2)
-    return vec;
+std::vector<size_t> sortIndices(std::vector<size_t> &indices,
+                                std::vector<unsigned long> &data) {
+  if (indices.size() < 2)
+    return indices;
 
+  // straggler handling
   bool hasStraggler = false;
-  unsigned long straggler = 0;
-  if (vec.size() % 2 == 1) {
-    straggler = vec.back();
-    vec.pop_back();
+  size_t stragglerIdx = 0;
+  if (indices.size() % 2 == 1) {
+    stragglerIdx = indices.back();
+    indices.pop_back();
     hasStraggler = true;
   }
 
-  std::vector<myPair> pairs;
-  for (unsigned long i = 0; i + 1 < vec.size(); i += 2) {
-    unsigned long low = vec[i];
-    unsigned long large = vec[i + 1];
-    if (low > large)
-      std::swap(low, large);
-    pairs.push_back(myPair(low, large));
+  // pairing
+  std::vector<unsigned long> winners;
+  std::vector<unsigned long> pairs(data.size() - 1);
+  for (size_t i = 0; i + 1 < indices.size(); i += 2) {
+    unsigned long idxA = indices[i];
+    unsigned long idxB = indices[i + 1];
+
+    if (data[idxA] > data[idxB]) {
+      winners.push_back(idxA);
+      pairs[idxA] = idxB; // instant link
+    } else {
+      winners.push_back(idxB);
+      pairs[idxB] = idxA;
+    }
   }
 
-  // extract the large
-  std::vector<unsigned long> chain;
-  std::vector<myPair>::iterator pIt = pairs.begin();
-  for (; pIt < pairs.end(); pIt++)
-    chain.push_back(pIt->second);
+  // rec
+  std::vector<size_t> sortedWinners = sortIndices(winners, data);
 
-  chain = sortVector(chain); // rec
+  // insertion
+  std::vector<size_t> finalChain = sortedWinners;
+  // immediatly insert first
+  finalChain.insert(finalChain.begin(), pairs[sortedWinners[0]]);
 
-  // need to know which small value belonged to which large
-  std::vector<unsigned long> pending;
-  std::vector<unsigned long>::iterator mIt = chain.begin();
-  for (; mIt < chain.end(); mIt++) {
-    pIt = pairs.begin();
-    for (bool cont = true; cont && pIt < pairs.end(); pIt++)
-      if (pIt->second == *mIt) {
-        pending.push_back(pIt->first);
-        cont = false;
-      }
-  }
-
-  // now the binary insert
-  std::vector<unsigned long> partners = chain;
-  // immediatly insert first loser
-  chain.insert(chain.begin(), pending[0]);
-  std::vector<unsigned long> jacob = genJacobsthal(vec.size());
-
-  unsigned long lastJacobIdx = 0;
+  // jacobsthal loop
+  size_t nPending = sortedWinners.size() - 1;
+  std::vector<unsigned long> jacob = genJacobsthal(indices.size());
+  size_t lastJacobIdx = 0;
   for (size_t i = 0; i < jacob.size(); i++) {
     size_t currentJacobIdx = jacob[i];
-    if (currentJacobIdx >= pending.size())
-      currentJacobIdx = pending.size() - 1;
+    if (currentJacobIdx >= nPending)
+      currentJacobIdx = nPending - 1;
+
     // iterate backkwards from currentJacobIdx to lastJacobIdx
     for (size_t k = currentJacobIdx; k > lastJacobIdx; k--) {
-      unsigned long loser = pending[k];
-      unsigned long partnerVal = partners[k];
-      std::vector<unsigned long>::iterator partnerIt =
-        std::find(chain.begin(), chain.end(), partnerVal);
-      std::vector<unsigned long>::iterator pos =
-        std::upper_bound(chain.begin(), partnerIt, loser);
-      chain.insert(pos, loser);
+      size_t winnerIdx = sortedWinners[k];
+      size_t loserIdx = pairs[winnerIdx];
+
+      // this might not be the fastest because we binary search the whole stack
+      // instead of stopping early
+      std::vector<unsigned long>::iterator pos = std::upper_bound(
+          finalChain.begin(), finalChain.end(), loserIdx, CompareIndices(data));
+
+      finalChain.insert(pos, loserIdx);
     }
     lastJacobIdx = currentJacobIdx;
   }
@@ -153,15 +160,24 @@ std::vector<unsigned long> sortVector(std::vector<unsigned long> vec) {
   // restore straggler
   if (hasStraggler) {
     std::vector<unsigned long>::iterator pos =
-        std::upper_bound(chain.begin(), chain.end(), straggler);
-    chain.insert(pos, straggler);
+        std::upper_bound(finalChain.begin(), finalChain.end(), stragglerIdx);
+
+    finalChain.insert(pos, stragglerIdx);
   }
 
-  return chain;
+  return finalChain;
 }
 
 void PmergeMe::sortVector() {
-  _vec = ::sortVector(_vec);
+  std::vector<size_t> indices;
+  for (size_t i = 0; i < _vec.size(); i++)
+    indices.push_back(i);
+
+  std::vector<size_t> sortedIndices = sortIndices(indices, _vec);
+
+  std::vector<unsigned long> reconstructedData;
+  for (size_t i = 0; i < sortedIndices.size(); i++)
+    reconstructedData.push_back(_vec[sortedIndices[i]]);
 }
 
 const char *PmergeMe::InvalidInputException::what() const throw() {
