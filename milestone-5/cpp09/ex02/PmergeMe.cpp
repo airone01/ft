@@ -111,7 +111,7 @@ std::vector<size_t> sortIndices(std::vector<size_t> &indices,
 
   // pairing
   std::vector<unsigned long> winners;
-  std::vector<unsigned long> pairs(data.size() - 1);
+  std::vector<unsigned long> pairs(data.size());
   for (size_t i = 0; i + 1 < indices.size(); i += 2) {
     unsigned long idxA = indices[i];
     unsigned long idxB = indices[i + 1];
@@ -140,7 +140,7 @@ std::vector<size_t> sortIndices(std::vector<size_t> &indices,
   for (size_t i = 0; i < jacob.size(); i++) {
     size_t currentJacobIdx = jacob[i];
     if (currentJacobIdx >= nPending)
-      currentJacobIdx = nPending - 1;
+      currentJacobIdx = nPending;
 
     // iterate backkwards from currentJacobIdx to lastJacobIdx
     for (size_t k = currentJacobIdx; k > lastJacobIdx; k--) {
@@ -160,7 +160,7 @@ std::vector<size_t> sortIndices(std::vector<size_t> &indices,
   // restore straggler
   if (hasStraggler) {
     std::vector<unsigned long>::iterator pos =
-        std::upper_bound(finalChain.begin(), finalChain.end(), stragglerIdx);
+        std::upper_bound(finalChain.begin(), finalChain.end(), stragglerIdx, CompareIndices(data));
 
     finalChain.insert(pos, stragglerIdx);
   }
@@ -178,6 +178,8 @@ void PmergeMe::sortVector() {
   std::vector<unsigned long> reconstructedData;
   for (size_t i = 0; i < sortedIndices.size(); i++)
     reconstructedData.push_back(_vec[sortedIndices[i]]);
+
+  _vec = reconstructedData;
 }
 
 const char *PmergeMe::InvalidInputException::what() const throw() {

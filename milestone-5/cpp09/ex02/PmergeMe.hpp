@@ -48,6 +48,7 @@ std::ostream &operator<<(std::ostream &os,
     os << *it;
     if (++it != c.end()) {
       os << ",";
+      // os << std::endl;
     }
   }
   os << "]";

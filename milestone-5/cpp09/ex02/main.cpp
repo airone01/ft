@@ -13,8 +13,7 @@ int main(int argc, char *argv[]) {
     // parse
     PmergeMe p(argv[1]);
 
-    std::cout << "Before (vec): " << p.getVector() << std::endl;
-    std::cout << "Before (deq): " << p.getDeque() << std::endl;
+    std::cout << "Before: " << p.getVector() << std::endl;
 
     // TODO: timer start
     p.sortVector();
@@ -24,8 +23,9 @@ int main(int argc, char *argv[]) {
     // TODO: FJ sort deq
     // TODO: timer end
 
-    std::cout << "After  (vec): " << p.getVector() << std::endl;
-    std::cout << "After  (dec): " << p.getDeque() << std::endl;
+    std::cout << "After : " << p.getVector() << std::endl;
+    // TODO: display time taken for vec
+    // TODO: display time taken for deq
   } catch (const std::exception &e) {
     std::cerr << "error: " << e.what() << std::endl;
     return 1;
