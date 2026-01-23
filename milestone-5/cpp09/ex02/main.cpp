@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Before: " << p.getVector() << std::endl;
 
     // TODO: timer start
-    p.sortVector();
+
     // TODO: timer end
 
     // TODO: timer start
