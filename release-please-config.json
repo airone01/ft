@@ -133,6 +133,10 @@
       "release-type": "simple",
       "package-name": "cpp08"
     },
+    "milestone-5/cpp09": {
+      "release-type": "simple",
+      "package-name": "cpp09"
+    },
     "milestone-5/inception": {
       "release-type": "simple",
       "package-name": "inception"

@@ -1,8 +1,8 @@
-NAME		= converter
+NAME		= PmergeMe
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 -MMD -MP
-CXXFLAGS	+= -Wconversion -pedantic
-SRC			= main.cpp ScalarConverter.cpp
+CXXFLAGS	+= -Wconversion -pedantic -g3
+SRC			= main.cpp PmergeMe.cpp
 OBJ			= $(SRC:.cpp=.o)
 
 all: $(NAME)
@@ -21,6 +21,12 @@ fclean: clean
 
 re: fclean
 	$(MAKE) all
+
+run10: $(NAME)
+	@./$(NAME) "$$(shuf -i 1-10 -n 10|tr '\n' ' ')"
+
+run10k: $(NAME)
+	@./$(NAME) "$$(shuf -i 1-10000 -n 10000|tr '\n' ' ')"
 
 -include $(SRC:.cpp=.d)
 
