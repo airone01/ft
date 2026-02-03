@@ -149,19 +149,21 @@ private:
    * @see https://oeis.org/A001045
    * @see https://en.wikipedia.org/wiki/Jacobsthal_number
    */
-  _C genJacobsthal(size_t len) {
+  _C genJacobsthal(size_t n_pending_elems) {
     _C j;
-    if (len > 0)
-      j.push_back(0);
-    if (len > 1)
+    if (n_pending_elems > 0)
       j.push_back(1);
-    ulong pprev = 0;
-    ulong prev = 1;
-    for (ulong n = 2; n < len; n++) {
-      ulong tmp = prev + 2 * pprev;
-      j.push_back(tmp);
+    if (n_pending_elems > 1)
+      j.push_back(3);
+    ulong pprev = 1;
+    ulong prev = 3;
+    for (;;) {
+      ulong next_val = prev + 2 * pprev;
+      j.push_back(next_val);
       pprev = prev;
-      prev = tmp;
+      prev = next_val;
+      if (next_val > n_pending_elems)
+        break;
     }
     return j;
   }
