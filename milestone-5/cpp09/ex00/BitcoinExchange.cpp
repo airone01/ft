@@ -148,7 +148,7 @@ float BitcoinExchange::_getExchangeRate(const std::string &date) {
 
   // if map begins after this date, we have no data
   if (it == _database.begin())
-    throw std::runtime_error("time is before first DB entry");
+    throw std::runtime_error("date predates database");
 
   // Otherwise, go back one step to find the closest lower date
   --it;
