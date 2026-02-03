@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
-#include <sched.h>
 #include <sstream>
 #include <string>
 
@@ -80,8 +79,8 @@ private:
     _C winners;
     _C pairs(data.size());
     for (size_t i = 0; i + 1 < indices.size(); i += 2) {
-      ulong idxA = indices[i];
-      ulong idxB = indices[i + 1];
+      unsigned long idxA = indices[i];
+      unsigned long idxB = indices[i + 1];
 
       if (data[idxA] > data[idxB]) {
         winners.push_back(idxA);
@@ -155,10 +154,10 @@ private:
       j.push_back(1);
     if (n_pending_elems > 1)
       j.push_back(3);
-    ulong pprev = 1;
-    ulong prev = 3;
+    unsigned long pprev = 1;
+    unsigned long prev = 3;
     for (;;) {
-      ulong next_val = prev + 2 * pprev;
+      unsigned long next_val = prev + 2 * pprev;
       j.push_back(next_val);
       pprev = prev;
       prev = next_val;
