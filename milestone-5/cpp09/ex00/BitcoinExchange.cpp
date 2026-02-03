@@ -119,7 +119,10 @@ bool BitcoinExchange::_isValidDate(const std::string &s) {
 
 bool BitcoinExchange::_isValidValue(const std::string &s, float &value) {
   // non-num
-  if (s.find_first_not_of("0123456789.") != std::string::npos)
+  if (s.find_first_not_of("0123456789.-") != std::string::npos)
+    return false;
+  // make sure '-' is at index 0
+  if (s.find('-') != std::string::npos && s[0] != '-')
     return false;
   // only one dot max
   if (std::count(s.begin(), s.end(), '.') > 1)
