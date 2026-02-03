@@ -103,6 +103,9 @@ void RPN::parse(const std::string &str) {
     _handleCalcs(st, *it);
   }
 
+  if (st.size() != 1)
+    throw InvalidRpnException();
+
   std::cout << st.top() << std::endl;
 }
 
