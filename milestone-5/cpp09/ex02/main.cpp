@@ -3,7 +3,6 @@
 #include <deque>
 #include <exception>
 #include <iomanip>
-#include <ios>
 #include <iostream>
 #include <vector>
 
@@ -37,7 +36,8 @@ int main(int argc, char *argv[]) {
     double qNsTime = (static_cast<double>(qEnd.tv_sec - qBegin.tv_sec) * 1.0e9 +
                       static_cast<double>(qEnd.tv_nsec - qBegin.tv_nsec));
 
-    std::cout << "After : " << pv.getData() << std::endl << std::setprecision(5);
+    std::cout << "After : " << pv.getData() << std::endl
+              << std::setprecision(5);
     std::cout << "Vector time: " << vNsTime << "ns" << " (≈" << vNsTime / 1.0e9
               << "s)" << std::endl;
     std::cout << "Deque time : " << qNsTime << "ns" << " (≈" << qNsTime / 1.0e9

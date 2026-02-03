@@ -116,9 +116,14 @@ private:
 
         // this might not be the fastest because we binary search the whole
         // stack instead of stopping early
-        typename _C::iterator pos =
-            std::upper_bound(finalChain.begin(), finalChain.end(), loserIdx,
-                             CompareIndices(data));
+        typename _C::iterator pos = std::upper_bound(
+            finalChain.begin(),
+#if FJ_ALGO == 1
+            std::find(finalChain.begin(), finalChain.end(), winnerIdx),
+#else
+            finalChain.end(),
+#endif
+            loserIdx, CompareIndices(data));
 
         finalChain.insert(pos, loserIdx);
       }
