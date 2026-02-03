@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -79,15 +80,20 @@ void BitcoinExchange::loadDatabase(const std::string &filename) {
   file.close();
 }
 
-bool BitcoinExchange::_isValidDate(const std::string &date) {
-  if (date.length() != 10)
+bool BitcoinExchange::_isValidDate(const std::string &s) {
+  // length check
+  if (s.length() != 10)
     return false;
-  if (date[4] != '-' || date[7] != '-')
+  // chars checks
+  if (s.find_first_not_of("0123456789-") != std::string::npos)
+    return false;
+  // '-' checks
+  if (std::count(s.begin(), s.end(), '-') != 2 || s[4] != '-' || s[7] != '-')
     return false;
 
-  int year = std::atoi(date.substr(0, 4).c_str());
-  int month = std::atoi(date.substr(5, 2).c_str());
-  int day = std::atoi(date.substr(8, 2).c_str());
+  int year = std::atoi(s.substr(0, 4).c_str());
+  int month = std::atoi(s.substr(5, 2).c_str());
+  int day = std::atoi(s.substr(8, 2).c_str());
 
   if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
     return false;
@@ -102,12 +108,21 @@ bool BitcoinExchange::_isValidDate(const std::string &date) {
   return true;
 }
 
-bool BitcoinExchange::_isValidValue(const std::string &valueStr, float &value) {
+bool BitcoinExchange::_isValidValue(const std::string &s, float &value) {
+  // non-num
+  if (s.find_first_not_of("0123456789.") != std::string::npos)
+    return false;
+  // only one dot max
+  if (std::count(s.begin(), s.end(), '.') > 1)
+    return false;
+
   char *end;
-  value = static_cast<float>(std::strtod(valueStr.c_str(), &end));
+  value = static_cast<float>(std::strtod(s.c_str(), &end));
+  if (*end != '\0')
+    return false;
 
   // check if conversion failed or didn't consume full string
-  return !(valueStr.empty() || end == valueStr.c_str());
+  return !(s.empty() || end == s.c_str());
 }
 
 float BitcoinExchange::_getExchangeRate(const std::string &date) {
@@ -146,23 +161,18 @@ void BitcoinExchange::processInput(const std::string &filename) {
       continue;
     first = false;
 
-    size_t pipePos = line.find('|');
+    size_t pipePos = line.find(" | ");
     if (pipePos == std::string::npos) {
-      std::cout << "error: bad input \"" << line << "\"" << std::endl;
+      std::cout << "error: invalid input \"" << line << "\"" << std::endl;
       continue;
     }
 
     std::string date = _trim(line.substr(0, pipePos));
-    std::string valueStr = _trim(line.substr(pipePos + 1));
-
-    if (!_isValidDate(date)) {
-      std::cout << "error: bad input \"" << date << "\"" << std::endl;
-      continue;
-    }
-
+    std::string valueStr = _trim(line.substr(pipePos + 3));
     float value;
-    if (!_isValidValue(valueStr, value)) {
-      std::cout << "error: bad input \"" << valueStr << "\""<< std::endl;
+
+    if (!_isValidDate(date) || !_isValidValue(valueStr, value)) {
+      std::cout << "error: invalid input \"" << line << "\"" << std::endl;
       continue;
     }
 
