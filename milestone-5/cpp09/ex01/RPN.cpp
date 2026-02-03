@@ -1,6 +1,7 @@
 #include "RPN.hpp"
 #include <cstdlib>
 #include <iostream>
+#include <limits>
 #include <stack>
 
 #define RPN_CHARS_DIGIT "0123456789"
@@ -32,6 +33,43 @@ long my_count(const std::string &s, const std::string &charset) {
 }
 
 /**
+ * @brief handles boring safe calculation and error-proning
+ */
+static void _handleCalcs(std::stack<long> &st, char c) {
+  long x = st.top();
+  st.pop();
+  long y = st.top();
+  st.pop();
+
+  switch (c) {
+  case ADD:
+    if (x > 0 && (y > std::numeric_limits<long>::max() - x))
+      throw RPN::OverflowException();
+    if (x < 0 && (y < std::numeric_limits<long>::min() - x))
+      throw RPN::OverflowException();
+    st.push(y + x);
+    break;
+  case SUB:
+    if (x > 0 && (y > std::numeric_limits<long>::max() + x))
+      throw RPN::OverflowException();
+    if (x < 0 && (y < std::numeric_limits<long>::min() + x))
+      throw RPN::OverflowException();
+    st.push(y - x);
+    break;
+  case MULT:
+    if (x > 0 && (y > std::numeric_limits<long>::max() / x))
+      throw RPN::OverflowException();
+    st.push(y * x);
+    break;
+  case DIV:
+    if (!x)
+      throw RPN::DivByZeroException();
+    st.push(y / x);
+    break;
+  }
+}
+
+/**
  * @throw IllegalCharacterException
  * @throw InvalidRpnException
  *
@@ -56,31 +94,13 @@ void RPN::parse(const std::string &str) {
     std::string smStr(1, *it);
     if (std::string(" \t").find_first_of(smStr) != std::string::npos)
       continue;
-    if (std::string(RPN_CHARS_OP).find_first_of(smStr) != std::string::npos) {
-      if (st.size() < 2)
-        throw InvalidRpnException();
-      long x = st.top();
-      st.pop();
-      long y = st.top();
-      st.pop();
-      switch (*it) {
-      case ADD:
-        st.push(y + x);
-        break;
-      case SUB:
-        st.push(y - x);
-        break;
-      case MULT:
-        st.push(y * x);
-        break;
-      case DIV:
-        if (!x)
-          throw DivByZeroException();
-        st.push(y / x);
-        break;
-      }
-    } else
+    if (std::string(RPN_CHARS_OP).find_first_of(smStr) == std::string::npos) {
       st.push(static_cast<long>(*it - '0'));
+      continue;
+    }
+    if (st.size() < 2)
+      throw InvalidRpnException();
+    _handleCalcs(st, *it);
   }
 
   std::cout << st.top() << std::endl;
@@ -96,4 +116,8 @@ const char *RPN::InvalidRpnException::what() const throw() {
 
 const char *RPN::DivByZeroException::what() const throw() {
   return "attempted to divide by zero";
+}
+
+const char *RPN::OverflowException::what() const throw() {
+  return "the expression would over/underflow";
 }

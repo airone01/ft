@@ -4,12 +4,7 @@
 #include <exception>
 #include <string>
 
-typedef enum e_ops {
-  ADD = '+',
-  SUB = '-',
-  MULT = '*',
-  DIV = '/'
-} t_ops;
+typedef enum e_ops { ADD = '+', SUB = '-', MULT = '*', DIV = '/' } t_ops;
 
 class RPN {
 private:
@@ -22,19 +17,24 @@ private:
 public:
   static void parse(const std::string &);
 
-  class IllegalCharacterException: public std::exception {
+  class IllegalCharacterException : public std::exception {
   public:
-    virtual const char* what() const throw();
+    virtual const char *what() const throw();
   };
 
-  class InvalidRpnException: public std::exception {
+  class InvalidRpnException : public std::exception {
   public:
-    virtual const char* what() const throw();
+    virtual const char *what() const throw();
   };
 
-  class DivByZeroException: public std::exception {
+  class DivByZeroException : public std::exception {
   public:
-    virtual const char* what() const throw();
+    virtual const char *what() const throw();
+  };
+
+  class OverflowException : public std::exception {
+  public:
+    virtual const char *what() const throw();
   };
 };
 
