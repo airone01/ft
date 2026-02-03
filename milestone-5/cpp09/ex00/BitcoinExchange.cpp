@@ -1,5 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <algorithm>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -92,19 +93,27 @@ bool BitcoinExchange::_isValidDate(const std::string &s) {
     return false;
 
   int year = std::atoi(s.substr(0, 4).c_str());
+  // dates before 70 are cringe :-O
+  if (year < 1970)
+    throw std::runtime_error("invalid date");
   int month = std::atoi(s.substr(5, 2).c_str());
   int day = std::atoi(s.substr(8, 2).c_str());
 
-  if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
-    return false;
+  struct tm tm = {};
+  tm.tm_year = year - 1900;
+  tm.tm_mon = month - 1;
+  tm.tm_mday = day;
+  tm.tm_isdst = -1; // let mktime determine if we use daylight saving by itself
 
-  // basic validation for days in month could be added here
-  // but strictly speaking, checking format YYYY-MM-DD is the priority.
-  if (month == 2 && day > 29)
-    return false; // simple leap year check omission for brevity unless required
-  if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
-    return false;
+  time_t result = std::mktime(&tm);
+  if (result == -1)
+    throw std::runtime_error("invalid date");
 
+  // if result was changed (normalized), then that means that the original was
+  // invalid, hence we crash
+  if (tm.tm_year != (year - 1900) || tm.tm_mon != (month - 1) ||
+      tm.tm_mday != day)
+    throw std::runtime_error("invalid date");
   return true;
 }
 
@@ -129,19 +138,17 @@ float BitcoinExchange::_getExchangeRate(const std::string &date) {
   if (_database.empty())
     return 0.0f;
 
-  // std::map::lower_bound returns the first element that is NOT considered to
-  // go before k. i.e., it returns iterator to >= date
+  // std::map::lower_bound returns the first element that is NOT considered
+  // to go before k. i.e., it returns iterator to >= date
   std::map<std::string, float>::iterator it = _database.lower_bound(date);
 
-  // If exact match found
-  if (it != _database.end() && it->first == date) {
+  // if exact match found
+  if (it != _database.end() && it->first == date)
     return it->second;
-  }
 
-  // If map begins after this date, we have no data
-  if (it == _database.begin()) {
-    return 0.0f; // Or handle as error
-  }
+  // if map begins after this date, we have no data
+  if (it == _database.begin())
+    throw std::runtime_error("time is before first DB entry");
 
   // Otherwise, go back one step to find the closest lower date
   --it;
@@ -157,39 +164,40 @@ void BitcoinExchange::processInput(const std::string &filename) {
   std::string line;
   bool first = true;
   while (std::getline(file, line)) {
-    if (line.empty() || (first && line == "date | value"))
-      continue;
-    first = false;
+    try {
+      if ((first && line == "date | value"))
+        continue;
+      if (line.empty()) {
+        std::cout << std::endl;
+        continue;
+      }
+      first = false;
 
-    size_t pipePos = line.find(" | ");
-    if (pipePos == std::string::npos) {
-      std::cout << "error: invalid input \"" << line << "\"" << std::endl;
+      size_t pipePos = line.find(" | ");
+      if (pipePos == std::string::npos)
+        throw std::runtime_error("unrecognized input");
+
+      std::string date = _trim(line.substr(0, pipePos));
+      std::string valueStr = _trim(line.substr(pipePos + 3));
+      float value;
+
+      if (!_isValidDate(date))
+        throw std::runtime_error("invalid date format");
+      if (!_isValidValue(valueStr, value))
+        throw std::runtime_error("invalid value format");
+      if (value < 0) // in thory should never happen
+        throw std::runtime_error("value is not a positive number");
+      if (value > 1e3f)
+        throw std::runtime_error("value is too large a number");
+
+      float rate = _getExchangeRate(date); // can thow
+      std::cout << date << " => " << value << " = " << (value * rate)
+                << std::endl;
+    } catch (const std::exception &e) {
+      std::cout << "error: " << e.what() << " in \"" << line << "\""
+                << std::endl;
       continue;
     }
-
-    std::string date = _trim(line.substr(0, pipePos));
-    std::string valueStr = _trim(line.substr(pipePos + 3));
-    float value;
-
-    if (!_isValidDate(date) || !_isValidValue(valueStr, value)) {
-      std::cout << "error: invalid input \"" << line << "\"" << std::endl;
-      continue;
-    }
-
-    if (value < 0) {
-      std::cout << "error: not a positive number." << std::endl;
-      continue;
-    }
-
-    // Constraint: value must be between 0 and 1000
-    if (value > 1000.0f) {
-      std::cout << "error: too large a number." << std::endl;
-      continue;
-    }
-
-    float rate = _getExchangeRate(date);
-    std::cout << date << " => " << value << " = " << (value * rate)
-              << std::endl;
   }
   file.close();
 }
