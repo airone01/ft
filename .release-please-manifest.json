@@ -34,7 +34,7 @@
   "milestone-5/cpp08": "1.1.0",
   "milestone-5/cpp09": "1.0.0",
   "milestone-5/inception": "1.0.0",
-  "rushes/hotrace": "2.0.0",
-  "rushes/libunit": "0.0.0",
+  "rushes/hotrace": "2.1.0",
+  "rushes/libunit": "1.0.0",
   "tools/push-swap-visualizer-minecraft": "1.0.0"
 }
