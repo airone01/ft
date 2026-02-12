@@ -1,0 +1,37 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+
+cc_library(
+    name = "libunit",
+    srcs = glob(["framework/*.c"]),
+    hdrs = glob(["framework/*.h"]),
+    copts = CC_COPTS,
+    includes = ["framework"],
+    visibility = ["//visibility:public"],
+    deps = ["//milestone-0/libft"]
+)
+
+cc_binary(
+    name = "tests",
+    srcs = glob([
+        "tests/**/*.c",
+        "tests/**/*.h",
+    ]),
+    copts = CC_COPTS,
+    includes = ["includes"],
+    visibility = ["//visibility:public"],
+    deps = ["//milestone-0/libft", "//rushes/libunit:libunit"]
+)
+
+cc_binary(
+    name = "real_tests",
+    srcs = glob([
+        "real_tests/**/*.c",
+        "real_tests/**/*.h",
+    ]),
+    copts = CC_COPTS,
+    includes = ["includes"],
+    visibility = ["//visibility:public"],
+    deps = ["//milestone-0/libft", "//rushes/libunit:libunit"]
+)

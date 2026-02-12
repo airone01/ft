@@ -145,6 +145,10 @@
       "release-type": "simple",
       "package-name": "hotrace"
     },
+    "rushes/libunit": {
+      "release-type": "simple",
+      "package-name": "libunit"
+    },
     "tools/push-swap-visualizer-minecraft": {
       "release-type": "rust",
       "package-name": "push-swap-visualizer"
