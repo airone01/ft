@@ -7,17 +7,23 @@
 #include <vector>
 
 int main(int argc, char *argv[]) {
-  if (argc != 2) {
-    std::cerr << "usage: " << argv[0] << " <positive integer sequence>"
+  if (argc < 2) {
+    std::cerr << "usage: " << argv[0] << " <positive integer sequence[s...]>"
               << std::endl;
     return 1;
+  }
+
+  std::string in(argv[1]);
+  if (argc > 2) {
+    for (size_t i = 2; i < static_cast<size_t>(argc); i++)
+      in.append(argv[i]);
   }
 
   try {
     typedef std::vector<unsigned long> vulong;
     typedef std::deque<unsigned long> qulong;
-    PmergeMe<vulong> pv(argv[1]);
-    PmergeMe<qulong> pq(argv[1]);
+    PmergeMe<vulong> pv(in);
+    PmergeMe<qulong> pq(in);
 
     std::cout << "Before: " << pv.getData() << std::endl;
 
