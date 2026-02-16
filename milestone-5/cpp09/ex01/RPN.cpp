@@ -50,15 +50,32 @@ static void _handleCalcs(std::stack<long> &st, char c) {
     st.push(y + x);
     break;
   case SUB:
-    if (x > 0 && (y > std::numeric_limits<long>::max() + x))
+    if (x < 0 && (y > std::numeric_limits<long>::max() + x))
       throw RPN::OverflowException();
-    if (x < 0 && (y < std::numeric_limits<long>::min() + x))
+    if (x > 0 && (y < std::numeric_limits<long>::min() + x))
       throw RPN::OverflowException();
     st.push(y - x);
     break;
   case MULT:
-    if (x > 0 && (y > std::numeric_limits<long>::max() / x))
-      throw RPN::OverflowException();
+    if (x == 0 || y == 0) {
+      st.push(0);
+      break;
+    }
+    if (x > 0 && y > 0) { // both pos
+      if (y > std::numeric_limits<long>::max() / x)
+        throw RPN::OverflowException();
+    } else if (x < 0 && y < 0) { // both neg, result pos, check against max
+      if (y < std::numeric_limits<long>::max() / x)
+        throw RPN::OverflowException();
+    } else {       // mixed pos/neg, result neg, check against min
+      if (x > 0) { // x pos y neg
+        if (y < std::numeric_limits<long>::min() / x)
+          throw RPN::OverflowException();
+      } else { // x neg y pos
+        if (y > std::numeric_limits<long>::min() / x)
+          throw RPN::OverflowException();
+      }
+    }
     st.push(y * x);
     break;
   case DIV:
