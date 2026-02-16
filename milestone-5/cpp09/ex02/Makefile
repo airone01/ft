@@ -5,6 +5,14 @@ CXXFLAGS	+= -Wconversion -pedantic -g3
 SRC			= main.cpp PmergeMe.cpp
 OBJ			= $(SRC:.cpp=.o)
 
+# implements real Ford Johnson division of search parameters
+# this makes the algorithm correct, but significantly slower
+# so here is a flag to disable it :-)
+#
+# this can be either 1 for real FJ, or anything else
+FJ_ALGO		?= 1
+CXXFLAGS	+= -DFJ_ALGO="$(FJ_ALGO)"
+
 all: $(NAME)
 
 $(NAME): $(OBJ)

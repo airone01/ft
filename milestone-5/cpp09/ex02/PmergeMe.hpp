@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
-#include <sched.h>
 #include <sstream>
 #include <string>
 
@@ -80,8 +79,8 @@ private:
     _C winners;
     _C pairs(data.size());
     for (size_t i = 0; i + 1 < indices.size(); i += 2) {
-      ulong idxA = indices[i];
-      ulong idxB = indices[i + 1];
+      unsigned long idxA = indices[i];
+      unsigned long idxB = indices[i + 1];
 
       if (data[idxA] > data[idxB]) {
         winners.push_back(idxA);
@@ -116,9 +115,14 @@ private:
 
         // this might not be the fastest because we binary search the whole
         // stack instead of stopping early
-        typename _C::iterator pos =
-            std::upper_bound(finalChain.begin(), finalChain.end(), loserIdx,
-                             CompareIndices(data));
+        typename _C::iterator pos = std::upper_bound(
+            finalChain.begin(),
+#if FJ_ALGO == 1
+            std::find(finalChain.begin(), finalChain.end(), winnerIdx),
+#else
+            finalChain.end(),
+#endif
+            loserIdx, CompareIndices(data));
 
         finalChain.insert(pos, loserIdx);
       }
@@ -144,19 +148,21 @@ private:
    * @see https://oeis.org/A001045
    * @see https://en.wikipedia.org/wiki/Jacobsthal_number
    */
-  _C genJacobsthal(size_t len) {
+  _C genJacobsthal(size_t n_pending_elems) {
     _C j;
-    if (len > 0)
-      j.push_back(0);
-    if (len > 1)
+    if (n_pending_elems > 0)
       j.push_back(1);
-    ulong pprev = 0;
-    ulong prev = 1;
-    for (ulong n = 2; n < len; n++) {
-      ulong tmp = prev + 2 * pprev;
-      j.push_back(tmp);
+    if (n_pending_elems > 1)
+      j.push_back(3);
+    unsigned long pprev = 1;
+    unsigned long prev = 3;
+    for (;;) {
+      unsigned long next_val = prev + 2 * pprev;
+      j.push_back(next_val);
       pprev = prev;
-      prev = tmp;
+      prev = next_val;
+      if (next_val > n_pending_elems)
+        break;
     }
     return j;
   }
