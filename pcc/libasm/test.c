@@ -12,10 +12,13 @@ int main(void) {
   }
 
   {
-    const char *s = calloc(128, sizeof(const char));
-    ft_strcpy(s,
-              "Violence is the last refuge of the incompetent. - Isaac Asimov");
+    char *s = calloc(128, sizeof(const char));
+    const char *sn = ft_strcpy(
+        s, "Violence is the last refuge of the incompetent. - Isaac Asimov");
     printf("copied string: \"%s\"\n", s);
+    printf("is the return value the original dest ptr (should be): %d\n",
+           sn == s);
+    free(s);
   }
 
   return 0;
