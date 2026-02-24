@@ -7,24 +7,30 @@ section .text
   global ft_strcmp
 
 ft_strcmp:
-  mov rax, 0 ; init rax
+  ; xor is a fast way to bzero a reg
+  xor rax, rax
+  xor rcx, rcx
 
 .find_loop:
-  ; calculate diff
-  add al, byte [rdi]
-  sub al, byte [rsi]
+  mov al, byte [rdi]
+  mov cl, byte [rsi]
 
-  ; check if either str ends
-  cmp byte[rdi], 0
-  je .done
-  cmp byte[rsi], 0
+  ; early stop when any char diff
+  cmp al, cl
+  jne .done
+
+  ; just check rsi's because the previous check made sure they are the same
+  cmp al, 0
   je .done
 
-  ; move to next dest and src bytes
   inc rdi
   inc rsi
   jmp .find_loop
 
 .done:
-  ret ; rax has output result
+  ; because rax and rcx were bzero'd, they hold only the exact positive
+  ; unsigned value of the characters, meaning subbing them correctly here
+  ; handles neg results as intended
+  sub rax, rcx
+  ret
 

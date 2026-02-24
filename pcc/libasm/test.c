@@ -5,10 +5,10 @@
 
 extern unsigned long ft_strlen(const char *s);
 extern const char *ft_strcpy(const char *dst, const char *src);
-extern unsigned long ft_strcmp(const char *s1, const char *s2);
+extern int ft_strcmp(const char *s1, const char *s2);
 
 void comp_ft_strcmp(const char *s1, const char *s2) {
-  printf("'%s' vs '%s' (mine): %zu\n", s1, s2, ft_strcmp(s1, s2));
+  printf("'%s' vs '%s' (mine): %d\n", s1, s2, ft_strcmp(s1, s2));
   printf("'%s' vs '%s' (libc): %d\n", s1, s2, strcmp(s1, s2));
 }
 
@@ -31,6 +31,9 @@ int main(void) {
   {
     const char *s1 = "hello";
     const char *s2 = "hella";
+    comp_ft_strcmp(s1, s2);
+    s1 = "hella";
+    s2 = "hello";
     comp_ft_strcmp(s1, s2);
     s1 = "";
     s2 = "";
