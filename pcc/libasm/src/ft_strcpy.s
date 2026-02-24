@@ -1,5 +1,5 @@
 ; input: rdi -> destination pointer
-; input: rdi -> source pointer to NUL-terminated string
+; input: rsi -> source pointer to NUL-terminated string
 ; output: rax -> original dest pointer
 
 section .text
