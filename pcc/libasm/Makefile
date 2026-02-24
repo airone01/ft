@@ -3,7 +3,8 @@ AR			:= ar
 ARFLAGS		:= rcs
 AS			:= nasm
 ASFLAGS		:= -f elf64 -Wall -Werror
-SRC			:= src/ft_strlen.s
+SRC			:= ft_strlen ft_strcpy
+SRC			:= $(addsuffix .s,$(addprefix src/,$(SRC)))
 OBJ			:= $(SRC:.s=.o)
 
 all: $(NAME)
