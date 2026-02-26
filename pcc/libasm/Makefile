@@ -3,8 +3,8 @@ AR			:= ar
 ARFLAGS		:= rcs
 AS			:= nasm
 ASFLAGS		:= -f elf64 -Wall -Werror
-SRC			:= ft_strlen ft_strcpy ft_strcmp ft_write
-SRC			:= $(addsuffix .s,$(addprefix src/,$(SRC)))
+SRC			:= strlen strcpy strcmp write read
+SRC			:= $(addsuffix .s,$(addprefix src/ft_,$(SRC)))
 OBJ			:= $(SRC:.s=.o)
 
 all: $(NAME)

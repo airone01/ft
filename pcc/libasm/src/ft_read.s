@@ -1,20 +1,20 @@
 ; input: rdi -> file descriptor (int)
 ; input: rsi -> pointer to data buffer (const void*)
-; input: rdx -> count of bytes of data to write (size_t)
-; output: rax -> bytes written, -1 on error (size_t)
+; input: rdx -> count of bytes of data to read (size_t)
+; output: rax -> bytes read, -1 on error (size_t)
 
 section .text
-  global ft_write
+  global ft_read
   extern __errno_location
 
-ft_write:
-  mov rax, 1 ; 1 is the syscall number for sys_write on Linux
+ft_read:
+  mov rax, 0 ; 0 is the syscall number for sys_read on Linux
   ; all data already in place, we just call
   syscall
 
   cmp rax, 0
   jl .error
-  ret ; after call rax will be nbytes written
+  ret ; after call rax will be nbytes read
 
 .error:
   neg rax ; invert code
