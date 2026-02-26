@@ -15,12 +15,12 @@ Provided functions
 
 The functions provided by this project are the following:
 
-- ft_strlen (man 3 strlen)
-- ft_strcpy (man 3 strcpy)
-- ft_strcmp (man 3 strcmp)
-- ft_write (man 2 write)
-- ft_read (man 2 read)
-- ft_strdup (man 3 strdup, call to malloc allowed)
+- ft_strlen (strlen.3)
+- ft_strcpy (strcpy.3)
+- ft_strcmp (strcmp.3)
+- ft_write (write.2)
+- ft_read (read.2)
+- ft_strdup (strdup.3, call to malloc allowed)
 
 And the bonus functions are as follow:
 
