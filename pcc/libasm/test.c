@@ -15,31 +15,12 @@
     }                                                                          \
   } while (0)
 
-#define ASSERT_GT(actual, expected, label)                                     \
-  do {                                                                         \
-    if ((actual) > (expected)) {                                               \
-      printf("\033[32mok\033[0m %s\n", label);                                 \
-    } else {                                                                   \
-      printf("\033[31mKO\033[0m %s (line %d): Expected %ld, got %ld\n", label, \
-             __LINE__, (long)(expected), (long)(actual));                      \
-    }                                                                          \
-  } while (0)
-
-#define ASSERT_LT(actual, expected, label)                                     \
-  do {                                                                         \
-    if ((actual) < (expected)) {                                               \
-      printf("\033[32mok\033[0m %s\n", label);                                 \
-    } else {                                                                   \
-      printf("\033[31mKO\033[0m %s (line %d): Expected %ld, got %ld\n", label, \
-             __LINE__, (long)(expected), (long)(actual));                      \
-    }                                                                          \
-  } while (0)
-
 extern size_t ft_strlen(const char *s);
 extern char *ft_strcpy(const char *dest, const char *src);
 extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t ft_write(int fildes, const void *buf, size_t nbyte);
 extern ssize_t ft_read(int fildes, void *buf, size_t nbyte);
+extern char *ft_strdup(const char *s);
 
 void comp_ft_strcmp(const char *s1, const char *s2, const char *label) {
   int my_res = ft_strcmp(s1, s2);
