@@ -7,6 +7,13 @@ SRC			:= strlen strcpy strcmp write read strdup
 SRC			:= $(addsuffix .s,$(addprefix src/ft_,$(SRC)))
 OBJ			:= $(SRC:.s=.o)
 
+TNAME		:= test
+TSRC		:= test.c
+# This tells the linker to create the ELF section and explicitly mark it as
+# non-executable and non-allocating. Not including a '.note.GNU-stack' section
+# in the assembly code implies executable stack.
+TLDFLAGS	:= -Wl,-z,noexecstack
+
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -19,14 +26,13 @@ clean:
 	$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME) ./test
+	$(RM) $(NAME) $(TNAME)
 
 re: fclean
 	$(MAKE) all
 
-test: $(NAME)
-	$(CC) test.c $(NAME) -o test
-	./test
+$(TNAME): $(NAME)
+	$(CC) $(TSRC) $(TLDFLAGS) $(NAME) -o $(TNAME)
 
 FORCE:
 

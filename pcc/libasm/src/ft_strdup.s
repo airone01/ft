@@ -1,6 +1,10 @@
 ; input: rdi -> source pointer to NUL-terminated string
 ; output: rax -> original source pointer
 
+; appendix B
+default rel
+[warning -reloc-rel-dword]
+
 section .text
   global ft_strdup
   extern malloc ; byte size into rdi, allign stack
@@ -8,23 +12,22 @@ section .text
   extern ft_strcpy
 
 ft_strdup:
-  push rdi ; save og ptr
-  call ft_strlen
+  push rdi ; save original ptr
+  call ft_strlen WRT ..plt
 
   inc rax ; ptr to NUL
   mov rdi, rax ; setup for malloc
 
-  call malloc
+  call malloc WRT ..plt
   cmp rax, 0 ; err handling
-  je .error
+  je .lerror
 
   mov rdi, rax ; setup for strcpy
   pop rsi ; get back ptr
 
-  call ft_strcpy
+  call ft_strcpy WRT ..plt
   ret
 
-.error
-  ; still need to pop to keep the stack balanced
-  pop rdi
+.lerror:
+  pop rdi ; appendix A
   ret

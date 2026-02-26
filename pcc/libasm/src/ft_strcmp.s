@@ -1,7 +1,17 @@
 ; input: rdi -> s1 pointer of NUL-terminated string
 ; input: rsi -> s2 pointer of NUL-terminated string
 ; output: rax -> int difference between data in pointers
-; note: NULL pointer segfaults
+
+; Technically strcmp is expected to return:
+; * 0 on s1 == s2
+; * any negative value on s1 < s2
+; * any positive value on s1 > s2
+; But this is an implementation closer to that of the libc. We return the
+; difference between the first different character of each string.
+; i.e. some optimized implementations (like Valgrind's) will return 0, -1 or 1.
+; This is the reason you cannot compare the result of different strcmp
+; implementations as a test, only the sign matters.
+; @see strcmp(3)
 
 section .text
   global ft_strcmp
