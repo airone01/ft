@@ -84,5 +84,24 @@ int main(void) {
     ASSERT_EQ(errno, EBADF, "ft_read should set errno on error");
   }
 
+  {
+    const char *orig1 = "A language that doesn't have everything is actually "
+                        "easier to program in than some that do";
+    char *dup1 = ft_strdup(orig1);
+    ASSERT_EQ(dup1 != orig1, 1,
+              "ft_strdup should allocate a new memory address");
+    ASSERT_EQ(strcmp(dup1, orig1), 0,
+              "ft_strdup should copy the exact contents");
+    free(dup1);
+
+    const char *orig2 = "";
+    char *dup2 = ft_strdup(orig2);
+    ASSERT_EQ(dup2 != orig2, 1,
+              "ft_strdup (empty str) should still allocate new memory");
+    ASSERT_EQ(strcmp(dup2, orig2), 0,
+              "ft_strdup (empty str) should cleanly copy the NUL terminator");
+    free(dup2);
+  }
+
   return 0;
 }
