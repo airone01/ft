@@ -41,10 +41,17 @@ int main(void) {
   {
     char *s = calloc(128, sizeof(const char));
     const char *o =
-        "Violence is the last refuge of the incompetent - Isaac Asimov";
+        "Violence is the last refuge of the incompetent — Isaac Asimov";
     const char *sn = ft_strcpy(s, o);
-    ASSERT_EQ(*sn, *o, "ft_strcpy should work");
+
+    ASSERT_EQ(strcmp(sn, o), 0, "ft_strcpy should copy full string");
     ASSERT_EQ(sn, s, "ft_strcpy should return dest");
+    char dest_buf[10] = "overwrite";
+    ft_strcpy(dest_buf, "");
+    ASSERT_EQ(dest_buf[0], '\0', "ft_strcpy (empty) should place NUL");
+    ASSERT_EQ(dest_buf[1], 'v',
+              "ft_strcpy (empty) should not overwrite past NUL");
+
     free(s);
   }
 
@@ -52,6 +59,10 @@ int main(void) {
     comp_ft_strcmp("hello", "hella", "ft_strcmp should handle positive diff");
     comp_ft_strcmp("hella", "hello", "ft_strcmp should handle negative diff");
     comp_ft_strcmp("", "", "ft_strcmp should handle equality");
+    comp_ft_strcmp("\xff", "\x01", "ft_strcmp should compare as unsigned char");
+    comp_ft_strcmp("ᓚᘏᗢ", "ᓚᘏᗢ", "ft_strcmp should handle special characters");
+    // well it should really not make any difference for 'special' characters or
+    // not, but I like the cat :-)
   }
 
   {
@@ -59,13 +70,16 @@ int main(void) {
     if (fd != -1) {
       ASSERT_EQ(ft_write(fd, "Testing ft_write...\n", 20), 20,
                 "ft_write should print exact number of characters");
-
-      errno = 0;
-      ASSERT_EQ(ft_write(-1, "fail", 4), -1, "ft_write should return -1");
-      ASSERT_EQ(errno, 9, "ft_write should set errno on error");
+      ASSERT_EQ(ft_write(fd, "fail", 0), 0,
+                "ft_write with 0 bytes should return 0");
       close(fd);
     } else
       printf("skip: could not open() to test valid write\n");
+
+    errno = 0;
+    ASSERT_EQ(ft_write(-1, "fail", 4), -1,
+              "ft_write should return -1 on error");
+    ASSERT_EQ(errno, EBADF, "ft_write should set errno on error");
   }
 
   {
@@ -74,6 +88,7 @@ int main(void) {
     if (fd != -1) {
       ssize_t ret = ft_read(fd, buf, 10);
       ASSERT_EQ(ret, 10, "ft_read should work");
+      ASSERT_EQ(ft_read(fd, buf, 0), 0, "ft_read with 0 bytes should return 0");
       close(fd);
     } else
       printf("skip: could not open() to test valid read\n");
@@ -85,8 +100,9 @@ int main(void) {
   }
 
   {
-    const char *orig1 = "A language that doesn't have everything is actually "
-                        "easier to program in than some that do";
+    const char *orig1 =
+        "A language that doesn't have everything is actually "
+        "easier to program in than some that do — Dennis Ritchie";
     char *dup1 = ft_strdup(orig1);
     ASSERT_EQ(dup1 != orig1, 1,
               "ft_strdup should allocate a new memory address");
