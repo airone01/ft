@@ -1,0 +1,32 @@
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+genrule(
+    name = "compile_libasm",
+    srcs = glob(["src/*.s"]),
+    outs = ["libasm.a"],
+    cmd = """
+    OBJS=""
+    for src in $(SRCS); do
+        obj="$(@D)/$$(basename $${src%.s}.o)"
+        nasm -f elf64 -Werror $$src -o $$obj
+        OBJS="$$OBJS $$obj"
+    done
+    ar rcs $@ $$OBJS
+    """,
+    message = "Compiling libasm with nasm...",
+)
+
+cc_library(
+    name = "libasm",
+    srcs = [":compile_libasm"],
+    visibility = ["//visibility:public"],
+)
+
+cc_binary(
+    name = "test",
+    srcs = ["test.c"],
+    deps = [":libasm"],
+    linkopts = ["-Wl,-z,noexecstack"],
+    visibility = ["//visibility:public"],
+)

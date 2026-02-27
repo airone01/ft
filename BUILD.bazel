@@ -11,13 +11,13 @@ alias(
     actual = "//central/minilibx:mlx",
 )
 
-### MILESTONE 0
+### Milestone 0
 alias(
     name = "libft",
     actual = "//milestone-0/libft:libft",
 )
 
-### MILESTONE 1
+### Milestone 1
 alias(
     name = "ft_printf",
     actual = "//milestone-1/ft_printf:ft_printf",
@@ -28,7 +28,7 @@ alias(
     actual = "//milestone-1/get_next_line:get_next_line",
 )
 
-### MILESTONE 2
+### Milestone 2
 alias(
     name = "fdf",
     actual = "//milestone-2/fdf:fdf",
@@ -44,7 +44,7 @@ alias(
     actual = "//milestone-2/push_swap:push_swap",
 )
 
-### MILESTONE 3
+### Milestone 3
 alias(
     name = "minishell",
     actual = "//milestone-3/minishell:minishell",
@@ -55,7 +55,7 @@ alias(
     actual = "//milestone-3/philosophers:philosophers",
 )
 
-### MILESTONE 4
+### Milestone 4
 alias(
     name = "cub3d",
     actual = "//milestone-4/cub3d:cub3d",
@@ -156,7 +156,7 @@ alias(
     actual = "//milestone-4/cpp04/ex02:abstract",
 )
 
-### MILESTONE 5
+### Milestone 5
 alias(
     name = "cpp05-ex00",
     actual = "//milestone-5/cpp05/ex00:bureaucrat",
@@ -231,3 +231,22 @@ alias (
   name = "cpp09-ex01",
   actual = "//milestone-5/cpp09/ex01:RPN"
 )
+
+alias (
+  name = "cpp09-ex02",
+  actual = "//milestone-5/cpp09/ex02:RmergeMe"
+)
+
+### PCC
+
+#### Compilation branch
+
+alias (
+  name = "libasm",
+  actual = "//pcc/libasm:libasm"
+)
+alias (
+  name = "libasm-test",
+  actual = "//pcc/libasm:test"
+)
+
