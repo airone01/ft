@@ -10,6 +10,7 @@ This project is programmed for baseline AMD64 with the System V AMD64 convention
 The Intel syntax is the one used, as required by the subject.
 My implementation is vanilla, as in it is not programmed with AVX or any AMD64 extension in mind.
 It should therefore be portable on AMD64 Linux.
+Assembling with NASM version 2.15.05.
 
 Provided functions
 ------------------
@@ -64,7 +65,8 @@ Appending 'WRT ..plt' (With Respect To Procedure Linkage Table) forces the assem
 This routes our call through the PLT trampoline, which dynamically resolves the true memory address via the GOT (Global Offset Table) at runtime.
 
 The 'default rel' line is used to indicate to the assembler that we are purposely writing position independent code.
-AFAIK, 'WRT ..plt' does route the call, but '-Wall' still warns, and we cannot compile because of '-Werror'. Hence, using '[warning -reloc-rel-dword]' to suppress the NASM warning.
+AFAIK, 'WRT ..plt' does route the call, but '-Wall' still warns, and we cannot compile because of '-Werror'.
+We would use '[warning -reloc-rel-dword]' to suppress the NASM warning for more recent versions of NASM, but it does not exist in 2.15.05, which is the version installed on 42 Lyon's computers.
 
 Appendix C
 ----------
@@ -82,3 +84,9 @@ https://refspecs.linuxbase.org/x86_64-overview.pdf
 
 "Linux ABI description"
 https://docs.kernel.org/admin-guide/abi.html
+
+"x64 Cheat Sheet"
+https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf
+
+"x86 calling conventions"
+https://en.wikipedia.org/wiki/X86_calling_conventions

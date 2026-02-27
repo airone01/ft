@@ -3,7 +3,6 @@
 
 ; appendix B
 default rel
-[warning -reloc-rel-dword]
 
 section .text
   global ft_strdup
