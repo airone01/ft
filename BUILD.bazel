@@ -234,7 +234,7 @@ alias (
 
 alias (
   name = "cpp09-ex02",
-  actual = "//milestone-5/cpp09/ex02:RmergeMe"
+  actual = "//milestone-5/cpp09/ex02:PmergeMe"
 )
 
 ### PCC
