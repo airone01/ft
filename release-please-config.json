@@ -141,6 +141,10 @@
       "release-type": "simple",
       "package-name": "inception"
     },
+    "pcc/b": {
+      "release-type": "simple",
+      "package-name": "b"
+    },
     "pcc/libasm": {
       "release-type": "simple",
       "package-name": "libasm"
