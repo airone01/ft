@@ -29,7 +29,8 @@ jobs:
           x11proto-dev \
           libxext-dev \
           libxrandr-dev \
-          libreadline-dev
+          libreadline-dev \
+          nasm
 
     - name: Generate libXpm config.h
       run: |
