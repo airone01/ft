@@ -1,11 +1,6 @@
 main() {
-  extrn putchar, char;
-  auto i, s;
+  auto i, s, x;
   i = 0;
-  s = "hello, world\n";
-  while (char(s, i)) {
-    putchar(char(s, i));
-    i++;
-  }
+  s = 42;
+  x = 100;
 }
-
