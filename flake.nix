@@ -68,6 +68,10 @@
           # ASM
           nasm
 
+          # Compiler compilers
+          bison # yacc
+          flex # lex
+
           # Rust
           pkg-config
           rustc
