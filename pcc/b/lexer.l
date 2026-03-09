@@ -10,6 +10,9 @@
 
 %%
 
+"auto"                  { return AUTO; }
+"extrn"                 { return EXTERN; }
+
 [a-zA-Z_][a-zA-Z0-9_]*  { 
                           yylval.str = strdup(yytext); // dupe
                           return IDENTIFIER; 
@@ -24,6 +27,7 @@
 
 "="                     { return EQUALS; }
 ";"                     { return SEMICOLON; }
+","                     { return ','; }
 "("                     { return '('; }
 ")"                     { return ')'; }
 "{"                     { return '{'; }
