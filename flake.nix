@@ -7,7 +7,12 @@
     c_formatter_42.url = "github:maix-flake/c_formatter_42";
   };
 
-  outputs = { nixpkgs, flake-utils, c_formatter_42, ... }:
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    c_formatter_42,
+    ...
+  }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
 
@@ -29,8 +34,8 @@
           openssl
           lld
 
-          # Sharp
-          stdenv.cc.cc.lib
+          # ASM
+          nasm
 
           # Rust
           pkg-config
@@ -53,9 +58,6 @@
         shellHook = with pkgs; ''
           # Node packages in PATH
           export PATH="$PWD/node_modules/.bin/:$PATH"
-
-          # Sharp
-          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.xorg.libX11.dev}/lib"
 
           # minilibx
           export X11_LIB_PATH="${combinedX11}"
