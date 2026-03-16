@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:56:34 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 14:45:41 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:33:15 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 #include <stddef.h>
 #include <unistd.h>
 
-static long pf_display2(int fd, va_list *args, const char *format) {
-  if (*format == 'x')
-    return (ft_putnbr_baseu(fd, va_arg(*args, unsigned int), BASE_16));
-  else if (*format == 'X')
-    return (ft_putnbr_baseu(fd, va_arg(*args, unsigned int), BASE_16C));
-  else if (*format == '%')
+static long pf_display2(int fd, va_list *args, t_format *format) {
+  if (format->type == 'x' || format->type == 'X')
+    return (print_hex(fd, format, va_arg(*args, unsigned int)));
+  else if (format->type == '%')
     return (ft_putchar_ssize(fd, '%'));
   return (0);
 }
@@ -32,19 +30,16 @@ static long pt_display(int fd, uintptr_t ptr) {
           ft_putnbr_baseu(fd, ptr, BASE_16));
 }
 
-static long pf_display(int fd, va_list *args, const char *format) {
-  void *tmp;
-
-  if (*format == 'c')
+static long pf_display(int fd, va_list *args, t_format *format) {
+  if (format->type == 'c')
     return (ft_putchar_ssize(fd, (char)va_arg(*args, int)));
-  else if (*format == 's') {
-    tmp = va_arg(*args, char *);
-    return (ft_putstr_ssize(fd, tmp));
-  } else if (*format == 'p')
+  else if (format->type == 's')
+    return (ft_putstr_ssize(fd, va_arg(*args, char *)));
+  else if (format->type == 'p')
     return (pt_display(fd, va_arg(*args, uintptr_t)));
-  else if (*format == 'd' || *format == 'i')
-    return (ft_putnbr_base(fd, va_arg(*args, int), BASE_10));
-  else if (*format == 'u')
+  else if (format->type == 'd' || format->type == 'i')
+    return (print_signed(fd, format, va_arg(*args, int)));
+  else if (format->type == 'u')
     return (ft_putnbr_baseu(fd, va_arg(*args, unsigned int), BASE_10));
   return (pf_display2(fd, args, format));
 }
@@ -64,15 +59,18 @@ static long pf_display(int fd, va_list *args, const char *format) {
 int ft_printf(const char *format, ...) {
   va_list args;
   long count;
+  t_format fmt;
 
   count = 0;
   va_start(args, format);
   while (*format) {
-    if (*format == '%')
-      count += pf_display(STDOUT_FILENO, &args, ++format);
-    else
+    if (*format == '%') {
+      fmt = parse_format(&format);
+      count += pf_display(STDOUT_FILENO, &args, &fmt);
+    } else
       count += ft_putchar_ssize(STDOUT_FILENO, *format);
-    format++;
+    if (*format)
+      format++;
   }
   va_end(args);
   return ((int)count);
@@ -93,13 +91,15 @@ int ft_printf(const char *format, ...) {
 int ft_printf_fd(int fd, const char *format, ...) {
   va_list args;
   long count;
+  t_format fmt;
 
   count = 0;
   va_start(args, format);
   while (*format) {
-    if (*format == '%')
-      count += pf_display(fd, &args, ++format);
-    else
+    if (*format == '%') {
+      fmt = parse_format(&format);
+      count += pf_display(STDOUT_FILENO, &args, &fmt);
+    } else
       count += ft_putchar_ssize(fd, *format);
     format++;
   }

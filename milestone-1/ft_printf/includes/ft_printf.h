@@ -6,14 +6,13 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:35:33 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 14:39:43 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:40:37 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 #define FT_PRINTF_H
 
-#include "libft.h"
 #include <stdint.h>
 #include <unistd.h>
 
@@ -35,5 +34,23 @@ ssize_t ft_putstr_ssize(int fd, const char *str);
 ssize_t ft_putchar_ssize(int fd, char c);
 int ft_printf(const char *format, ...);
 int ft_printf_fd(int fd, const char *format, ...);
+
+// bonus stuff
+
+/* all format flags */
+typedef struct s_format {
+  int minus;
+  int zero;
+  int hash;
+  int space;
+  int plus;
+  int width;     // min width
+  int precision; // precision (-1 means not specified)
+  char type;     // conversion type (c, s, p, d, etc.)
+} t_format;
+
+t_format parse_format(const char **format);
+long print_hex(int fd, t_format *fmt, unsigned int nbr);
+long print_signed(int fd, t_format *fmt, int nbr);
 
 #endif /* ifndef FT_PRINTF_H */
