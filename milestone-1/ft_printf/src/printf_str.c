@@ -1,49 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_signed.c                                   :+:      :+:    :+:   */
+/*   printf_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/16 17:48:37 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 17:52:49 by elagouch         ###   ########.fr       */
+/*   Created: 2026/03/16 17:31:59 by elagouch          #+#    #+#             */
+/*   Updated: 2026/03/16 18:32:27 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
+#include <stddef.h>
 
-static int pfget_num_len(long nbr) {
-  int len = 0;
-  if (nbr == 0)
-    return (1);
-  if (nbr < 0) {
-    len++;
-    nbr = -nbr;
-  }
-  while (nbr > 0) {
-    len++;
-    nbr /= 10;
-  }
-  return (len);
-}
-
-long print_signed(int fd, t_format *fmt, int nbr) {
+long print_string(int fd, t_format *fmt, const char *str) {
   long count;
   int len;
 
   count = 0;
-  len = pfget_num_len(nbr);
-  if (nbr >= 0 && (fmt->plus || fmt->space))
-    len++;
+  if (!str)
+    str = "(null)";
+  len = (int)ft_strlen(str);
+  if (fmt->precision >= 0 && fmt->precision < len)
+    len = fmt->precision;
   if (!fmt->minus)
     count += print_padding(fd, len, fmt->width, ' ');
-  if (nbr >= 0) {
-    if (fmt->plus)
-      count += pfputchar(fd, '+');
-    else if (fmt->space)
-      count += pfputchar(fd, ' ');
-  }
-  count += pfputnbr_base(fd, nbr, BASE_10);
+  count += write(fd, str, (size_t)len);
   if (fmt->minus)
     count += print_padding(fd, len, fmt->width, ' ');
   return (count);

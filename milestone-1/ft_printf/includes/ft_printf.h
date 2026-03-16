@@ -6,7 +6,7 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:35:33 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 17:55:09 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/03/16 18:29:08 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ long print_string(int fd, t_format *fmt, const char *str);
 long print_padding(int fd, int current_len, int target_width, char c);
 
 // exposed functions
-int ft_printf(const char *format, ...);
-int ft_printf_fd(int fd, const char *format, ...);
+int ft_printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+int ft_printf_fd(int fd, const char *format, ...)
+    __attribute__((format(printf, 2, 3)));
 
 #endif /* ifndef FT_PRINTF_H */
