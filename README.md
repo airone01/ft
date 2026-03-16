@@ -11,24 +11,23 @@
     <a href="https://github.com/airone01/ft"><img alt="Repo Size" src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41" /></a><br />
     <a href="https://github.com/airone01/ft/actions/workflows/make.yml"><img alt="Bazel workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/bazel.yml?style=flat-square&logo=bazel&logoColor=D9E0EE&labelColor=302D41" /></a>
     <a href="https://github.com/airone01/ft/actions/workflows/norminette.yml"><img alt="Norminette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/norminette.yml?style=flat-square&logo=42&logoColor=D9E0EE&labelColor=302D41&label=norm" /></a>
-    <img src="https://wakatime.com/badge/github/airone01/ft.svg?style=flat-square&logoColor=D9E0EE&labelColor=302D41" alt="Wakatime project time">
   </p>
 </div>
 
 <div align="center">
-  <a>
-    ft is a monorepo of all my projects related to 42. It's mainly meant for personal archiving, but I share some cool projects that you can check out. For example, the Minecraft push_swap visualizer.
-  </a>
+  <code>ft</code> is a monorepo of all my projects related to <a href="https://42.fr/en/homepage/">42</a>. It's mainly meant for personal archiving, but I share some cool stuff that you can check out.
 </div>
 
 ---
 
 <div align="center"><p>
 
+[Foreword]: #foreword
 [Projects]: #projects
 [Extra tools/projects]: #extra-toolsprojects
 [Additional notes]: #additional-notes
 
+**[<kbd> <br> Foreword <br> </kbd>][Foreword]**
 **[<kbd> <br> Projects <br> </kbd>][Projects]**
 **[<kbd> <br> Extra tools/projects <br> </kbd>][Extra tools/projects]**
 **[<kbd> <br> Additional notes <br> </kbd>][Additional notes]**
@@ -36,6 +35,26 @@
 </p></div>
 
 ---
+
+## Foreword
+
+This is a monorepo, meaning that projects are tightly coupled and depend on each other to work properly.
+
+> [!CAUTION]
+> 42 projects are centered around GNU Make, to make students understand compilation better.
+> I am not intersted in maintaining 30+ (very similar) Makefiles in this monorepo though.
+> After many attempts at setting up an automatic way to create Makefiles on the fly while managing C/C++ dependencies on the site, I decided to quit that.
+> For thais reason and the fact that I enjoy DevOps and reproductibility, I switched to Bazel, and I occasionally create a Makefile and clean the repo before pushing a project.
+> One of the side effects of these choices is that it makes it harder for people to simply copy my projects and push them as theirs (or really it doesn't, but pretend it does).
+> It wasn't the original goal to do that, but copying is of course against the core principle of 42, and what I personally believe in.
+> This repo serves more as an example of what can be done in this school instead of a copy-paste directory for students.
+> **TL;DR: You might need a (teeny tiny) bit of work if you want to copy my work and have it graded as yours, or it might be easy for you.
+> Whatever it is, never do that. It's called a school for a reason.**
+> *Learn; Write your own tests; and "By Odin! By Thor! Use your brain!".*
+
+> [!NOTE]
+> No, I was not asked by 42 staff to write this disclaimer, it is my honest opinion and reasoning.
+> My intra login is `elagouch`.
 
 ## Projects
 
@@ -174,7 +193,10 @@ A program to flex on your friends by visualizing your push_swap algorithm in
 Minecraft. It uses [Valence](https://valence.rs/) to control the game packets
 and visualize the sorting algorithm on your `1.20.1` client.
 
-![In-game screenshot](./.github/assets/screenshot_1.webp)
+<details>
+  <summary>In-game screenshot</summary>
+  <img alt="Minecraft push_swap visualizer in-game screenshot" src="./.github/assets/screenshot_1.webp" />
+</details>
 
 <img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
 
@@ -195,20 +217,40 @@ You can convert PNG images to BMP using `convert` using [ImageMagick](https://im
 
 ### Bazel
 
+> [!NOTE]
+> Did you read the foreword?
+
 You can build all of the projects in this monorepo using [Bazel](https://bazel.build/).
 
-- Run `bazel query ...` to list all projects
-- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`, [I configured aliases](./BUILD.bazel)).
+- Run `bazel query ...` to list all projects.
+- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`, [there are aliases](./BUILD.bazel)).
 - Most importantly, run `bazel build //...` to make all projects at once (as well as the required external libs).
 
-Building all projects at the same time without cache takes around 20s on the slowest 4-threads school computers. On the fastest (DELL), it takes at worse 7 seconds.
+Building all projects at the same time without cache takes around 20s on the slowest 4-threads school computers (at 42 Lyon).
+On the fastest (DELL), it takes at worse 7 seconds including Bazel binary downloading and warmup.
 
 [![asciicast](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
 
-### Direnv
+### LSPs and `compile_commands.json`
 
-This project's dev dependencies are managed using `nix-direnv`. If you don't
-know what NixOS is, you probably don't have to care about that though.
+If you use an IDE or LSP server and the constant `clangd` type errors appearing when browsing this repo hurt your eyes, I might have a solution for you.
+The `compile_commands.json` file!
+It instructs your LSP server on where to locate the headers, and in which order, and how your compiling system (Bazel in this case) manages your compilation.
+
+To compile this file for the whole project using Bazel:
+```sh
+bazel run //:refresh_compile_commands
+```
+
+> [!NOTE]
+> The `compile_commands.json` is gitignore'd for your inconvenience :-)
+
+### nix-direnv
+
+This project's dev dependencies are managed using [`nix-direnv`](https://github.com/nix-community/nix-direnv).
+There is a central [`flake.nix`](./flake.nix) file whose main purpose is exposing `devShell`s.
+
+I might eventually package the projects of this repo into this flake when I find the time.
 
 ## License
 
