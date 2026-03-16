@@ -14,8 +14,9 @@
 #include "libft.h"
 #include <unistd.h>
 
-long pfputstr(int fd, const char *str) {
-  if (!str)
-    return (write(fd, "(null)", 6));
-  return (write(fd, str, (size_t)ft_strlen(str)));
+long	pfputstr(int fd, const char *str)
+{
+	if (!str)
+		return (write(fd, "(null)", 6));
+	return (write(fd, str, (size_t)ft_strlen(str)));
 }
