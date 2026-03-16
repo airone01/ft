@@ -1,5 +1,5 @@
 {
-  "piscine-c/shell00": "1.0.0",
+  "piscine-c/shell00": "1.1.0",
   "piscine-c/shell01": "1.0.0",
   "piscine-c/c00": "1.0.0",
   "piscine-c/c01": "1.0.0",
@@ -32,9 +32,9 @@
   "milestone-5/cpp06": "1.1.0",
   "milestone-5/cpp07": "1.1.0",
   "milestone-5/cpp08": "1.1.0",
-  "milestone-5/cpp09": "1.0.0",
+  "milestone-5/cpp09": "1.0.1",
   "milestone-5/inception": "1.0.0",
-  "pcc/libasm": "0.0.0",
+  "pcc/libasm": "1.0.0",
   "rushes/hotrace": "2.1.0",
   "rushes/libunit": "1.0.0",
   "tools/push-swap-visualizer-minecraft": "1.0.0"
