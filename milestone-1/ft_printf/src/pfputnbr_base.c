@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base_ssize.c                             :+:      :+:    :+:   */
+/*   pfputnbr_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:37:33 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 17:14:28 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:55:35 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static unsigned long bad_base(const char *base) {
   return (0);
 }
 
-ssize_t ft_putnbr_base(int fd, int nbr, const char *base) {
+ssize_t pfputnbr_base(int fd, int nbr, const char *base) {
   long base_len;
   long count;
 
@@ -52,16 +52,16 @@ ssize_t ft_putnbr_base(int fd, int nbr, const char *base) {
   }
   if (nbr < 0) {
     count += write(fd, "-", 1);
-    count += ft_putnbr_base(fd, -nbr, base);
+    count += pfputnbr_base(fd, -nbr, base);
     return (count);
   }
   if (nbr >= (int)base_len)
-    count += ft_putnbr_base(fd, nbr / (int)base_len, base);
+    count += pfputnbr_base(fd, nbr / (int)base_len, base);
   count += write(fd, &(base[nbr % base_len]), 1);
   return (count);
 }
 
-ssize_t ft_putnbr_baseu(int fd, unsigned long nbr, const char *base) {
+ssize_t pfputnbru_base(int fd, unsigned long nbr, const char *base) {
   size_t base_len;
   ssize_t count;
 
@@ -70,7 +70,7 @@ ssize_t ft_putnbr_baseu(int fd, unsigned long nbr, const char *base) {
   count = 0;
   base_len = ft_strlen(base);
   if (nbr >= base_len)
-    count += ft_putnbr_baseu(fd, nbr / base_len, base);
+    count += pfputnbru_base(fd, nbr / base_len, base);
   count += write(fd, &(base[nbr % base_len]), 1);
   return (count);
 }

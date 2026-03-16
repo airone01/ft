@@ -6,16 +6,14 @@
 /*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:35:33 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 17:40:37 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/03/16 17:55:09 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 #define FT_PRINTF_H
 
-#include <stdint.h>
 #include <unistd.h>
-
 #ifndef BASE_10
 #define BASE_10 "0123456789"
 #endif /* ifndef BASE_10 */
@@ -28,16 +26,7 @@
 #define BASE_16C "0123456789ABCDEF"
 #endif /* ifndef BASE_16C */
 
-ssize_t ft_putnbr_baseu(int fd, unsigned long nbr, const char *base);
-ssize_t ft_putnbr_base(int fd, int nbr, const char *base);
-ssize_t ft_putstr_ssize(int fd, const char *str);
-ssize_t ft_putchar_ssize(int fd, char c);
-int ft_printf(const char *format, ...);
-int ft_printf_fd(int fd, const char *format, ...);
-
-// bonus stuff
-
-/* all format flags */
+// formatting flags
 typedef struct s_format {
   int minus;
   int zero;
@@ -49,8 +38,22 @@ typedef struct s_format {
   char type;     // conversion type (c, s, p, d, etc.)
 } t_format;
 
+// rewrites of classic funcs for our use case
+ssize_t pfputnbru_base(int fd, unsigned long nbr, const char *base);
+ssize_t pfputnbr_base(int fd, int nbr, const char *base);
+ssize_t pfputstr(int fd, const char *str);
+ssize_t pfputchar(int fd, char c);
+
+// utils
 t_format parse_format(const char **format);
+// displaying
 long print_hex(int fd, t_format *fmt, unsigned int nbr);
 long print_signed(int fd, t_format *fmt, int nbr);
+long print_string(int fd, t_format *fmt, const char *str);
+long print_padding(int fd, int current_len, int target_width, char c);
+
+// exposed functions
+int ft_printf(const char *format, ...);
+int ft_printf_fd(int fd, const char *format, ...);
 
 #endif /* ifndef FT_PRINTF_H */
