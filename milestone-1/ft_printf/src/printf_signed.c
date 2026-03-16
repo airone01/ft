@@ -6,13 +6,13 @@
 /*   By: elagouch <elagouch@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 17:48:37 by elagouch          #+#    #+#             */
-/*   Updated: 2026/03/16 18:34:33 by elagouch         ###   ########.fr       */
+/*   Updated: 2026/03/16 18:37:41 by elagouch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int pfget_num_len(long nbr) {
+static int get_num_len(long nbr) {
   int len = 0;
   if (nbr == 0)
     return (1);
@@ -31,7 +31,7 @@ static int pfget_num_len(long nbr) {
 static void calc_pad(t_format *fmt, int nbr, int *pad) {
   int sign_len;
 
-  pad[2] = pfget_num_len(nbr) - (nbr < 0);
+  pad[2] = get_num_len(nbr) - (nbr < 0);
   if (nbr == 0 && fmt->precision == 0)
     pad[2] = 0;
   sign_len = (nbr < 0) || fmt->plus || fmt->space;
@@ -47,6 +47,7 @@ static void calc_pad(t_format *fmt, int nbr, int *pad) {
     pad[1] = 0;
 }
 
+/* pad[0]=zeros, pad[1]=spaces, pad[2]=digits */
 long print_signed(int fd, t_format *fmt, int nbr) {
   long count;
   unsigned int unbr;
