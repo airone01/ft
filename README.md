@@ -27,7 +27,7 @@
 [Extra tools/projects]: #extra-toolsprojects
 [Additional notes]: #additional-notes
 
-**[<kbd> <br> Foreword <br> </kbd>][Foreword]**
+**[<kbd> <br> Foreword <br> </kbd>][Foreword]**
 **[<kbd> <br> Projects <br> </kbd>][Projects]**
 **[<kbd> <br> Extra tools/projects <br> </kbd>][Extra tools/projects]**
 **[<kbd> <br> Additional notes <br> </kbd>][Additional notes]**
@@ -38,7 +38,7 @@
 
 ## Foreword
 
-This is a monorepo, meaning that projects are tightly coupled and depend on each other to work properly.
+This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that projects are tightly coupled and depend on each other to work properly.
 
 > [!CAUTION]
 > 42 projects are centered around GNU Make, to make students understand compilation better.
