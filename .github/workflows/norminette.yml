@@ -55,7 +55,7 @@ jobs:
             if [ -n "$CHANGED_FILES" ]; then
               MILESTONE_FILES=$(echo "$CHANGED_FILES" | grep -E '^milestone-[^/]+/' || true)
               if [ -n "$MILESTONE_FILES" ]; then
-                CANDIDATES=$(echo "$MILESTONE_FILES" | sed 's|^\(milestone-[^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
+                CANDIDATES=$(echo "$MILESTONE_FILES" | sed 's|^\(milestone-[^/]*/[^/]*\)/.*|\1|' | sort -u | tr '\n' ' ')
                 for p in $CANDIDATES; do
                   if [[ " $PROJECTS " == *" $p "* ]]; then
                     CHANGED_PROJECTS="$CHANGED_PROJECTS $p"
