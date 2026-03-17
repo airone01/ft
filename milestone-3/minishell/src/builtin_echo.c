@@ -56,7 +56,7 @@ int	builtin_echo(t_ctx *ctx, t_command *cmd)
 	}
 	while (i <= cmd->arg_count)
 	{
-		ft_printf(cmd->args[i], STDOUT_FILENO);
+		ft_printf("%s", cmd->args[i]);
 		if (i < cmd->arg_count)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
