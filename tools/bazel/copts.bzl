@@ -31,11 +31,21 @@ CXX_COPTS = [
     "-g3",
 ]
 
-MATH_LINKOPTS = ["-lm"]
-READLINE_LINKOPTS = ["-lreadline"]
-MLX_LINKOPTS = [
-    "-lmlx",
-    "-lXext",
-    "-lX11",
-    "-lXpm",
-] + MATH_LINKOPTS
+MATH_LINKOPTS  = select({
+    "//:on_nix": [],
+    "//conditions:default": ["-lm"]
+})
+READLINE_LINKOPTS = select({
+    "//:on_nix": [],
+    "//conditions:default": ["-lreadline"]
+})
+MLX_LINKOPTS = select({
+    "//:on_nix": [],
+    "//conditions:default": [
+        "-lmlx",
+        "-lXext",
+        "-lX11",
+        "-lXpm",
+    ],
+}) + MATH_LINKOPTS
+

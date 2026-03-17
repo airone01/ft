@@ -15,6 +15,10 @@ cc_binary(
     linkopts = READLINE_LINKOPTS,
     visibility = ["//visibility:public"],
     deps = [
+        "//milestone-0/libft",
         "//milestone-1/ft_printf",
-    ],
+    ] + select({
+        "//:on_nix": ["@readline//:readline"],
+        "//conditions:default": [],
+    }),
 )

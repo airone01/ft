@@ -45,10 +45,11 @@ nix_repo.flake(
 use_repo(nix_repo, "nixpkgs")
 
 nix_pkg = use_extension("@rules_nixpkgs_core//extensions:package.bzl", "nix_pkg")
-nix_pkg.attr(
+nix_pkg.expr(
     name = "readline",
     repo = "@nixpkgs",
-    attr = "readline",
+    attr = "pkg",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"readline-merged\"; paths = [ pkgs.readline pkgs.readline.dev ]; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
@@ -63,7 +64,7 @@ nix_pkg.expr(
     name = "libX11",
     repo = "@nixpkgs",
     attr = "pkg",
-    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev ]; }; }",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev pkgs.xorg.xorgproto ]; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
@@ -78,7 +79,7 @@ nix_pkg.expr(
     name = "libXext",
     repo = "@nixpkgs",
     attr = "pkg",
-    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev ]; }; }",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev pkgs.xorg.xorgproto ]; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
