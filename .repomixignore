@@ -9,4 +9,13 @@ LICENSE
 
 # So as not to get all projects
 external-tools/
+external-libs/
+central/
+piscine-discovery-web/
+
+# Various random files
+*.csv
+*sums
+wget-list
+milestone-1/get_next_line/giant_line.txt
 

@@ -1,12 +1,20 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load("//:tools/bazel/copts.bzl", "CC_COPTS")
 
 cc_library(
     name = "ft_printf",
-    srcs = glob(["src/**/*.c"]),
-    hdrs = glob(["includes/**/*.h"]),
+    srcs = glob(["src/*.c"]),
+    hdrs = glob(["includes/*.h"]),
     copts = CC_COPTS,
     includes = ["includes"],
     visibility = ["//visibility:public"],
     deps = ["//milestone-0/libft"],
+)
+
+cc_test(
+    name = "ft_printf_test",
+    size = "small",
+    srcs = ["test/main_test.c"],
+    deps = [":ft_printf"],
 )

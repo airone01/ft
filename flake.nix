@@ -1,3 +1,28 @@
+# ============================================================================ #
+#                             BAZEL FHS WORKAROUND                             #
+# Bazel downloads pre-compiled binaries that expect standard Linux paths (like #
+# `/lib64`). On NixOS, these crash with a 'stub-ld' error.                     #
+#                                                                              #
+# This is only ever a problem for certain tasks that run something that was    #
+# just compiled, in particular the 'refresh_compile_commands' target in this   #
+# repo, which builds a set of scripts that can be run to generate the          #
+# 'compile_commands.json' file. (see REAME.md)                                 #
+#                                                                              #
+# I use `steam-run bazel` locally to fake a standard filesystem so             #
+# they execute, keeping the repo pure for 42's Ubuntu.                         #
+# The alternatives are too complicated for what I'm bothered to code (if even  #
+# possible in the case of 'refresh_compile_commands').                         #
+# I have not included 'steam-run' in this flake as it is unfree software.      #
+#                                                                              #
+# If you decide to go the 'steam-run' route like me to generate                #
+# 'compile_commands.json', you can safely ignore the 'launcher_maker.cc'       #
+# warnings that Bazel yells at you.                                            #
+#                                                                              #
+# Those are caused by Hedron aggressively trying to analyze *everything* in    #
+# the dependency graph so the LSP has perfect score, which fails because       #
+# Bazel's internal C++ script does not pass `--std=c++11` to its own internal  #
+# tooling. Basically nothing to worry about.                                   #
+# ============================================================================ #
 {
   description = "Flake for ft";
 
@@ -16,11 +41,10 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
 
-      # Create a combined directory with all needed X11 headers
       combinedX11 = pkgs.runCommand "combined-x11-headers" {} ''
         mkdir -p $out/X11/extensions
-        cp -r ${pkgs.xorg.libX11.dev}/include/X11/* $out/X11/
-        cp -r ${pkgs.xorg.libXext.dev}/include/X11/extensions/* $out/X11/extensions/
+        cp -r ${pkgs.libX11.dev}/include/X11/* $out/X11/
+        cp -r ${pkgs.libXext.dev}/include/X11/extensions/* $out/X11/extensions/
       '';
     in {
       devShells.default = pkgs.mkShell {
@@ -28,6 +52,8 @@
           bashInteractive
         ];
         buildInputs = with pkgs; [
+          bazel_8
+
           # Node tools
           nodejs_22
           bun
@@ -50,14 +76,15 @@
           norminette
           valgrind
 
-          # x11
-          xorg.libX11.dev
-          xorg.libXext.dev
+          # X11
+          libX11.dev
+          libXext.dev
           libbsd
         ];
-        shellHook = with pkgs; ''
-          # Node packages in PATH
+
+        shellHook = ''
           export PATH="$PWD/node_modules/.bin/:$PATH"
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.libX11.dev}/lib"
 
           # minilibx
           export X11_LIB_PATH="${combinedX11}"
