@@ -49,24 +49,62 @@ nix_pkg.attr(
     name = "readline",
     repo = "@nixpkgs",
     attr = "readline",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+cc_library(
+    name = "readline",
+    srcs = glob(["lib/**/*.so*"]),
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
 )
-nix_pkg.attr(
+""",
+)
+nix_pkg.expr(
     name = "libX11",
     repo = "@nixpkgs",
-    attr = "xorg.libX11",
+    attr = "pkg",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev ]; }; }",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+cc_library(
+    name = "libX11",
+    srcs = glob(["lib/**/*.so*"]),
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
 )
-nix_pkg.attr(
-    name = "libXpm",
-    repo = "@nixpkgs",
-    attr = "xorg.libXpm",
+""",
 )
-nix_pkg.attr(
+nix_pkg.expr(
     name = "libXext",
     repo = "@nixpkgs",
-    attr = "xorg.libXext",
+    attr = "pkg",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev ]; }; }",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+cc_library(
+    name = "libXext",
+    srcs = glob(["lib/**/*.so*"]),
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
 )
-use_repo(nix_pkg, "readline", "libX11", "libXpm", "libXext")
-# use_repo(nix_pkg, "readline", "libX11", "libXpm")
+""",
+)
+# nix_pkg.attr(
+#     name = "libXpm",
+#     repo = "@nixpkgs",
+#     attr = "xorg.libXpm",
+#     build_file_content = """
+# cc_library(
+#     name = "libXpm",
+#     srcs = glob(["lib/**/*.so*"]),
+#     hdrs = glob(["include/**/*.h"]),
+#     includes = ["include"],
+#     visibility = ["//visibility:public"],
+# )
+# """,
+# )
+# use_repo(nix_pkg, "readline", "libX11", "libXpm", "libXext")
+use_repo(nix_pkg, "readline", "libX11", "libXext")
 
 nix_cc = use_extension("@rules_nixpkgs_cc//extensions:toolchains.bzl", "nix_cc")
 nix_cc.toolchain(
