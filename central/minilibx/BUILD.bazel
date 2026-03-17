@@ -7,11 +7,9 @@ cc_library(
         exclude = ["mlx_lib_xpm.c"],
     ),
     hdrs = [
+        "mlx.h",
         "mlx_int.h",
-    ] + select({
-        "//:on_nix": [],
-        "//conditions:default": ["mlx.h"],
-    }),
+    ],
     copts = [
         "-std=gnu89",
         "-w", # external lib, suppress warns
@@ -25,6 +23,8 @@ cc_library(
         "//:on_nix": [
             "@libX11//:libX11",
             "@libXext//:libXext",
+            "@libXrandr//:libXrandr",
+            "@libXrender//:libXrender",
             # "@libXpm//:libXpm",
         ],
         "//conditions:default": [],

@@ -64,7 +64,7 @@ nix_pkg.expr(
     name = "libX11",
     repo = "@nixpkgs",
     attr = "pkg",
-    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev pkgs.xorg.xorgproto ]; }; }",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
@@ -79,11 +79,41 @@ nix_pkg.expr(
     name = "libXext",
     repo = "@nixpkgs",
     attr = "pkg",
-    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev pkgs.xorg.xorgproto ]; }; }",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
     name = "libXext",
+    srcs = glob(["lib/**/*.so*"]),
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
+)
+""",
+)
+nix_pkg.expr(
+    name = "libXrandr",
+    repo = "@nixpkgs",
+    attr = "pkg",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrandr-merged\"; paths = [ pkgs.xorg.libXrandr pkgs.xorg.libXrandr.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+cc_library(
+    name = "libXrandr",
+    srcs = glob(["lib/**/*.so*"]),
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
+)
+""",
+)
+nix_pkg.expr(
+    name = "libXrender",
+    repo = "@nixpkgs",
+    attr = "pkg",
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrender-merged\"; paths = [ pkgs.xorg.libXrender pkgs.xorg.libXrender.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+cc_library(
+    name = "libXrender",
     srcs = glob(["lib/**/*.so*"]),
     hdrs = glob(["include/**/*.h"]),
     includes = ["include"],
@@ -105,7 +135,7 @@ cc_library(
 # """,
 # )
 # use_repo(nix_pkg, "readline", "libX11", "libXpm", "libXext")
-use_repo(nix_pkg, "readline", "libX11", "libXext")
+use_repo(nix_pkg, "readline", "libX11", "libXext", "libXrandr", "libXrender")
 
 nix_cc = use_extension("@rules_nixpkgs_cc//extensions:toolchains.bzl", "nix_cc")
 nix_cc.toolchain(
