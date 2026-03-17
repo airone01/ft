@@ -2,6 +2,9 @@
 # Build Settings
 # ============================================================================
 
+build:nix --extra_toolchains=@nix_toolchain//:toolchain
+build:nix --symlink_prefix=.bazel-nix/
+
 # Use C++17 for better compatibility (can override per-target)
 build --cxxopt=-std=c++98
 build --host_cxxopt=-std=c++98
