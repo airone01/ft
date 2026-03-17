@@ -23,9 +23,9 @@ cc_library(
     ],
     deps = select({
         "//:on_nix": [
-            "@nix_libX11//:libX11", 
-            "@nix_libXext//:libXext", 
-            "@nix_libXpm//:libXpm"
+            "@libX11//:libX11",
+            "@libXpm//:libXpm",
+            "@libXext//:libXext",
         ],
         "//conditions:default": [],
     }),

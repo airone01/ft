@@ -37,37 +37,43 @@ git_override(
     strip_prefix = "toolchains/cc",
 )
 
-nixpkgs = use_extension("@rules_nixpkgs_core//:extensions.bzl", "nixpkgs")
-nixpkgs.flake(
+nix_repo = use_extension("@rules_nixpkgs_core//extensions:repository.bzl", "nix_repo")
+nix_repo.flake(
     name = "nixpkgs",
-    file = "//:flake.nix",
+    lock_file = "//:flake.lock",
 )
-use_repo(nixpkgs, "nixpkgs")
+use_repo(nix_repo, "nixpkgs")
 
-nixpkgs_package = use_extension("@rules_nixpkgs_core//:extensions.bzl", "nixpkgs_package")
-nixpkgs_package.package(
+nix_pkg = use_extension("@rules_nixpkgs_core//extensions:package.bzl", "nix_pkg")
+nix_pkg.attr(
     name = "readline",
-    repository = "@nixpkgs",
-    target = "readline",
+    repo = "@nixpkgs",
+    attr = "readline",
 )
-nixpkgs_package.package(
+nix_pkg.attr(
     name = "libX11",
-    repository = "@nixpkgs",
-    target = "xorg.libX11",
+    repo = "@nixpkgs",
+    attr = "xorg.libX11",
 )
-nixpkgs_package.package(
+nix_pkg.attr(
     name = "libXpm",
-    repository = "@nixpkgs",
-    target = "xorg.libXpm",
+    repo = "@nixpkgs",
+    attr = "xorg.libXpm",
 )
-use_repo(nixpkgs_package, "readline", "libX11", "libXpm")
+nix_pkg.attr(
+    name = "libXext",
+    repo = "@nixpkgs",
+    attr = "xorg.libXext",
+)
+use_repo(nix_pkg, "readline", "libX11", "libXpm", "libXext")
+# use_repo(nix_pkg, "readline", "libX11", "libXpm")
 
-nixpkgs_cc = use_extension("@rules_nixpkgs_cc//:extensions.bzl", "nixpkgs_cc_configure")
-nixpkgs_cc.nixpkgs_cc(
+nix_cc = use_extension("@rules_nixpkgs_cc//extensions:toolchains.bzl", "nix_cc")
+nix_cc.toolchain(
     name = "nix_toolchain",
     repository = "@nixpkgs",
 )
-use_repo(nixpkgs_cc, "nix_toolchain")
+use_repo(nix_cc, "nix_toolchain")
 
 # note: i'm not configuring the rust crates in bazel, as cargo is good enough
 # for my use-case.
