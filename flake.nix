@@ -3,9 +3,15 @@
 # Bazel downloads pre-compiled binaries that expect standard Linux paths (like #
 # `/lib64`). On NixOS, these crash with a 'stub-ld' error.                     #
 #                                                                              #
+# This is only ever a problem for certain tasks that run something that was    #
+# just compiled, in particular the 'refresh_compile_commands' target in this   #
+# repo, which builds a set of scripts that can be run to generate the          #
+# 'compile_commands.json' file. (see REAME.md)                                 #
+#                                                                              #
 # I use `steam-run bazel` locally to fake a standard filesystem so             #
 # they execute, keeping the repo pure for 42's Ubuntu.                         #
-# The alternatives are too complicated for what I'm bothered to code.          #
+# The alternatives are too complicated for what I'm bothered to code (if even  #
+# possible in the case of 'refresh_compile_commands').                         #
 # I have not included 'steam-run' in this flake as it is unfree software.      #
 #                                                                              #
 # If you decide to go the 'steam-run' route like me to generate                #
@@ -35,7 +41,6 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
 
-      # Create a combined directory with all needed X11 headers
       combinedX11 = pkgs.runCommand "combined-x11-headers" {} ''
         mkdir -p $out/X11/extensions
         cp -r ${pkgs.libX11.dev}/include/X11/* $out/X11/
@@ -55,9 +60,6 @@
           openssl
           lld
 
-          # Sharp
-          stdenv.cc.cc.lib
-
           # Rust
           pkg-config
           rustc
@@ -71,7 +73,7 @@
           norminette
           valgrind
 
-          # x11
+          # X11
           libX11.dev
           libXext.dev
           libbsd
