@@ -8,7 +8,6 @@ cc_library(
     ),
     hdrs = [
         "mlx_int.h",
-        "X11/xpm.h",
     ] + select({
         "//:on_nix": [],
         "//conditions:default": ["mlx.h"],
@@ -32,7 +31,7 @@ cc_library(
     }),
     linkopts = select({
         "//:on_nix": [],
-        "//conditions:default": ["-lX11", "-lXext", "-l:libXpm.so.4", "-lm"],
+        "//conditions:default": ["-lX11", "-lXext", "-lm"],
     }),
     linkstatic = True,
     visibility = ["//visibility:public"],
