@@ -33,7 +33,10 @@ CXX_COPTS = [
 
 MATH_LINKOPTS = ["-lm"]
 READLINE_LINKOPTS = ["-lreadline"]
-MLX_LINKOPTS = [
+MLX_LINKOPTS = select({
+    "//:on_nix": ["-lXpm"],
+    "//conditions:default": ["-l:libXpm.so.4"],
+}) + [
     "-lmlx",
     "-lXext",
     "-lX11",

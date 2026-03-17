@@ -55,7 +55,12 @@ nixpkgs_package.package(
     repository = "@nixpkgs",
     target = "xorg.libX11",
 )
-use_repo(nixpkgs_package, "readline", "libX11")
+nixpkgs_package.package(
+    name = "libXpm",
+    repository = "@nixpkgs",
+    target = "xorg.libXpm",
+)
+use_repo(nixpkgs_package, "readline", "libX11", "libXpm")
 
 nixpkgs_cc = use_extension("@rules_nixpkgs_cc//:extensions.bzl", "nixpkgs_cc_configure")
 nixpkgs_cc.nixpkgs_cc(

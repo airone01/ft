@@ -2,10 +2,17 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 cc_library(
     name = "mlx",
-    srcs = glob(["*.c"]),
+    srcs = glob(
+        ["*.c"],
+        exclude = ["mlx_lib_xpm.c"],
+    ),
     hdrs = [
         "mlx_int.h",
-    ],
+        "X11/xpm.h",
+    ] + select({
+        "//:on_nix": [],
+        "//conditions:default": ["mlx.h"],
+    }),
     copts = [
         "-std=gnu89",
         "-w", # external lib, suppress warns
@@ -25,7 +32,7 @@ cc_library(
     }),
     linkopts = select({
         "//:on_nix": [],
-        "//conditions:default": ["-lX11", "-lXext", "-lm"],
+        "//conditions:default": ["-lX11", "-lXext", "-l:libXpm.so.4", "-lm"],
     }),
     linkstatic = True,
     visibility = ["//visibility:public"],
