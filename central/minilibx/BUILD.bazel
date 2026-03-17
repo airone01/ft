@@ -4,30 +4,29 @@ cc_library(
     name = "mlx",
     srcs = glob(["*.c"]),
     hdrs = [
-        "mlx.h",
         "mlx_int.h",
     ],
     copts = [
         "-std=gnu89",
-        "-w",  # Suppress warnings for external library
+        "-w", # external lib, suppress warns
         "-O3",
-        "-include",
-        "xpm.h",
     ],
     includes = [
         ".",
         "/usr/include",
     ],
-    linkopts = [
-        "-lm",
-        "-lXext",
-        "-lX11",
-        "-lXrandr",
-        "-L/usr/lib/x86_64-linux-gnu",
-    ],
+    deps = select({
+        "//:on_nix": [
+            "@nix_libX11//:libX11", 
+            "@nix_libXext//:libXext", 
+            "@nix_libXpm//:libXpm"
+        ],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        "//:on_nix": [],
+        "//conditions:default": ["-lX11", "-lXext", "-lm"],
+    }),
     linkstatic = True,
     visibility = ["//visibility:public"],
-    deps = [
-        "//external-libs/libXpm:xpm",
-    ],
 )

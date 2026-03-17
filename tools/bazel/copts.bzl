@@ -31,13 +31,8 @@ CXX_COPTS = [
     "-g3",
 ]
 
-# Linker flags for projects using math library
 MATH_LINKOPTS = ["-lm"]
-
-# Linker flags for projects using readline
 READLINE_LINKOPTS = ["-lreadline"]
-
-# Linker flags for projects using MiniLibX
 MLX_LINKOPTS = [
     "-lmlx",
     "-lXext",

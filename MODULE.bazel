@@ -14,12 +14,55 @@ module(
 # bazel_dep(name = "rules_shell", version = "0.6.1")
 bazel_dep(name = "rules_cc", version = "0.2.9")
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+bazel_dep(name = "rules_nixpkgs_core", version = "0.13.0")
+bazel_dep(name = "rules_nixpkgs_cc", version = "0.13.0")
 
 git_override(
     module_name = "hedron_compile_commands",
     remote = "https://github.com/xFile3160/bazel-compile-commands-extractor.git",
     branch = "7fe1eab26d2b8eeb5e1c6a2f38bddb001e3f9696",
 )
+
+git_override(
+    module_name = "rules_nixpkgs_core",
+    remote = "https://github.com/tweag/rules_nixpkgs",
+    commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    strip_prefix = "core",
+)
+
+git_override(
+    module_name = "rules_nixpkgs_cc",
+    remote = "https://github.com/tweag/rules_nixpkgs",
+    commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    strip_prefix = "toolchains/cc",
+)
+
+nixpkgs = use_extension("@rules_nixpkgs_core//:extensions.bzl", "nixpkgs")
+nixpkgs.flake(
+    name = "nixpkgs",
+    file = "//:flake.nix",
+)
+use_repo(nixpkgs, "nixpkgs")
+
+nixpkgs_package = use_extension("@rules_nixpkgs_core//:extensions.bzl", "nixpkgs_package")
+nixpkgs_package.package(
+    name = "readline",
+    repository = "@nixpkgs",
+    target = "readline",
+)
+nixpkgs_package.package(
+    name = "libX11",
+    repository = "@nixpkgs",
+    target = "xorg.libX11",
+)
+use_repo(nixpkgs_package, "readline", "libX11")
+
+nixpkgs_cc = use_extension("@rules_nixpkgs_cc//:extensions.bzl", "nixpkgs_cc_configure")
+nixpkgs_cc.nixpkgs_cc(
+    name = "nix_toolchain",
+    repository = "@nixpkgs",
+)
+use_repo(nixpkgs_cc, "nix_toolchain")
 
 # note: i'm not configuring the rust crates in bazel, as cargo is good enough
 # for my use-case.

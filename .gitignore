@@ -83,4 +83,6 @@ vgcore.*
 # bazel
 bazel-*
 build_events.json
+.nix-store-link
+.bazelrc.nix
 

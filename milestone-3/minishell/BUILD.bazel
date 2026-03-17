@@ -9,7 +9,7 @@ cc_binary(
     ]),
     copts = CC_COPTS,
     includes = [
-        "/usr/include",
+        "-I/usr/include",
         "includes",
     ],
     linkopts = READLINE_LINKOPTS,
