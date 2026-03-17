@@ -60,6 +60,9 @@
           openssl
           lld
 
+          # ASM
+          nasm
+
           # Rust
           pkg-config
           rustc

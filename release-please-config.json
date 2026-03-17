@@ -141,6 +141,10 @@
       "release-type": "simple",
       "package-name": "inception"
     },
+    "pcc/libasm": {
+      "release-type": "simple",
+      "package-name": "libasm"
+    },
     "rushes/hotrace": {
       "release-type": "simple",
       "package-name": "hotrace"
