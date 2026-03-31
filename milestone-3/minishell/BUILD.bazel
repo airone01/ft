@@ -9,12 +9,16 @@ cc_binary(
     ]),
     copts = CC_COPTS,
     includes = [
-        "/usr/include",
+        "-I/usr/include",
         "includes",
     ],
     linkopts = READLINE_LINKOPTS,
     visibility = ["//visibility:public"],
     deps = [
+        "//milestone-0/libft",
         "//milestone-1/ft_printf",
-    ],
+    ] + select({
+        "//:on_nix": ["@readline//:readline"],
+        "//conditions:default": [],
+    }),
 )

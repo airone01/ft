@@ -31,15 +31,21 @@ CXX_COPTS = [
     "-g3",
 ]
 
-# Linker flags for projects using math library
-MATH_LINKOPTS = ["-lm"]
+MATH_LINKOPTS  = select({
+    "//:on_nix": [],
+    "//conditions:default": ["-lm"]
+})
+READLINE_LINKOPTS = select({
+    "//:on_nix": [],
+    "//conditions:default": ["-lreadline"]
+})
+MLX_LINKOPTS = select({
+    "//:on_nix": [],
+    "//conditions:default": [
+        "-lmlx",
+        "-lXext",
+        "-lX11",
+        "-lXpm",
+    ],
+}) + MATH_LINKOPTS
 
-# Linker flags for projects using readline
-READLINE_LINKOPTS = ["-lreadline"]
-
-# Linker flags for projects using MiniLibX
-MLX_LINKOPTS = [
-    "-lmlx",
-    "-lXext",
-    "-lX11",
-] + MATH_LINKOPTS
