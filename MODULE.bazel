@@ -10,31 +10,33 @@ module(
     version = "1.0.0",
 )
 
-# bazel_dep(name = "platforms", version = "0.0.11")
-# bazel_dep(name = "rules_shell", version = "0.6.1")
+# Deps
 bazel_dep(name = "rules_cc", version = "0.2.17")
+bazel_dep(name = "rules_rust", version = "0.69.0")
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 bazel_dep(name = "rules_nixpkgs_core", version = "0.13.0")
 bazel_dep(name = "rules_nixpkgs_cc", version = "0.13.0")
+bazel_dep(name = "rules_nixpkgs_rust", version = "0.13.0")
 
+# compile_commands.json
 git_override(
     module_name = "hedron_compile_commands",
     remote = "https://github.com/xFile3160/bazel-compile-commands-extractor.git",
     branch = "7fe1eab26d2b8eeb5e1c6a2f38bddb001e3f9696",
 )
 
+# Rust
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(edition = "2021")
+use_repo(rust, "rust_toolchains")
+register_toolchains("@rust_toolchains//:all")
+
+# Nix
 git_override(
     module_name = "rules_nixpkgs_core",
     remote = "https://github.com/tweag/rules_nixpkgs",
     commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
     strip_prefix = "core",
-)
-
-git_override(
-    module_name = "rules_nixpkgs_cc",
-    remote = "https://github.com/tweag/rules_nixpkgs",
-    commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
-    strip_prefix = "toolchains/cc",
 )
 
 nix_repo = use_extension("@rules_nixpkgs_core//extensions:repository.bzl", "nix_repo")
@@ -137,6 +139,14 @@ cc_library(
 # use_repo(nix_pkg, "readline", "libX11", "libXpm", "libXext")
 use_repo(nix_pkg, "readline", "libX11", "libXext", "libXrandr", "libXrender")
 
+# Nix CC
+git_override(
+    module_name = "rules_nixpkgs_cc",
+    remote = "https://github.com/tweag/rules_nixpkgs",
+    commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    strip_prefix = "toolchains/cc",
+)
+
 nix_cc = use_extension("@rules_nixpkgs_cc//extensions:toolchains.bzl", "nix_cc")
 nix_cc.toolchain(
     name = "nix_toolchain",
@@ -144,5 +154,19 @@ nix_cc.toolchain(
 )
 use_repo(nix_cc, "nix_toolchain")
 
-# note: i'm not configuring the rust crates in bazel, as cargo is good enough
-# for my use-case.
+# Nix Rust
+git_override(
+    module_name = "rules_nixpkgs_rust",
+    remote = "https://github.com/tweag/rules_nixpkgs",
+    commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    strip_prefix = "toolchains/rust",
+)
+nix_rust = use_extension("@rules_nixpkgs_rust//:rust.bzl", "nix_rust")
+nix_rust.toolchain(
+    name = "nix_rust_toolchain",
+    repository = "@nixpkgs", 
+)
+use_repo(nix_rust, "nix_rust_toolchain")
+
+register_toolchains("@nix_rust_toolchain//:all")
+

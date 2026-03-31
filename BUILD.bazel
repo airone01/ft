@@ -28,6 +28,12 @@ alias(
     actual = "//central/minilibx:mlx",
 )
 
+## TOOLS
+alias(
+    name = "ps_visu_mc",
+    actual = "//tools/push-swap-visualizer-minecraft:ps_visu_mc",
+)
+
 ### Milestone 0
 alias(
     name = "libft",
