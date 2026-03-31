@@ -32,12 +32,6 @@ jobs:
           libreadline-dev \
           nasm
 
-    - name: Generate libXpm config.h
-      run: |
-        cd external-libs/libXpm
-        autoreconf -vfi
-        ./configure
-
     - name: Cache Bazel
       uses: actions/cache@v4
       with:
