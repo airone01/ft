@@ -164,7 +164,7 @@ This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that proje
         <td>100</td>
       </tr>
       <tr align="center">
-        <td rowspan="2">5</td>
+        <td rowspan="3">5</td>
         <td>
             <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
@@ -179,9 +179,33 @@ This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that proje
         <td>✅</td>
         <td>90</td>
       </tr>
+      <tr align="center">
+        <td>
+            <a href="/milestone-5/cpp05/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br>
+            <sub>CPP 05-09</sub>
+        </td>
+        <td>✅<br/>
+          <sub>(various grades)</sub>
+        </td>
+        <td>N/A</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="1">6</td>
+        <td>
+            <a href="/milestone-6/ft_transcendence/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_transcendencem.png" alt="ft_transcendence logo"></a><br/>
+            <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+        </td>
+        <td>✅</td>
+        <td>125</td>
+      </tr>
     </tbody>
   </table>
 </details>
+
+### Notable projects
+
+|![](/.github/assets/banners/fdf.avif | width=200)|![](/.github/assets/banners/cub3d.avif | width=200)|
+|----|---|
 
 ## Extra tools/projects
 
