@@ -4,6 +4,12 @@ config_setting(
     visibility = ["//visibility:public"],
 )
 
+config_setting(
+    name = "on_3ds",
+    define_values = {"os": "3ds"},
+    visibility = ["//visibility:public"],
+)
+
 ###############################################################################
 #                                    MISC                                     #
 ###############################################################################

@@ -1,0 +1,17 @@
+load("//:tools/bazel/copts.bzl", "CC_COPTS")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "mlx_3ds",
+    srcs = ["mlx_3ds.c"],
+    hdrs = [], # It uses the project's mlx.h
+    copts = CC_COPTS + [
+        "-D__3DS__",
+    ],
+    includes = ["."],
+    deps = [
+        "//milestone-4/cub3d:includes",
+        "//central/minilibx:mlx_headers",
+    ],
+    visibility = ["//visibility:public"],
+)

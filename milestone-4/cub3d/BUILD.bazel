@@ -34,6 +34,13 @@ load("//:tools/bazel/copts.bzl", "CC_COPTS")
 #     visibility = ["//visibility:public"],
 # )
 
+cc_library(
+    name = "includes",
+    hdrs = glob(["includes/*.h"]),
+    includes = ["includes"],
+    visibility = ["//visibility:public"],
+)
+
 cc_binary(
     name = "cub3d",
     srcs = glob(
@@ -61,15 +68,15 @@ cc_binary(
 )
 
 cc_binary(
-    name = "cub3d-bonus",
+    name = "cub3d-3ds",
     srcs = glob(
         [
             "src/*.c",
             "includes/*.h",
         ],
         exclude = [
-            "src/*_m.c",
-            "src/*_m2.c",
+            "src/*_b.c",
+            "src/*_b2.c",
         ],
     ),
     copts = CC_COPTS + [
@@ -79,9 +86,17 @@ cc_binary(
     includes = ["includes"],
     visibility = ["//visibility:public"],
     deps = [
-        "//central/minilibx:mlx",
+        "//milestone-4/cub3d/3ds:mlx_3ds",
         "//milestone-0/libft",
         "//milestone-1/ft_printf",
         "//milestone-1/get_next_line",
     ],
+)
+
+genrule(
+    name = "cub3d_3dsx",
+    srcs = [":cub3d-3ds"],
+    outs = ["cub3d.3dsx"],
+    cmd = "3dsxtool $< $@",
+    visibility = ["//visibility:public"],
 )

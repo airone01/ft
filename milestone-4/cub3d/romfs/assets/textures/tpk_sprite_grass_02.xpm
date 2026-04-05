@@ -1,0 +1,27 @@
+/* XPM */
+static char *awr5n_8lap0[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 5 1 ",
+"  c None",
+". c #0B280F",
+"X c #1A3612",
+"o c #2E4D17",
+"O c #3F5711",
+/* pixels */
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"              o ",
+"              o ",
+" O     o      o ",
+" O     o   o XO ",
+" o X O o o o OOX",
+"Oo  oO OX. OoXo.",
+"o.OX.O.OX..O..o.",
+"o.o.O..o.oXoXX.."
+};

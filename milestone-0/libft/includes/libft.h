@@ -36,7 +36,7 @@ typedef struct s_list
 // Bored to doxygen those
 void				ft_lstadd_back(t_list **lst, t_list *new_list);
 void				ft_lstadd_front(t_list **lst, t_list *new_list);
-t_list				*ft_lstat(t_list *lst, unsigned long index);
+t_list				*ft_lstat(t_list *lst, size_t index);
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
@@ -44,7 +44,7 @@ t_list				*ft_lstlast(t_list *lst);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
-unsigned long		ft_lstsize(t_list *lst);
+size_t				ft_lstsize(t_list *lst);
 
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// Memory ////////////////////////////////////
@@ -70,7 +70,8 @@ void				*ft_bzero(void *s, size_t n);
  * @return void* A pointer to the allocated zero-initialized memory, or NULL if
  *               the allocation fails or an overflow occurs.
  */
-void				*ft_calloc(unsigned long nmemb, size_t size);
+void                            *ft_calloc(size_t nmemb, size_t size);
+
 
 /**
  * @brief Locates the first occurrence of a byte in a memory area.
@@ -92,7 +93,7 @@ void				*ft_memchr(const void *s, uint8_t c, size_t n);
  *
  * @note If n is zero, the return value is zero.
  */
-int					ft_memcmp(const void *s1, const void *s2, unsigned long n);
+int					ft_memcmp(const void *s1, const void *s2, size_t n);
 
 /**
  * @brief Copies bytes from one memory area to another (non-overlapping).
@@ -300,13 +301,13 @@ char				*ft_strdup(const char *s);
  * @param dst Destination string.
  * @param src Source string to append.
  * @param size Size of the destination buffer.
- * @return unsigned long Total length of the string tried to create
+ * @return size_t Total length of the string tried to create
  *                       (strlen(src) + strlen(dst)).
  *
  * @note Will append at most size-strlen(dst)-1 bytes and NUL-terminate the
  *       result.
  */
-unsigned long		ft_strlcat(char *dst, const char *src, unsigned long size);
+size_t				ft_strlcat(char *dst, const char *src, size_t size);
 
 /**
  * @brief Copies a string with size limitation and NUL-termination.
@@ -314,12 +315,12 @@ unsigned long		ft_strlcat(char *dst, const char *src, unsigned long size);
  * @param dst Destination buffer.
  * @param src Source string to copy.
  * @param size Size of the destination buffer.
- * @return unsigned long Total length of the string tried to create
+ * @return size_t Total length of the string tried to create
  *                       (strlen(src)).
  *
  * @note Will copy at most size-1 bytes and NUL-terminate the result.
  */
-unsigned long		ft_strlcpy(char *dst, const char *src, unsigned long size);
+size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 
 /**
  * @brief Calculates the length of a null-terminated string.
@@ -330,7 +331,7 @@ unsigned long		ft_strlcpy(char *dst, const char *src, unsigned long size);
  * @param str Pointer to the null-terminated string.
  * @return The number of characters in @p str, excluding the null terminator.
  */
-unsigned long		ft_strlen(const char *str);
+size_t				ft_strlen(const char *str);
 
 /**
  * @brief Compares up to n characters of two strings.
@@ -346,7 +347,7 @@ unsigned long		ft_strlen(const char *str);
  *             found, respectively, to be less than, to match, or be greater
  *             than @p s2.
  */
-int					ft_strncmp(const char *s1, const char *s2, unsigned long n);
+int					ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /**
  * @brief Locates a substring within a string with length limitation.
@@ -359,7 +360,7 @@ int					ft_strncmp(const char *s1, const char *s2, unsigned long n);
  *               Returns big if little is empty.
  */
 char				*ft_strnstr(const char *big, const char *little,
-						unsigned long len);
+						size_t len);
 
 /**
  * @brief Locates the last occurrence of a character in a string.
@@ -408,7 +409,7 @@ char				*ft_strjoin(const char *s1, const char *s2);
  * @return char* New string with results of function applications, or NULL if
  *               allocation fails.
  */
-char				*ft_strmapi(const char *s, char (*f)(unsigned long, char));
+char				*ft_strmapi(const char *s, char (*f)(size_t, char));
 
 /**
  * @brief Removes specified characters from the beginning and end of a string.
@@ -428,7 +429,7 @@ char				*ft_strtrim(const char *s1, const char *set);
  * @return char* Newly allocated substring, or NULL if allocation fails.
  */
 char				*ft_substr(const char *s, unsigned int start,
-						unsigned long len);
+						size_t len);
 
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// String <-> Number///////////////////////////////

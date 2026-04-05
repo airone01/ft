@@ -15,6 +15,7 @@
 #include "get_next_line.h"
 #include "ft_printf.h"
 #include <fcntl.h>
+#include <stdio.h>
 
 bool	process_config_line(t_data *data, char *line)
 {
@@ -70,8 +71,11 @@ int	read_file(t_data *data, const char *file)
 	int				fd;
 
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	if (fd < 0) {
+        printf("read_file: Error: could not open %s\n", file);
 		return (1);
+    }
+    printf("read_file: Opened %s\n", file);
 	if (init_map_buffer(&map_buffer))
 	{
 		close(fd);

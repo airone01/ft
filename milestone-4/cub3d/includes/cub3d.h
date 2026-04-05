@@ -28,9 +28,14 @@
 # define YELLOW "\033[093m"
 # define CYAN "\033[36m"
 
+#ifdef __3DS__
+# define WIN_H 240
+# define WIN_W 400
+#else
 // Valgrind mode :-)
 # define WIN_H 480
 # define WIN_W 640
+#endif
 
 // # define WIN_H 720
 // # define WIN_W 1280

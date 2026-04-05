@@ -1,0 +1,27 @@
+/* XPM */
+static char *a0uiv_6tvqa[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 5 1 ",
+"  c None",
+". c #0B280F",
+"X c #1A3612",
+"o c #2E4D17",
+"O c #3F5711",
+/* pixels */
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"                ",
+"o            O  ",
+" o  o O  o X  O ",
+" o. O oX oo X X ",
+" Xo O.OX  Xo. oO",
+"oXoXO.X. XooXooX",
+"o.X.oX..oX..XoX."
+};

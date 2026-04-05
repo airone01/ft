@@ -1,0 +1,18 @@
+WE ../../textures/tpk_tech_4f.xpm
+NO ../../textures/tpk_tech_3b.xpm
+SO ../../textures/tpk_tech_2f.xpm
+EA ../../textures/tpk_tech_1e.xpm
+D ../../textures/tpk_door_1a.xpm
+P ../../textures/tpk_sprite_grass.xpm
+C 135,206,235
+F 0,100,0
+
+111111111 111111111
+1P00P00P1 1P00P00P1
+100P00001 100P00001
+1P000P00111P000P0011
+1000E0000D0000P000D1
+10P0000P1110P0000P11
+100P00P01 100P00P01
+1P00000P1 1P00000P1
+111111111 111111111
