@@ -21,7 +21,7 @@
 static double	get_time_diff(struct timeval *start, struct timeval *end)
 {
 	return ((double)(end->tv_sec - start->tv_sec) + (double)(end->tv_usec
-		- start->tv_usec) / 1000000.0);
+			- start->tv_usec) / 1000000.0);
 }
 
 void	update_fps_counter(t_data *data)

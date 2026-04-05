@@ -15,9 +15,9 @@
 */
 
 #include "cub3d.h"
+#include "ft_printf.h"
 #include "texture.h"
 #include "utils.h"
-#include "ft_printf.h"
 #include <stdlib.h>
 
 /*

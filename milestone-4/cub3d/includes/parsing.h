@@ -92,8 +92,8 @@ bool	looks_like_map_line(char *line);
  * @param buffer Map buffer to store map lines
  * @return true on error, false on success
  */
-bool	process_single_line(t_data *data, char *line,
-			bool *map_section_started, t_map_buffer *buffer);
+bool	process_single_line(t_data *data, char *line, bool *map_section_started,
+			t_map_buffer *buffer);
 
 /**
  * @brief Comprehensive map validation using flood fill algorithm

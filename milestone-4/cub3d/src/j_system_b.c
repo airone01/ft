@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "ft_printf.h"
 #include "libft.h"
 #include "mlx.h"
 #include "sprite_bonus.h"
-#include "ft_printf.h"
 
 bool	add_sprite(t_data *data, double x, double y)
 {
@@ -68,8 +68,7 @@ void	init_sprite_system(t_data *data)
 			sizeof(int));
 	if (!data->sprite_sys.sprites || !data->sprite_sys.render_order)
 	{
-		ft_printf(RED "Error\nFailed to allocate memory for sprite system\n"
-			RESET);
+		ft_printf(RED "Error\nFailed to allocate memory for sprite system\n" RESET);
 		return ;
 	}
 	scan_map_for_sprites(data);
