@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-unsigned long	ft_strlcpy(char *dst, const char *src, unsigned long size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	const char	*src_start = src;
 

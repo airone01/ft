@@ -12,8 +12,8 @@
 
 #include "cub3d.h"
 #include "draw.h"
-#include "raycasting.h"
 #include "libft.h"
+#include "raycasting.h"
 #include <math.h>
 
 static double	calculate_distance(double x1, double y1, double x2, double y2)

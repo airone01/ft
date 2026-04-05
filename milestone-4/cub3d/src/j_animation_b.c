@@ -16,13 +16,13 @@
 #include "utils.h"
 #include <stdlib.h>
 
-void	init_sprite_animation(t_sprite *sprite);
-char	*create_frame_path(char *base_path, int frame_num);
-bool	load_single_frame(t_data *data, t_sprite *sprite, char *resolved_path,
-			int frame_idx);
+void		init_sprite_animation(t_sprite *sprite);
+char		*create_frame_path(char *base_path, int frame_num);
+bool		load_single_frame(t_data *data, t_sprite *sprite,
+				char *resolved_path, int frame_idx);
 
 static int	load_animated_frames(t_data *data, t_sprite *sprite,
-								char *base_path)
+		char *base_path)
 {
 	int		frame;
 	int		valid_frames;
@@ -92,19 +92,17 @@ void	update_sprite_animation(t_sprite *sprite, double delta_time)
 	if (sprite->animation.frame_count <= 1)
 		return ;
 	sprite->animation.current_time += (float)delta_time;
-	if (sprite->animation.current_time
-		>= sprite->animation.frame_duration)
+	if (sprite->animation.current_time >= sprite->animation.frame_duration)
 	{
 		sprite->animation.current_time = 0.0f;
 		sprite->animation.current_frame++;
-		if (sprite->animation.current_frame
-			>= sprite->animation.frame_count)
+		if (sprite->animation.current_frame >= sprite->animation.frame_count)
 		{
 			if (sprite->animation.loop)
 				sprite->animation.current_frame = 0;
 			else
-				sprite->animation.current_frame
-					= sprite->animation.frame_count - 1;
+				sprite->animation.current_frame = sprite->animation.frame_count
+					- 1;
 		}
 	}
 }

@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft.h"
 #include "ft_printf.h"
+#include "libft.h"
 
 static void	init_door_system_loop(t_data *data, int x, int y)
 {
@@ -42,8 +42,7 @@ void	init_door_system(t_data *data)
 			sizeof(t_door));
 	if (!data->door_sys.doors)
 	{
-		ft_printf(RED "Error\nFailed to allocate memory for door system\n"
-			RESET);
+		ft_printf(RED "Error\nFailed to allocate memory for door system\n" RESET);
 		return ;
 	}
 	y = -1;

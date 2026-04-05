@@ -33,7 +33,7 @@ typedef struct s_sprite_render
 	int		draw_end_y;
 	int		draw_start_x;
 	int		draw_end_x;
-}	t_sprite_render;
+}			t_sprite_render;
 
 /*******************************************************************************
  *                             Function Prototypes                             *

@@ -35,15 +35,14 @@ char	*create_frame_path(char *base_path, int frame_num)
 }
 
 bool	load_single_frame(t_data *data, t_sprite *sprite, char *resolved_path,
-							int frame_idx)
+		int frame_idx)
 {
 	sprite->animation.frames[frame_idx].img = mlx_xpm_file_to_image(data->mlx,
 			resolved_path, &sprite->animation.frames[frame_idx].width,
 			&sprite->animation.frames[frame_idx].height);
 	if (!sprite->animation.frames[frame_idx].img)
 		return (false);
-	sprite->animation.frames[frame_idx].addr = mlx_get_data_addr(
-			sprite->animation.frames[frame_idx].img,
+	sprite->animation.frames[frame_idx].addr = mlx_get_data_addr(sprite->animation.frames[frame_idx].img,
 			&sprite->animation.frames[frame_idx].bits_per_pixel,
 			&sprite->animation.frames[frame_idx].line_length,
 			&sprite->animation.frames[frame_idx].endian);

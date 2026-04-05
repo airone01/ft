@@ -15,7 +15,7 @@
 #if defined(__x86_64__) || defined(_M_X64)
 
 // Fast x64 implementation
-unsigned long	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	const unsigned long	*long_ptr;
 	unsigned long		word;
@@ -24,7 +24,7 @@ unsigned long	ft_strlen(const char *str)
 	while (((unsigned long)char_ptr & (sizeof(long) - 1)) != 0)
 	{
 		if (!*char_ptr)
-			return ((unsigned long)(char_ptr - str));
+			return ((size_t)(char_ptr - str));
 		char_ptr++;
 	}
 	long_ptr = (const unsigned long *)char_ptr;
@@ -38,19 +38,19 @@ unsigned long	ft_strlen(const char *str)
 	char_ptr = (const char *)long_ptr;
 	while (*char_ptr)
 		char_ptr++;
-	return ((unsigned long)(char_ptr - str));
+	return ((size_t)(char_ptr - str));
 }
 
 #else
 
 // Portable implementation
-unsigned long	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	const char	*s;
 
 	s = str;
 	while (*s)
 		s++;
-	return ((unsigned long)(s - str));
+	return ((size_t)(s - str));
 }
 #endif

@@ -50,7 +50,7 @@ typedef struct s_draw_params
 	int		end_x;
 	int		end_y;
 	t_color	color;
-}	t_draw_params;
+}			t_draw_params;
 
 /*******************************************************************************
  *                             Function Prototypes                             *
@@ -65,7 +65,7 @@ typedef struct s_draw_params
  *
  * @param data Main game data structure containing player and map info
  */
-void	draw_minimap(t_data *data);
+void		draw_minimap(t_data *data);
 
 /**
  * @brief Draws a filled rectangle with specified parameters
@@ -73,7 +73,7 @@ void	draw_minimap(t_data *data);
  * @param data Main game data structure for screen dimensions
  * @param params Drawing parameters including position, size, and color
  */
-void	draw_filled_rect(t_data *data, t_draw_params *params);
+void		draw_filled_rect(t_data *data, t_draw_params *params);
 
 /*
 ** n_draw.c
@@ -85,7 +85,7 @@ void	draw_filled_rect(t_data *data, t_draw_params *params);
  * @param data Main game data structure containing screen dimensions
  * @param params Drawing parameters to be clamped (modified in place)
  */
-void	clamp_rect_bounds(t_data *data, t_draw_params *params);
+void		clamp_rect_bounds(t_data *data, t_draw_params *params);
 
 /**
  * @brief Draws a line between two points using Bresenham's algorithm
@@ -93,7 +93,7 @@ void	clamp_rect_bounds(t_data *data, t_draw_params *params);
  * @param data Main game data structure for screen access
  * @param params Line parameters (start/end points and color)
  */
-void	draw_line(t_data *data, t_draw_params *params);
+void		draw_line(t_data *data, t_draw_params *params);
 
 /**
  * @brief Draws the border frame around the minimap
@@ -101,7 +101,7 @@ void	draw_line(t_data *data, t_draw_params *params);
  * @param data Main game data structure
  * @param params Drawing parameters for border positioning
  */
-void	draw_minimap_border(t_data *data, t_draw_params *params);
+void		draw_minimap_border(t_data *data, t_draw_params *params);
 
 /*
 ** n_draw_utils.c
@@ -114,7 +114,7 @@ void	draw_minimap_border(t_data *data, t_draw_params *params);
  * @param params Drawing parameters for FOV visualization
  * @param player_screen Array with player screen position [x, y]
  */
-void	draw_player_fov(t_data *data, t_draw_params *params);
+void		draw_player_fov(t_data *data, t_draw_params *params);
 
 /**
  * @brief Draws the four borderlines around minimap perimeter
@@ -122,7 +122,7 @@ void	draw_player_fov(t_data *data, t_draw_params *params);
  * @param data Main game data structure
  * @param params Drawing parameters with border positioning
  */
-void	draw_border_lines(t_data *data, t_draw_params *params);
+void		draw_border_lines(t_data *data, t_draw_params *params);
 
 /*
 ** n_grid.c
@@ -134,7 +134,7 @@ void	draw_border_lines(t_data *data, t_draw_params *params);
  * @param data Main game data containing the map array
  * @param params Drawing parameters for grid positioning and scaling
  */
-void	draw_minimap_grid(t_data *data, t_draw_params *params);
+void		draw_minimap_grid(t_data *data, t_draw_params *params);
 
 /*
 ** n_player.c
@@ -147,7 +147,7 @@ void	draw_minimap_grid(t_data *data, t_draw_params *params);
  * @param params Drawing parameters, end coordinates stored in end_x/end_y
  * @param angle Ray direction in radians
  */
-void	cast_fov_ray(t_data *data, t_draw_params *params, double angle);
+void		cast_fov_ray(t_data *data, t_draw_params *params, double angle);
 
 /**
  * @brief Draws the player representation on the minimap
@@ -155,7 +155,7 @@ void	cast_fov_ray(t_data *data, t_draw_params *params, double angle);
  * @param data Main game data with player information
  * @param params Drawing parameters for player visualization
  */
-void	draw_minimap_player(t_data *data, t_draw_params *params);
+void		draw_minimap_player(t_data *data, t_draw_params *params);
 
 /*
 ** n_utils.c
@@ -169,7 +169,7 @@ void	draw_minimap_player(t_data *data, t_draw_params *params);
  * @param screen_y Y coordinate to check
  * @return true if coordinates are outside bounds, false if within
  */
-bool	check_fov_bounds(t_draw_params *params, int screen_x, int screen_y);
+bool		check_fov_bounds(t_draw_params *params, int screen_x, int screen_y);
 
 /**
  * @brief Checks if player sprite fits within minimap boundaries
@@ -177,7 +177,7 @@ bool	check_fov_bounds(t_draw_params *params, int screen_x, int screen_y);
  * @param params Drawing parameters with player position and minimap bounds
  * @return true if player fits within bounds, false otherwise
  */
-bool	is_player_in_bounds(t_draw_params *params);
+bool		is_player_in_bounds(t_draw_params *params);
 
 /**
  * @brief Validates pixel coordinates within screen boundaries
@@ -187,7 +187,7 @@ bool	is_player_in_bounds(t_draw_params *params);
  * @param y Coordinate to validate
  * @return 1 if valid, 0 otherwise
  */
-int		is_pixel_valid(t_data *data, int x, int y);
+int			is_pixel_valid(t_data *data, int x, int y);
 
 /**
  * @brief Calculates step directions for line drawing algorithms
@@ -196,7 +196,7 @@ int		is_pixel_valid(t_data *data, int x, int y);
  * @param step_x Pointer to store X direction (-1 or +1)
  * @param step_y Pointer to store Y direction (-1 or +1)
  */
-void	init_steps(t_draw_params *params, int *step_x, int *step_y);
+void		init_steps(t_draw_params *params, int *step_x, int *step_y);
 
 /**
  * @brief Initializes ray position and direction for raycasting
@@ -207,7 +207,7 @@ void	init_steps(t_draw_params *params, int *step_x, int *step_y);
  * @param ray_dir Array to store ray direction vector [x, y]
  * @warning NULL pointers cause undefined behavior
  */
-void	init_ray_pos(t_data *data, double angle, double *ray_pos,
-			double *ray_dir);
+void		init_ray_pos(t_data *data, double angle, double *ray_pos,
+				double *ray_dir);
 
 #endif // !MINIMAP_BONUS_H

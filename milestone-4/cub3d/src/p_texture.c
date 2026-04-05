@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "texture.h"
-#include "parsing.h"
 #include "ft_printf.h"
+#include "libft.h"
+#include "parsing.h"
+#include "texture.h"
 
 bool	check_text_duplicate(t_data *data, const char *cardinal, char *exist)
 {

@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "ft_printf.h"
 #include "libft.h"
 #include "texture.h"
 #include "utils.h"
-#include "ft_printf.h"
 
 bool	load_game_textures_bonus(t_data *data)
 {

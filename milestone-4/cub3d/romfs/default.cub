@@ -1,0 +1,18 @@
+NO romfs:/assets/textures/prototype_red.xpm
+SO romfs:/assets/textures/prototype_blue.xpm
+WE romfs:/assets/textures/prototype_yellow.xpm
+EA romfs:/assets/textures/prototype_green.xpm
+P romfs:/assets/textures/tpk_sprite_grass.xpm
+D romfs:/assets/textures/tpk_door_1a.xpm
+
+F 18,53,25
+C 153,204,255
+
+111111111111
+1         11
+1          1
+111111111111
+10S000000001
+111111111111
+11P        1
+111111111111

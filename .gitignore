@@ -86,3 +86,6 @@ build_events.json
 .nix-store-link
 .bazelrc.nix
 
+# 3DS files
+*.3dsx
+*.smdh

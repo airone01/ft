@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 #include "mem.h"
 #include "parsing.h"
 #include "utils.h"
-#include "ft_printf.h"
 
 static bool	find_player_position(t_data *data, int *start_x, int *start_y)
 {

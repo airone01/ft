@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
 #include "ft_printf.h"
+#include "parsing.h"
 
 /*
 ** `p_validation_pproc.c`
@@ -45,7 +45,7 @@ bool	check_texture_completeness(t_data *data)
 
 bool	check_color_completeness(t_data *data)
 {
-	(void) data;
+	(void)data;
 	return (false);
 }
 
