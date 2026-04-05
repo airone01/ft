@@ -204,7 +204,7 @@ This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that proje
 
 ### Notable projects
 
-|![](/.github/assets/banners/fdf.avif | width=200)|![](/.github/assets/banners/cub3d.avif | width=200)|
+|[fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" width=400 height=300 />|[cub3d](/milestone-4/cub3d/README.md)<br /><img src="/.github/assets/banners/cub3d.avif" width=400 height=300 />|
 |----|---|
 
 ## Extra tools/projects
