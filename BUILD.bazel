@@ -10,6 +10,13 @@ config_setting(
     visibility = ["//visibility:public"],
 )
 
+constraint_setting(name = "target_os")
+
+constraint_value(
+    name = "3ds",
+    constraint_setting = ":target_os",
+)
+
 ###############################################################################
 #                                    MISC                                     #
 ###############################################################################

@@ -105,6 +105,10 @@ cc_binary(
             "src/*_m2.c",
         ],
     ),
+    target_compatible_with = select({
+        "//:on_3ds": [],
+        "//conditions:default": ["@platforms//:incompatible"],
+    }),
     copts = CC_COPTS + [
         "-Wno-incompatible-pointer-types",
         "-Wno-cast-function-type",
@@ -124,6 +128,10 @@ genrule(
     name = "cub3d_3dsx",
     srcs = [":cub3d-3ds"],
     outs = ["cub3d.3dsx"],
+    target_compatible_with = select({
+        "//:on_3ds": [],
+        "//conditions:default": ["@platforms//:incompatible"],
+    }),
     cmd = "3dsxtool $< $@",
     visibility = ["//visibility:public"],
 )

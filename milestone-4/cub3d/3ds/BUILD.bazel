@@ -5,6 +5,10 @@ cc_library(
     name = "mlx_3ds",
     srcs = ["mlx_3ds.c"],
     hdrs = [], # It uses the project's mlx.h
+    target_compatible_with = select({
+        "//:on_3ds": [],
+        "//conditions:default": ["@platforms//:incompatible"],
+    }),
     copts = CC_COPTS + [
         "-D__3DS__",
     ],
