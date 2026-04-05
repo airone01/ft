@@ -212,8 +212,8 @@ projects are tightly coupled and depend on each other to work properly.
 
 ### Notable projects
 
-| [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" width=400 height=300 /> | [cub3d](/milestone-4/cub3d/README.md)<br /><img src="/.github/assets/banners/cub3d.avif" width=400 height=300 /> |
-| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" width=400 height=300 /> | [cub3d](/milestone-4/cub3d/README.md)<br /><img src="/.github/assets/banners/cub3d.avif" width=400 height=300 /><br />(and its [3DS port](/milestone-4/cub3d/3DS_README.md)) |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## Extra tools/projects
 
