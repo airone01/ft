@@ -11,9 +11,14 @@ module(
 )
 
 # Deps
+bazel_dep(name = "platforms", version = "1.0.0")
+
+# bazel_dep(name = "rules_shell", version = "0.6.1")
 bazel_dep(name = "rules_cc", version = "0.2.17")
 bazel_dep(name = "rules_rust", version = "0.69.0")
+
 bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+
 bazel_dep(name = "rules_nixpkgs_core", version = "0.13.0")
 bazel_dep(name = "rules_nixpkgs_cc", version = "0.13.0")
 bazel_dep(name = "rules_nixpkgs_rust", version = "0.13.0")
@@ -21,21 +26,22 @@ bazel_dep(name = "rules_nixpkgs_rust", version = "0.13.0")
 # compile_commands.json
 git_override(
     module_name = "hedron_compile_commands",
-    remote = "https://github.com/xFile3160/bazel-compile-commands-extractor.git",
     branch = "7fe1eab26d2b8eeb5e1c6a2f38bddb001e3f9696",
+    remote = "https://github.com/xFile3160/bazel-compile-commands-extractor.git",
 )
 
 # Rust
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
 rust.toolchain(edition = "2021")
 use_repo(rust, "rust_toolchains")
+
 register_toolchains("@rust_toolchains//:all")
 
 # Nix
 git_override(
     module_name = "rules_nixpkgs_core",
-    remote = "https://github.com/tweag/rules_nixpkgs",
     commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    remote = "https://github.com/tweag/rules_nixpkgs",
     strip_prefix = "core",
 )
 
@@ -49,9 +55,7 @@ use_repo(nix_repo, "nixpkgs")
 nix_pkg = use_extension("@rules_nixpkgs_core//extensions:package.bzl", "nix_pkg")
 nix_pkg.expr(
     name = "readline",
-    repo = "@nixpkgs",
     attr = "pkg",
-    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"readline-merged\"; paths = [ pkgs.readline pkgs.readline.dev ]; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
@@ -61,57 +65,57 @@ cc_library(
     includes = ["include"],
 )
 """,
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"readline-merged\"; paths = [ pkgs.readline pkgs.readline.dev ]; }; }",
+    repo = "@nixpkgs",
 )
 nix_pkg.expr(
     name = "libX11",
-    repo = "@nixpkgs",
     attr = "pkg",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+cc_library(
+    name = "libX11",
+    srcs = glob(["lib/**/*.so*"]),
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
+)
+""",
     expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+    repo = "@nixpkgs",
+)
+nix_pkg.expr(
+    name = "libXext",
+    attr = "pkg",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
-    name = "libX11",
+    name = "libXext",
     srcs = glob(["lib/**/*.so*"]),
     hdrs = glob(["include/**/*.h"]),
     includes = ["include"],
 )
 """,
-)
-nix_pkg.expr(
-    name = "libXext",
-    repo = "@nixpkgs",
-    attr = "pkg",
     expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+    repo = "@nixpkgs",
+)
+nix_pkg.expr(
+    name = "libXrandr",
+    attr = "pkg",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
-    name = "libXext",
+    name = "libXrandr",
     srcs = glob(["lib/**/*.so*"]),
     hdrs = glob(["include/**/*.h"]),
     includes = ["include"],
 )
 """,
-)
-nix_pkg.expr(
-    name = "libXrandr",
-    repo = "@nixpkgs",
-    attr = "pkg",
     expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrandr-merged\"; paths = [ pkgs.xorg.libXrandr pkgs.xorg.libXrandr.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
-    build_file_content = """
-package(default_visibility = ["//visibility:public"])
-cc_library(
-    name = "libXrandr",
-    srcs = glob(["lib/**/*.so*"]),
-    hdrs = glob(["include/**/*.h"]),
-    includes = ["include"],
-)
-""",
+    repo = "@nixpkgs",
 )
 nix_pkg.expr(
     name = "libXrender",
-    repo = "@nixpkgs",
     attr = "pkg",
-    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrender-merged\"; paths = [ pkgs.xorg.libXrender pkgs.xorg.libXrender.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
     build_file_content = """
 package(default_visibility = ["//visibility:public"])
 cc_library(
@@ -121,7 +125,10 @@ cc_library(
     includes = ["include"],
 )
 """,
+    expr = "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrender-merged\"; paths = [ pkgs.xorg.libXrender pkgs.xorg.libXrender.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+    repo = "@nixpkgs",
 )
+
 # nix_pkg.attr(
 #     name = "libXpm",
 #     repo = "@nixpkgs",
@@ -137,13 +144,13 @@ cc_library(
 # """,
 # )
 # use_repo(nix_pkg, "readline", "libX11", "libXpm", "libXext")
-use_repo(nix_pkg, "readline", "libX11", "libXext", "libXrandr", "libXrender")
+use_repo(nix_pkg, "libX11", "libXext", "libXrandr", "libXrender", "readline")
 
 # Nix CC
 git_override(
     module_name = "rules_nixpkgs_cc",
-    remote = "https://github.com/tweag/rules_nixpkgs",
     commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    remote = "https://github.com/tweag/rules_nixpkgs",
     strip_prefix = "toolchains/cc",
 )
 
@@ -157,16 +164,16 @@ use_repo(nix_cc, "nix_toolchain")
 # Nix Rust
 git_override(
     module_name = "rules_nixpkgs_rust",
-    remote = "https://github.com/tweag/rules_nixpkgs",
     commit = "cb0f9be1798131ea4336fd02b850edeeb1972680",
+    remote = "https://github.com/tweag/rules_nixpkgs",
     strip_prefix = "toolchains/rust",
 )
+
 nix_rust = use_extension("@rules_nixpkgs_rust//:rust.bzl", "nix_rust")
 nix_rust.toolchain(
     name = "nix_rust_toolchain",
-    repository = "@nixpkgs", 
+    repository = "@nixpkgs",
 )
 use_repo(nix_rust, "nix_rust_toolchain")
 
 register_toolchains("@nix_rust_toolchain//:all")
-

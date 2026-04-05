@@ -1,6 +1,6 @@
 """Common compiler options for the entire monorepo."""
 
-CC_COPTS = [
+_BASE_CC_COPTS = [
     "-Wall",
     "-Werror",
     "-Wextra",
@@ -15,12 +15,21 @@ CC_COPTS = [
     "-Wwrite-strings",
     "-fno-omit-frame-pointer",
     "-O2",
-    "-march=native",
     "-ffunction-sections",
     "-fdata-sections",
     "-ffast-math",
     "-g3",
 ]
+
+CC_COPTS = _BASE_CC_COPTS + select({
+    "//:on_3ds": [
+        "-march=armv6k",
+        "-mtune=mpcore",
+        "-mfloat-abi=hard",
+        "-mtp=soft",
+    ],
+    "//conditions:default": ["-march=native"],
+})
 
 CXX_COPTS = [
     "-Wall",

@@ -46,13 +46,10 @@ void	sort_sprites_by_distance(t_data *data)
 		j = i;
 		while (++j < data->sprite_sys.count)
 		{
-			if (data->sprite_sys.sprites[data->sprite_sys.render_order[i]]
-				.distance < data->sprite_sys.sprites[data->sprite_sys
-					.render_order[j]].distance)
+			if (data->sprite_sys.sprites[data->sprite_sys.render_order[i]].distance < data->sprite_sys.sprites[data->sprite_sys.render_order[j]].distance)
 			{
 				temp = data->sprite_sys.render_order[i];
-				data->sprite_sys.render_order[i]
-					= data->sprite_sys.render_order[j];
+				data->sprite_sys.render_order[i] = data->sprite_sys.render_order[j];
 				data->sprite_sys.render_order[j] = temp;
 			}
 		}

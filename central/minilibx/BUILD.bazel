@@ -1,6 +1,13 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 cc_library(
+    name = "mlx_headers",
+    hdrs = ["mlx.h"],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "mlx",
     srcs = glob(
         ["*.c"],

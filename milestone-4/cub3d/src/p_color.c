@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 #include "libft.h"
 #include "parsing.h"
-#include "ft_printf.h"
 #include <stdint.h>
 
 static bool	parse_rgb_values(int *r, int *g, int *b, char *color)

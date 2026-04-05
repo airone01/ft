@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "ft_printf.h"
 #include "libft.h"
 #include "mem.h"
 #include "mlx.h"
@@ -18,8 +19,8 @@
 #include "player.h"
 #include "pproc.h"
 #include "utils.h"
-#include "ft_printf.h"
 #include <limits.h>
+#include <stdio.h>
 
 t_data	*init_data(void)
 {
@@ -88,27 +89,74 @@ int	main_color_resources(t_data *data)
 	return (0);
 }
 
+#ifdef __3DS__
+# include <3ds.h>
+extern void	wait_for_exit(void);
+# define DEBUG_LOG(msg) svcOutputDebugString(msg, ft_strlen(msg))
+#else
+# define DEBUG_LOG(msg)
+#endif
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
+	char	*map_path;
 
+	DEBUG_LOG("MAIN: Starting...\n");
+#ifdef __3DS__
+	if (R_FAILED(romfsInit()))
+	{
+		DEBUG_LOG("MAIN: Error: Failed to init ROMFS\n");
+		printf("Error: Failed to init ROMFS\n");
+		wait_for_exit();
+		return (1);
+	}
+	DEBUG_LOG("MAIN: ROMFS Initialized.\n");
+	printf("ROMFS: Initialized.\n");
+	map_path = (char *)"romfs:/default.cub";
+	(void)argc;
+	(void)argv;
+#else
 	if (check_error(argc, argv))
 		return (1);
+	map_path = argv[1];
+#endif
 	data = init_data();
 	if (!data)
+	{
+		DEBUG_LOG("MAIN: Error: init_data failed\n");
+#ifdef __3DS__
+		wait_for_exit();
+#endif
 		return (1);
-	data->map_file_path = ft_strdup(argv[1]);
-	if (!data->map_file_path || read_file(data, argv[1])
+	}
+	data->map_file_path = ft_strdup(map_path);
+	printf("MAIN: Loading map %s...\n", map_path);
+	DEBUG_LOG("MAIN: Loading map...\n");
+	if (!data->map_file_path || read_file(data, map_path)
 		|| validate_config_completeness(data) || check_map_validity(data)
 		|| main_color_resources(data))
 	{
+		DEBUG_LOG("MAIN: Error: Failed to load map or resources\n");
+		printf("MAIN: Error: Failed to load map or resources.\n");
 		free_resources(&data);
+#ifdef __3DS__
+		wait_for_exit();
+		romfsExit();
+#endif
 		return (1);
 	}
+	DEBUG_LOG("MAIN: Resources loaded.\n");
 	handle_main_bonus_features(data);
 	init_player(data);
+	DEBUG_LOG("MAIN: Setting up hooks...\n");
 	setup_mlx_hooks(data);
+	DEBUG_LOG("MAIN: Entering loop...\n");
 	mlx_loop(data->mlx);
+	DEBUG_LOG("MAIN: Exited loop.\n");
 	free_resources(&data);
+#ifdef __3DS__
+	romfsExit();
+#endif
 	return (0);
 }

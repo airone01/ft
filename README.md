@@ -27,10 +27,10 @@
 [Extra tools/projects]: #extra-toolsprojects
 [Additional notes]: #additional-notes
 
-**[<kbd> <br> Foreword <br> </kbd>][Foreword]**
-**[<kbd> <br> Projects <br> </kbd>][Projects]**
-**[<kbd> <br> Extra tools/projects <br> </kbd>][Extra tools/projects]**
-**[<kbd> <br> Additional notes <br> </kbd>][Additional notes]**
+**[<kbd><br> Foreword <br></kbd>][Foreword]**
+**[<kbd><br> Projects <br></kbd>][Projects]**
+**[<kbd><br> Extra tools/projects <br></kbd>][Extra tools/projects]**
+**[<kbd><br> Additional notes <br></kbd>][Additional notes]**
 
 </p></div>
 
@@ -38,23 +38,31 @@
 
 ## Foreword
 
-This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that projects are tightly coupled and depend on each other to work properly.
+This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that
+projects are tightly coupled and depend on each other to work properly.
 
 > [!CAUTION]
-> 42 projects are centered around GNU Make, to make students understand compilation better.
-> I am not intersted in maintaining 30+ (very similar) Makefiles in this monorepo though.
-> After many attempts at setting up an automatic way to create Makefiles on the fly while managing C/C++ dependencies on the site, I decided to quit that.
-> For thais reason and the fact that I enjoy DevOps and reproductibility, I switched to Bazel, and I occasionally create a Makefile and clean the repo before pushing a project.
-> One of the side effects of these choices is that it makes it harder for people to simply copy my projects and push them as theirs (or really it doesn't, but pretend it does).
-> It wasn't the original goal to do that, but copying is of course against the core principle of 42, and what I personally believe in.
-> This repo serves more as an example of what can be done in this school instead of a copy-paste directory for students.
-> **TL;DR: You might need a (teeny tiny) bit of work if you want to copy my work and have it graded as yours, or it might be easy for you.
-> Whatever it is, never do that. It's called a school for a reason.**
-> *Learn; Write your own tests; and "By Odin! By Thor! Use your brain!".*
+> 42 projects are centered around GNU Make, to make students understand
+> compilation better. I am not intersted in maintaining 30+ (very similar)
+> Makefiles in this monorepo though. After many attempts at setting up an
+> automatic way to create Makefiles on the fly while managing C/C++ dependencies
+> on the site, I decided to quit that. For thais reason and the fact that I
+> enjoy DevOps and reproductibility, I switched to Bazel, and I occasionally
+> create a Makefile and clean the repo before pushing a project. One of the side
+> effects of these choices is that it makes it harder for people to simply copy
+> my projects and push them as theirs (or really it doesn't, but pretend it
+> does). It wasn't the original goal to do that, but copying is of course
+> against the core principle of 42, and what I personally believe in. This repo
+> serves more as an example of what can be done in this school instead of a
+> copy-paste directory for students. **TL;DR: You might need a (teeny tiny) bit
+> of work if you want to copy my work and have it graded as yours, or it might
+> be easy for you. Whatever it is, never do that. It's called a school for a
+> reason.** _Learn; Write your own tests; and "By Odin! By Thor! Use your
+> brain!"._
 
 > [!NOTE]
-> No, I was not asked by 42 staff to write this disclaimer, it is my honest opinion and reasoning.
-> My intra login is `elagouch`.
+> No, I was not asked by 42 staff to write this disclaimer, it is my honest
+> opinion and reasoning. My intra login is `elagouch`.
 
 ## Projects
 
@@ -164,10 +172,10 @@ This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that proje
         <td>100</td>
       </tr>
       <tr align="center">
-        <td rowspan="2">5</td>
+        <td rowspan="3">5</td>
         <td>
             <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
-            <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+            <sub>with <a href="https://github.com/v-blanc">@vblanc</a>, <a href="https://github.com/EnzoPasselegue1">@enpassel</a> & <a href="https://github.com/SimonCottenet">@scottene</a></sub>
         </td>
         <td>✅</td>
         <td>125</td>
@@ -179,9 +187,33 @@ This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that proje
         <td>✅</td>
         <td>90</td>
       </tr>
+      <tr align="center">
+        <td>
+            <a href="/milestone-5/cpp05/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br>
+            <sub>CPP 05-09</sub>
+        </td>
+        <td>✅<br/>
+          <sub>(various grades)</sub>
+        </td>
+        <td>N/A</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="1">6</td>
+        <td>
+            <a href="/milestone-6/ft_transcendence/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_transcendencem.png" alt="ft_transcendence logo"></a><br/>
+            <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+        </td>
+        <td>✅</td>
+        <td>125</td>
+      </tr>
     </tbody>
   </table>
 </details>
+
+### Notable projects
+
+| [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" width=400 height=300 /> | [cub3d](/milestone-4/cub3d/README.md)<br /><img src="/.github/assets/banners/cub3d.avif" width=400 height=300 /><br />(and its [3DS port](/milestone-4/cub3d/3DS_README.md)) |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## Extra tools/projects
 
@@ -211,7 +243,9 @@ type :
 python main.py your_file.bmp
 ```
 
-You can convert PNG images to BMP using `convert` using [ImageMagick](https://imagemagick.org/), or online with [EzGIF](https://ezgif.com/png-to-bmp).
+You can convert PNG images to BMP using `convert` using
+[ImageMagick](https://imagemagick.org/), or online with
+[EzGIF](https://ezgif.com/png-to-bmp).
 
 ## Additional notes
 
@@ -220,24 +254,31 @@ You can convert PNG images to BMP using `convert` using [ImageMagick](https://im
 > [!NOTE]
 > Did you read the foreword?
 
-You can build all of the projects in this monorepo using [Bazel](https://bazel.build/).
+You can build all of the projects in this monorepo using
+[Bazel](https://bazel.build/).
 
 - Run `bazel query ...` to list all projects.
-- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`, [there are aliases](./BUILD.bazel)).
-- Most importantly, run `bazel build //...` to make all projects at once (as well as the required external libs).
+- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`,
+  [there are aliases](./BUILD.bazel)).
+- Most importantly, run `bazel build //...` to make all projects at once (as
+  well as the required external libs).
 
-Building all projects at the same time without cache takes around 20s on the slowest 4-threads school computers (at 42 Lyon).
-On the fastest (DELL), it takes at worse 7 seconds including Bazel binary downloading and warmup.
+Building all projects at the same time without cache takes around 20s on the
+slowest 4-threads school computers (at 42 Lyon). On the fastest (DELL), it takes
+at worse 7 seconds including Bazel binary downloading and warmup.
 
 [![asciicast](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
 
 ### LSPs and `compile_commands.json`
 
-If you use an IDE or LSP server and the constant `clangd` type errors appearing when browsing this repo hurt your eyes, I might have a solution for you.
-The `compile_commands.json` file!
-It instructs your LSP server on where to locate the headers, and in which order, and how your compiling system (Bazel in this case) manages your compilation.
+If you use an IDE or LSP server and the constant `clangd` type errors appearing
+when browsing this repo hurt your eyes, I might have a solution for you. The
+`compile_commands.json` file! It instructs your LSP server on where to locate
+the headers, and in which order, and how your compiling system (Bazel in this
+case) manages your compilation.
 
 To compile this file for the whole project using Bazel:
+
 ```sh
 bazel run //:refresh_compile_commands
 ```
@@ -247,12 +288,14 @@ bazel run //:refresh_compile_commands
 
 ### nix-direnv
 
-This project's dev dependencies are managed using [`nix-direnv`](https://github.com/nix-community/nix-direnv).
-There is a central [`flake.nix`](./flake.nix) file whose main purpose is exposing `devShell`s.
+This project's dev dependencies are managed using
+[`nix-direnv`](https://github.com/nix-community/nix-direnv). There is a central
+[`flake.nix`](./flake.nix) file whose main purpose is exposing `devShell`s.
 
-I might eventually package the projects of this repo into this flake when I find the time.
+I might eventually package the projects of this repo into this flake when I find
+the time.
 
 ## License
 
-This project is licensed under the [MIT License](/LICENSE). See the [LICENSE](/LICENSE) file for details.
-
+This project is licensed under the [MIT License](/LICENSE). See the
+[LICENSE](/LICENSE) file for details.

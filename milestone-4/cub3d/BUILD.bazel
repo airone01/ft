@@ -1,4 +1,5 @@
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//:tools/bazel/copts.bzl", "CC_COPTS")
 
 ### Note:
@@ -33,6 +34,13 @@ load("//:tools/bazel/copts.bzl", "CC_COPTS")
 #     ],
 #     visibility = ["//visibility:public"],
 # )
+
+cc_library(
+    name = "includes",
+    hdrs = glob(["includes/*.h"]),
+    includes = ["includes"],
+    visibility = ["//visibility:public"],
+)
 
 cc_binary(
     name = "cub3d",
@@ -84,4 +92,47 @@ cc_binary(
         "//milestone-1/ft_printf",
         "//milestone-1/get_next_line",
     ],
+)
+
+cc_binary(
+    name = "cub3d-3ds",
+    srcs = glob(
+        [
+            "src/*.c",
+            "includes/*.h",
+        ],
+        exclude = [
+            "src/*_m.c",
+            "src/*_m2.c",
+        ],
+    ),
+    target_compatible_with = select({
+        "//:on_3ds": [],
+        "//conditions:default": ["@platforms//:incompatible"],
+    }),
+    copts = CC_COPTS + [
+        "-Wno-incompatible-pointer-types",
+        "-Wno-cast-function-type",
+    ],
+    includes = ["includes"],
+    visibility = ["//visibility:public"],
+    data = glob(["assets/**"]),
+    deps = [
+        "//milestone-4/cub3d/3ds:mlx_3ds",
+        "//milestone-0/libft",
+        "//milestone-1/ft_printf",
+        "//milestone-1/get_next_line",
+    ],
+)
+
+genrule(
+    name = "cub3d_3dsx",
+    srcs = [":cub3d-3ds"],
+    outs = ["cub3d.3dsx"],
+    target_compatible_with = select({
+        "//:on_3ds": [],
+        "//conditions:default": ["@platforms//:incompatible"],
+    }),
+    cmd = "3dsxtool $< $@",
+    visibility = ["//visibility:public"],
 )

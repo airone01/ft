@@ -52,7 +52,7 @@ char	*resolve_path(const char *base_path, const char *relative_path)
 
 	if (!base_path || !relative_path)
 		return (NULL);
-	if (relative_path[0] == '/')
+	if (relative_path[0] == '/' || !ft_strncmp(relative_path, "romfs:/", 7))
 		return (ft_strdup(relative_path));
 	dir_path = get_directory_path(base_path);
 	if (!dir_path)

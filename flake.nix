@@ -30,16 +30,21 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     c_formatter_42.url = "github:maix-flake/c_formatter_42";
+    devkitNix.url = "github:bandithedoge/devkitNix";
   };
 
   outputs = {
     nixpkgs,
     flake-utils,
     c_formatter_42,
+    devkitNix,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [devkitNix.overlays.default];
+      };
 
       combinedX11 = pkgs.runCommand "combined-x11-headers" {} ''
         mkdir -p $out/X11/extensions
@@ -114,5 +119,15 @@
           fi
         '';
       };
+
+      devShells.threeDS =
+        pkgs.mkShell.override {
+          stdenv = pkgs.devkitNix.stdenvARM;
+        } {
+          packages = [
+            pkgs.bazel_8
+            pkgs.azahar
+          ];
+        };
     });
 }
