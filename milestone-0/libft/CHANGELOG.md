@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/airone01/ft/compare/libft-v2.0.0...libft-v2.1.0) (2026-04-05)
+
+
+### Features
+
+* **cub3d:** port to 3ds ([#131](https://github.com/airone01/ft/issues/131)) ([dbce2c3](https://github.com/airone01/ft/commit/dbce2c3464ed2fbcf48e0a7f47bf3cf84a2e9f2c))
+
 ## [2.0.0](https://github.com/airone01/ft/compare/libft-v1.0.0...libft-v2.0.0) (2026-01-20)
 
 
