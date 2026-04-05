@@ -18,13 +18,28 @@ FLAGS="-D__3DS__ -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft -O2 -Wal
 LIBS="-L$DEVKITPRO/libctru/lib -lctru -lm"
 SPECS="-specs=3dsx.specs"
 
-SRCS=$(find src -name "*.c" | grep -v "_b.c" | grep -v "_b2.c")
+SRCS=$(find src -name "*.c" | grep -v "_m.c" | grep -v "_m2.c")
 SRCS="$SRCS 3ds/mlx_3ds.c"
 
 # Dependencies
 SRCS="$SRCS $(find ../../milestone-0/libft/src -name "*.c")"
 SRCS="$SRCS $(find ../../milestone-1/ft_printf/src -name "*.c")"
 SRCS="$SRCS $(find ../../milestone-1/get_next_line/src -name "*.c")"
+
+echo "Refreshing romfs..."
+mkdir -p romfs
+cp -r assets romfs/
+# Always update default.cub to ensure demonstrative features are present
+cp assets/maps/good/test_map.cub romfs/default.cub
+# Fix paths in default.cub and add a sprite/door for demonstration
+sed -i 's|../../textures/|romfs:/assets/textures/|g' romfs/default.cub
+if ! grep -q "P " romfs/default.cub; then
+    sed -i '/EA / a P romfs:/assets/textures/tpk_sprite_grass.xpm' romfs/default.cub
+    sed -i '/P / a D romfs:/assets/textures/tpk_door_1a.xpm' romfs/default.cub
+    # Add a door and a sprite to the map data
+    sed -i 's/111111111111/111111D11111/2' romfs/default.cub
+    sed -i 's/11         1/11P        1/' romfs/default.cub
+fi
 
 echo "Compiling cub3d.elf..."
 $CC $FLAGS $INCLUDES $SRCS $SPECS $LIBS -o cub3d.elf

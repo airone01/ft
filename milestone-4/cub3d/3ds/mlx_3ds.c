@@ -236,7 +236,7 @@ static unsigned int parse_xpm_color(char *s) {
     if (s[0] == '#') return strtoul(s + 1, NULL, 16);
     if (!strcasecmp(s, "white")) return 0xFFFFFF;
     if (!strcasecmp(s, "black")) return 0x000000;
-    if (!strcasecmp(s, "None")) return 0x000000;
+    if (!strcasecmp(s, "None")) return 0xFF00FF;
     return 0;
 }
 

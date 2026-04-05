@@ -101,8 +101,8 @@ cc_binary(
             "includes/*.h",
         ],
         exclude = [
-            "src/*_b.c",
-            "src/*_b2.c",
+            "src/*_m.c",
+            "src/*_m2.c",
         ],
     ),
     copts = CC_COPTS + [
@@ -111,6 +111,7 @@ cc_binary(
     ],
     includes = ["includes"],
     visibility = ["//visibility:public"],
+    data = glob(["assets/**"]),
     deps = [
         "//milestone-4/cub3d/3ds:mlx_3ds",
         "//milestone-0/libft",
