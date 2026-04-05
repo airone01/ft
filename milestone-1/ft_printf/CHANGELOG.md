@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/airone01/ft/compare/ft_printf-v3.0.0...ft_printf-v3.1.0) (2026-04-05)
+
+
+### Features
+
+* **cub3d:** port to 3ds ([#131](https://github.com/airone01/ft/issues/131)) ([dbce2c3](https://github.com/airone01/ft/commit/dbce2c3464ed2fbcf48e0a7f47bf3cf84a2e9f2c))
+
 ## [3.0.0](https://github.com/airone01/ft/compare/ft_printf-v2.0.0...ft_printf-v3.0.0) (2026-03-21)
 
 
