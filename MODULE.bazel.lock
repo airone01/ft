@@ -212,6 +212,156 @@
         ]
       }
     },
+    "@@rules_nixpkgs_core+//extensions:package.bzl%nix_pkg": {
+      "general": {
+        "bzlTransitiveDigest": "ruEmraFb7u4q0MTYOiSKkWNsxEaoi/jSCDyXENcFc7I=",
+        "usagesDigest": "OhZIZde8HZaZnEJsQl29aNl7oC+pNKxTNJGGUsH6sqA=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "readline": {
+            "repoRuleId": "@@rules_nixpkgs_core+//:nixpkgs.bzl%_nixpkgs_package",
+            "attributes": {
+              "unmangled_name": "readline",
+              "attribute_path": "pkg",
+              "nix_file_deps": {},
+              "nix_file_content": "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"readline-merged\"; paths = [ pkgs.readline pkgs.readline.dev ]; }; }",
+              "nix_license_path": "",
+              "repository": "@@rules_nixpkgs_core++nix_repo+nixpkgs//:nixpkgs",
+              "repositories": {},
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\ncc_library(\n    name = \"readline\",\n    srcs = glob([\"lib/**/*.so*\"]),\n    hdrs = glob([\"include/**/*.h\"]),\n    includes = [\"include\"],\n)\n",
+              "nixopts": [],
+              "quiet": false,
+              "fail_not_supported": true
+            }
+          },
+          "libX11": {
+            "repoRuleId": "@@rules_nixpkgs_core+//:nixpkgs.bzl%_nixpkgs_package",
+            "attributes": {
+              "unmangled_name": "libX11",
+              "attribute_path": "pkg",
+              "nix_file_deps": {},
+              "nix_file_content": "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libX11-merged\"; paths = [ pkgs.xorg.libX11 pkgs.xorg.libX11.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+              "nix_license_path": "",
+              "repository": "@@rules_nixpkgs_core++nix_repo+nixpkgs//:nixpkgs",
+              "repositories": {},
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\ncc_library(\n    name = \"libX11\",\n    srcs = glob([\"lib/**/*.so*\"]),\n    hdrs = glob([\"include/**/*.h\"]),\n    includes = [\"include\"],\n)\n",
+              "nixopts": [],
+              "quiet": false,
+              "fail_not_supported": true
+            }
+          },
+          "libXext": {
+            "repoRuleId": "@@rules_nixpkgs_core+//:nixpkgs.bzl%_nixpkgs_package",
+            "attributes": {
+              "unmangled_name": "libXext",
+              "attribute_path": "pkg",
+              "nix_file_deps": {},
+              "nix_file_content": "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXext-merged\"; paths = [ pkgs.xorg.libXext pkgs.xorg.libXext.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+              "nix_license_path": "",
+              "repository": "@@rules_nixpkgs_core++nix_repo+nixpkgs//:nixpkgs",
+              "repositories": {},
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\ncc_library(\n    name = \"libXext\",\n    srcs = glob([\"lib/**/*.so*\"]),\n    hdrs = glob([\"include/**/*.h\"]),\n    includes = [\"include\"],\n)\n",
+              "nixopts": [],
+              "quiet": false,
+              "fail_not_supported": true
+            }
+          },
+          "libXrandr": {
+            "repoRuleId": "@@rules_nixpkgs_core+//:nixpkgs.bzl%_nixpkgs_package",
+            "attributes": {
+              "unmangled_name": "libXrandr",
+              "attribute_path": "pkg",
+              "nix_file_deps": {},
+              "nix_file_content": "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrandr-merged\"; paths = [ pkgs.xorg.libXrandr pkgs.xorg.libXrandr.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+              "nix_license_path": "",
+              "repository": "@@rules_nixpkgs_core++nix_repo+nixpkgs//:nixpkgs",
+              "repositories": {},
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\ncc_library(\n    name = \"libXrandr\",\n    srcs = glob([\"lib/**/*.so*\"]),\n    hdrs = glob([\"include/**/*.h\"]),\n    includes = [\"include\"],\n)\n",
+              "nixopts": [],
+              "quiet": false,
+              "fail_not_supported": true
+            }
+          },
+          "libXrender": {
+            "repoRuleId": "@@rules_nixpkgs_core+//:nixpkgs.bzl%_nixpkgs_package",
+            "attributes": {
+              "unmangled_name": "libXrender",
+              "attribute_path": "pkg",
+              "nix_file_deps": {},
+              "nix_file_content": "let pkgs = import <nixpkgs> {}; in { pkg = pkgs.buildEnv { name = \"libXrender-merged\"; paths = [ pkgs.xorg.libXrender pkgs.xorg.libXrender.dev pkgs.xorg.xorgproto ]; ignoreCollisions = true; }; }",
+              "nix_license_path": "",
+              "repository": "@@rules_nixpkgs_core++nix_repo+nixpkgs//:nixpkgs",
+              "repositories": {},
+              "build_file_content": "\npackage(default_visibility = [\"//visibility:public\"])\ncc_library(\n    name = \"libXrender\",\n    srcs = glob([\"lib/**/*.so*\"]),\n    hdrs = glob([\"include/**/*.h\"]),\n    includes = [\"include\"],\n)\n",
+              "nixopts": [],
+              "quiet": false,
+              "fail_not_supported": true
+            }
+          }
+        },
+        "moduleExtensionMetadata": {
+          "explicitRootModuleDirectDeps": [
+            "readline",
+            "libX11",
+            "libXext",
+            "libXrandr",
+            "libXrender"
+          ],
+          "explicitRootModuleDirectDevDeps": [],
+          "useAllRepos": "NO",
+          "reproducible": false
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "",
+            "nixpkgs",
+            "rules_nixpkgs_core++nix_repo+nixpkgs"
+          ],
+          [
+            "rules_nixpkgs_core+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ]
+        ]
+      }
+    },
+    "@@rules_nixpkgs_core+//extensions:repository.bzl%nix_repo": {
+      "general": {
+        "bzlTransitiveDigest": "xMSWKvZIEQqlHQX+SsttaWQzaCbbrmu32wouJ4ZLlPw=",
+        "usagesDigest": "tFz7v19HnG49ue5J+nNPXl99yRFlCUON0GwrMyHp3xU=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "nixpkgs": {
+            "repoRuleId": "@@rules_nixpkgs_core+//:nixpkgs.bzl%_nixpkgs_local_repository",
+            "attributes": {
+              "unmangled_name": "nixpkgs",
+              "nix_file_deps": [],
+              "nix_file_content": "",
+              "nix_flake_lock_file": "@@//:flake.lock"
+            }
+          }
+        },
+        "moduleExtensionMetadata": {
+          "explicitRootModuleDirectDeps": [
+            "nixpkgs"
+          ],
+          "explicitRootModuleDirectDevDeps": [],
+          "useAllRepos": "NO",
+          "reproducible": false
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "rules_nixpkgs_core+",
+            "bazel_skylib",
+            "bazel_skylib+"
+          ]
+        ]
+      }
+    },
     "@@rules_python+//python/extensions:config.bzl%config": {
       "general": {
         "bzlTransitiveDigest": "TRGIl0CDmorwyNiblOYyhWuyKzi/kWFHT2uIofq7o9Y=",

@@ -20,6 +20,7 @@
 #include "utils.h"
 #include "ft_printf.h"
 #include <limits.h>
+#include <stdio.h>
 
 t_data	*init_data(void)
 {
@@ -90,7 +91,6 @@ int	main_color_resources(t_data *data)
 
 #ifdef __3DS__
 # include <3ds.h>
-# include <stdio.h>
 extern void wait_for_exit();
 # define DEBUG_LOG(msg) svcOutputDebugString(msg, ft_strlen(msg))
 #else
