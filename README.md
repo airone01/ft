@@ -15,7 +15,7 @@
 </div>
 
 <div align="center">
-  <code>ft</code> is a monorepo of all my projects related to <a href="https://42.fr/en/homepage/">42</a>. It's mainly meant for personal archiving, but I share some cool stuff that you can check out.
+  <code>ft</code> is a monorepo of all my projects related to <a href="https://42.fr/en/homepage/">42</a>. It's mainly meant for personal archiving, but I also share some cool stuff.
 </div>
 
 ---
@@ -27,10 +27,10 @@
 [Extra tools/projects]: #extra-toolsprojects
 [Additional notes]: #additional-notes
 
-**[<kbd><br> Foreword <br></kbd>][Foreword]**
-**[<kbd><br> Projects <br></kbd>][Projects]**
-**[<kbd><br> Extra tools/projects <br></kbd>][Extra tools/projects]**
-**[<kbd><br> Additional notes <br></kbd>][Additional notes]**
+**[<kbd><br/> Foreword <br/>​</kbd>][Foreword]**
+**[<kbd><br/> Projects <br/>​</kbd>][Projects]**
+**[<kbd><br/> Extra tools/projects <br/>​</kbd>][Extra tools/projects]**
+**[<kbd><br/> Additional notes <br/>​</kbd>][Additional notes]**
 
 </p></div>
 
@@ -38,31 +38,24 @@
 
 ## Foreword
 
-This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning that
-projects are tightly coupled and depend on each other to work properly.
+This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning these
+projects are tightly coupled and share dependencies to work properly.
+
+**Why Bazel instead of Make?** The 42 curriculum relies heavily on GNU Make to
+teach students the fundamentals of compilation. However, maintaining 30+ nearly
+identical Makefiles in a monorepo quickly becomes tedious. Because I enjoy
+DevOps and reproducibility, I migrated this repository to Bazel. I now only
+generate a standard Makefile and clean the repo right before pushing a project
+for grading.
 
 > [!CAUTION]
-> 42 projects are centered around GNU Make, to make students understand
-> compilation better. I am not intersted in maintaining 30+ (very similar)
-> Makefiles in this monorepo though. After many attempts at setting up an
-> automatic way to create Makefiles on the fly while managing C/C++ dependencies
-> on the site, I decided to quit that. For thais reason and the fact that I
-> enjoy DevOps and reproductibility, I switched to Bazel, and I occasionally
-> create a Makefile and clean the repo before pushing a project. One of the side
-> effects of these choices is that it makes it harder for people to simply copy
-> my projects and push them as theirs (or really it doesn't, but pretend it
-> does). It wasn't the original goal to do that, but copying is of course
-> against the core principle of 42, and what I personally believe in. This repo
-> serves more as an example of what can be done in this school instead of a
-> copy-paste directory for students. **TL;DR: You might need a (teeny tiny) bit
-> of work if you want to copy my work and have it graded as yours, or it might
-> be easy for you. Whatever it is, never do that. It's called a school for a
-> reason.** _Learn; Write your own tests; and "By Odin! By Thor! Use your
-> brain!"._
-
-> [!NOTE]
-> No, I was not asked by 42 staff to write this disclaimer, it is my honest
-> opinion and reasoning. My intra login is `elagouch`.
+> A natural side effect of this Bazel setup is that it makes it harder to
+> blindly copy-paste my projects and submit them as your own. While deterring
+> cheating wasn't my primary technical goal, I fully support the result. Copying
+> defeats the core principles of 42 and goes against what I personally believe
+> in. This repository is meant to serve as an example of what you can build at
+> this school, not as a shortcut. It's called a school for a reason. _Learn;
+> Write your own tests; and "By Odin! By Thor! Use your brain!"._
 
 ## Projects
 
@@ -82,7 +75,7 @@ projects are tightly coupled and depend on each other to work properly.
         <td>0</td>
         <td><a href="/milestone-0/libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
         <td>
-          ✅<br>
+          ✅<br/>
           <sub>(with bonuses)</sub>
         </td>
         <td>125</td>
@@ -91,7 +84,7 @@ projects are tightly coupled and depend on each other to work properly.
         <td rowspan="3">1</td>
         <td><a href="/milestone-1/born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
         <td>
-          ✅<br>
+          ✅<br/>
           <sub>(with bonuses)</sub>
         </td>
         <td>125</td>
@@ -110,7 +103,7 @@ projects are tightly coupled and depend on each other to work properly.
         <td rowspan="3">2</td>
         <td><a href="/milestone-2/pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
         <td>
-          ✅<br>
+          ✅<br/>
           <sub>(with bonuses)</sub>
         </td>
         <td>125</td>
@@ -123,7 +116,7 @@ projects are tightly coupled and depend on each other to work properly.
       <tr align="center">
         <td><a href="/milestone-2/fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
         <td>
-          ✅<br>
+          ✅<br/>
           <sub>(with bonuses)</sub>
         </td>
         <td>125</td>
@@ -131,7 +124,7 @@ projects are tightly coupled and depend on each other to work properly.
       <tr align="center">
         <td rowspan=2>3</td>
         <td>
-            <a href="/milestone-3/minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br>
+            <a href="/milestone-3/minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br/>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>✅</td>
@@ -145,28 +138,26 @@ projects are tightly coupled and depend on each other to work properly.
       <tr align="center">
         <td rowspan=3>4</td>
         <td>
-            <a href="/milestone-4/cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br>
+            <a href="/milestone-4/cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br/>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>
-          ✅<br>
+          ✅<br/>
           <sub>(with bonuses)</sub>
         </td>
         <td>125</td>
       </tr>
       <tr align="center">
         <td>
-            <a href="/milestone-4/cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br>
+            <a href="/milestone-4/cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br/>
             <sub>CPP 00-04</sub>
         </td>
-        <td>✅<br/>
-          <sub>(various grades)</sub>
-        </td>
-        <td>N/A</td>
+        <td>✅</td>
+        <td><sub>(various grades)</sub></td>
       </tr>
       <tr align="center">
         <td>
-            <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/netpracticee.png" alt="NetPractice logo"><br>
+            <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/netpracticee.png" alt="NetPractice logo"><br/>
         </td>
         <td>✅</td>
         <td>100</td>
@@ -175,7 +166,7 @@ projects are tightly coupled and depend on each other to work properly.
         <td rowspan="3">5</td>
         <td>
             <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
-            <sub>with <a href="https://github.com/v-blanc">@vblanc</a>, <a href="https://github.com/EnzoPasselegue1">@enpassel</a> & <a href="https://github.com/SimonCottenet">@scottene</a></sub>
+            <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
         </td>
         <td>✅</td>
         <td>125</td>
@@ -189,19 +180,18 @@ projects are tightly coupled and depend on each other to work properly.
       </tr>
       <tr align="center">
         <td>
-            <a href="/milestone-5/cpp05/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br>
+            <a href="/milestone-5/cpp05/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br/>
             <sub>CPP 05-09</sub>
         </td>
-        <td>✅<br/>
-          <sub>(various grades)</sub>
+        <td>✅
         </td>
-        <td>N/A</td>
+        <td><sub>(various grades)</sub></td>
       </tr>
       <tr align="center">
         <td rowspan="1">6</td>
         <td>
             <a href="/milestone-6/ft_transcendence/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_transcendencem.png" alt="ft_transcendence logo"></a><br/>
-            <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
+            <sub>with <a href="https://github.com/v-blanc">@vblanc</a>, <a href="https://github.com/EnzoPasselegue1">@enpassel</a> & <a href="https://github.com/SimonCottenet">@scottene</a></sub>
         </td>
         <td>✅</td>
         <td>125</td>
@@ -212,12 +202,16 @@ projects are tightly coupled and depend on each other to work properly.
 
 ### Notable projects
 
-| [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" width=400 height=300 /> | [cub3d](/milestone-4/cub3d/README.md)<br /><img src="/.github/assets/banners/cub3d.avif" width=400 height=300 /><br />(and its [3DS port](/milestone-4/cub3d/3DS_README.md)) |
-| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" width=400 height=300 /> | [cub3d](/milestone-4/cub3d/README.md) (and its [3DS port](/milestone-4/cub3d/3DS_README.md))<br /><img src="/.github/assets/banners/cub3d.avif" width=400 height=300 /> |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## Extra tools/projects
 
-<img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
+### [`3DS port of cub3d`](/milestone-4/cub3d/3DS_README.md)
+
+During a boring weekend, I set up a Bazel target to cross-compile a 3DS homebrew
+app. If you have a modded 3DS on hand, you can compile it and try yourself. It's
+very limited, laggy, and crashes on quit though. You have been warned.
 
 ### [`Minecraft push_swap visualizer`](./tools/push-swap-visualizer-minecraft/README.md)
 
@@ -230,18 +224,11 @@ and visualize the sorting algorithm on your `1.20.1` client.
   <img alt="Minecraft push_swap visualizer in-game screenshot" src="./.github/assets/screenshot_1.webp" />
 </details>
 
-<img alt="Rust logo" src="https://skillicons.dev/icons?i=rust" align="right" />
-
 ### [`FDF generator`](./external-tools/fdf-bmp-converter/README.md)
 
 A simple script to convert a BMP image into a fdf file. It currently only works
 for bitmap images smaller than 255 \* 255, because I don't really know how to
-reliably get the width of the image in the header. To run the script, simply
-type :
-
-```sh
-python main.py your_file.bmp
-```
+reliably get the width of the image in the header.
 
 You can convert PNG images to BMP using `convert` using
 [ImageMagick](https://imagemagick.org/), or online with
@@ -263,11 +250,7 @@ You can build all of the projects in this monorepo using
 - Most importantly, run `bazel build //...` to make all projects at once (as
   well as the required external libs).
 
-Building all projects at the same time without cache takes around 20s on the
-slowest 4-threads school computers (at 42 Lyon). On the fastest (DELL), it takes
-at worse 7 seconds including Bazel binary downloading and warmup.
-
-[![asciicast](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf.svg)](https://asciinema.org/a/Q60Ii24GuotRy8JJRdH2NMJxf)
+As per Bazel fashion, building the entirety of the repo at once is pretty fast.
 
 ### LSPs and `compile_commands.json`
 
