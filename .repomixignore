@@ -2,7 +2,6 @@
 Cargo.lock
 package-lock.json
 flake.lock
-MODULE.bazel.lock
 
 # Other
 LICENSE
