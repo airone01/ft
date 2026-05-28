@@ -1,1 +1,2 @@
-find . -type d,f|wc -l
+#!/usr/bin/env sh
+find . -type d,f | wc -l
