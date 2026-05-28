@@ -83,3 +83,7 @@ vgcore.*
 # 3DS files
 *.3dsx
 *.smdh
+
+# Zig
+zig-out/
+.zig-cache/
