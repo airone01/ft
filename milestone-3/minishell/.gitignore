@@ -4,7 +4,6 @@
 minishell
 minishell_test
 testb
-repomix-output.*
 file_*.txt
 output.txt\\nHeredoc
 actual_output.txt
