@@ -20,6 +20,11 @@ const cpp06_mod = @import("milestone-5/cpp06/build.zig");
 const cpp07_mod = @import("milestone-5/cpp07/build.zig");
 const cpp08_mod = @import("milestone-5/cpp08/build.zig");
 const cpp09_mod = @import("milestone-5/cpp09/build.zig");
+const rush00_mod = @import("piscine-c/rush00/build.zig");
+const rush01_mod = @import("piscine-c/rush01/build.zig");
+const rush02_mod = @import("piscine-c/rush02/build.zig");
+const hotrace_mod = @import("rushes/hotrace/build.zig");
+const libunit_mod = @import("rushes/libunit/build.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -71,4 +76,12 @@ pub fn build(b: *std.Build) void {
     cpp07_mod.configure(b, target, optimize);
     cpp08_mod.configure(b, target, optimize);
     cpp09_mod.configure(b, target, optimize);
+
+    // Piscine C
+    rush00_mod.configure(b, target, optimize);
+    // rush01 and rush02 have incomplete implementations (called functions are commented out)
+
+    // Rushes
+    hotrace_mod.configure(b, target, optimize);
+    libunit_mod.configure(b, target, optimize, libunit_mod.Deps{ .libft = lft });
 }
