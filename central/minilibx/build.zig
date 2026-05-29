@@ -23,7 +23,6 @@ pub fn configure(
         .flags = &.{ "-Wall", "-Wextra" },
     });
     lib.root_module.addIncludePath(b.path(mlx_dir));
-    lib.root_module.linkSystemLibrary("X11", .{});
-    lib.root_module.linkSystemLibrary("Xext", .{});
+    helpers.addNixSystemIncludePaths(b, lib.root_module);
     return lib;
 }

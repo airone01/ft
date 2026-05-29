@@ -28,6 +28,25 @@ pub fn dirExists(b: *std.Build, rel_path: []const u8) bool {
     return true;
 }
 
+// Reads NIX_CFLAGS_COMPILE from the build environment and adds every -I path
+// as a system include path. On non-Nix systems this is a no-op (standard dirs
+// like /usr/include are already on the compiler's default search path).
+pub fn addNixSystemIncludePaths(b: *std.Build, module: *std.Build.Module) void {
+    const val = b.graph.environ_map.get("NIX_CFLAGS_COMPILE") orelse return;
+    var it = std.mem.tokenizeScalar(u8, val, ' ');
+    while (it.next()) |flag| {
+        if (std.mem.startsWith(u8, flag, "-I")) {
+            // -I/path (joined)
+            module.addSystemIncludePath(.{ .cwd_relative = b.dupe(flag[2..]) });
+        } else if (std.mem.eql(u8, flag, "-isystem")) {
+            // -isystem /path (two tokens)
+            if (it.next()) |path| {
+                module.addSystemIncludePath(.{ .cwd_relative = b.dupe(path) });
+            }
+        }
+    }
+}
+
 pub fn collectFileNamesExcludingEndsWith(b: *std.Build, dir_rel: []const u8, excludes: []const []const u8) []const []const u8 {
     const io = b.graph.io;
     var dir = b.build_root.handle.openDir(io, dir_rel, .{ .iterate = true }) catch return &.{};
@@ -43,6 +62,36 @@ pub fn collectFileNamesExcludingEndsWith(b: *std.Build, dir_rel: []const u8, exc
         list.append(b.allocator, b.dupe(entry.name)) catch @panic("OOM");
     }
     return list.toOwnedSlice(b.allocator) catch @panic("OOM");
+}
+
+pub fn collectFilesRecursively(b: *std.Build, dir_rel: []const u8, ext: []const u8) []const []const u8 {
+    var list: std.ArrayList([]const u8) = .empty;
+    collectFilesRecursivelyInto(b, dir_rel, "", ext, &list);
+    return list.toOwnedSlice(b.allocator) catch @panic("OOM");
+}
+
+fn collectFilesRecursivelyInto(
+    b: *std.Build,
+    root: []const u8,
+    sub: []const u8,
+    ext: []const u8,
+    list: *std.ArrayList([]const u8),
+) void {
+    const io = b.graph.io;
+    const abs = if (sub.len == 0) root else b.pathJoin(&.{ root, sub });
+    var dir = b.build_root.handle.openDir(io, abs, .{ .iterate = true }) catch return;
+    defer dir.close(io);
+    var it = dir.iterate();
+    while (it.next(io) catch null) |entry| {
+        if (entry.kind == .file) {
+            if (!std.mem.endsWith(u8, entry.name, ext)) continue;
+            const rel = if (sub.len == 0) b.dupe(entry.name) else b.pathJoin(&.{ sub, entry.name });
+            list.append(b.allocator, rel) catch @panic("OOM");
+        } else if (entry.kind == .directory) {
+            const child = if (sub.len == 0) b.dupe(entry.name) else b.pathJoin(&.{ sub, entry.name });
+            collectFilesRecursivelyInto(b, root, child, ext, list);
+        }
+    }
 }
 
 const cpp_flags: []const []const u8 = &.{
