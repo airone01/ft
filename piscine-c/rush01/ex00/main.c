@@ -10,47 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// Prototypes :-)
 #include "rush.h"
+#include <stdlib.h>
 
-// int main(void)
-// {
-// 	unsigned int	**grid;
-// 	unsigned int	magic;
-// 	int				size;
-// 	char				*entry;
+int	main(int argc, char **argv)
+{
+	unsigned int	**grid;
+	unsigned int	magic;
+	unsigned int	size;
+	unsigned int	i;
 
-// 	//       |up   | |down | |left | |right|
-// 	entry = "4 3 2 1 1 2 2 2 4 3 2 1 1 2 2 2"; // Original
-// 	// entry = "8 3 2 1 8 2 2 2 8 3 2 1 1 2 2 2 8 3 2 1 1 2\
-//				2 2 8 3 2 1 1 2 2 2";
-// 	size = read_grid_axis_size(entry) + 2;
-// 	magic = ft_facto(size - 2);
-// 	grid = make_grid(size);
-
-// 	// show_grid(grid, size);
-// 	// populate(grid, size);	// debug
-
-// 	read_grid(entry, grid, size);
-// 	// show_grid(grid, size);
-
-// 	// Solve maybe half of the thing already
-// 	if (solve_max(grid, size) || solve_min(grid, size))
-// 	{
-// 		ft_putstr("Error\n");
-// 		return (1);
-// 	}
-
-// 	// Brute-force our way into a solution
-// 	if (!brute_try(grid, size, magic))
-// 	{
-// 		ft_putstr("Error\n");
-// 		return (1);
-// 	}
-// 	// show_grid(grid, size);
-// }
-
-// NE PAS OUBLIER LE FREE PAR PITIE
-// ET TESTER VALGRIND
-// ET CHANGER LES COMMITS
-// ET METTRE LE PROTO DANS LE MAIN PRINCIPAL
+	if (argc != 2)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
+	size = read_grid_axis_size(argv[1]) + 2;
+	magic = ft_facto(size - 2);
+	grid = make_grid(size);
+	if (!grid)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
+	read_grid(argv[1], grid, size);
+	if (solve_max(grid, size) || solve_min(grid, size)
+		|| !brute_try(grid, size, magic))
+	{
+		ft_putstr("Error\n");
+		i = 0;
+		while (i < size)
+			free(grid[i++]);
+		free(grid);
+		return (1);
+	}
+	i = 0;
+	while (i < size)
+		free(grid[i++]);
+	free(grid);
+	return (0);
+}

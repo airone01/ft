@@ -20,6 +20,7 @@ const cpp06_mod = @import("milestone-5/cpp06/build.zig");
 const cpp07_mod = @import("milestone-5/cpp07/build.zig");
 const cpp08_mod = @import("milestone-5/cpp08/build.zig");
 const cpp09_mod = @import("milestone-5/cpp09/build.zig");
+const piscine_c_mod = @import("piscine-c/build.zig");
 const rush00_mod = @import("piscine-c/rush00/build.zig");
 const rush01_mod = @import("piscine-c/rush01/build.zig");
 const rush02_mod = @import("piscine-c/rush02/build.zig");
@@ -78,8 +79,10 @@ pub fn build(b: *std.Build) void {
     cpp09_mod.configure(b, target, optimize);
 
     // Piscine C
+    piscine_c_mod.configure(b, target, optimize);
     rush00_mod.configure(b, target, optimize);
-    // rush01 and rush02 have incomplete implementations (called functions are commented out)
+    rush01_mod.configure(b, target, optimize);
+    rush02_mod.configure(b, target, optimize);
 
     // Rushes
     hotrace_mod.configure(b, target, optimize);

@@ -15,6 +15,8 @@
 
 unsigned int	grid_check(unsigned int **grid, unsigned int size,
 					unsigned int magic);
+void			brute_set(unsigned int abcd[4], unsigned int **grid,
+					unsigned int size, unsigned int magic);
 unsigned int	brute_try(unsigned int **grid, unsigned int size,
 					unsigned int magic);
 unsigned int	**grid_dupe(unsigned int **grid, unsigned int size);
