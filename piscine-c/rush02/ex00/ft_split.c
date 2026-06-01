@@ -70,78 +70,78 @@ char	*save_word(char **tab, char *str, int *limit, int c)
 	return (tab[c]);
 }
 
-// char	**ft_split2(char *str, char *charset)
-// {
-// 	int		nbr;
-// 	int		i;
-// 	int		limit[2];
-// 	char	**result;
-// 	int		c;
+char	**ft_split2(char *str, char *charset)
+{
+	int		nbr;
+	int		i;
+	int		limit[2];
+	char	**result;
+	int		c;
 
-// 	c = 0;
-// 	nbr = count_words(str, charset);
-// 	result = malloc(sizeof(char *) * nbr + 1);
-// 	if (result == NULL)
-// 		return (result);
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] > 32 && str[i] < 127)
-// 		{
-// 			limit[0] = i;
-// 			while (str[i] > 32 && str[i] < 127)
-// 			{
-// 				if (check_charset(str, charset, i) == 1 || str[i + 1] == '\0')
-// 				{
-// 					limit[1] = i;
-// 					save_word(result, str, limit, c);
-// 					c++;
-// 					i++;
-// 					break ;
-// 				}
-// 				i++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	result[c] = NULL;
-// 	return (result);
-// }
+	c = 0;
+	nbr = count_words(str, charset);
+	result = malloc(sizeof(char *) * nbr + 1);
+	if (result == NULL)
+		return (result);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] > 32 && str[i] < 127)
+		{
+			limit[0] = i;
+			while (str[i] > 32 && str[i] < 127)
+			{
+				if (check_charset(str, charset, i) == 1 || str[i + 1] == '\0')
+				{
+					limit[1] = i;
+					save_word(result, str, limit, c);
+					c++;
+					i++;
+					break ;
+				}
+				i++;
+			}
+		}
+		i++;
+	}
+	result[c] = NULL;
+	return (result);
+}
 
-// char	**ft_split(char *str, char *charset)
-// {
-// 	int		nbr;
-// 	int		i;
-// 	int		limit[2];
-// 	char	**result;
-// 	int		c;
+char	**ft_split(char *str, char *charset)
+{
+	int		nbr;
+	int		i;
+	int		limit[2];
+	char	**result;
+	int		c;
 
-// 	c = 0;
-// 	nbr = count_words(str, charset);
-// 	result = malloc(sizeof(char *) * nbr + 1);
-// 	if (result == NULL)
-// 		return (result);
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] >= 32 && str[i] < 127)
-// 		{
-// 			limit[0] = i;
-// 			while (str[i] >= 32 && str[i] < 127)
-// 			{
-// 				if (check_charset(str, charset, i) == 1 || str[i + 1] == '\0')
-// 				{
-// 					limit[1] = i;
-// 					save_word(result, str, limit, c);
-// 					c++;
-// 					i++;
-// 					break ;
-// 				}
-// 				i++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	result[c] = NULL;
-// 	return (result);
-// }
+	c = 0;
+	nbr = count_words(str, charset);
+	result = malloc(sizeof(char *) * nbr + 1);
+	if (result == NULL)
+		return (result);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= 32 && str[i] < 127)
+		{
+			limit[0] = i;
+			while (str[i] >= 32 && str[i] < 127)
+			{
+				if (check_charset(str, charset, i) == 1 || str[i + 1] == '\0')
+				{
+					limit[1] = i;
+					save_word(result, str, limit, c);
+					c++;
+					i++;
+					break ;
+				}
+				i++;
+			}
+		}
+		i++;
+	}
+	result[c] = NULL;
+	return (result);
+}
