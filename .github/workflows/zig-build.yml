@@ -22,7 +22,8 @@ jobs:
         sudo apt-get install -y \
           libx11-dev \
           libxext-dev \
-          libreadline-dev
+          libreadline-dev \
+          nasm
 
     - name: Install Zig
       uses: mlugg/setup-zig@v2

@@ -26,6 +26,7 @@ const rush01_mod = @import("piscine-c/rush01/build.zig");
 const rush02_mod = @import("piscine-c/rush02/build.zig");
 const hotrace_mod = @import("rushes/hotrace/build.zig");
 const libunit_mod = @import("rushes/libunit/build.zig");
+const libasm_mod = @import("pcc/libasm/build.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -87,4 +88,7 @@ pub fn build(b: *std.Build) void {
     // Rushes
     hotrace_mod.configure(b, target, optimize);
     libunit_mod.configure(b, target, optimize, libunit_mod.Deps{ .libft = lft });
+
+    // PCC
+    b.installArtifact(libasm_mod.configure(b, target, optimize));
 }
