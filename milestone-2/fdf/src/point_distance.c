@@ -20,12 +20,11 @@
  *
  * @return	The distance between the two points
  */
-double	point_distance(t_point a, t_point b)
-{
-	double	dx;
-	double	dy;
+double point_distance(t_point a, t_point b) {
+  double dx;
+  double dy;
 
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	return (sqrt(dx * dx + dy * dy));
+  dx = b.x - a.x;
+  dy = b.y - a.y;
+  return (sqrt(dx * dx + dy * dy));
 }

@@ -17,30 +17,27 @@
  *
  * @param ctx Context
  */
-void	draw_lines(t_ctx *ctx)
-{
-	t_section	section;
-	int			section_start_y;
-	int			section_start_x;
-	int			section_size;
+void draw_lines(t_ctx *ctx) {
+  t_section section;
+  int section_start_y;
+  int section_start_x;
+  int section_size;
 
-	section_size = 16;
-	section_start_y = 0;
-	while (section_start_y < ctx->map.height)
-	{
-		section.start_y = section_start_y;
-		section.end_y = (int)fmin(section_start_y + section_size - 1,
-				ctx->map.height - 1);
-		section_start_x = 0;
-		while (section_start_x < ctx->map.width)
-		{
-			section.start_x = section_start_x;
-			section.end_x = (int)fmin(section_start_x + section_size - 1,
-					ctx->map.width - 1);
-			if (!is_section_outside_viewport(ctx, section))
-				render_section(ctx, section);
-			section_start_x += section_size;
-		}
-		section_start_y += section_size;
-	}
+  section_size = 16;
+  section_start_y = 0;
+  while (section_start_y < ctx->map.height) {
+    section.start_y = section_start_y;
+    section.end_y =
+        (int)fmin(section_start_y + section_size - 1, ctx->map.height - 1);
+    section_start_x = 0;
+    while (section_start_x < ctx->map.width) {
+      section.start_x = section_start_x;
+      section.end_x =
+          (int)fmin(section_start_x + section_size - 1, ctx->map.width - 1);
+      if (!is_section_outside_viewport(ctx, section))
+        render_section(ctx, section);
+      section_start_x += section_size;
+    }
+    section_start_y += section_size;
+  }
 }

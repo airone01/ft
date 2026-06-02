@@ -19,20 +19,18 @@
  * @param is_heredoc Boolean flag indicating if redirection is a heredoc
  * @return int File descriptor or -1 on error
  */
-static int	open_input_file(t_redir *redir, bool is_heredoc)
-{
-	int	fd;
+static int open_input_file(t_redir *redir, bool is_heredoc) {
+  int fd;
 
-	if (is_heredoc)
-		fd = redir->fd;
-	else
-		fd = open(redir->filename, O_RDONLY);
-	if (!is_heredoc && fd == -1)
-	{
-		error(redir->filename, "redirection", ERR_NO_FILE);
-		return (-1);
-	}
-	return (fd);
+  if (is_heredoc)
+    fd = redir->fd;
+  else
+    fd = open(redir->filename, O_RDONLY);
+  if (!is_heredoc && fd == -1) {
+    error(redir->filename, "redirection", ERR_NO_FILE);
+    return (-1);
+  }
+  return (fd);
 }
 
 /**
@@ -41,16 +39,14 @@ static int	open_input_file(t_redir *redir, bool is_heredoc)
  * @param fd File descriptor to redirect
  * @return bool true on success, false on error
  */
-static bool	redirect_to_stdin(int fd)
-{
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		close(fd);
-		error("dup2", "redirection", ERR_FD);
-		return (false);
-	}
-	close(fd);
-	return (true);
+static bool redirect_to_stdin(int fd) {
+  if (dup2(fd, STDIN_FILENO) == -1) {
+    close(fd);
+    error("dup2", "redirection", ERR_FD);
+    return (false);
+  }
+  close(fd);
+  return (true);
 }
 
 /**
@@ -59,27 +55,24 @@ static bool	redirect_to_stdin(int fd)
  * @param cmd Command structure
  * @return bool true on success, false on error
  */
-bool	apply_input_redirection(t_command *cmd)
-{
-	t_redir	*redir;
-	int		fd;
-	bool	is_heredoc;
+bool apply_input_redirection(t_command *cmd) {
+  t_redir *redir;
+  int fd;
+  bool is_heredoc;
 
-	redir = cmd->redirection;
-	while (redir)
-	{
-		if (redir->type == TOK_REDIR_FROM || redir->type == TOK_HERE_DOC_FROM)
-		{
-			is_heredoc = (redir->type == TOK_HERE_DOC_FROM);
-			fd = open_input_file(redir, is_heredoc);
-			if (fd == -1)
-				return (false);
-			if (!redirect_to_stdin(fd))
-				return (false);
-			if (is_heredoc)
-				redir->fd = -1;
-		}
-		redir = redir->next;
-	}
-	return (true);
+  redir = cmd->redirection;
+  while (redir) {
+    if (redir->type == TOK_REDIR_FROM || redir->type == TOK_HERE_DOC_FROM) {
+      is_heredoc = (redir->type == TOK_HERE_DOC_FROM);
+      fd = open_input_file(redir, is_heredoc);
+      if (fd == -1)
+        return (false);
+      if (!redirect_to_stdin(fd))
+        return (false);
+      if (is_heredoc)
+        redir->fd = -1;
+    }
+    redir = redir->next;
+  }
+  return (true);
 }

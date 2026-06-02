@@ -20,13 +20,12 @@
  *
  * @returns	translated tile
  */
-t_tile	bsq_map_char_to_tile(char c, t_tiles tiles)
-{
-	if (c == tiles.epty)
-		return (epty);
-	if (c == tiles.full)
-		return (full);
-	return (obst);
+t_tile bsq_map_char_to_tile(char c, t_tiles tiles) {
+  if (c == tiles.epty)
+    return (epty);
+  if (c == tiles.full)
+    return (full);
+  return (obst);
 }
 
 /*
@@ -37,13 +36,12 @@ t_tile	bsq_map_char_to_tile(char c, t_tiles tiles)
  *
  * @returns	char corresponding to the tile
  */
-char	bsq_map_tile_to_char(t_tile tile, t_tiles tiles)
-{
-	if (tile == epty)
-		return (tiles.epty);
-	if (tile == full)
-		return (tiles.full);
-	return (tiles.obst);
+char bsq_map_tile_to_char(t_tile tile, t_tiles tiles) {
+  if (tile == epty)
+    return (tiles.epty);
+  if (tile == full)
+    return (tiles.full);
+  return (tiles.obst);
 }
 
 /*
@@ -51,23 +49,20 @@ char	bsq_map_tile_to_char(t_tile tile, t_tiles tiles)
  *
  * @param	map	the map to display
  */
-void	bsq_map_put(t_map map)
-{
-	char	c;
-	int		i;
-	int		j;
+void bsq_map_put(t_map map) {
+  char c;
+  int i;
+  int j;
 
-	i = 0;
-	while (i < map.coords.y)
-	{
-		j = 0;
-		while (j < map.coords.x)
-		{
-			c = bsq_map_tile_to_char(map.map[i][j], map.tiles);
-			ft_putchar(c);
-			j++;
-		}
-		ft_putstr("\n");
-		i++;
-	}
+  i = 0;
+  while (i < map.coords.y) {
+    j = 0;
+    while (j < map.coords.x) {
+      c = bsq_map_tile_to_char(map.map[i][j], map.tiles);
+      ft_putchar(c);
+      j++;
+    }
+    ft_putstr("\n");
+    i++;
+  }
 }

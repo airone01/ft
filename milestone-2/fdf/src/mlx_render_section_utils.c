@@ -21,22 +21,21 @@
  * @param data Pointer to connection data struct
  * @return bool Whether the connection should be drawn
  */
-bool	prepare_right_connection(t_render_context *rc, int x, int y,
-		t_connection_data *data)
-{
-	int	next_x;
+bool prepare_right_connection(t_render_context *rc, int x, int y,
+                              t_connection_data *data) {
+  int next_x;
 
-	next_x = x + rc->lod;
-	if (next_x >= rc->ctx->map.width)
-		return (false);
-	data->current = get_projected_point(x, y, rc->ctx);
-	data->down = get_projected_point(next_x, y, rc->ctx);
-	data->current_color = rc->ctx->map.matrix[y][x].color;
-	data->down_color = rc->ctx->map.matrix[y][next_x].color;
-	data->current_z = rc->ctx->map.matrix[y][x].elevation;
-	data->down_z = rc->ctx->map.matrix[y][next_x].elevation;
-	return (!is_line_outside_viewport(data->current, data->down,
-			rc->ctx->img.width, rc->ctx->img.height));
+  next_x = x + rc->lod;
+  if (next_x >= rc->ctx->map.width)
+    return (false);
+  data->current = get_projected_point(x, y, rc->ctx);
+  data->down = get_projected_point(next_x, y, rc->ctx);
+  data->current_color = rc->ctx->map.matrix[y][x].color;
+  data->down_color = rc->ctx->map.matrix[y][next_x].color;
+  data->current_z = rc->ctx->map.matrix[y][x].elevation;
+  data->down_z = rc->ctx->map.matrix[y][next_x].elevation;
+  return (!is_line_outside_viewport(data->current, data->down,
+                                    rc->ctx->img.width, rc->ctx->img.height));
 }
 
 /**
@@ -48,20 +47,19 @@ bool	prepare_right_connection(t_render_context *rc, int x, int y,
  * @param data Pointer to connection data struct
  * @return bool Whether the connection should be drawn
  */
-bool	prepare_down_connection(t_render_context *rc, int x, int y,
-		t_connection_data *data)
-{
-	int	next_y;
+bool prepare_down_connection(t_render_context *rc, int x, int y,
+                             t_connection_data *data) {
+  int next_y;
 
-	next_y = y + rc->lod;
-	if (next_y >= rc->ctx->map.height)
-		return (false);
-	data->current = get_projected_point(x, y, rc->ctx);
-	data->down = get_projected_point(x, next_y, rc->ctx);
-	data->current_color = rc->ctx->map.matrix[y][x].color;
-	data->down_color = rc->ctx->map.matrix[next_y][x].color;
-	data->current_z = rc->ctx->map.matrix[y][x].elevation;
-	data->down_z = rc->ctx->map.matrix[next_y][x].elevation;
-	return (!is_line_outside_viewport(data->current, data->down,
-			rc->ctx->img.width, rc->ctx->img.height));
+  next_y = y + rc->lod;
+  if (next_y >= rc->ctx->map.height)
+    return (false);
+  data->current = get_projected_point(x, y, rc->ctx);
+  data->down = get_projected_point(x, next_y, rc->ctx);
+  data->current_color = rc->ctx->map.matrix[y][x].color;
+  data->down_color = rc->ctx->map.matrix[next_y][x].color;
+  data->current_z = rc->ctx->map.matrix[y][x].elevation;
+  data->down_z = rc->ctx->map.matrix[next_y][x].elevation;
+  return (!is_line_outside_viewport(data->current, data->down,
+                                    rc->ctx->img.width, rc->ctx->img.height));
 }

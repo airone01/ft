@@ -12,7 +12,4 @@
 
 #include "../tests.h"
 
-int	test_null(void)
-{
-	return (!(ft_strlen(NULL) == 0));
-}
+int test_null(void) { return (!(ft_strlen(NULL) == 0)); }

@@ -17,26 +17,24 @@
  * - pointer to ints if everything worked
  * - NULL if malloc failed
  */
-int	*ft_range(int min, int max)
-{
-	int	*dest;
-	int	size;
-	int	i;
+int *ft_range(int min, int max) {
+  int *dest;
+  int size;
+  int i;
 
-	size = max - min;
-	if (min >= max)
-		return (0);
-	dest = malloc(sizeof(int) * size);
-	if (dest == 0)
-		return (0);
-	i = 0;
-	while (i < size)
-	{
-		dest[i] = min;
-		min++;
-		i++;
-	}
-	return (dest);
+  size = max - min;
+  if (min >= max)
+    return (0);
+  dest = malloc(sizeof(int) * size);
+  if (dest == 0)
+    return (0);
+  i = 0;
+  while (i < size) {
+    dest[i] = min;
+    min++;
+    i++;
+  }
+  return (dest);
 }
 
 // #include <stdio.h>

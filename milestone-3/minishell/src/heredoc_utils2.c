@@ -19,17 +19,16 @@
  * This function prints a formatted warning message to stderr when
  * the user terminates a heredoc with Ctrl+D instead of typing the delimiter.
  */
-static void	display_heredoc_eof_warning(void)
-{
-	char	*warning_part1;
-	char	*warning_part2;
-	char	*warning_part3;
+static void display_heredoc_eof_warning(void) {
+  char *warning_part1;
+  char *warning_part2;
+  char *warning_part3;
 
-	warning_part1 = (char *)"minishell: warning: heredoc: ";
-	warning_part2 = (char *)"here-document delimited by end-of-file ";
-	warning_part3 = (char *)"(`eof')\n";
-	ft_printf_fd(STDERR_FILENO, YELLOW "%s%s%s" RESET, warning_part1,
-		warning_part2, warning_part3);
+  warning_part1 = (char *)"minishell: warning: heredoc: ";
+  warning_part2 = (char *)"here-document delimited by end-of-file ";
+  warning_part3 = (char *)"(`eof')\n";
+  ft_printf_fd(STDERR_FILENO, YELLOW "%s%s%s" RESET, warning_part1,
+               warning_part2, warning_part3);
 }
 
 /**
@@ -44,33 +43,28 @@ static void	display_heredoc_eof_warning(void)
  * @return 1 if delimiter matched or EOF encountered, 0 if normal line, -1 on
  * error
  */
-int	read_heredoc_line(char *delimiter, char **line)
-{
-	int	delimiter_len;
+int read_heredoc_line(char *delimiter, char **line) {
+  int delimiter_len;
 
-	if (g_signal_status == 130)
-		return (-1);
-	delimiter_len = (int)ft_strlen(delimiter);
-	rl_catch_signals = 0;
-	rl_catch_sigwinch = 0;
-	*line = readline("> ");
-	if (!(*line) || g_signal_status == 130)
-	{
-		if (*line && g_signal_status == 130)
-		{
-			free(*line);
-			*line = NULL;
-		}
-		else if (!(*line))
-			return (display_heredoc_eof_warning(), 1);
-		return (-1);
-	}
-	if (ft_strncmp(*line, delimiter, (unsigned long)delimiter_len + 1) == 0)
-	{
-		free(*line);
-		return (1);
-	}
-	return (0);
+  if (g_signal_status == 130)
+    return (-1);
+  delimiter_len = (int)ft_strlen(delimiter);
+  rl_catch_signals = 0;
+  rl_catch_sigwinch = 0;
+  *line = readline("> ");
+  if (!(*line) || g_signal_status == 130) {
+    if (*line && g_signal_status == 130) {
+      free(*line);
+      *line = NULL;
+    } else if (!(*line))
+      return (display_heredoc_eof_warning(), 1);
+    return (-1);
+  }
+  if (ft_strncmp(*line, delimiter, (unsigned long)delimiter_len + 1) == 0) {
+    free(*line);
+    return (1);
+  }
+  return (0);
 }
 
 /**
@@ -81,14 +75,12 @@ int	read_heredoc_line(char *delimiter, char **line)
  * @param pipe_fds Array to store pipe file descriptors
  * @return 0 on success, -1 on error
  */
-int	setup_heredoc_pipes(int pipe_fds[2])
-{
-	if (pipe(pipe_fds) == -1)
-	{
-		perror("minishell: pipe setup failed");
-		return (-1);
-	}
-	return (0);
+int setup_heredoc_pipes(int pipe_fds[2]) {
+  if (pipe(pipe_fds) == -1) {
+    perror("minishell: pipe setup failed");
+    return (-1);
+  }
+  return (0);
 }
 
 /**
@@ -100,29 +92,24 @@ int	setup_heredoc_pipes(int pipe_fds[2])
  * @param ctx Shell context
  * @return Read end of pipe on success, -1 on error
  */
-int	wait_heredoc_child(int pipe_fds[2], t_ctx *ctx)
-{
-	int	status;
-	int	exit_code;
-	int	read_fd;
+int wait_heredoc_child(int pipe_fds[2], t_ctx *ctx) {
+  int status;
+  int exit_code;
+  int read_fd;
 
-	read_fd = pipe_fds[0];
-	waitpid(-1, &status, 0);
-	if (WIFEXITED(status))
-	{
-		exit_code = WEXITSTATUS(status);
-		if (exit_code != 0)
-		{
-			close(read_fd);
-			ctx->exit_status = exit_code;
-			return (-1);
-		}
-	}
-	else if (WIFSIGNALED(status))
-	{
-		close(read_fd);
-		ctx->exit_status = 130;
-		return (-1);
-	}
-	return (read_fd);
+  read_fd = pipe_fds[0];
+  waitpid(-1, &status, 0);
+  if (WIFEXITED(status)) {
+    exit_code = WEXITSTATUS(status);
+    if (exit_code != 0) {
+      close(read_fd);
+      ctx->exit_status = exit_code;
+      return (-1);
+    }
+  } else if (WIFSIGNALED(status)) {
+    close(read_fd);
+    ctx->exit_status = 130;
+    return (-1);
+  }
+  return (read_fd);
 }

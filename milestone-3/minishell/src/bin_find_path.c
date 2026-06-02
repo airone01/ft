@@ -20,19 +20,18 @@
  * @param path Path to the file to check
  * @return true if file is executable, false otherwise
  */
-static bool	is_executable_file(const char *path)
-{
-	struct stat	path_stat;
+static bool is_executable_file(const char *path) {
+  struct stat path_stat;
 
-	if (access(path, F_OK) != 0)
-		return (false);
-	if (stat(path, &path_stat) != 0)
-		return (false);
-	if (S_ISDIR(path_stat.st_mode))
-		return (false);
-	if (access(path, X_OK) != 0)
-		return (false);
-	return (true);
+  if (access(path, F_OK) != 0)
+    return (false);
+  if (stat(path, &path_stat) != 0)
+    return (false);
+  if (S_ISDIR(path_stat.st_mode))
+    return (false);
+  if (access(path, X_OK) != 0)
+    return (false);
+  return (true);
 }
 
 /**
@@ -44,17 +43,16 @@ static bool	is_executable_file(const char *path)
  * @param bin Binary name
  * @return Newly allocated full path or NULL on allocation failure
  */
-static char	*join_path(const char *dir, char *bin)
-{
-	char	*tmp;
-	char	*full_path;
+static char *join_path(const char *dir, char *bin) {
+  char *tmp;
+  char *full_path;
 
-	tmp = ft_strjoin(dir, "/");
-	if (!tmp)
-		return (NULL);
-	full_path = ft_strjoin(tmp, bin);
-	free(tmp);
-	return (full_path);
+  tmp = ft_strjoin(dir, "/");
+  if (!tmp)
+    return (NULL);
+  full_path = ft_strjoin(tmp, bin);
+  free(tmp);
+  return (full_path);
 }
 
 /**
@@ -67,17 +65,16 @@ static char	*join_path(const char *dir, char *bin)
  * @param bin Binary name to look for
  * @return Full path if executable binary found, NULL otherwise
  */
-char	*bin_find_path(const char *dir, char *bin)
-{
-	char	*full_path;
+char *bin_find_path(const char *dir, char *bin) {
+  char *full_path;
 
-	if (!dir || !bin)
-		return (NULL);
-	full_path = join_path(dir, bin);
-	if (!full_path)
-		return (NULL);
-	if (is_executable_file(full_path))
-		return (full_path);
-	free(full_path);
-	return (NULL);
+  if (!dir || !bin)
+    return (NULL);
+  full_path = join_path(dir, bin);
+  if (!full_path)
+    return (NULL);
+  if (is_executable_file(full_path))
+    return (full_path);
+  free(full_path);
+  return (NULL);
 }

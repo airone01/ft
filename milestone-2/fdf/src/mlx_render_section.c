@@ -20,18 +20,17 @@
  * @param y Current y position
  * @param is_edge Whether the point is on the edge of a section
  */
-static void	draw_right_connection(t_render_context *rc, int x, int y,
-		bool is_edge)
-{
-	t_connection_data	data;
+static void draw_right_connection(t_render_context *rc, int x, int y,
+                                  bool is_edge) {
+  t_connection_data data;
 
-	(void)is_edge;
-	if (prepare_right_connection(rc, x, y, &data))
-	{
-		draw_line_img(rc->ctx, data.current, data.down,
-			color_get_line((t_color_get_line_params){rc->ctx, data.current_z,
-				data.down_z, data.current_color, data.down_color}));
-	}
+  (void)is_edge;
+  if (prepare_right_connection(rc, x, y, &data)) {
+    draw_line_img(rc->ctx, data.current, data.down,
+                  color_get_line((t_color_get_line_params){
+                      rc->ctx, data.current_z, data.down_z, data.current_color,
+                      data.down_color}));
+  }
 }
 
 /**
@@ -42,18 +41,17 @@ static void	draw_right_connection(t_render_context *rc, int x, int y,
  * @param y Current y position
  * @param is_edge Whether the point is on the edge of a section
  */
-static void	draw_down_connection(t_render_context *rc, int x, int y,
-		bool is_edge)
-{
-	t_connection_data	data;
+static void draw_down_connection(t_render_context *rc, int x, int y,
+                                 bool is_edge) {
+  t_connection_data data;
 
-	(void)is_edge;
-	if (prepare_down_connection(rc, x, y, &data))
-	{
-		draw_line_img(rc->ctx, data.current, data.down,
-			color_get_line((t_color_get_line_params){rc->ctx, data.current_z,
-				data.down_z, data.current_color, data.down_color}));
-	}
+  (void)is_edge;
+  if (prepare_down_connection(rc, x, y, &data)) {
+    draw_line_img(rc->ctx, data.current, data.down,
+                  color_get_line((t_color_get_line_params){
+                      rc->ctx, data.current_z, data.down_z, data.current_color,
+                      data.down_color}));
+  }
 }
 
 /**
@@ -61,21 +59,19 @@ static void	draw_down_connection(t_render_context *rc, int x, int y,
  *
  * @param p Function parameters
  */
-static void	render_section_loop(t_render_section_params p)
-{
-	while (p.x <= p.section.end_x)
-	{
-		p.is_edge_x = (p.x == p.section.end_x);
-		if (!p.is_edge_x)
-			draw_right_connection(&p.rc, p.x, p.y, p.is_edge_x);
-		else if (p.x + p.rc.lod < p.ctx->map.width)
-			draw_right_connection(&p.rc, p.x, p.y, p.is_edge_x);
-		if (!p.is_edge_y)
-			draw_down_connection(&p.rc, p.x, p.y, p.is_edge_y);
-		else if (p.y + p.rc.lod < p.ctx->map.height)
-			draw_down_connection(&p.rc, p.x, p.y, p.is_edge_y);
-		p.x += p.rc.lod;
-	}
+static void render_section_loop(t_render_section_params p) {
+  while (p.x <= p.section.end_x) {
+    p.is_edge_x = (p.x == p.section.end_x);
+    if (!p.is_edge_x)
+      draw_right_connection(&p.rc, p.x, p.y, p.is_edge_x);
+    else if (p.x + p.rc.lod < p.ctx->map.width)
+      draw_right_connection(&p.rc, p.x, p.y, p.is_edge_x);
+    if (!p.is_edge_y)
+      draw_down_connection(&p.rc, p.x, p.y, p.is_edge_y);
+    else if (p.y + p.rc.lod < p.ctx->map.height)
+      draw_down_connection(&p.rc, p.x, p.y, p.is_edge_y);
+    p.x += p.rc.lod;
+  }
 }
 
 /**
@@ -84,26 +80,24 @@ static void	render_section_loop(t_render_section_params p)
  * @param ctx Context
  * @param section The section to render
  */
-void	render_section(t_ctx *ctx, t_section section)
-{
-	t_render_context	rc;
-	int					x;
-	int					y;
-	bool				is_edge_x;
-	bool				is_edge_y;
+void render_section(t_ctx *ctx, t_section section) {
+  t_render_context rc;
+  int x;
+  int y;
+  bool is_edge_x;
+  bool is_edge_y;
 
-	rc.ctx = ctx;
-	rc.section = section;
-	rc.lod = ctx->lod_level;
-	y = section.start_y;
-	is_edge_x = false;
-	is_edge_y = false;
-	while (y <= section.end_y)
-	{
-		is_edge_y = (y == section.end_y);
-		x = section.start_x;
-		render_section_loop((t_render_section_params){rc, section, is_edge_x,
-			is_edge_y, ctx, x, y});
-		y += rc.lod;
-	}
+  rc.ctx = ctx;
+  rc.section = section;
+  rc.lod = ctx->lod_level;
+  y = section.start_y;
+  is_edge_x = false;
+  is_edge_y = false;
+  while (y <= section.end_y) {
+    is_edge_y = (y == section.end_y);
+    x = section.start_x;
+    render_section_loop((t_render_section_params){rc, section, is_edge_x,
+                                                  is_edge_y, ctx, x, y});
+    y += rc.lod;
+  }
 }

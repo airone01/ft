@@ -16,9 +16,8 @@
 #include "pproc.h"
 #include "sprite_bonus.h"
 
-void	handle_main_bonus_features(t_data *data)
-{
-	mouse_init(data->win_width, data->win_height);
-	init_sprite_system(data);
-	init_door_system(data);
+void handle_main_bonus_features(t_data *data) {
+  mouse_init(data->win_width, data->win_height);
+  init_sprite_system(data);
+  init_door_system(data);
 }

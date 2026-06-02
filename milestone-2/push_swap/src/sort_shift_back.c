@@ -20,27 +20,21 @@
  * @param   len     Length of stack
  * @param   stack   Stack
  */
-void	stack_shift(t_stack **stack)
-{
-	ssize_t	low_pos;
-	ssize_t	len;
+void stack_shift(t_stack **stack) {
+  ssize_t low_pos;
+  ssize_t len;
 
-	len = (ssize_t)stack_size(*stack);
-	low_pos = stack_lowest_pos(stack);
-	if (low_pos > len / 2)
-	{
-		while (low_pos < len)
-		{
-			rra(stack, 1);
-			low_pos++;
-		}
-	}
-	else
-	{
-		while (low_pos > 0)
-		{
-			ra(stack, 1);
-			low_pos--;
-		}
-	}
+  len = (ssize_t)stack_size(*stack);
+  low_pos = stack_lowest_pos(stack);
+  if (low_pos > len / 2) {
+    while (low_pos < len) {
+      rra(stack, 1);
+      low_pos++;
+    }
+  } else {
+    while (low_pos > 0) {
+      ra(stack, 1);
+      low_pos--;
+    }
+  }
 }

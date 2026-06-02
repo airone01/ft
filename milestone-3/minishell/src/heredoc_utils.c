@@ -19,12 +19,11 @@
  * @param start Start index of substring to replace
  * @return Newly allocated prefix string or NULL on error
  */
-static char	*create_prefix(char *str, int start)
-{
-	char	*prefix;
+static char *create_prefix(char *str, int start) {
+  char *prefix;
 
-	prefix = ft_substr(str, 0, (unsigned long)start);
-	return (prefix);
+  prefix = ft_substr(str, 0, (unsigned long)start);
+  return (prefix);
 }
 
 /**
@@ -34,12 +33,11 @@ static char	*create_prefix(char *str, int start)
  * @param end End index of substring to replace
  * @return Newly allocated suffix string or NULL on error
  */
-static char	*create_suffix(char *str, int end)
-{
-	char	*suffix;
+static char *create_suffix(char *str, int end) {
+  char *suffix;
 
-	suffix = ft_strdup(str + end);
-	return (suffix);
+  suffix = ft_strdup(str + end);
+  return (suffix);
 }
 
 /**
@@ -49,13 +47,12 @@ static char	*create_suffix(char *str, int end)
  * @param replacement Replacement string
  * @return Newly allocated joined string or NULL on error
  */
-static char	*join_prefix_replacement(char *prefix, char *replacement)
-{
-	char	*result;
+static char *join_prefix_replacement(char *prefix, char *replacement) {
+  char *result;
 
-	result = ft_strjoin(prefix, replacement);
-	free(prefix);
-	return (result);
+  result = ft_strjoin(prefix, replacement);
+  free(prefix);
+  return (result);
 }
 
 /**
@@ -66,15 +63,14 @@ static char	*join_prefix_replacement(char *prefix, char *replacement)
  * @param original Original string to free
  * @return Newly allocated complete string or NULL on error
  */
-static char	*join_with_suffix(char *temp1, char *suffix, char *original)
-{
-	char	*result;
+static char *join_with_suffix(char *temp1, char *suffix, char *original) {
+  char *result;
 
-	result = ft_strjoin(temp1, suffix);
-	free(temp1);
-	free(suffix);
-	free(original);
-	return (result);
+  result = ft_strjoin(temp1, suffix);
+  free(temp1);
+  free(suffix);
+  free(original);
+  return (result);
 }
 
 /**
@@ -86,26 +82,23 @@ static char	*join_with_suffix(char *temp1, char *suffix, char *original)
  * @param replacement Replacement string
  * @return Newly allocated string with replacement
  */
-char	*replace_substring(char *str, int start, int end, char *replacement)
-{
-	char	*prefix;
-	char	*suffix;
-	char	*temp1;
+char *replace_substring(char *str, int start, int end, char *replacement) {
+  char *prefix;
+  char *suffix;
+  char *temp1;
 
-	prefix = create_prefix(str, start);
-	if (!prefix)
-		return (NULL);
-	suffix = create_suffix(str, end);
-	if (!suffix)
-	{
-		free(prefix);
-		return (NULL);
-	}
-	temp1 = join_prefix_replacement(prefix, replacement);
-	if (!temp1)
-	{
-		free(suffix);
-		return (NULL);
-	}
-	return (join_with_suffix(temp1, suffix, str));
+  prefix = create_prefix(str, start);
+  if (!prefix)
+    return (NULL);
+  suffix = create_suffix(str, end);
+  if (!suffix) {
+    free(prefix);
+    return (NULL);
+  }
+  temp1 = join_prefix_replacement(prefix, replacement);
+  if (!temp1) {
+    free(suffix);
+    return (NULL);
+  }
+  return (join_with_suffix(temp1, suffix, str));
 }

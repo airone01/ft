@@ -11,16 +11,15 @@
 /* ************************************************************************** */
 
 #ifndef TEXTURE_H
-# define TEXTURE_H
+#define TEXTURE_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*******************************************************************************
  *                             Function Prototypes                             *
  ******************************************************************************/
 
-bool		check_text_duplicate(t_data *data, const char *cardinal,
-				char *exist);
+bool check_text_duplicate(t_data *data, const char *cardinal, char *exist);
 
 /**
  * @brief Get RGB color from image data at a specific screen position
@@ -30,7 +29,7 @@ bool		check_text_duplicate(t_data *data, const char *cardinal,
  * @param y Y screen coordinate
  * @return t_color Pixel color
  */
-t_color		get_pixel_color(t_texture *texture, int x, int y);
+t_color get_pixel_color(t_texture *texture, int x, int y);
 
 /**
  * @brief Determine which texture to use based on wall orientation
@@ -40,7 +39,7 @@ t_color		get_pixel_color(t_texture *texture, int x, int y);
  * @param ray Pointer to ray
  * @return t_texture* Pointer to a newly initialized texture object
  */
-t_texture	*get_wall_texture(t_data *data, t_textures *textures, t_ray *ray);
+t_texture *get_wall_texture(t_data *data, t_textures *textures, t_ray *ray);
 
 /**
  * @brief Load textures needed for cub3d from XPM texture files paths
@@ -54,7 +53,7 @@ t_texture	*get_wall_texture(t_data *data, t_textures *textures, t_ray *ray);
  *       clockwise hortizontal angle), meaing N, E, S, W.
  * @see https://en.wikipedia.org/wiki/Cardinal_direction
  */
-bool		load_textures(t_textures *textures, void *mlx_ptr, char *paths[4]);
+bool load_textures(t_textures *textures, void *mlx_ptr, char *paths[4]);
 
 /**
  * @brief Loads bonus textures only
@@ -63,10 +62,10 @@ bool		load_textures(t_textures *textures, void *mlx_ptr, char *paths[4]);
  * @param door_path Door path
  * @returns bool Whether it failed or not
  */
-bool		load_bonus_textures(t_data *data, char *door_path);
+bool load_bonus_textures(t_data *data, char *door_path);
 
-bool		parse_texture_no_so(t_data *data, char *path, const char *cardinal);
-bool		parse_texture_we_ea(t_data *data, char *path, const char *cardinal);
+bool parse_texture_no_so(t_data *data, char *path, const char *cardinal);
+bool parse_texture_we_ea(t_data *data, char *path, const char *cardinal);
 
 /**
  * @brief Resolves paths of textures
@@ -74,6 +73,6 @@ bool		parse_texture_we_ea(t_data *data, char *path, const char *cardinal);
  * @param data App data
  * @param map_path Map path
  */
-char		**resolve_texture_paths(t_data *data, const char *map_path);
+char **resolve_texture_paths(t_data *data, const char *map_path);
 
 #endif // !TEXTURE_H

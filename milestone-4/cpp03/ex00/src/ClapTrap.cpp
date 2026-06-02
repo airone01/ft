@@ -16,8 +16,7 @@
 
 // Default contructor
 ClapTrap::ClapTrap()
-    : _name("CL4P-TP"), _hitPoints(10), _energyPoints(10),
-      _attackDamage(0) {
+    : _name("CL4P-TP"), _hitPoints(10), _energyPoints(10), _attackDamage(0) {
   std::cout << "ClapTrap " << _name << " was created! (default constructor)"
             << std::endl;
 }

@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef PARSING_H
-# define PARSING_H
+#define PARSING_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*******************************************************************************
  *                             Function Prototypes                             *
@@ -30,7 +30,7 @@
  * @param id Color identifier ("F " for floor, "C " for ceiling)
  * @return true on parsing error, false on success
  */
-bool	parse_color_line(t_data *data, char *line, const char *id);
+bool parse_color_line(t_data *data, char *line, const char *id);
 
 /**
  * @brief Validates that color string contains only valid RGB digits
@@ -38,7 +38,7 @@ bool	parse_color_line(t_data *data, char *line, const char *id);
  * @param color The color string to validate
  * @return true if invalid characters found, false if valid
  */
-bool	check_color_line(t_data *data, char *color);
+bool check_color_line(t_data *data, char *color);
 
 /*
 ** p_file.c
@@ -50,7 +50,7 @@ bool	check_color_line(t_data *data, char *color);
  * @param line The configuration line to process
  * @return true on parsing error, false on success
  */
-bool	process_config_line(t_data *data, char *line);
+bool process_config_line(t_data *data, char *line);
 
 /**
  * @brief Open and parses a file
@@ -59,7 +59,7 @@ bool	process_config_line(t_data *data, char *line);
  * @param file File to open
  * @return int 1 on failure, 0 otherwise
  */
-int		read_file(t_data *data, const char *file);
+int read_file(t_data *data, const char *file);
 
 /*
 ** p_flood_fill.c
@@ -71,7 +71,7 @@ int		read_file(t_data *data, const char *file);
  * @param data App data containing the map to copy
  * @return true if creating map failed, false if map is created
  */
-char	**create_map_copy(t_data *data);
+char **create_map_copy(t_data *data);
 
 /*
 ** p_map.c
@@ -82,7 +82,7 @@ char	**create_map_copy(t_data *data);
  * @param line The line to analyze
  * @return true if line contains map characters (0,1,N,S,E,W), false otherwise
  */
-bool	looks_like_map_line(char *line);
+bool looks_like_map_line(char *line);
 
 /**
  * @brief Processes a single line from the file (config or map data)
@@ -92,8 +92,8 @@ bool	looks_like_map_line(char *line);
  * @param buffer Map buffer to store map lines
  * @return true on error, false on success
  */
-bool	process_single_line(t_data *data, char *line, bool *map_section_started,
-			t_map_buffer *buffer);
+bool process_single_line(t_data *data, char *line, bool *map_section_started,
+                         t_map_buffer *buffer);
 
 /**
  * @brief Comprehensive map validation using flood fill algorithm
@@ -101,7 +101,7 @@ bool	process_single_line(t_data *data, char *line, bool *map_section_started,
  * @param data App data containing the map to validate
  * @return true if map validation fails, false if map is valid
  */
-bool	fill_map(t_data *data, int fd);
+bool fill_map(t_data *data, int fd);
 
 /*
 ** p_map_{m,b}.c
@@ -113,7 +113,7 @@ bool	fill_map(t_data *data, int fd);
  * @param trimmed String to check
  * @returns bool Whether it's a config line or not
  */
-bool	config_line_condition(char *trimmed);
+bool config_line_condition(char *trimmed);
 
 /*
 ** p_map_check.c
@@ -125,7 +125,7 @@ bool	config_line_condition(char *trimmed);
  * @param data App data containing the map to validate
  * @return true if map validation fails, false if map is valid
  */
-bool	check_map_validity(t_data *data);
+bool check_map_validity(t_data *data);
 
 /**
  * @brief Recursively performs flood fill algorithm on a 2D character map.
@@ -136,7 +136,7 @@ bool	check_map_validity(t_data *data);
  * @param data Additional data structure for flood fill parameters
  * @return true if successful, false on error or invalid coordinates
  */
-bool	flood_fill_recursive(char **map_copy, int x, int y, t_data *data);
+bool flood_fill_recursive(char **map_copy, int x, int y, t_data *data);
 
 /*
 ** p_map_utils.c
@@ -147,7 +147,7 @@ bool	flood_fill_recursive(char **map_copy, int x, int y, t_data *data);
  * @param buffer The map buffer to expand
  * @return true on memory allocation failure, false on success
  */
-bool	expand_buffer(t_map_buffer *buffer);
+bool expand_buffer(t_map_buffer *buffer);
 
 /**
  * @brief Adds a line to the buffer and updates max width tracking
@@ -155,13 +155,13 @@ bool	expand_buffer(t_map_buffer *buffer);
  * @param line The line to add (will be duplicated)
  * @return true on error, false on success
  */
-bool	add_line_to_buffer(t_map_buffer *buffer, char *line);
+bool add_line_to_buffer(t_map_buffer *buffer, char *line);
 
 /**
  * @brief Frees all allocated memory in the map buffer
  * @param buffer The map buffer to free
  */
-void	free_map_buffer(t_map_buffer *buffer);
+void free_map_buffer(t_map_buffer *buffer);
 
 /**
  * @brief Transfers buffer contents to main data structure
@@ -170,7 +170,7 @@ void	free_map_buffer(t_map_buffer *buffer);
  * @param buffer Source buffer containing map lines
  * @return true on memory allocation failure, false on success
  */
-bool	buffer_to_data(t_data *data, t_map_buffer *buffer);
+bool buffer_to_data(t_data *data, t_map_buffer *buffer);
 
 /*
 ** p_texture.c
@@ -185,7 +185,7 @@ bool	buffer_to_data(t_data *data, t_map_buffer *buffer);
  * @return true On error
  * @return false On success
  */
-bool	parse_texture_path(t_data *data, char *line, const char *cardinal);
+bool parse_texture_path(t_data *data, char *line, const char *cardinal);
 
 /*
 ** p_validation.c
@@ -197,7 +197,7 @@ bool	parse_texture_path(t_data *data, char *line, const char *cardinal);
  * @param data App data structure to validate
  * @return true if configuration is incomplete, false if complete
  */
-bool	validate_config_completeness(t_data *data);
+bool validate_config_completeness(t_data *data);
 
 /**
  * @brief Check if all texture paths are properly set
@@ -205,7 +205,7 @@ bool	validate_config_completeness(t_data *data);
  * @param data App data structure
  * @return true if textures missing, false if all present
  */
-bool	check_texture_completeness(t_data *data);
+bool check_texture_completeness(t_data *data);
 
 /**
  * @brief Check if colors are properly configured
@@ -213,6 +213,6 @@ bool	check_texture_completeness(t_data *data);
  * @param data App data structure
  * @return true if colors missing, false if properly set
  */
-bool	check_color_completeness(t_data *data);
+bool check_color_completeness(t_data *data);
 
 #endif // !PARSING_H

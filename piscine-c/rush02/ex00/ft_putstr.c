@@ -15,7 +15,4 @@
 /*
  * Puts a string to stdout.
  */
-void	ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
-}
+void ft_putstr(char *str) { write(1, str, ft_strlen(str)); }

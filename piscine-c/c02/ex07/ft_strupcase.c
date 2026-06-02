@@ -12,21 +12,18 @@
 
 // #include <stdio.h>
 
-char	*ft_strupcase(char *str)
-{
-	int			i;
-	const char	offset = 'a' - 'A';
+char *ft_strupcase(char *str) {
+  int i;
+  const char offset = 'a' - 'A';
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-		{
-			str[i] -= offset;
-		}
-		i++;
-	}
-	return (str);
+  i = 0;
+  while (str[i] != '\0') {
+    if (str[i] >= 'a' && str[i] <= 'z') {
+      str[i] -= offset;
+    }
+    i++;
+  }
+  return (str);
 }
 
 // int	main(void)

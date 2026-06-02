@@ -20,21 +20,20 @@
  *
  * @returns	unsigned int	Color value
  */
-unsigned int	color_get(int z, int min_z, int max_z)
-{
-	double	ratio;
-	double	hue;
+unsigned int color_get(int z, int min_z, int max_z) {
+  double ratio;
+  double hue;
 
-	if (min_z == max_z)
-		return (0x0000FFFF);
-	ratio = (double)(z - min_z) / (max_z - min_z);
-	if (ratio < 0.25)
-		hue = 240 - (ratio * 4 * 60);
-	else if (ratio < 0.5)
-		hue = 180 - ((ratio - 0.25) * 4 * 60);
-	else if (ratio < 0.75)
-		hue = 120 - ((ratio - 0.5) * 4 * 60);
-	else
-		hue = 60 - ((ratio - 0.75) * 4 * 60);
-	return (hsv_to_rgb(hue, 0.8, 1.0));
+  if (min_z == max_z)
+    return (0x0000FFFF);
+  ratio = (double)(z - min_z) / (max_z - min_z);
+  if (ratio < 0.25)
+    hue = 240 - (ratio * 4 * 60);
+  else if (ratio < 0.5)
+    hue = 180 - ((ratio - 0.25) * 4 * 60);
+  else if (ratio < 0.75)
+    hue = 120 - ((ratio - 0.5) * 4 * 60);
+  else
+    hue = 60 - ((ratio - 0.75) * 4 * 60);
+  return (hsv_to_rgb(hue, 0.8, 1.0));
 }

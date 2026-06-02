@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef RAYCASTING_H
-# define RAYCASTING_H
+#define RAYCASTING_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*******************************************************************************
  *                             Function Prototypes                             *
@@ -29,7 +29,7 @@
  * @param data App data
  * @param ray Ray
  */
-void	find_horizontal_intersection(t_data *data, t_ray *ray);
+void find_horizontal_intersection(t_data *data, t_ray *ray);
 
 /*
 ** r_raycasting.c
@@ -43,7 +43,7 @@ void	find_horizontal_intersection(t_data *data, t_ray *ray);
  *
  * @note Distance will be set in data->perp_wall_dist
  */
-void	calculate_final_distance(t_data *data, t_ray *ray);
+void calculate_final_distance(t_data *data, t_ray *ray);
 
 /**
  * @brief All of the raycasting process
@@ -51,7 +51,7 @@ void	calculate_final_distance(t_data *data, t_ray *ray);
  * @param data App data
  * @param ray Ray
  */
-void	grid_raycasting(t_data *data);
+void grid_raycasting(t_data *data);
 
 /*
 ** r_utils.c
@@ -60,7 +60,7 @@ void	grid_raycasting(t_data *data);
 /*
 ** Inits a ray with simple math.
 */
-void	init_ray(t_ray *ray, t_player *player, double camera_x);
+void init_ray(t_ray *ray, t_player *player, double camera_x);
 
 /**
  * @brief Heavy work of the raycasting process.
@@ -69,7 +69,7 @@ void	init_ray(t_ray *ray, t_player *player, double camera_x);
  * @param ray Ray
  * @param x X coordinate
  */
-void	cast_grid_ray(t_data *data, t_ray *ray, int x);
+void cast_grid_ray(t_data *data, t_ray *ray, int x);
 
 /**
  * @brief Figures out a line height from the screen size
@@ -77,7 +77,7 @@ void	cast_grid_ray(t_data *data, t_ray *ray, int x);
  * @param ray Ray
  * @param screen_height Screen height
  */
-void	calculate_line_height(t_ray *ray, int screen_height);
+void calculate_line_height(t_ray *ray, int screen_height);
 
 /**
  * @brief Checks if the cell should be considered a "blank space" (floor), or
@@ -88,7 +88,7 @@ void	calculate_line_height(t_ray *ray, int screen_height);
  * @param y Y codinate
  * @returns bool Whether the cell is "walkable"
  */
-bool	is_valid_and_walkable(t_data *data, int x, int y);
+bool is_valid_and_walkable(t_data *data, int x, int y);
 
 /*
 ** r_vertical.c
@@ -100,6 +100,6 @@ bool	is_valid_and_walkable(t_data *data, int x, int y);
  * @param data App data
  * @param ray Ray
  */
-void	find_vertical_intersection(t_data *data, t_ray *ray);
+void find_vertical_intersection(t_data *data, t_ray *ray);
 
 #endif // !RAYCASTING_H

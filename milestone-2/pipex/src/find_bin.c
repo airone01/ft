@@ -22,17 +22,16 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-char	*find_bin(t_ctx *app, char *bin)
-{
-	char	*result;
+char *find_bin(t_ctx *app, char *bin) {
+  char *result;
 
-	if (!bin)
-		return (NULL);
-	result = path_find_bin(app, (char *)"./", bin);
-	if (result)
-		return (result);
-	result = env_find_bin(app, bin);
-	if (result)
-		return (result);
-	return (NULL);
+  if (!bin)
+    return (NULL);
+  result = path_find_bin(app, (char *)"./", bin);
+  if (result)
+    return (result);
+  result = env_find_bin(app, bin);
+  if (result)
+    return (result);
+  return (NULL);
 }

@@ -18,14 +18,13 @@
  * @param line Line to expand variables in
  * @return Newly allocated copy of line or NULL on error
  */
-char	*init_expansion(char *line)
-{
-	char	*result;
+char *init_expansion(char *line) {
+  char *result;
 
-	if (!line)
-		return (NULL);
-	result = ft_strdup(line);
-	return (result);
+  if (!line)
+    return (NULL);
+  result = ft_strdup(line);
+  return (result);
 }
 
 /**
@@ -36,11 +35,10 @@ char	*init_expansion(char *line)
  * @param end Position to stop extraction
  * @return Newly allocated variable name with = appended or NULL on error
  */
-char	*extract_var_name(char *str, int start, int end)
-{
-	char	*var_name;
+char *extract_var_name(char *str, int start, int end) {
+  char *var_name;
 
-	var_name = ft_substr(str, (unsigned int)(start + 1), (unsigned long)(end
-				- start - 1));
-	return (var_name);
+  var_name = ft_substr(str, (unsigned int)(start + 1),
+                       (unsigned long)(end - start - 1));
+  return (var_name);
 }

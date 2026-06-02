@@ -20,7 +20,4 @@
  *
  * @return	double	The dot product of the two points
  */
-double	point_dot(t_point a, t_point b)
-{
-	return (a.x * b.x + a.y * b.y);
-}
+double point_dot(t_point a, t_point b) { return (a.x * b.x + a.y * b.y); }

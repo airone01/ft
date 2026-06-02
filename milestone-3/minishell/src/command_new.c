@@ -17,17 +17,16 @@
  *
  * @return t_command* New initialized command or NULL if allocation fails
  */
-t_command	*command_new(void)
-{
-	t_command	*cmd;
+t_command *command_new(void) {
+  t_command *cmd;
 
-	cmd = (t_command *)malloc(sizeof(t_command));
-	if (!cmd)
-		return (NULL);
-	cmd->args = NULL;
-	cmd->arg_count = 0;
-	cmd->redirection = NULL;
-	cmd->operator = TOK_NONE;
-	cmd->next = NULL;
-	return (cmd);
+  cmd = (t_command *)malloc(sizeof(t_command));
+  if (!cmd)
+    return (NULL);
+  cmd->args = NULL;
+  cmd->arg_count = 0;
+  cmd->redirection = NULL;
+  cmd->operator = TOK_NONE;
+  cmd->next = NULL;
+  return (cmd);
 }

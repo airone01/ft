@@ -14,31 +14,28 @@
 // #include <string.h>
 // #include <bsd/string.h>
 
-unsigned int	ft_strlen(char *str)
-{
-	if (*str == '\0')
-		return (0);
-	return (ft_strlen (str + sizeof(char)) + 1);
+unsigned int ft_strlen(char *str) {
+  if (*str == '\0')
+    return (0);
+  return (ft_strlen(str + sizeof(char)) + 1);
 }
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
-{
-	unsigned int	dest_len;
-	unsigned int	src_len;
-	unsigned int	i;
+unsigned int ft_strlcat(char *dest, char *src, unsigned int size) {
+  unsigned int dest_len;
+  unsigned int src_len;
+  unsigned int i;
 
-	dest_len = ft_strlen(dest);
-	src_len = ft_strlen(src);
-	i = 0;
-	if (size <= dest_len)
-		return (src_len + size);
-	while (i < (size - dest_len - 1) && src[i] != '\0')
-	{
-		dest[i + dest_len] = src[i];
-		i++;
-	}
-	dest[i + dest_len] = '\0';
-	return (ft_strlen(dest) - 1);
+  dest_len = ft_strlen(dest);
+  src_len = ft_strlen(src);
+  i = 0;
+  if (size <= dest_len)
+    return (src_len + size);
+  while (i < (size - dest_len - 1) && src[i] != '\0') {
+    dest[i + dest_len] = src[i];
+    i++;
+  }
+  dest[i + dest_len] = '\0';
+  return (ft_strlen(dest) - 1);
 }
 
 // int	main(void)

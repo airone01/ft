@@ -17,24 +17,21 @@
  * @param	s1	Stack
  * @return		Truthy if yes, otherwise falsy
  */
-ssize_t	stack_dupes(t_stack *s1)
-{
-	t_stack	*start;
-	t_stack	*s2;
+ssize_t stack_dupes(t_stack *s1) {
+  t_stack *start;
+  t_stack *s2;
 
-	if (!s1)
-		return (0);
-	start = s1;
-	while (s1)
-	{
-		s2 = start;
-		while (s2)
-		{
-			if ((s1->pos != s2->pos) && (s1->val == s2->val))
-				return (1);
-			s2 = s2->next;
-		}
-		s1 = s1->next;
-	}
-	return (0);
+  if (!s1)
+    return (0);
+  start = s1;
+  while (s1) {
+    s2 = start;
+    while (s2) {
+      if ((s1->pos != s2->pos) && (s1->val == s2->val))
+        return (1);
+      s2 = s2->next;
+    }
+    s1 = s1->next;
+  }
+  return (0);
 }

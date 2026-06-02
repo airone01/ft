@@ -20,15 +20,14 @@
  * @param	argc	Number of arguments
  * @param	argv	Arguments
  */
-int	args_valid(t_ctx *app, int argc, char **argv)
-{
-	if (argc != 5)
-		app_exit_errno(*app, EINVAL);
-	app->fd_file_in = open(argv[1], O_RDONLY);
-	if (app->fd_file_in == -1)
-		app_exit(*app);
-	app->fd_file_out = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (app->fd_file_out == -1)
-		app_exit(*app);
-	return (0);
+int args_valid(t_ctx *app, int argc, char **argv) {
+  if (argc != 5)
+    app_exit_errno(*app, EINVAL);
+  app->fd_file_in = open(argv[1], O_RDONLY);
+  if (app->fd_file_in == -1)
+    app_exit(*app);
+  app->fd_file_out = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+  if (app->fd_file_out == -1)
+    app_exit(*app);
+  return (0);
 }

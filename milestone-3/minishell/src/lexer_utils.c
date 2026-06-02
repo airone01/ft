@@ -18,11 +18,10 @@
  * @param lexer Pointer to lexer structure
  * @return Current character or '\0' if at end of input
  */
-char	get_lexer(t_lexer *lexer)
-{
-	if (lexer->position >= lexer->length)
-		return ('\0');
-	return (lexer->input[lexer->position]);
+char get_lexer(t_lexer *lexer) {
+  if (lexer->position >= lexer->length)
+    return ('\0');
+  return (lexer->input[lexer->position]);
 }
 
 /**
@@ -30,10 +29,9 @@ char	get_lexer(t_lexer *lexer)
  *
  * @param lexer Pointer to lexer structure
  */
-void	advance_lexer(t_lexer *lexer)
-{
-	if (lexer->position < lexer->length)
-		lexer->position++;
+void advance_lexer(t_lexer *lexer) {
+  if (lexer->position < lexer->length)
+    lexer->position++;
 }
 
 /**
@@ -41,14 +39,12 @@ void	advance_lexer(t_lexer *lexer)
  *
  * @param lexer Pointer to lexer structure
  */
-void	skip_whitespace_lexer(t_lexer *lexer)
-{
-	while (get_lexer(lexer) == ' ' || get_lexer(lexer) == '\t')
-		advance_lexer(lexer);
+void skip_whitespace_lexer(t_lexer *lexer) {
+  while (get_lexer(lexer) == ' ' || get_lexer(lexer) == '\t')
+    advance_lexer(lexer);
 }
 
-void	sync_quote_state(t_ctx *ctx, t_lexer *lexer)
-{
-	ctx->quote.in_single_quote = lexer->quote.in_single_quote;
-	ctx->quote.in_double_quote = lexer->quote.in_double_quote;
+void sync_quote_state(t_ctx *ctx, t_lexer *lexer) {
+  ctx->quote.in_single_quote = lexer->quote.in_single_quote;
+  ctx->quote.in_double_quote = lexer->quote.in_double_quote;
 }

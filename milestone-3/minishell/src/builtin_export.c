@@ -20,22 +20,20 @@
  * @param key Key to validate
  * @return bool true if valid, false otherwise
  */
-bool	validate_env_key(char *key)
-{
-	int	i;
+bool validate_env_key(char *key) {
+  int i;
 
-	if (!key || !key[0])
-		return (false);
-	if (!ft_isalpha(key[0]) && key[0] != '_')
-		return (false);
-	i = 1;
-	while (key[i])
-	{
-		if (!is_valid_env_char(key[i]))
-			return (false);
-		i++;
-	}
-	return (true);
+  if (!key || !key[0])
+    return (false);
+  if (!ft_isalpha(key[0]) && key[0] != '_')
+    return (false);
+  i = 1;
+  while (key[i]) {
+    if (!is_valid_env_char(key[i]))
+      return (false);
+    i++;
+  }
+  return (true);
 }
 
 /**
@@ -44,14 +42,13 @@ bool	validate_env_key(char *key)
  * @param arg Export argument in form key=value
  * @return char* Value part (caller must free) or NULL if no value
  */
-char	*get_env_value_from_export(char *arg)
-{
-	char	*equals;
+char *get_env_value_from_export(char *arg) {
+  char *equals;
 
-	equals = ft_strchr(arg, '=');
-	if (!equals)
-		return (NULL);
-	return (ft_strdup(equals + 1));
+  equals = ft_strchr(arg, '=');
+  if (!equals)
+    return (NULL);
+  return (ft_strdup(equals + 1));
 }
 
 /**
@@ -61,24 +58,23 @@ char	*get_env_value_from_export(char *arg)
  * @param arg Argument to process
  * @return int 0 on success, 1 on error
  */
-static int	process_export_arg(t_ctx *ctx, char *arg)
-{
-	char	*key;
-	char	*value;
-	bool	has_equals;
-	int		result;
+static int process_export_arg(t_ctx *ctx, char *arg) {
+  char *key;
+  char *value;
+  bool has_equals;
+  int result;
 
-	key = NULL;
-	value = NULL;
-	if (extract_export_data(arg, &key, &value, &has_equals))
-		return (1);
-	result = update_or_add_env_var(ctx, key, value, has_equals);
-	free(key);
-	if (value)
-		free(value);
-	if (result)
-		return (0);
-	return (1);
+  key = NULL;
+  value = NULL;
+  if (extract_export_data(arg, &key, &value, &has_equals))
+    return (1);
+  result = update_or_add_env_var(ctx, key, value, has_equals);
+  free(key);
+  if (value)
+    free(value);
+  if (result)
+    return (0);
+  return (1);
 }
 
 /**
@@ -88,23 +84,20 @@ static int	process_export_arg(t_ctx *ctx, char *arg)
  * @param cmd Command containing arguments
  * @return int Exit status (0 for success, non-zero for error)
  */
-int	builtin_export(t_ctx *ctx, t_command *cmd)
-{
-	int	i;
-	int	status;
+int builtin_export(t_ctx *ctx, t_command *cmd) {
+  int i;
+  int status;
 
-	if (cmd->arg_count == 0)
-	{
-		print_export_env(ctx);
-		return (0);
-	}
-	status = 0;
-	i = 1;
-	while (i <= cmd->arg_count)
-	{
-		if (process_export_arg(ctx, cmd->args[i]) != 0)
-			status = 1;
-		i++;
-	}
-	return (status);
+  if (cmd->arg_count == 0) {
+    print_export_env(ctx);
+    return (0);
+  }
+  status = 0;
+  i = 1;
+  while (i <= cmd->arg_count) {
+    if (process_export_arg(ctx, cmd->args[i]) != 0)
+      status = 1;
+    i++;
+  }
+  return (status);
 }

@@ -19,10 +19,9 @@
  *
  * @returns	NULL
  */
-void	*free_and_null(void *ptr)
-{
-	free(ptr);
-	return (NULL);
+void *free_and_null(void *ptr) {
+  free(ptr);
+  return (NULL);
 }
 
 /*
@@ -33,11 +32,10 @@ void	*free_and_null(void *ptr)
  *
  * @returns	NULL
  */
-void	*free_and_null_map(void *ptr, t_tile **map, t_coords coords)
-{
-	free(ptr);
-	bsq_map_free(map, coords);
-	return (NULL);
+void *free_and_null_map(void *ptr, t_tile **map, t_coords coords) {
+  free(ptr);
+  bsq_map_free(map, coords);
+  return (NULL);
 }
 
 /*
@@ -45,11 +43,9 @@ void	*free_and_null_map(void *ptr, t_tile **map, t_coords coords)
  *
  * @param	strs	array of strings
  */
-void	free_strs(char **strs)
-{
-	while (*strs != NULL)
-	{
-		free(*strs);
-		strs++;
-	}
+void free_strs(char **strs) {
+  while (*strs != NULL) {
+    free(*strs);
+    strs++;
+  }
 }

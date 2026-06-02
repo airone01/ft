@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #ifndef STD_H
-# define STD_H
+#define STD_H
 
-# include <limits.h>  // max vals
-# include <stdbool.h> // bool
-# include <stddef.h>  // size_t, ssize_t
-# include <stdint.h>  // uint8_t
+#include <limits.h>  // max vals
+#include <stdbool.h> // bool
+#include <stddef.h>  // size_t, ssize_t
+#include <stdint.h>  // uint8_t
 
 /**
  * @brief Converts a string to an unsigned long integer.
@@ -34,7 +34,7 @@
  * @note No overflow checking is performed; if the represented value exceeds
  *       ULONG_MAX, the result is undefined.
  */
-unsigned long	ft_atoul(const char *str);
+unsigned long ft_atoul(const char *str);
 
 /**
  * @brief Allocates zero-initialized memory for an array.
@@ -47,7 +47,7 @@ unsigned long	ft_atoul(const char *str);
  * @return A pointer to the allocated zero-initialized memory, or NULL if the
  *         allocation fails or an overflow occurs.
  */
-void			*ft_calloc(size_t nmemb, size_t size);
+void *ft_calloc(size_t nmemb, size_t size);
 
 /**
  * @brief Checks if a character is a decimal digit (0–9).
@@ -55,7 +55,7 @@ void			*ft_calloc(size_t nmemb, size_t size);
  * @param c Character to check.
  * @return true if @p c is a decimal digit, false otherwise.
  */
-bool			ft_isdigit(char c);
+bool ft_isdigit(char c);
 
 /**
  * @brief Checks if a character is a space character.
@@ -65,7 +65,7 @@ bool			ft_isdigit(char c);
  * @param c Character to check.
  * @return true if @p c is a space character, false otherwise.
  */
-bool			ft_isspace(char c);
+bool ft_isspace(char c);
 
 /**
  * @brief Converts an integer to a string.
@@ -76,7 +76,7 @@ bool			ft_isspace(char c);
  *
  * @note Handles negative numbers. Caller must free the returned string.
  */
-char			*ft_itoa(int n);
+char *ft_itoa(int n);
 
 /**
  * @brief Fills a memory area with a constant byte.
@@ -86,7 +86,7 @@ char			*ft_itoa(int n);
  * @param n Number of bytes to fill.
  * @return void* Pointer to the memory area.
  */
-void			*ft_memset(void *s, uint8_t c, size_t n);
+void *ft_memset(void *s, uint8_t c, size_t n);
 
 /**
  * @brief Calculates the length of a null-terminated string.
@@ -97,7 +97,7 @@ void			*ft_memset(void *s, uint8_t c, size_t n);
  * @param str Pointer to the null-terminated string.
  * @return The number of characters in @p str, excluding the null terminator.
  */
-unsigned long	ft_strlen(const char *str);
+unsigned long ft_strlen(const char *str);
 
 /**
  * @brief Compares two strings lexicographically.
@@ -112,7 +112,7 @@ unsigned long	ft_strlen(const char *str);
  *         found, respectively, to be less than, to match, or be greater than
  *         @p s2.
  */
-int				ft_strcmp(const char *s1, const char *s2);
+int ft_strcmp(const char *s1, const char *s2);
 
 /**
  * @brief Compares up to n characters of two strings.
@@ -128,6 +128,6 @@ int				ft_strcmp(const char *s1, const char *s2);
  *         found, respectively, to be less than, to match, or be greater than
  *         @p s2.
  */
-int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

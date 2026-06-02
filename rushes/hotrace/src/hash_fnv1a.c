@@ -22,22 +22,20 @@
  *
  * @returns	Hashed data
  */
-uint32_t	fnv1a_hash(const void *data, size_t size)
-{
-	const unsigned char	*bytes;
-	uint32_t			hash;
-	size_t				i;
+uint32_t fnv1a_hash(const void *data, size_t size) {
+  const unsigned char *bytes;
+  uint32_t hash;
+  size_t i;
 
-	if (!data || size == 0)
-		return (0);
-	bytes = (const unsigned char *)data;
-	hash = 2166136261u;
-	i = 0;
-	while (i < size && bytes[i])
-	{
-		hash ^= bytes[i];
-		hash *= 16777619u;
-		i++;
-	}
-	return (hash);
+  if (!data || size == 0)
+    return (0);
+  bytes = (const unsigned char *)data;
+  hash = 2166136261u;
+  i = 0;
+  while (i < size && bytes[i]) {
+    hash ^= bytes[i];
+    hash *= 16777619u;
+    i++;
+  }
+  return (hash);
 }

@@ -24,22 +24,21 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-char	*path_find_bin(t_ctx *app, char *dir, char *bin)
-{
-	char	*tmp;
-	char	*full_path;
+char *path_find_bin(t_ctx *app, char *dir, char *bin) {
+  char *tmp;
+  char *full_path;
 
-	if (!dir || !bin)
-		return (NULL);
-	tmp = ft_strjoin(dir, "/");
-	if (!tmp)
-		app_exit_errno(*app, ENOMEM);
-	full_path = ft_strjoin(tmp, bin);
-	free(tmp);
-	if (!full_path)
-		app_exit_errno(*app, ENOMEM);
-	if (access(full_path, X_OK) == 0)
-		return (full_path);
-	free(full_path);
-	return (NULL);
+  if (!dir || !bin)
+    return (NULL);
+  tmp = ft_strjoin(dir, "/");
+  if (!tmp)
+    app_exit_errno(*app, ENOMEM);
+  full_path = ft_strjoin(tmp, bin);
+  free(tmp);
+  if (!full_path)
+    app_exit_errno(*app, ENOMEM);
+  if (access(full_path, X_OK) == 0)
+    return (full_path);
+  free(full_path);
+  return (NULL);
 }

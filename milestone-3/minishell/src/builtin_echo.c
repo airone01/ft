@@ -18,20 +18,18 @@
  * @param arg Argument to check
  * @return bool true if it's the -n option, false otherwise
  */
-static bool	is_n_option(char *arg)
-{
-	int	i;
+static bool is_n_option(char *arg) {
+  int i;
 
-	if (!arg || ft_strncmp(arg, "-n", 2) != 0)
-		return (false);
-	i = 2;
-	while (arg[i])
-	{
-		if (arg[i] != 'n')
-			return (false);
-		i++;
-	}
-	return (true);
+  if (!arg || ft_strncmp(arg, "-n", 2) != 0)
+    return (false);
+  i = 2;
+  while (arg[i]) {
+    if (arg[i] != 'n')
+      return (false);
+    i++;
+  }
+  return (true);
 }
 
 /**
@@ -41,27 +39,24 @@ static bool	is_n_option(char *arg)
  * @param cmd Command containing arguments
  * @return int Exit status (always 0 for echo)
  */
-int	builtin_echo(t_ctx *ctx, t_command *cmd)
-{
-	int		i;
-	bool	new_line;
+int builtin_echo(t_ctx *ctx, t_command *cmd) {
+  int i;
+  bool new_line;
 
-	(void)ctx;
-	new_line = true;
-	i = 1;
-	while (i <= cmd->arg_count && is_n_option(cmd->args[i]))
-	{
-		new_line = false;
-		i++;
-	}
-	while (i <= cmd->arg_count)
-	{
-		ft_printf("%s", cmd->args[i]);
-		if (i < cmd->arg_count)
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
-	if (new_line)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (0);
+  (void)ctx;
+  new_line = true;
+  i = 1;
+  while (i <= cmd->arg_count && is_n_option(cmd->args[i])) {
+    new_line = false;
+    i++;
+  }
+  while (i <= cmd->arg_count) {
+    ft_printf("%s", cmd->args[i]);
+    if (i < cmd->arg_count)
+      ft_putchar_fd(' ', STDOUT_FILENO);
+    i++;
+  }
+  if (new_line)
+    ft_putchar_fd('\n', STDOUT_FILENO);
+  return (0);
 }

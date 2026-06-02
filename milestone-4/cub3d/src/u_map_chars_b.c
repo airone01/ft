@@ -17,7 +17,4 @@
 ** D		- Door
 ** P		- Animated sprite
 */
-const char	*map_chars(void)
-{
-	return ("01NSEWDP \t\n");
-}
+const char *map_chars(void) { return ("01NSEWDP \t\n"); }

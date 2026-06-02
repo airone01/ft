@@ -22,20 +22,17 @@
  * @param	n	Size in number of bytes
  * @returns     Pointer to the memory area s
  */
-void	*ft_memset(void *s, int c, size_t n)
-{
-	uint8_t	*pt;
+void *ft_memset(void *s, int c, size_t n) {
+  uint8_t *pt;
 
-	if (n != 0)
-	{
-		pt = s;
-		while (n != 0)
-		{
-			*pt++ = (uint8_t)c;
-			n--;
-		}
-	}
-	return (s);
+  if (n != 0) {
+    pt = s;
+    while (n != 0) {
+      *pt++ = (uint8_t)c;
+      n--;
+    }
+  }
+  return (s);
 }
 
 /**
@@ -46,10 +43,7 @@ void	*ft_memset(void *s, int c, size_t n)
  * @param	n	Size in number of bytes
  * @returns	pointer to the memory area s
  */
-void	*ft_bzero(void *s, size_t n)
-{
-	return (ft_memset(s, 0, n));
-}
+void *ft_bzero(void *s, size_t n) { return (ft_memset(s, 0, n)); }
 
 /**
  * The calloc() function allocates memory for an array  of  nmemb  elements  of
@@ -67,16 +61,15 @@ void	*ft_bzero(void *s, size_t n)
  * @param	size	Length of the type of the variable
  * @returns	pointer Filled with NUL
  */
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*ptr;
+void *ft_calloc(size_t nmemb, size_t size) {
+  void *ptr;
 
-	if (size && nmemb > SIZE_MAX / size)
-		return (0);
-	ptr = malloc(size * nmemb);
-	if (!ptr)
-		return (0);
-	return (ft_bzero(ptr, size * nmemb));
+  if (size && nmemb > SIZE_MAX / size)
+    return (0);
+  ptr = malloc(size * nmemb);
+  if (!ptr)
+    return (0);
+  return (ft_bzero(ptr, size * nmemb));
 }
 
 /**
@@ -84,14 +77,13 @@ void	*ft_calloc(size_t nmemb, size_t size)
  * @param	str	String to get length from
  * @retuns      Length of str
  */
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
+size_t ft_strlen(const char *str) {
+  size_t i;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+  i = 0;
+  while (str[i] != '\0')
+    i++;
+  return (i);
 }
 
 /**
@@ -100,38 +92,34 @@ size_t	ft_strlen(const char *str)
  * @returns     String if everything worked
  * @returns     NULL if malloc failed
  */
-char	*ft_strdup(const char *s)
-{
-	size_t	i;
-	char	*dst;
+char *ft_strdup(const char *s) {
+  size_t i;
+  char *dst;
 
-	dst = ft_calloc(ft_strlen(s) + 1, sizeof(char));
-	if (!dst)
-		return (0);
-	i = 0;
-	while (s[i])
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	return ((char *)dst);
+  dst = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+  if (!dst)
+    return (0);
+  i = 0;
+  while (s[i]) {
+    dst[i] = s[i];
+    i++;
+  }
+  return ((char *)dst);
 }
 
-struct s_stock_str	*ft_strs_to_tab(int ac, char **av)
-{
-	int			i;
-	t_stock_str	*stk;
+struct s_stock_str *ft_strs_to_tab(int ac, char **av) {
+  int i;
+  t_stock_str *stk;
 
-	if ((stk = ft_calloc(ac + 1, sizeof(t_stock_str))) == ((void *)0))
-		return ((void *)0);
-	i = 0;
-	while (i < ac)
-	{
-		stk[i].size = ft_strlen(av[i]);
-		stk[i].str = av[i];
-		stk[i].copy = ft_strdup(av[i]);
-		i++;
-	}
-	stk[i].str = 0;
-	return (stk);
+  if ((stk = ft_calloc(ac + 1, sizeof(t_stock_str))) == ((void *)0))
+    return ((void *)0);
+  i = 0;
+  while (i < ac) {
+    stk[i].size = ft_strlen(av[i]);
+    stk[i].str = av[i];
+    stk[i].copy = ft_strdup(av[i]);
+    i++;
+  }
+  stk[i].str = 0;
+  return (stk);
 }

@@ -10,5 +10,3 @@ typedef struct s_Data {
 } Data;
 
 #endif // !DATA_HPP
-
-

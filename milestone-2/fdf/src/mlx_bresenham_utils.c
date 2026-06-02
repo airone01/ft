@@ -19,18 +19,17 @@
  * @param line Line coordinates in array form [x0, y0, x1, y1]
  * @return bool True if line is completely outside and can be culled
  */
-bool	is_line_outside_bounds(t_ctx *ctx, int *line)
-{
-	int	w;
-	int	h;
+bool is_line_outside_bounds(t_ctx *ctx, int *line) {
+  int w;
+  int h;
 
-	w = ctx->img.width;
-	h = ctx->img.height;
-	if ((line[0] < 0 && line[2] < 0) || (line[0] >= w && line[2] >= w))
-		return (true);
-	if ((line[1] < 0 && line[3] < 0) || (line[1] >= h && line[3] >= h))
-		return (true);
-	return (false);
+  w = ctx->img.width;
+  h = ctx->img.height;
+  if ((line[0] < 0 && line[2] < 0) || (line[0] >= w && line[2] >= w))
+    return (true);
+  if ((line[1] < 0 && line[3] < 0) || (line[1] >= h && line[3] >= h))
+    return (true);
+  return (false);
 }
 
 /**
@@ -41,10 +40,9 @@ bool	is_line_outside_bounds(t_ctx *ctx, int *line)
  * @param y Y-coordinate to render
  * @param color Line color
  */
-void	process_point(t_ctx *ctx, int x, int y, unsigned int color)
-{
-	if (x >= 0 && x < ctx->img.width && y >= 0 && y < ctx->img.height)
-		mlx_pixel_put_img(&ctx->img, x, y, color);
+void process_point(t_ctx *ctx, int x, int y, unsigned int color) {
+  if (x >= 0 && x < ctx->img.width && y >= 0 && y < ctx->img.height)
+    mlx_pixel_put_img(&ctx->img, x, y, color);
 }
 
 /**
@@ -54,15 +52,13 @@ void	process_point(t_ctx *ctx, int x, int y, unsigned int color)
  * @param x Pointer to x coordinate to update
  * @param e2 Value of error * 2
  */
-void	process_x_step(t_bresenham_params p, int *x, int e2)
-{
-	if (e2 >= p.params[1])
-	{
-		if (*x == p.line[2])
-			return ;
-		p.params[4] += p.params[1];
-		*x += p.params[2];
-	}
+void process_x_step(t_bresenham_params p, int *x, int e2) {
+  if (e2 >= p.params[1]) {
+    if (*x == p.line[2])
+      return;
+    p.params[4] += p.params[1];
+    *x += p.params[2];
+  }
 }
 
 /**
@@ -72,13 +68,11 @@ void	process_x_step(t_bresenham_params p, int *x, int e2)
  * @param y Pointer to y coordinate to update
  * @param e2 Value of error * 2
  */
-void	process_y_step(t_bresenham_params p, int *y, int e2)
-{
-	if (e2 <= p.params[0])
-	{
-		if (*y == p.line[3])
-			return ;
-		p.params[4] += p.params[0];
-		*y += p.params[3];
-	}
+void process_y_step(t_bresenham_params p, int *y, int e2) {
+  if (e2 <= p.params[0]) {
+    if (*y == p.line[3])
+      return;
+    p.params[4] += p.params[0];
+    *y += p.params[3];
+  }
 }

@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef DRAW_H
-# define DRAW_H
+#define DRAW_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*******************************************************************************
  *                             Function Prototypes                             *
@@ -31,7 +31,7 @@
  * @param ray The ray information
  * @return int The x-coordinate on the texture
  */
-int		calculate_texture_x(double wall_x, t_texture *texture, t_ray *ray);
+int calculate_texture_x(double wall_x, t_texture *texture, t_ray *ray);
 
 /**
  * @brief Calculate where exactly the wall was hit
@@ -40,7 +40,7 @@ int		calculate_texture_x(double wall_x, t_texture *texture, t_ray *ray);
  * @param ray The ray information
  * @return double The exact hit position on the wall (0-1)
  */
-double	calculate_wall_hit(t_data *data, t_ray *ray);
+double calculate_wall_hit(t_data *data, t_ray *ray);
 
 /*
 ** d_draw.c
@@ -53,7 +53,7 @@ double	calculate_wall_hit(t_data *data, t_ray *ray);
  * @param ray Ray pointing to where to draw
  * @param x X coorinate
  */
-void	draw_textured_line(t_data *data, t_ray *ray, int x);
+void draw_textured_line(t_data *data, t_ray *ray, int x);
 
 /**
  * @brief Draw ceiling with solid color
@@ -63,7 +63,7 @@ void	draw_textured_line(t_data *data, t_ray *ray, int x);
  * @param start_y Start Y coordinate
  * @param ceil_color Ceiling color
  */
-void	draw_ceiling(t_data *data, int x, int start_y, t_color ceil_color);
+void draw_ceiling(t_data *data, int x, int start_y, t_color ceil_color);
 
 /**
  * @brief Draw floor with solid color
@@ -73,7 +73,7 @@ void	draw_ceiling(t_data *data, int x, int start_y, t_color ceil_color);
  * @param end_y End Y coordinate
  * @param floor_color Floor color
  */
-void	draw_floor(t_data *data, int x, int end_y, t_color floor_color);
+void draw_floor(t_data *data, int x, int end_y, t_color floor_color);
 
 /**
  * @brief Puts a pixel to a MLX image
@@ -84,7 +84,7 @@ void	draw_floor(t_data *data, int x, int end_y, t_color floor_color);
  * @param y Pixel Y coordinate
  * @param color Pixel color
  */
-void	my_mlx_pixel_put(t_img *img, int x, int y, t_color color);
+void my_mlx_pixel_put(t_img *img, int x, int y, t_color color);
 
 /*
 ** d_render.c
@@ -95,6 +95,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, t_color color);
  *
  * @param data App data
  */
-void	render_frame(t_data *data);
+void render_frame(t_data *data);
 
 #endif // !DRAW_H

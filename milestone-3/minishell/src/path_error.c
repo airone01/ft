@@ -18,13 +18,12 @@
  * @param err_type Type of error encountered
  * @return int Error code (127 for not found, 126 for permission, etc.)
  */
-int	get_path_error_code(t_error_type err_type)
-{
-	if (err_type == ERR_NO_FILE || err_type == ERR_CMD_NOT_FOUND)
-		return (127);
-	if (err_type == ERR_NO_PERMS || err_type == ERR_IS_DIR)
-		return (126);
-	return (1);
+int get_path_error_code(t_error_type err_type) {
+  if (err_type == ERR_NO_FILE || err_type == ERR_CMD_NOT_FOUND)
+    return (127);
+  if (err_type == ERR_NO_PERMS || err_type == ERR_IS_DIR)
+    return (126);
+  return (1);
 }
 
 /**
@@ -34,7 +33,6 @@ int	get_path_error_code(t_error_type err_type)
  * @param err_type Type of error encountered
  * @return int Error code for shell exit status
  */
-int	handle_path_error(char *path, t_error_type err_type)
-{
-	return (error(path, NULL, err_type));
+int handle_path_error(char *path, t_error_type err_type) {
+  return (error(path, NULL, err_type));
 }

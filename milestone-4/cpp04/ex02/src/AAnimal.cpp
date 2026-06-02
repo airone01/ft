@@ -38,4 +38,3 @@ AAnimal &AAnimal::operator=(const AAnimal &other) {
 
 // Getters
 const std::string AAnimal::getType(void) const { return _type; }
-

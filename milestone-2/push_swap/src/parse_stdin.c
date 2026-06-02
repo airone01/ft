@@ -12,22 +12,20 @@
 
 #include "push_swap.h"
 
-static void	strs_clear(char **strs)
-{
-	char	**ptr;
+static void strs_clear(char **strs) {
+  char **ptr;
 
-	if (!strs)
-		return ;
-	ptr = strs;
-	while (*strs)
-		free(*strs++);
-	free(ptr);
+  if (!strs)
+    return;
+  ptr = strs;
+  while (*strs)
+    free(*strs++);
+  free(ptr);
 }
 
-static void	all_clear(char **strs, t_stack *stack)
-{
-	strs_clear(strs);
-	stack_clear(stack);
+static void all_clear(char **strs, t_stack *stack) {
+  strs_clear(strs);
+  stack_clear(stack);
 }
 
 /**
@@ -36,27 +34,25 @@ static void	all_clear(char **strs, t_stack *stack)
  * @param   str     String to parse
  * @return          New stack stack
  */
-t_stack	*parse_and_add_anyway(t_stack *stack, char *str)
-{
-	ssize_t	nbr;
-	size_t	i;
-	char	**strs;
+t_stack *parse_and_add_anyway(t_stack *stack, char *str) {
+  ssize_t nbr;
+  size_t i;
+  char **strs;
 
-	i = 0;
-	strs = ft_split(str, ' ');
-	while (strs[i])
-	{
-		nbr = ft_atol(strs[i]);
-		if (nbr > INT_MAX || nbr < INT_MIN)
-			return (all_clear(strs, stack), NULL);
-		if (stack)
-			stack_add_back(stack, nbr);
-		else
-			stack = stack_new(nbr);
-		i++;
-	}
-	strs_clear(strs);
-	return (stack);
+  i = 0;
+  strs = ft_split(str, ' ');
+  while (strs[i]) {
+    nbr = ft_atol(strs[i]);
+    if (nbr > INT_MAX || nbr < INT_MIN)
+      return (all_clear(strs, stack), NULL);
+    if (stack)
+      stack_add_back(stack, nbr);
+    else
+      stack = stack_new(nbr);
+    i++;
+  }
+  strs_clear(strs);
+  return (stack);
 }
 
 /**
@@ -65,16 +61,14 @@ t_stack	*parse_and_add_anyway(t_stack *stack, char *str)
  * @param   argv    Arguments
  * @return          Stack
  */
-t_stack	*parse_stdin(int argc, char **argv)
-{
-	t_stack	*stack;
+t_stack *parse_stdin(int argc, char **argv) {
+  t_stack *stack;
 
-	stack = NULL;
-	while (argc--)
-	{
-		stack = parse_and_add_anyway(stack, *argv++);
-		if (!stack)
-			return (NULL);
-	}
-	return (stack);
+  stack = NULL;
+  while (argc--) {
+    stack = parse_and_add_anyway(stack, *argv++);
+    if (!stack)
+      return (NULL);
+  }
+  return (stack);
 }

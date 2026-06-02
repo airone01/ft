@@ -15,7 +15,7 @@
 #include <ostream>
 
 // Default constructor
-WrongAnimal::WrongAnimal(): _type("WrongAnimal") {
+WrongAnimal::WrongAnimal() : _type("WrongAnimal") {
   std::cout << _type << " constructed (default constructor)" << std::endl;
 }
 // Parameterized constructors

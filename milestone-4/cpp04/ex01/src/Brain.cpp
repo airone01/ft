@@ -37,4 +37,3 @@ Brain &Brain::operator=(const Brain &other) {
   }
   return *this;
 }
-
