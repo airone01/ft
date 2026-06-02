@@ -13,6 +13,8 @@
 #ifndef H_PUTNBR_LANG_H
 #define H_PUTNBR_LANG_H
 
+#include "h_rush.h"
+
 // QTY
 void putnbr_lang_3x_hundreds(struct s_lang_args args, int three_x);
 void putnbr_lang_3x_tens(struct s_lang_args args, int three_x);
