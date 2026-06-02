@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc_utils2.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: elagouch <elagouch@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 13:59:38 by elagouch          #+#    #+#             */
-/*   Updated: 2025/05/08 17:05:01 by elagouch         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "globals.h"
 #include "minishell.h" // required bc globals.h does not include minishell.h
