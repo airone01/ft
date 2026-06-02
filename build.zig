@@ -27,6 +27,7 @@ const rush02_mod = @import("piscine-c/rush02/build.zig");
 const hotrace_mod = @import("rushes/hotrace/build.zig");
 const libunit_mod = @import("rushes/libunit/build.zig");
 const libasm_mod = @import("pcc/libasm/build.zig");
+const minecraft_viz_mod = @import("tools/push-swap-visualizer-minecraft/build.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -91,4 +92,7 @@ pub fn build(b: *std.Build) void {
 
     // PCC
     b.installArtifact(libasm_mod.configure(b, target, optimize));
+
+    // External tools
+    minecraft_viz_mod.configure(b, target, optimize);
 }
