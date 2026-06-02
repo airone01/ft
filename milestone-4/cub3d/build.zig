@@ -6,10 +6,8 @@ const inc_dir = "milestone-4/cub3d/includes";
 
 // K&R casts in mlx hooks require suppressing strict function pointer warnings
 const c_flags: []const []const u8 = &.{
-    "-Wall", "-Wextra", "-Werror",
-    "-Wno-incompatible-function-pointer-types",
-    "-Wno-cast-function-type-strict",
-    "-Wno-cast-function-type",
+    "-Wall",                                    "-Wextra",                        "-Werror",
+    "-Wno-incompatible-function-pointer-types", "-Wno-cast-function-type-strict", "-Wno-cast-function-type",
 };
 
 pub const Deps = struct {
@@ -61,9 +59,7 @@ pub fn configure(
     optimize: std.builtin.OptimizeMode,
     deps: Deps,
 ) struct { mandatory: *std.Build.Step.Compile, bonus: *std.Build.Step.Compile } {
-    const mandatory = addBinary(b, target, optimize, "cub3d",
-        &.{ "_b.c", "_b2.c" }, deps);
-    const bonus = addBinary(b, target, optimize, "cub3d_bonus",
-        &.{ "_m.c", "_m2.c" }, deps);
+    const mandatory = addBinary(b, target, optimize, "cub3d", &.{ "_b.c", "_b2.c" }, deps);
+    const bonus = addBinary(b, target, optimize, "cub3d_bonus", &.{ "_m.c", "_m2.c" }, deps);
     return .{ .mandatory = mandatory, .bonus = bonus };
 }

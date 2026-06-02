@@ -1,15 +1,12 @@
 name: release-please
-
 on:
   push:
     branches:
       - main
       - ci/release-please
-
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
   release-please:
     runs-on: ubuntu-latest
@@ -20,4 +17,3 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
           token: ${{ secrets.GITHUB_TOKEN }}
-

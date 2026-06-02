@@ -71,24 +71,31 @@ fi
 
 # Test 10: Sorted output validation
 ARG="2 1 0"
+# shellcheck disable=2086 # want to split
 ./push_swap $ARG | ./checker_linux $ARG | grep -q "OK"
 test_result $?
 
 # Test 11: Random values between 0 and 3
 ARG=$(shuf -i 0-3 -n 3 | tr '\n' ' ')
+# shellcheck disable=2086 # want to split
 instructions=$(./push_swap $ARG | wc -l)
+# shellcheck disable=2086 # want to split
 ./push_swap $ARG | ./checker_linux $ARG | grep -q "OK" && [ $instructions -le 3 ]
 test_result $?
 
 # Test 12: Specific 5-value list
 ARG="1 5 2 4 3"
+# shellcheck disable=2086 # want to split
 instructions=$(./push_swap $ARG | wc -l)
+# shellcheck disable=2086 # want to split
 ./push_swap $ARG | ./checker_linux $ARG | grep -q "OK" && [ $instructions -le 12 ]
 test_result $?
 
 # Test 13: Random 5-value list
 ARG=$(shuf -i 0-100 -n 5 | tr '\n' ' ')
+# shellcheck disable=2086 # want to split
 instructions=$(./push_swap $ARG | wc -l)
+# shellcheck disable=2086 # want to split
 ./push_swap $ARG | ./checker_linux $ARG | grep -q "OK" && [ $instructions -le 12 ]
 test_result $?
 
@@ -124,16 +131,19 @@ test_result $?
 
 # Test 20: Checker valid list, invalid instructions
 ARG="0 9 1 8 2"
+# shellcheck disable=2086 # want to split
 printf "pb\nra\nra\nsa\nra\n" | ./checker $ARG | grep -q "KO"
 test_result $?
 
 # Test 21: Checker valid list, valid instructions
 ARG="0 9 1 8 2"
+# shellcheck disable=2086 # want to split
 printf "pb\nra\npb\nra\nsa\nra\npa\npa\n" | ./checker $ARG | grep -q "OK"
 test_result $?
 
 # Test 22: Checker valid list, no instructions
 ARG="0 1 2"
+# shellcheck disable=2086 # want to split
 ./checker $ARG </dev/null | grep -q "OK"
 test_result $?
 

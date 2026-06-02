@@ -100,7 +100,7 @@ i=0
 while [[ $i -lt $COLOR_COUNT ]]; do
   if [[ "${POSITIONAL[$i]}" =~ ^#?[0-9a-fA-F]{6}$ ]]; then
     # Hex color - parse it
-    read R G B <<<$(parse_color "${POSITIONAL[$i]}")
+    read -r R G B <<<"$(parse_color "${POSITIONAL[$i]}")"
     COLORS_ARG="$COLORS_ARG $R $G $B"
     i=$((i + 1))
   else
@@ -119,7 +119,7 @@ while [[ $i -lt $COLOR_COUNT ]]; do
 done
 
 # Count the number of actual colors (each color is 3 values)
-RGB_VALUES_COUNT=$(echo $COLORS_ARG | wc -w)
+RGB_VALUES_COUNT=$(echo "$COLORS_ARG" | wc -w)
 ACTUAL_COLOR_COUNT=$((RGB_VALUES_COUNT / 3))
 
 if [[ $ACTUAL_COLOR_COUNT -lt 2 ]]; then

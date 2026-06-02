@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# shellcheck disable=SC3040 # not coding for posix
 set -euo pipefail
 
 WP_PATH="/var/www/html/wordpress"
@@ -8,10 +9,12 @@ WP_CONFIG="$WP_PATH/wp-config.php"
 if [ ! -f "$WP_CONFIG" ]; then
   echo "wp-config.php not found, creating config..."
 
-  export MYSQL_PASSWORD="$(cat /run/secrets/mysql_password)"
-  export WP_ADMIN_PASSWORD="$(cat /run/secrets/wordpress_admin_password)"
+  export MYSQL_PASSWORD
+  MYSQL_PASSWORD="$(cat /run/secrets/mysql_password)"
+  export WP_ADMIN_PASSWORD
+  WP_ADMIN_PASSWORD="$(cat /run/secrets/wordpress_admin_password)"
 
-  php84 /app/wp-cli config create --dbhost=$INCEPTION_HOST_DB --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --path="$WP_PATH"
+  php84 /app/wp-cli config create --dbhost="$INCEPTION_HOST_DB" --dbname="$MYSQL_DATABASE" --dbuser="$MYSQL_USER" --dbpass="$MYSQL_PASSWORD" --path="$WP_PATH"
 
   php84 /app/wp-cli core install \
     --url="https://$SITE_NAME" \
@@ -33,4 +36,3 @@ else
 fi
 
 exec /usr/sbin/php-fpm84 -F
-

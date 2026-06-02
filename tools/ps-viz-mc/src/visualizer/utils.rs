@@ -27,7 +27,7 @@ pub fn get_block_color(value: i32) -> BlockState {
 
 #[cfg(test)]
 mod tests {
-    use crate::{get_block_color, utils::initialize_test, VISUALIZATION_BLOCKS};
+    use crate::{VISUALIZATION_BLOCKS, get_block_color, utils::initialize_test};
     use valence::BlockState;
 
     #[test]

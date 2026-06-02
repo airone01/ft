@@ -13,15 +13,15 @@ CMD="sort"
 PROG="./pipex"
 FILE_IN="file_bee" # Bee Movie script
 FILE_OUT=$(mktemp)
-CMDS_MIN=1
+# CMDS_MIN=1
 CMDS_MAX=1024
 
 # Runs once and get the output
 echo -e "${BLACK_WHITE} #### 1. Normal #### ${RESET}"
 OG_RESULT=$(yes "$CMD" | head -n $CMDS_MAX | xargs -I {} echo -n "| {} " | xargs -0 bash -c "cat $FILE_IN {}" 2>/dev/null)
-YOUR_RESULT=$($PROG $FILE_IN $(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ') /dev/stdout)
-OG_RESULT_LEN=$(echo "$OG_RESULT" | wc -c)
-YOUR_RESULT_LEN=$(echo "$YOUR_RESULT" | wc -c)
+YOUR_RESULT=$($PROG $FILE_IN "$(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ')" /dev/stdout)
+OG_RESULT_LEN=${#OG_RESULT}
+YOUR_RESULT_LEN=${#YOUR_RESULT}
 
 printf "A. Length"
 if [ "$OG_RESULT_LEN" -eq "$YOUR_RESULT_LEN" ]; then
@@ -34,7 +34,7 @@ echo -e "${GREY}Yours:\t\t$YOUR_RESULT_LEN${RESET}"
 
 # Runs again with valgrind
 echo -e "${BLACK_WHITE} #### 2. With valgrind #### ${RESET}"
-RESULT_NO_ERR=$($VALGRIND $PROG $FILE_IN $(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ') /dev/null 2>/dev/null)
+RESULT_NO_ERR=$($VALGRIND $PROG $FILE_IN "$(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ')" /dev/null 2>/dev/null)
 
 printf "A. Empty"
 if [ -z "$RESULT_NO_ERR" ]; then
@@ -44,9 +44,8 @@ else
 fi
 
 printf "B. Leaks"
-RESULT_ERR_TO_STDOUT=$($VALGRIND $PROG $FILE_IN $(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ') $FILE_OUT 2>&1)
-echo "$RESULT_ERR_TO_STDOUT" | grep -q "no leaks are possible"
-if [ $? -eq 0 ]; then
+RESULT_ERR_TO_STDOUT=$($VALGRIND $PROG $FILE_IN "$(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ')" "$FILE_OUT" 2>&1)
+if echo "$RESULT_ERR_TO_STDOUT" | grep -q "no leaks are possible"; then
   echo -e "\t${GREEN}SUCCESS ✓${RESET}"
 else
   echo -e "\t${RED}FAIL ✗${RESET}"
@@ -62,7 +61,7 @@ echo -e "${GREY}Bytes:\t\t$BYTES${RESET}"
 
 echo -e "${BLACK_WHITE} #### 3. Time measurements #### ${RESET}"
 RESULT_OG=$( (time yes "$CMD" | head -n $CMDS_MAX | xargs -I {} echo -n "| {} " | xargs -0 bash -c "cat $FILE_IN {}" 2>/dev/null >/dev/null) 2>&1)
-RESULT_YOURS=$( (time $PROG $FILE_IN $(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ') /dev/null 2>/dev/null >/dev/null) 2>&1)
+RESULT_YOURS=$( (time $PROG $FILE_IN "$(yes "$CMD" | head -n $CMDS_MAX | tr '\n' ' ')" /dev/null 2>/dev/null >/dev/null) 2>&1)
 
 echo -e "A. Original:\n${GREY}${RESULT_OG}${RESET}"
 echo -e "B. Yours:\n${GREY}${RESULT_YOURS}${RESET}"
@@ -70,7 +69,7 @@ echo -e "B. Yours:\n${GREY}${RESULT_YOURS}${RESET}"
 echo -e "${BLACK_WHITE} #### 4. PIP (pipex in pipex) with valgrind #### ${RESET}"
 
 printf "A. Empty"
-RESULT_PIP_EMPTY=$(${PROG} ${FILE_IN} ${prog}\ /dev/stdin\ ${CMD}\ ${CMD}\ /dev/stdout wc\ ${CMD} ${CMD} /dev/null 2>/dev/null)
+RESULT_PIP_EMPTY=$(${PROG} ${FILE_IN} ${PROG}\ /dev/stdin\ ${CMD}\ ${CMD}\ /dev/stdout wc\ ${CMD} ${CMD} /dev/null 2>/dev/null)
 if [ -z "$RESULT_PIP_EMPTY" ]; then
   echo -e "\t${GREEN}SUCCESS ✓${RESET}"
 else
@@ -79,8 +78,7 @@ fi
 
 printf "B. Leaks"
 RESULT_PIP_ERR_TO_STDOUT=$(${VALGRIND} ${PROG} ${FILE_IN} ${PROG}\ /dev/stdin\ ${CMD}\ ${CMD}\ /dev/stdout ${CMD} ${CMD} /dev/null 2>&1)
-echo "$RESULT_PIP_ERR_TO_STDOUT" | grep -q "no leaks are possible"
-if [ $? -eq 0 ]; then
+if echo "$RESULT_PIP_ERR_TO_STDOUT" | grep -q "no leaks are possible"; then
   echo -e "\t${GREEN}SUCCESS ✓${RESET}"
 else
   echo -e "\t${RED}FAIL ✗${RESET}"

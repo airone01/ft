@@ -5,7 +5,7 @@ use core::net::SocketAddr;
 use valence::prelude::Uuid;
 use valence::text::{Color, IntoText as _};
 use valence::{
-    network::{async_trait, HandshakeData, PlayerSampleEntry, ServerListPing},
+    network::{HandshakeData, PlayerSampleEntry, ServerListPing, async_trait},
     prelude::{NetworkCallbacks, SharedNetworkState},
 };
 

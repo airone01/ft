@@ -49,9 +49,7 @@ pub fn configure(
     optimize: std.builtin.OptimizeMode,
     deps: Deps,
 ) struct { mandatory: *std.Build.Step.Compile, bonus: *std.Build.Step.Compile } {
-    const mandatory = addBinary(b, target, optimize, "pipex",
-        &.{ "_main_bonus.c", "args_valid_bonus.c", "bonus_here_doc.c" }, deps);
-    const bonus = addBinary(b, target, optimize, "pipex_bonus",
-        &.{ "_main.c", "args_valid.c" }, deps);
+    const mandatory = addBinary(b, target, optimize, "pipex", &.{ "_main_bonus.c", "args_valid_bonus.c", "bonus_here_doc.c" }, deps);
+    const bonus = addBinary(b, target, optimize, "pipex_bonus", &.{ "_main.c", "args_valid.c" }, deps);
     return .{ .mandatory = mandatory, .bonus = bonus };
 }

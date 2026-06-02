@@ -1,8 +1,8 @@
 use std::sync::Once;
 
+use valence::Text;
 use valence::prelude::Color;
 use valence::prelude::IntoText as _;
-use valence::Text;
 
 use crate::settings::get_settings;
 

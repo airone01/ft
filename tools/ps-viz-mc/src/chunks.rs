@@ -1,8 +1,8 @@
 use valence::{
+    ChunkLayer, ChunkView,
     client::Client,
     entity::{OldPosition, Position},
     prelude::{Query, With},
-    ChunkLayer, ChunkView,
 };
 
 use crate::consts::VIEW_DIST;
