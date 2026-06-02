@@ -20,14 +20,13 @@
  * @param module Module name for error reporting
  * @return Allocated memory or exits on failure
  */
-void	*safe_malloc(t_ctx *ctx, size_t size, const char *module)
-{
-	void	*ptr;
+void *safe_malloc(t_ctx *ctx, size_t size, const char *module) {
+  void *ptr;
 
-	ptr = malloc(size);
-	if (!ptr)
-		ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
-	return (ptr);
+  ptr = malloc(size);
+  if (!ptr)
+    ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
+  return (ptr);
 }
 
 /**
@@ -38,16 +37,15 @@ void	*safe_malloc(t_ctx *ctx, size_t size, const char *module)
  * @param module Module name for error reporting
  * @return Duplicated string or exits on failure
  */
-char	*safe_strdup(t_ctx *ctx, const char *str, const char *module)
-{
-	char	*dup;
+char *safe_strdup(t_ctx *ctx, const char *str, const char *module) {
+  char *dup;
 
-	if (!str)
-		return (NULL);
-	dup = ft_strdup(str);
-	if (!dup)
-		ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
-	return (dup);
+  if (!str)
+    return (NULL);
+  dup = ft_strdup(str);
+  if (!dup)
+    ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
+  return (dup);
 }
 
 /**
@@ -59,15 +57,14 @@ char	*safe_strdup(t_ctx *ctx, const char *str, const char *module)
  * @param module Module name for error reporting
  * @return Joined string or exits on failure
  */
-char	*safe_strjoin(t_ctx *ctx, const char *s1, const char *s2,
-		const char *module)
-{
-	char	*result;
+char *safe_strjoin(t_ctx *ctx, const char *s1, const char *s2,
+                   const char *module) {
+  char *result;
 
-	result = ft_strjoin(s1, s2);
-	if (!result)
-		ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
-	return (result);
+  result = ft_strjoin(s1, s2);
+  if (!result)
+    ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
+  return (result);
 }
 
 /**
@@ -79,12 +76,11 @@ char	*safe_strjoin(t_ctx *ctx, const char *s1, const char *s2,
  * @param module Module name for error reporting
  * @return Allocated memory or exits on failure
  */
-void	*safe_calloc(t_ctx *ctx, size_t nmemb, size_t size, const char *module)
-{
-	void	*ptr;
+void *safe_calloc(t_ctx *ctx, size_t nmemb, size_t size, const char *module) {
+  void *ptr;
 
-	ptr = ft_calloc(nmemb, size);
-	if (!ptr)
-		ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
-	return (ptr);
+  ptr = ft_calloc(nmemb, size);
+  if (!ptr)
+    ctx_error_exit(ctx, NULL, module, ERR_ALLOC);
+  return (ptr);
 }

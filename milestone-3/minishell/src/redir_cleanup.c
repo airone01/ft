@@ -18,26 +18,22 @@
  * @param ctx Context containing tokens and commands
  * @return void
  */
-void	cleanup_heredoc_resources(t_ctx *ctx)
-{
-	t_command	*cmd;
-	t_redir		*redir;
+void cleanup_heredoc_resources(t_ctx *ctx) {
+  t_command *cmd;
+  t_redir *redir;
 
-	if (!ctx || !ctx->cmd)
-		return ;
-	cmd = ctx->cmd;
-	while (cmd)
-	{
-		redir = cmd->redirection;
-		while (redir)
-		{
-			if (redir->type == TOK_HERE_DOC_FROM && redir->fd >= 0)
-			{
-				close(redir->fd);
-				redir->fd = -1;
-			}
-			redir = redir->next;
-		}
-		cmd = cmd->next;
-	}
+  if (!ctx || !ctx->cmd)
+    return;
+  cmd = ctx->cmd;
+  while (cmd) {
+    redir = cmd->redirection;
+    while (redir) {
+      if (redir->type == TOK_HERE_DOC_FROM && redir->fd >= 0) {
+        close(redir->fd);
+        redir->fd = -1;
+      }
+      redir = redir->next;
+    }
+    cmd = cmd->next;
+  }
 }

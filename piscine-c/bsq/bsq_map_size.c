@@ -20,25 +20,22 @@
  *
  * @returns	amount of readable bytes
  */
-int	bsq_handle_size(int fd, void *buff)
-{
-	int	size;
-	int	count;
+int bsq_handle_size(int fd, void *buff) {
+  int size;
+  int count;
 
-	count = 0;
-	size = 100;
-	while (size == 100)
-	{
-		size = read(fd, buff, 100);
-		if (size == -1)
-		{
-			free(buff);
-			close(fd);
-			return (-1);
-		}
-		count += size;
-	}
-	return (count);
+  count = 0;
+  size = 100;
+  while (size == 100) {
+    size = read(fd, buff, 100);
+    if (size == -1) {
+      free(buff);
+      close(fd);
+      return (-1);
+    }
+    count += size;
+  }
+  return (count);
 }
 
 /*
@@ -49,20 +46,19 @@ int	bsq_handle_size(int fd, void *buff)
  * @returns	the number of bytes
  * @returns -1 if the file is unreadable
  */
-int	bsq_map_file_size(char *fname)
-{
-	void	*buff;
-	int		count;
-	int		fd;
+int bsq_map_file_size(char *fname) {
+  void *buff;
+  int count;
+  int fd;
 
-	fd = open(fname, O_RDONLY, 0);
-	if (fd == -1)
-		return (-1);
-	buff = malloc(100 * sizeof(char));
-	count = bsq_handle_size(fd, buff);
-	if (count == -1)
-		return (-1);
-	free(buff);
-	close(fd);
-	return (count);
+  fd = open(fname, O_RDONLY, 0);
+  if (fd == -1)
+    return (-1);
+  buff = malloc(100 * sizeof(char));
+  count = bsq_handle_size(fd, buff);
+  if (count == -1)
+    return (-1);
+  free(buff);
+  close(fd);
+  return (count);
 }

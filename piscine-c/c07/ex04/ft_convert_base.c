@@ -10,33 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_itoa_base(int nbr, char *base);
-int		ft_strlen(char *str);
+char *ft_itoa_base(int nbr, char *base);
+int ft_strlen(char *str);
 
-int	bad_base(char *base)
-{
-	int	i;
-	int	j;
+int bad_base(char *base) {
+  int i;
+  int j;
 
-	if (base[0] == '\0' || base[1] == '\0')
-		return (1);
-	i = 0;
-	while (base[i] != '\0')
-	{
-		if (base[i] == '-' || base[i] == '+' || base[i] == ' ')
-			return (1);
-		j = 0;
-		while (base[j] != '\0')
-		{
-			if (j == i && base[j + 1] != '\0')
-				j++;
-			else if (base[j] == base[i] && base[j + 1] != '\0')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
+  if (base[0] == '\0' || base[1] == '\0')
+    return (1);
+  i = 0;
+  while (base[i] != '\0') {
+    if (base[i] == '-' || base[i] == '+' || base[i] == ' ')
+      return (1);
+    j = 0;
+    while (base[j] != '\0') {
+      if (j == i && base[j + 1] != '\0')
+        j++;
+      else if (base[j] == base[i] && base[j + 1] != '\0')
+        return (1);
+      j++;
+    }
+    i++;
+  }
+  return (0);
 }
 
 /*
@@ -44,18 +41,16 @@ int	bad_base(char *base)
  *
  * Returns: true or false
  */
-int	in_str(char c, char *str)
-{
-	int	i;
+int in_str(char c, char *str) {
+  int i;
 
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
+  i = 0;
+  while (str[i]) {
+    if (str[i] == c)
+      return (1);
+    i++;
+  }
+  return (0);
 }
 
 /*
@@ -65,19 +60,17 @@ int	in_str(char c, char *str)
  * check the bases beforehand.
  * But just in case, it returns -1 if there is an error.
  */
-int	ft_strchr(char *str, char c)
-{
-	int	i;
+int ft_strchr(char *str, char c) {
+  int i;
 
-	i = 0;
-	while (1)
-	{
-		if (str[i] == c)
-			return (i);
-		if (str[i] == '\0')
-			return (-1);
-		i++;
-	}
+  i = 0;
+  while (1) {
+    if (str[i] == c)
+      return (i);
+    if (str[i] == '\0')
+      return (-1);
+    i++;
+  }
 }
 
 /*
@@ -85,47 +78,42 @@ int	ft_strchr(char *str, char c)
  *
  * Returns: the resulting int
  */
-int	ft_atoi_base(char *str, char *base)
-{
-	int	count;
-	int	mult;
-	int	base_len;
+int ft_atoi_base(char *str, char *base) {
+  int count;
+  int mult;
+  int base_len;
 
-	count = 0;
-	mult = 1;
-	base_len = ft_strlen(base);
-	while ((*str >= 8 && *str <= 13) || *str == ' ')
-		str++;
-	while ((*str == '+' || *str == '-') && *str)
-	{
-		if (*str == '-')
-			mult = -mult;
-		str++;
-	}
-	while (in_str(*str, base) && *str)
-	{
-		count = (count * base_len) + ft_strchr(base, *str);
-		str++;
-	}
-	return (mult * count);
+  count = 0;
+  mult = 1;
+  base_len = ft_strlen(base);
+  while ((*str >= 8 && *str <= 13) || *str == ' ')
+    str++;
+  while ((*str == '+' || *str == '-') && *str) {
+    if (*str == '-')
+      mult = -mult;
+    str++;
+  }
+  while (in_str(*str, base) && *str) {
+    count = (count * base_len) + ft_strchr(base, *str);
+    str++;
+  }
+  return (mult * count);
 }
 
 /*
  * Converts a number in a given base to another number in another given base
  */
-char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
-{
-	int	len_from;
-	int	len_to;
-	int	anbr;
+char *ft_convert_base(char *nbr, char *base_from, char *base_to) {
+  int len_from;
+  int len_to;
+  int anbr;
 
-	len_from = ft_strlen(base_from);
-	len_to = ft_strlen(base_to);
-	if (bad_base(base_from) || bad_base(base_to) || len_from <= 1
-		|| len_to <= 1)
-		return (0);
-	anbr = ft_atoi_base(nbr, base_from);
-	return (ft_itoa_base(anbr, base_to));
+  len_from = ft_strlen(base_from);
+  len_to = ft_strlen(base_to);
+  if (bad_base(base_from) || bad_base(base_to) || len_from <= 1 || len_to <= 1)
+    return (0);
+  anbr = ft_atoi_base(nbr, base_from);
+  return (ft_itoa_base(anbr, base_to));
 }
 
 // #include <stdio.h>

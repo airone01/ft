@@ -18,15 +18,14 @@
  * @param ctx Shell context
  * @param cmd Command to execute
  */
-static bool	special_cases(t_ctx *ctx, t_command *cmd)
-{
-	if (cmd->arg_count == 0 && cmd->next == NULL && cmd->args[0]
-		&& ft_strncmp(cmd->args[0], ":", 3) == 0)
-		return (ctx->exit_status = 0, true);
-	if (cmd->arg_count == 0 && cmd->next == NULL && cmd->args[0]
-		&& ft_strncmp(cmd->args[0], "!", 3) == 0)
-		return (ctx->exit_status = 1, true);
-	return (false);
+static bool special_cases(t_ctx *ctx, t_command *cmd) {
+  if (cmd->arg_count == 0 && cmd->next == NULL && cmd->args[0] &&
+      ft_strncmp(cmd->args[0], ":", 3) == 0)
+    return (ctx->exit_status = 0, true);
+  if (cmd->arg_count == 0 && cmd->next == NULL && cmd->args[0] &&
+      ft_strncmp(cmd->args[0], "!", 3) == 0)
+    return (ctx->exit_status = 1, true);
+  return (false);
 }
 
 /**
@@ -36,28 +35,25 @@ static bool	special_cases(t_ctx *ctx, t_command *cmd)
  * @param cmd Command structure with redirections
  * @return bool true if redirections were processed, false on error
  */
-static bool	handle_redirections_only(t_ctx *ctx, t_command *cmd)
-{
-	int	stdin_copy;
-	int	stdout_copy;
+static bool handle_redirections_only(t_ctx *ctx, t_command *cmd) {
+  int stdin_copy;
+  int stdout_copy;
 
-	if (!save_original_fds(&stdin_copy, &stdout_copy))
-		return (false);
-	if (read_all_heredocs(ctx) != 0)
-	{
-		cleanup_heredoc_resources(ctx);
-		restore_original_fds(stdin_copy, stdout_copy);
-		return (false);
-	}
-	if (!apply_redirections(cmd))
-	{
-		cleanup_heredoc_resources(ctx);
-		restore_original_fds(stdin_copy, stdout_copy);
-		return (false);
-	}
-	restore_original_fds(stdin_copy, stdout_copy);
-	cleanup_heredoc_resources(ctx);
-	return (true);
+  if (!save_original_fds(&stdin_copy, &stdout_copy))
+    return (false);
+  if (read_all_heredocs(ctx) != 0) {
+    cleanup_heredoc_resources(ctx);
+    restore_original_fds(stdin_copy, stdout_copy);
+    return (false);
+  }
+  if (!apply_redirections(cmd)) {
+    cleanup_heredoc_resources(ctx);
+    restore_original_fds(stdin_copy, stdout_copy);
+    return (false);
+  }
+  restore_original_fds(stdin_copy, stdout_copy);
+  cleanup_heredoc_resources(ctx);
+  return (true);
 }
 
 /**
@@ -66,29 +62,25 @@ static bool	handle_redirections_only(t_ctx *ctx, t_command *cmd)
  * @param ctx Shell context
  * @param cmd Command to execute
  */
-void	execute_commands(t_ctx *ctx, t_command *cmd)
-{
-	if (!cmd)
-		return ;
-	if ((!cmd->args || !cmd->args[0]) && cmd->redirection)
-	{
-		handle_redirections_only(ctx, cmd);
-		return ;
-	}
-	if (!cmd->args || !cmd->args[0])
-		return ;
-	if (special_cases(ctx, cmd))
-		return ;
-	if (read_all_heredocs(ctx) != 0)
-	{
-		cleanup_heredoc_resources(ctx);
-		return ;
-	}
-	if (cmd && !cmd->next && is_builtin_command(cmd->args[0]))
-	{
-		ctx->exit_status = execute_builtin(ctx, cmd);
-		return ;
-	}
-	execute_pipeline(ctx, cmd);
-	cleanup_heredoc_resources(ctx);
+void execute_commands(t_ctx *ctx, t_command *cmd) {
+  if (!cmd)
+    return;
+  if ((!cmd->args || !cmd->args[0]) && cmd->redirection) {
+    handle_redirections_only(ctx, cmd);
+    return;
+  }
+  if (!cmd->args || !cmd->args[0])
+    return;
+  if (special_cases(ctx, cmd))
+    return;
+  if (read_all_heredocs(ctx) != 0) {
+    cleanup_heredoc_resources(ctx);
+    return;
+  }
+  if (cmd && !cmd->next && is_builtin_command(cmd->args[0])) {
+    ctx->exit_status = execute_builtin(ctx, cmd);
+    return;
+  }
+  execute_pipeline(ctx, cmd);
+  cleanup_heredoc_resources(ctx);
 }

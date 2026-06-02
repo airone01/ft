@@ -22,24 +22,22 @@
  *
  * @exception	ENOMEM if malloc fails
  */
-char	**cmda_args(t_ctx *app, char *cmd)
-{
-	char	**args;
-	char	*bin_og;
-	char	*bin;
+char **cmda_args(t_ctx *app, char *cmd) {
+  char **args;
+  char *bin_og;
+  char *bin;
 
-	args = ft_split(cmd, ' ');
-	if (!args)
-		app_exit_errno(*app, ENOMEM);
-	bin_og = args[0];
-	bin = find_bin(app, bin_og);
-	free(bin_og);
-	args[0] = NULL;
-	if (!bin)
-	{
-		free_strings(args);
-		app_exit_errno(*app, ENOENT);
-	}
-	args[0] = bin;
-	return (args);
+  args = ft_split(cmd, ' ');
+  if (!args)
+    app_exit_errno(*app, ENOMEM);
+  bin_og = args[0];
+  bin = find_bin(app, bin_og);
+  free(bin_og);
+  args[0] = NULL;
+  if (!bin) {
+    free_strings(args);
+    app_exit_errno(*app, ENOENT);
+  }
+  args[0] = bin;
+  return (args);
 }

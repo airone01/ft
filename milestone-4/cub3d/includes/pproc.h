@@ -16,24 +16,24 @@
 */
 
 #ifndef PPROC_H
-# define PPROC_H
+#define PPROC_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*
 ** Main file
 */
-void	handle_main_bonus_features(t_data *data);
+void handle_main_bonus_features(t_data *data);
 
 /*
 ** Rendering
 */
-void	handle_render_bonus_features(t_data *data);
-void	handle_render_extra_features(t_data *data);
+void handle_render_bonus_features(t_data *data);
+void handle_render_extra_features(t_data *data);
 
 /*
 ** MLX
 */
-void	handle_mlx_bonus_features(t_data *data, int keycode);
+void handle_mlx_bonus_features(t_data *data, int keycode);
 
 #endif // !PPROC_H

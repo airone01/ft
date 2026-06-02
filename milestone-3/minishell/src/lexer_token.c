@@ -19,21 +19,19 @@
  * @param lexer Current lexer state
  * @return t_token* Created word token or NULL on error
  */
-static t_token	*handle_word_token(t_lexer *lexer)
-{
-	char	*word;
-	t_token	*token;
+static t_token *handle_word_token(t_lexer *lexer) {
+  char *word;
+  t_token *token;
 
-	word = read_complex_word(lexer);
-	if (!word)
-		return (NULL);
-	token = create_token(TOK_WORD, word);
-	if (!token)
-	{
-		free(word);
-		return (NULL);
-	}
-	return (token);
+  word = read_complex_word(lexer);
+  if (!word)
+    return (NULL);
+  token = create_token(TOK_WORD, word);
+  if (!token) {
+    free(word);
+    return (NULL);
+  }
+  return (token);
 }
 
 /**
@@ -43,32 +41,30 @@ static t_token	*handle_word_token(t_lexer *lexer)
  * @return Next token or NULL on error
  * @note Caller must free the returned token
  */
-t_token	*next_token_lexer(t_lexer *lexer)
-{
-	t_token	*token;
+t_token *next_token_lexer(t_lexer *lexer) {
+  t_token *token;
 
-	skip_whitespace_lexer(lexer);
-	token = handle_basics_token(lexer);
-	if (token)
-		return (token);
-	token = handle_pipe_and_token(lexer);
-	if (token)
-		return (token);
-	token = handle_redir_from_and_to_token(lexer);
-	if (token)
-		return (token);
-	token = handle_word_token(lexer);
-	if (token)
-	{
-		if (lexer->quote.in_single_quote)
-			token->quote.in_single_quote = true;
-		if (lexer->quote.in_double_quote)
-			token->quote.in_double_quote = true;
-		lexer->quote.in_single_quote = 0;
-		lexer->quote.in_double_quote = 0;
-		return (token);
-	}
-	return (NULL);
+  skip_whitespace_lexer(lexer);
+  token = handle_basics_token(lexer);
+  if (token)
+    return (token);
+  token = handle_pipe_and_token(lexer);
+  if (token)
+    return (token);
+  token = handle_redir_from_and_to_token(lexer);
+  if (token)
+    return (token);
+  token = handle_word_token(lexer);
+  if (token) {
+    if (lexer->quote.in_single_quote)
+      token->quote.in_single_quote = true;
+    if (lexer->quote.in_double_quote)
+      token->quote.in_double_quote = true;
+    lexer->quote.in_single_quote = 0;
+    lexer->quote.in_double_quote = 0;
+    return (token);
+  }
+  return (NULL);
 }
 
 /**
@@ -76,16 +72,14 @@ t_token	*next_token_lexer(t_lexer *lexer)
  *
  * @param token Token to free
  */
-static void	free_token(t_token *token)
-{
-	if (!token)
-		return ;
-	if (token->value)
-	{
-		free(token->value);
-		token->value = NULL;
-	}
-	free(token);
+static void free_token(t_token *token) {
+  if (!token)
+    return;
+  if (token->value) {
+    free(token->value);
+    token->value = NULL;
+  }
+  free(token);
 }
 
 /**
@@ -96,16 +90,14 @@ static void	free_token(t_token *token)
  *
  * @param token First token in the list
  */
-void	free_all_token(t_token *token)
-{
-	t_token	*current;
-	t_token	*next;
+void free_all_token(t_token *token) {
+  t_token *current;
+  t_token *next;
 
-	current = token;
-	while (current)
-	{
-		next = current->next;
-		free_token(current);
-		current = next;
-	}
+  current = token;
+  while (current) {
+    next = current->next;
+    free_token(current);
+    current = next;
+  }
 }

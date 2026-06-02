@@ -21,18 +21,16 @@
  * @param ctx Shell context containing environment variables
  * @return PATH value or NULL if not found
  */
-static char	*get_path_var(t_ctx *ctx)
-{
-	t_env	*env;
+static char *get_path_var(t_ctx *ctx) {
+  t_env *env;
 
-	env = ctx->env_list;
-	while (env)
-	{
-		if (ft_strncmp(env->key, "PATH", 5) == 0)
-			return (env->value);
-		env = env->next;
-	}
-	return (NULL);
+  env = ctx->env_list;
+  while (env) {
+    if (ft_strncmp(env->key, "PATH", 5) == 0)
+      return (env->value);
+    env = env->next;
+  }
+  return (NULL);
 }
 
 /**
@@ -43,14 +41,13 @@ static char	*get_path_var(t_ctx *ctx)
  * @param dir Directory path to normalize
  * @return Normalized path (modified in-place)
  */
-static char	*normalize_dir_path(char *dir)
-{
-	int	len;
+static char *normalize_dir_path(char *dir) {
+  int len;
 
-	len = (int)ft_strlen(dir);
-	if (len > 0 && dir[len - 1] == '/')
-		dir[len - 1] = '\0';
-	return (dir);
+  len = (int)ft_strlen(dir);
+  if (len > 0 && dir[len - 1] == '/')
+    dir[len - 1] = '\0';
+  return (dir);
 }
 
 /**
@@ -62,21 +59,19 @@ static char	*normalize_dir_path(char *dir)
  * @param bin Binary name to search for
  * @return Full path if found, NULL otherwise
  */
-static char	*search_in_path_dirs(char **path_dirs, char *bin)
-{
-	char	*path;
-	int		i;
+static char *search_in_path_dirs(char **path_dirs, char *bin) {
+  char *path;
+  int i;
 
-	i = 0;
-	while (path_dirs[i])
-	{
-		path_dirs[i] = normalize_dir_path(path_dirs[i]);
-		path = bin_find_path(path_dirs[i], bin);
-		if (path)
-			return (path);
-		i++;
-	}
-	return (NULL);
+  i = 0;
+  while (path_dirs[i]) {
+    path_dirs[i] = normalize_dir_path(path_dirs[i]);
+    path = bin_find_path(path_dirs[i], bin);
+    if (path)
+      return (path);
+    i++;
+  }
+  return (NULL);
 }
 
 /**
@@ -88,21 +83,20 @@ static char	*search_in_path_dirs(char **path_dirs, char *bin)
  * @param bin Binary name to search for
  * @return Full path to binary if found and executable, NULL otherwise
  */
-char	*env_find_bin(t_ctx *ctx, char *bin)
-{
-	char	*path_var;
-	char	**path_dirs;
-	char	*bin_path;
+char *env_find_bin(t_ctx *ctx, char *bin) {
+  char *path_var;
+  char **path_dirs;
+  char *bin_path;
 
-	if (!bin)
-		return (NULL);
-	path_var = get_path_var(ctx);
-	if (!path_var || !*path_var)
-		return (NULL);
-	path_dirs = ft_split(path_var, ':');
-	if (!path_dirs)
-		return (NULL);
-	bin_path = search_in_path_dirs(path_dirs, bin);
-	free_2d_array((void **)path_dirs);
-	return (bin_path);
+  if (!bin)
+    return (NULL);
+  path_var = get_path_var(ctx);
+  if (!path_var || !*path_var)
+    return (NULL);
+  path_dirs = ft_split(path_var, ':');
+  if (!path_dirs)
+    return (NULL);
+  bin_path = search_in_path_dirs(path_dirs, bin);
+  free_2d_array((void **)path_dirs);
+  return (bin_path);
 }

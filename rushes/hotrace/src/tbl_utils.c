@@ -12,22 +12,21 @@
 
 #include "hotrace.h"
 
-t_list	*tbl_find_node(t_list *tbl[TBL_SIZE], char *key)
-{
-	t_list	*head;
-	t_list	*found;
-	int		index;
+t_list *tbl_find_node(t_list *tbl[TBL_SIZE], char *key) {
+  t_list *head;
+  t_list *found;
+  int index;
 
-	if (!tbl || !key)
-		return (NULL);
-	index = hash_find_index(key);
-	if (index < 0)
-		return (NULL);
-	head = tbl[index];
-	if (!head)
-		return (NULL);
-	found = find_node(head, key);
-	return (found);
+  if (!tbl || !key)
+    return (NULL);
+  index = hash_find_index(key);
+  if (index < 0)
+    return (NULL);
+  head = tbl[index];
+  if (!head)
+    return (NULL);
+  found = find_node(head, key);
+  return (found);
 }
 
 /**
@@ -40,28 +39,26 @@ t_list	*tbl_find_node(t_list *tbl[TBL_SIZE], char *key)
  * @return    true if the key-value pair was successfully appended,
  *            false otherwise.
  */
-bool	append_to_table(t_list *tbl[TBL_SIZE], char *key, char *value)
-{
-	t_list	*new;
-	int		index;
-	char	*new_key;
-	char	*new_value;
+bool append_to_table(t_list *tbl[TBL_SIZE], char *key, char *value) {
+  t_list *new;
+  int index;
+  char *new_key;
+  char *new_value;
 
-	index = hash_find_index(key);
-	if (index == -1)
-		return (false);
-	new_key = ft_strdup(key);
-	if (!new_key)
-		return (false);
-	new_value = ft_strdup(value);
-	if (!new_value)
-	{
-		free(new_key);
-		return (false);
-	}
-	new = ft_lstnew(new_key, new_value);
-	if (!new)
-		return (false);
-	ft_lstadd_front(&tbl[index], new);
-	return (true);
+  index = hash_find_index(key);
+  if (index == -1)
+    return (false);
+  new_key = ft_strdup(key);
+  if (!new_key)
+    return (false);
+  new_value = ft_strdup(value);
+  if (!new_value) {
+    free(new_key);
+    return (false);
+  }
+  new = ft_lstnew(new_key, new_value);
+  if (!new)
+    return (false);
+  ft_lstadd_front(&tbl[index], new);
+  return (true);
 }

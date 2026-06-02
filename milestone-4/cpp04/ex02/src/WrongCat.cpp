@@ -32,4 +32,6 @@ WrongCat &WrongCat::operator=(const WrongCat &other) {
 const std::string WrongCat::getType(void) const { return _type; }
 
 // Private functions
-void WrongCat::makeSound(void) const { std::cout << "Wrong Meow!" << std::endl; }
+void WrongCat::makeSound(void) const {
+  std::cout << "Wrong Meow!" << std::endl;
+}

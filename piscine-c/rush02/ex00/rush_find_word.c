@@ -43,31 +43,27 @@
  * #===y===#
  * ```
  */
-char	*find_word(char ***cube, int len, int u, int qty)
-{
-	int		i;
-	char	*a_to_find;
-	char	*head;
+char *find_word(char ***cube, int len, int u, int qty) {
+  int i;
+  char *a_to_find;
+  char *head;
 
-	head = ft_itoa(u);
-	a_to_find = ft_strnew(1 + ft_strlen(head) + (3 * qty));
-	ft_strcat(a_to_find, head);
-	i = 0;
-	while (i < qty)
-	{
-		ft_strcat(a_to_find, "000");
-		i++;
-	}
-	i = 0;
-	while (i < len)
-	{
-		if (ft_strcmp(cube[i][0], a_to_find) == 0)
-		{
-			free(a_to_find);
-			return (cube[i][1]);
-		}
-		i++;
-	}
-	free(a_to_find);
-	return (NULL);
+  head = ft_itoa(u);
+  a_to_find = ft_strnew(1 + ft_strlen(head) + (3 * qty));
+  ft_strcat(a_to_find, head);
+  i = 0;
+  while (i < qty) {
+    ft_strcat(a_to_find, "000");
+    i++;
+  }
+  i = 0;
+  while (i < len) {
+    if (ft_strcmp(cube[i][0], a_to_find) == 0) {
+      free(a_to_find);
+      return (cube[i][1]);
+    }
+    i++;
+  }
+  free(a_to_find);
+  return (NULL);
 }

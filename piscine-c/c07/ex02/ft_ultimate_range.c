@@ -25,33 +25,29 @@
  * - if failed, -1
  * - if bad values, 0
  */
-int	ft_ultimate_range(int **range, int min, int max)
-{
-	int	i;
-	int	*tab;
-	int	size;
+int ft_ultimate_range(int **range, int min, int max) {
+  int i;
+  int *tab;
+  int size;
 
-	size = max - min;
-	tab = malloc(sizeof(*tab) * (size));
-	if (min >= max)
-	{
-		*range = NULL;
-		return (0);
-	}
-	if (tab == NULL)
-	{
-		*range = NULL;
-		return (-1);
-	}
-	i = 0;
-	while (min < max)
-	{
-		tab[i] = min;
-		i++;
-		min++;
-	}
-	*range = tab;
-	return (size);
+  size = max - min;
+  tab = malloc(sizeof(*tab) * (size));
+  if (min >= max) {
+    *range = NULL;
+    return (0);
+  }
+  if (tab == NULL) {
+    *range = NULL;
+    return (-1);
+  }
+  i = 0;
+  while (min < max) {
+    tab[i] = min;
+    i++;
+    min++;
+  }
+  *range = tab;
+  return (size);
 }
 
 // #include <stdio.h>

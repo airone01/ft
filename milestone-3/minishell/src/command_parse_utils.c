@@ -18,16 +18,15 @@
  * @param expanded_value The value to set as the first argument
  * @return char** Newly allocated args array or NULL on failure
  */
-static char	**create_first_arg(char *expanded_value)
-{
-	char	**new_args;
+static char **create_first_arg(char *expanded_value) {
+  char **new_args;
 
-	new_args = malloc(sizeof(char *) * 2);
-	if (!new_args)
-		return (NULL);
-	new_args[0] = expanded_value;
-	new_args[1] = NULL;
-	return (new_args);
+  new_args = malloc(sizeof(char *) * 2);
+  if (!new_args)
+    return (NULL);
+  new_args[0] = expanded_value;
+  new_args[1] = NULL;
+  return (new_args);
 }
 
 /**
@@ -37,23 +36,21 @@ static char	**create_first_arg(char *expanded_value)
  * @param expanded_value New value to add to args array
  * @return char** New args array or NULL on failure
  */
-static char	**create_extended_args(t_command *cmd, char *expanded_value)
-{
-	char	**new_args;
-	int		i;
+static char **create_extended_args(t_command *cmd, char *expanded_value) {
+  char **new_args;
+  int i;
 
-	new_args = malloc(sizeof(char *) * ((unsigned long)cmd->arg_count + 3));
-	if (!new_args)
-		return (NULL);
-	i = 0;
-	while (i <= cmd->arg_count)
-	{
-		new_args[i] = cmd->args[i];
-		i++;
-	}
-	new_args[i] = expanded_value;
-	new_args[i + 1] = NULL;
-	return (new_args);
+  new_args = malloc(sizeof(char *) * ((unsigned long)cmd->arg_count + 3));
+  if (!new_args)
+    return (NULL);
+  i = 0;
+  while (i <= cmd->arg_count) {
+    new_args[i] = cmd->args[i];
+    i++;
+  }
+  new_args[i] = expanded_value;
+  new_args[i + 1] = NULL;
+  return (new_args);
 }
 
 /**
@@ -63,19 +60,17 @@ static char	**create_extended_args(t_command *cmd, char *expanded_value)
  * @param expanded_value Expanded token value to add
  * @return bool true on success, false on failure
  */
-bool	handle_first_arg(t_command *cmd, char *expanded_value)
-{
-	char	**new_args;
+bool handle_first_arg(t_command *cmd, char *expanded_value) {
+  char **new_args;
 
-	new_args = create_first_arg(expanded_value);
-	if (!new_args)
-	{
-		free(expanded_value);
-		return (false);
-	}
-	cmd->args = new_args;
-	cmd->arg_count = 0;
-	return (true);
+  new_args = create_first_arg(expanded_value);
+  if (!new_args) {
+    free(expanded_value);
+    return (false);
+  }
+  cmd->args = new_args;
+  cmd->arg_count = 0;
+  return (true);
 }
 
 /**
@@ -85,20 +80,18 @@ bool	handle_first_arg(t_command *cmd, char *expanded_value)
  * @param expanded_value Expanded token value to add
  * @return bool true on success, false on failure
  */
-bool	add_to_existing_args(t_command *cmd, char *expanded_value)
-{
-	char	**new_args;
+bool add_to_existing_args(t_command *cmd, char *expanded_value) {
+  char **new_args;
 
-	new_args = create_extended_args(cmd, expanded_value);
-	if (!new_args)
-	{
-		free(expanded_value);
-		return (false);
-	}
-	free(cmd->args);
-	cmd->args = new_args;
-	cmd->arg_count++;
-	return (true);
+  new_args = create_extended_args(cmd, expanded_value);
+  if (!new_args) {
+    free(expanded_value);
+    return (false);
+  }
+  free(cmd->args);
+  cmd->args = new_args;
+  cmd->arg_count++;
+  return (true);
 }
 
 /**
@@ -109,14 +102,13 @@ bool	add_to_existing_args(t_command *cmd, char *expanded_value)
  * @param ctx Context containing environment information
  * @return bool true on success, false on failure
  */
-bool	process_word_token(t_command *cmd, t_token *token, t_ctx *ctx)
-{
-	char	*expanded_value;
+bool process_word_token(t_command *cmd, t_token *token, t_ctx *ctx) {
+  char *expanded_value;
 
-	expanded_value = handle_quotes_and_vars(ctx, token);
-	if (!expanded_value)
-		return (false);
-	if (!cmd->args)
-		return (handle_first_arg(cmd, expanded_value));
-	return (add_to_existing_args(cmd, expanded_value));
+  expanded_value = handle_quotes_and_vars(ctx, token);
+  if (!expanded_value)
+    return (false);
+  if (!cmd->args)
+    return (handle_first_arg(cmd, expanded_value));
+  return (add_to_existing_args(cmd, expanded_value));
 }

@@ -21,24 +21,21 @@
  *
  * @note The searched variable *must* end with a '='
  */
-char	*env_find(t_ctx *ctx, char *var)
-{
-	size_t	i;
-	size_t	len;
-	char	*env_var;
+char *env_find(t_ctx *ctx, char *var) {
+  size_t i;
+  size_t len;
+  char *env_var;
 
-	if (!ctx->envp)
-		return (NULL);
-	i = 0;
-	len = ft_strlen(var);
-	while (ctx->envp[i])
-	{
-		if (ft_strncmp(ctx->envp[i], var, len) == 0)
-		{
-			env_var = ft_strdup(ctx->envp[i] + len);
-			return (env_var);
-		}
-		i++;
-	}
-	return (NULL);
+  if (!ctx->envp)
+    return (NULL);
+  i = 0;
+  len = ft_strlen(var);
+  while (ctx->envp[i]) {
+    if (ft_strncmp(ctx->envp[i], var, len) == 0) {
+      env_var = ft_strdup(ctx->envp[i] + len);
+      return (env_var);
+    }
+    i++;
+  }
+  return (NULL);
 }

@@ -21,24 +21,22 @@
  * @returns	buffer with read data
  * @returns	null if error
  */
-void	*ft_file_read(char *fname, int fsize)
-{
-	void	*buff;
-	int		fd;
+void *ft_file_read(char *fname, int fsize) {
+  void *buff;
+  int fd;
 
-	fd = open(fname, O_RDONLY, 0);
-	if (fd == -1)
-		return (NULL);
-	buff = malloc(fsize * sizeof(char) + 1);
-	if (read(fd, buff, fsize) == -1)
-	{
-		free(buff);
-		close(fd);
-		return (NULL);
-	}
-	close(fd);
-	((char *)buff)[fsize] = '\0';
-	return (buff);
+  fd = open(fname, O_RDONLY, 0);
+  if (fd == -1)
+    return (NULL);
+  buff = malloc(fsize * sizeof(char) + 1);
+  if (read(fd, buff, fsize) == -1) {
+    free(buff);
+    close(fd);
+    return (NULL);
+  }
+  close(fd);
+  ((char *)buff)[fsize] = '\0';
+  return (buff);
 }
 
 /*
@@ -49,15 +47,14 @@ void	*ft_file_read(char *fname, int fsize)
  * @returns	buffer with read data
  * @returns	null if error
  */
-void	*ft_stdin_read(int fsize)
-{
-	void	*buff;
-	int		sread;
+void *ft_stdin_read(int fsize) {
+  void *buff;
+  int sread;
 
-	buff = malloc(fsize * sizeof(char) + 1);
-	sread = read(0, buff, fsize);
-	if (sread == -1)
-		return (free_and_null(buff));
-	((char *)buff)[sread] = '\0';
-	return (buff);
+  buff = malloc(fsize * sizeof(char) + 1);
+  sread = read(0, buff, fsize);
+  if (sread == -1)
+    return (free_and_null(buff));
+  ((char *)buff)[sread] = '\0';
+  return (buff);
 }

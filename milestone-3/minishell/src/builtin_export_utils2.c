@@ -24,24 +24,22 @@
  * @param has_equals_ptr Pointer to indicate the presence of the equals sign
  * @return int 0 on success, 1 on error
  */
-int	extract_export_data(char *arg, char **key_ptr, char **value_ptr,
-		bool *has_equals_ptr)
-{
-	*key_ptr = get_env_key_from_export(arg);
-	if (!*key_ptr)
-		return (1);
-	if (!validate_env_key(*key_ptr))
-	{
-		(void)error(arg, "export", ERR_IDENTIFIER);
-		free(*key_ptr);
-		*key_ptr = NULL;
-		return (1);
-	}
-	*has_equals_ptr = (ft_strchr(arg, '=') != NULL);
-	*value_ptr = NULL;
-	if (*has_equals_ptr)
-		*value_ptr = get_env_value_from_export(arg);
-	return (0);
+int extract_export_data(char *arg, char **key_ptr, char **value_ptr,
+                        bool *has_equals_ptr) {
+  *key_ptr = get_env_key_from_export(arg);
+  if (!*key_ptr)
+    return (1);
+  if (!validate_env_key(*key_ptr)) {
+    (void)error(arg, "export", ERR_IDENTIFIER);
+    free(*key_ptr);
+    *key_ptr = NULL;
+    return (1);
+  }
+  *has_equals_ptr = (ft_strchr(arg, '=') != NULL);
+  *value_ptr = NULL;
+  if (*has_equals_ptr)
+    *value_ptr = get_env_value_from_export(arg);
+  return (0);
 }
 
 /**
@@ -53,13 +51,12 @@ int	extract_export_data(char *arg, char **key_ptr, char **value_ptr,
  * @param has_equals Indicates if the argument contained an equals sign
  * @return int 1 on success, 0 on failure
  */
-int	update_or_add_env_var(t_ctx *ctx, char *key, char *value, bool has_equals)
-{
-	int	result;
+int update_or_add_env_var(t_ctx *ctx, char *key, char *value, bool has_equals) {
+  int result;
 
-	if (!update_env_var(&ctx->env_list, key, value, has_equals))
-		result = add_env_var(&ctx->env_list, key, value);
-	else
-		result = 1;
-	return (result);
+  if (!update_env_var(&ctx->env_list, key, value, has_equals))
+    result = add_env_var(&ctx->env_list, key, value);
+  else
+    result = 1;
+  return (result);
 }

@@ -19,15 +19,14 @@
  * @param s2 Second string
  * @return Newly allocated joined string or NULL on error
  */
-char	*join_and_free(char *s1, char *s2)
-{
-	char	*result;
+char *join_and_free(char *s1, char *s2) {
+  char *result;
 
-	if (!s1)
-		return (ft_strdup(s2));
-	result = ft_strjoin(s1, s2);
-	free(s1);
-	return (result);
+  if (!s1)
+    return (ft_strdup(s2));
+  result = ft_strjoin(s1, s2);
+  free(s1);
+  return (result);
 }
 
 /**
@@ -36,11 +35,10 @@ char	*join_and_free(char *s1, char *s2)
  * @param result Current result buffer
  * @return Updated result buffer with position at dollar sign
  */
-char	*handle_dollar_sign(char *result)
-{
-	if (!result)
-		result = ft_strdup("");
-	return (result);
+char *handle_dollar_sign(char *result) {
+  if (!result)
+    result = ft_strdup("");
+  return (result);
 }
 
 /**
@@ -50,20 +48,18 @@ char	*handle_dollar_sign(char *result)
  * @param result Current result buffer
  * @return Updated result buffer or NULL on error
  */
-char	*handle_word_part(t_lexer *lexer, char *result)
-{
-	char	*part;
-	char	*new_result;
+char *handle_word_part(t_lexer *lexer, char *result) {
+  char *part;
+  char *new_result;
 
-	part = read_word_lexer(lexer);
-	if (!part)
-	{
-		free(result);
-		return (ft_strdup(""));
-	}
-	new_result = join_and_free(result, part);
-	free(part);
-	return (new_result);
+  part = read_word_lexer(lexer);
+  if (!part) {
+    free(result);
+    return (ft_strdup(""));
+  }
+  new_result = join_and_free(result, part);
+  free(part);
+  return (new_result);
 }
 
 /**
@@ -74,20 +70,18 @@ char	*handle_word_part(t_lexer *lexer, char *result)
  * @param quote_char Quote character (single or double)
  * @return Updated result buffer or NULL on error
  */
-char	*handle_quoted_part(t_lexer *lexer, char *result, char quote_char)
-{
-	char	*part;
-	char	*new_result;
+char *handle_quoted_part(t_lexer *lexer, char *result, char quote_char) {
+  char *part;
+  char *new_result;
 
-	part = read_quoted_string_lexer(lexer, quote_char);
-	if (!part)
-	{
-		free(result);
-		return (NULL);
-	}
-	new_result = join_and_free(result, part);
-	free(part);
-	return (new_result);
+  part = read_quoted_string_lexer(lexer, quote_char);
+  if (!part) {
+    free(result);
+    return (NULL);
+  }
+  new_result = join_and_free(result, part);
+  free(part);
+  return (new_result);
 }
 
 /**
@@ -97,16 +91,15 @@ char	*handle_quoted_part(t_lexer *lexer, char *result, char quote_char)
  * @param result Current result string (can be NULL)
  * @return char* Token string or NULL on error
  */
-char	*handle_dollar_quotes(t_lexer *lexer)
-{
-	char	quote_char;
+char *handle_dollar_quotes(t_lexer *lexer) {
+  char quote_char;
 
-	advance_lexer(lexer);
-	quote_char = get_lexer(lexer);
-	advance_lexer(lexer);
-	while (get_lexer(lexer) != '\0' && get_lexer(lexer) != quote_char)
-		advance_lexer(lexer);
-	if (get_lexer(lexer) == quote_char)
-		advance_lexer(lexer);
-	return (ft_strdup(""));
+  advance_lexer(lexer);
+  quote_char = get_lexer(lexer);
+  advance_lexer(lexer);
+  while (get_lexer(lexer) != '\0' && get_lexer(lexer) != quote_char)
+    advance_lexer(lexer);
+  if (get_lexer(lexer) == quote_char)
+    advance_lexer(lexer);
+  return (ft_strdup(""));
 }

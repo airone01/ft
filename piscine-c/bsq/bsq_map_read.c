@@ -23,24 +23,22 @@
  *
  * @returns	true or false
  */
-bool	bsq_map_valid(char **strs, t_coords *coords)
-{
-	int	i;
+bool bsq_map_valid(char **strs, t_coords *coords) {
+  int i;
 
-	if (strs == NULL)
-		return (false);
-	coords->y = ft_atoi(strs[0]);
-	coords->x = ft_strlen(strs[1]);
-	if (bsq_matrix_count(strs) - 1 != coords->y)
-		return (false);
-	i = 1;
-	while (i < coords->y - 1)
-	{
-		if (ft_strlen(strs[i]) != coords->x)
-			return (false);
-		i++;
-	}
-	return (true);
+  if (strs == NULL)
+    return (false);
+  coords->y = ft_atoi(strs[0]);
+  coords->x = ft_strlen(strs[1]);
+  if (bsq_matrix_count(strs) - 1 != coords->y)
+    return (false);
+  i = 1;
+  while (i < coords->y - 1) {
+    if (ft_strlen(strs[i]) != coords->x)
+      return (false);
+    i++;
+  }
+  return (true);
 }
 
 /*
@@ -50,18 +48,17 @@ bool	bsq_map_valid(char **strs, t_coords *coords)
  *
  * @returns	metadata as t_tiles
  */
-t_tiles	bsq_map_meta(char **strs)
-{
-	t_tiles	tiles;
-	int		i;
+t_tiles bsq_map_meta(char **strs) {
+  t_tiles tiles;
+  int i;
 
-	i = 0;
-	while (char_is_num(strs[0][i]))
-		i++;
-	tiles.epty = strs[0][i];
-	tiles.obst = strs[0][i + 1];
-	tiles.full = strs[0][i + 2];
-	return (tiles);
+  i = 0;
+  while (char_is_num(strs[0][i]))
+    i++;
+  tiles.epty = strs[0][i];
+  tiles.obst = strs[0][i + 1];
+  tiles.full = strs[0][i + 2];
+  return (tiles);
 }
 
 /*
@@ -73,31 +70,27 @@ t_tiles	bsq_map_meta(char **strs)
  * @returns	the map
  * @returns	NULL if a character (and hence, the map) was invalid
  */
-t_tile	**bsq_map_from_str(char **strs, t_coords coords, t_tiles tiles)
-{
-	t_tile	**map;
-	int		i;
-	int		j;
+t_tile **bsq_map_from_str(char **strs, t_coords coords, t_tiles tiles) {
+  t_tile **map;
+  int i;
+  int j;
 
-	strs++;
-	map = bsq_map_init(coords);
-	i = 0;
-	while (i < coords.y)
-	{
-		j = 0;
-		while (j < coords.x)
-		{
-			if (strs[i][j] != tiles.epty && strs[i][j] != tiles.obst)
-			{
-				bsq_map_free(map, coords);
-				return (NULL);
-			}
-			map[i][j] = bsq_map_char_to_tile(strs[i][j], tiles);
-			j++;
-		}
-		i++;
-	}
-	return (map);
+  strs++;
+  map = bsq_map_init(coords);
+  i = 0;
+  while (i < coords.y) {
+    j = 0;
+    while (j < coords.x) {
+      if (strs[i][j] != tiles.epty && strs[i][j] != tiles.obst) {
+        bsq_map_free(map, coords);
+        return (NULL);
+      }
+      map[i][j] = bsq_map_char_to_tile(strs[i][j], tiles);
+      j++;
+    }
+    i++;
+  }
+  return (map);
 }
 
 /*
@@ -109,30 +102,27 @@ t_tile	**bsq_map_from_str(char **strs, t_coords coords, t_tiles tiles)
  * @returns	allocated map with data
  * @returns	null if error
  */
-t_map	*bsq_map_read(char *fname, int fsize)
-{
-	t_coords	coords;
-	t_tiles		tiles;
-	t_tile		**map;
-	char		**strs;
+t_map *bsq_map_read(char *fname, int fsize) {
+  t_coords coords;
+  t_tiles tiles;
+  t_tile **map;
+  char **strs;
 
-	strs = bsq_read_split_free(fname, fsize);
-	if (bsq_matrix_count(strs) == 0)
-	{
-		free_strs(strs);
-		return (NULL);
-	}
-	if (!bsq_map_valid(strs, &coords))
-		return (free_and_null(strs));
-	tiles = bsq_map_meta(strs);
-	map = bsq_map_from_str(strs, coords, tiles);
-	if (map == NULL)
-	{
-		bsq_map_free(map, coords);
-		free_strs(strs);
-		return (NULL);
-	}
-	return (all_final(map, tiles, strs, coords));
+  strs = bsq_read_split_free(fname, fsize);
+  if (bsq_matrix_count(strs) == 0) {
+    free_strs(strs);
+    return (NULL);
+  }
+  if (!bsq_map_valid(strs, &coords))
+    return (free_and_null(strs));
+  tiles = bsq_map_meta(strs);
+  map = bsq_map_from_str(strs, coords, tiles);
+  if (map == NULL) {
+    bsq_map_free(map, coords);
+    free_strs(strs);
+    return (NULL);
+  }
+  return (all_final(map, tiles, strs, coords));
 }
 
 // /*

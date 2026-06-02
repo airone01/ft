@@ -19,11 +19,9 @@
  *
  * @param str Pointer to string pointer to free
  */
-void	safe_free_str(char **str)
-{
-	if (str && *str)
-	{
-		free(*str);
-		*str = NULL;
-	}
+void safe_free_str(char **str) {
+  if (str && *str) {
+    free(*str);
+    *str = NULL;
+  }
 }

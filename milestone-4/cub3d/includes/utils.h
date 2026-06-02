@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #ifndef UTILS_H
-# define UTILS_H
+#define UTILS_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*******************************************************************************
  *                             Function Prototypes                             *
@@ -30,7 +30,7 @@
  * @param relative_path Relative path to resolve
  * @return char* Resolved absolute path, or NULL on failure
  */
-char		*resolve_path(const char *base_path, const char *relative_path);
+char *resolve_path(const char *base_path, const char *relative_path);
 
 /*
 ** u_texture.c
@@ -43,14 +43,14 @@ char		*resolve_path(const char *base_path, const char *relative_path);
  * @return true On error
  * @return false On success
  */
-bool		load_game_textures(t_data *data);
-bool		load_game_textures_bonus(t_data *data);
+bool load_game_textures(t_data *data);
+bool load_game_textures_bonus(t_data *data);
 
 /**
  * @brief Returns the map characters
  *
  * @returns The map characters
  */
-const char	*map_chars(void);
+const char *map_chars(void);
 
 #endif // !UTILS_H

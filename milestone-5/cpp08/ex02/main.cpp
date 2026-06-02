@@ -1,7 +1,7 @@
 #include "MutantStack.hpp"
 #include <iostream>
-#include <string>
 #include <list>
+#include <string>
 
 bool assert_test(bool condition, const std::string &name) {
   if (condition)
@@ -29,8 +29,14 @@ int main(void) {
 
     assert_test(mstack.size() == lstack.size(), "size matches std::list");
 
-    mstack.push(3); mstack.push(5); mstack.push(737); mstack.push(0);
-    lstack.push_back(3); lstack.push_back(5); lstack.push_back(737); lstack.push_back(0);
+    mstack.push(3);
+    mstack.push(5);
+    mstack.push(737);
+    mstack.push(0);
+    lstack.push_back(3);
+    lstack.push_back(5);
+    lstack.push_back(737);
+    lstack.push_back(0);
 
     // check iterators
     MutantStack<int>::iterator it = mstack.begin();
@@ -39,10 +45,12 @@ int main(void) {
     std::list<int>::iterator lite = lstack.end();
 
     // check increment/decrement
-    ++it; --it;
+    ++it;
+    --it;
     bool identical = true;
     while (it != ite && lit != lite) {
-      if (*it != *lit) identical = false;
+      if (*it != *lit)
+        identical = false;
       ++it;
       ++lit;
     }
@@ -55,7 +63,9 @@ int main(void) {
 
   {
     MutantStack<char> ms;
-    ms.push('a'); ms.push('b'); ms.push('c');
+    ms.push('a');
+    ms.push('b');
+    ms.push('c');
 
     // test reverse iterator
     MutantStack<char>::reverse_iterator rit = ms.rbegin();

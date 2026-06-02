@@ -10,10 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	test_timeout(void)
-{
-	while (1)
-	{
-	}
-	return (1);
+int test_timeout(void) {
+  while (1) {
+  }
+  return (1);
 }

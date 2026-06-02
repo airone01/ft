@@ -17,15 +17,13 @@
  *
  * @param ptrs	The pointer of pointers to free
  */
-void	free_2d_array(void **ptrs)
-{
-	int	i;
+void free_2d_array(void **ptrs) {
+  int i;
 
-	i = 0;
-	while (ptrs[i])
-	{
-		free(ptrs[i]);
-		i++;
-	}
-	free(ptrs);
+  i = 0;
+  while (ptrs[i]) {
+    free(ptrs[i]);
+    i++;
+  }
+  free(ptrs);
 }

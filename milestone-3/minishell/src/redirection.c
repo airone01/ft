@@ -19,15 +19,14 @@
  * @param cmd Command structure
  * @return bool true on success, false on error
  */
-bool	apply_redirections(t_command *cmd)
-{
-	if (!cmd || !cmd->redirection)
-		return (true);
-	if (!apply_input_redirection(cmd))
-		return (false);
-	if (!apply_output_redirection(cmd))
-		return (false);
-	return (true);
+bool apply_redirections(t_command *cmd) {
+  if (!cmd || !cmd->redirection)
+    return (true);
+  if (!apply_input_redirection(cmd))
+    return (false);
+  if (!apply_output_redirection(cmd))
+    return (false);
+  return (true);
 }
 
 /**
@@ -37,18 +36,16 @@ bool	apply_redirections(t_command *cmd)
  * @param stdout_fd Pointer to store original stdout fd
  * @return bool true on success, false on error
  */
-bool	save_original_fds(int *stdin_fd, int *stdout_fd)
-{
-	*stdin_fd = dup(STDIN_FILENO);
-	if (*stdin_fd == -1)
-		return (error("dup", "redirection", ERR_FD), false);
-	*stdout_fd = dup(STDOUT_FILENO);
-	if (*stdout_fd == -1)
-	{
-		close(*stdin_fd);
-		return (error("dup", "redirection", ERR_FD), false);
-	}
-	return (true);
+bool save_original_fds(int *stdin_fd, int *stdout_fd) {
+  *stdin_fd = dup(STDIN_FILENO);
+  if (*stdin_fd == -1)
+    return (error("dup", "redirection", ERR_FD), false);
+  *stdout_fd = dup(STDOUT_FILENO);
+  if (*stdout_fd == -1) {
+    close(*stdin_fd);
+    return (error("dup", "redirection", ERR_FD), false);
+  }
+  return (true);
 }
 
 /**
@@ -57,16 +54,13 @@ bool	save_original_fds(int *stdin_fd, int *stdout_fd)
  * @param stdin_fd Original stdin fd
  * @param stdout_fd Original stdout fd
  */
-void	restore_original_fds(int stdin_fd, int stdout_fd)
-{
-	if (stdin_fd != -1)
-	{
-		dup2(stdin_fd, STDIN_FILENO);
-		close(stdin_fd);
-	}
-	if (stdout_fd != -1)
-	{
-		dup2(stdout_fd, STDOUT_FILENO);
-		close(stdout_fd);
-	}
+void restore_original_fds(int stdin_fd, int stdout_fd) {
+  if (stdin_fd != -1) {
+    dup2(stdin_fd, STDIN_FILENO);
+    close(stdin_fd);
+  }
+  if (stdout_fd != -1) {
+    dup2(stdout_fd, STDOUT_FILENO);
+    close(stdout_fd);
+  }
 }

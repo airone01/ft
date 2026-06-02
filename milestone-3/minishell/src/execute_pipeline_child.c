@@ -22,21 +22,18 @@
  * @param fds Input and output file descriptors
  * @return bool true on success, false on error
  */
-static bool	setup_io_redirection(t_fds fds)
-{
-	if (fds.in != -1)
-	{
-		if (dup2(fds.in, STDIN_FILENO) == -1)
-			return (false);
-		close(fds.in);
-	}
-	if (fds.out != -1)
-	{
-		if (dup2(fds.out, STDOUT_FILENO) == -1)
-			return (false);
-		close(fds.out);
-	}
-	return (true);
+static bool setup_io_redirection(t_fds fds) {
+  if (fds.in != -1) {
+    if (dup2(fds.in, STDIN_FILENO) == -1)
+      return (false);
+    close(fds.in);
+  }
+  if (fds.out != -1) {
+    if (dup2(fds.out, STDOUT_FILENO) == -1)
+      return (false);
+    close(fds.out);
+  }
+  return (true);
 }
 
 /**
@@ -46,14 +43,13 @@ static bool	setup_io_redirection(t_fds fds)
  * @param cmd Command to execute
  * @param pids Process ids pointer to free
  */
-void	execute_builtin_and_exit(t_ctx *ctx, t_command *cmd, int *pids)
-{
-	int	status;
+void execute_builtin_and_exit(t_ctx *ctx, t_command *cmd, int *pids) {
+  int status;
 
-	status = execute_builtin(ctx, cmd);
-	ctx_clear(ctx);
-	free(pids);
-	exit(status);
+  status = execute_builtin(ctx, cmd);
+  ctx_clear(ctx);
+  free(pids);
+  exit(status);
 }
 
 /**
@@ -66,32 +62,29 @@ void	execute_builtin_and_exit(t_ctx *ctx, t_command *cmd, int *pids)
  * @param fds Input and output file descriptors
  * @param pids Process ids pointer to free
  */
-void	execute_command_in_child(t_ctx *ctx, t_command *cmd, t_fds fds,
-		int *pids)
-{
-	char	*bin_path;
-	int		status;
+void execute_command_in_child(t_ctx *ctx, t_command *cmd, t_fds fds,
+                              int *pids) {
+  char *bin_path;
+  int status;
 
-	if (!setup_io_redirection(fds) || !apply_redirections(cmd))
-	{
-		ctx_clear(ctx);
-		free(pids);
-		exit(1);
-	}
-	if (!cmd->args)
-		return ;
-	if (is_builtin_command(cmd->args[0]))
-		execute_builtin_and_exit(ctx, cmd, pids);
-	setup_child_signals();
-	bin_path = bin_find(ctx, cmd->args[0]);
-	if (!bin_path)
-	{
-		status = ctx->exit_status;
-		ctx_clear(ctx);
-		free(pids);
-		exit(status);
-	}
-	execve(bin_path, cmd->args, ctx->envp);
-	free(bin_path);
-	exit(error(cmd->args[0], NULL, ERR_CMD_NOT_FOUND));
+  if (!setup_io_redirection(fds) || !apply_redirections(cmd)) {
+    ctx_clear(ctx);
+    free(pids);
+    exit(1);
+  }
+  if (!cmd->args)
+    return;
+  if (is_builtin_command(cmd->args[0]))
+    execute_builtin_and_exit(ctx, cmd, pids);
+  setup_child_signals();
+  bin_path = bin_find(ctx, cmd->args[0]);
+  if (!bin_path) {
+    status = ctx->exit_status;
+    ctx_clear(ctx);
+    free(pids);
+    exit(status);
+  }
+  execve(bin_path, cmd->args, ctx->envp);
+  free(bin_path);
+  exit(error(cmd->args[0], NULL, ERR_CMD_NOT_FOUND));
 }

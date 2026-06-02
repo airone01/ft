@@ -10,21 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_iterative_factorial(int nb)
-{
-	int	i;
-	int	count;
+int ft_iterative_factorial(int nb) {
+  int i;
+  int count;
 
-	if (nb < 0)
-		return (0);
-	i = 1;
-	count = 1;
-	while (i <= nb)
-	{
-		count *= i;
-		i++;
-	}
-	return (count);
+  if (nb < 0)
+    return (0);
+  i = 1;
+  count = 1;
+  while (i <= nb) {
+    count *= i;
+    i++;
+  }
+  return (count);
 }
 
 // #include <stdio.h>

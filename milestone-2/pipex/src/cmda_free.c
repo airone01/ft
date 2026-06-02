@@ -17,15 +17,13 @@
  *
  * @param cmda	The advanced command
  */
-void	cmda_free(void *cmda)
-{
-	char	**args;
+void cmda_free(void *cmda) {
+  char **args;
 
-	args = (char **)cmda;
-	while (*args)
-	{
-		free(*args);
-		args++;
-	}
-	free(cmda);
+  args = (char **)cmda;
+  while (*args) {
+    free(*args);
+    args++;
+  }
+  free(cmda);
 }

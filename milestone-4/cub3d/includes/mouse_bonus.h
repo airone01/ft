@@ -11,36 +11,35 @@
 /* ************************************************************************** */
 
 #ifndef MOUSE_BONUS_H
-# define MOUSE_BONUS_H
+#define MOUSE_BONUS_H
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 /*******************************************************************************
  *                                    Macros                                   *
  ******************************************************************************/
 
-# define MOUSE_SENSITIVITY 0.001
-# define MOUSE_MIN 0.0005
-# define MOUSE_MAX 0.005
-# define MOUSE_LEFT_CLICK 1
-# define MOUSE_RIGHT_CLICK 3
-# define MOUSE_SCROLL_UP 4
-# define MOUSE_SCROLL_DOWN 5
+#define MOUSE_SENSITIVITY 0.001
+#define MOUSE_MIN 0.0005
+#define MOUSE_MAX 0.005
+#define MOUSE_LEFT_CLICK 1
+#define MOUSE_RIGHT_CLICK 3
+#define MOUSE_SCROLL_UP 4
+#define MOUSE_SCROLL_DOWN 5
 
 /*******************************************************************************
  *                                  Structures                                 *
  ******************************************************************************/
 
-typedef struct s_mouse
-{
-	int		x;
-	int		y;
-	int		last_x;
-	int		last_y;
-	bool	is_active;
-	bool	first_move;
-	double	sensitivity;
-}			t_mouse;
+typedef struct s_mouse {
+  int x;
+  int y;
+  int last_x;
+  int last_y;
+  bool is_active;
+  bool first_move;
+  double sensitivity;
+} t_mouse;
 
 /*******************************************************************************
  *                             Function Prototypes                             *
@@ -55,7 +54,7 @@ typedef struct s_mouse
  *
  * @param button Mouse button code (MOUSE_SCROLL_UP/DOWN)
  */
-void		handle_scroll_wheel(int button);
+void handle_scroll_wheel(int button);
 
 /**
  * @brief Process mouse button press events
@@ -63,7 +62,7 @@ void		handle_scroll_wheel(int button);
  * @param button Mouse button identifier
  * @return 0 on success
  */
-int			mouse_press_handler(int button);
+int mouse_press_handler(int button);
 
 /*
 ** o_init.c
@@ -75,26 +74,26 @@ int			mouse_press_handler(int button);
  * @param win_width Window width in pixels
  * @param win_height Window height in pixels
  */
-void		mouse_init(int win_width, int win_height);
+void mouse_init(int win_width, int win_height);
 
 /**
  * @brief Get pointer to global mouse state
  *
  * @return Pointer to global mouse structure
  */
-t_mouse		*mouse_get_state(void);
+t_mouse *mouse_get_state(void);
 
 /**
  * @brief Toggle mouse activation state
  */
-void		mouse_toggle(void);
+void mouse_toggle(void);
 
 /**
  * @brief Setup MLX mouse event hooks
  *
  * @param data Main game data structure
  */
-void		mouse_setup_hooks(t_data *data);
+void mouse_setup_hooks(t_data *data);
 
 /*
 ** o_mouse.c
@@ -108,6 +107,6 @@ void		mouse_setup_hooks(t_data *data);
  * @param data Main game data structure
  * @return 0 on success
  */
-int			mouse_move_handler(int x, int y, t_data *data);
+int mouse_move_handler(int x, int y, t_data *data);
 
 #endif // !MOUSE_BONUS_H
