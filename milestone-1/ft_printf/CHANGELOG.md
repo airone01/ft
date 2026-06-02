@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.2.0](https://github.com/airone01/ft/compare/ft_printf-v3.1.0...ft_printf-v3.2.0) (2026-06-02)
+
+
+### Features
+
+* **zig:** all cc program build ([40b2c59](https://github.com/airone01/ft/commit/40b2c5956a9a9c83c50cfd586d8dffb8f963b391))
+
+
+### Bug Fixes
+
+* remove Makefiles ([c1da704](https://github.com/airone01/ft/commit/c1da704a688460cf6a6c37d5b2ec941f7aa61e55))
+* remove most bazel mentions ([a37c27d](https://github.com/airone01/ft/commit/a37c27d7994f19b2e2b6ccf74401bc261d011d16))
+
 ## [3.1.0](https://github.com/airone01/ft/compare/ft_printf-v3.0.0...ft_printf-v3.1.0) (2026-04-05)
 
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/airone01/ft/compare/get_next_line-v2.0.0...get_next_line-v2.1.0) (2026-06-02)
+
+
+### Features
+
+* **zig:** all cc program build ([40b2c59](https://github.com/airone01/ft/commit/40b2c5956a9a9c83c50cfd586d8dffb8f963b391))
+
+
+### Bug Fixes
+
+* remove most bazel mentions ([a37c27d](https://github.com/airone01/ft/commit/a37c27d7994f19b2e2b6ccf74401bc261d011d16))
+
 ## [2.0.0](https://github.com/airone01/ft/compare/get_next_line-v1.0.0...get_next_line-v2.0.0) (2026-01-20)
 
 
