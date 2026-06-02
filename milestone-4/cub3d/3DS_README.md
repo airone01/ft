@@ -19,7 +19,7 @@ Native Nintendo 3DS port of the `cub3d` raycasting engine.
 ## Build Instructions
 
 You must use the `threeDS` nix shell to get the `devkitARM` toolchain. I will
-probably not be configuring Bazel to build the app, this script will do.
+probably not be configuring Zig to build the app, this script will do.
 
 ```bash
 nix develop .#threeDS

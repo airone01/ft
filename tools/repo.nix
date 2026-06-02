@@ -79,6 +79,7 @@ in {
         # minishell
         readline
 
+        bear
         just
       ];
       shellHook = config.pre-commit.installationScript;
