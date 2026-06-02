@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/airone01/ft/compare/cpp09-v1.0.1...cpp09-v1.1.0) (2026-06-02)
+
+
+### Features
+
+* **zig:** all cc program build ([40b2c59](https://github.com/airone01/ft/commit/40b2c5956a9a9c83c50cfd586d8dffb8f963b391))
+
+
+### Bug Fixes
+
+* remove Makefiles ([c1da704](https://github.com/airone01/ft/commit/c1da704a688460cf6a6c37d5b2ec941f7aa61e55))
+* remove most bazel mentions ([a37c27d](https://github.com/airone01/ft/commit/a37c27d7994f19b2e2b6ccf74401bc261d011d16))
+
 ## [1.0.1](https://github.com/airone01/ft/compare/cpp09-v1.0.0...cpp09-v1.0.1) (2026-03-16)
 
 

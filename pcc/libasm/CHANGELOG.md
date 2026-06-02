@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/airone01/ft/compare/libasm-v1.0.0...libasm-v1.1.0) (2026-06-02)
+
+
+### Features
+
+* **libasm:** build with zig ([f916fb3](https://github.com/airone01/ft/commit/f916fb3fc561f19f818c75653f2670dbeeb59508))
+
+
+### Bug Fixes
+
+* **libasm:** patch build flag ([8b63aca](https://github.com/airone01/ft/commit/8b63aca67c4778a2e8aebc33bbafb2730ecafc3f))
+* remove most bazel mentions ([a37c27d](https://github.com/airone01/ft/commit/a37c27d7994f19b2e2b6ccf74401bc261d011d16))
+
 ## 1.0.0 (2026-03-16)
 
 

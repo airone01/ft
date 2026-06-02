@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/airone01/ft/compare/inception-v1.0.0...inception-v1.1.0) (2026-06-02)
+
+
+### Features
+
+* **inception:** justfile ([cce418e](https://github.com/airone01/ft/commit/cce418ecb879f0070e7755a8cd28a95285a3fa62))
+* **nix:** more linters ([1c675dd](https://github.com/airone01/ft/commit/1c675dd90dd67ed869ae18134d113eb93bee4b78))
+
+
+### Bug Fixes
+
+* remove Makefiles ([c1da704](https://github.com/airone01/ft/commit/c1da704a688460cf6a6c37d5b2ec941f7aa61e55))
+
 ## 1.0.0 (2026-01-20)
 
 
