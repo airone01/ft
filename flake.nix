@@ -50,6 +50,8 @@
 
           # minishell
           readline
+
+          just
         ];
       };
 
