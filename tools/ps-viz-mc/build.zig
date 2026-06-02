@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const manifest = "tools/push-swap-visualizer-minecraft/Cargo.toml";
+const manifest = "tools/ps-viz-mc/Cargo.toml";
 // Cargo places the binary at the workspace root target/, not the package's target/
 const binary = "target/release/mcps";
 

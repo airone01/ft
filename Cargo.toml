@@ -1,4 +1,4 @@
 [workspace]
-members = ["tools/push-swap-visualizer-minecraft"]
+members = ["tools/ps-viz-mc"]
 exclude = []
 resolver = "2"

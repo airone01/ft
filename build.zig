@@ -27,7 +27,7 @@ const rush02_mod = @import("piscine-c/rush02/build.zig");
 const hotrace_mod = @import("rushes/hotrace/build.zig");
 const libunit_mod = @import("rushes/libunit/build.zig");
 const libasm_mod = @import("pcc/libasm/build.zig");
-const minecraft_viz_mod = @import("tools/push-swap-visualizer-minecraft/build.zig");
+const minecraft_viz_mod = @import("tools/ps-viz-mc/build.zig");
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -44,26 +44,31 @@ pub fn build(b: *std.Build) void {
 
     // Milestone 2
     b.installArtifact(fdf_mod.configure(b, target, optimize, .{
-        .libft = lft, .ft_printf = printf, .gnl = gnl, .minilibx = mlx,
+        .libft = lft,
+        .ft_printf = printf,
+        .gnl = gnl,
+        .minilibx = mlx,
     }));
-    const pipex = pipex_mod.configure(b, target, optimize,
-        pipex_mod.Deps{ .libft = lft, .ft_printf = printf, .gnl = gnl });
+    const pipex = pipex_mod.configure(b, target, optimize, pipex_mod.Deps{ .libft = lft, .ft_printf = printf, .gnl = gnl });
     b.installArtifact(pipex.mandatory);
     b.installArtifact(pipex.bonus);
-    const ps = push_swap_mod.configure(b, target, optimize,
-        push_swap_mod.Deps{ .libft = lft, .gnl = gnl });
+    const ps = push_swap_mod.configure(b, target, optimize, push_swap_mod.Deps{ .libft = lft, .gnl = gnl });
     b.installArtifact(ps.push_swap);
     b.installArtifact(ps.checker);
 
     // Milestone 3
     b.installArtifact(minishell_mod.configure(b, target, optimize, .{
-        .libft = lft, .ft_printf = printf,
+        .libft = lft,
+        .ft_printf = printf,
     }));
     b.installArtifact(philosophers_mod.configure(b, target, optimize, .{ .libft = lft }));
 
     // Milestone 4
     const cub3d = cub3d_mod.configure(b, target, optimize, cub3d_mod.Deps{
-        .libft = lft, .ft_printf = printf, .gnl = gnl, .minilibx = mlx,
+        .libft = lft,
+        .ft_printf = printf,
+        .gnl = gnl,
+        .minilibx = mlx,
     });
     b.installArtifact(cub3d.mandatory);
     b.installArtifact(cub3d.bonus);
