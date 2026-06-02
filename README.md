@@ -213,7 +213,7 @@ During a boring weekend, I set up a Bazel target to cross-compile a 3DS homebrew
 app. If you have a modded 3DS on hand, you can compile it and try yourself. It's
 very limited, laggy, and crashes on quit though. You have been warned.
 
-### [`Minecraft push_swap visualizer`](./tools/push-swap-visualizer-minecraft/README.md)
+### [`Minecraft push_swap visualizer`](./tools/ps-viz-mc/README.md)
 
 A program to flex on your friends by visualizing your push_swap algorithm in
 Minecraft. It uses [Valence](https://valence.rs/) to control the game packets
