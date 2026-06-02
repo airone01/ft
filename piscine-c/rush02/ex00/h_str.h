@@ -13,23 +13,25 @@
 #ifndef H_STR_H
 # define H_STR_H
 
-// Strings <-> numbers
-char			*ft_itoa(int nb);
-long			ft_atoi(char *str);
+# include <stddef.h>
+
+// From libft
+char			*ft_itoa(int n);
+int				ft_atoi(const char *nptr);
+size_t			ft_strlcat(char *dst, const char *src, size_t size);
+char			*ft_strdup(const char *s);
+int				ft_strcmp(const char *s1, const char *s2);
+size_t			ft_strlen(const char *str);
 // STDIN manipulations
 void			ft_putstr(char *str);
-// Strings manipulation
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
+// Strings manipulation — local implementations
 char			**ft_split2(char *str, char *charset);
 char			**ft_split(char *str, char *charset);
 char			*ft_strncpy(char *dest, char *src, unsigned int n);
 char			*ft_strjoin(int size, char **strs, char *sep);
 char			*ft_strcat(char *dest, char *src);
 char			*ft_strcpy(char *dest, char *src);
-char			*ft_strdup(char *src);
 char			*ft_strnew(int size);
-int				ft_strcmp(char *s1, char *s2);
-int				ft_strlen(char *str);
 int				check_charset(char *str, char *charset, int i);
 int				count_words(char *str, char *charset);
 
