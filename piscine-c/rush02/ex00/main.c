@@ -10,7 +10,7 @@ char ***extract_data(char *data_src, int *len) {
 
   file = open(data_src, O_RDONLY);
   read(file, buffer, 5000);
-  dico1 = ft_split(buffer, "\n");
+  dico1 = ft_split_rush(buffer, "\n");
   i = 0;
   while (dico1[i++]) {
     (*len)++;
@@ -18,7 +18,7 @@ char ***extract_data(char *data_src, int *len) {
   cube = malloc(sizeof(char **) * (*len));
   i = 0;
   while (dico1[i]) {
-    cube[i] = ft_split2(dico1[i], ":");
+    cube[i] = ft_split_rush2(dico1[i], ":");
     i++;
   }
   return (cube);
