@@ -13,20 +13,22 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include "ft_printf.h"         // our standard functions :-)
-#include "libft.h"             // our printf implementation :-)
-#include <errno.h>             // errno
-#include <fcntl.h>             // file control flags
+#include "ft_printf.h" // our standard functions :-)
+#include "libft.h"     // our printf implementation :-)
+#include <errno.h>     // errno
+#include <fcntl.h>     // file control flags
+// clang-format off
+#include <stdio.h>             // standard i/o (must precede readline)
 #include <readline/history.h>  // rl_ utils
 #include <readline/readline.h> // readline
-#include <signal.h>            // signal-related functions
-#include <stdbool.h>           // for booleans
-#include <stdio.h>             // standard i/o
-#include <stdlib.h>            // standard lib
-#include <string.h>            // string operations
-#include <sys/stat.h>          // stat function for files/directories
-#include <sys/types.h>         // various types
-#include <sys/wait.h>          // more signal-related functions
+// clang-format on
+#include <signal.h>    // signal-related functions
+#include <stdbool.h>   // for booleans
+#include <stdlib.h>    // standard lib
+#include <string.h>    // string operations
+#include <sys/stat.h>  // stat function for files/directories
+#include <sys/types.h> // various types
+#include <sys/wait.h>  // more signal-related functions
 
 // *************************************************************************** #
 //                                   Macros                                    #
