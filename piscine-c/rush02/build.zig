@@ -9,6 +9,7 @@ pub fn configure(
     b: *std.Build,
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
+    lft: *std.Build.Step.Compile,
 ) void {
     const exe = b.addExecutable(.{
         .name = "rush02",
@@ -24,5 +25,6 @@ pub fn configure(
         .flags = c_flags,
     });
     exe.root_module.addIncludePath(b.path(src_dir));
+    exe.root_module.linkLibrary(lft);
     b.installArtifact(exe);
 }

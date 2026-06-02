@@ -84,7 +84,7 @@ pub fn build(b: *std.Build) void {
     piscine_c_mod.configure(b, target, optimize);
     rush00_mod.configure(b, target, optimize);
     rush01_mod.configure(b, target, optimize);
-    rush02_mod.configure(b, target, optimize);
+    rush02_mod.configure(b, target, optimize, lft);
 
     // Rushes
     hotrace_mod.configure(b, target, optimize);
