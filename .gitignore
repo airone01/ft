@@ -56,8 +56,9 @@ dkms.conf
 # ft
 *.bonus
 
-# nix-direnv
+# Nix
 .direnv/
+/.pre-commit-config.yaml
 
 # CMake
 compile_commands.json

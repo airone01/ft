@@ -1,67 +1,24 @@
 {
-  description = "Flake for ft";
+  description = "ft monorepo";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    c_formatter_42.url = "github:maix-flake/c_formatter_42";
     devkitNix.url = "github:bandithedoge/devkitNix";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    git-hooks.url = "github:cachix/git-hooks.nix";
+    import-tree.url = "github:vic/import-tree";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    systems.url = "github:nix-systems/default";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
-  outputs = {
-    nixpkgs,
-    flake-utils,
-    c_formatter_42,
-    devkitNix,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [devkitNix.overlays.default];
-      };
-    in {
-      devShells.default = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [
-          bashInteractive
-        ];
-        buildInputs = with pkgs; [
-          # ASM
-          nasm
-
-          # Rust
-          pkg-config
-          rustc
-          cargo
-          gcc
-          rustfmt
-          clippy
-
-          # 42
-          c_formatter_42.packages.${system}.default
-          norminette
-          valgrind
-
-          # X11
-          libX11
-          libX11.dev
-          libXext
-          libXext.dev
-
-          # minishell
-          readline
-
-          just
-        ];
-      };
-
-      devShells.threeDS =
-        pkgs.mkShell.override {
-          stdenv = pkgs.devkitNix.stdenvARM;
-        } {
-          packages = [
-            pkgs.azahar
-          ];
-        };
-    });
+  outputs = inputs: let
+    inherit (inputs.nixpkgs) lib;
+  in
+    inputs.flake-parts.lib.mkFlake
+    {inherit inputs;}
+    (lib.pipe inputs.import-tree [
+      (i: i.filterNot (lib.hasInfix "/external-tools/"))
+      (i: i.filterNot (lib.hasSuffix "/flake.nix"))
+      (i: i ./.)
+    ]);
 }
