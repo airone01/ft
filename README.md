@@ -4,13 +4,42 @@
 
 <div align="center">
   <p>
-    <a href="https://github.com/airone01/ft/pulse"><img alt="Last commit" src="https://img.shields.io/github/last-commit/airone01/ft?style=flat-square&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/></a>
-    <a href="https://github.com/airone01/ft/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/airone01/ft?style=flat-square&logo=unlicense&color=ee999f&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <a href="https://github.com/airone01/ft/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/airone01/ft?style=flat-square&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <a href="https://github.com/airone01/ft/issues"><img alt="Issues" src="https://img.shields.io/github/issues/airone01/ft?style=flat-square&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <a href="https://github.com/airone01/ft"><img alt="Repo Size" src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41" /></a><br />
-    <a href="https://github.com/airone01/ft/actions/workflows/make.yml"><img alt="Bazel workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/bazel.yml?style=flat-square&logo=bazel&logoColor=D9E0EE&labelColor=302D41" /></a>
-    <a href="https://github.com/airone01/ft/actions/workflows/norminette.yml"><img alt="Norminette workflow status" src="https://img.shields.io/github/actions/workflow/status/airone01/ft/norminette.yml?style=flat-square&logo=42&logoColor=D9E0EE&labelColor=302D41&label=norm" /></a>
+    <a href="https://github.com/airone01/ft/pulse">
+      <img
+        alt="Last commit"
+        src="https://img.shields.io/github/last-commit/airone01/ft?style=flat-square&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"
+      />
+    </a>
+    <a href="https://github.com/airone01/ft/blob/main/LICENSE">
+      <img
+        alt="License"
+        src="https://img.shields.io/github/license/airone01/ft?style=flat-square&logo=unlicense&color=ee999f&logoColor=D9E0EE&labelColor=302D41"
+      />
+    </a>
+    <a href="https://github.com/airone01/ft/stargazers">
+      <img
+        alt="Stars"
+        src="https://img.shields.io/github/stars/airone01/ft?style=flat-square&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41"
+      />
+    </a>
+    <a href="https://github.com/airone01/ft/issues">
+      <img
+        alt="Issues"
+        src="https://img.shields.io/github/issues/airone01/ft?style=flat-square&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41"
+      />
+    </a>
+    <a href="https://github.com/airone01/ft">
+      <img
+        alt="Repo Size"
+        src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41"
+      />
+    </a>
+    <a href="https://github.com/airone01/ft/actions/workflows/zig-build.yml">
+      <img
+        alt="Zig workflow status"
+        src="https://img.shields.io/github/actions/workflow/status/airone01/ft/zig-build.yml?style=flat-square&logo=zig&logoColor=D9E0EE&labelColor=302D41"
+      />
+    </a>
   </p>
 </div>
 
@@ -41,21 +70,22 @@
 This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning these
 projects are tightly coupled and share dependencies to work properly.
 
-**Why Bazel instead of Make?** The 42 curriculum relies heavily on GNU Make to
+**Why Zig instead of Make?** The 42 curriculum relies heavily on GNU Make to
 teach students the fundamentals of compilation. However, maintaining 30+ nearly
 identical Makefiles in a monorepo quickly becomes tedious. Because I enjoy
-DevOps and reproducibility, I migrated this repository to Bazel. I now only
-generate a standard Makefile and clean the repo right before pushing a project
-for grading.
+DevOps and reproducibility, I migrated this repository to the Zig build system.
+I now only generate a standard Makefile and clean the repo right before pushing
+a project for grading. I used to use Bazel to build my projects, but it's
+somewhat incompatible with Nix, so I moved to the Zig build system.
 
 > [!CAUTION]
-> A natural side effect of this Bazel setup is that it makes it harder to
-> blindly copy-paste my projects and submit them as your own. While deterring
-> cheating wasn't my primary technical goal, I fully support the result. Copying
-> defeats the core principles of 42 and goes against what I personally believe
-> in. This repository is meant to serve as an example of what you can build at
-> this school, not as a shortcut. It's called a school for a reason. _Learn;
-> Write your own tests; and "By Odin! By Thor! Use your brain!"._
+> A natural side effect of this Zig setup is that it makes it harder to blindly
+> copy-paste my projects and submit them as your own. While deterring cheating
+> wasn't my primary technical goal, I fully support the result. Copying defeats
+> the core principles of 42 and goes against what I personally believe in. This
+> repository is meant to serve as an example of what you can build at this
+> school, not as a shortcut. It's called a school for a reason. _Learn; Write
+> your own tests; and "By Odin! By Thor! Use your brain!"._
 
 ## Projects
 
@@ -236,34 +266,32 @@ You can convert PNG images to BMP using `convert` using
 
 ## Additional notes
 
-### Bazel
+### Zig build
 
 > [!NOTE]
 > Did you read the foreword?
 
-You can build all of the projects in this monorepo using
-[Bazel](https://bazel.build/).
+You can build all the projects in this monorepo using
+[Zig](https://ziglang.org/).
 
-- Run `bazel query ...` to list all projects.
-- Run `bazel build //milestone-2/fdf:fdf` to make `fdf` (or `bazel build fdf`,
-  [there are aliases](./BUILD.bazel)).
-- Most importantly, run `bazel build //...` to make all projects at once (as
-  well as the required external libs).
+- See the list of project in the [main build file](./build.zig).
+- Run `zig build` to make all projects at once (as well as the required external
+  libs).
 
-As per Bazel fashion, building the entirety of the repo at once is pretty fast.
+As per Zig fashion, building the entirety of the repo at once is pretty fast.
 
 ### LSPs and `compile_commands.json`
 
 If you use an IDE or LSP server and the constant `clangd` type errors appearing
 when browsing this repo hurt your eyes, I might have a solution for you. The
 `compile_commands.json` file! It instructs your LSP server on where to locate
-the headers, and in which order, and how your compiling system (Bazel in this
-case) manages your compilation.
+the headers, and in which order, and how your build system (Zig in this case)
+manages your compilation.
 
-To compile this file for the whole project using Bazel:
+To compile this file for the whole project using Zig and Bear:
 
 ```sh
-bazel run //:refresh_compile_commands
+bear -- zig build
 ```
 
 > [!NOTE]
@@ -273,7 +301,7 @@ bazel run //:refresh_compile_commands
 
 This project's dev dependencies are managed using
 [`nix-direnv`](https://github.com/nix-community/nix-direnv). There is a central
-[`flake.nix`](./flake.nix) file whose main purpose is exposing `devShell`s.
+[`flake.nix`](./flake.nix) that loads all nix files using `import-tree`.
 
 I might eventually package the projects of this repo into this flake when I find
 the time.
