@@ -52,7 +52,7 @@ char *save_word(char **tab, char *str, int *limit, int c) {
   return (tab[c]);
 }
 
-char **ft_split2(char *str, char *charset) {
+char **ft_split_rush2(char *str, char *charset) {
   int nbr;
   int i;
   int limit[2];
@@ -85,7 +85,7 @@ char **ft_split2(char *str, char *charset) {
   return (result);
 }
 
-char **ft_split(char *str, char *charset) {
+char **ft_split_rush(char *str, char *charset) {
   int nbr;
   int i;
   int limit[2];

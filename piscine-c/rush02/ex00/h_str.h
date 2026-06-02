@@ -14,8 +14,8 @@ size_t ft_strlen(const char *str);
 // STDIN manipulations
 void ft_putstr(char *str);
 // Strings manipulation — local implementations
-char **ft_split2(char *str, char *charset);
-char **ft_split(char *str, char *charset);
+char **ft_split_rush2(char *str, char *charset);
+char **ft_split_rush(char *str, char *charset);
 char *ft_strncpy(char *dest, char *src, unsigned int n);
 char *ft_strjoin(int size, char **strs, char *sep);
 char *ft_strcat(char *dest, char *src);
