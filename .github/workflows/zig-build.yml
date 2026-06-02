@@ -11,7 +11,7 @@ jobs:
   build:
     name: Zig CI
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
 
     steps:
     - uses: actions/checkout@v6
@@ -30,13 +30,27 @@ jobs:
       with:
         version: 0.16.0
 
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+
     - name: Cache Zig
       uses: actions/cache@v5
       with:
-        path: ~/.cache/zig
+        path: .zig-cache
         key: ${{ runner.os }}-zig-${{ hashFiles('build.zig', 'build.zig.zon', 'build_helpers.zig') }}
         restore-keys: |
           ${{ runner.os }}-zig-
 
+    - name: Cache Cargo
+      uses: actions/cache@v5
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('tools/push-swap-visualizer-minecraft/Cargo.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+
     - name: Build All Targets
-      run: zig build
+      run: zig build --global-cache-dir .zig-cache

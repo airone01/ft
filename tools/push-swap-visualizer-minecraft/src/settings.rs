@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 use std::process::Command;
+use valence::log as _;
 
 use once_cell::sync::OnceCell;
 
@@ -53,7 +54,6 @@ pub fn setup_executable() -> Result<(), String> {
     let settings = get_settings();
 
     if settings.makefile.exists() {
-        println!("Launching make...");
         let makefile_dir = settings.makefile.parent().ok_or("Invalid Makefile path")?;
         let makefile_name = settings
             .makefile
@@ -78,9 +78,9 @@ pub fn setup_executable() -> Result<(), String> {
         if !status.success() {
             return Err("Make command failed".into());
         }
-        println!("Make complete");
+        info!("Finished running make");
     } else {
-        println!("warn: no Makefile found");
+        warn!("No Makefile found");
     }
 
     if !settings.executable.exists() {
