@@ -18,7 +18,6 @@ services:
       watch:
         - action: rebuild
           path: ./requirements/nginx
-
   mariadb:
     image: inception_mariadb:latest
     build:
@@ -35,7 +34,6 @@ services:
       watch:
         - action: rebuild
           path: ./requirements/mariadb
-
   wordpress:
     image: inception_wordpress:latest
     build:
@@ -56,12 +54,10 @@ services:
       watch:
         - action: rebuild
           path: ./requirements/wordpress
-
 networks:
   net:
     name: inception_net
     driver: bridge
-
 volumes:
   mariadb:
     driver: local

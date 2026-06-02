@@ -3,11 +3,19 @@ _: let
     "CHANGELOG.md"
     ".release-please-manifest.json"
     "**/*.html"
+    "**.envrc"
+    "pcc/ft_linux/downloads/check_host_deps.sh"
+    "central/minilibx/**/*.sh"
+    "milestone-4/cpp00/ex01/test.sh"
   ];
   preCommitExcludes = [
     "CHANGELOG\\.md$"
     "\\.release-please-manifest\\.json$"
     ".*\.html$"
+    ".*\.envrc$"
+    "pcc/ft_linux/downloads/check_host_deps.sh$"
+    "central/minilibx/test/.*\.sh$"
+    "milestone-4/cpp00/ex01/test\.sh$"
   ];
 in {
   perSystem = {
@@ -28,11 +36,22 @@ in {
       settings.global.excludes = treefmtExcludes;
 
       programs = {
-        alejandra.enable = true;
+        # c, cpp
         clang-format.enable = true;
+        # nix
+        alejandra.enable = true;
         deadnix.enable = true;
         statix.enable = true;
+        # toml
         taplo.enable = true;
+        # zig
+        zig.enable = true;
+        # shell
+        shellcheck.enable = true;
+        # yaml
+        yamlfmt.enable = true;
+        # rust
+        rustfmt.enable = true;
       };
     };
 
