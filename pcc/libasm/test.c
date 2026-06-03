@@ -21,6 +21,9 @@ extern int ft_strcmp(const char *s1, const char *s2);
 extern ssize_t ft_write(int fildes, const void *buf, size_t nbyte);
 extern ssize_t ft_read(int fildes, void *buf, size_t nbyte);
 extern char *ft_strdup(const char *s);
+extern int ft_atoi_base(char *str, char *base);
+extern int g_invalid_base;
+extern int g_no_match;
 
 void comp_ft_strcmp(const char *s1, const char *s2, const char *label) {
   int my_res = ft_strcmp(s1, s2);
@@ -117,6 +120,89 @@ int main(void) {
     ASSERT_EQ(strcmp(dup2, orig2), 0,
               "ft_strdup (empty str) should cleanly copy the NUL terminator");
     free(dup2);
+  }
+
+  {
+#define RESET_FLAGS()                                                          \
+  do {                                                                         \
+    g_invalid_base = 0;                                                        \
+    g_no_match = 0;                                                            \
+  } while (0)
+
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("123", "0123456789"), 123,
+              "ft_atoi_base: decimal positive");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("-456", "0123456789"), -456,
+              "ft_atoi_base: decimal negative");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("+42", "0123456789"), 42,
+              "ft_atoi_base: explicit positive sign");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("  \t 99", "0123456789"), 99,
+              "ft_atoi_base: leading whitespace");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("  -7", "0123456789"), -7,
+              "ft_atoi_base: whitespace then minus");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("++--9", "0123456789"), 9,
+              "ft_atoi_base: double negation cancels out");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("0", "0123456789"), 0, "ft_atoi_base: zero");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("ff", "0123456789abcdef"), 255,
+              "ft_atoi_base: hex ff");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("-ff", "0123456789abcdef"), -255,
+              "ft_atoi_base: hex negative");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("10", "01"), 2, "ft_atoi_base: binary 10 = 2");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("1111", "01"), 15, "ft_atoi_base: binary 1111 = 15");
+    RESET_FLAGS();
+    ASSERT_EQ(ft_atoi_base("z", "0z"), 1, "ft_atoi_base: custom two-char base");
+
+    /* invalid base: too short */
+    RESET_FLAGS();
+    ft_atoi_base("1", "0");
+    ASSERT_EQ(g_invalid_base, 1,
+              "ft_atoi_base: base len 1 sets g_invalid_base");
+
+    /* invalid base: contains '+' */
+    RESET_FLAGS();
+    ft_atoi_base("1", "0+1");
+    ASSERT_EQ(g_invalid_base, 1,
+              "ft_atoi_base: base with '+' sets g_invalid_base");
+
+    /* invalid base: contains '-' */
+    RESET_FLAGS();
+    ft_atoi_base("1", "0-1");
+    ASSERT_EQ(g_invalid_base, 1,
+              "ft_atoi_base: base with '-' sets g_invalid_base");
+
+    /* invalid base: contains space */
+    RESET_FLAGS();
+    ft_atoi_base("1", "0 1");
+    ASSERT_EQ(g_invalid_base, 1,
+              "ft_atoi_base: base with ' ' sets g_invalid_base");
+
+    /* invalid base: duplicate chars */
+    RESET_FLAGS();
+    ft_atoi_base("1", "001");
+    ASSERT_EQ(g_invalid_base, 1,
+              "ft_atoi_base: duplicate base chars sets g_invalid_base");
+
+    /* no match: char not in base */
+    RESET_FLAGS();
+    ft_atoi_base("9", "01234567");
+    ASSERT_EQ(g_no_match, 1,
+              "ft_atoi_base: digit outside base sets g_no_match");
+
+    /* no match: char mid-string not in base */
+    RESET_FLAGS();
+    ft_atoi_base("12x4", "0123456789");
+    ASSERT_EQ(g_no_match, 1,
+              "ft_atoi_base: mid-string invalid char sets g_no_match");
   }
 
   return 0;
