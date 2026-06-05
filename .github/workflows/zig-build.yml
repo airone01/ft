@@ -18,8 +18,24 @@ jobs:
           sudo apt-get install -y \
             libx11-dev \
             libxext-dev \
-            libreadline-dev \
-            nasm
+            libreadline-dev
+      - name: Cache NASM
+        id: cache-nasm
+        uses: actions/cache@v4
+        with:
+          path: ~/nasm-install
+          key: nasm-3.01-${{ runner.os }}
+      - name: Build and install NASM
+        if: steps.cache-nasm.outputs.cache-hit != 'true'
+        run: |
+          wget https://www.nasm.us/pub/nasm/releasebuilds/3.01/nasm-3.01.tar.gz
+          tar xzf nasm-3.01.tar.gz
+          cd nasm-3.01
+          ./configure --prefix=$HOME/nasm-install
+          make -j$(nproc)
+          make install
+      - name: Add NASM to PATH
+        run: echo "$HOME/nasm-install/bin" >> $GITHUB_PATH
       - name: Install Zig
         uses: mlugg/setup-zig@v2
         with:
