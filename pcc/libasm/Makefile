@@ -3,7 +3,9 @@ AR			:= ar
 ARFLAGS		:= rcs
 AS			:= nasm
 ASFLAGS		:= -f elf64 -Wall -Werror
-SRC			:= strlen strcpy strcmp write read strdup atoi_base
+SRC			:= strlen strcpy strcmp write read strdup
+SRCB		:= atoi_base list_push_front list_size list_sort list_remove_if
+SRC			+= $(addsuffix _bonus,$(SRCB))
 SRC			:= $(addsuffix .s,$(addprefix src/ft_,$(SRC)))
 OBJ			:= $(SRC:.s=.o)
 

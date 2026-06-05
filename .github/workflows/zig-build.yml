@@ -19,23 +19,17 @@ jobs:
             libx11-dev \
             libxext-dev \
             libreadline-dev
-      - name: Cache NASM
-        id: cache-nasm
-        uses: actions/cache@v4
-        with:
-          path: ~/nasm-install
-          key: nasm-3.01-${{ runner.os }}
       - name: Build and install NASM
-        if: steps.cache-nasm.outputs.cache-hit != 'true'
         run: |
-          wget https://www.nasm.us/pub/nasm/releasebuilds/3.01/nasm-3.01.tar.gz
-          tar xzf nasm-3.01.tar.gz
-          cd nasm-3.01
-          ./configure --prefix=$HOME/nasm-install
+          export NASM_VER="3.01"
+          wget https://www.nasm.us/pub/nasm/releasebuilds/${NASM_VER}/nasm-${NASM_VER}.tar.gz
+          tar xzf nasm-${NASM_VER}.tar.gz
+          cd nasm-${NASM_VER}
+          ./configure --prefix=$HOME/.local
           make -j$(nproc)
           make install
-      - name: Add NASM to PATH
-        run: echo "$HOME/nasm-install/bin" >> $GITHUB_PATH
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          nasm --version
       - name: Install Zig
         uses: mlugg/setup-zig@v2
         with:
