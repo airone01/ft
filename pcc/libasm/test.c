@@ -25,6 +25,17 @@ extern int ft_atoi_base(char *str, char *base);
 extern int g_invalid_base;
 extern int g_no_match;
 
+typedef struct s_list {
+  void *data;
+  struct s_list *next;
+} t_list;
+
+extern void ft_list_push_front(t_list **begin_list, void *data);
+extern int ft_list_size(t_list *begin_list);
+extern void ft_list_sort(t_list **begin_list, int (*cmp)());
+extern void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
+                              void (*free_fct)(void *));
+
 void comp_ft_strcmp(const char *s1, const char *s2, const char *label) {
   int my_res = ft_strcmp(s1, s2);
   int std_res = strcmp(s1, s2);
@@ -203,6 +214,77 @@ int main(void) {
     ft_atoi_base("12x4", "0123456789");
     ASSERT_EQ(g_no_match, 1,
               "ft_atoi_base: mid-string invalid char sets g_no_match");
+  }
+
+  {
+    t_list *list = NULL;
+
+    /* ft_list_size: NULL list */
+    ASSERT_EQ(ft_list_size(NULL), 0, "ft_list_size: empty list returns 0");
+
+    /* ft_list_push_front: single push */
+    ft_list_push_front(&list, "hello");
+    ASSERT_EQ(ft_list_size(list), 1,
+              "ft_list_push_front: size is 1 after one push");
+    ASSERT_EQ(strcmp((char *)list->data, "hello"), 0,
+              "ft_list_push_front: data of first node is correct");
+
+    /* ft_list_push_front: second push goes to front */
+    ft_list_push_front(&list, "world");
+    ASSERT_EQ(ft_list_size(list), 2,
+              "ft_list_push_front: size is 2 after two pushes");
+    ASSERT_EQ(strcmp((char *)list->data, "world"), 0,
+              "ft_list_push_front: new node is at front");
+    ASSERT_EQ(strcmp((char *)list->next->data, "hello"), 0,
+              "ft_list_push_front: old node is second");
+
+    /* ft_list_push_front: third push */
+    ft_list_push_front(&list, "!");
+    ASSERT_EQ(ft_list_size(list), 3, "ft_list_size: three-element list");
+
+    /* ft_list_sort: sort ["!", "world", "hello"] ascending by strcmp */
+    ft_list_sort(&list, (int (*)())ft_strcmp);
+    ASSERT_EQ(strcmp((char *)list->data, "!"), 0,
+              "ft_list_sort: first element after sort");
+    ASSERT_EQ(strcmp((char *)list->next->data, "hello"), 0,
+              "ft_list_sort: second element after sort");
+    ASSERT_EQ(strcmp((char *)list->next->next->data, "world"), 0,
+              "ft_list_sort: third element after sort");
+
+    /* ft_list_sort: already-sorted list is stable */
+    ft_list_sort(&list, (int (*)())ft_strcmp);
+    ASSERT_EQ(strcmp((char *)list->data, "!"), 0,
+              "ft_list_sort: already-sorted list unchanged");
+
+    /* free the sorted list before remove_if tests */
+    while (list) {
+      t_list *n = list->next;
+      free(list);
+      list = n;
+    }
+
+    /* ft_list_remove_if: build ["a", "b", "a", "c"] using strdup data */
+    list = NULL;
+    ft_list_push_front(&list, strdup("c"));
+    ft_list_push_front(&list, strdup("a"));
+    ft_list_push_front(&list, strdup("b"));
+    ft_list_push_front(&list, strdup("a"));
+    /* list is now: a -> b -> a -> c */
+
+    /* remove all "a" nodes */
+    ft_list_remove_if(&list, "a", (int (*)())ft_strcmp, free);
+    ASSERT_EQ(ft_list_size(list), 2,
+              "ft_list_remove_if: size is 2 after removing two 'a' nodes");
+    ASSERT_EQ(strcmp((char *)list->data, "b"), 0,
+              "ft_list_remove_if: first remaining node is 'b'");
+    ASSERT_EQ(strcmp((char *)list->next->data, "c"), 0,
+              "ft_list_remove_if: second remaining node is 'c'");
+
+    /* remove all remaining nodes */
+    ft_list_remove_if(&list, "b", (int (*)())ft_strcmp, free);
+    ft_list_remove_if(&list, "c", (int (*)())ft_strcmp, free);
+    ASSERT_EQ(list, NULL,
+              "ft_list_remove_if: list is NULL after removing all nodes");
   }
 
   return 0;

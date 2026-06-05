@@ -7,6 +7,9 @@ SRC			:= strlen strcpy strcmp write read strdup atoi_base
 SRC			:= $(addsuffix .s,$(addprefix src/ft_,$(SRC)))
 OBJ			:= $(SRC:.s=.o)
 
+BONUS_SRC	:= $(addprefix src/ft_list_,push_front_bonus.s size_bonus.s sort_bonus.s remove_if_bonus.s)
+BONUS_OBJ	:= $(BONUS_SRC:.s=.o)
+
 TNAME		:= test
 TSRC		:= test.c
 # This tells the linker to create the ELF section and explicitly mark it as
@@ -16,6 +19,9 @@ TLDFLAGS	:= -Wl,-z,noexecstack
 
 all: $(NAME)
 
+bonus: $(NAME) $(BONUS_OBJ)
+	$(AR) $(ARFLAGS) $(NAME) $(BONUS_OBJ)
+
 $(NAME): $(OBJ)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 
@@ -23,7 +29,7 @@ $(NAME): $(OBJ)
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(BONUS_OBJ)
 
 fclean: clean
 	$(RM) $(NAME) $(TNAME)
@@ -36,6 +42,4 @@ $(TNAME): $(NAME)
 
 FORCE:
 
-.PHONY: all clean fclean re test FORCE
-
-
+.PHONY: all bonus clean fclean re test FORCE
