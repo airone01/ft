@@ -1,0 +1,40 @@
+{
+  "$schema": "https://www.schemastore.org/package.json",
+  "name": "@transc/db",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./drizzle-orm": "./src/drizzle-orm.ts"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "db:push": "drizzle-kit push --config=./drizzle.config.ts",
+    "db:generate": "drizzle-kit generate --config=./drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config=./drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config=./drizzle.config.ts",
+    "setup": "bun run db:generate && bun run db:migrate && bun run src/seed.ts"
+  },
+  "peerDependencies": {
+    "typescript": "~5.9.3"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.45.1",
+    "pg": "^8.18.0",
+    "postgres": "^3.4.8",
+    "ws": "^8.20.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "@types/pg": "^8.16.0",
+    "@types/ws": "^8.18.1"
+  }
+}

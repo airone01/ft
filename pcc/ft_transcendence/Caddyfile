@@ -1,0 +1,15 @@
+{$DOMAIN}:8443 {
+	tls internal
+
+	handle /socket.io/* {
+		reverse_proxy web:3001
+	}
+
+	handle {
+		reverse_proxy web:3000
+	}
+}
+
+http://{$DOMAIN}:8080 {
+  redir https://{$DOMAIN}:8443{uri}
+}

@@ -1,0 +1,188 @@
+<script lang="ts">
+import { BotIcon, LogOutIcon, SettingsIcon, ZapIcon } from "@lucide/svelte";
+import type { SubmitFunction } from "@sveltejs/kit";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@transc/ui/command";
+import { SidebarProvider, SidebarTrigger } from "@transc/ui/sidebar";
+import { toast } from "svelte-sonner";
+import { enhance } from "$app/forms";
+import { goto, invalidateAll } from "$app/navigation";
+import { page } from "$app/state";
+import AppSidebar from "$lib/components/app-sidebar.svelte";
+import { naturalCap, type ShellGroup, sidebarGroups } from "$lib/navigation";
+import { m } from "$lib/paraglide/messages";
+import { useMediaQuery } from "$lib/utils/media-query.svelte";
+
+const { children } = $props();
+
+let logoutForm: HTMLFormElement | undefined = $state();
+let commandInput: string = $state("");
+let sidebarOpen: boolean = $state(page.data.sidebarOpen);
+let commandOpen: boolean = $state(false);
+
+const isMobile = useMediaQuery("(max-width: 639px)");
+
+$effect(() => {
+  // set cookie when bar state changes
+  // biome-ignore lint/suspicious/noDocumentCookie: can't use CookieStore because $effect can't be async
+  document.cookie = `sidebar:state=${sidebarOpen}; path=/; max-age=31536000; SameSite=Lax`;
+});
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+    e.preventDefault();
+    commandOpen = !commandOpen;
+  }
+}
+
+function runCommand(url: string) {
+  commandOpen = false;
+  goto(url);
+}
+
+const logoutFunc: SubmitFunction = () => {
+  return async ({ result }) => {
+    if (result.type === "redirect" || result.type === "success") {
+      toast.success(m.app_shell_popup_success_logout());
+      await invalidateAll(); // invalidates data to redraw interface
+    } else {
+      toast.error(m.app_shell_popup_fail_logout());
+    }
+  };
+};
+
+$effect(() => {
+  if (commandInput.toLowerCase() === "secretcat")
+    window.location =
+      "https://i.pinimg.com/originals/20/69/fd/2069fd0482fe844c802fd3cc76f39045.jpg" as string &
+        Location;
+});
+
+const commandGroups: ShellGroup[] = [
+  ...sidebarGroups
+    .map(({ label, items }) => ({
+      heading:
+        label === m.app_shell_heading_content()
+          ? m.app_shell_heading_quick_nav()
+          : naturalCap(label),
+      items: items.map((e) => {
+        const { href, label, ...el } = e;
+        return {
+          navUrl: href,
+          label: naturalCap(label),
+          ...el,
+        };
+      }),
+    }))
+    .filter((e) => e.heading !== "Chess"),
+  {
+    heading: m.app_shell_heading_chess(),
+    items: [
+      { label: m.app_shell_item_play(), navUrl: "/play", icon: ZapIcon },
+      {
+        label: m.app_shell_item_play_vs_bot(),
+        navUrl: "/play/bot",
+        icon: BotIcon,
+      },
+    ],
+  },
+  {
+    heading: m.app_shell_heading_account(),
+    items: [
+      {
+        label: m.app_shell_item_settings(),
+        navUrl: "/settings",
+        icon: SettingsIcon,
+      },
+      {
+        label: m.app_shell_item_logout(),
+        icon: LogOutIcon,
+        onClick: () => logoutForm?.requestSubmit(),
+      },
+    ],
+  },
+];
+</script>
+
+<svelte:document onkeydown={handleKeydown} />
+
+<form
+  action="/logout"
+  method="POST"
+  bind:this={logoutForm}
+  use:enhance={logoutFunc}
+></form>
+<nav aria-label="Command Dialog">
+  <CommandDialog bind:open={commandOpen}>
+    <CommandInput
+      bind:value={commandInput}
+      placeholder={m.app_shell_heading_placeholder()}
+    />
+    <CommandList>
+      <CommandEmpty>{m.app_shell_no_result_found()}</CommandEmpty>
+      {#each commandGroups as { items, heading }, i (heading)}
+        <CommandGroup {heading}>
+          {#each items as { navUrl, label, onClick, icon: Icon } (label)}
+            <CommandItem
+              onSelect={onClick
+              ? onClick
+              : navUrl
+                ? () => runCommand(navUrl)
+                : undefined}
+              class="aria-selected:bg-accent group"
+            >
+              <Icon
+                class="me-2 size-4 group-data-selected:text-accent-foreground text-foreground"
+              />
+              <span>{label}</span>
+            </CommandItem>
+          {/each}
+        </CommandGroup>
+        {#if i + 1 > commandGroups.length}
+          <CommandSeparator />
+        {/if}
+      {/each}
+    </CommandList>
+  </CommandDialog>
+</nav>
+
+<SidebarProvider bind:open={sidebarOpen}>
+  <AppSidebar
+    {logoutForm}
+    collapsible={isMobile.current ? "offcanvas" : "icon"}
+  />
+  <div class="flex flex-col w-full [&>main]:p-4 [&>main]:mt-11">
+    <header
+      class="border-b w-full p-2 h-11 fixed bg-background/40 backdrop-blur-md z-10"
+    >
+      <SidebarTrigger />
+    </header>
+    {@render children?.()}
+
+    <footer class="border-t mt-auto bg-background">
+      <div class="container mx-auto px-4 py-3">
+        <div
+          class="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-muted-foreground"
+        >
+          <p>{m.app_shell_copyright()}</p>
+          <div class="flex gap-4">
+            <a href="/privacy" class="hover:text-foreground transition-colors">
+              {m.app_shell_privacy_policy()}
+            </a>
+            <span class="text-muted-foreground/50">•</span>
+            <a href="/terms" class="hover:text-foreground transition-colors">
+              {m.app_shell_terms_of_service()}
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</SidebarProvider>
