@@ -1,0 +1,155 @@
+<script lang="ts">
+import { Upload, ZoomIn } from "@lucide/svelte";
+import type { Snippet } from "svelte";
+import Cropper, { type OnCropCompleteEvent } from "svelte-easy-crop";
+import { toast } from "svelte-sonner";
+import { m } from "../../../../../../apps/web/src/lib/paraglide/messages";
+import { getCroppedImg } from "../../../canvas";
+import { Button } from "../button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../dialog";
+import { Spinner } from "../spinner";
+
+let {
+  open = $bindable(false),
+  onCropped,
+  children,
+}: {
+  open?: boolean;
+  onCropped: (file: File) => void;
+  children: Snippet<[]>;
+} = $props();
+
+let imageSrc: string | null = $state(null);
+let crop = $state({ x: 0, y: 0 });
+let zoom = $state(1);
+let pixelCrop = $state({ x: 0, y: 0, width: 0, height: 0 });
+let loading = $state(false);
+let fileInput: HTMLInputElement;
+
+function onFileSelected(e: Event) {
+  const target = e.target as HTMLInputElement;
+  if (target.files && target.files.length > 0) {
+    const file = target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      imageSrc = reader.result as string;
+      open = true;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+async function saveCrop() {
+  if (!imageSrc || !pixelCrop || pixelCrop.width === 0) {
+    console.error("Crop data missing:", pixelCrop);
+    toast.error(m.component_image_cropper_toast_move_image_error());
+    return;
+  }
+
+  loading = true;
+  try {
+    const blob = await getCroppedImg(imageSrc, pixelCrop);
+    if (blob) {
+      // convert blob to file to satisfy interface
+      const file = new File([blob], "avatar.webp", { type: "image/webp" });
+      onCropped(file);
+      open = false;
+      // reset
+      imageSrc = null;
+      zoom = 1;
+    }
+  } catch (e) {
+    console.error(e);
+    toast.error(m.component_image_cropper_toast_crop_error());
+  } finally {
+    loading = false;
+  }
+}
+
+function triggerFileInput() {
+  fileInput.click();
+}
+</script>
+
+<input
+  type="file"
+  accept="image/*"
+  class="hidden"
+  bind:this={fileInput}
+  onchange={onFileSelected}
+>
+
+<div
+  onclick={triggerFileInput}
+  role="button"
+  tabindex="0"
+  class="w-fit"
+  onkeydown={(e) => e.key === 'Enter' && triggerFileInput()}
+>
+  {#if children}
+    {@render children()}
+  {:else}
+    <Button variant="outline">
+      <Upload class="mr-2 h-4 w-4" />
+      {m.component_image_cropper_upload()}
+    </Button>
+  {/if}
+</div>
+
+<Dialog bind:open>
+  <DialogContent class="sm:max-w-125">
+    <DialogHeader>
+      <DialogTitle>{m.component_image_cropper_edit()}</DialogTitle>
+    </DialogHeader>
+
+    <div class="relative w-full h-100 bg-black/5 rounded-md overflow-hidden">
+      {#if imageSrc}
+        <Cropper
+          image={imageSrc}
+          bind:crop
+          bind:zoom
+          aspect={1}
+          showGrid={true}
+          oncropcomplete={(e: OnCropCompleteEvent) => {
+            pixelCrop = e.pixels;
+          }}
+        />
+      {/if}
+    </div>
+
+    <div class="flex items-center gap-4 py-2">
+      <ZoomIn class="h-4 w-4 text-muted-foreground" />
+      <input
+        type="range"
+        min="1"
+        max="3"
+        step="0.1"
+        bind:value={zoom}
+        class="w-full accent-primary h-2 bg-secondary rounded-lg appearance-none cursor-pointer"
+      >
+    </div>
+
+    <DialogFooter>
+      <Button
+        variant="outline"
+        onclick={() => (open = false)}
+        class="cursor-pointer"
+      >
+        {m.component_image_cropper_cancel()}
+      </Button>
+      <Button onclick={saveCrop} disabled={loading} class="cursor-pointer">
+        {#if loading}
+          <Spinner class="mr-2 h-4 w-4" />
+        {/if}
+        {m.component_image_cropper_save()}
+      </Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
