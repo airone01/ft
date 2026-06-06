@@ -1,8 +1,9 @@
 	; input: rdi -> source pointer to NUL-terminated string
 	; output: rax -> original source pointer
 
-	;       appendix B
-	default rel
+	extern   __errno_location
+	;        appendix B
+	default  rel
 	[warning -reloc-rel-dword]
 
 	section .text
@@ -29,5 +30,10 @@ ft_strdup:
 	ret
 
 .lerror:
-	pop rdi; appendix A
+	;    RSP is 16-byte aligned here (one push rdi at entry, one call ft_strlen
+	;    one call malloc — net effect: aligned), so we can call directly.
+	call __errno_location WRT ..plt
+	mov  dword [rax], 12; ENOMEM = 12
+	xor  eax, eax; return NULL
+	pop  rdi; balance the initial push rdi
 	ret

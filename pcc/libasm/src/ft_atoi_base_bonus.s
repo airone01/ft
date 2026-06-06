@@ -41,6 +41,9 @@ ft_atoi_base:
 	je    .invalid_base
 	cmp   al, '-'
 	je    .invalid_base
+	;     whitespace: 9-13 (\t \n \v \f \r)
+	lea   ecx, [eax - 9]
+	je    .invalid_base
 	cmp   al, ' '
 	je    .invalid_base
 	inc   r13d
