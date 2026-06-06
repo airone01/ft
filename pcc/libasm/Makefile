@@ -3,14 +3,14 @@ AR			:= ar
 ARFLAGS		:= rcs
 AS			:= nasm
 ASFLAGS		:= -f elf64 -Wall -Werror
+
 SRC			:= strlen strcpy strcmp write read strdup
-SRCB		:= atoi_base list_push_front list_size list_sort list_remove_if
-SRC			+= $(addsuffix _bonus,$(SRCB))
 SRC			:= $(addsuffix .s,$(addprefix src/ft_,$(SRC)))
 OBJ			:= $(SRC:.s=.o)
 
-BONUS_SRC	:= $(addprefix src/ft_list_,push_front_bonus.s size_bonus.s sort_bonus.s remove_if_bonus.s)
-BONUS_OBJ	:= $(BONUS_SRC:.s=.o)
+SRCB		:= atoi_base list_push_front list_size list_sort list_remove_if
+SRCB		:= $(addsuffix _bonus.s,$(addprefix src/ft_,$(SRCB)))
+OBJB		:= $(SRCB:.s=.o)
 
 TNAME		:= test
 TSRC		:= test.c
@@ -21,8 +21,8 @@ TLDFLAGS	:= -Wl,-z,noexecstack
 
 all: $(NAME)
 
-bonus: $(NAME) $(BONUS_OBJ)
-	$(AR) $(ARFLAGS) $(NAME) $(BONUS_OBJ)
+bonus: $(NAME) $(OBJB)
+	$(AR) $(ARFLAGS) $(NAME) $(OBJB)
 
 $(NAME): $(OBJ)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
@@ -31,7 +31,7 @@ $(NAME): $(OBJ)
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ)
+	$(RM) $(OBJ) $(OBJB)
 
 fclean: clean
 	$(RM) $(NAME) $(TNAME)
@@ -39,7 +39,7 @@ fclean: clean
 re: fclean
 	$(MAKE) all
 
-$(TNAME): $(NAME)
+$(TNAME): bonus $(NAME)
 	$(CC) $(TSRC) $(TLDFLAGS) $(NAME) -o $(TNAME)
 
 FORCE:
