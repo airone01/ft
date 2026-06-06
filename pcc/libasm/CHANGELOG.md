@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/airone01/ft/compare/libasm-v1.1.0...libasm-v1.2.0) (2026-06-06)
+
+
+### Features
+
+* **libasm:** ft_atoi_base ([17918f3](https://github.com/airone01/ft/commit/17918f307fc1cbfe8296dcbb0bb20ce235dce165))
+* **libasm:** last bonus exercises ([2592919](https://github.com/airone01/ft/commit/25929194051e599eace84445515becf674324604))
+
+
+### Bug Fixes
+
+* **libasm:** last minute patches ([8a947dd](https://github.com/airone01/ft/commit/8a947dd857c53bb154f71b2eef94b4d86b404de2))
+
 ## [1.1.0](https://github.com/airone01/ft/compare/libasm-v1.0.0...libasm-v1.1.0) (2026-06-02)
 
 
