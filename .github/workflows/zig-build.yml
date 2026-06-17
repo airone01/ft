@@ -55,3 +55,5 @@ jobs:
             ${{ runner.os }}-cargo-
       - name: Build All Targets
         run: zig build --global-cache-dir .zig-cache
+      - name: Test All Targets
+        run: zig build test --global-cache-dir .zig-cache
