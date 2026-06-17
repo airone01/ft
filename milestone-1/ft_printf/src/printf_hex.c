@@ -1,4 +1,3 @@
-
 #include "ft_printf.h"
 
 static int get_hex_len(unsigned int nbr) {

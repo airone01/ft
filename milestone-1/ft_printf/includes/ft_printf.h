@@ -1,4 +1,3 @@
-
 #ifndef FT_PRINTF_H
 #define FT_PRINTF_H
 
@@ -24,7 +23,7 @@ typedef struct s_format {
   int plus;
   int width;     // min width
   int precision; // precision (-1 means not specified)
-  char type;     // conversion type (c, s, p, d, etc.)
+  char type;     // conversion type
 } t_format;
 
 // rewrites of classic funcs for our use case

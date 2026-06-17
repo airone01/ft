@@ -1,4 +1,3 @@
-
 #include "ft_printf.h"
 
 static int get_num_len(long nbr) {

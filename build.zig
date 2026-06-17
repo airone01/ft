@@ -33,12 +33,15 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    const test_step = b.step("test", "Run all tests");
+
     // Shared libraries
     const mlx = minilibx_mod.configure(b, target, optimize);
     const lft = libft_mod.configure(b, target, optimize);
     b.installArtifact(lft);
     const printf = ft_printf_mod.configure(b, target, optimize, lft);
     b.installArtifact(printf);
+    ft_printf_mod.addTests(b, target, optimize, test_step, lft);
     const gnl = gnl_mod.configure(b, target, optimize);
     b.installArtifact(gnl);
 

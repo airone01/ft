@@ -1,4 +1,3 @@
-
 #include "ft_printf.h"
 
 long print_padding(int fd, int current_len, int target_width, char c) {
