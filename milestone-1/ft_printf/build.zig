@@ -1,5 +1,5 @@
 const std = @import("std");
-const helpers = @import("../../build_helpers.zig");
+const helpers = @import("../../tools/build_helpers.zig");
 
 const src_dir = "milestone-1/ft_printf/src";
 const test_file = "milestone-1/ft_printf/test.zig";

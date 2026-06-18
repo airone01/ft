@@ -1,5 +1,5 @@
 const std = @import("std");
-const helpers = @import("../../build_helpers.zig");
+const helpers = @import("../../tools/build_helpers.zig");
 
 const src_dir = "milestone-0/libft/src";
 pub const include_path = "milestone-0/libft/includes";

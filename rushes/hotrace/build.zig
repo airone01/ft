@@ -1,5 +1,5 @@
 const std = @import("std");
-const helpers = @import("../../build_helpers.zig");
+const helpers = @import("../../tools/build_helpers.zig");
 
 const src_dir = "rushes/hotrace/src";
 const inc_dir = "rushes/hotrace/includes";
