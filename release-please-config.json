@@ -145,6 +145,10 @@
       "release-type": "simple",
       "package-name": "libasm"
     },
+    "pcc/snow-crash": {
+      "release-type": "simple",
+      "package-name": "snow-crash"
+    },
     "rushes/hotrace": {
       "release-type": "simple",
       "package-name": "hotrace"
