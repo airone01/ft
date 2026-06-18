@@ -5,6 +5,7 @@ _: let
     "**/*.html"
     "**.envrc"
     "pcc/ft_linux/downloads/check_host_deps.sh"
+    "pcc/snow-crash/auto.sh"
     "central/minilibx/**/*.sh"
     "milestone-4/cpp00/ex01/test.sh"
   ];
@@ -14,6 +15,7 @@ _: let
     ".*\.html$"
     ".*\.envrc$"
     "pcc/ft_linux/downloads/check_host_deps.sh$"
+    "pcc/snow-crash/auto.sh$"
     "central/minilibx/test/.*\.sh$"
     "milestone-4/cpp00/ex01/test\.sh$"
   ];

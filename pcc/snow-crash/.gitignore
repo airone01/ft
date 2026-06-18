@@ -1,0 +1,5 @@
+db/
+*.iso
+level*
+token*
+.php*
