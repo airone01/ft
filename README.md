@@ -4,42 +4,30 @@
 
 <div align="center">
   <p>
-    <a href="https://github.com/airone01/ft/pulse">
-      <img
+    <a href="https://github.com/airone01/ft/pulse"><img
         alt="Last commit"
-        src="https://img.shields.io/github/last-commit/airone01/ft?style=flat-square&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"
-      />
-    </a>
-    <a href="https://github.com/airone01/ft/blob/main/LICENSE">
-      <img
+        src="https://img.shields.io/github/last-commit/airone01/ft?style=flat-square&logo=git&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"
+      /></a>
+    <a href="https://github.com/airone01/ft/blob/main/LICENSE"><img
         alt="License"
         src="https://img.shields.io/github/license/airone01/ft?style=flat-square&logo=unlicense&color=ee999f&logoColor=D9E0EE&labelColor=302D41"
-      />
-    </a>
-    <a href="https://github.com/airone01/ft/stargazers">
-      <img
+      /></a>
+    <a href="https://github.com/airone01/ft/stargazers"><img
         alt="Stars"
         src="https://img.shields.io/github/stars/airone01/ft?style=flat-square&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41"
-      />
-    </a>
-    <a href="https://github.com/airone01/ft/issues">
-      <img
+      /></a>
+    <a href="https://github.com/airone01/ft/issues"><img
         alt="Issues"
         src="https://img.shields.io/github/issues/airone01/ft?style=flat-square&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41"
-      />
-    </a>
-    <a href="https://github.com/airone01/ft">
-      <img
+      /></a>
+    <a href="https://github.com/airone01/ft"><img
         alt="Repo Size"
         src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41"
-      />
-    </a>
-    <a href="https://github.com/airone01/ft/actions/workflows/zig-build.yml">
-      <img
+      /></a>
+    <a href="https://github.com/airone01/ft/actions/workflows/zig-build.yml"><img
         alt="Zig workflow status"
         src="https://img.shields.io/github/actions/workflow/status/airone01/ft/zig-build.yml?style=flat-square&logo=zig&logoColor=D9E0EE&labelColor=302D41"
-      />
-    </a>
+      /></a>
   </p>
 </div>
 
@@ -54,11 +42,13 @@
 [Foreword]: #foreword
 [Projects]: #projects
 [Extra tools/projects]: #extra-toolsprojects
+[Building and packaging]: #building-and-packaging
 [Additional notes]: #additional-notes
 
 **[<kbd><br/> Foreword <br/>​</kbd>][Foreword]**
 **[<kbd><br/> Projects <br/>​</kbd>][Projects]**
 **[<kbd><br/> Extra tools/projects <br/>​</kbd>][Extra tools/projects]**
+**[<kbd><br/> Building and packaging <br/>​</kbd>][Building and packaging]**
 **[<kbd><br/> Additional notes <br/>​</kbd>][Additional notes]**
 
 </p></div>
@@ -67,8 +57,8 @@
 
 ## Foreword
 
-This is a [monorepo](https://en.wikipedia.org/wiki/Monorepo), meaning these
-projects are tightly coupled and share dependencies to work properly.
+This is a [monorepository](https://en.wikipedia.org/wiki/Monorepo), meaning
+these projects are tightly coupled and share dependencies to work properly.
 
 **Why Zig instead of Make?** The 42 curriculum relies heavily on GNU Make to
 teach students the fundamentals of compilation. However, maintaining 30+ nearly
@@ -240,9 +230,10 @@ somewhat incompatible with Nix, so I moved to the Zig build system.
 
 ### [`3DS port of cub3d`](/milestone-4/cub3d/3DS_README.md)
 
-During a boring weekend, I set up a Bazel target to cross-compile a 3DS homebrew
-app. If you have a modded 3DS on hand, you can compile it and try yourself. It's
-very limited, laggy, and crashes on quit though. You have been warned.
+During a boring weekend, I set up a Bazel[^1] target to cross-compile a 3DS
+home-brew app. If you have a modded 3DS on hand, you can compile it and try
+yourself. It's very limited, laggy, and crashes on quit though. You have been
+warned. The level packaged is also very basic.
 
 ### [`Minecraft push_swap visualizer`](./tools/ps-viz-mc/README.md)
 
@@ -257,22 +248,18 @@ and visualize the sorting algorithm on your `1.20.1` client.
 
 ### [`FDF generator`](./external-tools/fdf-bmp-converter/README.md)
 
-A simple script to convert a BMP image into a fdf file. It currently only works
-for bitmap images smaller than 255 \* 255, because I don't really know how to
-reliably get the width of the image in the header.
+A simple script to convert a BMP[^2] image into a fdf file. It currently only
+works for bitmap images smaller than 255 \* 255, because I don't really know how
+to reliably get the width of the image in the header.
 
-You can convert PNG images to BMP using `convert` using
-[ImageMagick](https://imagemagick.org/), or online with
-[EzGIF](https://ezgif.com/png-to-bmp).
+## Building and packaging
 
-## Additional notes
-
-### Zig build
+### Zig
 
 > [!NOTE]
 > Did you read the foreword?
 
-You can build all the projects in this monorepo using
+You can build all[^3] the projects in this monorepo using
 [Zig](https://ziglang.org/).
 
 - See the list of project in the [main build file](./build.zig).
@@ -280,6 +267,18 @@ You can build all the projects in this monorepo using
   libs).
 
 As per Zig fashion, building the entirety of the repo at once is pretty fast.
+
+## Nix
+
+This project's dev dependencies are packaged using [Nix](https://nixos.org/) in
+a `devShell` that I personally use with
+[`nix-direnv`](https://github.com/nix-community/nix-direnv). There is a central
+[`flake.nix`](./flake.nix) that loads all nix files using `import-tree`.
+
+I might eventually package the projects of this repo into this flake when I find
+the time.
+
+## Additional notes
 
 ### LSPs and `compile_commands.json`
 
@@ -289,7 +288,7 @@ when browsing this repo hurt your eyes, I might have a solution for you. The
 the headers, and in which order, and how your build system (Zig in this case)
 manages your compilation.
 
-To compile this file for the whole project using Zig and Bear:
+To compile this file for the whole project using Zig and Bear[^4]:
 
 ```sh
 bear -- zig build
@@ -298,16 +297,23 @@ bear -- zig build
 > [!NOTE]
 > The `compile_commands.json` is gitignore'd for your inconvenience :-)
 
-### nix-direnv
-
-This project's dev dependencies are managed using
-[`nix-direnv`](https://github.com/nix-community/nix-direnv). There is a central
-[`flake.nix`](./flake.nix) that loads all nix files using `import-tree`.
-
-I might eventually package the projects of this repo into this flake when I find
-the time.
-
 ## License
 
 This project is licensed under the [MIT License](/LICENSE). See the
 [LICENSE](/LICENSE) file for details.
+
+[^1]: I used to use Bazel to build my projects, but it's somewhat incompatible
+    with Nix, so I moved to the Zig build system.
+
+[^2]: You can convert PNG images to BMP using `convert` from
+    [ImageMagick](https://imagemagick.org/), or online with
+    [EzGIF](https://ezgif.com/png-to-bmp).
+
+[^3]: I haven't bothered to make _everything_ compile using the Zig build
+    system. At the time of writing and understandably, transcendence and the 3ds
+    cub3d port must be compiled individually with their own tooling. I don't
+    update the README as often as I update projects though, so take a look
+    around and see for yourself!
+
+[^4]: From [https://github.com/rizsotto/Bear](https://github.com/rizsotto/Bear):
+    "Bear generates a compilation database for Clang tooling."
