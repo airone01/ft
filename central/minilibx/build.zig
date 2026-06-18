@@ -1,5 +1,5 @@
 const std = @import("std");
-const helpers = @import("../../build_helpers.zig");
+const helpers = @import("../../tools/build_helpers.zig");
 
 const mlx_dir = "central/minilibx";
 pub const include_path = mlx_dir;

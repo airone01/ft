@@ -1,5 +1,5 @@
 const std = @import("std");
-const helpers = @import("../../build_helpers.zig");
+const helpers = @import("../../tools/build_helpers.zig");
 
 const framework_dir = "rushes/libunit/framework";
 const tests_dir = "rushes/libunit/tests";

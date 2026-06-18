@@ -1,5 +1,5 @@
 const std = @import("std");
-const helpers = @import("../build_helpers.zig");
+const helpers = @import("../tools/build_helpers.zig");
 
 const c_flags: []const []const u8 = &.{ "-Wall", "-Wextra" };
 const days = &[_][]const u8{ "c00", "c01", "c02", "c03", "c04", "c05", "c06", "c07", "c08" };
