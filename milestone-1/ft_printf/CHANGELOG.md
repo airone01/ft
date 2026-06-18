@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/airone01/ft/compare/ft_printf-v3.2.0...ft_printf-v3.3.0) (2026-06-18)
+
+
+### Features
+
+* **ft_printf:** bonuses ([2124a43](https://github.com/airone01/ft/commit/2124a43dc4657751d05ee911254f462e437ce29e))
+
 ## [3.2.0](https://github.com/airone01/ft/compare/ft_printf-v3.1.0...ft_printf-v3.2.0) (2026-06-02)
 
 
