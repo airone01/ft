@@ -27,6 +27,7 @@ const rush02_mod = @import("piscine-c/rush02/build.zig");
 const hotrace_mod = @import("rushes/hotrace/build.zig");
 const libunit_mod = @import("rushes/libunit/build.zig");
 const libasm_mod = @import("pcc/libasm/build.zig");
+const nm_mod = @import("pcc/nm/build.zig");
 const minecraft_viz_mod = @import("tools/ps-viz-mc/build.zig");
 
 pub fn build(b: *std.Build) void {
@@ -100,6 +101,17 @@ pub fn build(b: *std.Build) void {
 
     // PCC
     b.installArtifact(libasm_mod.configure(b, target, optimize));
+    const nm_exe = nm_mod.configure(b, target, optimize);
+    b.installArtifact(nm_exe);
+    nm_mod.addTests(b, target, optimize, test_step, nm_exe);
+
+    const run_nm_cmd = b.addRunArtifact(nm_exe);
+    run_nm_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        run_nm_cmd.addArgs(args);
+    }
+    const run_nm_step = b.step("run-nm", "Run ft_nm");
+    run_nm_step.dependOn(&run_nm_cmd.step);
 
     // External tools
     minecraft_viz_mod.configure(b, target, optimize);
