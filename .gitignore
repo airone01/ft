@@ -59,6 +59,7 @@ dkms.conf
 # Nix
 .direnv/
 /.pre-commit-config.yaml
+result
 
 # CMake
 compile_commands.json
