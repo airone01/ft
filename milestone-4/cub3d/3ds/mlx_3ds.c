@@ -126,10 +126,10 @@ int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
     return (0);
   fb = gfxGetFramebuffer(GFX_TOP, GFX_LEFT, NULL, NULL);
   // Screen is 240x400 physically (portrait),
-  but we use it as 400x240(landscape)
-      // x' = 239 - y
-      // y' = x
-      for (int j = 0; j < SCREEN_HEIGHT && j < img->height; j++) {
+  // but we use it as 400x240(landscape)
+  // x' = 239 - y
+  // y' = x
+  for (int j = 0; j < SCREEN_HEIGHT && j < img->height; j++) {
     for (int i = 0; i < SCREEN_WIDTH && i < img->width; i++) {
       src_idx = (j * img->width + i) * 4;
       x_phys = 239 - j;
@@ -148,9 +148,6 @@ int mlx_loop(void *mlx_ptr) {
   t_3ds_mlx *mlx;
   u32 kDown;
   u32 kUp;
-  int (*func)(int, void *);
-  int (*func)(int, void *);
-  int (*func)(void *);
 
   mlx = (t_3ds_mlx *)mlx_ptr;
   while (aptMainLoop()) {
@@ -158,56 +155,57 @@ int mlx_loop(void *mlx_ptr) {
     kDown = hidKeysDown();
     kUp = hidKeysUp();
     if (mlx->key_press_hook) {
-      (func)(int, void) = (int (*)(int, void *))mlx->key_press_hook;
+      int (*key_press)(int, void *) = (int (*)(int, void *))mlx->key_press_hook;
       if (kDown & KEY_START)
-        func(ESCAPE, mlx->key_press_param);
+        key_press(ESCAPE, mlx->key_press_param);
       if (kDown & KEY_DUP)
-        func(W, mlx->key_press_param);
+        key_press(W, mlx->key_press_param);
       if (kDown & KEY_DDOWN)
-        func(S, mlx->key_press_param);
+        key_press(S, mlx->key_press_param);
       if (kDown & KEY_DLEFT)
-        func(A, mlx->key_press_param);
+        key_press(A, mlx->key_press_param);
       if (kDown & KEY_DRIGHT)
-        func(D, mlx->key_press_param);
+        key_press(D, mlx->key_press_param);
       if (kDown & KEY_L)
-        func(LEFT_ARROW, mlx->key_press_param);
+        key_press(LEFT_ARROW, mlx->key_press_param);
       if (kDown & KEY_R)
-        func(RIGHT_ARROW, mlx->key_press_param);
+        key_press(RIGHT_ARROW, mlx->key_press_param);
       if (kDown & KEY_A)
-        func(W, mlx->key_press_param);
+        key_press(W, mlx->key_press_param);
       if (kDown & KEY_B)
-        func(S, mlx->key_press_param);
+        key_press(S, mlx->key_press_param);
       if (kDown & KEY_Y)
-        func(A, mlx->key_press_param);
+        key_press(A, mlx->key_press_param);
       if (kDown & KEY_X)
-        func(D, mlx->key_press_param);
+        key_press(D, mlx->key_press_param);
     }
     if (mlx->key_release_hook) {
-      (func)(int, void) = (int (*)(int, void *))mlx->key_release_hook;
+      int (*key_release)(int, void *) =
+          (int (*)(int, void *))mlx->key_release_hook;
       if (kUp & KEY_DUP)
-        func(W, mlx->key_release_param);
+        key_release(W, mlx->key_release_param);
       if (kUp & KEY_DDOWN)
-        func(S, mlx->key_release_param);
+        key_release(S, mlx->key_release_param);
       if (kUp & KEY_DLEFT)
-        func(A, mlx->key_release_param);
+        key_release(A, mlx->key_release_param);
       if (kUp & KEY_DRIGHT)
-        func(D, mlx->key_release_param);
+        key_release(D, mlx->key_release_param);
       if (kUp & KEY_L)
-        func(LEFT_ARROW, mlx->key_release_param);
+        key_release(LEFT_ARROW, mlx->key_release_param);
       if (kUp & KEY_R)
-        func(RIGHT_ARROW, mlx->key_release_param);
+        key_release(RIGHT_ARROW, mlx->key_release_param);
       if (kUp & KEY_A)
-        func(W, mlx->key_release_param);
+        key_release(W, mlx->key_release_param);
       if (kUp & KEY_B)
-        func(S, mlx->key_release_param);
+        key_release(S, mlx->key_release_param);
       if (kUp & KEY_Y)
-        func(A, mlx->key_release_param);
+        key_release(A, mlx->key_release_param);
       if (kUp & KEY_X)
-        func(D, mlx->key_release_param);
+        key_release(D, mlx->key_release_param);
     }
     if (mlx->loop_hook) {
-      (func)(void) = (int (*)(void *))mlx->loop_hook;
-      func(mlx->loop_param);
+      int (*loop_func)(void *) = (int (*)(void *))mlx->loop_hook;
+      loop_func(mlx->loop_param);
     }
     gfxFlushBuffers();
     gfxSwapBuffers();

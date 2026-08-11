@@ -24,8 +24,8 @@ SRCS="$SRCS 3ds/mlx_3ds.c"
 
 # Dependencies
 SRCS="$SRCS $(find ../../milestone-0/libft/src -name "*.c")"
-SRCS="$SRCS $(find ../../milestone-1/ft_printf/src -name "*.c")"
-SRCS="$SRCS $(find ../../milestone-1/get_next_line/src -name "*.c")"
+SRCS="$SRCS $(find ../../milestone-1/ft_printf/src -name "*.c" | grep -v "_bonus.c")"
+SRCS="$SRCS $(find ../../milestone-1/get_next_line/src -name "*.c" | grep -v "main.c")"
 
 echo "Refreshing romfs..."
 mkdir -p romfs

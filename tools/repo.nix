@@ -12,12 +12,12 @@ _: let
   preCommitExcludes = [
     "CHANGELOG\\.md$"
     "\\.release-please-manifest\\.json$"
-    ".*\.html$"
-    ".*\.envrc$"
+    ".*\\.html$"
+    ".*\\.envrc$"
     "pcc/ft_linux/downloads/check_host_deps.sh$"
     "pcc/snow-crash/auto.sh$"
-    "central/minilibx/test/.*\.sh$"
-    "milestone-4/cpp00/ex01/test\.sh$"
+    "central/minilibx/test/.*\\.sh$"
+    "milestone-4/cpp00/ex01/test\\.sh$"
   ];
 in {
   perSystem = {
