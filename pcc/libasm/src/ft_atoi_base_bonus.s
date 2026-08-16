@@ -8,9 +8,6 @@
 	; r14d = sign (+1 or -1)
 	; r15d = accumulated result
 
-	default  rel
-	[warning -reloc-rel-dword]
-
 	section .bss
 	global  g_invalid_base
 	global  g_no_match

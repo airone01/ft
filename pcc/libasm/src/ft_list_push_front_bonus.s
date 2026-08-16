@@ -1,10 +1,6 @@
 	; input: rdi -> begin_list (t_list **), rsi -> data (void *)
 	; output: (none) — prepends a new node to the list
 
-	;        appendix B
-	default  rel
-	[warning -reloc-rel-dword]
-
 	section .text
 	global  ft_list_push_front
 	extern  malloc
