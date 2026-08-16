@@ -1,7 +1,13 @@
 const std = @import("std");
 
-const src_dir = "pcc/libasm/src";
 const asm_sources = &[_][]const u8{ "ft_strlen.s", "ft_strcpy.s", "ft_strcmp.s", "ft_write.s", "ft_read.s", "ft_strdup.s", "ft_atoi_base_bonus.s", "ft_list_push_front_bonus.s", "ft_list_remove_if_bonus.s", "ft_list_size_bonus.s", "ft_list_sort_bonus.s" };
+
+fn dirExists(b: *std.Build, rel_path: []const u8) bool {
+    const io = b.graph.io;
+    var d = b.build_root.handle.openDir(io, rel_path, .{}) catch return false;
+    d.close(io);
+    return true;
+}
 
 fn nasmAtLeast3(b: *std.Build) bool {
     const result = std.process.run(b.allocator, b.graph.io, .{
@@ -9,7 +15,6 @@ fn nasmAtLeast3(b: *std.Build) bool {
     }) catch return false;
     defer b.allocator.free(result.stdout);
     defer b.allocator.free(result.stderr);
-    // output is e.g. "NASM version 3.0.0" or "NASM version 2.16.01"
     return std.mem.indexOf(u8, result.stdout, "NASM version 3.") != null or
         std.mem.indexOf(u8, result.stdout, "NASM version 4.") != null;
 }
@@ -21,6 +26,10 @@ pub fn configure(
 ) *std.Build.Step.Compile {
     if (target.result.cpu.arch != .x86_64 or target.result.os.tag != .linux)
         @panic("libasm only supports x86-64 Linux");
+
+    const is_root = dirExists(b, "pcc/libasm/src");
+    const prefix = if (is_root) "pcc/libasm" else ".";
+    const src_dir = b.pathJoin(&.{ prefix, "src" });
 
     const lib = b.addLibrary(.{
         .name = "asm",
@@ -35,8 +44,6 @@ pub fn configure(
     for (asm_sources) |src| {
         var argv: std.ArrayList([]const u8) = .empty;
         argv.appendSlice(b.allocator, &.{ "nasm", "-f", "elf64", "-Wall", "-Werror" }) catch @panic("OOM");
-        // -w-reloc-rel-dword suppresses a nasm 3.x warning for WRT ..plt calls;
-        // the flag doesn't exist in nasm 2.x so only pass it when nasm >= 3.
         if (suppress_plt_warn)
             argv.append(b.allocator, "-w-reloc-rel-dword") catch @panic("OOM");
         argv.append(b.allocator, "-o") catch @panic("OOM");
@@ -56,7 +63,7 @@ pub fn configure(
         }),
     });
     test_exe.root_module.addCSourceFiles(.{
-        .root = b.path("pcc/libasm"),
+        .root = b.path(prefix),
         .files = &.{"test.c"},
         .flags = &.{ "-Wall", "-Wextra" },
     });
@@ -64,4 +71,12 @@ pub fn configure(
     b.installArtifact(test_exe);
 
     return lib;
+}
+
+pub fn build(b: *std.Build) void {
+    const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
+
+    const lib = configure(b, target, optimize);
+    b.installArtifact(lib);
 }

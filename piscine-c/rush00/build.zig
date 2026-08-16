@@ -1,8 +1,13 @@
 const std = @import("std");
 
-const dir = "piscine-c/rush00";
-
 const c_flags: []const []const u8 = &.{ "-Wall", "-Wextra" };
+
+fn dirExists(b: *std.Build, rel_path: []const u8) bool {
+    const io = b.graph.io;
+    var d = b.build_root.handle.openDir(io, rel_path, .{}) catch return false;
+    d.close(io);
+    return true;
+}
 
 fn addBinary(
     b: *std.Build,
@@ -11,6 +16,9 @@ fn addBinary(
     name: []const u8,
     impl_file: []const u8,
 ) void {
+    const is_root = dirExists(b, "piscine-c/rush00");
+    const dir = if (is_root) "piscine-c/rush00" else ".";
+
     const exe = b.addExecutable(.{
         .name = name,
         .root_module = b.createModule(.{
@@ -36,4 +44,11 @@ pub fn configure(
     addBinary(b, target, optimize, "rush00-ex00", "rush00.c");
     addBinary(b, target, optimize, "rush00-ex02", "rush02.c");
     addBinary(b, target, optimize, "rush00-ex03", "rush03.c");
+}
+
+pub fn build(b: *std.Build) void {
+    const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
+
+    configure(b, target, optimize);
 }
