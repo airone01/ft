@@ -95,7 +95,7 @@ pub fn build(b: *std.Build) void {
     rush02_mod.configure(b, target, optimize, lft);
 
     // Rushes
-    hotrace_mod.configure(b, target, optimize);
+    b.installArtifact(hotrace_mod.configure(b, target, optimize));
     libunit_mod.configure(b, target, optimize, libunit_mod.Deps{ .libft = lft });
 
     // PCC

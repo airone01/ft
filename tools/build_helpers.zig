@@ -102,9 +102,12 @@ pub fn buildCppModule(
     b: *std.Build,
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
-    module_dir: []const u8,
+    module_dir_param: []const u8,
     module_name: []const u8,
 ) void {
+    const is_root = dirExists(b, module_dir_param);
+    const module_dir = if (is_root) module_dir_param else ".";
+
     const io = b.graph.io;
     var dir = b.build_root.handle.openDir(io, module_dir, .{ .iterate = true }) catch return;
     defer dir.close(io);
