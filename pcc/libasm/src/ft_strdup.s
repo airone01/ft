@@ -1,10 +1,7 @@
 	; input: rdi -> source pointer to NUL-terminated string
 	; output: rax -> original source pointer
 
-	extern   __errno_location
-	;        appendix B
-	default  rel
-	[warning -reloc-rel-dword]
+	extern __errno_location
 
 	section .text
 	global  ft_strdup

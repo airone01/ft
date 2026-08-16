@@ -3,10 +3,6 @@
 	; input: rdx -> count of bytes of data to write (size_t)
 	; output: rax -> bytes written, -1 on error (size_t)
 
-	;        appendix B
-	default  rel
-	[warning -reloc-rel-dword]
-
 	section .text
 	global  ft_write
 	extern  __errno_location

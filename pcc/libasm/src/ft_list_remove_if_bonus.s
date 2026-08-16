@@ -2,10 +2,6 @@
 	; rdx -> cmp (fn ptr), rcx -> free_fct (fn ptr)
 	; output: (none) — removes all nodes where cmp(node->data, data_ref) == 0
 
-	;        appendix B
-	default  rel
-	[warning -reloc-rel-dword]
-
 	section .text
 	global  ft_list_remove_if
 	extern  free
