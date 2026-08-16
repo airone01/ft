@@ -149,6 +149,10 @@
       "release-type": "simple",
       "package-name": "snow-crash"
     },
+    "pcc/rainfall": {
+      "release-type": "simple",
+      "package-name": "rainfall"
+    },
     "rushes/hotrace": {
       "release-type": "simple",
       "package-name": "hotrace"
