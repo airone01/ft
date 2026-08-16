@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/airone01/ft/compare/libasm-v1.2.0...libasm-v1.2.1) (2026-08-16)
+
+
+### Bug Fixes
+
+* **libasm:** rm dep to newer versioons of nasm ([4e256ae](https://github.com/airone01/ft/commit/4e256ae562ccebea888fde4637d4565ea8deadd9))
+
 ## [1.2.0](https://github.com/airone01/ft/compare/libasm-v1.1.0...libasm-v1.2.0) (2026-06-18)
 
 

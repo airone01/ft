@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/airone01/ft/compare/cub3d-v2.2.0...cub3d-v2.2.1) (2026-08-16)
+
+
+### Bug Fixes
+
+* **cub3d:** patch compilation of the 3ds target, package it ([b57f1c4](https://github.com/airone01/ft/commit/b57f1c46db83d2da7078ea08f7b48367c6f1bda8))
+
 ## [2.2.0](https://github.com/airone01/ft/compare/cub3d-v2.1.0...cub3d-v2.2.0) (2026-06-02)
 
 
