@@ -19,6 +19,10 @@ int main(int argc, const char *argv[]) {
     return EXIT_FAILURE;
   }
 
+  sort_files(flists.err_files, flists.nerr, &opts);
+  sort_files(flists.files, flists.nfiles, &opts);
+  sort_files(flists.dirs, flists.ndirs, &opts);
+
   // Errors
   if (flists.nerr > 0) {
     had_error = 1;

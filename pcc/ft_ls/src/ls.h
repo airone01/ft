@@ -125,4 +125,9 @@ void free_files(File *files, size_t count);
  */
 void free_file_lists(FileLists *flists);
 
+/**
+ * @brief Sorts an array of File structs based on options
+ */
+void sort_files(File *files, size_t count, const CliOptions *opts);
+
 #endif /* LS_H */
