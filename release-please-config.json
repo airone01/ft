@@ -145,6 +145,14 @@
       "release-type": "simple",
       "package-name": "libasm"
     },
+    "pcc/nm": {
+      "release-type": "simple",
+      "package-name": "nm"
+    },
+    "pcc/ft_ls": {
+      "release-type": "simple",
+      "package-name": "ft_ls"
+    },
     "pcc/snow-crash": {
       "release-type": "simple",
       "package-name": "snow-crash"
