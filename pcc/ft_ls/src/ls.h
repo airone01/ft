@@ -1,5 +1,5 @@
-#ifndef LS_H
-#define LS_H
+#ifndef SRC_LS_H
+#define SRC_LS_H
 
 #include <stddef.h>
 #include <sys/stat.h>
@@ -75,10 +75,8 @@ typedef struct {
 } ColWidth;
 
 /**
- * CLI arguments parser
- * @returns 0 on success
- * @returns -1 on error
- * @returns -2 on success but quit immediately
+ * @brief CLI arguments parser
+ * @returns 0 on success, -1 on error, -2 on success but quit immediately
  */
 int argsp(int argc, const char *argv[], CliOptions *opts);
 
@@ -98,14 +96,12 @@ int argsi(CliOptions *opts, FileLists *flists);
  *               const char s[n], size_t n);
  *
  * @brief Duplicates a string
- * @returns NULL on error
- * @returns pointer to duplicated string on success
+ * @returns pointer to duplicated string on success, NULL otherwise
  */
 char *strndup(const char *s, size_t n);
 /**
  * @brief Duplicates a string
- * @returns NULL on error
- * @returns pointer to duplicated string on success
+ * @returns pointer to duplicated string on success, NULL otherwise
  */
 char *strdup(const char *s);
 
@@ -126,8 +122,28 @@ void free_files(File *files, size_t count);
 void free_file_lists(FileLists *flists);
 
 /**
+ * @brief Resolves group and user names for a list of tFiles into File structs
+ */
+int fndids(size_t nmemb, tFile efiles[], File **dfiles);
+
+/**
+ * @brief Joins directory path and file name into a relative path string
+ */
+char *path_join(const char *dir, const char *file);
+
+/**
+ * @brief Directory traversal cycle
+ * @param dir_path Directory path to traverse
+ * @param opts CLI options
+ * @param print_header 1 to print "path:" header, 0 otherwise
+ * @returns 0 on success, -1 on error
+ */
+int traverse_dir(const char *dir_path, const CliOptions *opts,
+                 int print_header);
+
+/**
  * @brief Sorts an array of File structs based on options
  */
 void sort_files(File *files, size_t count, const CliOptions *opts);
 
-#endif /* LS_H */
+#endif /* SRC_LS_H */
