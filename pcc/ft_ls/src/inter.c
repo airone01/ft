@@ -33,12 +33,18 @@ int argsi(CliOptions *opts, File **dfiles) {
     }
 
     files[i].stat = sb;
+    files[i].path = strdup(opts->paths[i]);
+    files[i].name = strdup(opts->paths[i]);
     files[i].uid = sb.st_uid;
     files[i].gid = sb.st_gid;
   }
 
   int r = fndids(opts->npaths, files, dfiles);
   // TO-DO: /\ error handling
+  for (size_t i = 0; i < opts->npaths; i++) {
+    free(files[i].path);
+    free(files[i].name);
+  }
   free(files);
   return r;
 }
@@ -59,6 +65,10 @@ int fndids(size_t nmemb, tFile efiles[], File **dfiles) {
   for (size_t i = 0; i < nmemb; i++) {
     tFile *efile = &efiles[i];
     File *file = &files[i];
+
+    file->name = strdup(efile->name);
+    file->path = strdup(efile->path);
+    file->stat = efile->stat;
 
     // Note: `getgrgid_r` has better thread safety
     struct group *grp = getgrgid(efile->stat.st_gid);

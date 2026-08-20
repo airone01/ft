@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
 
   if (files) {
     for (size_t i = 0; i < opts.npaths; i++)
-      printf("%s\n", files[i].group);
+      printf("%s\t%s:%s\n", files[i].name, files[i].user, files[i].group);
 
     free_files(files, opts.npaths);
   }
