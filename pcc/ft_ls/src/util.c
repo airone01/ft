@@ -44,3 +44,19 @@ void free_files(File *files, size_t count) {
   }
   free(files);
 }
+
+void free_file_lists(FileLists *flists) {
+  if (!flists)
+    return;
+  free_files(flists->err_files, flists->nerr);
+  flists->err_files = NULL;
+  flists->nerr = 0;
+
+  free_files(flists->files, flists->nfiles);
+  flists->files = NULL;
+  flists->nfiles = 0;
+
+  free_files(flists->dirs, flists->ndirs);
+  flists->dirs = NULL;
+  flists->ndirs = 0;
+}

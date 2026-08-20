@@ -23,6 +23,8 @@ typedef struct File {
   char *path;
   // Cached lstat struct
   struct stat stat;
+  // Error code if stat/access failed (0 if success)
+  int err_code;
   // For symlinks with -l
   char *link_target;
   // Resolved user name (or id on lack thereof)
@@ -41,6 +43,8 @@ typedef struct tFile {
   char *path;
   // Cached lstat struct
   struct stat stat;
+  // Error code if stat failed
+  int err_code;
   // For symlinks with -l
   char *link_target;
   int uid;
@@ -49,6 +53,17 @@ typedef struct tFile {
   char xattr_acl;
   struct tFile *next;
 } tFile;
+
+typedef struct {
+  File *err_files;
+  size_t nerr;
+
+  File *files;
+  size_t nfiles;
+
+  File *dirs;
+  size_t ndirs;
+} FileLists;
 
 typedef struct {
   int links;
@@ -69,11 +84,14 @@ int argsp(int argc, const char *argv[], CliOptions *opts);
 
 /**
  * @brief Options interpreter
+ * Categorizes command line path arguments into three lists:
+ *   1. flists->err_files: files with stat/access errors
+ *   2. flists->files: non-directory files
+ *   3. flists->dirs: directories
  * @returns 0 on success
- * @returns -1 on error
- * @returns -2 on success but quit immediately
+ * @returns -1 on memory or system error
  */
-int argsi(CliOptions *opts, File **dfiles);
+int argsi(CliOptions *opts, FileLists *flists);
 
 /**
  * char *strndup(size_t n;
@@ -101,5 +119,10 @@ void free_file(File *file);
  * itself
  */
 void free_files(File *files, size_t count);
+
+/**
+ * @brief Frees all three lists in a FileLists struct
+ */
+void free_file_lists(FileLists *flists);
 
 #endif /* LS_H */
