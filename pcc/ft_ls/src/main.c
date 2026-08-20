@@ -37,9 +37,16 @@ int main(int argc, const char *argv[]) {
     printf("%s\n", flists.files[i].name);
   }
 
-  // Dirs
+  // Dir traversal cycle
+  int show_header = (flists.ndirs > 1 || flists.nfiles > 0 || flists.nerr > 0 ||
+                     opts.recursive);
   for (size_t i = 0; i < flists.ndirs; i++) {
-    printf("%s:\n", flists.dirs[i].name);
+    if (i > 0 || flists.nfiles > 0) {
+      printf("\n");
+    }
+    if (traverse_dir(flists.dirs[i].path, &opts, show_header) == -1) {
+      had_error = 1;
+    }
   }
 
   free_file_lists(&flists);
