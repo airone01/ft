@@ -50,7 +50,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
   }
 
   size_t capacity = 16;
-  size_t count = 0;
+  size_t nfiles = 0;
   tFile *tfiles = malloc(capacity * sizeof(tFile));
   if (!tfiles) {
     // closedir immediately to avoid fd buildup
@@ -64,87 +64,55 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
     if (!opts->all && entry->d_name[0] == '.')
       continue;
 
-    if (count >= capacity) {
+    if (nfiles >= capacity) {
       capacity *= 2;
       tFile *new_tfiles = realloc(tfiles, capacity * sizeof(tFile));
       if (!new_tfiles) {
-        free_tfiles(tfiles, count);
+        free_tfiles(tfiles, nfiles);
         closedir(dp);
         return -1;
       }
       tfiles = new_tfiles;
     }
 
-    memset(&tfiles[count], 0, sizeof(tFile));
-    tfiles[count].name = strdup(entry->d_name);
-    tfiles[count].path = path_join(dir_path, entry->d_name);
-    if (!tfiles[count].name || !tfiles[count].path) {
-      free_tfiles(tfiles, count + 1);
+    memset(&tfiles[nfiles], 0, sizeof(tFile));
+    tfiles[nfiles].name = strdup(entry->d_name);
+    tfiles[nfiles].path = path_join(dir_path, entry->d_name);
+    if (!tfiles[nfiles].name || !tfiles[nfiles].path) {
+      free_tfiles(tfiles, nfiles + 1);
       closedir(dp);
       return -1;
     }
 
     // meta enrichment
     struct stat sb;
-    if (lstat(tfiles[count].path, &sb) == -1) {
-      tfiles[count].err_code = errno;
+    if (lstat(tfiles[nfiles].path, &sb) == -1) {
+      tfiles[nfiles].err_code = errno;
     } else {
-      tfiles[count].stat = sb;
-      tfiles[count].uid = sb.st_uid;
-      tfiles[count].gid = sb.st_gid;
-      tfiles[count].err_code = 0;
+      tfiles[nfiles].stat = sb;
+      tfiles[nfiles].uid = sb.st_uid;
+      tfiles[nfiles].gid = sb.st_gid;
+      tfiles[nfiles].err_code = 0;
     }
-    count++;
+    nfiles++;
   }
   closedir(dp); // closedir immediately to avoid fd buildup
 
   File *files = NULL;
-  if (fndids(count, tfiles, &files) == -1) {
-    free_tfiles(tfiles, count);
+  if (fndids(nfiles, tfiles, &files) == -1) {
+    free_tfiles(tfiles, nfiles);
     return -1;
   }
-  free_tfiles(tfiles, count);
+  free_tfiles(tfiles, nfiles);
 
-  sort_files(files, count, opts);
+  sort_files(files, nfiles, opts);
 
-  // Print header
-  // TO-DO: display.c
-  if (print_header) {
-    printf("%s:\n", dir_path);
-  }
-
-  // Cols width
-  // TO-DO: display.c
-  if (opts->longlist && count > 0) {
-    long long total_blocks = 0;
-    for (size_t i = 0; i < count; i++) {
-      if (files[i].err_code == 0) {
-        total_blocks += files[i].stat.st_blocks;
-      }
-    }
-    printf("total %lld\n", total_blocks);
-  }
-
-  // Print list
-  // TO-DO: display.c
-  for (size_t i = 0; i < count; i++) {
-    if (files[i].err_code != 0) {
-      fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[i].path,
-              strerror(files[i].err_code));
-    } else {
-      if (opts->longlist) {
-        printf("%s %s %s %s\n", files[i].name,
-               files[i].user ? files[i].user : "?",
-               files[i].group ? files[i].group : "?", files[i].path);
-      } else {
-        printf("%s\n", files[i].name);
-      }
-    }
-  }
+  dish(print_header, *opts, files, nfiles, dir_path);
+  disl(*opts, files, nfiles);
 
   // Recurse subdirs
   if (opts->recursive) {
-    for (size_t i = 0; i < count; i++) {
+    for (size_t i = 0; i < nfiles; i++) {
       if (files[i].err_code == 0 && S_ISDIR(files[i].stat.st_mode)) {
         if (strcmp(files[i].name, ".") != 0 &&
             strcmp(files[i].name, "..") != 0) {
@@ -155,6 +123,6 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
     }
   }
 
-  free_files(files, count);
+  free_files(files, nfiles);
   return 0;
 }

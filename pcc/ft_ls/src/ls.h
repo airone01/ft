@@ -146,4 +146,9 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
  */
 void sort_files(File *files, size_t count, const CliOptions *opts);
 
+void dish(int print_header, CliOptions opts, File *files, size_t nfiles,
+          const char *dir_path);
+
+void disl(CliOptions opts, File *files, size_t nfiles);
+
 #endif /* SRC_LS_H */
