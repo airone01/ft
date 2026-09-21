@@ -33,8 +33,8 @@ int main(int argc, const char *argv[]) {
   }
 
   // Non-dir files
-  for (size_t i = 0; i < flists.nfiles; i++) {
-    printf("%s\n", flists.files[i].name);
+  if (flists.nfiles > 0) {
+    disl(opts, flists.files, flists.nfiles);
   }
 
   // Dir traversal cycle

@@ -94,6 +94,9 @@ int argsi(CliOptions *opts, FileLists *flists) {
       dest->uid = sb.st_uid;
       dest->gid = sb.st_gid;
       dest->err_code = 0;
+      if (S_ISLNK(sb.st_mode) && opts->ltype == LTypeLong) {
+        dest->link_target = read_symlink_target(p, sb.st_size);
+      }
       if (!dest->name || !dest->path)
         goto fail;
     }
@@ -154,6 +157,11 @@ int fndids(size_t nmemb, tFile efiles[], File **dfiles) {
     if (efile->path) {
       file->path = strdup(efile->path);
       if (!file->path)
+        goto fail;
+    }
+    if (efile->link_target) {
+      file->link_target = strdup(efile->link_target);
+      if (!file->link_target)
         goto fail;
     }
     file->stat = efile->stat;

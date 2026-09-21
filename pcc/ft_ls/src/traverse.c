@@ -93,6 +93,10 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
       tfiles[nfiles].uid = sb.st_uid;
       tfiles[nfiles].gid = sb.st_gid;
       tfiles[nfiles].err_code = 0;
+      if (S_ISLNK(sb.st_mode) && opts->ltype == LTypeLong) {
+        tfiles[nfiles].link_target =
+            read_symlink_target(tfiles[nfiles].path, sb.st_size);
+      }
     }
     nfiles++;
   }
