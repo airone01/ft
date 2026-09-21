@@ -26,10 +26,16 @@ void disl(CliOptions opts, File *files, size_t nfiles) {
               strerror(files[i].err_code));
     } else {
       if (opts.ltype == LTypeLong) {
-        printf("---------- %d %s %s %s\n", 1,
-               files[i].user ? files[i].user : "?",
-               files[i].group ? files[i].group : "?", files[i].name);
-        // missing much info
+        if (S_ISLNK(files[i].stat.st_mode) && files[i].link_target) {
+          printf("---------- %d %s %s %s -> %s\n", 1,
+                 files[i].user ? files[i].user : "?",
+                 files[i].group ? files[i].group : "?", files[i].name,
+                 files[i].link_target);
+        } else {
+          printf("---------- %d %s %s %s\n", 1,
+                 files[i].user ? files[i].user : "?",
+                 files[i].group ? files[i].group : "?", files[i].name);
+        }
       } else if (opts.ltype == LTypePretty) {
         // basic pretty-print, TODO pad this
         printf("%s", files[i].name);

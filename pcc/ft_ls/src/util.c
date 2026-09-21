@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <unistd.h>
+
 static size_t nmin(size_t a, size_t b) {
   if (a < b)
     return a;
@@ -25,6 +27,28 @@ char *strndup(const char *s, size_t n) {
 }
 
 char *strdup(const char *s) { return strndup(s, UINTMAX_MAX); }
+
+char *read_symlink_target(const char *path, off_t st_size) {
+  if (!path)
+    return NULL;
+  size_t buflen = (st_size > 0 ? (size_t)st_size + 1 : 256);
+  while (1) {
+    char *buf = malloc(buflen);
+    if (!buf)
+      return NULL;
+    ssize_t len = readlink(path, buf, buflen - 1);
+    if (len == -1) {
+      free(buf);
+      return NULL;
+    }
+    if ((size_t)len < buflen - 1) {
+      buf[len] = '\0';
+      return buf;
+    }
+    free(buf);
+    buflen *= 2;
+  }
+}
 
 void free_file(File *file) {
   if (!file)

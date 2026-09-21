@@ -116,6 +116,12 @@ char *strndup(const char *s, size_t n);
 char *strdup(const char *s);
 
 /**
+ * @brief Reads symbolic link target using POSIX readlink
+ * @returns pointer to target string on success, NULL otherwise
+ */
+char *read_symlink_target(const char *path, off_t st_size);
+
+/**
  * @brief Frees dynamically allocated memory in a single File struct
  */
 void free_file(File *file);
