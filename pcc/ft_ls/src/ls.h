@@ -4,8 +4,18 @@
 #include <stddef.h>
 #include <sys/stat.h>
 
+// List Type
+enum LType {
+  // pretty user display (default)
+  LTypePretty = 0,
+  // piped display (when piped to a program)
+  LTypePiped = 1,
+  // long display (-l option)
+  LTypeLong = 2,
+};
+
 typedef struct {
-  int longlist;
+  enum LType ltype;
   int recursive;
   int all;
   int reverse;
