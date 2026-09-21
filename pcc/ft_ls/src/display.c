@@ -8,7 +8,7 @@ void dish(int print_header, CliOptions opts, File *files, size_t nfiles,
     printf("%s:\n", dir_path);
 
   // Cols width
-  if (opts.longlist && nfiles > 0) {
+  if (opts.ltype == 2 && nfiles > 0) {
     long long total_blocks = 0;
     for (size_t i = 0; i < nfiles; i++) {
       if (files[i].err_code == 0) {
@@ -25,14 +25,21 @@ void disl(CliOptions opts, File *files, size_t nfiles) {
       fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[i].path,
               strerror(files[i].err_code));
     } else {
-      if (opts.longlist) {
+      if (opts.ltype == LTypeLong) {
         printf("---------- %d %s %s %s\n", 1,
                files[i].user ? files[i].user : "?",
                files[i].group ? files[i].group : "?", files[i].name);
         // missing much info
+      } else if (opts.ltype == LTypePretty) {
+        // basic pretty-print, TODO pad this
+        printf("%s", files[i].name);
+        if (i + 1 < nfiles)
+          printf("  ");
       } else {
         printf("%s\n", files[i].name);
       }
     }
   }
+  if (opts.ltype == LTypePretty)
+    printf("\n");
 }

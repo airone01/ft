@@ -74,7 +74,7 @@ int argsi(CliOptions *opts, FileLists *flists) {
       nerr++;
     } else {
       int is_dir = S_ISDIR(sb.st_mode);
-      if (S_ISLNK(sb.st_mode) && !opts->longlist) {
+      if (S_ISLNK(sb.st_mode) && opts->ltype != LTypeLong) {
         struct stat target_sb;
         if (stat(p, &target_sb) == 0 && S_ISDIR(target_sb.st_mode)) {
           is_dir = 1;

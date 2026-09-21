@@ -36,7 +36,7 @@ int argsp(int argc, const char *argv[], CliOptions *opts) {
 
   opts->recursive = 0;
   opts->all = 0;
-  opts->longlist = 0;
+  opts->ltype = LTypePretty;
   opts->reverse = 0;
   opts->timesort = 0;
 
@@ -47,7 +47,7 @@ int argsp(int argc, const char *argv[], CliOptions *opts) {
       opts->all = 1;
       break;
     case 'l':
-      opts->longlist = 1;
+      opts->ltype = LTypeLong;
       break;
     case 'r':
       opts->reverse = 1;
