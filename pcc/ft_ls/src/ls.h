@@ -122,6 +122,11 @@ char *strdup(const char *s);
 char *read_symlink_target(const char *path, off_t st_size);
 
 /**
+ * @brief Formats file mode bits into a 10-character permission string
+ */
+void get_mode_string(mode_t mode, char str[11]);
+
+/**
  * @brief Frees dynamically allocated memory in a single File struct
  */
 void free_file(File *file);
