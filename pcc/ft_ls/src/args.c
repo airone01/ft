@@ -36,13 +36,16 @@ int argsp(int argc, const char *argv[], CliOptions *opts) {
 
   opts->recursive = 0;
   opts->all = 0;
-  opts->ltype = LTypePretty;
+  opts->ltype = isatty(STDOUT_FILENO) ? LTypePretty : LTypePiped;
   opts->reverse = 0;
   opts->timesort = 0;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "alrRt",
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "1alrRt",
                                 long_options, NULL)) != -1)
     switch (c) {
+    case '1':
+      opts->ltype = LTypePiped;
+      break;
     case 'a':
       opts->all = 1;
       break;
