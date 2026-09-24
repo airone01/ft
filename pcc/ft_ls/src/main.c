@@ -1,4 +1,5 @@
 #include "ls.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,6 +7,8 @@
 int main(int argc, const char *argv[]) {
   CliOptions opts;
   int had_error = 0;
+
+  setlocale(LC_ALL, "");
 
   int rparse = argsp(argc, argv, &opts);
   if (rparse == -1)
