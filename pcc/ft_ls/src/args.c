@@ -51,6 +51,7 @@ int argsp(int argc, const char *argv[], CliOptions *opts) {
       break;
     case 'l':
       opts->ltype = LTypeLong;
+      opts->showDate = 1;
       break;
     case 'r':
       opts->reverse = 1;
