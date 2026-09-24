@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h>
 #include <unistd.h>
+
+#define SIX_MONTHS 6 * 30 * 24 * 3600
 
 static size_t nmin(size_t a, size_t b) {
   if (a < b)
@@ -50,7 +52,7 @@ char *read_symlink_target(const char *path, off_t st_size) {
   }
 }
 
-void get_mode_string(mode_t mode, char str[11]) {
+void mode_str(mode_t mode, char str[11]) {
   if (S_ISREG(mode))
     str[0] = '-';
   else if (S_ISDIR(mode))
@@ -81,6 +83,19 @@ void get_mode_string(mode_t mode, char str[11]) {
   str[9] = (mode & S_IXOTH) ? 'x' : '-';
 
   str[10] = '\0';
+}
+
+void date_str(time_t mtime, char str[32]) {
+  struct tm *tm_info = localtime(&mtime);
+  time_t now = time(NULL);
+
+  if (mtime > now || (now - mtime) > SIX_MONTHS) {
+    // older file format
+    strftime(str, 32, "%b %e  %Y", tm_info);
+  } else {
+    // recent file format
+    strftime(str, 32, "%b %e %H:%M", tm_info);
+  }
 }
 
 void free_file(File *file) {

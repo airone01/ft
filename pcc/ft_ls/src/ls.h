@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <sys/stat.h>
+#include <time.h>
 
 // List Type
 enum LType {
@@ -21,6 +22,7 @@ typedef struct {
   int reverse;
   int timesort;
   int color;
+  int showDate;
 
   size_t npaths;
   const char **paths;
@@ -122,9 +124,14 @@ char *strdup(const char *s);
 char *read_symlink_target(const char *path, off_t st_size);
 
 /**
+ * @brief Formats file time
+ */
+void date_str(time_t mtime, char str[32]);
+
+/**
  * @brief Formats file mode bits into a 10-character permission string
  */
-void get_mode_string(mode_t mode, char str[11]);
+void mode_str(mode_t mode, char str[11]);
 
 /**
  * @brief Frees dynamically allocated memory in a single File struct

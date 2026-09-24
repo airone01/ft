@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include <sys/ioctl.h>
+#include <time.h>
 #include <unistd.h>
 
 void dish(int print_header, CliOptions opts, File *files, size_t nfiles,
@@ -124,20 +125,24 @@ void disl(CliOptions opts, File *files, size_t nfiles) {
               strerror(files[i].err_code));
     } else {
       if (opts.ltype == LTypeLong) {
-        char mode_str[11];
-        get_mode_string(files[i].stat.st_mode, mode_str);
+        char mode_s[11];
+        char date_s[32];
+        mode_str(files[i].stat.st_mode, mode_s);
+        date_str(files[i].stat.st_mtime, date_s);
         const char *usr = files[i].user ? files[i].user : "?";
         const char *grp = files[i].group ? files[i].group : "?";
 
+        // whether file is symlink
         if (S_ISLNK(files[i].stat.st_mode) && files[i].link_target) {
-          printf("%s %*ld %-*s %-*s %*lld %s -> %s\n", mode_str, cw.links,
+          printf("%s %*ld %-*s %-*s %*lld %s %s -> %s\n", mode_s, cw.links,
                  (long)files[i].stat.st_nlink, cw.user, usr, cw.group, grp,
-                 cw.size, (long long)files[i].stat.st_size, files[i].name,
-                 files[i].link_target);
+                 cw.size, (long long)files[i].stat.st_size, date_s,
+                 files[i].name, files[i].link_target);
         } else {
-          printf("%s %*ld %-*s %-*s %*lld %s\n", mode_str, cw.links,
+          printf("%s %*ld %-*s %-*s %*lld %s %s\n", mode_s, cw.links,
                  (long)files[i].stat.st_nlink, cw.user, usr, cw.group, grp,
-                 cw.size, (long long)files[i].stat.st_size, files[i].name);
+                 cw.size, (long long)files[i].stat.st_size, date_s,
+                 files[i].name);
         }
       } else {
         printf("%s\n", files[i].name);
