@@ -22,7 +22,7 @@ static int file_cmp(const void *p1, const void *p2) {
   }
 
   if (cmp == 0) {
-    cmp = strcmp(f1->name, f2->name);
+    cmp = strcoll(f1->name, f2->name);
   }
 
   if (g_sort_opts && g_sort_opts->reverse) {
