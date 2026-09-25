@@ -1,3 +1,4 @@
+#include "types.h"
 #define _GNU_SOURCE
 
 #include "options.h"
@@ -53,6 +54,12 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
     case 'a':
       optsp->all = 1;
       break;
+    case 'z':
+      // 'z' is here and not at the bottom of the switch because it can be
+      // overwritten by 'l'
+      optsp->eol = '\0';
+      optsp->display_mode = DisplayPiped;
+      break;
     case 'l':
       optsp->display_mode = DisplayLong;
       optsp->showDate = 1;
@@ -65,9 +72,6 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 't':
       optsp->timesort = 1;
-      break;
-    case 'z':
-      optsp->eol = '\0';
       break;
     default:
       fprintf(stderr, "Try '%s --help' for more information.\n", argv[0]);
