@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
 
-#include "ls.h"
+#include "options.h"
 #include <getopt.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -26,7 +26,7 @@ void print_help(const char *pname) {
   fprintf(stderr, "         display this help and exit\n");
 }
 
-int argsp(int argc, const char *argv[], CliOptions *opts) {
+int parse_args(int argc, const char *argv[], CliOptions *opts) {
   char c;
   static struct option long_options[] = {
       {"help", no_argument, 0, 'h'}, {"recursive", no_argument, 0, 'R'},
@@ -36,7 +36,7 @@ int argsp(int argc, const char *argv[], CliOptions *opts) {
 
   opts->recursive = 0;
   opts->all = 0;
-  opts->ltype = isatty(STDOUT_FILENO) ? LTypePretty : LTypePiped;
+  opts->ltype = isatty(STDOUT_FILENO) ? DisplayPretty : DisplayPiped;
   opts->reverse = 0;
   opts->timesort = 0;
 
@@ -44,13 +44,13 @@ int argsp(int argc, const char *argv[], CliOptions *opts) {
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
-      opts->ltype = LTypePiped;
+      opts->ltype = DisplayPiped;
       break;
     case 'a':
       opts->all = 1;
       break;
     case 'l':
-      opts->ltype = LTypeLong;
+      opts->ltype = DisplayLong;
       opts->showDate = 1;
       break;
     case 'r':

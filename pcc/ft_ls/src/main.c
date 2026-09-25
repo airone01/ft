@@ -1,4 +1,8 @@
-#include "ls.h"
+#include "file.h"
+#include "options.h"
+#include "print.h"
+#include "types.h"
+#include "util.h"
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,14 +14,14 @@ int main(int argc, const char *argv[]) {
 
   setlocale(LC_ALL, "");
 
-  int rparse = argsp(argc, argv, &opts);
+  int rparse = parse_args(argc, argv, &opts);
   if (rparse == -1)
     return EXIT_FAILURE;
   if (rparse == -2)
     return EXIT_SUCCESS;
 
   FileLists flists;
-  if (argsi(&opts, &flists) == -1) {
+  if (process_cli_paths(&opts, &flists) == -1) {
     fprintf(stderr, "%s: memory allocation failure\n", argv[0]);
     return EXIT_FAILURE;
   }
@@ -37,7 +41,7 @@ int main(int argc, const char *argv[]) {
 
   // Non-dir files
   if (flists.nfiles > 0) {
-    disl(opts, flists.files, flists.nfiles);
+    print_file_list(opts, flists.files, flists.nfiles);
   }
 
   // Dir traversal cycle

@@ -1,7 +1,9 @@
 // The following is needed for getgrgid_r and getpwuid_r
 // #define _POSIX_C_SOURCE 200809L
 
-#include "ls.h"
+#include "file.h"
+#include "types.h"
+#include "util.h"
 #include <grp.h>
 #include <pwd.h>
 #include <stddef.h>
@@ -14,13 +16,6 @@
 
 #include <errno.h>
 
-/**
- * @brief Resolves group and user names for a list of tFiles into File structs
- * @returns 0 on success
- * @returns -1 on memory allocation error
- */
-int fndids(size_t nmemb, tFile efiles[], File **dfiles);
-
 static void free_tfiles(tFile *files, size_t count) {
   if (!files)
     return;
@@ -32,7 +27,7 @@ static void free_tfiles(tFile *files, size_t count) {
   free(files);
 }
 
-int argsi(CliOptions *opts, FileLists *flists) {
+int process_cli_paths(CliOptions *opts, FileLists *flists) {
   if (!opts || !flists)
     return -1;
 
@@ -74,7 +69,7 @@ int argsi(CliOptions *opts, FileLists *flists) {
       nerr++;
     } else {
       int is_dir = S_ISDIR(sb.st_mode);
-      if (S_ISLNK(sb.st_mode) && opts->ltype != LTypeLong) {
+      if (S_ISLNK(sb.st_mode) && opts->ltype != DisplayLong) {
         struct stat target_sb;
         if (stat(p, &target_sb) == 0 && S_ISDIR(target_sb.st_mode)) {
           is_dir = 1;
@@ -94,7 +89,7 @@ int argsi(CliOptions *opts, FileLists *flists) {
       dest->uid = sb.st_uid;
       dest->gid = sb.st_gid;
       dest->err_code = 0;
-      if (S_ISLNK(sb.st_mode) && opts->ltype == LTypeLong) {
+      if (S_ISLNK(sb.st_mode) && opts->ltype == DisplayLong) {
         dest->link_target = read_symlink_target(p, sb.st_size);
       }
       if (!dest->name || !dest->path)
@@ -102,15 +97,15 @@ int argsi(CliOptions *opts, FileLists *flists) {
     }
   }
 
-  if (fndids(nerr, err_tmp, &flists->err_files) == -1)
+  if (resolve_owner_group(nerr, err_tmp, &flists->err_files) == -1)
     goto fail;
   flists->nerr = nerr;
 
-  if (fndids(nfiles, files_tmp, &flists->files) == -1)
+  if (resolve_owner_group(nfiles, files_tmp, &flists->files) == -1)
     goto fail;
   flists->nfiles = nfiles;
 
-  if (fndids(ndirs, dirs_tmp, &flists->dirs) == -1)
+  if (resolve_owner_group(ndirs, dirs_tmp, &flists->dirs) == -1)
     goto fail;
   flists->ndirs = ndirs;
 
@@ -127,7 +122,7 @@ fail:
   return -1;
 }
 
-int fndids(size_t nmemb, tFile efiles[], File **dfiles) {
+int resolve_owner_group(size_t nmemb, tFile efiles[], File **dfiles) {
   if (nmemb == 0) {
     *dfiles = NULL;
     return 0;

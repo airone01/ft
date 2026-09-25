@@ -1,4 +1,6 @@
-#include "ls.h"
+#include "print.h"
+#include "types.h"
+#include "util.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -6,8 +8,8 @@
 #include <time.h>
 #include <unistd.h>
 
-void dish(int print_header, CliOptions opts, File *files, size_t nfiles,
-          const char *dir_path) {
+void print_dir_header(int print_header, CliOptions opts, File *files,
+                      size_t nfiles, const char *dir_path) {
   if (print_header)
     printf("%s:\n", dir_path);
 
@@ -108,14 +110,14 @@ static void dis_pretty(File *files, size_t nfiles) {
   }
 }
 
-void disl(CliOptions opts, File *files, size_t nfiles) {
-  if (opts.ltype == LTypePretty) {
+void print_file_list(CliOptions opts, File *files, size_t nfiles) {
+  if (opts.ltype == DisplayPretty) {
     dis_pretty(files, nfiles);
     return;
   }
 
   ColWidth cw = {0, 0, 0, 0, 0, 0};
-  if (opts.ltype == LTypeLong) {
+  if (opts.ltype == DisplayLong) {
     cw = compute_col_widths(files, nfiles);
   }
 
@@ -124,7 +126,7 @@ void disl(CliOptions opts, File *files, size_t nfiles) {
       fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[i].path,
               strerror(files[i].err_code));
     } else {
-      if (opts.ltype == LTypeLong) {
+      if (opts.ltype == DisplayLong) {
         char mode_s[11];
         char date_s[32];
         mode_str(files[i].stat.st_mode, mode_s);

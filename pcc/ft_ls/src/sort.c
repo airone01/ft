@@ -1,6 +1,7 @@
-#include "ls.h"
+#include "types.h"
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 static _Thread_local const CliOptions *g_sort_opts = NULL;
 
