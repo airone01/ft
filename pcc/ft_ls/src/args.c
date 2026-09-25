@@ -22,6 +22,8 @@ void print_help(const char *pname) {
   fprintf(stderr, "         list subdirectories recursively\n");
   fprintf(stderr, "  -t\n");
   fprintf(stderr, "         sort by time, newest first\n");
+  fprintf(stderr, "  -1\n");
+  fprintf(stderr, "         list one file per line\n");
   fprintf(stderr, "      --help\n");
   fprintf(stderr, "         display this help and exit\n");
 }
