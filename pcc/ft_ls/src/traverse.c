@@ -1,9 +1,13 @@
-#include "ls.h"
+#include "file.h"
+#include "print.h"
+#include "types.h"
+#include "util.h"
 #include <dirent.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 char *path_join(const char *dir, const char *file) {
   if (!dir || !file)
@@ -93,7 +97,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
       tfiles[nfiles].uid = sb.st_uid;
       tfiles[nfiles].gid = sb.st_gid;
       tfiles[nfiles].err_code = 0;
-      if (S_ISLNK(sb.st_mode) && opts->ltype == LTypeLong) {
+      if (S_ISLNK(sb.st_mode) && opts->ltype == DisplayLong) {
         tfiles[nfiles].link_target =
             read_symlink_target(tfiles[nfiles].path, sb.st_size);
       }
@@ -103,7 +107,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
   closedir(dp); // closedir immediately to avoid fd buildup
 
   File *files = NULL;
-  if (fndids(nfiles, tfiles, &files) == -1) {
+  if (resolve_owner_group(nfiles, tfiles, &files) == -1) {
     free_tfiles(tfiles, nfiles);
     return -1;
   }
@@ -111,8 +115,8 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
 
   sort_files(files, nfiles, opts);
 
-  dish(print_header, *opts, files, nfiles, dir_path);
-  disl(*opts, files, nfiles);
+  print_dir_header(print_header, *opts, files, nfiles, dir_path);
+  print_file_list(*opts, files, nfiles);
 
   // Recurse subdirs
   if (opts->recursive) {
