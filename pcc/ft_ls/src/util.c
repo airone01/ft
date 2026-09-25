@@ -12,7 +12,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define SIX_MONTHS 6 * 30 * 24 * 3600
+#define THRESHOLD_OLD 15778463 // Threshold before file is 'old', in seconds.
 
 static size_t nmin(size_t a, size_t b) {
   if (a < b)
@@ -94,7 +94,7 @@ void date_str(time_t mtime, char str[32]) {
   struct tm *tm_info = localtime(&mtime);
   time_t now = time(NULL);
 
-  if (mtime > now || (now - mtime) > SIX_MONTHS) {
+  if (mtime > now || (now - mtime) > THRESHOLD_OLD) {
     // older file format
     strftime(str, 32, "%b %e  %Y", tm_info);
   } else {
