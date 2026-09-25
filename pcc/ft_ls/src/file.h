@@ -5,9 +5,10 @@
 #include <stddef.h>
 
 /**
- * @brief Resolves group and user names for a list of tFiles into File structs
+ * @brief Resolves group and user names for a list of TempFile into File
+ * structures
  */
-int resolve_owner_group(size_t nmemb, tFile efiles[], File **dfiles);
+int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles);
 
 /**
  * @brief Directory traversal cycle
@@ -20,7 +21,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
                  int print_header);
 
 /**
- * @brief Sorts an array of File structs based on options
+ * @brief Sorts an array of File structures based on options
  */
 void sort_files(File *files, size_t count, const CliOptions *opts);
 

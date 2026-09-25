@@ -39,12 +39,12 @@ int main(int argc, const char *argv[]) {
     }
   }
 
-  // Non-dir files
+  // Non-directory files
   if (flists.nfiles > 0) {
     print_file_list(opts, flists.files, flists.nfiles);
   }
 
-  // Dir traversal cycle
+  // Directory traversal cycle
   int show_header = (flists.ndirs > 1 || flists.nfiles > 0 || flists.nerr > 0 ||
                      opts.recursive);
   for (size_t i = 0; i < flists.ndirs; i++) {

@@ -13,7 +13,7 @@ enum DisplayType {
   DisplayLong = 2,
 };
 
-typedef struct {
+typedef struct CliOptions {
   enum DisplayType ltype;
   int recursive;
   int all;
@@ -31,27 +31,27 @@ typedef struct File {
   char *name;
   // Relative or absolute path for stat/open
   char *path;
-  // Cached lstat struct
+  // Cached lstat() struct
   struct stat stat;
   // Error code if stat/access failed (0 if success)
   int err_code;
   // For symlinks with -l
   char *link_target;
-  // Resolved user name (or id on lack thereof)
+  // Resolved user name (or ID on lack thereof)
   char *user;
-  // Resolved group name (or id on lack thereof)
+  // Resolved group name (or ID on lack thereof)
   char *group;
-  // '@', '+' or ' ' for extended attrs
+  // '@', '+' or ' ' for extended attributes
   char xattr_acl;
   struct File *next;
 } File;
 
-typedef struct tFile {
+typedef struct TempFile {
   // argv or d_name
   char *name;
   // Full path for stat/open
   char *path;
-  // Cached lstat struct
+  // Cached lstat() struct
   struct stat stat;
   // Error code if stat failed
   int err_code;
@@ -59,12 +59,12 @@ typedef struct tFile {
   char *link_target;
   int uid;
   int gid;
-  // '@', '+' or ' ' for extended attrs
+  // '@', '+' or ' ' for extended attributes
   char xattr_acl;
-  struct tFile *next;
-} tFile;
+  struct TempFile *next;
+} TempFile;
 
-typedef struct {
+typedef struct FileLists {
   File *err_files;
   size_t nerr;
 

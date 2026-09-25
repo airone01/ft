@@ -1,3 +1,6 @@
+// https://man7.org/linux/man-pages/man2/lstat.2.html
+#define _POSIX_C_SOURCE 200112L
+
 #include "file.h"
 #include "print.h"
 #include "types.h"
@@ -30,7 +33,7 @@ char *path_join(const char *dir, const char *file) {
   return path;
 }
 
-static void free_tfiles(tFile *files, size_t count) {
+static void free_tfiles(TempFile *files, size_t count) {
   if (!files)
     return;
   for (size_t i = 0; i < count; i++) {
@@ -55,9 +58,9 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
 
   size_t capacity = 16;
   size_t nfiles = 0;
-  tFile *tfiles = malloc(capacity * sizeof(tFile));
+  TempFile *tfiles = malloc(capacity * sizeof(TempFile));
   if (!tfiles) {
-    // closedir immediately to avoid fd buildup
+    // closedir() immediately to avoid FD buildup
     closedir(dp);
     return -1;
   }
@@ -70,7 +73,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
 
     if (nfiles >= capacity) {
       capacity *= 2;
-      tFile *new_tfiles = realloc(tfiles, capacity * sizeof(tFile));
+      TempFile *new_tfiles = realloc(tfiles, capacity * sizeof(TempFile));
       if (!new_tfiles) {
         free_tfiles(tfiles, nfiles);
         closedir(dp);
@@ -79,7 +82,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
       tfiles = new_tfiles;
     }
 
-    memset(&tfiles[nfiles], 0, sizeof(tFile));
+    memset(&tfiles[nfiles], 0, sizeof(TempFile));
     tfiles[nfiles].name = strdup(entry->d_name);
     tfiles[nfiles].path = path_join(dir_path, entry->d_name);
     if (!tfiles[nfiles].name || !tfiles[nfiles].path) {
@@ -94,8 +97,8 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
       tfiles[nfiles].err_code = errno;
     } else {
       tfiles[nfiles].stat = sb;
-      tfiles[nfiles].uid = sb.st_uid;
-      tfiles[nfiles].gid = sb.st_gid;
+      tfiles[nfiles].uid = (int)sb.st_uid;
+      tfiles[nfiles].gid = (int)sb.st_gid;
       tfiles[nfiles].err_code = 0;
       if (S_ISLNK(sb.st_mode) && opts->ltype == DisplayLong) {
         tfiles[nfiles].link_target =
@@ -104,7 +107,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
     }
     nfiles++;
   }
-  closedir(dp); // closedir immediately to avoid fd buildup
+  closedir(dp); // closedir() immediately to avoid FD buildup
 
   File *files = NULL;
   if (resolve_owner_group(nfiles, tfiles, &files) == -1) {
@@ -118,7 +121,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
   print_dir_header(print_header, *opts, files, nfiles, dir_path);
   print_file_list(*opts, files, nfiles);
 
-  // Recurse subdirs
+  // Recurse subdirectories
   if (opts->recursive) {
     for (size_t i = 0; i < nfiles; i++) {
       if (files[i].err_code == 0 && S_ISDIR(files[i].stat.st_mode)) {

@@ -16,6 +16,7 @@ static int file_cmp(const void *p1, const void *p2) {
     }
 #if defined(__linux__) ||                                                      \
     (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200809L)
+    // Conditional compilation my beloved <3
     else if (f1->stat.st_mtim.tv_nsec != f2->stat.st_mtim.tv_nsec) {
       cmp = (f1->stat.st_mtim.tv_nsec > f2->stat.st_mtim.tv_nsec) ? -1 : 1;
     }

@@ -1,3 +1,6 @@
+// https://man7.org/linux/man-pages/man2/readlink.2.html
+#define _POSIX_C_SOURCE 200112L
+
 #include "types.h"
 #include <stddef.h>
 #include <stdint.h>
@@ -22,7 +25,7 @@ char *strndup(const char *s, size_t n) {
     return NULL;
 
   size_t m = nmin(strlen(s), n) + 1;
-  char *d = malloc(m * sizeof(char));
+  char *d = calloc(m, sizeof(char));
   if (!d)
     return NULL;
 
