@@ -109,6 +109,32 @@ static void dis_pretty(CliOptions opts, File *files, size_t nmemb) {
   }
 }
 
+static void print_file(CliOptions opts, File file, ColWidth cw,
+                       int any_xattr_acl) {
+  if (opts.display_mode == DisplayLong) {
+    char mode_s[12];
+    char date_s[32];
+    mode_str(file.stat.st_mode, file.xattr_acl, any_xattr_acl, mode_s);
+    date_str(file.stat.st_mtime, date_s);
+    const char *usr = file.user ? file.user : "?";
+    const char *grp = file.group ? file.group : "?";
+
+    // whether file is symlink
+    if (S_ISLNK(file.stat.st_mode) && file.link_target) {
+      printf("%s %*ld %-*s %-*s %*lld %s %s -> %s%c", mode_s, cw.links,
+             (long)file.stat.st_nlink, cw.user, usr, cw.group, grp, cw.size,
+             (long long)file.stat.st_size, date_s, file.name, file.link_target,
+             opts.eol);
+    } else {
+      printf("%s %*ld %-*s %-*s %*lld %s %s%c", mode_s, cw.links,
+             (long)file.stat.st_nlink, cw.user, usr, cw.group, grp, cw.size,
+             (long long)file.stat.st_size, date_s, file.name, opts.eol);
+    }
+  } else {
+    printf("%s%c", file.name, opts.eol);
+  }
+}
+
 void print_file_list(CliOptions opts, File *files, size_t nmemb) {
   if (opts.display_mode == DisplayPretty) {
     dis_pretty(opts, files, nmemb);
@@ -133,30 +159,7 @@ void print_file_list(CliOptions opts, File *files, size_t nmemb) {
       fprintf(stderr, "ft_ls: cannot access '%s': %s%c", files[i].path,
               strerror(files[i].err_code), opts.eol);
     } else {
-      if (opts.display_mode == DisplayLong) {
-        char mode_s[12];
-        char date_s[32];
-        mode_str(files[i].stat.st_mode, files[i].xattr_acl, any_xattr_acl,
-                 mode_s);
-        date_str(files[i].stat.st_mtime, date_s);
-        const char *usr = files[i].user ? files[i].user : "?";
-        const char *grp = files[i].group ? files[i].group : "?";
-
-        // whether file is symlink
-        if (S_ISLNK(files[i].stat.st_mode) && files[i].link_target) {
-          printf("%s %*ld %-*s %-*s %*lld %s %s -> %s%c", mode_s, cw.links,
-                 (long)files[i].stat.st_nlink, cw.user, usr, cw.group, grp,
-                 cw.size, (long long)files[i].stat.st_size, date_s,
-                 files[i].name, files[i].link_target, opts.eol);
-        } else {
-          printf("%s %*ld %-*s %-*s %*lld %s %s%c", mode_s, cw.links,
-                 (long)files[i].stat.st_nlink, cw.user, usr, cw.group, grp,
-                 cw.size, (long long)files[i].stat.st_size, date_s,
-                 files[i].name, opts.eol);
-        }
-      } else {
-        printf("%s%c", files[i].name, opts.eol);
-      }
+      print_file(opts, files[i], cw, any_xattr_acl);
     }
   }
 }
