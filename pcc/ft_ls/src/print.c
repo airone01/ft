@@ -127,9 +127,9 @@ void print_file_list(CliOptions opts, File *files, size_t nfiles) {
               strerror(files[i].err_code));
     } else {
       if (opts.ltype == DisplayLong) {
-        char mode_s[11];
+        char mode_s[12];
         char date_s[32];
-        mode_str(files[i].stat.st_mode, mode_s);
+        mode_str(files[i].stat.st_mode, files[i].xattr_acl, mode_s);
         date_str(files[i].stat.st_mtime, date_s);
         const char *usr = files[i].user ? files[i].user : "?";
         const char *grp = files[i].group ? files[i].group : "?";

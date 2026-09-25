@@ -100,9 +100,12 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
       tfiles[nfiles].uid = (int)sb.st_uid;
       tfiles[nfiles].gid = (int)sb.st_gid;
       tfiles[nfiles].err_code = 0;
-      if (S_ISLNK(sb.st_mode) && opts->ltype == DisplayLong) {
-        tfiles[nfiles].link_target =
-            read_symlink_target(tfiles[nfiles].path, sb.st_size);
+      if (opts->ltype == DisplayLong) {
+        tfiles[nfiles].xattr_acl = get_xattr_acl_char(tfiles[nfiles].path);
+        if (S_ISLNK(sb.st_mode)) {
+          tfiles[nfiles].link_target =
+              read_symlink_target(tfiles[nfiles].path, sb.st_size);
+        }
       }
     }
     nfiles++;
