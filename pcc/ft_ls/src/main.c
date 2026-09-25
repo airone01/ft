@@ -1,6 +1,8 @@
-#include "file.h"
-#include "options.h"
-#include "print.h"
+#include "cli/cli.h"
+#include "core/entry.h"
+#include "core/traverse.h"
+#include "display/display.h"
+#include "sort/sort.h"
 #include "types.h"
 #include "util.h"
 #include <locale.h>
@@ -41,7 +43,10 @@ int main(int argc, const char *argv[]) {
 
   // Non-directory files
   if (flists.nmemb > 0) {
-    print_file_list(opts, flists.files, flists.nmemb);
+    if (opts.display_mode == DisplayGrid)
+      display_files_grid(opts, flists.files, flists.nmemb);
+    else
+      display_files_list(opts, flists.files, flists.nmemb);
   }
 
   // Directory traversal cycle

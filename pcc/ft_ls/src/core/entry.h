@@ -1,13 +1,8 @@
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#ifndef SRC_CORE_ENTRY_H
+#define SRC_CORE_ENTRY_H
 
-#include "types.h"
+#include "../types.h"
 #include <stddef.h>
-
-/**
- * @returns 0 on success, -1 on error, -2 on success but quit immediately
- */
-int parse_args(int argc, const char *argv[], CliOptions *optsp);
 
 /**
  * @brief Options interpreter
@@ -20,4 +15,10 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp);
  */
 int process_cli_paths(CliOptions *optsp, FileLists *flists);
 
-#endif /* OPTIONS_H */
+/**
+ * @brief Resolves group and user names for a list of TempFile into File
+ * structures
+ */
+int resolve_owner_group(size_t nmemb, TempFile temp_files[], File **filesp);
+
+#endif /* SRC_CORE_ENTRY_H */

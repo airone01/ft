@@ -1,13 +1,13 @@
-#include "types.h"
+// https://man7.org/linux/man-pages/man3/getopt_long.3.html
 #define _GNU_SOURCE
 
-#include "options.h"
+#include "cli.h"
 #include <getopt.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <unistd.h>
 
-void print_help(const char *pname) {
+static void print_help(const char *pname) {
   fprintf(stderr, "usage: %s [options] [file(s)...]\n", pname);
   fprintf(
       stderr,
@@ -40,7 +40,7 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
 
   optsp->recursive = 0;
   optsp->all = 0;
-  optsp->display_mode = isatty(STDOUT_FILENO) ? DisplayPretty : DisplayPiped;
+  optsp->display_mode = isatty(STDOUT_FILENO) ? DisplayGrid : DisplayPiped;
   optsp->reverse = 0;
   optsp->timesort = 0;
   optsp->eol = '\n';
