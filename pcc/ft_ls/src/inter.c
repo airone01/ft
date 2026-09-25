@@ -16,8 +16,8 @@
 #include <unistd.h>
 
 // Yes, this code is based on GOTO, but this was cleaner than the alternatives.
-int process_cli_paths(CliOptions *opts, FileLists *flists) {
-  if (!opts || !flists)
+int process_cli_paths(CliOptions *optsp, FileLists *flists) {
+  if (!optsp || !flists)
     return -1;
 
   flists->err_files = NULL;
@@ -27,12 +27,12 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
   flists->dirs = NULL;
   flists->ndirs = 0;
 
-  if (opts->npaths == 0)
+  if (optsp->npaths == 0)
     return 0;
 
-  TempFile *err_tmp = calloc(opts->npaths, sizeof(TempFile));
-  TempFile *files_tmp = calloc(opts->npaths, sizeof(TempFile));
-  TempFile *dirs_tmp = calloc(opts->npaths, sizeof(TempFile));
+  TempFile *err_tmp = calloc(optsp->npaths, sizeof(TempFile));
+  TempFile *files_tmp = calloc(optsp->npaths, sizeof(TempFile));
+  TempFile *dirs_tmp = calloc(optsp->npaths, sizeof(TempFile));
 
   if (!err_tmp || !files_tmp || !dirs_tmp) {
     free_temp_files(err_tmp, 0);
@@ -45,8 +45,8 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
   size_t nmemb = 0;
   size_t ndirs = 0;
 
-  for (size_t i = 0; i < opts->npaths; i++) {
-    const char *p = opts->paths[i];
+  for (size_t i = 0; i < optsp->npaths; i++) {
+    const char *p = optsp->paths[i];
     struct stat sb;
 
     if (lstat(p, &sb) == -1) {
@@ -58,7 +58,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
       nerr++;
     } else {
       int is_dir = S_ISDIR(sb.st_mode);
-      if (S_ISLNK(sb.st_mode) && opts->ltype != DisplayLong) {
+      if (S_ISLNK(sb.st_mode) && optsp->display_mode != DisplayLong) {
         struct stat target_sb;
         if (stat(p, &target_sb) == 0 && S_ISDIR(target_sb.st_mode)) {
           is_dir = 1;
@@ -79,7 +79,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
       dest->uid = (int)sb.st_uid;
       dest->gid = (int)sb.st_gid;
       dest->err_code = 0;
-      if (opts->ltype == DisplayLong) {
+      if (optsp->display_mode == DisplayLong) {
         dest->xattr_acl = get_xattr_acl_char(p);
         if (S_ISLNK(sb.st_mode)) {
           dest->link_target = read_symlink_target(p, sb.st_size);

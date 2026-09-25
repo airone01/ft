@@ -10,17 +10,17 @@
 void print_dir_header(int print_header, CliOptions opts, File *files,
                       size_t nmemb, const char *dir_path) {
   if (print_header)
-    printf("%s:\n", dir_path);
+    printf("%s:%c", dir_path, opts.eol);
 
   // Cols width
-  if (opts.ltype == 2 && nmemb > 0) {
+  if (opts.display_mode == 2 && nmemb > 0) {
     long long total_blocks = 0;
     for (size_t i = 0; i < nmemb; i++) {
       if (files[i].err_code == 0) {
         total_blocks += files[i].stat.st_blocks;
       }
     }
-    printf("total %lld\n", total_blocks / 2);
+    printf("total %lld%c", total_blocks / 2, opts.eol);
   }
 }
 
@@ -61,7 +61,7 @@ static ColWidth compute_col_widths(File *files, size_t nmemb) {
   return cw;
 }
 
-static void dis_pretty(File *files, size_t nmemb) {
+static void dis_pretty(CliOptions opts, File *files, size_t nmemb) {
   if (nmemb == 0)
     return;
 
@@ -93,8 +93,8 @@ static void dis_pretty(File *files, size_t nmemb) {
       int idx = c * num_rows + r;
       if (idx < (int)nmemb) {
         if (files[idx].err_code != 0) {
-          fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[idx].path,
-                  strerror(files[idx].err_code));
+          fprintf(stderr, "ft_ls: cannot access '%s': %s%c", files[idx].path,
+                  strerror(files[idx].err_code), opts.eol);
         } else {
           int next_idx = (c + 1) * num_rows + r;
           if (c == num_cols - 1 || next_idx >= (int)nmemb) {
@@ -105,19 +105,19 @@ static void dis_pretty(File *files, size_t nmemb) {
         }
       }
     }
-    printf("\n");
+    printf("%c", opts.eol);
   }
 }
 
 void print_file_list(CliOptions opts, File *files, size_t nmemb) {
-  if (opts.ltype == DisplayPretty) {
-    dis_pretty(files, nmemb);
+  if (opts.display_mode == DisplayPretty) {
+    dis_pretty(opts, files, nmemb);
     return;
   }
 
   ColWidth cw = {0, 0, 0, 0, 0, 0};
   int any_xattr_acl = 0;
-  if (opts.ltype == DisplayLong) {
+  if (opts.display_mode == DisplayLong) {
     cw = compute_col_widths(files, nmemb);
     for (size_t i = 0; i < nmemb; i++) {
       if (files[i].err_code == 0 &&
@@ -130,10 +130,10 @@ void print_file_list(CliOptions opts, File *files, size_t nmemb) {
 
   for (size_t i = 0; i < nmemb; i++) {
     if (files[i].err_code != 0) {
-      fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[i].path,
-              strerror(files[i].err_code));
+      fprintf(stderr, "ft_ls: cannot access '%s': %s%c", files[i].path,
+              strerror(files[i].err_code), opts.eol);
     } else {
-      if (opts.ltype == DisplayLong) {
+      if (opts.display_mode == DisplayLong) {
         char mode_s[12];
         char date_s[32];
         mode_str(files[i].stat.st_mode, files[i].xattr_acl, any_xattr_acl,
@@ -144,18 +144,18 @@ void print_file_list(CliOptions opts, File *files, size_t nmemb) {
 
         // whether file is symlink
         if (S_ISLNK(files[i].stat.st_mode) && files[i].link_target) {
-          printf("%s %*ld %-*s %-*s %*lld %s %s -> %s\n", mode_s, cw.links,
+          printf("%s %*ld %-*s %-*s %*lld %s %s -> %s%c", mode_s, cw.links,
                  (long)files[i].stat.st_nlink, cw.user, usr, cw.group, grp,
                  cw.size, (long long)files[i].stat.st_size, date_s,
-                 files[i].name, files[i].link_target);
+                 files[i].name, files[i].link_target, opts.eol);
         } else {
-          printf("%s %*ld %-*s %-*s %*lld %s %s\n", mode_s, cw.links,
+          printf("%s %*ld %-*s %-*s %*lld %s %s%c", mode_s, cw.links,
                  (long)files[i].stat.st_nlink, cw.user, usr, cw.group, grp,
                  cw.size, (long long)files[i].stat.st_size, date_s,
-                 files[i].name);
+                 files[i].name, opts.eol);
         }
       } else {
-        printf("%s\n", files[i].name);
+        printf("%s%c", files[i].name, opts.eol);
       }
     }
   }

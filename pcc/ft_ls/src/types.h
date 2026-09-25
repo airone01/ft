@@ -4,23 +4,25 @@
 #include <stddef.h>
 #include <sys/stat.h>
 
-typedef enum DisplayType {
+typedef enum DisplayMode {
   // (default)
   DisplayPretty = 0,
   // (when piped to a program)
   DisplayPiped = 1,
   // (-l option)
   DisplayLong = 2,
-} DisplayType;
+} DisplayMode;
 
 typedef struct CliOptions {
-  DisplayType ltype;
+  DisplayMode display_mode;
   int recursive;
   int all;
   int reverse;
   int timesort;
   int color;
   int showDate;
+  // End-of-line character. Relevant for `--zero`. Default `\n`.
+  char eol;
 
   size_t npaths;
   const char **paths;

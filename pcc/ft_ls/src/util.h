@@ -15,7 +15,7 @@
 char *strndup(const char *s, size_t n);
 
 /**
- * @brief Duplicates a NULL-terminated string
+ * @brief Duplicates a NUL-terminated string
  * @returns pointer to duplicated string on success, NULL otherwise
  */
 char *strdup(const char *s);

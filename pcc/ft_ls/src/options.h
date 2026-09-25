@@ -7,7 +7,7 @@
 /**
  * @returns 0 on success, -1 on error, -2 on success but quit immediately
  */
-int parse_args(int argc, const char *argv[], CliOptions *opts);
+int parse_args(int argc, const char *argv[], CliOptions *optsp);
 
 /**
  * @brief Options interpreter
@@ -18,6 +18,6 @@ int parse_args(int argc, const char *argv[], CliOptions *opts);
  * @returns 0 on success
  * @returns -1 on memory or system error
  */
-int process_cli_paths(CliOptions *opts, FileLists *flists);
+int process_cli_paths(CliOptions *optsp, FileLists *flists);
 
 #endif /* OPTIONS_H */
