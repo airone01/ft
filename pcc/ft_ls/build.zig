@@ -1,10 +1,20 @@
 const std = @import("std");
 
-const c_flags: []const []const u8 = &.{
+const base_c_flags: []const []const u8 = &.{
     "-Wall",
     "-Wextra",
     "-Wpedantic",
     "-DFT_BONUS=1",
+};
+
+const release_c_flags: []const []const u8 = &.{
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-DFT_BONUS=1",
+    "-O3",
+    "-DNDEBUG",
+    "-fno-plt",
 };
 
 fn dirExists(b: *std.Build, rel_path: []const u8) bool {
@@ -36,12 +46,18 @@ pub fn configure(
     const rel_prefix = if (dirExists(b, "pcc/ft_ls/src")) "pcc/ft_ls" else ".";
     const src_dir = b.pathJoin(&.{ rel_prefix, "src" });
 
+    const c_flags = switch (optimize) {
+        .Debug => base_c_flags,
+        else => release_c_flags,
+    };
+
     const exe = b.addExecutable(.{
         .name = "ft_ls",
         .root_module = b.createModule(.{
             .target = target,
             .optimize = optimize,
             .link_libc = true,
+            .strip = (optimize != .Debug),
         }),
     });
     exe.root_module.addCSourceFiles(.{
