@@ -4,6 +4,7 @@
 #include "file.h"
 #include "types.h"
 #include "util.h"
+#include <errno.h>
 #include <grp.h>
 #include <pwd.h>
 #include <stddef.h>
@@ -13,8 +14,6 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
-#include <errno.h>
 
 // Yes, this code is based on GOTO, but this was cleaner than the alternatives.
 int process_cli_paths(CliOptions *opts, FileLists *flists) {
