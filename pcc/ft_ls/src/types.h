@@ -4,17 +4,17 @@
 #include <stddef.h>
 #include <sys/stat.h>
 
-enum DisplayType {
+typedef enum DisplayType {
   // (default)
   DisplayPretty = 0,
   // (when piped to a program)
   DisplayPiped = 1,
   // (-l option)
   DisplayLong = 2,
-};
+} DisplayType;
 
 typedef struct CliOptions {
-  enum DisplayType ltype;
+  DisplayType ltype;
   int recursive;
   int all;
   int reverse;
@@ -74,5 +74,43 @@ typedef struct FileLists {
   File *dirs;
   size_t ndirs;
 } FileLists;
+
+// File type
+// https://en.wikipedia.org/wiki/Unix_file_types#Symbolic
+enum {
+  FileRegular = '-',
+  FileDirectory = 'd',
+  FileSymlink = 'l',
+  FileFifo = 'p',
+  FileBlockSpecial = 'b',
+  FileCharSpecial = 'c',
+  FileSocket = 's',
+  FileUnknown = '?',
+};
+
+// Permissions
+// https://en.wikipedia.org/wiki/File-system_permissions#Traditional_POSIX_permissions
+enum {
+  ModeOff = '-',
+  ModeRead = 'r',
+  ModeWrite = 'w',
+  ModeExec = 'x',
+  ModeSetugid = 's',
+  ModeSetugidNonExec = 'S',
+  ModeSticky = 't',
+  ModeStickyNonExec = 'T',
+  // Extended attributes & ACL
+  ModeXattr = '@',
+  ModeAcl = '+',
+};
+
+typedef struct {
+  int links;
+  int user;
+  int group;
+  int size;
+  int major;
+  int minor;
+} ColWidth;
 
 #endif /* TYPES_H */

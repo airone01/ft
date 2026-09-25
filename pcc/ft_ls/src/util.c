@@ -8,13 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/xattr.h>
 #include <time.h>
 #include <unistd.h>
-
-#define THRESHOLD_OLD 15778463 // Threshold before file is 'old', in seconds.
 
 static size_t nmin(size_t a, size_t b) {
   if (a < b)
@@ -59,40 +55,6 @@ char *read_symlink_target(const char *path, off_t st_size) {
   }
 }
 
-void mode_str(mode_t mode, char xattr_acl, char str[12]) {
-  if (S_ISREG(mode))
-    str[0] = '-';
-  else if (S_ISDIR(mode))
-    str[0] = 'd';
-  else if (S_ISLNK(mode))
-    str[0] = 'l';
-  else if (S_ISCHR(mode))
-    str[0] = 'c';
-  else if (S_ISBLK(mode))
-    str[0] = 'b';
-  else if (S_ISFIFO(mode))
-    str[0] = 'p';
-  else if (S_ISSOCK(mode))
-    str[0] = 's';
-  else
-    str[0] = '?';
-
-  str[1] = (mode & S_IRUSR) ? 'r' : '-';
-  str[2] = (mode & S_IWUSR) ? 'w' : '-';
-  str[3] = (mode & S_IXUSR) ? 'x' : '-';
-
-  str[4] = (mode & S_IRGRP) ? 'r' : '-';
-  str[5] = (mode & S_IWGRP) ? 'w' : '-';
-  str[6] = (mode & S_IXGRP) ? 'x' : '-';
-
-  str[7] = (mode & S_IROTH) ? 'r' : '-';
-  str[8] = (mode & S_IWOTH) ? 'w' : '-';
-  str[9] = (mode & S_IXOTH) ? 'x' : '-';
-
-  str[10] = (xattr_acl != '\0') ? xattr_acl : ' ';
-  str[11] = '\0';
-}
-
 char get_xattr_acl_char(const char *path) {
   if (!path)
     return ' ';
@@ -133,19 +95,6 @@ char get_xattr_acl_char(const char *path) {
   if (has_acl)
     return '+';
   return ' ';
-}
-
-void date_str(time_t mtime, char str[32]) {
-  struct tm *tm_info = localtime(&mtime);
-  time_t now = time(NULL);
-
-  if (mtime > now || (now - mtime) > THRESHOLD_OLD) {
-    // older file format
-    strftime(str, 32, "%b %e  %Y", tm_info);
-  } else {
-    // recent file format
-    strftime(str, 32, "%b %e %H:%M", tm_info);
-  }
 }
 
 void free_file(File *file) {

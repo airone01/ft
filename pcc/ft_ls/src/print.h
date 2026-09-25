@@ -3,15 +3,26 @@
 
 #include "types.h"
 #include <stddef.h>
+#include <sys/types.h>
+#include <time.h>
 
-typedef struct {
-  int links;
-  int user;
-  int group;
-  int size;
-  int major;
-  int minor;
-} ColWidth;
+#ifndef THRESHOLD_OLD
+// Threshold before file is 'old', in seconds.
+#define THRESHOLD_OLD 15778463
+#endif /* THRESHOLD_OLD */
+
+/**
+ * @brief Formats file time
+ * @note Writes to a small string buffer `str` for simplicity
+ */
+void date_str(time_t mtime, char str[32]);
+
+/**
+ * @brief Formats file mode bits and xattr/acl indicator into an 11-character
+ * permission string
+ * @note Writes to a small string buffer `str` for simplicity
+ */
+void mode_str(mode_t mode, char xattr_acl, char str[12]);
 
 /**
  * @brief Prints the directory header in list mode

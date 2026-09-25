@@ -27,19 +27,6 @@ char *strdup(const char *s);
 char *read_symlink_target(const char *path, off_t st_size);
 
 /**
- * @brief Formats file time
- * @note Writes to a small string buffer `str` for simplicity
- */
-void date_str(time_t mtime, char str[32]);
-
-/**
- * @brief Formats file mode bits and xattr/acl indicator into an 11-character
- * permission string
- * @note Writes to a small string buffer `str` for simplicity
- */
-void mode_str(mode_t mode, char xattr_acl, char str[12]);
-
-/**
  * @brief Checks for extended attributes (@) or ACL (+) on a file path
  */
 char get_xattr_acl_char(const char *path);
