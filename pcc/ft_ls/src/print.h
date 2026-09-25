@@ -22,7 +22,7 @@ void date_str(time_t mtime, char str[32]);
  * permission string
  * @note Writes to a small string buffer `str` for simplicity
  */
-void mode_str(mode_t mode, char xattr_acl, char str[12]);
+void mode_str(mode_t mode, char xattr_acl, int any_xattr_acl, char str[12]);
 
 /**
  * @brief Prints the directory header in list mode
