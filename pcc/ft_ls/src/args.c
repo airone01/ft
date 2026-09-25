@@ -22,47 +22,52 @@ void print_help(const char *pname) {
   fprintf(stderr, "         list subdirectories recursively\n");
   fprintf(stderr, "  -t\n");
   fprintf(stderr, "         sort by time, newest first\n");
+  fprintf(stderr, "      --zero\n");
+  fprintf(stderr, "         end each output line with NUL, not newline\n");
   fprintf(stderr, "  -1\n");
   fprintf(stderr, "         list one file per line\n");
   fprintf(stderr, "      --help\n");
   fprintf(stderr, "         display this help and exit\n");
 }
 
-int parse_args(int argc, const char *argv[], CliOptions *opts) {
+int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   char c;
   static struct option long_options[] = {
       {"help", no_argument, 0, 'h'}, {"recursive", no_argument, 0, 'R'},
       {"all", no_argument, 0, 'a'},  {"reverse", no_argument, 0, 'r'},
-      {"time", no_argument, 0, 't'},
-  };
+      {"time", no_argument, 0, 't'}, {"zero", no_argument, 0, 'z'}};
 
-  opts->recursive = 0;
-  opts->all = 0;
-  opts->ltype = isatty(STDOUT_FILENO) ? DisplayPretty : DisplayPiped;
-  opts->reverse = 0;
-  opts->timesort = 0;
+  optsp->recursive = 0;
+  optsp->all = 0;
+  optsp->display_mode = isatty(STDOUT_FILENO) ? DisplayPretty : DisplayPiped;
+  optsp->reverse = 0;
+  optsp->timesort = 0;
+  optsp->eol = '\n';
 
   while ((c = (char)getopt_long(argc, (char *const *)argv, "1alrRt",
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
-      opts->ltype = DisplayPiped;
+      optsp->display_mode = DisplayPiped;
       break;
     case 'a':
-      opts->all = 1;
+      optsp->all = 1;
       break;
     case 'l':
-      opts->ltype = DisplayLong;
-      opts->showDate = 1;
+      optsp->display_mode = DisplayLong;
+      optsp->showDate = 1;
       break;
     case 'r':
-      opts->reverse = 1;
+      optsp->reverse = 1;
       break;
     case 'R':
-      opts->recursive = 1;
+      optsp->recursive = 1;
       break;
     case 't':
-      opts->timesort = 1;
+      optsp->timesort = 1;
+      break;
+    case 'z':
+      optsp->eol = '\0';
       break;
     default:
       fprintf(stderr, "Try '%s --help' for more information.\n", argv[0]);
@@ -72,13 +77,13 @@ int parse_args(int argc, const char *argv[], CliOptions *opts) {
       return -2;
     }
 
-  opts->paths = &argv[optind];
-  opts->npaths = (size_t)(argc - optind);
+  optsp->paths = &argv[optind];
+  optsp->npaths = (size_t)(argc - optind);
 
-  if (opts->npaths == 0) {
+  if (optsp->npaths == 0) {
     static const char *default_files[] = {"."};
-    opts->paths = default_files;
-    opts->npaths = 1;
+    optsp->paths = default_files;
+    optsp->npaths = 1;
   }
 
   return 0;
