@@ -24,7 +24,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
   flists->err_files = NULL;
   flists->nerr = 0;
   flists->files = NULL;
-  flists->nfiles = 0;
+  flists->nmemb = 0;
   flists->dirs = NULL;
   flists->ndirs = 0;
 
@@ -43,7 +43,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
   }
 
   size_t nerr = 0;
-  size_t nfiles = 0;
+  size_t nmemb = 0;
   size_t ndirs = 0;
 
   for (size_t i = 0; i < opts->npaths; i++) {
@@ -70,7 +70,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
       if (is_dir) {
         dest = &dirs_tmp[ndirs++];
       } else {
-        dest = &files_tmp[nfiles++];
+        dest = &files_tmp[nmemb++];
       }
 
       dest->name = strdup(p);
@@ -94,30 +94,31 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
     goto fail;
   flists->nerr = nerr;
 
-  if (resolve_owner_group(nfiles, files_tmp, &flists->files) == -1)
+  if (resolve_owner_group(nmemb, files_tmp, &flists->files) == -1)
     goto fail;
-  flists->nfiles = nfiles;
+  flists->nmemb = nmemb;
 
   if (resolve_owner_group(ndirs, dirs_tmp, &flists->dirs) == -1)
     goto fail;
   flists->ndirs = ndirs;
 
   free_temp_files(err_tmp, nerr);
-  free_temp_files(files_tmp, nfiles);
+  free_temp_files(files_tmp, nmemb);
   free_temp_files(dirs_tmp, ndirs);
   return 0;
 
 fail:
   free_temp_files(err_tmp, nerr);
-  free_temp_files(files_tmp, nfiles);
+  free_temp_files(files_tmp, nmemb);
   free_temp_files(dirs_tmp, ndirs);
   free_file_lists(flists);
   return -1;
 }
 
-int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles) {
+// Yes, GOTO
+int resolve_owner_group(size_t nmemb, TempFile temp_files[], File **filesp) {
   if (nmemb == 0) {
-    *dfiles = NULL;
+    *filesp = NULL;
     return 0;
   }
 
@@ -133,33 +134,33 @@ int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles) {
     usrmlen = 100;
 
   for (size_t i = 0; i < nmemb; i++) {
-    TempFile *efile = &efiles[i];
+    TempFile *temp_file = &temp_files[i];
     File *file = &files[i];
 
-    file->err_code = efile->err_code;
-    if (efile->name) {
-      file->name = strdup(efile->name);
+    file->err_code = temp_file->err_code;
+    if (temp_file->name) {
+      file->name = strdup(temp_file->name);
       if (!file->name)
         goto fail;
     }
-    if (efile->path) {
-      file->path = strdup(efile->path);
+    if (temp_file->path) {
+      file->path = strdup(temp_file->path);
       if (!file->path)
         goto fail;
     }
-    if (efile->link_target) {
-      file->link_target = strdup(efile->link_target);
+    if (temp_file->link_target) {
+      file->link_target = strdup(temp_file->link_target);
       if (!file->link_target)
         goto fail;
     }
-    file->xattr_acl = efile->xattr_acl;
-    file->stat = efile->stat;
+    file->xattr_acl = temp_file->xattr_acl;
+    file->stat = temp_file->stat;
 
-    if (efile->err_code != 0) {
+    if (temp_file->err_code != 0) {
       continue;
     }
 
-    struct group *grp = getgrgid(efile->stat.st_gid);
+    struct group *grp = getgrgid(temp_file->stat.st_gid);
     if (grp) {
       file->group = strdup(grp->gr_name);
       if (!file->group)
@@ -168,11 +169,11 @@ int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles) {
       char *gn = malloc((uint64_t)grpmlen * sizeof(char));
       if (!gn)
         goto fail;
-      snprintf(gn, (uint64_t)grpmlen, "%u", efile->stat.st_gid);
+      snprintf(gn, (uint64_t)grpmlen, "%u", temp_file->stat.st_gid);
       file->group = gn;
     }
 
-    struct passwd *user = getpwuid(efile->stat.st_uid);
+    struct passwd *user = getpwuid(temp_file->stat.st_uid);
     if (user) {
       file->user = strdup(user->pw_name);
       if (!file->user)
@@ -181,16 +182,16 @@ int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles) {
       char *un = malloc((uint16_t)usrmlen * sizeof(char));
       if (!un)
         goto fail;
-      snprintf(un, (uint16_t)usrmlen, "%u", efile->stat.st_uid);
+      snprintf(un, (uint16_t)usrmlen, "%u", temp_file->stat.st_uid);
       file->user = un;
     }
   }
 
-  *dfiles = files;
+  *filesp = files;
   return 0;
 
 fail:
   free_files(files, nmemb);
-  *dfiles = NULL;
+  *filesp = NULL;
   return -1;
 }

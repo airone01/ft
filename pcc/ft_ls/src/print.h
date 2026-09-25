@@ -22,6 +22,6 @@ void print_dir_header(int print_header, CliOptions opts, File *files,
 /**
  * @brief Prints the files
  */
-void print_file_list(CliOptions opts, File *files, size_t nfiles);
+void print_file_list(CliOptions opts, File *files, size_t nmemb);
 
 #endif /* DISPLAY_H */

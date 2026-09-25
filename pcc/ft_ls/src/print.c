@@ -9,14 +9,14 @@
 #include <unistd.h>
 
 void print_dir_header(int print_header, CliOptions opts, File *files,
-                      size_t nfiles, const char *dir_path) {
+                      size_t nmemb, const char *dir_path) {
   if (print_header)
     printf("%s:\n", dir_path);
 
   // Cols width
-  if (opts.ltype == 2 && nfiles > 0) {
+  if (opts.ltype == 2 && nmemb > 0) {
     long long total_blocks = 0;
-    for (size_t i = 0; i < nfiles; i++) {
+    for (size_t i = 0; i < nmemb; i++) {
       if (files[i].err_code == 0) {
         total_blocks += files[i].stat.st_blocks;
       }
@@ -36,9 +36,9 @@ static int get_num_digits(long long n) {
   return count;
 }
 
-static ColWidth compute_col_widths(File *files, size_t nfiles) {
+static ColWidth compute_col_widths(File *files, size_t nmemb) {
   ColWidth cw = {1, 1, 1, 1, 0, 0};
-  for (size_t i = 0; i < nfiles; i++) {
+  for (size_t i = 0; i < nmemb; i++) {
     if (files[i].err_code != 0)
       continue;
     int link_w = get_num_digits((long)files[i].stat.st_nlink);
@@ -62,8 +62,8 @@ static ColWidth compute_col_widths(File *files, size_t nfiles) {
   return cw;
 }
 
-static void dis_pretty(File *files, size_t nfiles) {
-  if (nfiles == 0)
+static void dis_pretty(File *files, size_t nmemb) {
+  if (nmemb == 0)
     return;
 
   struct winsize ws;
@@ -74,7 +74,7 @@ static void dis_pretty(File *files, size_t nfiles) {
   }
 
   size_t max_len = 0;
-  for (size_t i = 0; i < nfiles; i++) {
+  for (size_t i = 0; i < nmemb; i++) {
     if (files[i].name) {
       size_t len = strlen(files[i].name);
       if (len > max_len)
@@ -87,18 +87,18 @@ static void dis_pretty(File *files, size_t nfiles) {
   if (num_cols < 1)
     num_cols = 1;
 
-  int num_rows = ((int)nfiles + num_cols - 1) / num_cols;
+  int num_rows = ((int)nmemb + num_cols - 1) / num_cols;
 
   for (int r = 0; r < num_rows; r++) {
     for (int c = 0; c < num_cols; c++) {
       int idx = c * num_rows + r;
-      if (idx < (int)nfiles) {
+      if (idx < (int)nmemb) {
         if (files[idx].err_code != 0) {
           fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[idx].path,
                   strerror(files[idx].err_code));
         } else {
           int next_idx = (c + 1) * num_rows + r;
-          if (c == num_cols - 1 || next_idx >= (int)nfiles) {
+          if (c == num_cols - 1 || next_idx >= (int)nmemb) {
             printf("%s", files[idx].name);
           } else {
             printf("%-*s", col_width, files[idx].name);
@@ -110,18 +110,18 @@ static void dis_pretty(File *files, size_t nfiles) {
   }
 }
 
-void print_file_list(CliOptions opts, File *files, size_t nfiles) {
+void print_file_list(CliOptions opts, File *files, size_t nmemb) {
   if (opts.ltype == DisplayPretty) {
-    dis_pretty(files, nfiles);
+    dis_pretty(files, nmemb);
     return;
   }
 
   ColWidth cw = {0, 0, 0, 0, 0, 0};
   if (opts.ltype == DisplayLong) {
-    cw = compute_col_widths(files, nfiles);
+    cw = compute_col_widths(files, nmemb);
   }
 
-  for (size_t i = 0; i < nfiles; i++) {
+  for (size_t i = 0; i < nmemb; i++) {
     if (files[i].err_code != 0) {
       fprintf(stderr, "ft_ls: cannot access '%s': %s\n", files[i].path,
               strerror(files[i].err_code));

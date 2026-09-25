@@ -34,10 +34,10 @@ static int file_cmp(const void *p1, const void *p2) {
   return cmp;
 }
 
-void sort_files(File *files, size_t count, const CliOptions *opts) {
-  if (!files || count < 2)
+void sort_files(File *files, size_t nmemb, const CliOptions *optsp) {
+  if (!files || nmemb < 2)
     return;
-  g_sort_opts = opts;
-  qsort(files, count, sizeof(File), file_cmp);
+  g_sort_opts = optsp;
+  qsort(files, nmemb, sizeof(File), file_cmp);
   g_sort_opts = NULL;
 }

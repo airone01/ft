@@ -69,7 +69,7 @@ typedef struct FileLists {
   size_t nerr;
 
   File *files;
-  size_t nfiles;
+  size_t nmemb;
 
   File *dirs;
   size_t ndirs;

@@ -1,4 +1,5 @@
 // https://man7.org/linux/man-pages/man2/lstat.2.html
+#include <stddef.h>
 #define _POSIX_C_SOURCE 200112L
 
 #include "file.h"
@@ -12,9 +13,44 @@
 #include <string.h>
 #include <sys/stat.h>
 
-int traverse_dir(const char *dir_path, const CliOptions *opts,
+static void meta_enrich(size_t nmemb, TempFile *temp_files,
+                        const CliOptions *optsp) {
+  struct stat sb;
+  if (lstat(temp_files[nmemb].path, &sb) == -1) {
+    temp_files[nmemb].err_code = errno;
+  } else {
+    temp_files[nmemb].stat = sb;
+    temp_files[nmemb].uid = (int)sb.st_uid;
+    temp_files[nmemb].gid = (int)sb.st_gid;
+    temp_files[nmemb].err_code = 0;
+    if (optsp->ltype == DisplayLong) {
+      temp_files[nmemb].xattr_acl = get_xattr_acl_char(temp_files[nmemb].path);
+      if (S_ISLNK(sb.st_mode)) {
+        temp_files[nmemb].link_target =
+            read_symlink_target(temp_files[nmemb].path, sb.st_size);
+      }
+    }
+  }
+}
+
+static void recurse_subdirs(size_t nmemb, File *files,
+                            const CliOptions *optsp) {
+  if (optsp->recursive) {
+    for (size_t i = 0; i < nmemb; i++) {
+      if (files[i].err_code == 0 && S_ISDIR(files[i].stat.st_mode)) {
+        if (strcmp(files[i].name, ".") != 0 &&
+            strcmp(files[i].name, "..") != 0) {
+          printf("\n");
+          traverse_dir(files[i].path, optsp, 1);
+        }
+      }
+    }
+  }
+}
+
+int traverse_dir(const char *dir_path, const CliOptions *optsp,
                  int print_header) {
-  if (!dir_path || !opts)
+  if (!dir_path || !optsp)
     return -1;
 
   DIR *dp = opendir(dir_path);
@@ -25,9 +61,9 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
   }
 
   size_t capacity = 16;
-  size_t nfiles = 0;
-  TempFile *tfiles = malloc(capacity * sizeof(TempFile));
-  if (!tfiles) {
+  size_t nmemb = 0;
+  TempFile *temp_files = malloc(capacity * sizeof(TempFile));
+  if (!temp_files) {
     // closedir() immediately to avoid FD buildup
     closedir(dp);
     return -1;
@@ -36,75 +72,50 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
   struct dirent *entry;
   while ((entry = readdir(dp)) != NULL) {
     // Skip hidden files unless -a
-    if (!opts->all && entry->d_name[0] == '.')
+    if (!optsp->all && entry->d_name[0] == '.')
       continue;
 
-    if (nfiles >= capacity) {
+    if (nmemb >= capacity) {
       capacity *= 2;
-      TempFile *new_tfiles = realloc(tfiles, capacity * sizeof(TempFile));
-      if (!new_tfiles) {
-        free_temp_files(tfiles, nfiles);
+      TempFile *new_temp_files =
+          realloc(temp_files, capacity * sizeof(TempFile));
+      if (!new_temp_files) {
+        free_temp_files(temp_files, nmemb);
         closedir(dp);
         return -1;
       }
-      tfiles = new_tfiles;
+      temp_files = new_temp_files;
     }
 
-    memset(&tfiles[nfiles], 0, sizeof(TempFile));
-    tfiles[nfiles].name = strdup(entry->d_name);
-    tfiles[nfiles].path = path_join(dir_path, entry->d_name);
-    if (!tfiles[nfiles].name || !tfiles[nfiles].path) {
-      free_temp_files(tfiles, nfiles + 1);
+    memset(&temp_files[nmemb], 0, sizeof(TempFile));
+    temp_files[nmemb].name = strdup(entry->d_name);
+    temp_files[nmemb].path = path_join(dir_path, entry->d_name);
+    if (!temp_files[nmemb].name || !temp_files[nmemb].path) {
+      free_temp_files(temp_files, nmemb + 1);
       closedir(dp);
       return -1;
     }
 
-    // meta enrichment
-    struct stat sb;
-    if (lstat(tfiles[nfiles].path, &sb) == -1) {
-      tfiles[nfiles].err_code = errno;
-    } else {
-      tfiles[nfiles].stat = sb;
-      tfiles[nfiles].uid = (int)sb.st_uid;
-      tfiles[nfiles].gid = (int)sb.st_gid;
-      tfiles[nfiles].err_code = 0;
-      if (opts->ltype == DisplayLong) {
-        tfiles[nfiles].xattr_acl = get_xattr_acl_char(tfiles[nfiles].path);
-        if (S_ISLNK(sb.st_mode)) {
-          tfiles[nfiles].link_target =
-              read_symlink_target(tfiles[nfiles].path, sb.st_size);
-        }
-      }
-    }
-    nfiles++;
+    meta_enrich(nmemb, temp_files, optsp);
+
+    nmemb++;
   }
   closedir(dp); // closedir() immediately to avoid FD buildup
 
   File *files = NULL;
-  if (resolve_owner_group(nfiles, tfiles, &files) == -1) {
-    free_temp_files(tfiles, nfiles);
+  if (resolve_owner_group(nmemb, temp_files, &files) == -1) {
+    free_temp_files(temp_files, nmemb);
     return -1;
   }
-  free_temp_files(tfiles, nfiles);
+  free_temp_files(temp_files, nmemb);
 
-  sort_files(files, nfiles, opts);
+  sort_files(files, nmemb, optsp);
 
-  print_dir_header(print_header, *opts, files, nfiles, dir_path);
-  print_file_list(*opts, files, nfiles);
+  print_dir_header(print_header, *optsp, files, nmemb, dir_path);
+  print_file_list(*optsp, files, nmemb);
 
-  // Recurse subdirectories
-  if (opts->recursive) {
-    for (size_t i = 0; i < nfiles; i++) {
-      if (files[i].err_code == 0 && S_ISDIR(files[i].stat.st_mode)) {
-        if (strcmp(files[i].name, ".") != 0 &&
-            strcmp(files[i].name, "..") != 0) {
-          printf("\n");
-          traverse_dir(files[i].path, opts, 1);
-        }
-      }
-    }
-  }
+  recurse_subdirs(nmemb, files, optsp);
 
-  free_files(files, nfiles);
+  free_files(files, nmemb);
   return 0;
 }
