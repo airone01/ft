@@ -62,6 +62,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
         struct stat target_sb;
         if (stat(p, &target_sb) == 0 && S_ISDIR(target_sb.st_mode)) {
           is_dir = 1;
+          sb = target_sb;
         }
       }
 
