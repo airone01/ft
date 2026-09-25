@@ -1,9 +1,9 @@
 // The following is needed for getgrgid_r() and getpwuid_r()
 #define _POSIX_C_SOURCE 200809L
 
-#include "file.h"
-#include "types.h"
-#include "util.h"
+#include "entry.h"
+#include "../format/metadata.h"
+#include "../util.h"
 #include <errno.h>
 #include <grp.h>
 #include <pwd.h>
@@ -110,7 +110,7 @@ fail:
   return -1;
 }
 
-// Yes, GOTO
+// Yes, this code is based on GOTO, but this was cleaner than the alternatives.
 int resolve_owner_group(size_t nmemb, TempFile temp_files[], File **filesp) {
   if (nmemb == 0) {
     *filesp = NULL;

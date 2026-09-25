@@ -1,13 +1,15 @@
 // https://man7.org/linux/man-pages/man2/lstat.2.html
-#include <stddef.h>
 #define _POSIX_C_SOURCE 200112L
 
-#include "file.h"
-#include "print.h"
-#include "types.h"
-#include "util.h"
+#include "traverse.h"
+#include "../display/display.h"
+#include "../format/metadata.h"
+#include "../sort/sort.h"
+#include "../util.h"
+#include "entry.h"
 #include <dirent.h>
 #include <errno.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -105,8 +107,8 @@ int traverse_dir(const char *dir_path, const CliOptions *optsp,
 
   sort_files(files, nmemb, optsp);
 
-  print_dir_header(print_header, *optsp, files, nmemb, dir_path);
-  print_file_list(*optsp, files, nmemb);
+  display_list_header(print_header, *optsp, files, nmemb, dir_path);
+  display_files_list(*optsp, files, nmemb);
 
   recurse_subdirs(nmemb, files, optsp);
 

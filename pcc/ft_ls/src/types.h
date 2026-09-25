@@ -6,7 +6,7 @@
 
 typedef enum DisplayMode {
   // (default)
-  DisplayPretty = 0,
+  DisplayGrid = 0,
   // (when piped to a program)
   DisplayPiped = 1,
   // (-l option)
