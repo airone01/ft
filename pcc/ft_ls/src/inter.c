@@ -1,5 +1,5 @@
-// The following is needed for getgrgid_r and getpwuid_r
-// #define _POSIX_C_SOURCE 200809L
+// The following is needed for getgrgid_r() and getpwuid_r()
+#define _POSIX_C_SOURCE 200809L
 
 #include "file.h"
 #include "types.h"
@@ -16,7 +16,7 @@
 
 #include <errno.h>
 
-static void free_tfiles(tFile *files, size_t count) {
+static void free_tfiles(TempFile *files, size_t count) {
   if (!files)
     return;
   for (size_t i = 0; i < count; i++) {
@@ -27,6 +27,7 @@ static void free_tfiles(tFile *files, size_t count) {
   free(files);
 }
 
+// Yes, this code is based on GOTO, but this was cleaner than the alternatives.
 int process_cli_paths(CliOptions *opts, FileLists *flists) {
   if (!opts || !flists)
     return -1;
@@ -41,9 +42,9 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
   if (opts->npaths == 0)
     return 0;
 
-  tFile *err_tmp = calloc(opts->npaths, sizeof(tFile));
-  tFile *files_tmp = calloc(opts->npaths, sizeof(tFile));
-  tFile *dirs_tmp = calloc(opts->npaths, sizeof(tFile));
+  TempFile *err_tmp = calloc(opts->npaths, sizeof(TempFile));
+  TempFile *files_tmp = calloc(opts->npaths, sizeof(TempFile));
+  TempFile *dirs_tmp = calloc(opts->npaths, sizeof(TempFile));
 
   if (!err_tmp || !files_tmp || !dirs_tmp) {
     free_tfiles(err_tmp, 0);
@@ -76,7 +77,7 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
         }
       }
 
-      tFile *dest;
+      TempFile *dest;
       if (is_dir) {
         dest = &dirs_tmp[ndirs++];
       } else {
@@ -86,8 +87,8 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
       dest->name = strdup(p);
       dest->path = strdup(p);
       dest->stat = sb;
-      dest->uid = sb.st_uid;
-      dest->gid = sb.st_gid;
+      dest->uid = (int)sb.st_uid;
+      dest->gid = (int)sb.st_gid;
       dest->err_code = 0;
       if (S_ISLNK(sb.st_mode) && opts->ltype == DisplayLong) {
         dest->link_target = read_symlink_target(p, sb.st_size);
@@ -122,7 +123,7 @@ fail:
   return -1;
 }
 
-int resolve_owner_group(size_t nmemb, tFile efiles[], File **dfiles) {
+int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles) {
   if (nmemb == 0) {
     *dfiles = NULL;
     return 0;
@@ -140,7 +141,7 @@ int resolve_owner_group(size_t nmemb, tFile efiles[], File **dfiles) {
     usrmlen = 100;
 
   for (size_t i = 0; i < nmemb; i++) {
-    tFile *efile = &efiles[i];
+    TempFile *efile = &efiles[i];
     File *file = &files[i];
 
     file->err_code = efile->err_code;
