@@ -21,7 +21,7 @@ void print_dir_header(int print_header, CliOptions opts, File *files,
         total_blocks += files[i].stat.st_blocks;
       }
     }
-    printf("total %lld\n", total_blocks);
+    printf("total %lld\n", total_blocks / 2);
   }
 }
 
