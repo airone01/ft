@@ -27,7 +27,7 @@ int main(int argc, const char *argv[]) {
   }
 
   sort_files(flists.err_files, flists.nerr, &opts);
-  sort_files(flists.files, flists.nfiles, &opts);
+  sort_files(flists.files, flists.nmemb, &opts);
   sort_files(flists.dirs, flists.ndirs, &opts);
 
   // Errors
@@ -40,15 +40,15 @@ int main(int argc, const char *argv[]) {
   }
 
   // Non-directory files
-  if (flists.nfiles > 0) {
-    print_file_list(opts, flists.files, flists.nfiles);
+  if (flists.nmemb > 0) {
+    print_file_list(opts, flists.files, flists.nmemb);
   }
 
   // Directory traversal cycle
-  int show_header = (flists.ndirs > 1 || flists.nfiles > 0 || flists.nerr > 0 ||
+  int show_header = (flists.ndirs > 1 || flists.nmemb > 0 || flists.nerr > 0 ||
                      opts.recursive);
   for (size_t i = 0; i < flists.ndirs; i++) {
-    if (i > 0 || flists.nfiles > 0) {
+    if (i > 0 || flists.nmemb > 0) {
       printf("\n");
     }
     if (traverse_dir(flists.dirs[i].path, &opts, show_header) == -1) {

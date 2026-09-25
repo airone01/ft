@@ -174,9 +174,9 @@ void free_file_lists(FileLists *flists) {
   flists->err_files = NULL;
   flists->nerr = 0;
 
-  free_files(flists->files, flists->nfiles);
+  free_files(flists->files, flists->nmemb);
   flists->files = NULL;
-  flists->nfiles = 0;
+  flists->nmemb = 0;
 
   free_files(flists->dirs, flists->ndirs);
   flists->dirs = NULL;
