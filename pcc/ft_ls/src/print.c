@@ -116,8 +116,16 @@ void print_file_list(CliOptions opts, File *files, size_t nmemb) {
   }
 
   ColWidth cw = {0, 0, 0, 0, 0, 0};
+  int any_xattr_acl = 0;
   if (opts.ltype == DisplayLong) {
     cw = compute_col_widths(files, nmemb);
+    for (size_t i = 0; i < nmemb; i++) {
+      if (files[i].err_code == 0 &&
+          (files[i].xattr_acl == '@' || files[i].xattr_acl == '+')) {
+        any_xattr_acl = 1;
+        break;
+      }
+    }
   }
 
   for (size_t i = 0; i < nmemb; i++) {
@@ -128,7 +136,8 @@ void print_file_list(CliOptions opts, File *files, size_t nmemb) {
       if (opts.ltype == DisplayLong) {
         char mode_s[12];
         char date_s[32];
-        mode_str(files[i].stat.st_mode, files[i].xattr_acl, mode_s);
+        mode_str(files[i].stat.st_mode, files[i].xattr_acl, any_xattr_acl,
+                 mode_s);
         date_str(files[i].stat.st_mtime, date_s);
         const char *usr = files[i].user ? files[i].user : "?";
         const char *grp = files[i].group ? files[i].group : "?";
@@ -165,7 +174,7 @@ void date_str(time_t mtime, char str[32]) {
   }
 }
 
-void mode_str(mode_t mode, char xattr_acl, char str[12]) {
+void mode_str(mode_t mode, char xattr_acl, int any_xattr_acl, char str[12]) {
   if (S_ISREG(mode))
     str[0] = FileRegular;
   else if (S_ISDIR(mode))
@@ -195,6 +204,10 @@ void mode_str(mode_t mode, char xattr_acl, char str[12]) {
   str[8] = (mode & S_IWOTH) ? ModeWrite : ModeOff;
   str[9] = (mode & S_IXOTH) ? ModeExec : ModeOff;
 
-  str[10] = (xattr_acl != '\0') ? xattr_acl : ' ';
-  str[11] = '\0';
+  if (any_xattr_acl) {
+    str[10] = (xattr_acl == '@' || xattr_acl == '+') ? xattr_acl : ' ';
+    str[11] = '\0';
+  } else {
+    str[10] = '\0';
+  }
 }
