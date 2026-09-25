@@ -12,38 +12,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-char *path_join(const char *dir, const char *file) {
-  if (!dir || !file)
-    return NULL;
-
-  size_t dlen = strlen(dir);
-  size_t flen = strlen(file);
-  int need_slash = (dlen > 0 && dir[dlen - 1] != '/');
-
-  size_t len = dlen + (need_slash ? 1 : 0) + flen + 1;
-  char *path = malloc(len);
-  if (!path)
-    return NULL;
-
-  if (need_slash)
-    snprintf(path, len, "%s/%s", dir, file);
-  else
-    snprintf(path, len, "%s%s", dir, file);
-
-  return path;
-}
-
-static void free_tfiles(TempFile *files, size_t count) {
-  if (!files)
-    return;
-  for (size_t i = 0; i < count; i++) {
-    free(files[i].name);
-    free(files[i].path);
-    free(files[i].link_target);
-  }
-  free(files);
-}
-
 int traverse_dir(const char *dir_path, const CliOptions *opts,
                  int print_header) {
   if (!dir_path || !opts)
@@ -75,7 +43,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
       capacity *= 2;
       TempFile *new_tfiles = realloc(tfiles, capacity * sizeof(TempFile));
       if (!new_tfiles) {
-        free_tfiles(tfiles, nfiles);
+        free_temp_files(tfiles, nfiles);
         closedir(dp);
         return -1;
       }
@@ -86,7 +54,7 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
     tfiles[nfiles].name = strdup(entry->d_name);
     tfiles[nfiles].path = path_join(dir_path, entry->d_name);
     if (!tfiles[nfiles].name || !tfiles[nfiles].path) {
-      free_tfiles(tfiles, nfiles + 1);
+      free_temp_files(tfiles, nfiles + 1);
       closedir(dp);
       return -1;
     }
@@ -114,10 +82,10 @@ int traverse_dir(const char *dir_path, const CliOptions *opts,
 
   File *files = NULL;
   if (resolve_owner_group(nfiles, tfiles, &files) == -1) {
-    free_tfiles(tfiles, nfiles);
+    free_temp_files(tfiles, nfiles);
     return -1;
   }
-  free_tfiles(tfiles, nfiles);
+  free_temp_files(tfiles, nfiles);
 
   sort_files(files, nfiles, opts);
 
