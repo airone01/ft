@@ -16,17 +16,6 @@
 
 #include <errno.h>
 
-static void free_tfiles(TempFile *files, size_t count) {
-  if (!files)
-    return;
-  for (size_t i = 0; i < count; i++) {
-    free(files[i].name);
-    free(files[i].path);
-    free(files[i].link_target);
-  }
-  free(files);
-}
-
 // Yes, this code is based on GOTO, but this was cleaner than the alternatives.
 int process_cli_paths(CliOptions *opts, FileLists *flists) {
   if (!opts || !flists)
@@ -47,9 +36,9 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
   TempFile *dirs_tmp = calloc(opts->npaths, sizeof(TempFile));
 
   if (!err_tmp || !files_tmp || !dirs_tmp) {
-    free_tfiles(err_tmp, 0);
-    free_tfiles(files_tmp, 0);
-    free_tfiles(dirs_tmp, 0);
+    free_temp_files(err_tmp, 0);
+    free_temp_files(files_tmp, 0);
+    free_temp_files(dirs_tmp, 0);
     return -1;
   }
 
@@ -113,15 +102,15 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
     goto fail;
   flists->ndirs = ndirs;
 
-  free_tfiles(err_tmp, nerr);
-  free_tfiles(files_tmp, nfiles);
-  free_tfiles(dirs_tmp, ndirs);
+  free_temp_files(err_tmp, nerr);
+  free_temp_files(files_tmp, nfiles);
+  free_temp_files(dirs_tmp, ndirs);
   return 0;
 
 fail:
-  free_tfiles(err_tmp, nerr);
-  free_tfiles(files_tmp, nfiles);
-  free_tfiles(dirs_tmp, ndirs);
+  free_temp_files(err_tmp, nerr);
+  free_temp_files(files_tmp, nfiles);
+  free_temp_files(dirs_tmp, ndirs);
   free_file_lists(flists);
   return -1;
 }

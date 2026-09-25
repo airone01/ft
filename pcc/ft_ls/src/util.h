@@ -61,6 +61,12 @@ void free_files(File *files, size_t count);
 void free_file_lists(FileLists *flists);
 
 /**
+ * @brief Frees dynamic allocations for an array of TempFile structs and the
+ * array itself
+ */
+void free_temp_files(TempFile *files, size_t count);
+
+/**
  * @brief Joins directory path and file name into a relative path string
  */
 char *path_join(const char *dir, const char *file);

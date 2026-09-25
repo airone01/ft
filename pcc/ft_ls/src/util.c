@@ -1,6 +1,7 @@
 // https://man7.org/linux/man-pages/man2/readlink.2.html
 #define _POSIX_C_SOURCE 200112L
 
+#include "util.h"
 #include "types.h"
 #include <stddef.h>
 #include <stdint.h>
@@ -9,6 +10,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/xattr.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -56,8 +58,6 @@ char *read_symlink_target(const char *path, off_t st_size) {
     buflen *= 2;
   }
 }
-
-#include <sys/xattr.h>
 
 void mode_str(mode_t mode, char xattr_acl, char str[12]) {
   if (S_ISREG(mode))
@@ -181,4 +181,36 @@ void free_file_lists(FileLists *flists) {
   free_files(flists->dirs, flists->ndirs);
   flists->dirs = NULL;
   flists->ndirs = 0;
+}
+
+void free_temp_files(TempFile *files, size_t count) {
+  if (!files)
+    return;
+  for (size_t i = 0; i < count; i++) {
+    free(files[i].name);
+    free(files[i].path);
+    free(files[i].link_target);
+  }
+  free(files);
+}
+
+char *path_join(const char *dir, const char *file) {
+  if (!dir || !file)
+    return NULL;
+
+  size_t dlen = strlen(dir);
+  size_t flen = strlen(file);
+  int need_slash = (dlen > 0 && dir[dlen - 1] != '/');
+
+  size_t len = dlen + (need_slash ? 1 : 0) + flen + 1;
+  char *path = malloc(len);
+  if (!path)
+    return NULL;
+
+  if (need_slash)
+    snprintf(path, len, "%s/%s", dir, file);
+  else
+    snprintf(path, len, "%s%s", dir, file);
+
+  return path;
 }
