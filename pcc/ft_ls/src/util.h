@@ -58,4 +58,9 @@ void free_temp_files(TempFile *files, size_t count);
  */
 char *path_join(const char *dir, const char *file);
 
+/**
+ * @brief Gets xattrs, ACL, and symlink infos and appends them to a temp file
+ */
+void enrich_temp_file(TempFile *tf, const CliOptions *optsp);
+
 #endif /* UTIL_H */
