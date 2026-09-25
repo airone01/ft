@@ -57,7 +57,9 @@ char *read_symlink_target(const char *path, off_t st_size) {
   }
 }
 
-void mode_str(mode_t mode, char str[11]) {
+#include <sys/xattr.h>
+
+void mode_str(mode_t mode, char xattr_acl, char str[12]) {
   if (S_ISREG(mode))
     str[0] = '-';
   else if (S_ISDIR(mode))
@@ -87,7 +89,50 @@ void mode_str(mode_t mode, char str[11]) {
   str[8] = (mode & S_IWOTH) ? 'w' : '-';
   str[9] = (mode & S_IXOTH) ? 'x' : '-';
 
-  str[10] = '\0';
+  str[10] = (xattr_acl != '\0') ? xattr_acl : ' ';
+  str[11] = '\0';
+}
+
+char get_xattr_acl_char(const char *path) {
+  if (!path)
+    return ' ';
+
+  ssize_t len = llistxattr(path, NULL, 0);
+  if (len <= 0)
+    return ' ';
+
+  char *buf = malloc((size_t)len);
+  if (!buf)
+    return ' ';
+
+  ssize_t res = llistxattr(path, buf, (size_t)len);
+  if (res <= 0) {
+    free(buf);
+    return ' ';
+  }
+
+  int has_xattr = 0;
+  int has_acl = 0;
+
+  size_t i = 0;
+  while (i < (size_t)res) {
+    const char *attr = &buf[i];
+    if (strcmp(attr, "system.posix_acl_access") == 0 ||
+        strcmp(attr, "system.posix_acl_default") == 0) {
+      has_acl = 1;
+    } else {
+      has_xattr = 1;
+    }
+    i += strlen(attr) + 1;
+  }
+
+  free(buf);
+
+  if (has_xattr)
+    return '@';
+  if (has_acl)
+    return '+';
+  return ' ';
 }
 
 void date_str(time_t mtime, char str[32]) {

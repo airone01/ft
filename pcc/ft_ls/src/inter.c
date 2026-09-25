@@ -90,8 +90,11 @@ int process_cli_paths(CliOptions *opts, FileLists *flists) {
       dest->uid = (int)sb.st_uid;
       dest->gid = (int)sb.st_gid;
       dest->err_code = 0;
-      if (S_ISLNK(sb.st_mode) && opts->ltype == DisplayLong) {
-        dest->link_target = read_symlink_target(p, sb.st_size);
+      if (opts->ltype == DisplayLong) {
+        dest->xattr_acl = get_xattr_acl_char(p);
+        if (S_ISLNK(sb.st_mode)) {
+          dest->link_target = read_symlink_target(p, sb.st_size);
+        }
       }
       if (!dest->name || !dest->path)
         goto fail;
@@ -160,6 +163,7 @@ int resolve_owner_group(size_t nmemb, TempFile efiles[], File **dfiles) {
       if (!file->link_target)
         goto fail;
     }
+    file->xattr_acl = efile->xattr_acl;
     file->stat = efile->stat;
 
     if (efile->err_code != 0) {
