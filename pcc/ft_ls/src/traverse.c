@@ -23,13 +23,7 @@ static void meta_enrich(size_t nmemb, TempFile *temp_files,
     temp_files[nmemb].uid = (int)sb.st_uid;
     temp_files[nmemb].gid = (int)sb.st_gid;
     temp_files[nmemb].err_code = 0;
-    if (optsp->display_mode == DisplayLong) {
-      temp_files[nmemb].xattr_acl = get_xattr_acl_char(temp_files[nmemb].path);
-      if (S_ISLNK(sb.st_mode)) {
-        temp_files[nmemb].link_target =
-            read_symlink_target(temp_files[nmemb].path, sb.st_size);
-      }
-    }
+    enrich_temp_file(&temp_files[nmemb], optsp);
   }
 }
 

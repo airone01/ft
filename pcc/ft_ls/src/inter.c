@@ -79,12 +79,7 @@ int process_cli_paths(CliOptions *optsp, FileLists *flists) {
       dest->uid = (int)sb.st_uid;
       dest->gid = (int)sb.st_gid;
       dest->err_code = 0;
-      if (optsp->display_mode == DisplayLong) {
-        dest->xattr_acl = get_xattr_acl_char(p);
-        if (S_ISLNK(sb.st_mode)) {
-          dest->link_target = read_symlink_target(p, sb.st_size);
-        }
-      }
+      enrich_temp_file(dest, optsp);
       if (!dest->name || !dest->path)
         goto fail;
     }

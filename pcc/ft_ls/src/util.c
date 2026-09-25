@@ -1,8 +1,9 @@
 // https://man7.org/linux/man-pages/man2/readlink.2.html
+#include <sys/stat.h>
 #define _POSIX_C_SOURCE 200112L
 
-#include "util.h"
 #include "types.h"
+#include "util.h"
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -162,4 +163,13 @@ char *path_join(const char *dir, const char *file) {
     snprintf(path, len, "%s%s", dir, file);
 
   return path;
+}
+
+void enrich_temp_file(TempFile *tf, const CliOptions *optsp) {
+  if (optsp->display_mode == DisplayLong && tf->err_code == 0) {
+    tf->xattr_acl = get_xattr_acl_char(tf->path);
+    if (S_ISLNK(tf->stat.st_mode)) {
+      tf->link_target = read_symlink_target(tf->path, tf->stat.st_size);
+    }
+  }
 }
