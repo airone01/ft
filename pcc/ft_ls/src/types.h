@@ -23,6 +23,7 @@ typedef struct CliOptions {
   int show_date;
   int directory;
   int use_access_time;
+  int do_not_sort;
   // End-of-line character. Relevant for `--zero`. Default `\n`.
   char eol;
 

@@ -17,6 +17,8 @@ static void print_help(const char *pname) {
   fprintf(stderr, "         do not ignore entries starting with .\n");
   fprintf(stderr, "  -d, --directory\n");
   fprintf(stderr, "         list directories themselves, not their contents\n");
+  fprintf(stderr, "  -f\n");
+  fprintf(stderr, "         same as -a -U\n");
   fprintf(stderr, "  -l\n");
   fprintf(stderr, "         use a long listing format\n");
   fprintf(stderr, "  -r, --reverse\n");
@@ -29,6 +31,8 @@ static void print_help(const char *pname) {
   fprintf(stderr, "         with -lt: sort by, and show, access time;\n");
   fprintf(stderr, "         with -l: show access time and sort by name;\n");
   fprintf(stderr, "         otherwise: sort by access time, newest first\n");
+  fprintf(stderr, "  -U\n");
+  fprintf(stderr, "         do not sort directory entries\n");
   fprintf(stderr, "      --zero\n");
   fprintf(stderr, "         end each output line with NUL, not newline\n");
   fprintf(stderr, "  -1\n");
@@ -39,11 +43,13 @@ static void print_help(const char *pname) {
 
 int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   char c;
-  static struct option long_options[] = {
-      {"help", no_argument, 0, 'h'},      {"recursive", no_argument, 0, 'R'},
-      {"all", no_argument, 0, 'a'},       {"reverse", no_argument, 0, 'r'},
-      {"time", no_argument, 0, 't'},      {"zero", no_argument, 0, 'z'},
-      {"directory", no_argument, 0, 'd'}, {0, 0, 0, 0}};
+  static struct option long_options[] = {{"all", no_argument, 0, 'a'},
+                                         {"directory", no_argument, 0, 'd'},
+                                         {"help", no_argument, 0, 'h'},
+                                         {"reverse", no_argument, 0, 'r'},
+                                         {"recursive", no_argument, 0, 'R'},
+                                         {"zero", no_argument, 0, 'z'},
+                                         {0, 0, 0, 0}};
 
   optsp->recursive = 0;
   optsp->all = 0;
@@ -53,12 +59,15 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   optsp->directory = 0;
   optsp->eol = '\n';
   optsp->use_access_time = 0;
+  optsp->do_not_sort = 0;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adlrRtu",
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adflrRtuU",
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
-      optsp->display_mode = DisplayPiped;
+      if (optsp->display_mode != DisplayLong)
+        // This flag is overwritten by -l
+        optsp->display_mode = DisplayPiped;
       break;
     case 'a':
       optsp->all = 1;
@@ -66,11 +75,9 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
     case 'd':
       optsp->directory = 1;
       break;
-    case 'z':
-      // 'z' is here and not at the bottom of the switch because it can be
-      // overwritten by 'l'
-      optsp->eol = '\0';
-      optsp->display_mode = DisplayPiped;
+    case 'f':
+      optsp->all = 1;
+      optsp->do_not_sort = 1;
       break;
     case 'l':
       optsp->display_mode = DisplayLong;
@@ -84,9 +91,20 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 't':
       optsp->timesort = 1;
+      optsp->do_not_sort = 0;
       break;
     case 'u':
       optsp->use_access_time = 1;
+      break;
+    case 'U':
+      optsp->do_not_sort = 1;
+      optsp->timesort = 0;
+      break;
+    case 'z':
+      optsp->eol = '\0';
+      if (optsp->display_mode != DisplayLong)
+        // This is overwritten by -l
+        optsp->display_mode = DisplayPiped;
       break;
     default:
       fprintf(stderr, "Try '%s --help' for more information.\n", argv[0]);
