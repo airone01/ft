@@ -1,33 +1,45 @@
 const std = @import("std");
 
+// Central
 const minilibx_mod = @import("central/minilibx/build.zig");
+// MS0
 const libft_mod = @import("milestone-0/libft/build.zig");
+// MS1
 const ft_printf_mod = @import("milestone-1/ft_printf/build.zig");
 const gnl_mod = @import("milestone-1/get_next_line/build.zig");
+// MS2
 const fdf_mod = @import("milestone-2/fdf/build.zig");
 const pipex_mod = @import("milestone-2/pipex/build.zig");
 const push_swap_mod = @import("milestone-2/push_swap/build.zig");
+// MS3
 const minishell_mod = @import("milestone-3/minishell/build.zig");
 const philosophers_mod = @import("milestone-3/philosophers/build.zig");
+// MS4
 const cub3d_mod = @import("milestone-4/cub3d/build.zig");
 const cpp00_mod = @import("milestone-4/cpp00/build.zig");
 const cpp01_mod = @import("milestone-4/cpp01/build.zig");
 const cpp02_mod = @import("milestone-4/cpp02/build.zig");
 const cpp03_mod = @import("milestone-4/cpp03/build.zig");
 const cpp04_mod = @import("milestone-4/cpp04/build.zig");
+// MS5
 const cpp05_mod = @import("milestone-5/cpp05/build.zig");
 const cpp06_mod = @import("milestone-5/cpp06/build.zig");
 const cpp07_mod = @import("milestone-5/cpp07/build.zig");
 const cpp08_mod = @import("milestone-5/cpp08/build.zig");
 const cpp09_mod = @import("milestone-5/cpp09/build.zig");
+// C Piscine
 const piscine_c_mod = @import("piscine-c/build.zig");
 const rush00_mod = @import("piscine-c/rush00/build.zig");
 const rush01_mod = @import("piscine-c/rush01/build.zig");
 const rush02_mod = @import("piscine-c/rush02/build.zig");
+// CC Rushes
 const hotrace_mod = @import("rushes/hotrace/build.zig");
 const libunit_mod = @import("rushes/libunit/build.zig");
+// Post CC
 const libasm_mod = @import("pcc/libasm/build.zig");
 const nm_mod = @import("pcc/nm/build.zig");
+const ft_ls_mod = @import("pcc/ft_ls/build.zig");
+// Tools
 const minecraft_viz_mod = @import("tools/ps-viz-mc/build.zig");
 
 pub fn build(b: *std.Build) void {
@@ -104,6 +116,7 @@ pub fn build(b: *std.Build) void {
     const nm_exe = nm_mod.configure(b, target, optimize);
     b.installArtifact(nm_exe);
     nm_mod.addTests(b, target, optimize, test_step, nm_exe);
+    b.installArtifact(ft_ls_mod.configure(b, target, optimize, ft_ls_mod.Deps{ .libft = lft }));
 
     const run_nm_cmd = b.addRunArtifact(nm_exe);
     run_nm_cmd.step.dependOn(b.getInstallStep());
