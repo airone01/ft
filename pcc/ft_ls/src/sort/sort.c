@@ -9,17 +9,14 @@ static int file_cmp(const void *p1, const void *p2) {
   const File *f1 = (const File *)p1;
   const File *f2 = (const File *)p2;
 
-  int should_time_sort = 0;
-  if (g_sort_opts) {
-    if (g_sort_opts->timesort)
-      should_time_sort = 1;
-    else if (g_sort_opts->use_access_time &&
-             g_sort_opts->display_mode != DisplayLong)
-      should_time_sort = 1;
+  SortBy sort_by = g_sort_opts ? g_sort_opts->sort_by : ByAlphanum;
+  if (sort_by == ByAlphanum && g_sort_opts && g_sort_opts->use_access_time &&
+      g_sort_opts->display_mode != DisplayLong) {
+    sort_by = ByTime;
   }
 
   int cmp = 0;
-  if (should_time_sort) {
+  if (sort_by == ByTime) {
     time_t t1 =
         g_sort_opts->use_access_time ? f1->stat.st_atime : f1->stat.st_mtime;
     time_t t2 =
@@ -38,6 +35,9 @@ static int file_cmp(const void *p1, const void *p2) {
         cmp = (ns1 > ns2) ? -1 : 1;
     }
 #endif
+  } else if (sort_by == BySize) {
+    if (f1->stat.st_size != f2->stat.st_size)
+      cmp = (f1->stat.st_size > f2->stat.st_size) ? -1 : 1;
   }
 
   if (cmp == 0) {
@@ -52,7 +52,7 @@ static int file_cmp(const void *p1, const void *p2) {
 }
 
 void sort_files(File *files, size_t nmemb, const CliOptions *optsp) {
-  if (!files || nmemb < 2 || optsp->do_not_sort)
+  if (!files || nmemb < 2 || optsp->sort_by == DontSort)
     return;
   g_sort_opts = optsp;
   qsort(files, nmemb, sizeof(File), file_cmp);
