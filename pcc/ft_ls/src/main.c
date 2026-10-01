@@ -10,11 +10,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define VBUF_SIZE 64 * 1024
+
 int main(int argc, const char *argv[]) {
   CliOptions opts;
   int had_error = 0;
 
   setlocale(LC_ALL, "");
+  setvbuf(stdout, NULL, _IOFBF, VBUF_SIZE);
 
   int rparse = parse_args(argc, argv, &opts);
   if (rparse == -1)
