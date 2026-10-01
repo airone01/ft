@@ -109,7 +109,10 @@ int traverse_dir(const char *dir_path, const CliOptions *optsp,
   sort_files(files, nmemb, optsp);
 
   display_list_header(print_header, *optsp, files, nmemb, dir_path);
-  display_files_list(*optsp, files, nmemb);
+  if (optsp->display_mode == DisplayList)
+    display_files_list(*optsp, files, nmemb);
+  else
+    display_files_grid(*optsp, files, nmemb);
 
   recurse_subdirs(nmemb, files, optsp);
 

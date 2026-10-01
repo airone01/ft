@@ -10,7 +10,7 @@ typedef enum DisplayMode {
   // (when piped to a program)
   DisplayPiped = 1,
   // (-l option)
-  DisplayLong = 2,
+  DisplayList = 2,
 } DisplayMode;
 
 typedef enum {

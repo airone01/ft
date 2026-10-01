@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 void enrich_temp_file(TempFile *tf, const CliOptions *optsp) {
-  if (optsp->display_mode == DisplayLong && tf->err_code == 0) {
+  if (optsp->display_mode == DisplayList && tf->err_code == 0) {
     tf->xattr_acl = get_xattr_acl_char(tf->path);
     if (S_ISLNK(tf->stat.st_mode)) {
       tf->link_target = read_symlink_target(tf->path, tf->stat.st_size);
