@@ -9,6 +9,7 @@
 #include "entry.h"
 #include <dirent.h>
 #include <errno.h>
+#include <libft.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,7 +85,7 @@ int traverse_dir(const char *dir_path, const CliOptions *optsp,
     }
 
     memset(&temp_files[nmemb], 0, sizeof(TempFile));
-    temp_files[nmemb].name = strdup(entry->d_name);
+    temp_files[nmemb].name = ft_strdup(entry->d_name);
     temp_files[nmemb].path = path_join(dir_path, entry->d_name);
     if (!temp_files[nmemb].name || !temp_files[nmemb].path) {
       free_temp_files(temp_files, nmemb + 1);

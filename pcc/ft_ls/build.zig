@@ -1,5 +1,9 @@
 const std = @import("std");
 
+pub const Deps = struct {
+    libft: *std.Build.Step.Compile,
+};
+
 const base_c_flags: []const []const u8 = &.{
     "-Wall",
     "-Wextra",
@@ -73,9 +77,14 @@ pub fn configure(
     b: *std.Build,
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
+    deps: Deps,
 ) *std.Build.Step.Compile {
-    const rel_prefix = if (dirExists(b, "pcc/ft_ls/src")) "pcc/ft_ls" else ".";
+    const is_root = dirExists(b, "pcc/ft_ls/src");
+    const rel_prefix = if (is_root) "pcc/ft_ls" else ".";
+    const libft_prefix = if (is_root) "milestone-0/libft" else "../../milestone-0/libft";
     const src_dir = b.pathJoin(&.{ rel_prefix, "src" });
+
+    const libft_inc = b.pathJoin(&.{ libft_prefix, "includes" });
 
     const c_flags = switch (optimize) {
         .Debug => base_c_flags,
@@ -97,14 +106,46 @@ pub fn configure(
         .flags = c_flags,
     });
     addIncludePathsRec(b, exe.root_module, src_dir, "");
+    exe.root_module.addIncludePath(b.path(libft_inc));
+    exe.root_module.linkLibrary(deps.libft);
     exe.root_module.linkSystemLibrary("c", .{});
     return exe;
+}
+
+fn buildDeps(
+    b: *std.Build,
+    target: std.Build.ResolvedTarget,
+    optimize: std.builtin.OptimizeMode,
+) Deps {
+    const is_root = dirExists(b, "pcc/ft_ls/src");
+    const libft_prefix = if (is_root) "milestone-0/libft" else "../../milestone-0/libft";
+
+    const libft_src = b.pathJoin(&.{ libft_prefix, "src" });
+    const libft_inc = b.pathJoin(&.{ libft_prefix, "includes" });
+
+    const lft = b.addLibrary(.{
+        .name = "ft",
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+            .link_libc = true,
+        }),
+    });
+    lft.root_module.addCSourceFiles(.{
+        .root = b.path(libft_src),
+        .files = collectFileNames(b, libft_src, ".c"),
+        .flags = release_c_flags,
+    });
+    lft.root_module.addIncludePath(b.path(libft_inc));
+
+    return .{ .libft = lft };
 }
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const exe = configure(b, target, optimize);
+    const deps = buildDeps(b, target, optimize);
+    const exe = configure(b, target, optimize, deps);
     b.installArtifact(exe);
 }

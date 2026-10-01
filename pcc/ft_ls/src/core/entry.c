@@ -6,6 +6,7 @@
 #include "../util.h"
 #include <errno.h>
 #include <grp.h>
+#include <libft.h>
 #include <pwd.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -50,8 +51,8 @@ int process_cli_paths(CliOptions *optsp, FileLists *flists) {
     struct stat sb;
 
     if (lstat(p, &sb) == -1) {
-      err_tmp[nerr].name = strdup(p);
-      err_tmp[nerr].path = strdup(p);
+      err_tmp[nerr].name = ft_strdup(p);
+      err_tmp[nerr].path = ft_strdup(p);
       err_tmp[nerr].err_code = errno;
       if (!err_tmp[nerr].name || !err_tmp[nerr].path)
         goto fail;
@@ -73,8 +74,8 @@ int process_cli_paths(CliOptions *optsp, FileLists *flists) {
         dest = &files_tmp[nmemb++];
       }
 
-      dest->name = strdup(p);
-      dest->path = strdup(p);
+      dest->name = ft_strdup(p);
+      dest->path = ft_strdup(p);
       dest->stat = sb;
       dest->uid = (int)sb.st_uid;
       dest->gid = (int)sb.st_gid;
@@ -134,17 +135,17 @@ int resolve_owner_group(size_t nmemb, TempFile temp_files[], File **filesp) {
 
     file->err_code = temp_file->err_code;
     if (temp_file->name) {
-      file->name = strdup(temp_file->name);
+      file->name = ft_strdup(temp_file->name);
       if (!file->name)
         goto fail;
     }
     if (temp_file->path) {
-      file->path = strdup(temp_file->path);
+      file->path = ft_strdup(temp_file->path);
       if (!file->path)
         goto fail;
     }
     if (temp_file->link_target) {
-      file->link_target = strdup(temp_file->link_target);
+      file->link_target = ft_strdup(temp_file->link_target);
       if (!file->link_target)
         goto fail;
     }
@@ -157,7 +158,7 @@ int resolve_owner_group(size_t nmemb, TempFile temp_files[], File **filesp) {
 
     struct group *grp = getgrgid(temp_file->stat.st_gid);
     if (grp) {
-      file->group = strdup(grp->gr_name);
+      file->group = ft_strdup(grp->gr_name);
       if (!file->group)
         goto fail;
     } else {
@@ -170,7 +171,7 @@ int resolve_owner_group(size_t nmemb, TempFile temp_files[], File **filesp) {
 
     struct passwd *user = getpwuid(temp_file->stat.st_uid);
     if (user) {
-      file->user = strdup(user->pw_name);
+      file->user = ft_strdup(user->pw_name);
       if (!file->user)
         goto fail;
     } else {

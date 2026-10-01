@@ -6,21 +6,6 @@
 #include <sys/types.h>
 
 /**
- * char *strndup(size_t n;
- *               const char s[n], size_t n);
- *
- * @brief Duplicates a string
- * @returns pointer to duplicated string on success, NULL otherwise
- */
-char *strndup(const char *s, size_t n);
-
-/**
- * @brief Duplicates a NUL-terminated string
- * @returns pointer to duplicated string on success, NULL otherwise
- */
-char *strdup(const char *s);
-
-/**
  * @brief Frees dynamically allocated memory in a single File struct
  */
 void free_file(File *file);

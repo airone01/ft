@@ -1,7 +1,6 @@
 #include "util.h"
 #include "types.h"
 #include <stddef.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,27 +8,6 @@
 #include <sys/xattr.h>
 #include <time.h>
 #include <unistd.h>
-
-static size_t nmin(size_t a, size_t b) {
-  if (a < b)
-    return a;
-  return b;
-}
-
-char *strndup(const char *s, size_t n) {
-  if (!s)
-    return NULL;
-
-  size_t m = nmin(strlen(s), n) + 1;
-  char *d = calloc(m, sizeof(char));
-  if (!d)
-    return NULL;
-
-  snprintf(d, m, "%s", s);
-  return d;
-}
-
-char *strdup(const char *s) { return strndup(s, UINTMAX_MAX); }
 
 void free_file(File *file) {
   if (!file)
