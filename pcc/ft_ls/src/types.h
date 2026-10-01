@@ -113,6 +113,7 @@ typedef struct {
   int size;
   int major;
   int minor;
+  int has_device;
 } ColWidth;
 
 #endif /* TYPES_H */
