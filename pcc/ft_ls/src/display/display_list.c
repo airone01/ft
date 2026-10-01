@@ -2,6 +2,7 @@
 #include "display.h"
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #ifdef __linux__
 #include <sys/sysmacros.h>
@@ -87,16 +88,19 @@ static void display_file(CliOptions opts, File file, ColWidth cw,
                (long long)file.stat.st_size);
     }
 
-    // Whether file is symlink
-    if (S_ISLNK(file.stat.st_mode) && file.link_target) {
-      printf("%s %*ld %-*s %-*s %s %s %s -> %s%c", mode_s, cw.links,
-             (long)file.stat.st_nlink, cw.user, usr, cw.group, grp, size_buf,
-             date_s, file.name, file.link_target, opts.eol);
-    } else {
-      printf("%s %*ld %-*s %-*s %s %s %s%c", mode_s, cw.links,
-             (long)file.stat.st_nlink, cw.user, usr, cw.group, grp, size_buf,
-             date_s, file.name, opts.eol);
-    }
+    // Mode and link count
+    printf("%s %*ld ", mode_s, cw.links, (long)file.stat.st_nlink);
+    // Owner and group cols
+    if (!opts.omit_owner_col)
+      printf("%-*s ", cw.user, usr);
+    if (!opts.omit_group_col)
+      printf("%-*s ", cw.group, grp);
+    // Size/device, date, and filename
+    printf("%s %s %s", size_buf, date_s, file.name);
+    // Symlink dest
+    if (S_ISLNK(file.stat.st_mode) && file.link_target)
+      printf(" -> %s", file.link_target);
+    printf("%c", opts.eol);
   } else {
     printf("%s%c", file.name, opts.eol);
   }

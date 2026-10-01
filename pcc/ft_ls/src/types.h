@@ -24,6 +24,8 @@ typedef struct CliOptions {
   int directory;
   int use_access_time;
   int do_not_sort;
+  int omit_owner_col;
+  int omit_group_col;
   // End-of-line character. Relevant for `--zero`. Default `\n`.
   char eol;
 
