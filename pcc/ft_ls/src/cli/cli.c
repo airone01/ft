@@ -17,10 +17,14 @@ static void print_help(const char *pname) {
   fprintf(stderr, "         do not ignore entries starting with .\n");
   fprintf(stderr, "  -d, --directory\n");
   fprintf(stderr, "         list directories themselves, not their contents\n");
+  fprintf(stderr, "  -g\n");
+  fprintf(stderr, "         like -l, but do not list owner\n");
   fprintf(stderr, "  -f\n");
   fprintf(stderr, "         same as -a -U\n");
   fprintf(stderr, "  -l\n");
   fprintf(stderr, "         use a long listing format\n");
+  fprintf(stderr, "  -o\n");
+  fprintf(stderr, "         like -l, but do not list group information\n");
   fprintf(stderr, "  -r, --reverse\n");
   fprintf(stderr, "         reverse order while sorting\n");
   fprintf(stderr, "  -R, --recursive\n");
@@ -60,8 +64,10 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   optsp->eol = '\n';
   optsp->use_access_time = 0;
   optsp->do_not_sort = 0;
+  optsp->omit_owner_col = 0;
+  optsp->omit_group_col = 0;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adflrRtuU",
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adfglorRtuU",
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
@@ -79,7 +85,17 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       optsp->all = 1;
       optsp->do_not_sort = 1;
       break;
+    case 'g':
+      optsp->omit_owner_col = 1;
+      optsp->display_mode = DisplayLong;
+      optsp->show_date = 1;
+      break;
     case 'l':
+      optsp->display_mode = DisplayLong;
+      optsp->show_date = 1;
+      break;
+    case 'o':
+      optsp->omit_group_col = 1;
       optsp->display_mode = DisplayLong;
       optsp->show_date = 1;
       break;
