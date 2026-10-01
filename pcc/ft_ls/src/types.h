@@ -13,19 +13,26 @@ typedef enum DisplayMode {
   DisplayLong = 2,
 } DisplayMode;
 
+typedef enum {
+  DontSort,
+  ByAlphanum,
+  ByTime,
+  BySize,
+} SortBy;
+
 typedef struct CliOptions {
   DisplayMode display_mode;
+  SortBy sort_by;
   int recursive;
   int all;
   int reverse;
-  int timesort;
   int color;
   int show_date;
   int directory;
   int use_access_time;
-  int do_not_sort;
   int omit_owner_col;
   int omit_group_col;
+
   // End-of-line character. Relevant for `--zero`. Default `\n`.
   char eol;
 

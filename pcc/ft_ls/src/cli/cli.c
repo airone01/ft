@@ -29,6 +29,8 @@ static void print_help(const char *pname) {
   fprintf(stderr, "         reverse order while sorting\n");
   fprintf(stderr, "  -R, --recursive\n");
   fprintf(stderr, "         list subdirectories recursively\n");
+  fprintf(stderr, "  -S\n");
+  fprintf(stderr, "         sort by file size, largest first\n");
   fprintf(stderr, "  -t\n");
   fprintf(stderr, "         sort by time, newest first\n");
   fprintf(stderr, "  -u\n");
@@ -55,19 +57,18 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
                                          {"zero", no_argument, 0, 'z'},
                                          {0, 0, 0, 0}};
 
+  optsp->display_mode = isatty(STDOUT_FILENO) ? DisplayGrid : DisplayPiped;
+  optsp->sort_by = ByAlphanum;
   optsp->recursive = 0;
   optsp->all = 0;
-  optsp->display_mode = isatty(STDOUT_FILENO) ? DisplayGrid : DisplayPiped;
   optsp->reverse = 0;
-  optsp->timesort = 0;
   optsp->directory = 0;
-  optsp->eol = '\n';
   optsp->use_access_time = 0;
-  optsp->do_not_sort = 0;
   optsp->omit_owner_col = 0;
   optsp->omit_group_col = 0;
+  optsp->eol = '\n';
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adfglorRtuU",
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adfglorRStuU",
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
@@ -83,7 +84,7 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 'f':
       optsp->all = 1;
-      optsp->do_not_sort = 1;
+      optsp->sort_by = DontSort;
       break;
     case 'g':
       optsp->omit_owner_col = 1;
@@ -105,16 +106,17 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
     case 'R':
       optsp->recursive = 1;
       break;
+    case 'S':
+      optsp->sort_by = BySize;
+      break;
     case 't':
-      optsp->timesort = 1;
-      optsp->do_not_sort = 0;
+      optsp->sort_by = ByTime;
       break;
     case 'u':
       optsp->use_access_time = 1;
       break;
     case 'U':
-      optsp->do_not_sort = 1;
-      optsp->timesort = 0;
+      optsp->sort_by = DontSort;
       break;
     case 'z':
       optsp->eol = '\0';
