@@ -9,16 +9,33 @@ static int file_cmp(const void *p1, const void *p2) {
   const File *f1 = (const File *)p1;
   const File *f2 = (const File *)p2;
 
+  int should_time_sort = 0;
+  if (g_sort_opts) {
+    if (g_sort_opts->timesort)
+      should_time_sort = 1;
+    else if (g_sort_opts->use_access_time &&
+             g_sort_opts->display_mode != DisplayLong)
+      should_time_sort = 1;
+  }
+
   int cmp = 0;
-  if (g_sort_opts && g_sort_opts->timesort) {
-    if (f1->stat.st_mtime != f2->stat.st_mtime) {
-      cmp = (f1->stat.st_mtime > f2->stat.st_mtime) ? -1 : 1;
-    }
+  if (should_time_sort) {
+    time_t t1 =
+        g_sort_opts->use_access_time ? f1->stat.st_atime : f1->stat.st_mtime;
+    time_t t2 =
+        g_sort_opts->use_access_time ? f2->stat.st_atime : f2->stat.st_mtime;
+    if (t1 != t2)
+      cmp = (t1 > t2) ? -1 : 1;
 #if defined(__linux__) ||                                                      \
     (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 200809L)
     // Conditional compilation my beloved <3
-    else if (f1->stat.st_mtim.tv_nsec != f2->stat.st_mtim.tv_nsec) {
-      cmp = (f1->stat.st_mtim.tv_nsec > f2->stat.st_mtim.tv_nsec) ? -1 : 1;
+    else {
+      long ns1 = g_sort_opts->use_access_time ? f1->stat.st_atim.tv_nsec
+                                              : f1->stat.st_mtim.tv_nsec;
+      long ns2 = g_sort_opts->use_access_time ? f2->stat.st_atim.tv_nsec
+                                              : f2->stat.st_mtim.tv_nsec;
+      if (ns1 != ns2)
+        cmp = (ns1 > ns2) ? -1 : 1;
     }
 #endif
   }
