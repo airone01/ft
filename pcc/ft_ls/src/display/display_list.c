@@ -72,7 +72,8 @@ static void display_file(CliOptions opts, File file, ColWidth cw,
     char size_buf[64];
 
     mode_str(file.stat.st_mode, file.xattr_acl, any_xattr_acl, mode_s);
-    date_str(file.stat.st_mtime, date_s);
+    date_str(opts.use_access_time ? file.stat.st_atime : file.stat.st_mtime,
+             date_s);
     const char *usr = file.user ? file.user : "?";
     const char *grp = file.group ? file.group : "?";
 

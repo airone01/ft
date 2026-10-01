@@ -14,7 +14,7 @@
  * @brief Formats file time
  * @note Writes to a small string buffer `str` for simplicity
  */
-void date_str(time_t mtime, char str[32]);
+void date_str(time_t time, char str[32]);
 
 /**
  * @brief Formats file mode bits and xattr/acl indicator into an 11-character

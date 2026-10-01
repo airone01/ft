@@ -15,6 +15,8 @@ static void print_help(const char *pname) {
 
   fprintf(stderr, "  -a, --all\n");
   fprintf(stderr, "         do not ignore entries starting with .\n");
+  fprintf(stderr, "  -d, --directory\n");
+  fprintf(stderr, "         list directories themselves, not their contents\n");
   fprintf(stderr, "  -l\n");
   fprintf(stderr, "         use a long listing format\n");
   fprintf(stderr, "  -r, --reverse\n");
@@ -23,8 +25,10 @@ static void print_help(const char *pname) {
   fprintf(stderr, "         list subdirectories recursively\n");
   fprintf(stderr, "  -t\n");
   fprintf(stderr, "         sort by time, newest first\n");
-  fprintf(stderr, "  -d, --directory\n");
-  fprintf(stderr, "         list directories themselves, not their contents\n");
+  fprintf(stderr, "  -u\n");
+  fprintf(stderr, "         with -lt: sort by, and show, access time;\n");
+  fprintf(stderr, "         with -l: show access time and sort by name;\n");
+  fprintf(stderr, "         otherwise: sort by access time, newest first\n");
   fprintf(stderr, "      --zero\n");
   fprintf(stderr, "         end each output line with NUL, not newline\n");
   fprintf(stderr, "  -1\n");
@@ -48,8 +52,9 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   optsp->timesort = 0;
   optsp->directory = 0;
   optsp->eol = '\n';
+  optsp->use_access_time = 0;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "1alrRtd",
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "1adlrRtu",
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
@@ -69,7 +74,7 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 'l':
       optsp->display_mode = DisplayLong;
-      optsp->showDate = 1;
+      optsp->show_date = 1;
       break;
     case 'r':
       optsp->reverse = 1;
@@ -79,6 +84,9 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 't':
       optsp->timesort = 1;
+      break;
+    case 'u':
+      optsp->use_access_time = 1;
       break;
     default:
       fprintf(stderr, "Try '%s --help' for more information.\n", argv[0]);
