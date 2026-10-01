@@ -8,14 +8,12 @@ const base_c_flags: []const []const u8 = &.{
     "-Wall",
     "-Wextra",
     "-Wpedantic",
-    "-DFT_BONUS=1",
 };
 
 const release_c_flags: []const []const u8 = &.{
     "-Wall",
     "-Wextra",
     "-Wpedantic",
-    "-DFT_BONUS=1",
     "-O3",
     "-DNDEBUG",
     "-fno-plt",
