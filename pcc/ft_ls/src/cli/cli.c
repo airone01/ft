@@ -23,6 +23,8 @@ static void print_help(const char *pname) {
   fprintf(stderr, "         list subdirectories recursively\n");
   fprintf(stderr, "  -t\n");
   fprintf(stderr, "         sort by time, newest first\n");
+  fprintf(stderr, "  -d, --directory\n");
+  fprintf(stderr, "         list directories themselves, not their contents\n");
   fprintf(stderr, "      --zero\n");
   fprintf(stderr, "         end each output line with NUL, not newline\n");
   fprintf(stderr, "  -1\n");
@@ -34,18 +36,20 @@ static void print_help(const char *pname) {
 int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   char c;
   static struct option long_options[] = {
-      {"help", no_argument, 0, 'h'}, {"recursive", no_argument, 0, 'R'},
-      {"all", no_argument, 0, 'a'},  {"reverse", no_argument, 0, 'r'},
-      {"time", no_argument, 0, 't'}, {"zero", no_argument, 0, 'z'}};
+      {"help", no_argument, 0, 'h'},      {"recursive", no_argument, 0, 'R'},
+      {"all", no_argument, 0, 'a'},       {"reverse", no_argument, 0, 'r'},
+      {"time", no_argument, 0, 't'},      {"zero", no_argument, 0, 'z'},
+      {"directory", no_argument, 0, 'd'}, {0, 0, 0, 0}};
 
   optsp->recursive = 0;
   optsp->all = 0;
   optsp->display_mode = isatty(STDOUT_FILENO) ? DisplayGrid : DisplayPiped;
   optsp->reverse = 0;
   optsp->timesort = 0;
+  optsp->directory = 0;
   optsp->eol = '\n';
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "1alrRt",
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "1alrRtd",
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
@@ -53,6 +57,9 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 'a':
       optsp->all = 1;
+      break;
+    case 'd':
+      optsp->directory = 1;
       break;
     case 'z':
       // 'z' is here and not at the bottom of the switch because it can be
