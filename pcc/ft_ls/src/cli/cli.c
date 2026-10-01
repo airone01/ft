@@ -72,7 +72,7 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
                                 long_options, NULL)) != -1)
     switch (c) {
     case '1':
-      if (optsp->display_mode != DisplayLong)
+      if (optsp->display_mode != DisplayList)
         // This flag is overwritten by -l
         optsp->display_mode = DisplayPiped;
       break;
@@ -88,16 +88,16 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 'g':
       optsp->omit_owner_col = 1;
-      optsp->display_mode = DisplayLong;
+      optsp->display_mode = DisplayList;
       optsp->show_date = 1;
       break;
     case 'l':
-      optsp->display_mode = DisplayLong;
+      optsp->display_mode = DisplayList;
       optsp->show_date = 1;
       break;
     case 'o':
       optsp->omit_group_col = 1;
-      optsp->display_mode = DisplayLong;
+      optsp->display_mode = DisplayList;
       optsp->show_date = 1;
       break;
     case 'r':
@@ -120,7 +120,7 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       break;
     case 'z':
       optsp->eol = '\0';
-      if (optsp->display_mode != DisplayLong)
+      if (optsp->display_mode != DisplayList)
         // This is overwritten by -l
         optsp->display_mode = DisplayPiped;
       break;

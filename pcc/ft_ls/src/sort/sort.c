@@ -11,7 +11,7 @@ static int file_cmp(const void *p1, const void *p2) {
 
   SortBy sort_by = g_sort_opts ? g_sort_opts->sort_by : ByAlphanum;
   if (sort_by == ByAlphanum && g_sort_opts && g_sort_opts->use_access_time &&
-      g_sort_opts->display_mode != DisplayLong) {
+      g_sort_opts->display_mode != DisplayList) {
     sort_by = ByTime;
   }
 

@@ -59,7 +59,7 @@ int process_cli_paths(CliOptions *optsp, FileLists *flists) {
       nerr++;
     } else {
       int is_dir = S_ISDIR(sb.st_mode);
-      if (S_ISLNK(sb.st_mode) && optsp->display_mode != DisplayLong &&
+      if (S_ISLNK(sb.st_mode) && optsp->display_mode != DisplayList &&
           !optsp->directory) {
         struct stat target_sb;
         if (stat(p, &target_sb) == 0 && S_ISDIR(target_sb.st_mode)) {

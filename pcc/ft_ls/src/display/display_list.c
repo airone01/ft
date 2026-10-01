@@ -67,7 +67,7 @@ static ColWidth compute_col_widths(File *files, size_t nmemb) {
 
 static void display_file(CliOptions opts, File file, ColWidth cw,
                          int any_xattr_acl) {
-  if (opts.display_mode == DisplayLong) {
+  if (opts.display_mode == DisplayList) {
     char mode_s[12];
     char date_s[32];
     char size_buf[64];
@@ -109,7 +109,7 @@ static void display_file(CliOptions opts, File file, ColWidth cw,
 void display_files_list(CliOptions opts, File *files, size_t nmemb) {
   ColWidth cw = {0, 0, 0, 0, 0, 0, 0};
   int any_xattr_acl = 0;
-  if (opts.display_mode == DisplayLong) {
+  if (opts.display_mode == DisplayList) {
     cw = compute_col_widths(files, nmemb);
     for (size_t i = 0; i < nmemb; i++) {
       if (files[i].err_code == 0 &&
@@ -136,7 +136,7 @@ void display_list_header(int print_header, CliOptions opts, File *files,
     printf("%s:%c", dir_path, opts.eol);
 
   // Cols width
-  if (opts.display_mode == DisplayLong && nmemb > 0) {
+  if (opts.display_mode == DisplayList && nmemb > 0) {
     long long total_blocks = 0;
     for (size_t i = 0; i < nmemb; i++) {
       if (files[i].err_code == 0) {
