@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/xattr.h>
+#include <unistd.h>
 
 void enrich_temp_file(TempFile *tf, const CliOptions *optsp) {
   if (optsp->display_mode == DisplayLong && tf->err_code == 0) {

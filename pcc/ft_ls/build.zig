@@ -24,18 +24,49 @@ fn dirExists(b: *std.Build, rel_path: []const u8) bool {
     return true;
 }
 
-fn collectFileNames(b: *std.Build, dir_rel: []const u8, ext: []const u8) []const []const u8 {
+fn collectFileNamesRec(b: *std.Build, base_dir: []const u8, sub_dir: []const u8, ext: []const u8, list: *std.ArrayList([]const u8)) void {
     const io = b.graph.io;
-    var dir = b.build_root.handle.openDir(io, dir_rel, .{ .iterate = true }) catch return &.{};
+    const current_rel = if (sub_dir.len == 0) base_dir else b.pathJoin(&.{ base_dir, sub_dir });
+    var dir = b.build_root.handle.openDir(io, current_rel, .{ .iterate = true }) catch return;
     defer dir.close(io);
-    var list: std.ArrayList([]const u8) = .empty;
+
     var it = dir.iterate();
     while (it.next(io) catch null) |entry| {
-        if (entry.kind != .file) continue;
-        if (!std.mem.endsWith(u8, entry.name, ext)) continue;
-        list.append(b.allocator, b.dupe(entry.name)) catch @panic("OOM");
+        if (entry.kind == .directory) {
+            if (std.mem.startsWith(u8, entry.name, ".")) continue;
+            const child_sub = if (sub_dir.len == 0) b.dupe(entry.name) else b.pathJoin(&.{ sub_dir, entry.name });
+            collectFileNamesRec(b, base_dir, child_sub, ext, list);
+        } else if (entry.kind == .file) {
+            if (std.mem.endsWith(u8, entry.name, ext)) {
+                const rel_file = if (sub_dir.len == 0) b.dupe(entry.name) else b.pathJoin(&.{ sub_dir, entry.name });
+                list.append(b.allocator, rel_file) catch @panic("OOM");
+            }
+        }
     }
+}
+
+fn collectFileNames(b: *std.Build, dir_rel: []const u8, ext: []const u8) []const []const u8 {
+    var list: std.ArrayList([]const u8) = .empty;
+    collectFileNamesRec(b, dir_rel, "", ext, &list);
     return list.toOwnedSlice(b.allocator) catch @panic("OOM");
+}
+
+fn addIncludePathsRec(b: *std.Build, module: *std.Build.Module, base_dir: []const u8, sub_dir: []const u8) void {
+    const io = b.graph.io;
+    const current_rel = if (sub_dir.len == 0) base_dir else b.pathJoin(&.{ base_dir, sub_dir });
+    module.addIncludePath(b.path(current_rel));
+
+    var dir = b.build_root.handle.openDir(io, current_rel, .{ .iterate = true }) catch return;
+    defer dir.close(io);
+
+    var it = dir.iterate();
+    while (it.next(io) catch null) |entry| {
+        if (entry.kind == .directory) {
+            if (std.mem.startsWith(u8, entry.name, ".")) continue;
+            const child_sub = if (sub_dir.len == 0) b.dupe(entry.name) else b.pathJoin(&.{ sub_dir, entry.name });
+            addIncludePathsRec(b, module, base_dir, child_sub);
+        }
+    }
 }
 
 pub fn configure(
@@ -65,7 +96,7 @@ pub fn configure(
         .files = collectFileNames(b, src_dir, ".c"),
         .flags = c_flags,
     });
-    exe.root_module.addIncludePath(b.path(src_dir));
+    addIncludePathsRec(b, exe.root_module, src_dir, "");
     exe.root_module.linkSystemLibrary("c", .{});
     return exe;
 }
