@@ -52,7 +52,7 @@ static int file_cmp(const void *p1, const void *p2) {
 }
 
 void sort_files(File *files, size_t nmemb, const CliOptions *optsp) {
-  if (!files || nmemb < 2)
+  if (!files || nmemb < 2 || optsp->do_not_sort)
     return;
   g_sort_opts = optsp;
   qsort(files, nmemb, sizeof(File), file_cmp);
