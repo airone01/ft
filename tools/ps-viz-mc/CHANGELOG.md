@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/airone01/ft/compare/ps-viz-mc-v0.1.0...ps-viz-mc-v0.1.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **libasm:** rm dep to newer versioons of nasm ([4e256ae](https://github.com/airone01/ft/commit/4e256ae562ccebea888fde4637d4565ea8deadd9))
+
 ## 0.1.0 (2026-06-02)
 
 
