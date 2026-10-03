@@ -5,19 +5,23 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): y.tab.c lex.yy.c
-	$(CC) $(CFLAGS) -o $(NAME) y.tab.c lex.yy.c
+	@echo " CC   $<"
+	@$(CC) $(CFLAGS) -o $(NAME) y.tab.c lex.yy.c
+	@ls -lah $(NAME)
 
-y.tab.c y.tab.h: parser.y
-	yacc -d parser.y
+y.tab.c y.tab.h: src/parser.y
+	@echo " YACC $<"
+	@yacc -d src/parser.y
 
-lex.yy.c: lexer.l y.tab.h
-	lex lexer.l
+lex.yy.c: src/lexer.l y.tab.h
+	@echo " LEX  $<"
+	@lex src/lexer.l
 
 clean:
-	rm -f lex.yy.c y.tab.c y.tab.h
+	@rm -fv lex.yy.c y.tab.c y.tab.h
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -fv $(NAME)
 
 re: fclean all
 
