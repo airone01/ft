@@ -218,10 +218,17 @@ expr:
 
 statement:
     lvalue EQUAL expr SEMICOLON {
-      // `expr` left its value in eax for us
-      // lvalue pushed its address earlier, now on stack
       printf("  pop ebx\n");
       printf("  mov [ebx], eax\n");
+    }
+  | lvalue INCREMENT SEMICOLON {
+      // lvalue left var addr pushed on stack
+      printf("  pop eax\n");
+      printf("  mov ebx, [eax]\n");
+      printf("  mov ecx, ebx\n");
+      printf("  add ebx, 1\n");
+      printf("  mov [eax], ebx\n");
+      printf("  mov eax, ecx\n");
     }
   | expr SEMICOLON
   | BRACEOPEN statements_list BRACECLOSE
@@ -232,7 +239,7 @@ while_start:
   WHILE {
     int start = label_counter;
     label_counter += 2;
-    printf(".L%d\n", start);
+    printf(".L%d:\n", start);
     $$ = start;
   }
 
@@ -246,7 +253,7 @@ while_statement:
     int start_lbl = $1;
     int exit_lbl = $1 + 1;
     printf("  jmp .L%d\n", start_lbl);
-    printf(".L%d\n", exit_lbl + 1);
+    printf(".L%d:\n", exit_lbl);
   }
   ;
 
@@ -257,11 +264,9 @@ args:
 
 args_list:
     expr {
-      printf("  push eax ; push fct arg to stack\n");
       $$ = 1;
     }
   | args_list COMMA expr {
-      printf("  push eax ; push fct arg to stack\n");
       $$ = $1 + 1;
     }
   ;
