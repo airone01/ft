@@ -8,7 +8,14 @@ int yylex(void);
 void yyerror(const char *s);
 
 typedef enum {
+  /* Local variables. Stack-allocated below ebp.
+   * Start at offset -4 and decrement by 4 for each variable. */
   TYPE_AUTO,
+  /* Function arguments. Caller-passed above ebp.
+   * Start at offset +8 and increment by 4 for each parameter. */
+  TYPE_PARAM,
+  /* Global/extern symbols. Referenced by name.
+   * No stack offset. */
   TYPE_EXTERN
 } SymbolType;
 
@@ -20,6 +27,7 @@ typedef struct {
 
 void *sym_table = NULL;
 int current_local_offset = -4;
+int current_param_offset = 8;
 
 // required by tsearch
 int compare_symbols(const void *pa, const void *pb) {
@@ -31,13 +39,18 @@ void add_symbol(char *name, SymbolType type) {
   sym->name = strdup(name);
   sym->type = type;
 
-  if (type == TYPE_AUTO) {
-    sym->offset = current_local_offset;
-    // shift down 4 for next var
-    current_local_offset -= 4;
-  } else {
-    // extern symbols don't use edp offset
-    sym->offset = 0;
+  switch (type) {
+    case TYPE_AUTO:
+      sym->offset = current_local_offset;
+      current_local_offset -= 4; // shift down 4 for next var
+      break;
+    case TYPE_PARAM:
+      sym->offset = current_param_offset;
+      current_param_offset += 4; // shift up 4 for next var
+      break;
+    case TYPE_EXTERN:
+      sym->offset = 0;
+      break;
   }
 
   // insertion
@@ -100,35 +113,77 @@ extrn_list:
   | extrn_list COMMA IDENTIFIER { add_symbol($3, TYPE_EXTERN); }
   ;
 
+param_list:
+    IDENTIFIER { add_symbol($1, TYPE_PARAM); }
+  | param_list COMMA IDENTIFIER { add_symbol($3, TYPE_PARAM); }
+  ;
+
 statements_list:
   | statements_list statement
   ;
 
-statement:
-  IDENTIFIER EQUAL NUMBER SEMICOLON {
+lvalue:
+  IDENTIFIER {
     Symbol *sym = get_symbol($1);
-    
-    if (sym && sym->type == TYPE_AUTO) {
-      printf("\tmov eax, %d\n", $3);
-      printf("\tmov [ebp%d], eax ; store val in %s\n", sym->offset, $1);
-    } else
-      fprintf(stderr, "Error: Unknown or non-auto variable '%s'\n", $1);
+    if (!sym) {
+      fprintf(stderr, "Error: Unknown variable '%s'\n", $1);
+    } else if (sym->type == TYPE_AUTO) {
+      printf("  lea eax, [ebp %d]\n", sym->offset);
+      printf("  push eax\n");
+    } else if (sym->type == TYPE_PARAM) {
+      printf("  lea eax, [ebp +  %d]\n", sym->offset);
+      printf("  push eax\n");
+    } else if (sym->type == TYPE_PARAM) {
+      printf("  lea eax, \"%s\"\n", sym->name);
+      printf("  push eax\n");
+    }
+  }
+
+primary_expr:
+    IDENTIFIER {
+      Symbol *sym = get_symbol($1);
+      if (sym->type == TYPE_AUTO) {
+        printf("  lea eax, [ebp %d]\n", sym->offset);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      } else if (sym->type == TYPE_PARAM) {
+        printf("  lea eax, [ebp + %d]\n", sym->offset);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      } else if (sym->type == TYPE_EXTERN) {
+        printf("  lea eax, \"%s\"\n", sym->name);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      }
+    }
+  | NUMBER {
+      printf("  mov eax, %d\n", $1);
+      printf("  push eax\n");
+    }
+  ;
+
+statement:
+  lvalue EQUAL primary_expr SEMICOLON {
+    // primary_expr left its value in eax for us
+    // lvalue pushed its address earlier, now on stack
+    printf("  pop ebx\n");
+    printf("  mov [ebx], eax\n");
   }
   ;
 
 function_definition:
   IDENTIFIER PAROPEN PARCLOSE BRACEOPEN {
     printf("%s:\n", $1);
-    printf("\t.long %s + 4\n", $1);
-    printf("\tenter 0, 0\n"); 
+    printf("  .long %s + 4\n", $1);
+    printf("  enter 0, 0\n"); 
     // reset offset tracker for new func
     current_local_offset = -4; 
   }
   declarations
   statements_list
   BRACECLOSE {
-    printf("\tleave\n");
-    printf("\tret\n");
+    printf("  leave\n");
+    printf("  ret\n");
   }
   ;
 
