@@ -10,28 +10,66 @@
 
 %%
 
-"auto"                  { return AUTO; }
-"extrn"                 { return EXTERN; }
+"auto"                     { return AUTO; }
+"extrn"                    { return EXTERN; }
+"while"                    { return WHILE; }
+"if"                       { return IF; }
+"else"                     { return ELSE; }
+"return"                   { return RETURN; }
 
-[a-zA-Z_][a-zA-Z0-9_]*  { 
-                          yylval.str = strdup(yytext); // dupe
-                          return IDENTIFIER; 
-                        }
+[a-zA-Z_][a-zA-Z0-9_]*     { // Variables
+                             yylval.str = strdup(yytext);
+                             return IDENTIFIER; 
+                           }
 
-[0-9]+                  { 
-                          yylval.num = atoi(yytext); 
-                          return NUMBER; 
-                        }
+[0-9]+                     { // Numbers
+                             yylval.num = atoi(yytext); 
+                             return NUMBER; 
+                           }
 
-[ \t\n]+                { /* ignore whitespaces */ }
+\"([^\"\\]|\\.)*\"         { // Strings
+                             yylval.str = strdup(yytext);
+                             return STRING;
+                           }
 
-"="                     { return EQUALS; }
-";"                     { return SEMICOLON; }
-","                     { return ','; }
-"("                     { return '('; }
-")"                     { return ')'; }
-"{"                     { return '{'; }
-"}"                     { return '}'; }
+[ \t\n]+                   { /* Ignore whitespaces */ }
+
+"/*"([^*]|\*+[^*/])*\*+"/" { /* Ignore comments */ }
+
+";"                        { return SEMICOLON; }
+","                        { return COMMA; }
+"("                        { return PAROPEN; }
+")"                        { return PARCLOSE; }
+"{"                        { return BRACEOPEN; }
+"}"                        { return BRACECLOSE; }
+"["                        { return ARROPEN; }
+"]"                        { return ARRCLOSE; }
+
+"=="                       { return EQUALS; }
+"!="                       { return NOTEQUALS; }
+"<="                       { return LOWEREQ; }
+"<"                        { return LOWER; }
+">="                       { return HIGHEREQ; }
+">"                        { return HIGHER; }
+
+"="                        { return EQUAL; }
+"!"                        { return NOT; }
+"~"                        { return BITNOT; }
+"&&"                       { return AND; }
+"&"                        { return BITAND; }
+"||"                       { return OR; }
+"|"                        { return BITOR; }
+"^"                        { return XOR; }
+"<<"                       { return LSHIFT; }
+">>"                       { return RSHIFT; }
+
+"++"                       { return INCREMENT; }
+"--"                       { return DECREMENT; }
+"+"                        { return PLUS; }
+"-"                        { return MINUS; }
+"*"                        { return STAR; }
+"/"                        { return DIV; }
+"%"                        { return MOD; }
 
 %%
 

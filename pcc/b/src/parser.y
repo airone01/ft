@@ -65,9 +65,14 @@ Symbol *get_symbol(char *name) {
   char *str;
 }
 
+%token AUTO EXTERN WHILE IF ELSE RETURN
 %token <str> IDENTIFIER
 %token <num> NUMBER
-%token EQUALS SEMICOLON AUTO EXTERN
+%token <str> STRING
+%token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARROPEN ARRCLOSE COMMOPEN COMMCLOSE
+%token EQUALS NOTEQUALS LOWEREQ LOWER HIGHEREQ HIGHER
+%token EQUAL NOT BITNOT AND BITAND OR BITOR XOR LSHIFT RSHIFT
+%token INCREMENT DECREMENT PLUS MINUS STAR DIV MOD
 
 %%
 
@@ -87,12 +92,12 @@ declaration:
 
 auto_list:
     IDENTIFIER { add_symbol($1, TYPE_AUTO); }
-  | auto_list ',' IDENTIFIER { add_symbol($3, TYPE_AUTO); }
+  | auto_list COMMA IDENTIFIER { add_symbol($3, TYPE_AUTO); }
   ;
 
 extrn_list:
     IDENTIFIER { add_symbol($1, TYPE_EXTERN); }
-  | extrn_list ',' IDENTIFIER { add_symbol($3, TYPE_EXTERN); }
+  | extrn_list COMMA IDENTIFIER { add_symbol($3, TYPE_EXTERN); }
   ;
 
 statements_list:
@@ -100,7 +105,7 @@ statements_list:
   ;
 
 statement:
-  IDENTIFIER EQUALS NUMBER SEMICOLON {
+  IDENTIFIER EQUAL NUMBER SEMICOLON {
     Symbol *sym = get_symbol($1);
     
     if (sym && sym->type == TYPE_AUTO) {
@@ -112,7 +117,7 @@ statement:
   ;
 
 function_definition:
-  IDENTIFIER '(' ')' '{' {
+  IDENTIFIER PAROPEN PARCLOSE BRACEOPEN {
     printf("%s:\n", $1);
     printf("\t.long %s + 4\n", $1);
     printf("\tenter 0, 0\n"); 
@@ -121,7 +126,7 @@ function_definition:
   }
   declarations
   statements_list
-  '}' {
+  BRACECLOSE {
     printf("\tleave\n");
     printf("\tret\n");
   }
