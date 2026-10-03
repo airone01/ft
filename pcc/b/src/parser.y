@@ -31,6 +31,7 @@ typedef struct {
 void *sym_table = NULL;
 int current_local_offset = -4;
 int current_param_offset = 8;
+int string_counter = 0;
 
 // required by tsearch
 int compare_symbols(const void *pa, const void *pb) {
@@ -80,6 +81,8 @@ Symbol *get_symbol(char *name) {
   int num;
   char *str;
 }
+
+%type <num> args args_list
 
 %token AUTO EXTERN WHILE IF ELSE RETURN
 %token <str> IDENTIFIER
@@ -136,13 +139,13 @@ lvalue:
     } else if (sym->type == TYPE_PARAM) {
       printf("  lea eax, [ebp +  %d]\n", sym->offset);
       printf("  push eax\n");
-    } else if (sym->type == TYPE_PARAM) {
+    } else if (sym->type == TYPE_EXTERN) {
       printf("  lea eax, \"%s\"\n", sym->name);
       printf("  push eax\n");
     }
   }
 
-primary_expr:
+expr:
     IDENTIFIER {
       Symbol *sym = get_symbol($1);
       if (sym->type == TYPE_AUTO) {
@@ -163,19 +166,95 @@ primary_expr:
       printf("  mov eax, %d\n", $1);
       printf("  push eax\n");
     }
+  | STRING {
+      printf("  .section .rodata\n");
+      printf("  .LC%d:\n", string_counter);
+      printf("    .long .LC%d+4\n", string_counter);
+      printf("    .string %s\n", $1);
+      printf("  .text\n");
+      printf("  mov eax, .LC%d\n", string_counter);
+      printf("  push eax\n");
+      string_counter++;
+    }
+  | IDENTIFIER PAROPEN {
+      Symbol *sym = get_symbol($1);
+      if (!sym) {
+        printf("  lea eax, \"%s\"\n", $1);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      } else if (sym->type  == TYPE_EXTERN) {
+        printf("  lea eax, \"%s\"\n", sym->name);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      } else if (sym->type  == TYPE_AUTO) {
+        printf("  lea eax, [ebp %d]\n", sym->offset);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      } else if (sym->type  == TYPE_PARAM) {
+        printf("  lea eax, [ebp + %d]\n", sym->offset);
+        printf("  mov eax, [eax]\n");
+        printf("  push eax\n");
+      }
+    }
+    args PARCLOSE {
+      int num_args = $4;
+      if (num_args > 0) {
+        // Swap top of stack [esp+0] with func ptr
+        // Mult. by 4 is for word size
+        printf("  mov ebx, [esp+0]\n");
+        printf("  mov ecx, [esp+%d]\n", num_args * 4);
+        printf("  mov [esp+%d], ebx\n", num_args * 4);
+        printf("  mov [esp+0], ecx\n");
+      }
+      printf("  pop eax\n");
+      printf("  call eax\n");
+      if (num_args > 0) {
+        printf("  add esp, %d\n", num_args * 4);
+      }
+    }
   ;
 
 statement:
-  lvalue EQUAL primary_expr SEMICOLON {
-    // primary_expr left its value in eax for us
-    // lvalue pushed its address earlier, now on stack
-    printf("  pop ebx\n");
-    printf("  mov [ebx], eax\n");
+    lvalue EQUAL expr SEMICOLON {
+      // `expr` left its value in eax for us
+      // lvalue pushed its address earlier, now on stack
+      printf("  pop ebx\n");
+      printf("  mov [ebx], eax\n");
+    }
+  | expr SEMICOLON
+  | BRACEOPEN statements_list BRACECLOSE
+  | while_statement
+  ;
+
+while_statement:
+  WHILE PAROPEN expr PARCLOSE BRACEOPEN {
+    /* todo */
   }
+  statements_list
+  BRACECLOSE {
+    /* todo */
+  }
+  ;
+
+args:
+              { $$ = 0; }
+  | args_list { $$ = $1; }
+  ;
+
+args_list:
+    expr {
+      printf("  push eax ; push fct arg to stack\n");
+      $$ = 1;
+    }
+  | args_list COMMA expr {
+      printf("  push eax ; push fct arg to stack\n");
+      $$ = $1 + 1;
+    }
   ;
 
 function_definition:
   IDENTIFIER PAROPEN PARCLOSE BRACEOPEN {
+    printf(".global %s\n", $1);
     printf("%s:\n", $1);
     printf("  .long %s + 4\n", $1);
     printf("  enter 0, 0\n"); 
