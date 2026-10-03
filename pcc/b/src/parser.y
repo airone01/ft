@@ -32,6 +32,7 @@ void *sym_table = NULL;
 int current_local_offset = -4;
 int current_param_offset = 8;
 int string_counter = 0;
+int label_counter = 1;
 
 // required by tsearch
 int compare_symbols(const void *pa, const void *pb) {
@@ -83,6 +84,7 @@ Symbol *get_symbol(char *name) {
 }
 
 %type <num> args args_list
+%type <num> while_start
 
 %token AUTO EXTERN WHILE IF ELSE RETURN
 %token <str> IDENTIFIER
@@ -226,13 +228,25 @@ statement:
   | while_statement
   ;
 
-while_statement:
-  WHILE PAROPEN expr PARCLOSE BRACEOPEN {
-    /* todo */
+while_start:
+  WHILE {
+    int start = label_counter;
+    label_counter += 2;
+    printf(".L%d\n", start);
+    $$ = start;
   }
-  statements_list
-  BRACECLOSE {
-    /* todo */
+
+while_statement:
+  while_start PAROPEN expr PARCLOSE {
+    int exit_lbl = $1 + 1;
+    printf("  cmp eax, 0\n");
+    printf("  je .L%d\n", exit_lbl);
+  }
+  statement {
+    int start_lbl = $1;
+    int exit_lbl = $1 + 1;
+    printf("  jmp .L%d\n", start_lbl);
+    printf(".L%d\n", exit_lbl + 1);
   }
   ;
 
