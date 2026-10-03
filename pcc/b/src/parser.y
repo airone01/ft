@@ -4,6 +4,9 @@
 #include <string.h>
 #include <search.h>
 
+#define CRESET "\e[0m"
+#define REDHB "\e[0;37;101m"
+
 int yylex(void);
 void yyerror(const char *s);
 
@@ -126,7 +129,7 @@ lvalue:
   IDENTIFIER {
     Symbol *sym = get_symbol($1);
     if (!sym) {
-      fprintf(stderr, "Error: Unknown variable '%s'\n", $1);
+      fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
     } else if (sym->type == TYPE_AUTO) {
       printf("  lea eax, [ebp %d]\n", sym->offset);
       printf("  push eax\n");
@@ -190,7 +193,7 @@ function_definition:
 %%
 
 void yyerror(const char *s) {
-  fprintf(stderr, "Error: %s\n", s);
+  fprintf(stderr, REDHB" Error: %s "CRESET"\n", s);
 }
 
 int main(void) {
