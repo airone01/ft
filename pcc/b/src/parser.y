@@ -112,8 +112,14 @@ declaration:
   ;
 
 auto_list:
-    IDENTIFIER { add_symbol($1, TYPE_AUTO); }
-  | auto_list COMMA IDENTIFIER { add_symbol($3, TYPE_AUTO); }
+    IDENTIFIER {
+      add_symbol($1, TYPE_AUTO);
+      printf("  push 0\n");
+    }
+  | auto_list COMMA IDENTIFIER {
+      add_symbol($3, TYPE_AUTO);
+      printf("  push 0\n");
+    }
   ;
 
 extrn_list:
@@ -137,14 +143,12 @@ lvalue:
       fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
     } else if (sym->type == TYPE_AUTO) {
       printf("  lea eax, [ebp %d]\n", sym->offset);
-      printf("  push eax\n");
     } else if (sym->type == TYPE_PARAM) {
       printf("  lea eax, [ebp +  %d]\n", sym->offset);
-      printf("  push eax\n");
     } else if (sym->type == TYPE_EXTERN) {
       printf("  lea eax, \"%s\"\n", sym->name);
-      printf("  push eax\n");
     }
+    printf("  push eax\n");
   }
 
 expr:
@@ -152,21 +156,15 @@ expr:
       Symbol *sym = get_symbol($1);
       if (sym->type == TYPE_AUTO) {
         printf("  lea eax, [ebp %d]\n", sym->offset);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       } else if (sym->type == TYPE_PARAM) {
         printf("  lea eax, [ebp + %d]\n", sym->offset);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       } else if (sym->type == TYPE_EXTERN) {
         printf("  lea eax, \"%s\"\n", sym->name);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       }
+      printf("  mov eax, [eax]\n");
     }
   | NUMBER {
       printf("  mov eax, %d\n", $1);
-      printf("  push eax\n");
     }
   | STRING {
       printf("  .section .rodata\n");
@@ -175,28 +173,21 @@ expr:
       printf("    .string %s\n", $1);
       printf("  .text\n");
       printf("  mov eax, .LC%d\n", string_counter);
-      printf("  push eax\n");
       string_counter++;
     }
   | IDENTIFIER PAROPEN {
       Symbol *sym = get_symbol($1);
       if (!sym) {
         printf("  lea eax, \"%s\"\n", $1);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       } else if (sym->type  == TYPE_EXTERN) {
         printf("  lea eax, \"%s\"\n", sym->name);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       } else if (sym->type  == TYPE_AUTO) {
         printf("  lea eax, [ebp %d]\n", sym->offset);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       } else if (sym->type  == TYPE_PARAM) {
         printf("  lea eax, [ebp + %d]\n", sym->offset);
-        printf("  mov eax, [eax]\n");
-        printf("  push eax\n");
       }
+      printf("  mov eax, [eax]\n");
+      printf("  push eax\n");
     }
     args PARCLOSE {
       int num_args = $4;
@@ -264,18 +255,20 @@ args:
 
 args_list:
     expr {
+      printf("  push eax\n");
       $$ = 1;
     }
   | args_list COMMA expr {
+      printf("  push eax\n");
       $$ = $1 + 1;
     }
   ;
 
 function_definition:
   IDENTIFIER PAROPEN PARCLOSE BRACEOPEN {
-    printf(".global %s\n", $1);
+    printf(".globl %s\n", $1);
     printf("%s:\n", $1);
-    printf("  .long %s + 4\n", $1);
+    printf("  .long \"%s\" + 4\n", $1);
     printf("  enter 0, 0\n"); 
     // reset offset tracker for new func
     current_local_offset = -4; 
@@ -295,5 +288,7 @@ void yyerror(const char *s) {
 }
 
 int main(void) {
+  printf(".intel_syntax noprefix\n");
+  printf(".text\n");
   return yyparse();
 }
