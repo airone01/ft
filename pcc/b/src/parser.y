@@ -275,7 +275,7 @@ expr:
     }
   | expr STAR { printf("  push eax\n"); } expr {
       printf("  pop ebx\n");
-      printf("  mul ebx\n");
+      printf("  imul eax, ebx\n");
     }
   | expr DIV { printf("  push eax\n"); } expr {
       printf("  mov ebx, eax\n"); // Divisor
