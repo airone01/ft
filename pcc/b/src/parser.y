@@ -84,6 +84,7 @@ Symbol *get_symbol(char *name) {
 }
 
 %type <num> args args_list
+%type <num> params params_list
 %type <num> while_start
 
 %token AUTO EXTERN WHILE IF ELSE RETURN
@@ -127,9 +128,14 @@ extrn_list:
   | extrn_list COMMA IDENTIFIER { add_symbol($3, TYPE_EXTERN); }
   ;
 
-param_list:
+params_list:
     IDENTIFIER { add_symbol($1, TYPE_PARAM); }
-  | param_list COMMA IDENTIFIER { add_symbol($3, TYPE_PARAM); }
+  | params_list COMMA IDENTIFIER { add_symbol($3, TYPE_PARAM); }
+  ;
+
+params:
+    /* empty */
+  | params_list
   ;
 
 statements_list:
@@ -139,29 +145,35 @@ statements_list:
 lvalue:
   IDENTIFIER {
     Symbol *sym = get_symbol($1);
-    if (!sym) {
+    if (sym) {
+      if (sym->type == TYPE_AUTO) {
+        printf("  lea eax, [ebp %d]\n", sym->offset);
+      } else if (sym->type == TYPE_PARAM) {
+        printf("  lea eax, [ebp +  %d]\n", sym->offset);
+      } else if (sym->type == TYPE_EXTERN) {
+        printf("  lea eax, \"%s\"\n", sym->name);
+      }
+      printf("  push eax\n");
+    } else {
       fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
-    } else if (sym->type == TYPE_AUTO) {
-      printf("  lea eax, [ebp %d]\n", sym->offset);
-    } else if (sym->type == TYPE_PARAM) {
-      printf("  lea eax, [ebp +  %d]\n", sym->offset);
-    } else if (sym->type == TYPE_EXTERN) {
-      printf("  lea eax, \"%s\"\n", sym->name);
     }
-    printf("  push eax\n");
   }
 
 expr:
     IDENTIFIER {
       Symbol *sym = get_symbol($1);
-      if (sym->type == TYPE_AUTO) {
-        printf("  lea eax, [ebp %d]\n", sym->offset);
-      } else if (sym->type == TYPE_PARAM) {
-        printf("  lea eax, [ebp + %d]\n", sym->offset);
-      } else if (sym->type == TYPE_EXTERN) {
-        printf("  lea eax, \"%s\"\n", sym->name);
+      if (sym) {
+        if (sym->type == TYPE_AUTO) {
+          printf("  lea eax, [ebp %d]\n", sym->offset);
+        } else if (sym->type == TYPE_PARAM) {
+          printf("  lea eax, [ebp + %d]\n", sym->offset);
+        } else if (sym->type == TYPE_EXTERN) {
+          printf("  lea eax, \"%s\"\n", sym->name);
+        }
+        printf("  mov eax, [eax]\n");
+      } else {
+        fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
       }
-      printf("  mov eax, [eax]\n");
     }
   | NUMBER {
       printf("  mov eax, %d\n", $1);
@@ -177,10 +189,8 @@ expr:
     }
   | IDENTIFIER PAROPEN {
       Symbol *sym = get_symbol($1);
-      if (!sym) {
+      if (!sym || sym->type  == TYPE_EXTERN) {
         printf("  lea eax, \"%s\"\n", $1);
-      } else if (sym->type  == TYPE_EXTERN) {
-        printf("  lea eax, \"%s\"\n", sym->name);
       } else if (sym->type  == TYPE_AUTO) {
         printf("  lea eax, [ebp %d]\n", sym->offset);
       } else if (sym->type  == TYPE_PARAM) {
@@ -265,13 +275,17 @@ args_list:
   ;
 
 function_definition:
-  IDENTIFIER PAROPEN PARCLOSE BRACEOPEN {
+  IDENTIFIER PAROPEN {
+    // Reset offsets for new function
+    // Needs to happen *before* params are read
+    current_local_offset = -4; 
+    current_param_offset = 8;
+  }
+  params PARCLOSE BRACEOPEN {
     printf(".globl %s\n", $1);
     printf("%s:\n", $1);
     printf("  .long \"%s\" + 4\n", $1);
     printf("  enter 0, 0\n"); 
-    // reset offset tracker for new func
-    current_local_offset = -4; 
   }
   declarations
   statements_list
