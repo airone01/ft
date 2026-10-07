@@ -94,7 +94,10 @@ Symbol *get_symbol(char *name) {
 %token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARROPEN ARRCLOSE COMMOPEN COMMCLOSE
 %token EQUALS NOTEQUALS LOWEREQ LOWER HIGHEREQ HIGHER
 %token EQUAL NOT BITNOT AND BITAND OR BITOR XOR LSHIFT RSHIFT
-%token INCREMENT DECREMENT PLUS MINUS STAR DIV MOD
+%token INCREMENT DECREMENT
+
+%left PLUS MINUS
+%left STAR DIV MOD
 
 %%
 
@@ -219,6 +222,35 @@ expr:
       printf("  pop ebx ; Assignment as expression\n");
       printf("  mov [ebx], eax\n");
     }
+  | expr PLUS expr { // Addition
+      printf("  pop ebx\n");
+      printf("  add eax, ebx\n");
+    }
+  | expr MINUS expr { // Substraction
+      printf("  pop ebx\n");
+      printf("  sub eax ebx\n");
+    }
+  | expr STAR expr { // Multiplication
+      printf("  pop ebx\n");
+      printf("  mul ebx\n");
+    }
+  | expr DIV expr { // Division
+      printf("  mov ebx, eax\n"); // Divisor
+      printf("  pop eax\n");      // Dividend
+      // "Convert Doubleword to Quadword"
+      // Sign-extend eax into edx.
+      printf("  cdq\n");
+      printf("  idiv ebx\n");
+    }
+  | expr MOD expr { // Modulo
+      printf("  mov ebx, eax\n"); // Divisor
+      printf("  pop eax\n");      // Dividend
+      // "Convert Doubleword to Quadword"
+      // Sign-extend eax into edx.
+      printf("  cdq\n");
+      printf("  idiv ebx\n");
+      printf("  mov eax, edx\n"); // Remainder in edx
+    }
   ;
 
 statement:
@@ -227,7 +259,7 @@ statement:
       printf("  mov [ebx], eax\n");
     }
   | lvalue INCREMENT SEMICOLON {
-      // lvalue left var addr pushed on stack
+      // lvalue var addr pushed on stack
       printf("  pop eax\n");
       printf("  mov ebx, [eax]\n");
       printf("  mov ecx, ebx\n");
