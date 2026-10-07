@@ -92,21 +92,32 @@ Symbol *get_symbol(char *name) {
 %token <num> NUMBER
 %token <str> STRING
 %token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARROPEN ARRCLOSE COMMOPEN COMMCLOSE
-%token EQUALS NOTEQUALS LOWEREQ LOWER HIGHEREQ HIGHER
-%token EQUAL NOT BITNOT AND BITAND OR BITOR XOR LSHIFT RSHIFT
 %token INCREMENT DECREMENT
 
+%right EQUAL
+%left OR
+%left AND
+%left BITOR
+%left XOR
+%left BITAND
+%left EQUALS NOTEQUALS
+%left NOT BITNOT
+%left LOWER LOWEREQ HIGHER HIGHEREQ
+%left LSHIFT RSHIFT
 %left PLUS MINUS
 %left STAR DIV MOD
 
 %%
 
 program:
-  | program declaration
+  | /* In B/C, there can only be top-level declarations, no expressions. */
+    program declaration
   | program function_definition
   ;
 
 declarations:
+    // TODO: figure out if empty case should be here or not
+    // Note: In THEORY it's not a problem but it might be better to move it one level higher. Worse clarity for users but may be more understandable to yacc??? idk
   | declarations declaration
   ;
 
@@ -147,12 +158,15 @@ statements_list:
 
 lvalue:
   IDENTIFIER {
+    /* Load left-value onto stack.
+     * It needs to be in the stack because it's the most convenient way to
+     * store it for easy access when handling the right-side expression. */
     Symbol *sym = get_symbol($1);
     if (sym) {
       if (sym->type == TYPE_AUTO) {
         printf("  lea eax, [ebp %d]\n", sym->offset);
       } else if (sym->type == TYPE_PARAM) {
-        printf("  lea eax, [ebp +  %d]\n", sym->offset);
+        printf("  lea eax, [ebp + %d]\n", sym->offset);
       } else if (sym->type == TYPE_EXTERN) {
         printf("  lea eax, \"%s\"\n", sym->name);
       }
@@ -164,6 +178,7 @@ lvalue:
 
 expr:
     IDENTIFIER {
+      /* Load value where pointed to by variable. Meaning simply loading a variable. */
       Symbol *sym = get_symbol($1);
       if (sym) {
         if (sym->type == TYPE_AUTO) {
@@ -182,6 +197,8 @@ expr:
       printf("  mov eax, %d\n", $1);
     }
   | STRING {
+      /* Pretty cool stuff: creates an inline read-only section with the string,
+       * and then load its pointer into `eax` ofc */
       printf("  .section .rodata\n");
       printf("  .LC%d:\n", string_counter);
       printf("    .long .LC%d+4\n", string_counter);
@@ -191,6 +208,7 @@ expr:
       string_counter++;
     }
   | IDENTIFIER PAROPEN {
+      /* Load function from pointer */
       Symbol *sym = get_symbol($1);
       if (!sym || sym->type  == TYPE_EXTERN) {
         printf("  lea eax, \"%s\"\n", $1);
@@ -202,11 +220,14 @@ expr:
       printf("  mov eax, [eax]\n");
       printf("  push eax\n");
     }
-    args PARCLOSE {
+    args /* Load arguments to stack */
+    PARCLOSE {
+      /* Run function from loaded pointer */
       int num_args = $4;
       if (num_args > 0) {
-        // Swap top of stack [esp+0] with func ptr
-        // Mult. by 4 is for word size
+        /* Must arrange stack again before `call`
+         * So swap top of stack [esp+0] with func ptr if func had args
+         * (Multiplication by 4 is for word size) */
         printf("  mov ebx, [esp+0]\n");
         printf("  mov ecx, [esp+%d]\n", num_args * 4);
         printf("  mov [esp+%d], ebx\n", num_args * 4);
@@ -218,10 +239,15 @@ expr:
         printf("  add esp, %d\n", num_args * 4);
       }
     }
-  | lvalue EQUAL expr { // Assignment as expression (eg `var = ...` in if condition) 
-      printf("  pop ebx ; Assignment as expression\n");
+  | lvalue EQUAL expr {
+      /* Assignment as expression
+       * (eg `var = ...` in if condition) */
+      printf("  pop ebx\n");
       printf("  mov [ebx], eax\n");
     }
+  /*
+   * Math operations
+   */
   | expr PLUS expr { // Addition
       printf("  pop ebx\n");
       printf("  add eax, ebx\n");
@@ -237,28 +263,120 @@ expr:
   | expr DIV expr { // Division
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
-      // "Convert Doubleword to Quadword"
-      // Sign-extend eax into edx.
+      /* "Convert Doubleword to Quadword"
+       * Sign-extend `eax` into `edx`. */
       printf("  cdq\n");
       printf("  idiv ebx\n");
     }
   | expr MOD expr { // Modulo
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
-      // "Convert Doubleword to Quadword"
-      // Sign-extend eax into edx.
+      /* "Convert Doubleword to Quadword"
+       * Sign-extend `eax` into `edx`. */
       printf("  cdq\n");
       printf("  idiv ebx\n");
       printf("  mov eax, edx\n"); // Remainder in edx
     }
+  /* Note for mid-rule actions:
+   * Because we don't have an AST, we must do some bullshit in order for the
+   * code to be continuous and working.
+   * For each of the following token handled, it goes roughly like this:
+   * - Left `expr` evaluates and leaves result in `eax` for us
+   *   - This is conveninent for other uses, but not here
+   * - Hence we push back `eax`
+   * - Right `expr` evaluates and leaves result in `eax` again
+   * - End action
+   *   - Pops left operand into `ebx`
+   *   - Use it as well as `eax` to run operation
+   */
+  /*
+   * Number comparisons
+   *
+   * `set*` are the calculation themselves
+   * `movzx eax, al` left-appends zeroes to `al`.
+   */
+  | expr LOWER { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  cmp ebx, eax\n");
+      printf("  setl al\n");
+      printf("  movzx eax, al\n");
+    }
+  | expr LOWEREQ { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  cmp ebx, eax\n");
+      printf("  setle al\n");
+      printf("  movzx eax, al\n");
+    }
+  | expr HIGHER { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  cmp ebx, eax\n");
+      printf("  setg al\n");
+      printf("  movzx eax, al\n");
+    }
+  | expr HIGHEREQ { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  cmp ebx, eax\n");
+      printf("  setge al\n");
+      printf("  movzx eax, al\n");
+    }
+  | expr EQUALS { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  cmp ebx, eax\n");
+      printf("  sete al\n");
+      printf("  movzx eax, al\n");
+    }
+  | expr NOTEQUALS { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  cmp ebx, eax\n");
+      printf("  setne al\n");
+      printf("  movzx eax, al\n");
+    }
+  /*
+   * Bitwise comparisons
+   */
+  | expr BITAND { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  and eax, ebx\n");
+    }
+  | expr BITOR { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  or eax, ebx\n");
+    }
+  | expr XOR { printf("  push eax\n"); } expr {
+      printf("  pop ebx\n");
+      printf("  xor eax, ebx\n");
+    }
+  /*
+   * Bit shifts
+   */
+  | expr LSHIFT { printf("  push eax\n"); } expr {
+      printf("  mov ecx, eax\n");
+      printf("  pop eax\n");
+      printf("  shl eax, cl\n");
+    }
+  | expr RSHIFT { printf("  push eax\n"); } expr {
+      printf("  mov ecx, eax\n");
+      printf("  pop eax\n");
+      printf("  sar eax, cl\n");
+    }
+  /*
+   * Unary operations
+   */
+  | NOT expr {
+      printf("  cmp eax, 0\n");
+      printf("  sete al\n");
+      printf("  mivzx eax, al\n");
+    }
+  | BITNOT expr {
+      printf("  not eax\n");
+    }
+  | MINUS expr %prec STAR {
+      printf("  neg eax\n");
+    }
   ;
 
 statement:
-    lvalue EQUAL expr SEMICOLON {
-      printf("  pop ebx\n");
-      printf("  mov [ebx], eax\n");
-    }
-  | lvalue INCREMENT SEMICOLON {
+    lvalue INCREMENT SEMICOLON {
       // lvalue var addr pushed on stack
       printf("  pop eax\n");
       printf("  mov ebx, [eax]\n");
@@ -326,6 +444,8 @@ args_list:
 
 function_definition:
   IDENTIFIER PAROPEN params PARCLOSE BRACEOPEN {
+    /* Function header stuff
+     * All funcs are flobal in Blang */
     printf(".globl %s\n", $1);
     printf("%s:\n", $1);
     printf("  .long \"%s\" + 4\n", $1);
@@ -336,10 +456,12 @@ function_definition:
   BRACECLOSE {
     printf("  leave\n");
     printf("  ret\n");
-    // Reset offsets for new function
-    // Needs to happen *before* params are read
-    // This is executed before every function, but at the end here because it's wrapped to after the last function.
-    // We cannot define it at `IDENTIFIER PAROPEN` because it conflicts with other parts of the parser code.
+    /* Reset offsets for new function.
+     * Needs to happen *before* params are read.
+     * This is executed before every function, but at the end here because it's
+     * wrapped to after the last function.
+     * We cannot define it at `IDENTIFIER PAROPEN` because it conflicts with
+     * other parts of the parser code. */
     current_local_offset = -4;
     current_param_offset = 8;
   }
