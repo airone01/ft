@@ -164,7 +164,7 @@ params_list:
   ;
 
 params:
-    /* empty */
+    { $$ = 0; }
   | params_list
   ;
 
