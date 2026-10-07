@@ -270,7 +270,8 @@ expr:
     }
   | expr MINUS { printf("  push eax\n"); } expr {
       printf("  pop ebx\n");
-      printf("  sub eax ebx\n");
+      printf("  sub ebx, eax\n");
+      printf("  mov eax, ebx\n");
     }
   | expr STAR { printf("  push eax\n"); } expr {
       printf("  pop ebx\n");
