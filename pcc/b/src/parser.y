@@ -215,6 +215,10 @@ expr:
         printf("  add esp, %d\n", num_args * 4);
       }
     }
+  | lvalue EQUAL expr { // Assignment as expression (eg `var = ...` in if condition) 
+      printf("  pop ebx ; Assignment as expression\n");
+      printf("  mov [ebx], eax\n");
+    }
   ;
 
 statement:
