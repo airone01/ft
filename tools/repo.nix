@@ -62,15 +62,16 @@ in {
         # ASM
         nasm
 
+        # B
+        bison # yacc
+        flex # lex
+
         # Rust
         pkg-config
         rustc
         cargo
         gcc
         rustfmt
-
-        # 42
-        valgrind
 
         # X11
         libX11
@@ -81,8 +82,12 @@ in {
         # minishell
         readline
 
+        # Build
         bear
         just
+
+        # Test
+        valgrind
       ];
       shellHook = config.pre-commit.installationScript;
     };
