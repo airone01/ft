@@ -234,14 +234,15 @@ statement:
   | expr SEMICOLON
   | BRACEOPEN statements_list BRACECLOSE
   | while_statement
+  | if_statement
   ;
 
 while_start:
   WHILE {
-    int start = label_counter;
+    int start_lbl = label_counter;
     label_counter += 2;
-    printf(".L%d:\n", start);
-    $$ = start;
+    printf(".L%d:\n", start_lbl);
+    $$ = start_lbl;
   }
 
 while_statement:
@@ -256,6 +257,19 @@ while_statement:
     printf("  jmp .L%d\n", start_lbl);
     printf(".L%d:\n", exit_lbl);
   }
+  ;
+
+if_statement:
+    IF PAROPEN expr PARCLOSE {
+      int exit_lbl = label_counter++;
+      printf("  cmp eax, 0\n");
+      printf("  je .L%d\n", exit_lbl);
+      $<num>$ = exit_lbl; // Cast $$ to num
+    }
+    statement {
+      int exit_lbl = $<num>5; // Cast $5 to num
+      printf(".L%d:\n", exit_lbl);
+    }
   ;
 
 args:
