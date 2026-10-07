@@ -99,7 +99,7 @@ Symbol *get_symbol(char *name) {
 %%
 
 program:
-  | program statement
+  | program declaration
   | program function_definition
   ;
 
@@ -289,13 +289,7 @@ args_list:
   ;
 
 function_definition:
-  IDENTIFIER PAROPEN {
-    // Reset offsets for new function
-    // Needs to happen *before* params are read
-    current_local_offset = -4; 
-    current_param_offset = 8;
-  }
-  params PARCLOSE BRACEOPEN {
+  IDENTIFIER PAROPEN params PARCLOSE BRACEOPEN {
     printf(".globl %s\n", $1);
     printf("%s:\n", $1);
     printf("  .long \"%s\" + 4\n", $1);
@@ -306,6 +300,12 @@ function_definition:
   BRACECLOSE {
     printf("  leave\n");
     printf("  ret\n");
+    // Reset offsets for new function
+    // Needs to happen *before* params are read
+    // This is executed before every function, but at the end here because it's wrapped to after the last function.
+    // We cannot define it at `IDENTIFIER PAROPEN` because it conflicts with other parts of the parser code.
+    current_local_offset = -4;
+    current_param_offset = 8;
   }
   ;
 
