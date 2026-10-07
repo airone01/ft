@@ -264,19 +264,19 @@ expr:
   /*
    * Math operations
    */
-  | expr PLUS expr { // Addition
+  | expr PLUS { printf("  push eax\n"); } expr {
       printf("  pop ebx\n");
       printf("  add eax, ebx\n");
     }
-  | expr MINUS expr { // Substraction
+  | expr MINUS { printf("  push eax\n"); } expr {
       printf("  pop ebx\n");
       printf("  sub eax ebx\n");
     }
-  | expr STAR expr { // Multiplication
+  | expr STAR { printf("  push eax\n"); } expr {
       printf("  pop ebx\n");
       printf("  mul ebx\n");
     }
-  | expr DIV expr { // Division
+  | expr DIV { printf("  push eax\n"); } expr {
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
       /* "Convert Doubleword to Quadword"
@@ -284,7 +284,7 @@ expr:
       printf("  cdq\n");
       printf("  idiv ebx\n");
     }
-  | expr MOD expr { // Modulo
+  | expr MOD { printf("  push eax\n"); } expr {
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
       /* "Convert Doubleword to Quadword"
