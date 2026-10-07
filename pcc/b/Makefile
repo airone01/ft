@@ -2,19 +2,22 @@ NAME = B
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3
 
+CYNHB := \e[1;105;30m
+CRESET := \e[0m
+
 all: $(NAME)
 
 $(NAME): y.tab.c lex.yy.c
-	@echo " CC   $<"
+	@printf "$(CYNHB) CC  $(CRESET) $<\n"
 	@$(CC) $(CFLAGS) -o $(NAME) y.tab.c lex.yy.c
-	@ls -lah $(NAME)
+	@printf "      $(NAME)\n"
 
 y.tab.c y.tab.h: src/parser.y
-	@echo " YACC $<"
+	@printf "$(CYNHB) YCC $(CRESET) $<\n"
 	@yacc -d src/parser.y
 
 lex.yy.c: src/lexer.l y.tab.h
-	@echo " LEX  $<"
+	@printf "$(CYNHB) LEX $(CRESET) $<\n"
 	@lex src/lexer.l
 
 clean:
@@ -23,6 +26,8 @@ clean:
 fclean: clean
 	@rm -fv $(NAME)
 
+bonus: all
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
