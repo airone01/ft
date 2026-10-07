@@ -27,6 +27,18 @@
                              return NUMBER; 
                            }
 
+'(\\.|[^\\'])'             { // Chars
+                             if (yytext[1] == '\\') {
+                               if (yytext[2] == 'n') yylval.num = '\n';
+                               else if (yytext[2] == 't') yylval.num = '\t';
+                               else if (yytext[2] == '0') yylval.num = '\0';
+                               else yylval.num = yytext[2];
+                             } else {
+                               yylval.num = (unsigned char)yytext[1];
+                             }
+                             return NUMBER;
+                           }
+
 \"([^\"\\]|\\.)*\"         { // Strings
                              yylval.str = strdup(yytext);
                              return STRING;
