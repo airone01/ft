@@ -381,7 +381,7 @@ expr:
   | NOT expr {
       printf("  cmp eax, 0\n");
       printf("  sete al\n");
-      printf("  mivzx eax, al\n");
+      printf("  movzx eax, al\n");
     }
   | BITNOT expr {
       printf("  not eax\n");
