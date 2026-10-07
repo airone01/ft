@@ -7,6 +7,18 @@
 #define CRESET "\e[0m"
 #define REDHB "\e[0;37;101m"
 
+/* TODO
+ * - return
+ * - goto
+ * - post-in/decrement
+ * - array indexing scaled by 4 (`a[b]`)
+ * TODO (BONUS)
+ * - switch/case
+ * - floating point operator
+ * - libb
+ * - two additional features
+ */
+
 int yylex(void);
 void yyerror(const char *s);
 
@@ -86,6 +98,10 @@ Symbol *get_symbol(char *name) {
 %type <num> args args_list
 %type <num> params params_list
 %type <num> while_start
+%type <num> if_header
+
+%nonassoc IFX
+%nonassoc ELSE
 
 %token AUTO EXTERN WHILE IF ELSE RETURN
 %token <str> IDENTIFIER
@@ -413,16 +429,27 @@ while_statement:
   }
   ;
 
-if_statement:
+if_header:
     IF PAROPEN expr PARCLOSE {
-      int exit_lbl = label_counter++;
+      int else_lbl = label_counter++;
       printf("  cmp eax, 0\n");
-      printf("  je .L%d\n", exit_lbl);
-      $<num>$ = exit_lbl; // Cast $$ to num
+      printf("  je .L%d\n", else_lbl);
+      $$ = else_lbl; // Cast $$ to num
+    }
+  ;
+
+if_statement:
+    if_header statement %prec IFX {
+      printf(".L%d:\n", $1);
+    }
+  | if_header statement ELSE {
+      int exit_lbl = label_counter++;
+      printf("  jmp .L%d\n", exit_lbl); // Skip else branch
+      printf(".L%d:\n", $1); // Start of else branch
+      $<num>$ = exit_lbl;
     }
     statement {
-      int exit_lbl = $<num>5; // Cast $5 to num
-      printf(".L%d:\n", exit_lbl);
+      printf(".L%d:\n", $<num>4);
     }
   ;
 
