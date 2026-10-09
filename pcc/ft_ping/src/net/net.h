@@ -19,11 +19,20 @@ int resolve_host(const CliOptions opts, struct sockaddr_in **target,
  */
 int prepare_sock(struct timeval timeout);
 
+int process_packet(char *buf, ssize_t len, uint16_t pid,
+                   struct sockaddr_in *from, const CliOptions opts,
+                   PingStats *stats);
+
 /**
- * @brief Main ping loop
+ * @brief Main polling program loop
  *
- * @returns 0 on success, 1 on loop break
+ * @returns -1 on timeout
+ * @returns -2 on sigint
  */
-int ping_echo(uint16_t pid, int seq, int sock, struct sockaddr_in *target);
+int recv_echo_loop(int sock, uint16_t pid, const CliOptions opts,
+                   PingStats *stats);
+
+int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
+              PingStats *stats);
 
 #endif /* SRC_NET_NET_H */
