@@ -43,11 +43,14 @@ int main(int argc, const char *argv[]) {
 
   signal(SIGINT, handle_sigint);
 
-  printf("PING %s (%s): %lu data bytes\n", opts.address, ip_str,
-         PACKET_SIZE - sizeof(struct icmphdr));
-
   uint16_t pid = getpid() & 0xFFFF;
   int seq = 0;
+
+  printf("PING %s (%s): %lu data bytes", opts.address, ip_str,
+         PACKET_SIZE - sizeof(struct icmphdr));
+  if (opts.verbose)
+    printf(", id 0x%04x = %u", pid, pid);
+  printf("\n");
 
   PingStats stats;
   init_stats(&stats);
