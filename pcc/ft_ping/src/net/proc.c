@@ -8,22 +8,27 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <sys/time.h>
 #include <sys/types.h>
 
 static void print_verbose_ip_dump(struct iphdr *orig_ip) {
-  printf("IP Hdr Dump:\n ");
   unsigned char *raw = (unsigned char *)orig_ip;
-  for (size_t i = 0; i < sizeof(struct iphdr); i++) {
+  char s_str[INET_ADDRSTRLEN], d_str[INET_ADDRSTRLEN];
+
+  inet_ntop(AF_INET, &orig_ip->saddr, s_str, sizeof(s_str));
+  inet_ntop(AF_INET, &orig_ip->daddr, d_str, sizeof(d_str));
+
+  printf("IP Hdr Dump:\n ");
+  for (size_t i = 0; i < sizeof(struct iphdr); i++)
     printf("%02x%s", raw[i], (i % 2) ? " " : "");
-  }
+
   printf("\nVr HL TOS  Len   ID Flg  off TTL Pro  cks      Src\tDst\tData\n");
   printf(" %1x  %1x  %02x %04x %04x   %1x %04x  %02x  %02x %04x %s  %s\n",
          orig_ip->version, orig_ip->ihl, orig_ip->tos, ntohs(orig_ip->tot_len),
          ntohs(orig_ip->id), (ntohs(orig_ip->frag_off) & 0xe000) >> 13,
          ntohs(orig_ip->frag_off) & 0x1fff, orig_ip->ttl, orig_ip->protocol,
-         ntohs(orig_ip->check), inet_ntoa(*(struct in_addr *)&orig_ip->saddr),
-         inet_ntoa(*(struct in_addr *)&orig_ip->daddr));
+         ntohs(orig_ip->check), s_str, d_str);
 }
 
 // 0: matching ICMP_ECHOREPLY
