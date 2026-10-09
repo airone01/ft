@@ -1,18 +1,21 @@
 // https://man7.org/linux/man-pages/man3/getopt_long.3.html
-#include <string.h>
 #define _GNU_SOURCE
 
 #include "cli.h"
+#include <errno.h>
 #include <getopt.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static void print_help(FILE *stream, const char *pname) {
   fprintf(stream, "Usage: %s [OPTION...] HOST ...\n", pname);
   fprintf(stream, "Send ICMP ECHO_REQUEST packets to network hosts.\n");
 
   fprintf(stream, "\nOptions valid for all request types:\n");
-  fprintf(stream, "  -v, --verbose  verbose output\n");
-  fprintf(stream, "  -?, --help     display this help list\n");
+  fprintf(stream, "  -c, --count <COUNT>  stop after sending COUNT packets\n");
+  fprintf(stream, "  -v, --verbose        verbose output\n");
+  fprintf(stream, "  -?, --help           display this help list\n");
 }
 
 int parse_args(int argc, const char *argv[], CliOptions *optsp) {
@@ -23,10 +26,21 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
 
   memset(optsp, 0, sizeof(*optsp));
   optsp->pname = argv[0];
+  optsp->npackets = -1;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "v?", long_options,
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "v?c:", long_options,
                                 NULL)) != -1)
     switch (c) {
+    case 'c':
+      char *endptr;
+      errno = 0;
+      long val = strtol(optarg, &endptr, 10);
+      if (errno != 0 || *endptr != '\0' || val <= 0) {
+        fprintf(stderr, "%s: invalid value (`%s')\n", optsp->pname, optarg);
+        return -1;
+      }
+      optsp->npackets = val;
+      break;
     case 'v':
       optsp->verbose = 1;
       break;
