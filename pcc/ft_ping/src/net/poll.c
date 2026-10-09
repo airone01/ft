@@ -5,7 +5,7 @@
 #include <sys/time.h>
 
 // TODO: might need conditional compilation for 32/64 discrepancies here
-static long get_time_ms(void) {
+long get_time_ms(void) {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
