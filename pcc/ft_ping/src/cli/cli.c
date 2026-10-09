@@ -31,11 +31,15 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
       optsp->verbose = 1;
       break;
     case '?':
-      print_help(stdout, argv[0]);
+      if (optopt == 0 || optopt == '?') {
+        print_help(stdout, optsp->pname);
+        return -2;
+      }
+      fprintf(stderr, "Try '%s -?' for more information.\n", optsp->pname);
       return -2;
     default:
       fprintf(stderr, "%s: invalid option -- '%c'\n", optsp->pname, c);
-      print_help(stderr, argv[0]);
+      print_help(stderr, optsp->pname);
       return -1;
     }
 
