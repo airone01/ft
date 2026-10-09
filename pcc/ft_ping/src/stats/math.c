@@ -19,17 +19,17 @@ unsigned short calculate_checksum(unsigned short *addr, int len) {
   return ~sum;
 }
 
-/* In case we're not allowed to use libm */
+static double nabs(double a) { return (a < 0) ? -a : a; }
 
-// static double nabs(double a) { return (a < 0) ? -a : a; }
-//
-// static double nsqrt(double a, double prec) {
-//   if (a <= 0.0 || a < prec)
-//     return 0.0;
-//   double x0, x1 = a / 2.0;
-//   do {
-//     x0 = x1;
-//     x1 = (x0 + a / x0) / 2.0;
-//   } while (nabs(x1 - x0) > prec);
-//   return x1;
-// }
+static double nsqrt(double a, double prec) {
+  if (a <= 0.0 || a < prec)
+    return 0.0;
+  double x0, x1 = a / 2.0;
+  do {
+    x0 = x1;
+    x1 = (x0 + a / x0) / 2.0;
+  } while (nabs(x1 - x0) > prec);
+  return x1;
+}
+
+__attribute((weak)) double sqrt(double a) { return nsqrt(a, 2); }
