@@ -73,5 +73,5 @@ int main(int argc, const char *argv[]) {
 
   freeaddrinfo(addr);
   close(sock);
-  return 0;
+  return stats.received != 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
