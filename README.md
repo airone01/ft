@@ -63,10 +63,9 @@ these projects are tightly coupled and share dependencies to work properly.
 **Why Zig instead of Make?** The 42 curriculum relies heavily on GNU Make to
 teach students the fundamentals of compilation. However, maintaining 30+ nearly
 identical Makefiles in a monorepo quickly becomes tedious. Because I enjoy
-DevOps and reproducibility, I migrated this repository to the Zig build system.
-I now only generate a standard Makefile and clean the repo right before pushing
-a project for grading. I used to use Bazel to build my projects, but it's
-somewhat incompatible with Nix, so I moved to the Zig build system.
+DevOps and reproducibility, I migrated this repository to the Zig build
+system[^1]. I now only generate a standard Makefile and clean the repo right
+before pushing a project for grading.
 
 > [!CAUTION]
 > A natural side effect of this Zig setup is that it makes it harder to blindly
@@ -296,6 +295,15 @@ bear -- zig build
 
 > [!NOTE]
 > The `compile_commands.json` is gitignore'd for your inconvenience :-)
+
+### Number of projects
+
+To get the number of projects in this repo, you can run a quick
+[`jq`](https://jqlang.org/) command.
+
+```sh
+jq '.packages | keys | map(select(startswith("tools") | not)) | length' -- release-please-config.json
+```
 
 ## License
 
