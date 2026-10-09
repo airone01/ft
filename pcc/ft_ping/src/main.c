@@ -65,7 +65,7 @@ int main(int argc, const char *argv[]) {
       break;
 
     seq++;
-    if (res == 0 && g_running)
+    if (res == 0 && res == 1 && g_running)
       sleep(1);
   }
 
