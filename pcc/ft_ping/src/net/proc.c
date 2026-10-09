@@ -84,6 +84,7 @@ int process_packet(char *buf, ssize_t len, uint16_t pid,
     } else {
       printf("%zd bytes from %s: icmp_seq=%u ttl=%d\n", icmp_len,
              inet_ntoa(from->sin_addr), seq, ip->ttl);
+      stats->received++;
     }
     return 0;
   }
