@@ -12,7 +12,8 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-static void print_verbose_ip_dump(struct iphdr *orig_ip) {
+static void print_verbose_ip_dump(struct iphdr *orig_ip,
+                                  struct icmphdr *orig_icmp) {
   unsigned char *raw = (unsigned char *)orig_ip;
   char s_str[INET_ADDRSTRLEN], d_str[INET_ADDRSTRLEN];
 
@@ -29,6 +30,13 @@ static void print_verbose_ip_dump(struct iphdr *orig_ip) {
          ntohs(orig_ip->id), (ntohs(orig_ip->frag_off) & 0xe000) >> 13,
          ntohs(orig_ip->frag_off) & 0x1fff, orig_ip->ttl, orig_ip->protocol,
          ntohs(orig_ip->check), s_str, d_str);
+
+  int orig_ip_len = orig_ip->ihl * 4;
+  int icmp_size = ntohs(orig_ip->tot_len) - orig_ip_len;
+
+  printf("ICMP: type %d, code %d, size %d, id 0x%04x, seq 0x%04x\n",
+         orig_icmp->type, orig_icmp->code, icmp_size,
+         ntohs(orig_icmp->un.echo.id), ntohs(orig_icmp->un.echo.sequence));
 }
 
 // 0: matching ICMP_ECHOREPLY
@@ -114,9 +122,8 @@ int process_packet(char *buf, ssize_t len, uint16_t pid,
              inet_ntoa(from->sin_addr));
     }
 
-    if (opts.verbose) {
-      print_verbose_ip_dump(orig_ip);
-    }
+    if (opts.verbose)
+      print_verbose_ip_dump(orig_ip, orig_icmp);
     return 1;
   }
 
