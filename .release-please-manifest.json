@@ -37,7 +37,7 @@
   "pcc/libasm": "1.2.1",
   "pcc/nm": "1.0.0",
   "pcc/ft_ls": "1.0.0",
-  "pcc/ft_ping": "0.0.0",
+  "pcc/ft_ping": "1.0.0",
   "pcc/snow-crash": "1.0.0",
   "rushes/hotrace": "2.2.1",
   "rushes/libunit": "1.1.1",
