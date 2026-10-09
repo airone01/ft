@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include <netinet/ip_icmp.h>
 #include <signal.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,6 +68,9 @@ int main(int argc, const char *argv[]) {
       break;
 
     seq++;
+
+    if (opts.npackets > 0 && stats.transmitted >= (size_t)opts.npackets)
+      break;
 
     long elapsed = get_time_ms() - t_start;
     if (elapsed && g_running)
