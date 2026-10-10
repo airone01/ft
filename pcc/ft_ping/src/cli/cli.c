@@ -9,13 +9,15 @@
 #include <string.h>
 
 static void print_help(FILE *stream, const char *pname) {
-  fprintf(stream, "Usage: %s [OPTION...] HOST ...\n", pname);
-  fprintf(stream, "Send ICMP ECHO_REQUEST packets to network hosts.\n");
-
-  fprintf(stream, "\nOptions valid for all request types:\n");
-  fprintf(stream, "  -c, --count <COUNT>  stop after sending COUNT packets\n");
-  fprintf(stream, "  -v, --verbose        verbose output\n");
-  fprintf(stream, "  -?, --help           display this help list\n");
+  fprintf(stream,
+          "Usage: %s [OPTION...] HOST ...\n"
+          "Send ICMP ECHO_REQUEST packets to network hosts.\n"
+          "\n"
+          "Options valid for all request types:\n"
+          "  -c, --count <COUNT>  stop after sending COUNT packets\n"
+          "  -v, --verbose        verbose output\n"
+          "  -?, --help           display this help list\n",
+          pname);
 }
 
 int parse_args(int argc, const char *argv[], CliOptions *optsp) {
@@ -50,7 +52,7 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
         return -2;
       }
       fprintf(stderr, "Try '%s -?' for more information.\n", optsp->pname);
-      return -2;
+      return -1;
     default:
       fprintf(stderr, "%s: invalid option -- '%c'\n", optsp->pname, c);
       print_help(stderr, optsp->pname);
