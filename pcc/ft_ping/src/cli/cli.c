@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 static void print_help(FILE *stream, const char *pname) {
   fprintf(stream,
@@ -15,6 +16,7 @@ static void print_help(FILE *stream, const char *pname) {
           "\n"
           "Options valid for all request types:\n"
           "  -c, --count <COUNT>  stop after sending COUNT packets\n"
+          "  -f                   flood ping (root only)\n"
           "  -v, --verbose        verbose output\n"
           "  -?, --help           display this help list\n",
           pname);
@@ -30,8 +32,8 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
   optsp->pname = argv[0];
   optsp->npackets = -1;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "v?c:", long_options,
-                                NULL)) != -1)
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "v?c:f",
+                                long_options, NULL)) != -1)
     switch (c) {
     case 'c':
       char *endptr;
@@ -42,6 +44,14 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
         return -1;
       }
       optsp->npackets = val;
+      break;
+    case 'f':
+      if (getuid() != 0) {
+        fprintf(stderr, "%s: flood ping is not allowed for non-root users\n",
+                optsp->pname);
+        return -2;
+      }
+      optsp->flood = 1;
       break;
     case 'v':
       optsp->verbose = 1;

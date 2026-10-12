@@ -10,7 +10,7 @@
 #include <sys/types.h>
 
 int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
-              PingStats *stats) {
+              PingStats *stats, const CliOptions opts) {
   char egress_buf[PACKET_SIZE];
   memset(egress_buf, 0, sizeof(egress_buf));
 
@@ -35,5 +35,11 @@ int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
     perror("sendto");
     return -1;
   }
+
+  if (opts.flood) {
+    putchar('.');
+    fflush(stdout);
+  }
+
   return 0;
 }
