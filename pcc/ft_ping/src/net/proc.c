@@ -58,7 +58,10 @@ int process_packet(char *buf, ssize_t len, uint16_t pid,
   ssize_t icmp_len = len - ip_hdr_len;
 
   // Standard ICMP echo reply
-  if (icmp->type == ICMP_ECHOREPLY) {
+  if (opts.flood) {
+    putchar('\b');
+    fflush(stdout);
+  } else if (icmp->type == ICMP_ECHOREPLY) {
     uint16_t recv_id = ntohs(icmp->un.echo.id);
     if (recv_id != pid)
       return 2;
