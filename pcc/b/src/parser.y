@@ -3,6 +3,7 @@
 #include "src/yy.h"
 #include "src/symtab.h"
 #include "src/color.h"
+#include "src/asm.h"
 
 /* TODO
  * - return
@@ -113,7 +114,7 @@ lvalue:
       } else if (sym->type == TYPE_EXTERN) {
         printf("  lea eax, \"%s\"\n", sym->name);
       }
-      printf("  push eax\n");
+      gen_push_eax();
     } else {
       fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
     }
@@ -161,7 +162,7 @@ expr:
         printf("  lea eax, [ebp + %d]\n", sym->offset);
       }
       printf("  mov eax, [eax]\n");
-      printf("  push eax\n");
+      gen_push_eax();
     }
     args /* Load arguments to stack */
     PARCLOSE {
@@ -191,20 +192,20 @@ expr:
   /*
    * Math operations
    */
-  | expr PLUS { printf("  push eax\n"); } expr {
+  | expr PLUS { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  add eax, ebx\n");
     }
-  | expr MINUS { printf("  push eax\n"); } expr {
+  | expr MINUS { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  sub ebx, eax\n");
       printf("  mov eax, ebx\n");
     }
-  | expr STAR { printf("  push eax\n"); } expr {
+  | expr STAR { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  imul eax, ebx\n");
     }
-  | expr DIV { printf("  push eax\n"); } expr {
+  | expr DIV { gen_push_eax(); } expr {
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
       /* "Convert Doubleword to Quadword"
@@ -212,7 +213,7 @@ expr:
       printf("  cdq\n");
       printf("  idiv ebx\n");
     }
-  | expr MOD { printf("  push eax\n"); } expr {
+  | expr MOD { gen_push_eax(); } expr {
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
       /* "Convert Doubleword to Quadword"
@@ -239,70 +240,23 @@ expr:
    * `set*` are the calculation themselves
    * `movzx eax, al` left-appends zeroes to `al`.
    */
-  | expr LOWER { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  cmp ebx, eax\n");
-      printf("  setl al\n");
-      printf("  movzx eax, al\n");
-    }
-  | expr LOWEREQ { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  cmp ebx, eax\n");
-      printf("  setle al\n");
-      printf("  movzx eax, al\n");
-    }
-  | expr HIGHER { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  cmp ebx, eax\n");
-      printf("  setg al\n");
-      printf("  movzx eax, al\n");
-    }
-  | expr HIGHEREQ { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  cmp ebx, eax\n");
-      printf("  setge al\n");
-      printf("  movzx eax, al\n");
-    }
-  | expr EQUALS { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  cmp ebx, eax\n");
-      printf("  sete al\n");
-      printf("  movzx eax, al\n");
-    }
-  | expr NOTEQUALS { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  cmp ebx, eax\n");
-      printf("  setne al\n");
-      printf("  movzx eax, al\n");
-    }
+  | expr LOWER     { gen_push_eax(); } expr { gen_cmp("setl"); }
+  | expr LOWEREQ   { gen_push_eax(); } expr { gen_cmp("setle"); }
+  | expr HIGHER    { gen_push_eax(); } expr { gen_cmp("setg"); }
+  | expr HIGHEREQ  { gen_push_eax(); } expr { gen_cmp("setge"); }
+  | expr EQUALS    { gen_push_eax(); } expr { gen_cmp("sete"); }
+  | expr NOTEQUALS { gen_push_eax(); } expr { gen_cmp("setne"); }
   /*
    * Bitwise comparisons
    */
-  | expr BITAND { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  and eax, ebx\n");
-    }
-  | expr BITOR { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  or eax, ebx\n");
-    }
-  | expr XOR { printf("  push eax\n"); } expr {
-      printf("  pop ebx\n");
-      printf("  xor eax, ebx\n");
-    }
+  | expr BITAND { gen_push_eax(); } expr { gen_bit_cmp("and"); }
+  | expr BITOR  { gen_push_eax(); } expr { gen_bit_cmp("or"); }
+  | expr XOR    { gen_push_eax(); } expr { gen_bit_cmp("xor"); }
   /*
    * Bit shifts
    */
-  | expr LSHIFT { printf("  push eax\n"); } expr {
-      printf("  mov ecx, eax\n");
-      printf("  pop eax\n");
-      printf("  shl eax, cl\n");
-    }
-  | expr RSHIFT { printf("  push eax\n"); } expr {
-      printf("  mov ecx, eax\n");
-      printf("  pop eax\n");
-      printf("  sar eax, cl\n");
-    }
+  | expr LSHIFT { gen_push_eax(); } expr { gen_shift("shl"); }
+  | expr RSHIFT { gen_push_eax(); } expr { gen_shift("sar"); }
   /*
    * Unary operations
    */
@@ -388,11 +342,11 @@ args:
 
 args_list:
     expr {
-      printf("  push eax\n");
+      gen_push_eax();
       $$ = 1;
     }
   | args_list COMMA expr {
-      printf("  push eax\n");
+      gen_push_eax();
       $$ = $1 + 1;
     }
   ;
