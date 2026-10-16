@@ -6,6 +6,7 @@
 void *sym_table = NULL;
 int current_local_offset = -4;
 int current_param_offset = 8;
+char *current_func_name = NULL;
 int string_counter = 0;
 int label_counter = 1;
 

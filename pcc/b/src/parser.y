@@ -6,7 +6,6 @@
 #include "src/asm.h"
 
 /* TODO
- * - goto
  * - post-in/decrement
  * - array indexing scaled by 4 (`a[b]`)
  * TODO (BONUS)
@@ -36,6 +35,7 @@
 %token <str> STRING
 %token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARROPEN ARRCLOSE COMMOPEN COMMCLOSE
 %token INCREMENT DECREMENT
+%token GOTO COLON
 
 %right EQUAL
 %left OR
@@ -55,7 +55,7 @@
 program:
   | /* In B/C, there can only be top-level declarations, no expressions. */
     program declaration
-  | program function_definition
+  | program func_def
   ;
 
 declarations:
@@ -295,6 +295,11 @@ statement:
       printf("  leave\n");
       printf("  ret\n");
     }
+  | label statement
+  | GOTO IDENTIFIER SEMICOLON {
+      printf("  jmp .L_%s_%s\n", current_func_name, $2);
+      free($2);
+    }
   ;
 
 while_start:
@@ -359,8 +364,9 @@ args_list:
     }
   ;
 
-function_definition:
+func_def:
   IDENTIFIER PAROPEN params PARCLOSE BRACEOPEN {
+    current_func_name = $1;
     /* Function header stuff
      * All funcs are flobal in Blang */
     printf(".globl %s\n", $1);
@@ -382,6 +388,13 @@ function_definition:
     current_local_offset = -4;
     current_param_offset = 8;
   }
+  ;
+
+label:
+    IDENTIFIER COLON {
+      printf(".L_%s_%s:\n", current_func_name, $1);
+      free($1);
+    }
   ;
 
 %%

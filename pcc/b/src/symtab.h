@@ -19,6 +19,7 @@ typedef struct {
 extern void *sym_table;
 extern int current_local_offset;
 extern int current_param_offset;
+extern char *current_func_name;
 extern int string_counter;
 extern int label_counter;
 
