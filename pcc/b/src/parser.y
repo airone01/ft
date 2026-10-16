@@ -6,7 +6,6 @@
 #include "src/asm.h"
 
 /* TODO
- * - return
  * - goto
  * - post-in/decrement
  * - array indexing scaled by 4 (`a[b]`)
@@ -121,7 +120,8 @@ lvalue:
   }
 
 expr:
-    IDENTIFIER {
+    PAROPEN expr PARCLOSE
+  | IDENTIFIER {
       /* Load value where pointed to by variable. Meaning simply loading a variable. */
       Symbol *sym = get_symbol($1);
       if (sym) {
@@ -287,6 +287,14 @@ statement:
   | BRACEOPEN statements_list BRACECLOSE
   | while_statement
   | if_statement
+  | RETURN SEMICOLON {
+      printf("  leave\n");
+      printf("  ret\n");
+    }
+  | RETURN expr SEMICOLON {
+      printf("  leave\n");
+      printf("  ret\n");
+    }
   ;
 
 while_start:
