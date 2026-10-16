@@ -117,11 +117,11 @@ Symbol *get_symbol(char *name) {
 %left XOR
 %left BITAND
 %left EQUALS NOTEQUALS
-%left NOT BITNOT
 %left LOWER LOWEREQ HIGHER HIGHEREQ
 %left LSHIFT RSHIFT
 %left PLUS MINUS
 %left STAR DIV MOD
+%left NOT BITNOT
 
 %%
 
