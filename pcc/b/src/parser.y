@@ -1,11 +1,8 @@
 %{
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <search.h>
-
-#define CRESET "\e[0m"
-#define REDHB "\e[0;37;101m"
+#include "src/yy.h"
+#include "src/symtab.h"
+#include "src/color.h"
 
 /* TODO
  * - return
@@ -18,76 +15,6 @@
  * - libb
  * - two additional features
  */
-
-int yylex(void);
-void yyerror(const char *s);
-
-typedef enum {
-  /* Local variables. Stack-allocated below ebp.
-   * Start at offset -4 and decrement by 4 for each variable. */
-  TYPE_AUTO,
-  /* Function arguments. Caller-passed above ebp.
-   * Start at offset +8 and increment by 4 for each parameter. */
-  TYPE_PARAM,
-  /* Global/extern symbols. Referenced by name.
-   * No stack offset. */
-  TYPE_EXTERN
-} SymbolType;
-
-typedef struct {
-  char *name;
-  SymbolType type;
-  int offset; // ebp
-} Symbol;
-
-void *sym_table = NULL;
-int current_local_offset = -4;
-int current_param_offset = 8;
-int string_counter = 0;
-int label_counter = 1;
-
-// required by tsearch
-int compare_symbols(const void *pa, const void *pb) {
-  return strcmp(((const Symbol *)pa)->name, ((const Symbol *)pb)->name);
-}
-
-void add_symbol(char *name, SymbolType type) {
-  Symbol *sym = malloc(sizeof(Symbol));
-  sym->name = strdup(name);
-  sym->type = type;
-
-  switch (type) {
-    case TYPE_AUTO:
-      sym->offset = current_local_offset;
-      current_local_offset -= 4; // shift down 4 for next var
-      break;
-    case TYPE_PARAM:
-      sym->offset = current_param_offset;
-      current_param_offset += 4; // shift up 4 for next var
-      break;
-    case TYPE_EXTERN:
-      sym->offset = 0;
-      break;
-  }
-
-  // insertion
-  Symbol **found = tsearch(sym, &sym_table, compare_symbols);
-  if (*found != sym) {
-    // var was already in the tree
-    free(sym->name);
-    free(sym);
-  }
-}
-
-Symbol *get_symbol(char *name) {
-  Symbol dummy;
-  dummy.name = name;
-  Symbol **found = tfind(&dummy, &sym_table, compare_symbols);
-  if (found) {
-    return *found;
-  }
-  return NULL;
-}
 %}
 
 %union {
@@ -496,13 +423,3 @@ function_definition:
   ;
 
 %%
-
-void yyerror(const char *s) {
-  fprintf(stderr, REDHB" Error: %s "CRESET"\n", s);
-}
-
-int main(void) {
-  printf(".intel_syntax noprefix\n");
-  printf(".text\n");
-  return yyparse();
-}
