@@ -1,12 +1,25 @@
 # B
 
-This project aims to create a simple B language compiler, using the `lex` and
-`yacc` programs and their syntax.
+This project aims to create a simple B to i386 assembly compiler, using the
+`lex` and `yacc` programs and their syntax.
 
 ## Requirements
 
 This project requires **GNU Make**, **yacc** and **lex** (or **bison** and
 **flex** as drop-in more modern replacements).
+
+## Implementation Details
+
+- The program compiles to i386 assembly with the Intel syntax.
+- There is no AST. Lookahead is LR(1). For now I've had no problems with this,
+  because B is a simple language, but there might be limitations by the time I
+  finish the bonuses.
+- Hence, this compiler is very simple. Resulting assembly has duplicated and
+  unoptimized operations. But as explicitly explained in the subject, the goal
+  is to make it work, not make it good.
+- It does not support early B-style assignment operators (`=+` instead of `+=`).
+- The escape character is the more modern `\`, not `*`.
+- It does not support global vector and vars declarations.
 
 ## Monorepo
 
