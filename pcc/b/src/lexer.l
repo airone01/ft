@@ -15,6 +15,7 @@
 "while"                    { return WHILE; }
 "if"                       { return IF; }
 "else"                     { return ELSE; }
+"goto"                     { return GOTO; }
 "return"                   { return RETURN; }
 
 [a-zA-Z_][a-zA-Z0-9_]*     { // Variables
@@ -49,6 +50,7 @@
 "/*"([^*]|\*+[^*/])*\*+"/" { /* Ignore comments */ }
 
 ";"                        { return SEMICOLON; }
+":"                        { return COLON; }
 ","                        { return COMMA; }
 "("                        { return PAROPEN; }
 ")"                        { return PARCLOSE; }
