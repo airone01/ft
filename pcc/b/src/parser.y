@@ -5,9 +5,7 @@
 #include "src/color.h"
 #include "src/asm.h"
 
-/* TODO
- * - array indexing scaled by 4 (`a[b]`)
- * TODO (BONUS)
+/* TODO (BONUS)
  * - switch/case
  * - floating point operator
  * - libb
@@ -32,7 +30,7 @@
 %token <str> IDENTIFIER
 %token <num> NUMBER
 %token <str> STRING
-%token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARROPEN ARRCLOSE COMMOPEN COMMCLOSE
+%token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARRCLOSE COMMOPEN COMMCLOSE
 %token INCREMENT DECREMENT
 %token GOTO COLON
 
@@ -48,6 +46,7 @@
 %left PLUS MINUS
 %left STAR DIV MOD
 %left NOT BITNOT
+%left ARROPEN
 
 %%
 
@@ -293,6 +292,45 @@ expr:
       printf("  dec dword ptr [edx]\n");
       printf("  mov eax, [edx]\n");
     }
+  /*
+   * Array indexing
+   *
+   * Separating arr_access from read vs assignment avoids the LR(1) lookahead
+   * problem.
+   *
+   * In more detail: because we don't use an AST and have a lookahead of one
+   * token, we cannot know in advance whether in `v[i]`, `i` should be treated
+   * as the start of an lvalue or as an expr.
+   * In a modern compiler, this problem would not arise because the first pass
+   * of the compiler would resolve `v[i]` as a node of array access of `v` at
+   * `i`, and later, a type-checker would run through the tree and solve the
+   * sideness of `i`.
+   * But, again, we don't have the luxury of an AST.
+   *
+   * The following is the cleanest solution I've found for this.
+   * I also emulate the incrent and decrement here for better parity.
+   */
+  // Read
+  | arr_access {
+      printf("  mov eax, [eax]\n");
+    }
+  // Assignment
+  | arr_access EQUAL { gen_push_eax(); } expr {
+      printf("  pop ebx\n");
+      printf("  mov [ebx], eax\n");
+    }
+  // Increment
+  | arr_access INCREMENT {
+      printf("  mov edx, eax\n");
+      printf("  mov eax, [edx]\n");
+      printf("  inc dword ptr [edx]\n");
+    }
+  // Decrement
+  | arr_access DECREMENT {
+      printf("  mov edx, eax\n");
+      printf("  mov eax, [edx]\n");
+      printf("  dec dword ptr [edx]\n");
+    }
   ;
 
 statement:
@@ -407,6 +445,13 @@ label:
     IDENTIFIER COLON {
       printf(".L_%s_%s:\n", current_func_name, $1);
       free($1);
+    }
+  ;
+
+arr_access:
+    expr ARROPEN { gen_push_eax(); } expr ARRCLOSE {
+      printf("  pop ebx\n");
+      printf("  lea eax, [ebx + eax*4]\n");
     }
   ;
 
