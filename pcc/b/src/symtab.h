@@ -1,3 +1,6 @@
+#ifndef SRC_SYMTAB_H
+#define SRC_SYMTAB_H
+
 typedef enum {
   /* Local variables. Stack-allocated below ebp.
    * Start at offset -4 and decrement by 4 for each variable. */
@@ -28,3 +31,5 @@ void add_symbol(char *name, SymbolType type);
 Symbol *get_symbol(char *name);
 
 int compare_symbols(const void *pa, const void *pb);
+
+#endif /* SRC_SYMTAB_H */
