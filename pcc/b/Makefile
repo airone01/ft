@@ -2,7 +2,8 @@ NAME := B
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -g3 -I. -Isrc
 
-SRC := symtab.c main.c y.tab.c lex.yy.c
+SRC := symtab.c main.c asm.c
+SRC += y.tab.c lex.yy.c
 SRC := $(addprefix src/, $(SRC))
 OBJ := $(SRC:.c=.o)
 
