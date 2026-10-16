@@ -1,4 +1,8 @@
 B
-*.[hcs]
+*.s
+
 !brt0.o
+
+src/y.tab.[hc]
+src/lex.yy.c
 
