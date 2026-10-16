@@ -6,7 +6,6 @@
 #include "src/asm.h"
 
 /* TODO
- * - post-in/decrement
  * - array indexing scaled by 4 (`a[b]`)
  * TODO (BONUS)
  * - switch/case
@@ -271,19 +270,33 @@ expr:
   | MINUS expr %prec STAR {
       printf("  neg eax\n");
     }
+  /*
+   * Pre/post increment
+   */
+  | lvalue INCREMENT {
+      printf("  pop edx\n");
+      printf("  mov eax, [edx]\n");
+      printf("  inc dword ptr [edx]\n");
+    }
+  | lvalue DECREMENT {
+      printf("  pop edx\n");
+      printf("  mov eax, [edx]\n");
+      printf("  dec dword ptr [edx]\n");
+    }
+  | INCREMENT lvalue {
+      printf("  pop edx\n");
+      printf("  inc dword ptr [edx]\n");
+      printf("  mov eax, [edx]\n");
+    }
+  | DECREMENT lvalue {
+      printf("  pop edx\n");
+      printf("  dec dword ptr [edx]\n");
+      printf("  mov eax, [edx]\n");
+    }
   ;
 
 statement:
-    lvalue INCREMENT SEMICOLON {
-      // lvalue var addr pushed on stack
-      printf("  pop eax\n");
-      printf("  mov ebx, [eax]\n");
-      printf("  mov ecx, ebx\n");
-      printf("  add ebx, 1\n");
-      printf("  mov [eax], ebx\n");
-      printf("  mov eax, ecx\n");
-    }
-  | expr SEMICOLON
+    expr SEMICOLON
   | BRACEOPEN statements_list BRACECLOSE
   | while_statement
   | if_statement
