@@ -1,4 +1,11 @@
 #!/usr/bin/env sh
+
+# This file defines the `compile` shell function, which compiles some B code to
+# Intel assembly with `./B`, and then uses `gcc` to compile this assembly to a
+# native executable binary, `a.out`.
+# To use this file, source it (`source compile.sh`), run `compile <file.b>`,
+# and then test the result `./a.out`.
+
 compile() (
   set -e
   for i in $(seq 1 $#); do
