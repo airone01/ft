@@ -6,7 +6,6 @@
 #include "src/asm.h"
 
 /* TODO (BONUS)
- * - switch/case
  * - floating point operator
  * - libb
  * - two additional features
@@ -31,6 +30,7 @@
 %token <num> NUMBER
 %token <str> STRING
 %token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARRCLOSE COMMOPEN COMMCLOSE
+%token SWITCH CASE DEFAULT BREAK
 %token INCREMENT DECREMENT
 %token GOTO COLON
 
@@ -351,6 +351,14 @@ statement:
       printf("  jmp .L_%s_%s\n", current_func_name, $2);
       free($2);
     }
+  | case_label statement
+  | default_label statement
+  | BREAK SEMICOLON {
+      if (switch_depth == 0)
+        fprintf(stderr, REDHB" Error: 'break' outside of switch statement"CRESET"\n");
+      printf("  jmp .L%d\n", switch_stack[switch_depth - 1].end_lbl);
+    }
+  | switch_statement
   ;
 
 while_start:
@@ -454,5 +462,52 @@ arr_access:
       printf("  lea eax, [ebx + eax*4]\n");
     }
   ;
+
+case_label:
+    CASE NUMBER COLON {
+      int lbl = label_counter++;
+      add_case($2, lbl);
+      printf(".L%d:\n", lbl);
+    }
+  ;
+
+default_label:
+    DEFAULT COLON {
+      int lbl = label_counter++;
+      if (switch_depth > 0)
+        switch_stack[switch_depth - 1].default_lbl = lbl;
+      printf(".L%d:\n", lbl);
+    }
+  ;
+
+switch_start:
+    SWITCH expr {
+      int dispatch_lbl = label_counter++;
+      int end_lbl = label_counter++;
+      push_switch(dispatch_lbl, end_lbl);
+      gen_push_eax();
+      printf("  jmp .L%d\n", dispatch_lbl);
+    }
+  ;
+
+switch_statement:
+    switch_start statement {
+      SwitchContext *sc = &switch_stack[switch_depth - 1];
+      // Fallthrough protection for end of body
+      printf("  jmp .L%d\n", sc->end_lbl);
+      printf(".L%d:\n", sc->dispatch_lbl);
+
+      // Emit comps
+      for (int i = 0; i < sc->case_count; i++) {
+        printf("  cmp dword ptr [esp], %d\n", sc->cases[i].val);
+        printf("  je .L%d\n", sc->cases[i].lbl);
+      }
+
+      if (sc->default_lbl)
+        printf("  jmp .L%d\n", sc->default_lbl);
+      printf(".L%d:\n", sc->end_lbl);
+      printf("  add esp, 4\n");
+      pop_switch();
+    }
 
 %%

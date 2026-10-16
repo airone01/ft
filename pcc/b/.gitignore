@@ -3,6 +3,8 @@ B
 
 !brt0.o
 
+b.pdf
+
 src/y.tab.[hc]
 src/lex.yy.c
 

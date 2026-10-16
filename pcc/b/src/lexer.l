@@ -17,6 +17,10 @@
 "else"                     { return ELSE; }
 "goto"                     { return GOTO; }
 "return"                   { return RETURN; }
+"switch"                   { return SWITCH; }
+"case"                     { return CASE; }
+"DEFAULT"                  { return DEFAULT; }
+"break"                    { return BREAK; }
 
 [a-zA-Z_][a-zA-Z0-9_]*     { // Variables
                              yylval.str = strdup(yytext);
