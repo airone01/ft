@@ -88,7 +88,7 @@ before pushing a project for grading.
     <tbody>
       <tr align="center">
         <td>0</td>
-        <td><a href="/milestone-0/libft/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/libftm.png" alt="libft logo"></a></td>
+        <td><strong>Libft</strong></td>
         <td>
           ✅<br/>
           <sub>(with bonuses)</sub>
@@ -97,7 +97,7 @@ before pushing a project for grading.
       </tr>
       <tr align="center">
         <td rowspan="3">1</td>
-        <td><a href="/milestone-1/born2beroot/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/born2berootm.png" alt="born2beroot logo"></a></td>
+        <td><strong>Born2beroot</strong></td>
         <td>
           ✅<br/>
           <sub>(with bonuses)</sub>
@@ -105,18 +105,18 @@ before pushing a project for grading.
         <td>125</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-1/ft_printf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_printfe.png" alt="ft_printf logo"></a></td>
+        <td><strong>ft_printf</strong></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-1/get_next_line/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/get_next_linee.png" alt="get_next_line logo"></a></td>
+        <td><strong>get_next_line</strong></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
         <td rowspan="3">2</td>
-        <td><a href="/milestone-2/pipex/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/pipexm.png" alt="pipex logo"></a></td>
+        <td><strong>pipex</strong></td>
         <td>
           ✅<br/>
           <sub>(with bonuses)</sub>
@@ -124,12 +124,12 @@ before pushing a project for grading.
         <td>125</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-2/push_swap/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/push_swape.png" alt="push_swap logo"></a></td>
+        <td><strong>push_swap</strong></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-2/fdf/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/fdfm.png" alt="fdf logo"></a></td>
+        <td><strong>FdF</strong></td>
         <td>
           ✅<br/>
           <sub>(with bonuses)</sub>
@@ -139,21 +139,21 @@ before pushing a project for grading.
       <tr align="center">
         <td rowspan=2>3</td>
         <td>
-            <a href="/milestone-3/minishell/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/minishelle.png" alt="minishell logo"></a><br/>
+            <strong>minishell</strong><br/>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>✅</td>
         <td>101</td>
       </tr>
       <tr align="center">
-        <td><a href="/milestone-3/philosophers/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/philosopherse.png" alt="philosophers logo"></a></td>
+        <td><strong>Philosophers</strong></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
         <td rowspan=3>4</td>
         <td>
-            <a href="/milestone-4/cub3d/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png" alt="cub3d logo"></a><br/>
+            <strong>cub3d</strong><br/>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a></sub>
         </td>
         <td>
@@ -163,41 +163,31 @@ before pushing a project for grading.
         <td>125</td>
       </tr>
       <tr align="center">
-        <td>
-            <a href="/milestone-4/cpp00/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br/>
-            <sub>CPP 00-04</sub>
-        </td>
+        <td><strong>CPP 00-04</strong></td>
         <td>✅</td>
         <td><sub>(various grades)</sub></td>
       </tr>
       <tr align="center">
-        <td>
-            <img src="https://github.com/ayogun/42-project-badges/raw/main/badges/netpracticee.png" alt="NetPractice logo"><br/>
-        </td>
+        <td><strong>NetPractice</strong></td>
         <td>✅</td>
         <td>100</td>
       </tr>
       <tr align="center">
         <td rowspan="3">5</td>
         <td>
-            <a href="/milestone-5/ft_irc/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_irce.png" alt="ft_irc logo"></a><br/>
+            <strong>ft_irc</strong><br/>
             <sub>with <a href="https://github.com/Manomania/">@maximart</a> & <a href="https://github.com/Sunny-444">@nahamida</a></sub>
         </td>
         <td>✅</td>
         <td>125</td>
       </tr>
       <tr align="center">
-        <td>
-            <a href="/milestone-5/inception/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/inceptione.png" alt="inception logo"><br/>
-        </td>
+        <td><strong>Inception</strong></td>
         <td>✅</td>
         <td>90</td>
       </tr>
       <tr align="center">
-        <td>
-            <a href="/milestone-5/cpp05/"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cppe.png" alt="CPP logo"></a><br/>
-            <sub>CPP 05-09</sub>
-        </td>
+        <td><strong>CPP 05-09</strong></td>
         <td>✅
         </td>
         <td><sub>(various grades)</sub></td>
@@ -205,7 +195,7 @@ before pushing a project for grading.
       <tr align="center">
         <td rowspan="1">6</td>
         <td>
-            <a href="/milestone-6/ft_transcendence/README.md"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/ft_transcendencem.png" alt="ft_transcendence logo"></a><br/>
+            <strong>ft_transcendence</strong><br/>
             <sub>with <a href="https://github.com/v-blanc">@vblanc</a>, <a href="https://github.com/EnzoPasselegue1">@enpassel</a> & <a href="https://github.com/SimonCottenet">@scottene</a></sub>
         </td>
         <td>✅</td>
