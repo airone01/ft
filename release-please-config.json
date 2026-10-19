@@ -157,6 +157,10 @@
       "release-type": "simple",
       "package-name": "ft_ping"
     },
+    "pcc/ft_transcendence": {
+      "release-type": "node",
+      "package-name": "ft_transcendence"
+    },
     "pcc/snow-crash": {
       "release-type": "simple",
       "package-name": "snow-crash"
