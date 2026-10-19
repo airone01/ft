@@ -5,24 +5,20 @@
 <div align="center">
   <p>
     <a href="https://github.com/airone01/ft/pulse"><img
-        alt="Last commit"
+        alt="When was the last commit"
         src="https://img.shields.io/github/last-commit/airone01/ft?style=flat-square&logo=git&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"
       /></a>
     <a href="https://github.com/airone01/ft/blob/main/LICENSE"><img
-        alt="License"
+        alt="This repo is licensed under MIT"
         src="https://img.shields.io/github/license/airone01/ft?style=flat-square&logo=unlicense&color=ee999f&logoColor=D9E0EE&labelColor=302D41"
       /></a>
-    <a href="https://github.com/airone01/ft/stargazers"><img
-        alt="Stars"
-        src="https://img.shields.io/github/stars/airone01/ft?style=flat-square&logo=githubsponsors&color=c69ff5&logoColor=D9E0EE&labelColor=302D41"
-      /></a>
-    <a href="https://github.com/airone01/ft/issues"><img
-        alt="Issues"
-        src="https://img.shields.io/github/issues/airone01/ft?style=flat-square&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41"
+    <a href="https://github.com/airone01/ft?tab=readme-ov-file#number-of-projects"><img
+        alt="How many projects are in this repo"
+        src="https://img.shields.io/badge/project_count-42_(yes,_really)-_?style=flat-square&logo=42&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41"
       /></a>
     <a href="https://github.com/airone01/ft"><img
-        alt="Repo Size"
-        src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41"
+        alt="Repo size in bytes"
+        src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=repo%20size&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41"
       /></a>
     <a href="https://github.com/airone01/ft/actions/workflows/zig-build.yml"><img
         alt="Zig workflow status"
