@@ -1,4 +1,0 @@
-[workspace]
-members = ["tools/ps-viz-mc"]
-exclude = []
-resolver = "2"
