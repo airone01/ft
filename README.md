@@ -207,9 +207,9 @@ before pushing a project for grading.
 
 ### Notable projects
 
-| [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" g width=400 />        | [cub3d](/milestone-4/cub3d/README.md) (and its [3DS port](/milestone-4/cub3d/3DS_README.md))<br /><img src="/.github/assets/banners/cub3d.avif" width=400 /> |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [ft_linux](/pcc/ft_linux/README.md)<br /><img src="/.github/assets/banners/ft_linux.avif" g width=400 /> | [ft_transcendence](/milestone-6/ft_transcendence/README.md)<br /><img src="/.github/assets/banners/ft_transcendence.avif" width=400 />                       |
+|      [fdf](/milestone-2/fdf/README.md)<br /><img src="/.github/assets/banners/fdf.avif" g width=400 />       | [cub3d](/milestone-4/cub3d/README.md) (and its [3DS port](/milestone-4/cub3d/3DS_README.md))<br /><img src="/.github/assets/banners/cub3d.avif" width=400 /> |
+| :----------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **[ft_linux](/pcc/ft_linux/README.md)**<br /><img src="/.github/assets/banners/ft_linux.avif" g width=400 /> |          **[ft_transcendence](/milestone-6/ft_transcendence/README.md)**<br /><img src="/.github/assets/banners/ft_transcendence.avif" width=400 />          |
 
 ## Extra tools/projects
 
