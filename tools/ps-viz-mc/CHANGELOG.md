@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/airone01/ft/compare/ps-viz-mc-v0.1.1...ps-viz-mc-v0.1.2) (2026-10-19)
+
+
+### Bug Fixes
+
+* **ps-viz-mc:** move repo Cargo.lock to project dir ([95dc5b1](https://github.com/airone01/ft/commit/95dc5b1b92cbe6c5ec355adf92a389152128048f))
+
 ## [0.1.1](https://github.com/airone01/ft/compare/ps-viz-mc-v0.1.0...ps-viz-mc-v0.1.1) (2026-10-02)
 
 
