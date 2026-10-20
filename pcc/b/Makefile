@@ -7,18 +7,20 @@ SRC += y.tab.c lex.yy.c
 SRC := $(addprefix src/, $(SRC))
 OBJ := $(SRC:.c=.o)
 
-CYNHB := \e[1;105;30m
+GRNHB := \e[1;102;30m
+YELHB := \e[1;103;30m
+MAGHB := \e[1;105;30m
 CRESET := \e[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "$(CYNHB) CC  $(CRESET) $^\n"
+	@printf "$(GRNHB) CC $(CRESET) $^\n"
 	@$(CC) $(CFLAGS) -o $@ $^
-	@printf "      $@\n"
+	@printf "$(GRNHB)    $(CRESET) $@\n"
 
 %.o: %.c
-	@printf "$(CYNHB) CC  $(CRESET) $^\n"
+	@printf "$(YELHB) CC $(CRESET) $<\n"
 	@$(CC) -c $< $(CFLAGS) -o $@
 
 # Prevents race condition where any header compiles
@@ -26,11 +28,11 @@ $(NAME): $(OBJ)
 $(OBJ): src/y.tab.h
 
 src/y.tab.c src/y.tab.h: src/parser.y
-	@printf "$(CYNHB) YCC $(CRESET) $<\n"
+	@printf "$(MAGHB) YY $(CRESET) $<\n"
 	@yacc -d src/parser.y -o src/y.tab.c
 
 src/lex.yy.c: src/lexer.l src/y.tab.h
-	@printf "$(CYNHB) LEX $(CRESET) $<\n"
+	@printf "$(MAGHB) LX $(CRESET) $<\n"
 	@lex -o src/lex.yy.c src/lexer.l
 
 clean:
