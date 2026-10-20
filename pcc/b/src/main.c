@@ -2,8 +2,11 @@
 #include "y.tab.h"
 #include <stdio.h>
 
+extern char *yytext;
+
 void yyerror(const char *s) {
-  fprintf(stderr, REDHB " Error: %s " CRESET "\n", s);
+  fprintf(stderr, REDHB " Error at %d:%d (near '%s'): %s " CRESET "\n",
+          yylloc.first_line, yylloc.first_column, yytext, s);
 }
 
 int main(void) {
