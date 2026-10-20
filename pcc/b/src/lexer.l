@@ -32,6 +32,15 @@
                              return TOK_NUM; 
                            }
 
+[0-9]+\.[0-9]+             { // Floating-point numbers
+                             // Convert into raw IEEE-754 bits
+                             float f = atof(yytext);
+                             unsigned int bits;
+                             memcpy(&bits, &f, sizeof(bits));
+                             yylval.num = bits;
+                             return TOK_NUM;
+                           }
+
 '(\\.|[^\\'])'             { // Chars
                              if (yytext[1] == '\\') {
                                if (yytext[2] == 'n') yylval.num = '\n';
@@ -80,6 +89,19 @@
 "||"                       { return TOK_DBL_PIPE; }
 "|"                        { return TOK_PIPE; }
 "^"                        { return TOK_CARRET; }
+
+"#+"                       { return TOK_FPLUS; }
+"#-"                       { return TOK_FMINUS; }
+"#*"                       { return TOK_FMULT; }
+"#/"                       { return TOK_FDIV; }
+"#<"                       { return TOK_FLT; }
+"#>"                       { return TOK_FGT; }
+"#=="                      { return TOK_FEQ; }
+"#!="                      { return TOK_FNEQ; }
+"#<="                      { return TOK_FLTE; }
+"#>="                      { return TOK_FGTE; }
+"##"                       { return TOK_HASH_HASH; }
+"#"                        { return TOK_HASH; }
 
 "++"                       { return TOK_INCREMENT; }
 "--"                       { return TOK_DECREMENT; }

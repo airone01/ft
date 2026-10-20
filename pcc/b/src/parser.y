@@ -6,7 +6,6 @@
 #include "src/asm.h"
 
 /* TODO (BONUS)
- * - floating point operator
  * - libb
  * - two additional features
  */
@@ -40,12 +39,13 @@
 %left TOK_PIPE
 %left TOK_CARRET
 %left TOK_AMPER
-%left TOK_EQ TOK_NEQ
-%left TOK_LANGLE TOK_LTE TOK_RANGLE TOK_GTE
+%left TOK_EQ TOK_FEQ TOK_NEQ TOK_FNEQ
+%left TOK_LANGLE TOK_FLT TOK_LTE TOK_FLTE TOK_RANGLE TOK_FGT TOK_GTE TOK_FGTE
 %left TOK_LSHIFT TOK_RSHIFT
-%left TOK_PLUS TOK_MINUS
-%left TOK_STAR TOK_DIV TOK_MOD
+%left TOK_PLUS TOK_FPLUS TOK_MINUS TOK_FMINUS
+%left TOK_STAR TOK_FMULT TOK_DIV TOK_FDIV TOK_MOD
 %left TOK_EXCL TOK_TILDE
+%left TOK_HASH TOK_HASH_HASH
 %left TOK_LBRACKET
 
 %%
@@ -187,6 +187,18 @@ expr:
       printf("  pop ebx\n");
       printf("  mov [ebx], eax\n");
     }
+  /* Note for mid-rule actions:
+   * Because we don't have an AST, we must do some bullshit in order for the
+   * code to be continuous and working.
+   * For each of the following token handled, it goes roughly like this:
+   * - Left `expr` evaluates and leaves result in `eax` for us
+   *   - This is conveninent for other uses, but not here
+   * - Hence we push back `eax`
+   * - Right `expr` evaluates and leaves result in `eax` again
+   * - End action
+   *   - Pops left operand into `ebx`
+   *   - Use it as well as `eax` to run operation
+   */
   /*
    * Math operations
    */
@@ -220,23 +232,54 @@ expr:
       printf("  idiv ebx\n");
       printf("  mov eax, edx\n"); // Remainder in edx
     }
-  /* Note for mid-rule actions:
-   * Because we don't have an AST, we must do some bullshit in order for the
-   * code to be continuous and working.
-   * For each of the following token handled, it goes roughly like this:
-   * - Left `expr` evaluates and leaves result in `eax` for us
-   *   - This is conveninent for other uses, but not here
-   * - Hence we push back `eax`
-   * - Right `expr` evaluates and leaves result in `eax` again
-   * - End action
-   *   - Pops left operand into `ebx`
-   *   - Use it as well as `eax` to run operation
+  /*
+   * Math operations on floating-point numbers
+   *
+   * The `ss` prefix at the end of instructions like `addss` stands for
+   * 'Scalar Single-precision' (to contrast with `ps` for 'Packed Single',
+   * `sd` for 'Scalar Double', and `pd` for 'Packed Double').
    */
+  | expr TOK_FPLUS { gen_push_eax(); } expr {
+      printf("  pop ebx\n");
+      printf("  movd xmm1, ebx\n");
+      printf("  movd xmm0, eax\n");
+      printf("  addss xmm1, xmm0\n");
+      printf("  movd eax, xmm1\n");
+    }
+  // This one is special. Since the IEEE-754 value is in `eax` already, we just
+  // need to invert the sign bit
+  | expr TOK_FMINUS { gen_push_eax(); } expr { printf("  xor eax, 0x80000000\n"); }
+  | expr TOK_FMULT { gen_push_eax(); } expr {
+      printf("  pop ebx\n");
+      printf("  movd xmm1, ebx\n");
+      printf("  movd xmm0, eax\n");
+      printf("  mulss xmm1, xmm0\n");
+      printf("  movd eax, xmm1\n");
+    }
+  | expr TOK_FDIV { gen_push_eax(); } expr {
+      printf("  pop ebx\n");
+      printf("  movd xmm1, ebx\n");
+      printf("  movd xmm0, eax\n");
+      printf("  divss xmm1, xmm0\n");
+      printf("  movd eax, xmm1\n");
+    }
+  | TOK_HASH expr {
+      /* CVTSI2SS is hard to swallow but it converts a signed integer into a
+       * scalar single-precision floating-point value (stored here into xmm0's
+       * low 32 bits).
+       * https://intel.github.io/SDM/instruction/CVTSI2SS.html
+       */
+      printf("  cvtsi2ss xmm0, eax\n");
+      printf("  movd eax, xmm0\n");
+    }
+  | TOK_HASH_HASH expr {
+      /* The inverse from above.
+       * https://intel.github.io/SDM/instruction/CVTTSS2SI.html */
+      printf("  movd xmm0, eax\n");
+      printf("  cvttss2si eax, xmm0\n");
+    }
   /*
    * Number comparisons
-   *
-   * `set*` are the calculation themselves
-   * `movzx eax, al` left-appends zeroes to `al`.
    */
   | expr TOK_LANGLE { gen_push_eax(); } expr { gen_cmp("setl"); }
   | expr TOK_LTE    { gen_push_eax(); } expr { gen_cmp("setle"); }
@@ -244,6 +287,15 @@ expr:
   | expr TOK_GTE    { gen_push_eax(); } expr { gen_cmp("setge"); }
   | expr TOK_EQ     { gen_push_eax(); } expr { gen_cmp("sete"); }
   | expr TOK_NEQ    { gen_push_eax(); } expr { gen_cmp("setne"); }
+  /*
+   * Floating-point number comparisons
+   */
+  | expr TOK_FLT  { gen_push_eax(); } expr { gen_fcmp("setb"); }
+  | expr TOK_FLTE { gen_push_eax(); } expr { gen_fcmp("setbe"); }
+  | expr TOK_FGT  { gen_push_eax(); } expr { gen_fcmp("seta"); }
+  | expr TOK_FGTE { gen_push_eax(); } expr { gen_fcmp("setae"); }
+  | expr TOK_FEQ  { gen_push_eax(); } expr { gen_fcmp("sete"); }
+  | expr TOK_FNEQ { gen_push_eax(); } expr { gen_fcmp("setne"); }
   /*
    * Bitwise comparisons
    */
