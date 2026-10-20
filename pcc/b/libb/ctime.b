@@ -7,9 +7,9 @@ ctime(timep, date) {
   t = t / 60;
   mm = t % 60;
   t = t / 60;
-  hh = t % 60;
+  hh = t % 24;
   t = t / 24;
-  days = t % 24;
+  days = t / 24;
 
   /* Leap years
    * Count since 1970 */
@@ -61,7 +61,7 @@ month_done: /* this label could be removed if I supported 'break' in loops */
   lchar(date, 0, char(months, m*3 + 0));
   lchar(date, 1, char(months, m*3 + 1));
   lchar(date, 2, char(months, m*3 + 2));
-  lchar(date, 2, ' ');
+  lchar(date, 3, ' ');
 
   if (d < 10)
     lchar(date, 4, ' ');
@@ -69,4 +69,18 @@ month_done: /* this label could be removed if I supported 'break' in loops */
     lchar(date, 4, d/10 + '0');
   lchar(date, 5, d%10 + '0');
   lchar(date, 6, ' ');
+
+  lchar(date, 7, hh/10 + '0');
+  lchar(date, 8, hh%10 + '0');
+  lchar(date, 9, ' ');
+
+  lchar(date, 10, mm/10 + '0');
+  lchar(date, 11, mm%10 + '0');
+  lchar(date, 12, ' ');
+
+  lchar(date, 13, ss/10 + '0');
+  lchar(date, 14, ss%10 + '0');
+  lchar(date, 15, '\0');
+
+  return (date);
 }

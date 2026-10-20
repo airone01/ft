@@ -7,7 +7,7 @@ NAME := libb.a
 B := ../B
 
 # Syscall wrappers
-SRC := chdir chmod chown close creat execv exit fork fstat getuid link mkdir open read seek setuid stat stat time unlink wait write
+SRC := chdir chmod chown close creat execv exit fork fstat getuid link mkdir open read seek setuid stat time unlink wait write
 # The rest
 SRC += char ctime execl getchar lchar printf printn putchar
 SRC := $(addsuffix .b, $(SRC))
