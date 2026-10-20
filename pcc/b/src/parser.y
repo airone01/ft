@@ -98,24 +98,25 @@ statements_list:
   ;
 
 lvalue:
-  TOK_IDENT {
-    /* Load left-value onto stack.
-     * It needs to be in the stack because it's the most convenient way to
-     * store it for easy access when handling the right-side expression. */
-    Symbol *sym = get_symbol($1);
-    if (sym) {
-      if (sym->type == TYPE_AUTO) {
-        printf("  lea eax, [ebp %d]\n", sym->offset);
-      } else if (sym->type == TYPE_PARAM) {
-        printf("  lea eax, [ebp + %d]\n", sym->offset);
-      } else if (sym->type == TYPE_EXTERN) {
-        printf("  lea eax, \"%s\"\n", sym->name);
+    TOK_IDENT {
+      /* Load left-value onto stack.
+       * It needs to be in the stack because it's the most convenient way to
+       * store it for easy access when handling the right-side expression. */
+      Symbol *sym = get_symbol($1);
+      if (sym) {
+        if (sym->type == TYPE_AUTO) {
+          printf("  lea eax, [ebp %d]\n", sym->offset);
+        } else if (sym->type == TYPE_PARAM) {
+          printf("  lea eax, [ebp + %d]\n", sym->offset);
+        } else if (sym->type == TYPE_EXTERN) {
+          printf("  lea eax, \"%s\"\n", sym->name);
+        }
+        gen_push_eax();
+      } else {
+        fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
       }
-      gen_push_eax();
-    } else {
-      fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
     }
-  }
+  ;
 
 expr:
     TOK_LPAREN expr TOK_RPAREN
@@ -135,9 +136,11 @@ expr:
         fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
       }
     }
-  | TOK_NUM {
-      printf("  mov eax, %d\n", $1);
-    }
+  | TOK_NUM { printf("  mov eax, %d\n", $1); }
+  // Address-of
+  | TOK_AMPER lvalue %prec TOK_EXCL { printf("  pop eax\n"); }
+  // Dereference
+  | TOK_STAR expr %prec TOK_EXCL { printf("  mov eax, [eax]\n"); }
   | TOK_STR {
       /* Pretty cool stuff: creates an inline read-only section with the string,
        * and then load its pointer into `eax` ofc */
