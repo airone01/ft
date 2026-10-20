@@ -128,7 +128,15 @@ int yycolumn = 1;
 "%"                        { return TOK_MOD; }
 
 .                          {
-                             fprintf(stderr, "Unknown character '%c`.\nThis should not have happened in the first place, as such characters should be considered as identifiers I believe. Please report to author.\n", yytext[0]);
+                             fprintf(stderr, "?:?:?: \e[31merror:\e[0m"
+                                     " unknown character '%c`.\n",
+                                     yytext[0]);
+                             fprintf(stderr, "?:?:?: \e[36mnote:\e[0m"
+                                     " this should not have happened in the "
+                                     "first place, as such characters should be"
+                                     " considered as identifiers\n");
+                             fprintf(stderr, "?:?:?: \e[36mnote:\e[0m"
+                                     " please report to author\n");
                              return 1;
                              return TOK_UNKNOWN;
                            }
