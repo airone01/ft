@@ -1,0 +1,333 @@
+.TH LIBB 3 "2026-10-19" "libb 0.1.0" "42 Projects Manual"
+.SH NAME
+libb \- B language runtime and standard library
+.SH SYNOPSIS
+.B "/* Declaration in B source files */"
+.nf
+.B extrn char, lchar, putchar, getchar, printn, printf, ctime;
+.B extrn read, write, open, close, creat, seek, unlink;
+.B extrn chdir, chmod, chown, mkdir, link, stat, fstat;
+.B extrn fork, wait, execl, execv, exit, getuid, setuid, time;
+.fi
+.PP
+.SS Character and String I/O
+.nf
+.BI "c = char(" "string" ", " "i" ");"
+.BI "lchar(" "string" ", " "i" ", " "c" ");"
+.BI "putchar(" "c" ");"
+.BI "c = getchar();"
+.BI "printn(" "number" ", " "base" ");"
+.BI "printf(" "format" ", " "arg1" ", ...);"
+.BI "ctime(" "time" ", " "date" ");"
+.fi
+.SS File and I/O Operations
+.nf
+.BI "nread = read(" "file" ", " "buffer" ", " "count" ");"
+.BI "nwrite = write(" "file" ", " "buffer" ", " "count" ");"
+.BI "file = open(" "string" ", " "mode" ");"
+.BI "error = close(" "file" ");"
+.BI "file = creat(" "string" ", " "mode" ");"
+.BI "error = seek(" "file" ", " "offset" ", " "pointer" ");"
+.BI "error = unlink(" "string" ");"
+.fi
+.SS File System and Attributes
+.nf
+.BI "error = chdir(" "string" ");"
+.BI "error = chmod(" "string" ", " "mode" ");"
+.BI "error = chown(" "string" ", " "owner" ");"
+.BI "error = mkdir(" "string" ", " "mode" ");"
+.BI "error = link(" "string1" ", " "string2" ");"
+.BI "error = stat(" "string" ", " "status" ");"
+.BI "error = fstat(" "file" ", " "status" ");"
+.fi
+.SS Process Control and System
+.nf
+.BI "id = getuid();"
+.BI "error = setuid(" "id" ");"
+.BI "time(" "timev" ");"
+.BI "error = fork();"
+.BI "error = wait();"
+.BI "execl(" "string" ", " "arg0" ", ..., 0);"
+.BI "execv(" "string" ", " "argv" ", " "count" ");"
+.BI "exit();"
+.fi
+.SH DESCRIPTION
+The
+.B libb
+library provides the standard runtime routines and UNIX system call wrappers for
+programs compiled with the B programming language compiler, conforming to Ken
+Thompson's
+.I "Users' Reference to B"
+(1972).
+.PP
+In B, all variables, parameters, and function return values are untyped 32-bit machine
+words. Pointers refer to memory addresses, while strings are arrays of byte-packed
+characters terminated by a null byte.
+.PP
+The functions in
+.B libb
+are categorized as follows:
+.SS Character and String I/O
+.TP
+.BI "char(" "string" ", " "i" ")"
+Returns the
+.IR i -th
+character (byte) from
+.IR string .
+Since standard B vector indexing (\fIa[b]\fR) operates on 32-bit machine words
+(\fI*(a + 4*b)\fR),
+.B char
+is used to index individual bytes within character strings.
+.TP
+.BI "lchar(" "string" ", " "i" ", " "c" ")"
+Stores the character
+.I c
+into the
+.IR i -th
+character (byte) position of
+.IR string .
+.TP
+.BI "putchar(" "c" ")"
+Writes the single character
+.I c
+to standard output (file descriptor 1). Returns 0 on success, or negative on error.
+.TP
+.BI "getchar()"
+Reads the next character from standard input (file descriptor 0). Returns the
+character read (as an unsigned byte value), or \-1 on end-of-file.
+.TP
+.BI "printn(" "number" ", " "base" ")"
+Recursively prints the non-negative integer
+.I number
+converted into radix
+.I base
+(where 2 <= \fIbase\fR <= 10) to standard output.
+.TP
+.BI "printf(" "format" ", " "arg1" ", ...)"
+Prints formatted output to standard output according to the format string
+.IR format .
+Format conversion specifiers begin with
+.B %
+and format the succeeding arguments in order:
+.RS
+.TP
+.B %d
+Prints the argument as a signed decimal integer.
+.TP
+.B %o
+Prints the argument as an octal integer.
+.TP
+.B %s
+Prints the argument as a null-terminated string.
+.TP
+.B %c
+Prints the argument as a single character.
+.TP
+.B %%
+Prints a literal percent sign.
+.RE
+.IP
+All other characters are printed verbatim to standard output.
+.TP
+.BI "ctime(" "time" ", " "date" ")"
+Converts the system timestamp stored in the vector
+.I time
+into a 16-character date string stored in vector
+.IR date .
+The formatted string follows the format:
+.B "Mmm dd hh:mm:ss" .
+.SS File and I/O Operations
+.TP
+.BI "read(" "file" ", " "buffer" ", " "count" ")"
+Reads up to
+.I count
+bytes from open file descriptor
+.I file
+into memory starting at
+.IR buffer .
+Returns the number of bytes read, or a negative value on error.
+.TP
+.BI "write(" "file" ", " "buffer" ", " "count" ")"
+Writes
+.I count
+bytes from memory starting at
+.I buffer
+to open file descriptor
+.IR file .
+Returns the number of bytes written, or a negative value on error.
+.TP
+.BI "open(" "string" ", " "mode" ")"
+Opens the file at pathname
+.IR string .
+If
+.I mode
+is 0, the file is opened for reading (\fBO_RDONLY\fR); if non-zero, it is opened
+for writing (\fBO_WRONLY\fR). Returns a non-negative file descriptor on success,
+or a negative value on error.
+.TP
+.BI "close(" "file" ")"
+Closes the open file descriptor
+.IR file .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "creat(" "string" ", " "mode" ")"
+Creates a new file or truncates an existing file specified by
+.I string
+with file permissions
+.IR mode .
+The file is opened for writing and its descriptor is returned. Returns a negative
+value on error.
+.TP
+.BI "seek(" "file" ", " "offset" ", " "pointer" ")"
+Repositions the read/write offset of open file descriptor
+.I file
+by
+.I offset
+bytes relative to
+.IR pointer :
+.RS
+.TP
+.B 0
+Relative to the beginning of the file (\fBSEEK_SET\fR).
+.TP
+.B 1
+Relative to the current file position (\fBSEEK_CUR\fR).
+.TP
+.B 2
+Relative to the end of the file (\fBSEEK_END\fR).
+.RE
+.IP
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "unlink(" "string" ")"
+Deletes the file name
+.I string
+from the filesystem. Returns 0 on success, or a negative value on error.
+.SS File System and Attributes
+.TP
+.BI "chdir(" "string" ")"
+Changes the current working directory to pathname
+.IR string .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "chmod(" "string" ", " "mode" ")"
+Changes the permissions of file
+.I string
+to octal mode
+.IR mode .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "chown(" "string" ", " "owner" ")"
+Changes the user ownership of file
+.I string
+to user ID
+.IR owner .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "mkdir(" "string" ", " "mode" ")"
+Creates a new directory named
+.I string
+with permissions
+.IR mode .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "link(" "string1" ", " "string2" ")"
+Creates a new hard link named
+.I string2
+pointing to existing file
+.IR string1 .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "stat(" "string" ", " "status" ")"
+Retrieves file status information for the file named by pathname
+.I string
+and stores it into vector
+.IR status .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "fstat(" "file" ", " "status" ")"
+Retrieves file status information for the open file descriptor
+.I file
+and stores it into vector
+.IR status .
+Returns 0 on success, or a negative value on error.
+.SS Process Control and System
+.TP
+.BI "fork()"
+Creates a new child process by duplicating the calling process. Returns 0 in the
+child process, the child's process ID in the parent process, or a negative value
+on failure.
+.TP
+.BI "wait()"
+Suspends the calling process until one of its child processes terminates. Returns
+the process ID of the terminated child, or a negative value on error.
+.TP
+.BI "execl(" "string" ", " "arg0" ", ..., 0)"
+Executes the binary file at pathname
+.IR string ,
+passing arguments
+.I arg0
+through the final 0 (null terminator). Replaces the calling process; only
+returns on error (negative value).
+.TP
+.BI "execv(" "string" ", " "argv" ", " "count" ")"
+Executes the binary file at pathname
+.IR string ,
+passing an array of
+.I count
+string pointers from vector
+.IR argv .
+Replaces the calling process; only returns on error (negative value).
+.TP
+.BI "exit()"
+Terminates the current process immediately with exit status 0. Does not return.
+.TP
+.BI "getuid()"
+Returns the real user ID of the calling process.
+.TP
+.BI "setuid(" "id" ")"
+Sets the user ID of the calling process to
+.IR id .
+Returns 0 on success, or a negative value on error.
+.TP
+.BI "time(" "timev" ")"
+Obtains the current system time in seconds since the UNIX Epoch (January 1, 1970)
+and writes it into the vector
+.IR timev .
+Returns the timestamp value.
+.SH RETURN VALUE
+Unless specified otherwise, functions that return a status code return 0 or a
+positive value on success, and a negative value on failure.
+.SH NOTES
+In accordance with project specifications, the historic PDP-11 teletype functions
+.B gtty
+and
+.B stty
+are omitted from this library implementation.
+.SH EXAMPLES
+A simple program printing to standard output and iterating over a string:
+.PP
+.nf
+main() {
+  extrn putchar, char, printf;
+  auto s, i;
+
+  s = "Hello from B!\en";
+  i = 0;
+  while (char(s, i)) {
+    putchar(char(s, i));
+    i++;
+  }
+
+  printf("Formatted number: %d (octal: %o)\en", 42, 42);
+}
+.fi
+.SH SEE ALSO
+.BR B (1),
+.BR syscall (2),
+.BR read (2),
+.BR write (2),
+.BR open (2),
+.BR printf (3)
+.SH AUTHORS
+Written for the 42 B compiler project, based on Ken Thompson's original 1972 specification.
