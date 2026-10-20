@@ -5,7 +5,9 @@
 extern char *yytext;
 
 void yyerror(const char *s) {
-  fprintf(stderr, REDHB " Error at %d:%d (near '%s'): %s " CRESET "\n",
+  fprintf(stderr,
+          "<stdin>:%d:%d: " REDHB "fatal:" CRESET " (near '%s'): %s " CRESET
+          "\n",
           yylloc.first_line, yylloc.first_column, yytext, s);
 }
 

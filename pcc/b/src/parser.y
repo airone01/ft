@@ -117,7 +117,7 @@ lvalue:
         }
         gen_push_eax();
       } else {
-        fprintf(stderr, REDHB" Error at %d:%d: Unknown variable '%s' "CRESET"\n",
+        fprintf(stderr, "<stdin>:%d:%d: " RED "error:" CRESET " unknown variable '%s'\n",
                 @1.first_line, @1.first_column, $1);
       }
     }
@@ -138,7 +138,7 @@ expr:
         }
         printf("  mov eax, [eax]\n");
       } else {
-        fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
+        fprintf(stderr, "<stdin>: " RED "error:" CRESET " unknown variable '%s'\n", $1);
       }
     }
   | TOK_NUM { printf("  mov eax, %d\n", $1); }
@@ -481,9 +481,16 @@ statement:
   | case_label statement
   | default_label statement
   | TOK_BREAK TOK_SEMI {
-      if (switch_depth == 0)
-        fprintf(stderr, REDHB" Error: 'break' outside of switch statement"CRESET"\n");
-      printf("  jmp .L%d\n", switch_stack[switch_depth - 1].end_lbl);
+      if (switch_depth == 0) {
+        fprintf(stderr, "<stdin>:%d:%d: " YEL "warning:" CRESET " 'break' "
+                "outside of a switch statement\n",
+                @1.first_line, @1.first_column);
+        fprintf(stderr, "<stdin>:%d:%d: " CYN "note:" CRESET " if this was used"
+                " in a loop, note that it is not implemented yet and will break"
+                CRESET "\n",
+                @1.first_line, @1.first_column);
+      } else
+        printf("  jmp .L%d\n", switch_stack[switch_depth - 1].end_lbl);
     }
   | switch_statement
   ;

@@ -14,7 +14,7 @@ ctime(timep, date) {
   /* Leap years
    * Count since 1970 */
   year = 1970;
-  while (1) {
+  while (days >= 365) {
     leap = 0;
     if (year % 4 == 0) {
       if (year % 100 != 0)
@@ -24,10 +24,11 @@ ctime(timep, date) {
     }
     ydays = 365 + leap;
     if (days < ydays)
-      break;
+      goto year_done;
     days = days - ydays;
     year++;
   }
+year_done: /* this label could be removed if I supported 'break' in loops */
 
   leap = 0;
   if (year % 4 == 0) {
@@ -48,10 +49,11 @@ ctime(timep, date) {
       mlen = 31;
 
     if (days < mlen)
-      break;
+      goto month_done;
     days = days - mlen;
     m++;
   }
+month_done: /* this label could be removed if I supported 'break' in loops */
   d = days + 1;
 
   /* Format using lchar */
