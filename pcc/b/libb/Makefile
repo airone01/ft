@@ -6,7 +6,10 @@ endif
 NAME := libb.a
 B := ../B
 
-SRC := char close ctime getchar lchar open putchar printf printn read write
+# Syscall wrappers
+SRC := chdir chmod chown close creat execv exit fork fstat getuid link mkdir open read seek setuid stat stat time unlink wait write
+# The rest
+SRC += char ctime execl getchar lchar printf printn putchar
 SRC := $(addsuffix .b, $(SRC))
 ASM := $(SRC:.b=.s)
 OBJ := $(SRC:.b=.o)
