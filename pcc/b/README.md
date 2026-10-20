@@ -26,6 +26,9 @@ drop-in more modern replacements).
 - It does not support early B-style assignment operators (`=+` instead of `+=`).
 - The char/string escape character is the more modern `\`, not `*`.
 - It does not support global vector and vars declarations.
+- There are some comments on stuff I deem necessary to detail, or on stuff I
+  find cool. For example, take a look around for the IEE-754, string, and
+  logical AND and OR implementations to name a few.
 
 ## Monorepo
 
