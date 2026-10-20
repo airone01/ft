@@ -6,7 +6,7 @@ endif
 NAME := libb.a
 B := ../B
 
-SRC := char close getchar lchar open putchar read write
+SRC := char close getchar lchar open putchar printf printn read write
 SRC := $(addsuffix .b, $(SRC))
 ASM := $(SRC:.b=.s)
 OBJ := $(SRC:.b=.o)
