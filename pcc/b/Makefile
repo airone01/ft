@@ -12,7 +12,7 @@ SRC += y.tab lex.yy
 SRC := $(addsuffix .c, $(addprefix src/, $(SRC)))
 OBJ := $(SRC:.c=.o)
 
-GRNHB := \e[1;101;30m
+GRNHB := \e[1;102;30m
 YELHB := \e[1;103;30m
 MAGHB := \e[1;105;30m
 CRESET := \e[0m

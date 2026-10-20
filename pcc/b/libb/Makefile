@@ -17,7 +17,8 @@ ARFLAGS := rcs
 AS := as
 ASFLAGS := --32
 
-REDHB := \e[1;102;30m
+REDHB := \e[1;101;30m
+GRNHB := \e[1;102;30m
 BLUHB := \e[1;104;30m
 CRESET := \e[0m
 
@@ -33,13 +34,13 @@ $(NAME): $(OBJ)
 	@$(AS) $(ASFLAGS) $< -o $@
 
 %.s: %.b
-	@printf "$(BLUHB) CC $(CRESET) $<\n"
+	@printf "$(BLUHB) BC $(CRESET) $<\n"
 	@$(B) < $< > $@
 
 clean:
 	@rm -fv $(OBJ) $(ASM)
 
-fclean:
+fclean: clean
 	@rm -fv $(NAME)
 
 re: fclean all
