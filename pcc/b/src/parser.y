@@ -23,30 +23,30 @@
 %type <num> if_header
 
 %nonassoc IFX
-%nonassoc ELSE
+%nonassoc TOK_ELSE
 
-%token AUTO EXTERN WHILE IF ELSE RETURN
-%token <str> IDENTIFIER
-%token <num> NUMBER
-%token <str> STRING
-%token SEMICOLON COMMA PAROPEN PARCLOSE BRACEOPEN BRACECLOSE ARRCLOSE COMMOPEN COMMCLOSE
-%token SWITCH CASE DEFAULT BREAK
-%token INCREMENT DECREMENT
-%token GOTO COLON
+%token TOK_AUTO TOK_EXTERN TOK_WHILE TOK_IF TOK_ELSE TOK_RETURN
+%token <str> TOK_IDENT
+%token <num> TOK_NUM
+%token <str> TOK_STR
+%token TOK_SEMI TOK_COMMA TOK_LPAREN TOK_RPAREN TOK_LBRACE TOK_RBRACE TOK_RBRACKET COMMOPEN COMMCLOSE
+%token TOK_SWITCH TOK_CASE TOK_DEFAULT TOK_BREAK
+%token TOK_INCREMENT TOK_DECREMENT
+%token TOK_GOTO TOK_COL
 
-%right EQUAL
-%left OR
-%left AND
-%left BITOR
-%left XOR
-%left BITAND
-%left EQUALS NOTEQUALS
-%left LOWER LOWEREQ HIGHER HIGHEREQ
-%left LSHIFT RSHIFT
-%left PLUS MINUS
-%left STAR DIV MOD
-%left NOT BITNOT
-%left ARROPEN
+%right TOK_ASSIGN
+%left TOK_DBL_PIPE
+%left TOK_DBL_AMPER
+%left TOK_PIPE
+%left TOK_CARRET
+%left TOK_AMPER
+%left TOK_EQ TOK_NEQ
+%left TOK_LANGLE TOK_LTE TOK_RANGLE TOK_GTE
+%left TOK_LSHIFT TOK_RSHIFT
+%left TOK_PLUS TOK_MINUS
+%left TOK_STAR TOK_DIV TOK_MOD
+%left TOK_EXCL TOK_TILDE
+%left TOK_LBRACKET
 
 %%
 
@@ -63,29 +63,29 @@ declarations:
   ;
 
 declaration:
-    AUTO auto_list SEMICOLON
-  | EXTERN extrn_list SEMICOLON
+    TOK_AUTO auto_list TOK_SEMI
+  | TOK_EXTERN extrn_list TOK_SEMI
   ;
 
 auto_list:
-    IDENTIFIER {
+    TOK_IDENT {
       add_symbol($1, TYPE_AUTO);
       printf("  push 0\n");
     }
-  | auto_list COMMA IDENTIFIER {
+  | auto_list TOK_COMMA TOK_IDENT {
       add_symbol($3, TYPE_AUTO);
       printf("  push 0\n");
     }
   ;
 
 extrn_list:
-    IDENTIFIER { add_symbol($1, TYPE_EXTERN); }
-  | extrn_list COMMA IDENTIFIER { add_symbol($3, TYPE_EXTERN); }
+    TOK_IDENT { add_symbol($1, TYPE_EXTERN); }
+  | extrn_list TOK_COMMA TOK_IDENT { add_symbol($3, TYPE_EXTERN); }
   ;
 
 params_list:
-    IDENTIFIER { add_symbol($1, TYPE_PARAM); }
-  | params_list COMMA IDENTIFIER { add_symbol($3, TYPE_PARAM); }
+    TOK_IDENT { add_symbol($1, TYPE_PARAM); }
+  | params_list TOK_COMMA TOK_IDENT { add_symbol($3, TYPE_PARAM); }
   ;
 
 params:
@@ -98,7 +98,7 @@ statements_list:
   ;
 
 lvalue:
-  IDENTIFIER {
+  TOK_IDENT {
     /* Load left-value onto stack.
      * It needs to be in the stack because it's the most convenient way to
      * store it for easy access when handling the right-side expression. */
@@ -118,8 +118,8 @@ lvalue:
   }
 
 expr:
-    PAROPEN expr PARCLOSE
-  | IDENTIFIER {
+    TOK_LPAREN expr TOK_RPAREN
+  | TOK_IDENT {
       /* Load value where pointed to by variable. Meaning simply loading a variable. */
       Symbol *sym = get_symbol($1);
       if (sym) {
@@ -135,10 +135,10 @@ expr:
         fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
       }
     }
-  | NUMBER {
+  | TOK_NUM {
       printf("  mov eax, %d\n", $1);
     }
-  | STRING {
+  | TOK_STR {
       /* Pretty cool stuff: creates an inline read-only section with the string,
        * and then load its pointer into `eax` ofc */
       printf("  .section .rodata\n");
@@ -149,7 +149,7 @@ expr:
       printf("  mov eax, .LC%d\n", string_counter);
       string_counter++;
     }
-  | IDENTIFIER PAROPEN {
+  | TOK_IDENT TOK_LPAREN {
       /* Load function from pointer */
       Symbol *sym = get_symbol($1);
       if (!sym || sym->type  == TYPE_EXTERN) {
@@ -163,7 +163,7 @@ expr:
       gen_push_eax();
     }
     args /* Load arguments to stack */
-    PARCLOSE {
+    TOK_RPAREN {
       /* Run function from loaded pointer */
       int num_args = $4;
       if (num_args > 0) {
@@ -181,7 +181,7 @@ expr:
         printf("  add esp, %d\n", num_args * 4);
       }
     }
-  | lvalue EQUAL expr {
+  | lvalue TOK_ASSIGN expr {
       /* Assignment as expression
        * (eg `var = ...` in if condition) */
       printf("  pop ebx\n");
@@ -190,20 +190,20 @@ expr:
   /*
    * Math operations
    */
-  | expr PLUS { gen_push_eax(); } expr {
+  | expr TOK_PLUS { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  add eax, ebx\n");
     }
-  | expr MINUS { gen_push_eax(); } expr {
+  | expr TOK_MINUS { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  sub ebx, eax\n");
       printf("  mov eax, ebx\n");
     }
-  | expr STAR { gen_push_eax(); } expr {
+  | expr TOK_STAR { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  imul eax, ebx\n");
     }
-  | expr DIV { gen_push_eax(); } expr {
+  | expr TOK_DIV { gen_push_eax(); } expr {
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
       /* "Convert Doubleword to Quadword"
@@ -211,7 +211,7 @@ expr:
       printf("  cdq\n");
       printf("  idiv ebx\n");
     }
-  | expr MOD { gen_push_eax(); } expr {
+  | expr TOK_MOD { gen_push_eax(); } expr {
       printf("  mov ebx, eax\n"); // Divisor
       printf("  pop eax\n");      // Dividend
       /* "Convert Doubleword to Quadword"
@@ -238,56 +238,56 @@ expr:
    * `set*` are the calculation themselves
    * `movzx eax, al` left-appends zeroes to `al`.
    */
-  | expr LOWER     { gen_push_eax(); } expr { gen_cmp("setl"); }
-  | expr LOWEREQ   { gen_push_eax(); } expr { gen_cmp("setle"); }
-  | expr HIGHER    { gen_push_eax(); } expr { gen_cmp("setg"); }
-  | expr HIGHEREQ  { gen_push_eax(); } expr { gen_cmp("setge"); }
-  | expr EQUALS    { gen_push_eax(); } expr { gen_cmp("sete"); }
-  | expr NOTEQUALS { gen_push_eax(); } expr { gen_cmp("setne"); }
+  | expr TOK_LANGLE { gen_push_eax(); } expr { gen_cmp("setl"); }
+  | expr TOK_LTE    { gen_push_eax(); } expr { gen_cmp("setle"); }
+  | expr TOK_RANGLE { gen_push_eax(); } expr { gen_cmp("setg"); }
+  | expr TOK_GTE    { gen_push_eax(); } expr { gen_cmp("setge"); }
+  | expr TOK_EQ     { gen_push_eax(); } expr { gen_cmp("sete"); }
+  | expr TOK_NEQ    { gen_push_eax(); } expr { gen_cmp("setne"); }
   /*
    * Bitwise comparisons
    */
-  | expr BITAND { gen_push_eax(); } expr { gen_bit_cmp("and"); }
-  | expr BITOR  { gen_push_eax(); } expr { gen_bit_cmp("or"); }
-  | expr XOR    { gen_push_eax(); } expr { gen_bit_cmp("xor"); }
+  | expr TOK_AMPER  { gen_push_eax(); } expr { gen_bit_cmp("and"); }
+  | expr TOK_PIPE   { gen_push_eax(); } expr { gen_bit_cmp("or"); }
+  | expr TOK_CARRET { gen_push_eax(); } expr { gen_bit_cmp("xor"); }
   /*
    * Bit shifts
    */
-  | expr LSHIFT { gen_push_eax(); } expr { gen_shift("shl"); }
-  | expr RSHIFT { gen_push_eax(); } expr { gen_shift("sar"); }
+  | expr TOK_LSHIFT { gen_push_eax(); } expr { gen_shift("shl"); }
+  | expr TOK_RSHIFT { gen_push_eax(); } expr { gen_shift("sar"); }
   /*
    * Unary operations
    */
-  | NOT expr {
+  | TOK_EXCL expr {
       printf("  cmp eax, 0\n");
       printf("  sete al\n");
       printf("  movzx eax, al\n");
     }
-  | BITNOT expr {
+  | TOK_TILDE expr {
       printf("  not eax\n");
     }
-  | MINUS expr %prec STAR {
+  | TOK_MINUS expr %prec TOK_STAR {
       printf("  neg eax\n");
     }
   /*
    * Pre/post increment
    */
-  | lvalue INCREMENT {
+  | lvalue TOK_INCREMENT {
       printf("  pop edx\n");
       printf("  mov eax, [edx]\n");
       printf("  inc dword ptr [edx]\n");
     }
-  | lvalue DECREMENT {
+  | lvalue TOK_DECREMENT {
       printf("  pop edx\n");
       printf("  mov eax, [edx]\n");
       printf("  dec dword ptr [edx]\n");
     }
-  | INCREMENT lvalue {
+  | TOK_INCREMENT lvalue {
       printf("  pop edx\n");
       printf("  inc dword ptr [edx]\n");
       printf("  mov eax, [edx]\n");
     }
-  | DECREMENT lvalue {
+  | TOK_DECREMENT lvalue {
       printf("  pop edx\n");
       printf("  dec dword ptr [edx]\n");
       printf("  mov eax, [edx]\n");
@@ -315,18 +315,18 @@ expr:
       printf("  mov eax, [eax]\n");
     }
   // Assignment
-  | arr_access EQUAL { gen_push_eax(); } expr {
+  | arr_access TOK_ASSIGN { gen_push_eax(); } expr {
       printf("  pop ebx\n");
       printf("  mov [ebx], eax\n");
     }
   // Increment
-  | arr_access INCREMENT {
+  | arr_access TOK_INCREMENT {
       printf("  mov edx, eax\n");
       printf("  mov eax, [edx]\n");
       printf("  inc dword ptr [edx]\n");
     }
   // Decrement
-  | arr_access DECREMENT {
+  | arr_access TOK_DECREMENT {
       printf("  mov edx, eax\n");
       printf("  mov eax, [edx]\n");
       printf("  dec dword ptr [edx]\n");
@@ -334,26 +334,26 @@ expr:
   ;
 
 statement:
-    expr SEMICOLON
-  | BRACEOPEN statements_list BRACECLOSE
+    expr TOK_SEMI
+  | TOK_LBRACE statements_list TOK_RBRACE
   | while_statement
   | if_statement
-  | RETURN SEMICOLON {
+  | TOK_RETURN TOK_SEMI {
       printf("  leave\n");
       printf("  ret\n");
     }
-  | RETURN expr SEMICOLON {
+  | TOK_RETURN expr TOK_SEMI {
       printf("  leave\n");
       printf("  ret\n");
     }
   | label statement
-  | GOTO IDENTIFIER SEMICOLON {
+  | TOK_GOTO TOK_IDENT TOK_SEMI {
       printf("  jmp .L_%s_%s\n", current_func_name, $2);
       free($2);
     }
   | case_label statement
   | default_label statement
-  | BREAK SEMICOLON {
+  | TOK_BREAK TOK_SEMI {
       if (switch_depth == 0)
         fprintf(stderr, REDHB" Error: 'break' outside of switch statement"CRESET"\n");
       printf("  jmp .L%d\n", switch_stack[switch_depth - 1].end_lbl);
@@ -362,7 +362,7 @@ statement:
   ;
 
 while_start:
-  WHILE {
+  TOK_WHILE {
     int start_lbl = label_counter;
     label_counter += 2;
     printf(".L%d:\n", start_lbl);
@@ -370,7 +370,7 @@ while_start:
   }
 
 while_statement:
-  while_start PAROPEN expr PARCLOSE {
+  while_start TOK_LPAREN expr TOK_RPAREN {
     int exit_lbl = $1 + 1;
     printf("  cmp eax, 0\n");
     printf("  je .L%d\n", exit_lbl);
@@ -384,7 +384,7 @@ while_statement:
   ;
 
 if_header:
-    IF PAROPEN expr PARCLOSE {
+    TOK_IF TOK_LPAREN expr TOK_RPAREN {
       int else_lbl = label_counter++;
       printf("  cmp eax, 0\n");
       printf("  je .L%d\n", else_lbl);
@@ -396,7 +396,7 @@ if_statement:
     if_header statement %prec IFX {
       printf(".L%d:\n", $1);
     }
-  | if_header statement ELSE {
+  | if_header statement TOK_ELSE {
       int exit_lbl = label_counter++;
       printf("  jmp .L%d\n", exit_lbl); // Skip else branch
       printf(".L%d:\n", $1); // Start of else branch
@@ -417,14 +417,14 @@ args_list:
       gen_push_eax();
       $$ = 1;
     }
-  | args_list COMMA expr {
+  | args_list TOK_COMMA expr {
       gen_push_eax();
       $$ = $1 + 1;
     }
   ;
 
 func_def:
-  IDENTIFIER PAROPEN params PARCLOSE BRACEOPEN {
+  TOK_IDENT TOK_LPAREN params TOK_RPAREN TOK_LBRACE {
     current_func_name = $1;
     /* Function header stuff
      * All funcs are flobal in Blang */
@@ -435,14 +435,14 @@ func_def:
   }
   declarations
   statements_list
-  BRACECLOSE {
+  TOK_RBRACE {
     printf("  leave\n");
     printf("  ret\n");
     /* Reset offsets for new function.
      * Needs to happen *before* params are read.
      * This is executed before every function, but at the end here because it's
      * wrapped to after the last function.
-     * We cannot define it at `IDENTIFIER PAROPEN` because it conflicts with
+     * We cannot define it at `TOK_IDENT TOK_LPAREN` because it conflicts with
      * other parts of the parser code. */
     current_local_offset = -4;
     current_param_offset = 8;
@@ -450,21 +450,21 @@ func_def:
   ;
 
 label:
-    IDENTIFIER COLON {
+    TOK_IDENT TOK_COL {
       printf(".L_%s_%s:\n", current_func_name, $1);
       free($1);
     }
   ;
 
 arr_access:
-    expr ARROPEN { gen_push_eax(); } expr ARRCLOSE {
+    expr TOK_LBRACKET { gen_push_eax(); } expr TOK_RBRACKET {
       printf("  pop ebx\n");
       printf("  lea eax, [ebx + eax*4]\n");
     }
   ;
 
 case_label:
-    CASE NUMBER COLON {
+    TOK_CASE TOK_NUM TOK_COL {
       int lbl = label_counter++;
       add_case($2, lbl);
       printf(".L%d:\n", lbl);
@@ -472,7 +472,7 @@ case_label:
   ;
 
 default_label:
-    DEFAULT COLON {
+    TOK_DEFAULT TOK_COL {
       int lbl = label_counter++;
       if (switch_depth > 0)
         switch_stack[switch_depth - 1].default_lbl = lbl;
@@ -481,7 +481,7 @@ default_label:
   ;
 
 switch_start:
-    SWITCH expr {
+    TOK_SWITCH expr {
       int dispatch_lbl = label_counter++;
       int end_lbl = label_counter++;
       push_switch(dispatch_lbl, end_lbl);
