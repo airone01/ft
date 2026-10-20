@@ -39,7 +39,7 @@ I'm bored to do it.
 
 ## TODO
 
-- Parser rules for TOK_DBL_PIPE and TOK_DBL_AMPER
+- B-style (`=+`) assignments (and maybe modern-style as well `+=`)
 
 - Preprocessor
 - Package original `yacc` and `lex`, compile and run with that instead of Bison
