@@ -6,8 +6,9 @@ endif
 NAME := B
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -g3 -I. -Isrc
+CFLAGS += -DFT_B_OPTI
 
-SRC := symtab main asm
+SRC := asm c2 main symtab
 SRC += y.tab lex.yy
 SRC := $(addsuffix .c, $(addprefix src/, $(SRC)))
 OBJ := $(SRC:.c=.o)

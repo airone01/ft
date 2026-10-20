@@ -35,11 +35,8 @@ I'm bored to do it.
 
 ## TODO
 
-- B-style (`=+`) assignments (and maybe modern-style as well `+=`)
+- [x] Compiler optimizations
 
+- B-style (`=+`) assignments (and maybe modern-style as well `+=`)
 - Preprocessor
-- Compiler optimizations
-- Package original `yacc` and `lex`, compile and run with that instead of Bison
-  and Flex. If I remember well, LinuxFromScratch has made some patches to make
-  them compatible with modern GNU libc.
 - Another feature?
