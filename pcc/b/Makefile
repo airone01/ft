@@ -1,18 +1,26 @@
+ifndef VERBOSE
+MAKEFLAGS += --silent
+.SILENT:
+endif
+
 NAME := B
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -g3 -I. -Isrc
 
-SRC := symtab.c main.c asm.c
-SRC += y.tab.c lex.yy.c
-SRC := $(addprefix src/, $(SRC))
+SRC := symtab main asm
+SRC += y.tab lex.yy
+SRC := $(addsuffix .c, $(addprefix src/, $(SRC)))
 OBJ := $(SRC:.c=.o)
 
-GRNHB := \e[1;102;30m
+GRNHB := \e[1;101;30m
 YELHB := \e[1;103;30m
 MAGHB := \e[1;105;30m
 CRESET := \e[0m
 
 all: $(NAME)
+
+libb: $(NAME)
+	@$(MAKE) -C libb
 
 $(NAME): $(OBJ)
 	@printf "$(GRNHB) CC $(CRESET) $^\n"
@@ -37,11 +45,13 @@ src/lex.yy.c: src/lexer.l src/y.tab.h
 
 clean:
 	@rm -fv $(OBJ) src/y.tab.c src/y.tab.h src/lex.yy.c
+	@$(MAKE) -C libb clean
 
 fclean: clean
 	@rm -fv $(NAME)
+	@$(MAKE) -C libb fclean
 
-bonus: all
+bonus: all libb
 
 re: fclean all
 
