@@ -533,7 +533,7 @@ default_label:
   ;
 
 switch_start:
-    TOK_SWITCH expr {
+    TOK_SWITCH TOK_LPAREN expr TOK_RPAREN {
       int dispatch_lbl = label_counter++;
       int end_lbl = label_counter++;
       push_switch(dispatch_lbl, end_lbl);
