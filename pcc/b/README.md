@@ -5,12 +5,18 @@ This project aims to create a simple B to i386 assembly compiler, using the
 
 ## Requirements
 
-This project requires **GNU Make**, **yacc** and **lex** (or **bison** and
-**flex** as drop-in more modern replacements).
+This project requires **GNU Make**,
+[**Yacc**](https://en.wikipedia.org/wiki/Yacc) and
+[**Lex**](https://en.wikipedia.org/wiki/Lex_(software)) (or
+[**GNU Bison**](https://en.wikipedia.org/wiki/GNU_Bison) and
+[**Flex**](https://en.wikipedia.org/wiki/Flex_(lexical_analyzer_generator)) as
+drop-in more modern replacements).
 
 ## Implementation Details
 
-- The program compiles to i386 assembly with the Intel syntax.
+- The program compiles to i386 assembly (for x86 processors with the
+  [SSE](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions)) using the
+  Intel syntax.
 - There is no AST. Lookahead is LR(1). For now I've had no problems with this,
   because B is a simple language, but there might be limitations by the time I
   finish the bonuses.
@@ -18,7 +24,7 @@ This project requires **GNU Make**, **yacc** and **lex** (or **bison** and
   unoptimized operations. But as explicitly explained in the subject, the goal
   is to make it work, not make it good.
 - It does not support early B-style assignment operators (`=+` instead of `+=`).
-- The escape character is the more modern `\`, not `*`.
+- The char/string escape character is the more modern `\`, not `*`.
 - It does not support global vector and vars declarations.
 
 ## Monorepo
