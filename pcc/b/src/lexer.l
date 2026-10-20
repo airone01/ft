@@ -19,7 +19,7 @@
 "return"                   { return RETURN; }
 "switch"                   { return SWITCH; }
 "case"                     { return CASE; }
-"DEFAULT"                  { return DEFAULT; }
+"default"                  { return DEFAULT; }
 "break"                    { return BREAK; }
 
 [a-zA-Z_][a-zA-Z0-9_]*     { // Variables
