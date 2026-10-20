@@ -11,6 +11,9 @@
  */
 %}
 
+%define parse.error verbose
+%locations
+
 %union {
   int num;
   char *str;
@@ -24,6 +27,7 @@
 %nonassoc IFX
 %nonassoc TOK_ELSE
 
+%token TOK_UNKNOWN
 %token TOK_AUTO TOK_EXTERN TOK_WHILE TOK_IF TOK_ELSE TOK_RETURN
 %token <str> TOK_IDENT
 %token <num> TOK_NUM
@@ -113,7 +117,8 @@ lvalue:
         }
         gen_push_eax();
       } else {
-        fprintf(stderr, REDHB" Error: Unknown variable '%s'"CRESET"\n", $1);
+        fprintf(stderr, REDHB" Error at %d:%d: Unknown variable '%s' "CRESET"\n",
+                @1.first_line, @1.first_column, $1);
       }
     }
   ;

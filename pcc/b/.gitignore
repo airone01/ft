@@ -7,4 +7,5 @@ b.pdf
 
 src/y.tab.[hc]
 src/lex.yy.c
+libb/*.s
 
