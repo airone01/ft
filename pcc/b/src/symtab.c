@@ -11,6 +11,8 @@ int current_param_offset = 8;
 char *current_func_name = NULL;
 int string_counter = 0;
 int label_counter = 1;
+int break_stack[64];
+int break_depth = 0;
 
 void add_symbol(char *name, SymbolType type) {
   Symbol *sym = malloc(sizeof(Symbol));

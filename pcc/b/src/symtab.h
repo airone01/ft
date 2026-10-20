@@ -32,6 +32,10 @@ typedef struct {
   int case_count;
 } SwitchContext;
 
+/* Note: this can and will break because of the size limit */
+extern int break_stack[64];
+extern int break_depth;
+/* Note: this can and will break because of the size limit */
 extern SwitchContext switch_stack[32];
 extern int switch_depth;
 extern void *sym_table;

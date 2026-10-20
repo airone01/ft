@@ -481,16 +481,12 @@ statement:
   | case_label statement
   | default_label statement
   | TOK_BREAK TOK_SEMI {
-      if (switch_depth == 0) {
+      if (break_depth == 0) {
         fprintf(stderr, "<stdin>:%d:%d: " YEL "warning:" CRESET " 'break' "
-                "outside of a switch statement\n",
-                @1.first_line, @1.first_column);
-        fprintf(stderr, "<stdin>:%d:%d: " CYN "note:" CRESET " if this was used"
-                " in a loop, note that it is not implemented yet and will break"
-                CRESET "\n",
+                "outside of loop or switch\n",
                 @1.first_line, @1.first_column);
       } else
-        printf("  jmp .L%d\n", switch_stack[switch_depth - 1].end_lbl);
+        printf("  jmp .L%d\n", break_stack[break_depth - 1]);
     }
   | switch_statement
   ;
@@ -504,17 +500,19 @@ while_start:
   }
 
 while_statement:
-  while_start TOK_LPAREN expr TOK_RPAREN {
-    int exit_lbl = $1 + 1;
-    printf("  cmp eax, 0\n");
-    printf("  je .L%d\n", exit_lbl);
-  }
-  statement {
-    int start_lbl = $1;
-    int exit_lbl = $1 + 1;
-    printf("  jmp .L%d\n", start_lbl);
-    printf(".L%d:\n", exit_lbl);
-  }
+    while_start TOK_LPAREN expr TOK_RPAREN {
+      int exit_lbl = $1 + 1;
+      printf("  cmp eax, 0\n");
+      printf("  je .L%d\n", exit_lbl);
+      break_stack[break_depth++] = exit_lbl;
+    }
+    statement {
+      int start_lbl = $1;
+      int exit_lbl = $1 + 1;
+      printf("  jmp .L%d\n", start_lbl);
+      printf(".L%d:\n", exit_lbl);
+      break_depth--;
+    }
   ;
 
 if_header:
@@ -618,6 +616,7 @@ switch_start:
     TOK_SWITCH TOK_LPAREN expr TOK_RPAREN {
       int dispatch_lbl = label_counter++;
       int end_lbl = label_counter++;
+      break_stack[break_depth++] = end_lbl;
       push_switch(dispatch_lbl, end_lbl);
       gen_push_eax();
       printf("  jmp .L%d\n", dispatch_lbl);
@@ -626,6 +625,8 @@ switch_start:
 
 switch_statement:
     switch_start statement {
+      break_depth--;
+
       SwitchContext *sc = &switch_stack[switch_depth - 1];
       // Fallthrough protection for end of body
       printf("  jmp .L%d\n", sc->end_lbl);
