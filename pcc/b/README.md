@@ -96,7 +96,7 @@ drop-in more modern replacements).
 - `return`
 - Address-of and dereference (`&` and `*`)
 - Comments (`/* ... */`)
-- A post-processing optimization layer
+- Global vectors and variables
 - ...and probably more I forgot :-)
 
 ### Bonus Features
@@ -111,7 +111,7 @@ The subject also asks for two more any feature I want. I implemented:
   assembly code itself, post-compilation. Inspired by "C2", one of the early
   compiler optimization layers of the C compiler that worked in a similar
   fashion.
--
+- Global vectors and variables
 
 ## Monorepo
 
