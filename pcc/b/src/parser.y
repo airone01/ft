@@ -19,6 +19,7 @@
   char *str;
 }
 
+%type <num> opt_num opt_ival_list ival_list
 %type <num> args args_list
 %type <num> params params_list
 %type <num> while_start
@@ -55,9 +56,91 @@
 %%
 
 program:
-  | /* In B/C, there can only be top-level declarations, no expressions. */
-    program declaration
+  | program global_def
   | program func_def
+  | program TOK_EXTERN extrn_list TOK_SEMI
+  ;
+
+global_def:
+    /* Vector: name[size] ival, ... */
+    TOK_IDENT TOK_LBRACKET opt_num TOK_RBRACKET {
+      printf(".data\n");
+      printf(".align 4\n");
+      printf(".L_%s_data:\n", $1);
+    }
+    opt_ival_list TOK_SEMI {
+      char *name = $1;
+      int size = $3;
+      int count = $6;
+      int total = (size > count) ? size : count;
+      if (total == 0) total = 1;
+      int remaining = total - count;
+      if (remaining > 0)
+        printf("  .zero %d\n", remaining * 4);
+      printf(".globl %s\n", name);
+      printf("%s:\n", name);
+      printf("  .long .L_%s_data\n", name);
+      printf(".text\n");
+
+      add_symbol(name, TYPE_EXTERN);
+      free(name);
+    }
+    /* Scalar: name ival, ... */
+  | TOK_IDENT {
+      printf(".globl %s\n", $1);
+      printf(".data\n");
+      printf(".align 4\n");
+      printf("%s:\n", $1);
+    }
+    opt_ival_list TOK_SEMI {
+      char *name = $1;
+      int count = $3;
+      if (count == 0)
+        /* Default to 0 */
+        printf("  .long 0\n");
+      printf(".text\n");
+
+      add_symbol(name, TYPE_EXTERN);
+      free(name);
+    }
+  ;
+
+opt_num:
+    /* empty: size 0 */ { $$ = 0; }
+  | TOK_NUM             { $$ = $1; }
+  ;
+
+opt_ival_list:
+    /* empty: size 0 */ { $$ = 0; }
+  | ival_list           { $$ = $1; }
+  ;
+
+ival_list:
+    ival                     { $$ = 1; }
+  | ival_list TOK_COMMA ival { $$ = $1 + 1; }
+  ;
+
+ival:
+    TOK_NUM {
+      printf("  .long %d\n", $1);
+    }
+  | TOK_MINUS TOK_NUM {
+      printf("  .long -%d\n", $2);
+    }
+  | TOK_STR {
+      int lbl = string_counter++;
+      printf("  .section .rodata\n");
+      printf("  .LC%d:\n", lbl);
+      printf("    .long .LC%d+4\n", lbl);
+      printf("    .string %s\n", $1);
+      printf("  .data\n");
+      printf("  .long .LC%d\n", lbl);
+      free($1);
+    }
+  | TOK_IDENT {
+      printf("  .long %s\n", $1);
+      free($1);
+    }
   ;
 
 declarations:
