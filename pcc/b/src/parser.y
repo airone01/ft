@@ -11,7 +11,7 @@
  */
 %}
 
-%define parse.error verbose
+// %define parse.error verbose
 %locations
 
 %union {

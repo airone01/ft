@@ -36,6 +36,7 @@ const rush02_mod = @import("piscine-c/rush02/build.zig");
 const hotrace_mod = @import("rushes/hotrace/build.zig");
 const libunit_mod = @import("rushes/libunit/build.zig");
 // Post CC
+const pcc_b = @import("pcc/b/build.zig");
 const libasm_mod = @import("pcc/libasm/build.zig");
 const nm_mod = @import("pcc/nm/build.zig");
 const ft_ls_mod = @import("pcc/ft_ls/build.zig");
@@ -119,6 +120,7 @@ pub fn build(b: *std.Build) void {
     nm_mod.addTests(b, target, optimize, test_step, nm_exe);
     b.installArtifact(ft_ls_mod.configure(b, target, optimize, ft_ls_mod.Deps{ .libft = lft }));
     b.installArtifact(ft_ping_mod.configure(b, target, optimize));
+    b.installArtifact(pcc_b.configure(b, target, optimize));
 
     const run_nm_cmd = b.addRunArtifact(nm_exe);
     run_nm_cmd.step.dependOn(b.getInstallStep());
