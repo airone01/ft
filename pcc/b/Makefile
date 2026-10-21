@@ -8,7 +8,7 @@ CC := gcc
 CFLAGS := -Wall -Wextra -Werror -g3 -I. -Isrc
 CFLAGS += -DFT_B_OPTI
 
-SRC := asm c2 main symtab
+SRC := asm c2 c2_1 c2_2 main symtab
 SRC += y.tab lex.yy
 SRC := $(addsuffix .c, $(addprefix src/, $(SRC)))
 OBJ := $(SRC:.c=.o)
