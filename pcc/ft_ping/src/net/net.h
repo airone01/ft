@@ -33,6 +33,8 @@ int recv_echo_loop(int sock, uint16_t pid, const CliOptions opts,
                    PingStats *stats);
 
 int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
-              PingStats *stats);
+              PingStats *stats, const CliOptions opts);
+
+long get_time_ms(void);
 
 #endif /* SRC_NET_NET_H */

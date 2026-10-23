@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include <netinet/ip_icmp.h>
 #include <signal.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,7 +57,9 @@ int main(int argc, const char *argv[]) {
   init_stats(&stats);
 
   while (g_running) {
-    if (send_echo(sock, pid, seq, target, &stats) < 0)
+    long t_start = get_time_ms();
+
+    if (send_echo(sock, pid, seq, target, &stats, opts) < 0)
       break;
 
     int res = recv_echo_loop(sock, pid, opts, &stats);
@@ -65,8 +68,15 @@ int main(int argc, const char *argv[]) {
       break;
 
     seq++;
-    if (res == 0 && res == 1 && g_running)
-      sleep(1);
+
+    if (opts.npackets > 0 && stats.transmitted >= (size_t)opts.npackets)
+      break;
+
+    if (!opts.flood && (res == 0 || res == 1) && g_running) {
+      long elapsed = get_time_ms() - t_start;
+      if (elapsed < 1000)
+        usleep((1000 - elapsed) * 1000);
+    }
   }
 
   print_stats(&stats, opts.address);

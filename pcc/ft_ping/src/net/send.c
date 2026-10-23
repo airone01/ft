@@ -4,12 +4,13 @@
 #include <netinet/ip_icmp.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <sys/types.h>
 
 int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
-              PingStats *stats) {
+              PingStats *stats, const CliOptions opts) {
   char egress_buf[PACKET_SIZE];
   memset(egress_buf, 0, sizeof(egress_buf));
 
@@ -20,9 +21,9 @@ int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
   icmp->un.echo.sequence = htons(seq);
   icmp->checksum = 0;
 
-  struct timeval *tv_send =
-      (struct timeval *)(egress_buf + sizeof(struct icmphdr));
-  gettimeofday(tv_send, NULL);
+  struct timeval tv_send;
+  gettimeofday(&tv_send, NULL);
+  memcpy(egress_buf + sizeof(struct icmphdr), &tv_send, sizeof(tv_send));
 
   icmp->checksum =
       calculate_checksum((unsigned short *)egress_buf, sizeof(egress_buf));
@@ -34,5 +35,11 @@ int send_echo(int sock, uint16_t pid, int seq, struct sockaddr_in *target,
     perror("sendto");
     return -1;
   }
+
+  if (opts.flood) {
+    putchar('.');
+    fflush(stdout);
+  }
+
   return 0;
 }
