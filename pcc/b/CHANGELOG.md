@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/airone01/ft/compare/b-v1.0.0...b-v1.1.0) (2026-11-01)
+
+
+### Features
+
+* **b:** intense testing ([e7a52b1](https://github.com/airone01/ft/commit/e7a52b191eba06be6e4526822afc0671ed558874))
+* **b:** options parsing and version display ([4511c1b](https://github.com/airone01/ft/commit/4511c1bb5baea635320c08a68b4f67957872957f))
+* **b:** test suite ([e994360](https://github.com/airone01/ft/commit/e994360fb5922e992f0ff6698dc43544b83cc017))
+
 ## 1.0.0 (2026-10-21)
 
 
