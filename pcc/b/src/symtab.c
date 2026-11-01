@@ -14,7 +14,7 @@ int label_counter = 1;
 int break_stack[64];
 int break_depth = 0;
 
-void add_symbol(char *name, SymbolType type) {
+void add_symbol(const char *name, SymbolType type) {
   Symbol *sym = malloc(sizeof(Symbol));
   sym->name = strdup(name);
   sym->type = type;

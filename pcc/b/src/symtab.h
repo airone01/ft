@@ -45,7 +45,7 @@ extern char *current_func_name;
 extern int string_counter;
 extern int label_counter;
 
-void add_symbol(char *name, SymbolType type);
+void add_symbol(const char *name, SymbolType type);
 Symbol *get_symbol(char *name);
 int compare_symbols(const void *pa, const void *pb);
 

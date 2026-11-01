@@ -8,7 +8,8 @@ CC := gcc
 CFLAGS := -Wall -Wextra -Werror -g3 -I. -Isrc
 CFLAGS += -DFT_B_OPTI
 
-SRC := asm c2 c2_1 c2_2 main symtab
+SRC := c2 c2_1 c2_2 main symtab
+SRC += $(addprefix gen/, array auto break cmp common expr func global goto hash if incr ival logic math_fops math_ops return shift switch unary while)
 SRC += y.tab lex.yy
 SRC := $(addsuffix .c, $(addprefix src/, $(SRC)))
 OBJ := $(SRC:.c=.o)
