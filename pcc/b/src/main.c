@@ -30,7 +30,7 @@ int parse_args(int argc, const char *argv[]) {
       print_help(argv[0]);
       return -2;
     case 'v':
-      printf("bc (airone01's ft) %s\n", FT_VERSION);
+      printf("%s (airone01's ft) %s\n", argv[0], FT_VERSION);
       return -2;
     default:
       return 0;
