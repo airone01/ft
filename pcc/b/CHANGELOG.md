@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/airone01/ft/compare/b-v2.0.0...b-v2.0.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* **b:** reverse stack on func call so that args are in ltr order ([4abe523](https://github.com/airone01/ft/commit/4abe52300cf8224cb4d70abc5cf9b34229f810f1))
+
 ## [2.0.0](https://github.com/airone01/ft/compare/b-v1.1.0...b-v2.0.0) (2026-11-01)
 
 
