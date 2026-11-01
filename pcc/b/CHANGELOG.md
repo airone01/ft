@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/airone01/ft/compare/b-v1.1.0...b-v2.0.0) (2026-11-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **b:** move code generation out of the grammar
+
+### Code Refactoring
+
+* **b:** move code generation out of the grammar ([e92ee4d](https://github.com/airone01/ft/commit/e92ee4dca8582c4f1fe10eae0b067217d3442558))
+
 ## [1.1.0](https://github.com/airone01/ft/compare/b-v1.0.0...b-v1.1.0) (2026-11-01)
 
 
