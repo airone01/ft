@@ -1,7 +1,4 @@
-#include "asm.h"
-#include <stdio.h>
-
-void gen_push_eax(void) { printf("  push eax\n"); }
+#include "gen.h"
 
 void gen_cmp(const char *set_instr) {
   printf("  pop ebx\n");
@@ -26,10 +23,4 @@ void gen_fcmp(const char *set_instr) {
   printf("  %s al\n", set_instr);
   // `movzx eax, al` left-appends zeroes to `al`
   printf("  movzx eax, al\n");
-}
-
-void gen_shift(const char *shift_instr) {
-  printf("  mov ecx, eax\n");
-  printf("  pop eax\n");
-  printf("  %s eax, cl\n", shift_instr);
 }
