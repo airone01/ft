@@ -13,10 +13,11 @@ typedef enum {
   TYPE_EXTERN
 } SymbolType;
 
-typedef struct {
+typedef struct Symbol {
   char *name;
   SymbolType type;
   int offset; // ebp
+  struct Symbol *next;
 } Symbol;
 
 typedef struct {
@@ -47,6 +48,7 @@ extern int label_counter;
 
 void add_symbol(const char *name, SymbolType type);
 Symbol *get_symbol(char *name);
+void clear_local_symbols(void);
 int compare_symbols(const void *pa, const void *pb);
 
 void push_switch(int dispatch_lbl, int end_lbl);

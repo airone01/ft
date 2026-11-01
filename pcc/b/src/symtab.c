@@ -5,7 +5,10 @@
 
 SwitchContext switch_stack[32];
 int switch_depth = 0;
+void *global_sym_table = NULL;
+void *local_sym_table = NULL;
 void *sym_table = NULL;
+static Symbol *local_list = NULL;
 int current_local_offset = -4;
 int current_param_offset = 8;
 char *current_func_name = NULL;
@@ -18,6 +21,7 @@ void add_symbol(const char *name, SymbolType type) {
   Symbol *sym = malloc(sizeof(Symbol));
   sym->name = strdup(name);
   sym->type = type;
+  sym->next = NULL;
 
   switch (type) {
   case TYPE_AUTO:
@@ -33,23 +37,42 @@ void add_symbol(const char *name, SymbolType type) {
     break;
   }
 
-  // insertion
-  Symbol **found = tsearch(sym, &sym_table, compare_symbols);
+  void **table = (type == TYPE_EXTERN) ? &global_sym_table : &local_sym_table;
+  Symbol **found = tsearch(sym, table, compare_symbols);
   if (*found != sym) {
     // var was already in the tree
     free(sym->name);
     free(sym);
+  } else if (type != TYPE_EXTERN) {
+    sym->next = local_list;
+    local_list = sym;
   }
 }
 
 Symbol *get_symbol(char *name) {
   Symbol dummy;
   dummy.name = name;
-  Symbol **found = tfind(&dummy, &sym_table, compare_symbols);
+  Symbol **found = tfind(&dummy, &local_sym_table, compare_symbols);
+  if (found) {
+    return *found;
+  }
+  found = tfind(&dummy, &global_sym_table, compare_symbols);
   if (found) {
     return *found;
   }
   return NULL;
+}
+
+void clear_local_symbols(void) {
+  Symbol *cur = local_list;
+  while (cur) {
+    Symbol *next = cur->next;
+    free(cur->name);
+    free(cur);
+    cur = next;
+  }
+  local_list = NULL;
+  local_sym_table = NULL;
 }
 
 // required by tsearch

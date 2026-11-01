@@ -55,4 +55,5 @@ void gen_func_def(void) {
    * other parts of the parser code. */
   current_local_offset = -4;
   current_param_offset = 8;
+  clear_local_symbols();
 }
