@@ -24,6 +24,24 @@ fn testCaseExit(comptime name: []const u8, expected_exit: u8) TestCase {
     };
 }
 
+fn testCaseStdout(comptime name: []const u8, expected_stdout: []const u8) TestCase {
+    return .{
+        .name = name,
+        .code = @embedFile("test/" ++ name ++ ".b"),
+        .expected_exit = 0,
+        .expected_stdout = expected_stdout,
+    };
+}
+
+fn testCaseStdin(comptime name: []const u8, stdin_data: []const u8) TestCase {
+    return .{
+        .name = name,
+        .code = @embedFile("test/" ++ name ++ ".b"),
+        .expected_exit = 0,
+        .stdin_data = stdin_data,
+    };
+}
+
 const tests = [_]TestCase{
     // ============================== ARITHMETIC ===============================
     testCase("arith_add"),
@@ -92,6 +110,44 @@ const tests = [_]TestCase{
     testCase("libb_write"),
     testCase("libb_putchar"),
     testCase("libb_printf"),
+
+    // ===================== UNARY & COMPOUND ASSIGNMENTS ======================
+    testCase("unary_negation"),
+    testCase("chained_assignment"),
+
+    // =============================== SWITCH ==================================
+    testCase("switch_default"),
+    testCase("switch_fallthrough"),
+    testCase("switch_nested"),
+
+    // ================================= LOOPS =================================
+    testCase("while_nested_break"),
+
+    // =========================== ARRAYS & POINTERS ===========================
+    testCase("array_post_inc_dec"),
+
+    // ========================== FUNCTIONS & CALLING ==========================
+    testCase("func_ptr_call"),
+    testCase("call_6_args"),
+    testCase("call_8_args"),
+    testCase("mutual_recursion"),
+    testCase("empty_return"),
+
+    // ============================ SCOPE & GLOBALS ============================
+    testCase("global_vector_negative_init"),
+    testCase("param_shadows_global"),
+    testCase("auto_shadows_global"),
+
+    // ============================ LIBB UTILS & IO ============================
+    testCase("libb_lchar"),
+    testCase("libb_creat_write_close_unlink"),
+    testCase("libb_open_read_close"),
+    testCase("libb_seek"),
+    testCase("libb_mkdir_chdir"),
+    testCaseStdout("libb_printn", "42\n1101\n"),
+    testCaseStdin("libb_getchar", "ABC"),
+    testCase("libb_chmod"),
+    testCase("libb_link"),
 };
 
 fn fileExists(io: std.Io, path: []const u8) bool {
