@@ -120,7 +120,9 @@ pub fn build(b: *std.Build) void {
     nm_mod.addTests(b, target, optimize, test_step, nm_exe);
     b.installArtifact(ft_ls_mod.configure(b, target, optimize, ft_ls_mod.Deps{ .libft = lft }));
     b.installArtifact(ft_ping_mod.configure(b, target, optimize));
-    b.installArtifact(pcc_b.configure(b, target, optimize));
+    const b_exe = pcc_b.configure(b, target, optimize);
+    b.installArtifact(b_exe);
+    pcc_b.addTests(b, target, optimize, test_step, b_exe);
 
     const run_nm_cmd = b.addRunArtifact(nm_exe);
     run_nm_cmd.step.dependOn(b.getInstallStep());

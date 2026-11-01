@@ -1,0 +1,6 @@
+main() {
+  auto a;
+  a = 0;
+  if (~a != -1) return (1);
+  return (0);
+}
