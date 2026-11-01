@@ -8,726 +8,90 @@ const TestCase = struct {
     stdin_data: []const u8 = "",
 };
 
+fn testCase(comptime name: []const u8) TestCase {
+    return .{
+        .name = name,
+        .code = @embedFile("test/" ++ name ++ ".b"),
+        .expected_exit = 0,
+    };
+}
+
+fn testCaseExit(comptime name: []const u8, expected_exit: u8) TestCase {
+    return .{
+        .name = name,
+        .code = @embedFile("test/" ++ name ++ ".b"),
+        .expected_exit = expected_exit,
+    };
+}
+
 const tests = [_]TestCase{
-    // ==================== ARITHMETIC ====================
-    .{
-        .name = "arith_add",
-        .code =
-        \\main() {
-        \\  auto a, b, c;
-        \\  a = 15;
-        \\  b = 27;
-        \\  c = a + b;
-        \\  if (c != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "arith_sub",
-        .code =
-        \\main() {
-        \\  auto a, b, c;
-        \\  a = 100;
-        \\  b = 58;
-        \\  c = a - b;
-        \\  if (c != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "arith_mul",
-        .code =
-        \\main() {
-        \\  auto a, b, c;
-        \\  a = 6;
-        \\  b = 7;
-        \\  c = a * b;
-        \\  if (c != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "arith_div",
-        .code =
-        \\main() {
-        \\  auto a, b, c;
-        \\  a = 84;
-        \\  b = 2;
-        \\  c = a / b;
-        \\  if (c != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "arith_mod",
-        .code =
-        \\main() {
-        \\  auto a, b, c;
-        \\  a = 142;
-        \\  b = 100;
-        \\  c = a % b;
-        \\  if (c != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "arith_precedence",
-        .code =
-        \\main() {
-        \\  auto x;
-        \\  x = 2 + 3 * 4;
-        \\  if (x != 14) return (1);
-        \\  x = (2 + 3) * 4;
-        \\  if (x != 20) return (2);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // ============================== ARITHMETIC ===============================
+    testCase("arith_add"),
+    testCase("arith_sub"),
+    testCase("arith_mul"),
+    testCase("arith_div"),
+    testCase("arith_mod"),
+    testCase("arith_precedence"),
 
-    // ==================== BITWISE ====================
-    .{
-        .name = "bitwise_and_or_xor",
-        .code =
-        \\main() {
-        \\  auto a, b;
-        \\  a = 65280; /* 0xFF00 in decimal */
-        \\  b = 4080;  /* 0x0FF0 in decimal */
-        \\  if ((a & b) != 3840) return (1);  /* 0x0F00 */
-        \\  if ((a | b) != 65520) return (2); /* 0xFFF0 */
-        \\  if ((a ^ b) != 61680) return (3); /* 0xF0F0 */
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "bitwise_shifts",
-        .code =
-        \\main() {
-        \\  auto a;
-        \\  a = 1;
-        \\  if ((a << 4) != 16) return (1);
-        \\  if ((16 >> 2) != 4) return (2);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "bitwise_not",
-        .code =
-        \\main() {
-        \\  auto a;
-        \\  a = 0;
-        \\  if (~a != -1) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // =============================== BITWISE =================================
+    testCase("bitwise_and_or_xor"),
+    testCase("bitwise_shifts"),
+    testCase("bitwise_not"),
 
-    // ==================== COMPARISONS ====================
-    .{
-        .name = "comparisons",
-        .code =
-        \\main() {
-        \\  if (!(5 == 5)) return (1);
-        \\  if (5 != 5) return (2);
-        \\  if (!(5 < 10)) return (3);
-        \\  if (10 < 5) return (4);
-        \\  if (!(5 <= 5)) return (5);
-        \\  if (!(5 <= 6)) return (6);
-        \\  if (!(10 > 5)) return (7);
-        \\  if (5 > 10) return (8);
-        \\  if (!(5 >= 5)) return (9);
-        \\  if (!(6 >= 5)) return (10);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // ========================= COMPARISONS & LOGICAL =========================
+    testCase("comparisons"),
+    testCase("logical_not"),
+    testCase("short_circuit_and"),
+    testCase("short_circuit_or"),
 
-    // ==================== LOGICAL & SHORT-CIRCUIT ====================
-    .{
-        .name = "logical_not",
-        .code =
-        \\main() {
-        \\  if (!0 != 1) return (1);
-        \\  if (!1 != 0) return (2);
-        \\  if (!42 != 0) return (3);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "short_circuit_and",
-        .code =
-        \\main() {
-        \\  auto side_effect;
-        \\  side_effect = 0;
-        \\  if (0 && (side_effect = 1)) {
-        \\    return (1);
-        \\  }
-        \\  if (side_effect != 0) return (2);
-        \\  if (1 && (side_effect = 1)) {
-        \\    if (side_effect != 1) return (3);
-        \\  } else {
-        \\    return (4);
-        \\  }
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "short_circuit_or",
-        .code =
-        \\main() {
-        \\  auto side_effect;
-        \\  side_effect = 0;
-        \\  if (1 || (side_effect = 1)) {
-        \\    if (side_effect != 0) return (1);
-        \\  } else {
-        \\    return (2);
-        \\  }
-        \\  if (0 || (side_effect = 1)) {
-        \\    if (side_effect != 1) return (3);
-        \\  } else {
-        \\    return (4);
-        \\  }
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // =============================== INC / DEC ===============================
+    testCase("inc_dec_vars"),
 
-    // ==================== INCREMENT / DECREMENT ====================
-    .{
-        .name = "inc_dec_vars",
-        .code =
-        \\main() {
-        \\  auto x, y;
-        \\  x = 10;
-        \\  y = x++;
-        \\  if (y != 10) return (1);
-        \\  if (x != 11) return (2);
-        \\  y = ++x;
-        \\  if (y != 12) return (3);
-        \\  if (x != 12) return (4);
-        \\  y = x--;
-        \\  if (y != 12) return (5);
-        \\  if (x != 11) return (6);
-        \\  y = --x;
-        \\  if (y != 10) return (7);
-        \\  if (x != 10) return (8);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // ============================= CONTROL FLOW ==============================
+    testCase("if_else"),
+    testCase("nested_if_else"),
+    testCase("while_loop"),
+    testCase("while_break"),
+    testCase("switch_case"),
+    testCase("goto_label"),
 
-    // ==================== CONTROL FLOW ====================
-    .{
-        .name = "if_else",
-        .code =
-        \\main() {
-        \\  auto a, r;
-        \\  a = 1;
-        \\  if (a) r = 10; else r = 20;
-        \\  if (r != 10) return (1);
-        \\  a = 0;
-        \\  if (a) r = 10; else r = 20;
-        \\  if (r != 20) return (2);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "nested_if_else",
-        .code =
-        \\main() {
-        \\  auto a, b, r;
-        \\  a = 0;
-        \\  b = 1;
-        \\  r = 0;
-        \\  if (a)
-        \\    if (b) r = 1;
-        \\    else r = 2;
-        \\  else
-        \\    r = 3;
-        \\  if (r != 3) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "while_loop",
-        .code =
-        \\main() {
-        \\  auto i, sum;
-        \\  i = 1;
-        \\  sum = 0;
-        \\  while (i <= 10) {
-        \\    sum = sum + i;
-        \\    i++;
-        \\  }
-        \\  if (sum != 55) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "while_break",
-        .code =
-        \\main() {
-        \\  auto i;
-        \\  i = 0;
-        \\  while (1) {
-        \\    i++;
-        \\    if (i == 5)
-        \\      break;
-        \\  }
-        \\  if (i != 5) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "switch_case",
-        .code =
-        \\main() {
-        \\  auto x, r;
-        \\  x = 2;
-        \\  r = 0;
-        \\  switch (x) {
-        \\    case 1: r = 10; break;
-        \\    case 2: r = 20; break;
-        \\    case 3: r = 30; break;
-        \\    default: r = 99; break;
-        \\  }
-        \\  if (r != 20) return (1);
-        \\  x = 5;
-        \\  switch (x) {
-        \\    case 1: r = 10; break;
-        \\    case 2: r = 20; break;
-        \\    default: r = 99; break;
-        \\  }
-        \\  if (r != 99) return (2);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "goto_label",
-        .code =
-        \\main() {
-        \\  auto x;
-        \\  x = 0;
-        \\  goto skip;
-        \\  x = 100;
-        \\skip:
-        \\  if (x != 0) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // =============================== RECURSION ===============================
+    testCase("recursion_fact"),
+    testCase("recursion_fib"),
 
-    // ==================== RECURSION ====================
-    .{
-        .name = "recursion_fact",
-        .code =
-        \\fact(n) {
-        \\  if (n <= 1) return (1);
-        \\  return (n * fact(n - 1));
-        \\}
-        \\main() {
-        \\  auto r;
-        \\  r = fact(5);
-        \\  if (r != 120) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "recursion_fib",
-        .code =
-        \\fib(n) {
-        \\  if (n <= 0) return (0);
-        \\  if (n == 1) return (1);
-        \\  return (fib(n - 1) + fib(n - 2));
-        \\}
-        \\main() {
-        \\  auto r;
-        \\  r = fib(7);
-        \\  if (r != 13) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // ======================== FUNCTION CALLING & ARGS ========================
+    testCase("call_0_args"),
+    testCase("call_1_arg"),
+    testCase("call_2_args"),
+    testCase("call_3_args"),
+    testCase("call_4_args"),
+    testCase("call_nested"),
 
-    // ==================== FUNCTION CALLS ====================
-    .{
-        .name = "call_0_args",
-        .code =
-        \\f0() { return (42); }
-        \\main() {
-        \\  if (f0() != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "call_1_arg",
-        .code =
-        \\f1(a) { return (a * 2); }
-        \\main() {
-        \\  if (f1(21) != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "call_2_args",
-        .code =
-        \\f2(a, b) { return (a * 10 + b); }
-        \\main() {
-        \\  if (f2(4, 2) != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "call_3_args",
-        .code =
-        \\f3(a, b, c) { return (a * 100 + b * 10 + c); }
-        \\main() {
-        \\  if (f3(1, 2, 3) != 123) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "call_4_args",
-        .code =
-        \\f4(a, b, c, d) { return (a * 1000 + b * 100 + c * 10 + d); }
-        \\main() {
-        \\  if (f4(1, 2, 3, 4) != 1234) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "call_nested",
-        .code =
-        \\add(a, b) { return (a + b); }
-        \\mul(a, b) { return (a * b); }
-        \\main() {
-        \\  auto r;
-        \\  r = add(mul(2, 3), mul(4, 5));
-        \\  if (r != 26) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // =========================== POINTERS & ARRAYS ===========================
+    testCase("address_of_and_deref"),
+    testCase("array_index_and_inc"),
+    testCase("global_scalars_and_vectors"),
 
-    // ==================== POINTERS & ARRAYS ====================
-    .{
-        .name = "address_of_and_deref",
-        .code =
-        \\main() {
-        \\  auto x, p;
-        \\  x = 42;
-        \\  p = &x;
-        \\  if (*p != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "array_index_and_inc",
-        .code =
-        \\main() {
-        \\  extrn v;
-        \\  v[0] = 10;
-        \\  v[1] = 20;
-        \\  if (v[0] != 10) return (1);
-        \\  if (v[1] != 20) return (2);
-        \\  v[0]++;
-        \\  if (v[0] != 11) return (3);
-        \\  v[1]--;
-        \\  if (v[1] != 19) return (4);
-        \\  return (0);
-        \\}
-        \\v[10];
-        ,
-        .expected_exit = 0,
-    },
+    // ================================ FLOATS =================================
+    testCase("float_ops"),
+    testCase("float_casts"),
+    testCase("float_cmps"),
 
-    // ==================== GLOBALS ====================
-    .{
-        .name = "global_scalars_and_vectors",
-        .code =
-        \\extrn g1, g2, gv;
-        \\main() {
-        \\  if (g1 != 42) return (1);
-        \\  if (g2 != 0) return (2);
-        \\  if (gv[0] != 100) return (3);
-        \\  if (gv[1] != 200) return (4);
-        \\  if (gv[2] != 0) return (5);
-        \\  return (0);
-        \\}
-        \\g1 42;
-        \\g2;
-        \\gv[5] 100, 200;
-        ,
-        .expected_exit = 0,
-    },
+    // ======================== SYMBOL TABLE / SCOPING =========================
+    testCase("cross_func_symbol_pollution"),
 
-    // ==================== FLOATS ====================
-    .{
-        .name = "float_ops",
-        .code =
-        \\main() {
-        \\  auto f1, f2, f3;
-        \\  f1 = 1.5;
-        \\  f2 = 2.5;
-        \\  f3 = f1 #+ f2;
-        \\  /* 4.0 in IEEE-754: 0x40800000 = 1082130432 */
-        \\  if (f3 != 1082130432) return (1);
-        \\  f3 = f2 #- f1;
-        \\  /* 1.0 in IEEE-754: 0x3f800000 = 1065353216 */
-        \\  if (f3 != 1065353216) return (2);
-        \\  f3 = f1 #* f2;
-        \\  /* 3.75: 0x40700000 = 1081081856 */
-        \\  if (f3 != 1081081856) return (3);
-        \\  f3 = 5.0 #/ 2.0;
-        \\  /* 2.5: 0x40200000 = 1075838976 */
-        \\  if (f3 != 1075838976) return (4);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "float_casts",
-        .code =
-        \\main() {
-        \\  auto i, f, i2;
-        \\  i = 42;
-        \\  f = # i;
-        \\  /* 42.0 in IEEE-754: 1109917696 */
-        \\  if (f != 1109917696) return (1);
-        \\  i2 = ## f;
-        \\  if (i2 != 42) return (2);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "float_cmps",
-        .code =
-        \\main() {
-        \\  if (!(1.5 #< 2.5)) return (1);
-        \\  if (2.5 #< 1.5) return (2);
-        \\  if (!(2.5 #> 1.5)) return (3);
-        \\  if (!(2.0 #== 2.0)) return (4);
-        \\  if (2.0 #!= 2.0) return (5);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-
-    // ==================== SYMBOL TABLE SCOPE ====================
-    .{
-        .name = "cross_func_symbol_pollution",
-        .code =
-        \\func1() {
-        \\  auto x;
-        \\  x = 10;
-        \\}
-        \\func2(x) {
-        \\  return (x);
-        \\}
-        \\main() {
-        \\  auto r;
-        \\  r = func2(42);
-        \\  if (r != 42) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-
-    // ==================== STANDARD LIBRARY (LIBB) ====================
-    .{
-        .name = "libb_char",
-        .code =
-        \\main() {
-        \\  extrn char;
-        \\  auto s;
-        \\  s = "ABCD";
-        \\  if (char(s, 0) != 'A') return (1);
-        \\  if (char(s, 1) != 'B') return (2);
-        \\  if (char(s, 2) != 'C') return (3);
-        \\  if (char(s, 3) != 'D') return (4);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_exit",
-        .code =
-        \\main() {
-        \\  extrn exit;
-        \\  exit(42);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 42,
-    },
-    .{
-        .name = "libb_time",
-        .code =
-        \\extrn t;
-        \\main() {
-        \\  extrn time;
-        \\  t[0] = 0;
-        \\  time(t);
-        \\  if (t[0] <= 1000000000) return (1);
-        \\  return (0);
-        \\}
-        \\t[2];
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_getuid",
-        .code =
-        \\main() {
-        \\  extrn getuid;
-        \\  if (getuid() < 0) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_chdir",
-        .code =
-        \\main() {
-        \\  extrn chdir;
-        \\  if (chdir("/tmp") != 0) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_close",
-        .code =
-        \\main() {
-        \\  extrn close;
-        \\  /* close non-existent fd 999 returns -EBADF (-9) */
-        \\  if (close(999) != -9) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_unlink",
-        .code =
-        \\main() {
-        \\  extrn unlink;
-        \\  /* unlink non-existent file returns -ENOENT (-2) */
-        \\  if (unlink("/nonexistent_xyz_12345") != -2) return (1);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_fork_wait",
-        .code =
-        \\main() {
-        \\  extrn fork, wait, exit;
-        \\  auto pid, wpid;
-        \\  pid = fork();
-        \\  if (pid == 0) {
-        \\    exit(0);
-        \\  }
-        \\  wpid = wait();
-        \\  if (wpid == pid) return (0);
-        \\  return (1);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_write",
-        .code =
-        \\main() {
-        \\  extrn write;
-        \\  write(1, "B_WRITE_TEST\n", 13);
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_putchar",
-        .code =
-        \\main() {
-        \\  extrn putchar;
-        \\  putchar('O');
-        \\  putchar('K');
-        \\  putchar('\n');
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
-    .{
-        .name = "libb_printf",
-        .code =
-        \\main() {
-        \\  extrn printf;
-        \\  printf("%d %s\n", 42, "OK");
-        \\  return (0);
-        \\}
-        ,
-        .expected_exit = 0,
-    },
+    // ========================= LIBB SYSCALLS & UTILS =========================
+    testCase("libb_char"),
+    testCaseExit("libb_exit", 42),
+    testCase("libb_time"),
+    testCase("libb_getuid"),
+    testCase("libb_chdir"),
+    testCase("libb_close"),
+    testCase("libb_unlink"),
+    testCase("libb_fork_wait"),
+    testCase("libb_write"),
+    testCase("libb_putchar"),
+    testCase("libb_printf"),
 };
 
 fn fileExists(io: std.Io, path: []const u8) bool {
@@ -746,13 +110,12 @@ pub fn main(init: std.process.Init.Minimal) !void {
     const io = threaded.io();
 
     var iter = init.args.iterate();
-    _ = iter.next(); // Skip self path
+    _ = iter.next(); // skip self path
 
     const b_path_arg = iter.next();
     const brt0_path_arg = iter.next();
     const libb_path_arg = iter.next();
 
-    // Determine paths with fallbacks
     const b_path = if (b_path_arg) |p| p else if (fileExists(io, "pcc/b/B")) "pcc/b/B" else if (fileExists(io, "./B")) "./B" else "zig-out/bin/B";
     const brt0_path = if (brt0_path_arg) |p| p else if (fileExists(io, "pcc/b/brt0.o")) "pcc/b/brt0.o" else if (fileExists(io, "./brt0.o")) "./brt0.o" else "pcc/b/brt0.o";
     const libb_path = if (libb_path_arg) |p| p else if (fileExists(io, "pcc/b/libb/libb.a")) "pcc/b/libb/libb.a" else if (fileExists(io, "./libb/libb.a")) "./libb/libb.a" else "zig-out/lib/libb.a";
@@ -789,7 +152,7 @@ pub fn main(init: std.process.Init.Minimal) !void {
         defer allocator.free(stdin_file);
         defer std.Io.Dir.deleteFileAbsolute(io, stdin_file) catch {};
 
-        // Write B source file
+        // Write B source
         {
             var file = std.Io.Dir.createFileAbsolute(io, b_file, .{}) catch |err| {
                 std.debug.print("[-] {s}: FAILED TO CREATE TEMP FILE: {s}\n", .{ t.name, @errorName(err) });
@@ -811,7 +174,7 @@ pub fn main(init: std.process.Init.Minimal) !void {
             file.close(io);
         }
 
-        // Step 1: Run B compiler
+        // Run B
         const b_cmd = try std.fmt.allocPrint(allocator, "{s} < {s} > {s}", .{ b_path, b_file, s_file });
         defer allocator.free(b_cmd);
 
@@ -834,7 +197,7 @@ pub fn main(init: std.process.Init.Minimal) !void {
             continue;
         }
 
-        // Step 2: Assemble with as --32
+        // Assemble
         const res_as = std.process.run(allocator, io, .{
             .argv = &.{ "as", "--32", s_file, "-o", o_file },
         }) catch |err| {
@@ -854,7 +217,7 @@ pub fn main(init: std.process.Init.Minimal) !void {
             continue;
         }
 
-        // Step 3: Link with ld
+        // Link
         const res_ld = std.process.run(allocator, io, .{
             .argv = &.{ "ld", "-m", "elf_i386", o_file, brt0_path, libb_path, "-o", bin_file },
         }) catch |err| {
@@ -874,7 +237,7 @@ pub fn main(init: std.process.Init.Minimal) !void {
             continue;
         }
 
-        // Step 4: Run under qemu-i386 -strace
+        // Run under qemu-i386 -strace
         const qemu_cmd = if (t.stdin_data.len > 0)
             try std.fmt.allocPrint(allocator, "qemu-i386 -strace {s} < {s}", .{ bin_file, stdin_file })
         else
