@@ -64,6 +64,7 @@ pub fn configure(
     flex_cmd.step.dependOn(&yacc_cmd.step);
 
     // B executable
+    const version = std.mem.trim(u8, @embedFile("version.txt"), &std.ascii.whitespace);
     const b_exe = b.addExecutable(.{
         .name = "B",
         .root_module = b.createModule(.{
@@ -72,6 +73,7 @@ pub fn configure(
             .link_libc = true,
         }),
     });
+    b_exe.root_module.addCMacro("FT_VERSION", b.fmt("\"{s}\"", .{version}));
     b_exe.root_module.addCSourceFiles(.{
         .root = b.path(src_dir),
         .files = &.{

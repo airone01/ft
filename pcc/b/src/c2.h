@@ -1,7 +1,13 @@
 #ifndef SRC_C2_H
 #define SRC_C2_H
 
+#ifndef MAX_LINES
 #define MAX_LINES 65536
+#endif /* MAX_LINES */
+
+#ifndef FT_VERSION
+#define FT_VERSION "???"
+#endif /* FT_VERSION */
 
 #include <stdio.h>
 
