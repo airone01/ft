@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.2](https://github.com/airone01/ft/compare/b-v2.0.1...b-v2.0.2) (2026-11-01)
+
+
+### Bug Fixes
+
+* **b:** correct binary name when version flag ([4284ecb](https://github.com/airone01/ft/commit/4284ecb6ca65d03a55cf678156e271c1d5fbae8b))
+* **b:** exit return status ([ae8d8bc](https://github.com/airone01/ft/commit/ae8d8bc812b2baac79b41c4a22dd3589b631fc0c))
+* **b:** globals polluting search tree ([99784d9](https://github.com/airone01/ft/commit/99784d9422c8c911984ad8e834fac13f6ea64a09))
+* **b:** mistook binary subtraction for unary negation ([63b2a16](https://github.com/airone01/ft/commit/63b2a166e0d086ed3d4eed8a4f654c1c9a7e907c))
+* **b:** strtol misuse when parsing octal literals ([a3eea46](https://github.com/airone01/ft/commit/a3eea4677e55fcc5618d681fa813c7eed93aaf88))
+
 ## [2.0.1](https://github.com/airone01/ft/compare/b-v2.0.0...b-v2.0.1) (2026-11-01)
 
 
