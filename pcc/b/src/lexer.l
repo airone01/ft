@@ -50,7 +50,7 @@ int yycolumn = 1;
                              return TOK_IDENT; 
                            }
 [0-9]+                     { // Plain integers
-                             yylval.num = atoi(yytext); 
+                             yylval.num = (int)strtol(yytext, NULL, 0);
                              return TOK_NUM; 
                            }
 [0-9]+\.[0-9]+             { // Floating-points
