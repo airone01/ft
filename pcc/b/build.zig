@@ -39,6 +39,8 @@ const libb_sources = [_][]const u8{
     "write",
 };
 
+var configured_libb_a: ?std.Build.LazyPath = null;
+
 pub fn configure(
     b: *std.Build,
     target: std.Build.ResolvedTarget,
@@ -49,19 +51,19 @@ pub fn configure(
     const src_dir = b.pathJoin(&.{ prefix, "src" });
     const libb_dir = b.pathJoin(&.{ prefix, "libb" });
 
-    // Step 1: Run yacc on parser.y to generate y.tab.c and y.tab.h
+    // yacc
     const yacc_cmd = b.addSystemCommand(&.{ "yacc", "-d" });
     yacc_cmd.addFileArg(b.path(b.pathJoin(&.{ src_dir, "parser.y" })));
     yacc_cmd.addArg("-o");
     const y_tab_c = yacc_cmd.addOutputFileArg("y.tab.c");
 
-    // Step 2: Run flex on lexer.l to generate lex.yy.c
-    const flex_cmd = b.addSystemCommand(&.{ "flex", "-o" });
+    // lex
+    const flex_cmd = b.addSystemCommand(&.{ "lex", "-o" });
     const lex_yy_c = flex_cmd.addOutputFileArg("lex.yy.c");
     flex_cmd.addFileArg(b.path(b.pathJoin(&.{ src_dir, "lexer.l" })));
     flex_cmd.step.dependOn(&yacc_cmd.step);
 
-    // Step 3: Build the B compiler executable
+    // B executable
     const b_exe = b.addExecutable(.{
         .name = "B",
         .root_module = b.createModule(.{
@@ -94,17 +96,17 @@ pub fn configure(
     b_exe.root_module.addIncludePath(b.path(src_dir));
     b_exe.root_module.addIncludePath(y_tab_c.dirname());
 
-    // Step 4: Build libb.a using B and the 32-bit assembler/archiver
+    // libb.a
     var obj_files: std.ArrayList(std.Build.LazyPath) = .empty;
 
     for (libb_sources) |name| {
-        // Compile .b to .s via B
+        // .b to .s
         const run_b = b.addRunArtifact(b_exe);
         const b_file = b.path(b.pathJoin(&.{ libb_dir, b.fmt("{s}.b", .{name}) }));
         run_b.setStdIn(.{ .lazy_path = b_file });
         const asm_file = run_b.captureStdOut(.{ .basename = b.fmt("{s}.s", .{name}) });
 
-        // Assemble .s to 32-bit .o via `as --32`
+        // .s to .o
         const as_cmd = b.addSystemCommand(&.{ "as", "--32", "-o" });
         const obj_file = as_cmd.addOutputFileArg(b.fmt("{s}.o", .{name}));
         as_cmd.addFileArg(asm_file);
@@ -112,17 +114,52 @@ pub fn configure(
         obj_files.append(b.allocator, obj_file) catch @panic("OOM");
     }
 
-    // Archive all .o into libb.a via `ar rcs`
+    // Archive all
     const ar_cmd = b.addSystemCommand(&.{ "ar", "rcs" });
     const libb_a = ar_cmd.addOutputFileArg("libb.a");
     for (obj_files.items) |obj| {
         ar_cmd.addFileArg(obj);
     }
 
+    configured_libb_a = libb_a;
+
     const install_lib = b.addInstallLibFile(libb_a, "libb.a");
     b.getInstallStep().dependOn(&install_lib.step);
 
     return b_exe;
+}
+
+pub fn addTests(
+    b: *std.Build,
+    target: std.Build.ResolvedTarget,
+    optimize: std.builtin.OptimizeMode,
+    test_step: *std.Build.Step,
+    b_exe: *std.Build.Step.Compile,
+) void {
+    const is_root = dirExists(b, "pcc/b/src");
+    const prefix = if (is_root) "pcc/b" else ".";
+    const test_file = b.pathJoin(&.{ prefix, "test.zig" });
+    const brt0_path = b.pathJoin(&.{ prefix, "brt0.o" });
+
+    const test_exe = b.addExecutable(.{
+        .name = "b_tests",
+        .root_module = b.createModule(.{
+            .root_source_file = b.path(test_file),
+            .target = target,
+            .optimize = optimize,
+        }),
+    });
+
+    const run_tests = b.addRunArtifact(test_exe);
+    run_tests.addArtifactArg(b_exe);
+    run_tests.addFileArg(b.path(brt0_path));
+    if (configured_libb_a) |libb| {
+        run_tests.addFileArg(libb);
+    } else {
+        run_tests.addFileArg(b.path(b.pathJoin(&.{ prefix, "libb", "libb.a" })));
+    }
+
+    test_step.dependOn(&run_tests.step);
 }
 
 pub fn build(b: *std.Build) void {
@@ -131,6 +168,9 @@ pub fn build(b: *std.Build) void {
 
     const b_exe = configure(b, target, optimize);
     b.installArtifact(b_exe);
+
+    const test_step = b.step("test", "Run B compiler and standard library tests");
+    addTests(b, target, optimize, test_step, b_exe);
 
     const run_cmd = b.addRunArtifact(b_exe);
     run_cmd.step.dependOn(b.getInstallStep());

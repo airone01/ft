@@ -5,6 +5,9 @@
 # native executable binary, `a.out`.
 # To use this file, source it (`source compile.sh`), run `compile <file.b>`,
 # and then test the result `./a.out`.
+# I have already set up the Zig worker to build everything without needing this
+# file. It is simply present because it's given by 42. And is expected during
+# defense.
 
 compile() (
   set -e
