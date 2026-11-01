@@ -17,13 +17,15 @@ void gen_func_call_mid(char *name) {
 void gen_func_call(int argc) {
   /* Run function from loaded pointer */
   if (argc > 0) {
-    /* Must arrange stack again before `call`
-     * So swap top of stack [esp+0] with func ptr if func had args
-     * (Multiplication by 4 is for word size) */
-    printf("  mov ebx, [esp+0]\n");
-    printf("  mov ecx, [esp+%d]\n", argc * 4);
-    printf("  mov [esp+%d], ebx\n", argc * 4);
-    printf("  mov [esp+0], ecx\n");
+    /* Reverse the stack (func_ptr + argc arguments) so that func_ptr
+     * is at [esp+0] and arguments are in cdecl left-to-right order. */
+    for (int i = 0; i < (argc + 1) / 2; i++) {
+      int j = argc - i;
+      printf("  mov ebx, [esp+%d]\n", i * 4);
+      printf("  mov ecx, [esp+%d]\n", j * 4);
+      printf("  mov [esp+%d], ebx\n", j * 4);
+      printf("  mov [esp+%d], ecx\n", i * 4);
+    }
   }
   printf("  pop eax\n");
   printf("  call eax\n");
