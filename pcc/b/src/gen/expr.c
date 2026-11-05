@@ -43,3 +43,97 @@ void gen_expr_ass(void) {
   printf("  pop ebx\n");
   printf("  mov [ebx], eax\n");
 }
+
+void gen_compound_ass(AssignOp op) {
+  printf("  pop ebx\n");
+  switch (op) {
+  case OP_ASSIGN:
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_ADD:
+    printf("  add [ebx], eax\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_SUB:
+    printf("  sub [ebx], eax\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_MUL:
+    printf("  imul eax, [ebx]\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_DIV:
+    printf("  mov ecx, eax\n");
+    printf("  mov eax, [ebx]\n");
+    printf("  cdq\n");
+    printf("  idiv ecx\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_MOD:
+    printf("  mov ecx, eax\n");
+    printf("  mov eax, [ebx]\n");
+    printf("  cdq\n");
+    printf("  idiv ecx\n");
+    printf("  mov eax, edx\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_AND:
+    printf("  and [ebx], eax\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_OR:
+    printf("  or [ebx], eax\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_XOR:
+    printf("  xor [ebx], eax\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_SHL:
+    printf("  mov ecx, eax\n");
+    printf("  shl dword ptr [ebx], cl\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_SHR:
+    printf("  mov ecx, eax\n");
+    printf("  sar dword ptr [ebx], cl\n");
+    printf("  mov eax, [ebx]\n");
+    break;
+  case OP_ASSIGN_EQ:
+    printf("  cmp [ebx], eax\n");
+    printf("  sete al\n");
+    printf("  movzx eax, al\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_NEQ:
+    printf("  cmp [ebx], eax\n");
+    printf("  setne al\n");
+    printf("  movzx eax, al\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_LT:
+    printf("  cmp [ebx], eax\n");
+    printf("  setl al\n");
+    printf("  movzx eax, al\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_LTE:
+    printf("  cmp [ebx], eax\n");
+    printf("  setle al\n");
+    printf("  movzx eax, al\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_GT:
+    printf("  cmp [ebx], eax\n");
+    printf("  setg al\n");
+    printf("  movzx eax, al\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  case OP_ASSIGN_GTE:
+    printf("  cmp [ebx], eax\n");
+    printf("  setge al\n");
+    printf("  movzx eax, al\n");
+    printf("  mov [ebx], eax\n");
+    break;
+  }
+}

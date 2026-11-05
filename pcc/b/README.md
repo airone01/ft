@@ -20,7 +20,7 @@ drop-in more modern replacements).
 - Hence, this compiler is very simple. Resulting assembly has duplicated and
   unoptimized operations. But as explicitly explained in the subject, the goal
   is to make it work, not make it good.
-- It does not support early B-style assignment operators (`=+` instead of `+=`).
+- It only supports early B-style assignment operators (`=+` instead of `+=`).
 - The char/string escape character is the more modern `\`, not `*`.
 - It does not support global vector and vars declarations.
 - There are some comments on stuff I deem necessary to detail, or on stuff I
@@ -91,6 +91,7 @@ drop-in more modern replacements).
     - `#<=`, `#>=`
     - `#==`, `#!=`
   - `++`, `--`
+- Assignment operators (`=+`, `=|`, `===`, ...)
 - `#` and `##`
 - Chars
 - Strings
