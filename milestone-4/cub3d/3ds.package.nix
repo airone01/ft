@@ -14,15 +14,23 @@
         src = ../..;
 
         buildPhase = ''
+          runHook preBuild
+
           cd milestone-4/cub3d
           bash build_3ds.sh
+
+          runHook postBuild
         '';
 
         installPhase = ''
+          runHook preInstall
+
           mkdir -p $out/bin
           cp cub3d.3dsx $out/bin/
           cp cub3d.elf $out/bin/
           cp cub3d.smdh $out/bin/
+
+          runHook postInstall
         '';
       };
     };
