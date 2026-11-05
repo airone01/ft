@@ -55,6 +55,7 @@ drop-in more modern replacements).
     - `&&`
     - `||`
     - `!`
+  - Ternaries (`a ? x : y`)
 - Semicolons
 - Braces
 - Switch

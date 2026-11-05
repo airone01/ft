@@ -31,9 +31,10 @@
 %token TOK_SEMI TOK_COMMA TOK_LPAREN TOK_RPAREN TOK_LBRACE TOK_RBRACE TOK_RBRACKET COMMOPEN COMMCLOSE
 %token TOK_SWITCH TOK_CASE TOK_DEFAULT TOK_BREAK
 %token TOK_INCREMENT TOK_DECREMENT
-%token TOK_GOTO TOK_COL
+%token TOK_GOTO
 
 %right TOK_ASSIGN
+%right TOK_QUES TOK_COL
 %left TOK_DBL_PIPE
 %left TOK_DBL_AMPER
 %left TOK_PIPE
@@ -198,6 +199,9 @@ expr:
     expr { gen_logi_and($<num>3); }
   | expr TOK_DBL_PIPE  { $<num>$ = gen_logi_or_mid(); }
     expr               { gen_logi_or($<num>3); }
+  | expr TOK_QUES { $<num>$ = gen_ternary_mid(); }
+    expr TOK_COL  { $<num>$ = gen_ternary_colon($<num>3); }
+    expr          { gen_ternary_end($<num>6); }
   ;
 expr_in_paren:
     TOK_LPAREN expr TOK_RPAREN

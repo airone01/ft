@@ -67,6 +67,7 @@ const tests = [_]TestCase{
 
     // ============================= CONTROL FLOW ==============================
     testCase("if_else"),
+    testCase("ternary"),
     testCase("nested_if_else"),
     testCase("while_loop"),
     testCase("while_break"),
