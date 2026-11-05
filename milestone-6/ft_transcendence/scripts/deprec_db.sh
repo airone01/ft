@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo '######################################################################'
-echo 'This script is DEPRECATED, `bun dev` already sets up and seeds the DB.';
+# shellcheck disable=SC2016
+echo 'This script is DEPRECATED, `bun dev` already sets up and seeds the DB.'
 echo '######################################################################'
-exit 1;
-
+exit 1
