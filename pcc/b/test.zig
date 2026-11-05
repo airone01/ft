@@ -326,10 +326,10 @@ pub fn main(init: std.process.Init.Minimal) !void {
         }
 
         if (ok) {
-            std.debug.print("[+] {s}: PASSED\n", .{t.name});
+            std.debug.print("{s}: \x1b[32mok\x1b[0m\n", .{t.name});
             passed += 1;
         } else {
-            std.debug.print("[-] {s}: FAILED (exit {d} != expected {d})\n", .{ t.name, actual_exit, t.expected_exit });
+            std.debug.print("[-] {s}: \x1b[31merror\x1b[0m (exit {d} != expected {d})\n", .{ t.name, actual_exit, t.expected_exit });
             if (res_qemu.stderr.len > 0) {
                 // Print first 3 lines of strace output
                 var line_it = std.mem.splitScalar(u8, res_qemu.stderr, '\n');
