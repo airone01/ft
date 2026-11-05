@@ -4,19 +4,14 @@ void gen_expr_ident(char *name) {
   /* Load value where pointed to by variable. Meaning simply loading a variable.
    */
   Symbol *sym = get_symbol(name);
-  if (sym) {
-    if (sym->type == TYPE_AUTO) {
-      printf("  lea eax, [ebp %d]\n", sym->offset);
-    } else if (sym->type == TYPE_PARAM) {
-      printf("  lea eax, [ebp + %d]\n", sym->offset);
-    } else if (sym->type == TYPE_EXTERN) {
-      printf("  lea eax, \"%s\"\n", sym->name);
-    }
-    printf("  mov eax, [eax]\n");
-  } else {
-    fprintf(stderr, "<stdin>: " RED "error:" CRESET " unknown variable '%s'\n",
-            name);
+  if (!sym || sym->type == TYPE_EXTERN) {
+    printf("  lea eax, \"%s\"\n", name);
+  } else if (sym->type == TYPE_AUTO) {
+    printf("  lea eax, [ebp %d]\n", sym->offset);
+  } else if (sym->type == TYPE_PARAM) {
+    printf("  lea eax, [ebp + %d]\n", sym->offset);
   }
+  printf("  mov eax, [eax]\n");
 }
 
 void gen_expr_num(int num) { printf("  mov eax, %d\n", num); }

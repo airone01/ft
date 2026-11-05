@@ -37,11 +37,12 @@ void gen_func_call(int argc) {
 void gen_func_def_mid(char *fname) {
   current_func_name = fname;
   /* Function header stuff
-   * All funcs are flobal in Blang */
+   * All funcs are global in Blang */
   printf(".globl %s\n", fname);
   printf("%s:\n", fname);
   printf("  .long \"%s\" + 4\n", fname);
   printf("  enter 0, 0\n");
+  add_symbol(fname, TYPE_EXTERN);
 }
 
 void gen_func_def(void) {
