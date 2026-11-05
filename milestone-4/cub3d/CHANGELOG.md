@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/airone01/ft/compare/cub3d-v2.2.1...cub3d-v2.2.2) (2026-11-05)
+
+
+### Bug Fixes
+
+* **cub3d:** update icon ([b0c75f2](https://github.com/airone01/ft/commit/b0c75f215d3a17656a5d39b4792a2f02a7b00158))
+
 ## [2.2.1](https://github.com/airone01/ft/compare/cub3d-v2.2.0...cub3d-v2.2.1) (2026-10-02)
 
 
