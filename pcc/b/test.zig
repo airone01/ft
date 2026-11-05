@@ -131,6 +131,7 @@ const tests = [_]TestCase{
 
     // ========================== FUNCTIONS & CALLING ==========================
     testCase("func_ptr_call"),
+    testCase("func_as_arg"),
     testCase("call_6_args"),
     testCase("call_8_args"),
     testCase("mutual_recursion"),
