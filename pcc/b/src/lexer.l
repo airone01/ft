@@ -78,6 +78,7 @@ int yycolumn = 1;
                            }
 
 ";"                        { return TOK_SEMI; }
+"?"                        { return TOK_QUES; }
 ":"                        { return TOK_COL; }
 ","                        { return TOK_COMMA; }
 "="                        { return TOK_ASSIGN; }

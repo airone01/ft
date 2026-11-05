@@ -180,4 +180,11 @@ int gen_if_mid(int else_lbl);
 void gen_if(int exit_lbl);
 int gen_if_hdr(void);
 
+/*
+ * Ternary
+ */
+int gen_ternary_mid(void);
+int gen_ternary_colon(int false_lbl);
+void gen_ternary_end(int exit_lbl);
+
 #endif /* SRC_GEN_GEN_H */
