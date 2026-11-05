@@ -114,6 +114,8 @@ const tests = [_]TestCase{
     // ===================== UNARY & COMPOUND ASSIGNMENTS ======================
     testCase("unary_negation"),
     testCase("chained_assignment"),
+    testCase("compound_assign"),
+    testCase("ternary"),
 
     // =============================== SWITCH ==================================
     testCase("switch_default"),
