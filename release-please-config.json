@@ -141,6 +141,10 @@
       "release-type": "simple",
       "package-name": "inception"
     },
+    "milestone-6/ft_transcendence": {
+      "release-type": "node",
+      "package-name": "ft_transcendence"
+    },
     "pcc/b": {
       "release-type": "simple",
       "package-name": "b"
@@ -152,10 +156,6 @@
     "pcc/ft_ping": {
       "release-type": "simple",
       "package-name": "ft_ping"
-    },
-    "pcc/ft_transcendence": {
-      "release-type": "node",
-      "package-name": "ft_transcendence"
     },
     "pcc/libasm": {
       "release-type": "simple",
