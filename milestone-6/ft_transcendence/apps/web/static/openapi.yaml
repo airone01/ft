@@ -1,18 +1,15 @@
 openapi: 3.1.0
-
 info:
   title: ft_transcendence API
   description: API for the ft_transcendence project
   version: 1.0.0
-
 servers:
   - url: http://localhost:5173/api
-
 paths:
   /users/{userId}:
     description: "test"
     get:
-      tags: 
+      tags:
         - users
       summary: Récupère un utilisateur
       parameters:
@@ -28,7 +25,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-
 components:
   schemas:
     User:
@@ -56,7 +52,6 @@ components:
         createdAt:
           type: string
           format: date-time
-
     AuthSession:
       type: object
       required:
@@ -78,7 +73,6 @@ components:
         expiresAt:
           type: string
           format: date-time
-
     Friendship:
       type: object
       required:
@@ -93,7 +87,6 @@ components:
         createdAt:
           type: string
           format: date-time
-
     Game:
       type: object
       required:
@@ -132,7 +125,6 @@ components:
           type: string
           format: date-time
           nullable: true
-
     GamePlayer:
       type: object
       required:
@@ -155,7 +147,6 @@ components:
           type: integer
           minimum: 1
           nullable: true
-
     GameSpectator:
       type: object
       required:
@@ -166,7 +157,6 @@ components:
           type: integer
         userId:
           type: integer
-
     UserStats:
       type: object
       required:

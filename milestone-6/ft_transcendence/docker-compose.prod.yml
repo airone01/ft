@@ -11,7 +11,6 @@ services:
       - DOMAIN=${DOMAIN}
     depends_on:
       - web
-
   migrator:
     build:
       context: .
@@ -22,7 +21,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
   web:
     build:
       context: .
@@ -43,7 +41,6 @@ services:
         condition: service_healthy
       migrator:
         condition: service_completed_successfully
-
   db:
     image: postgres:15-alpine
     environment:
@@ -57,7 +54,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
 volumes:
   pgdata_prod:
   caddy_data:
