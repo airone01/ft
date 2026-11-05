@@ -47,7 +47,7 @@ echo "Compiling cub3d.elf..."
 $CC $FLAGS $INCLUDES $SRCS $SPECS $LIBS -o cub3d.elf
 
 echo "Generating SMDH..."
-"$DEVKITPRO"/tools/bin/smdhtool --create "cub3d" "cub3d port" "airone01" icon.png cub3d.smdh
+"$DEVKITPRO"/tools/bin/smdhtool --create "cub3d" "cub3d port" "airone01" assets/icon_64.png cub3d.smdh
 
 echo "Converting to cub3d.3dsx..."
 $TOOL3DS cub3d.elf cub3d.3dsx --romfs=romfs --smdh=cub3d.smdh
