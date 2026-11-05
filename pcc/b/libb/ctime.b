@@ -8,7 +8,6 @@ ctime(timep, date) {
   mm = t % 60;
   t = t / 60;
   hh = t % 24;
-  t = t / 24;
   days = t / 24;
 
   /* Leap years
