@@ -19,6 +19,7 @@
 %type <num> params params_list
 %type <num> while_start
 %type <num> if_header
+%type <num> assign_op
 
 %nonassoc IFX
 %nonassoc TOK_ELSE
@@ -32,8 +33,11 @@
 %token TOK_SWITCH TOK_CASE TOK_DEFAULT TOK_BREAK
 %token TOK_INCREMENT TOK_DECREMENT
 %token TOK_GOTO
+%token TOK_ASS_ADD TOK_ASS_SUB TOK_ASS_MUL TOK_ASS_DIV TOK_ASS_MOD
+%token TOK_ASS_SHL TOK_ASS_SHR TOK_ASS_AND TOK_ASS_OR TOK_ASS_XOR
+%token TOK_ASS_EQ TOK_ASS_NEQ TOK_ASS_LT TOK_ASS_LTE TOK_ASS_GT TOK_ASS_GTE
 
-%right TOK_ASSIGN
+%right TOK_ASSIGN TOK_ASS_ADD TOK_ASS_SUB TOK_ASS_MUL TOK_ASS_DIV TOK_ASS_MOD TOK_ASS_SHL TOK_ASS_SHR TOK_ASS_AND TOK_ASS_OR TOK_ASS_XOR TOK_ASS_EQ TOK_ASS_NEQ TOK_ASS_LT TOK_ASS_LTE TOK_ASS_GT TOK_ASS_GTE
 %right TOK_QUES TOK_COL
 %left TOK_DBL_PIPE
 %left TOK_DBL_AMPER
@@ -129,6 +133,26 @@ statements_list:
   | statements_list statement
   ;
 
+assign_op:
+    TOK_ASSIGN  { $$ = OP_ASSIGN; }
+  | TOK_ASS_ADD { $$ = OP_ASSIGN_ADD; }
+  | TOK_ASS_SUB { $$ = OP_ASSIGN_SUB; }
+  | TOK_ASS_MUL { $$ = OP_ASSIGN_MUL; }
+  | TOK_ASS_DIV { $$ = OP_ASSIGN_DIV; }
+  | TOK_ASS_MOD { $$ = OP_ASSIGN_MOD; }
+  | TOK_ASS_SHL { $$ = OP_ASSIGN_SHL; }
+  | TOK_ASS_SHR { $$ = OP_ASSIGN_SHR; }
+  | TOK_ASS_AND { $$ = OP_ASSIGN_AND; }
+  | TOK_ASS_OR  { $$ = OP_ASSIGN_OR; }
+  | TOK_ASS_XOR { $$ = OP_ASSIGN_XOR; }
+  | TOK_ASS_EQ  { $$ = OP_ASSIGN_EQ; }
+  | TOK_ASS_NEQ { $$ = OP_ASSIGN_NEQ; }
+  | TOK_ASS_LT  { $$ = OP_ASSIGN_LT; }
+  | TOK_ASS_LTE { $$ = OP_ASSIGN_LTE; }
+  | TOK_ASS_GT  { $$ = OP_ASSIGN_GT; }
+  | TOK_ASS_GTE { $$ = OP_ASSIGN_GTE; }
+  ;
+
 lvalue:
     TOK_IDENT { gen_lvalue($1, @1); }
   ;
@@ -155,7 +179,7 @@ expr:
   | TOK_AMPER lvalue %prec TOK_EXCL { gen_expr_addrof(); }
   | TOK_STAR expr %prec TOK_EXCL    { gen_expr_deref_expr(); }
   | TOK_STR                         { gen_expr_deref($1); }
-  | lvalue TOK_ASSIGN expr          { gen_expr_ass(); }
+  | lvalue assign_op expr %prec TOK_ASSIGN { gen_compound_ass($2); }
   | expr TOK_PLUS  { gpe(); } expr { gen_math_plus(); }
   | expr TOK_MINUS { gpe(); } expr { gen_math_minus(); }
   | expr TOK_STAR  { gpe(); } expr { gen_math_mult(); }
@@ -192,7 +216,7 @@ expr:
   | TOK_INCREMENT lvalue { gen_incr(Inc, Pre); }
   | TOK_DECREMENT lvalue { gen_incr(Dec, Pre); }
   | arr_access                            { gen_arr_read(); }
-  | arr_access TOK_ASSIGN { gpe(); } expr { gen_arr_write(); }
+  | arr_access assign_op { gpe(); } expr %prec TOK_ASSIGN { gen_compound_ass($2); }
   | arr_access TOK_INCREMENT              { gen_arr_inc(); }
   | arr_access TOK_DECREMENT              { gen_arr_dec(); }
   | expr TOK_DBL_AMPER { $<num>$ = gen_logi_and_mid(); }

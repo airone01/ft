@@ -21,7 +21,7 @@ int gen_if_hdr(void) {
 int gen_ternary_mid(void) {
   int false_lbl = label_counter++;
   printf("  cmp eax, 0\n");
-  printf("  jd .L%d\n", false_lbl);
+  printf("  je .L%d\n", false_lbl);
   return false_lbl;
 }
 

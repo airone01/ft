@@ -142,7 +142,28 @@ void gen_expr_num(int num);
 void gen_expr_addrof(void);
 void gen_expr_deref_expr(void);
 void gen_expr_deref(const char *name);
+typedef enum {
+  OP_ASSIGN,
+  OP_ASSIGN_ADD,
+  OP_ASSIGN_SUB,
+  OP_ASSIGN_MUL,
+  OP_ASSIGN_DIV,
+  OP_ASSIGN_MOD,
+  OP_ASSIGN_SHL,
+  OP_ASSIGN_SHR,
+  OP_ASSIGN_AND,
+  OP_ASSIGN_OR,
+  OP_ASSIGN_XOR,
+  OP_ASSIGN_EQ,
+  OP_ASSIGN_NEQ,
+  OP_ASSIGN_LT,
+  OP_ASSIGN_LTE,
+  OP_ASSIGN_GT,
+  OP_ASSIGN_GTE,
+} AssignOp;
+
 void gen_expr_ass(void);
+void gen_compound_ass(AssignOp op);
 
 /*
  * Func
