@@ -304,10 +304,9 @@ This project is licensed under the [MIT License](/LICENSE). See the
     [EzGIF](https://ezgif.com/png-to-bmp).
 
 [^3]: I haven't bothered to make _everything_ compile using the Zig build
-    system. At the time of writing and understandably, transcendence and the 3ds
-    cub3d port must be compiled individually with their own tooling. I don't
-    update the README as often as I update projects though, so take a look
-    around and see for yourself!
+    system. At the time of writing the 3ds cub3d port must be compiled
+    individually with its own tooling. I don't update the README as often as I
+    update projects though, so take a look around and see for yourself!
 
 [^4]: From [https://github.com/rizsotto/Bear](https://github.com/rizsotto/Bear):
     "Bear generates a compilation database for Clang tooling."
