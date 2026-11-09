@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.0.0](https://github.com/airone01/ft/compare/b-v2.0.2...b-v3.0.0) (2026-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **b:** Register functions in symbol table
+
+### Features
+
+* **b:** assignment operators ([d085246](https://github.com/airone01/ft/commit/d08524689b0e85279eaf2d0092246337733f248d))
+* **b:** ternary conditions ([a09ed93](https://github.com/airone01/ft/commit/a09ed9389c696a34fe53d8a559d64b0e0a8b854f))
+
+
+### Bug Fixes
+
+* **b:** ctime display correct days ([c50cff3](https://github.com/airone01/ft/commit/c50cff3a2cce8990180708344ea1ef11783f69bd))
+* **b:** interpret functions as symbols ([4539f13](https://github.com/airone01/ft/commit/4539f13213b7506590d718793bd3a519221c2ab4))
+
 ## [2.0.2](https://github.com/airone01/ft/compare/b-v2.0.1...b-v2.0.2) (2026-11-01)
 
 
