@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.0.0](https://github.com/airone01/ft/compare/b-v3.0.0...b-v4.0.0) (2026-11-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **b:** Complete rewrite of the lvalue grammar to be generic. Funky syntax such as `&*ptr` or `*(&var + 5) = x` is now supported.
+
+### Bug Fixes
+
+* **b:** allow effectless single-semicolon statement ([eb22885](https://github.com/airone01/ft/commit/eb228853bf49bc67068c74de77e4788780d76074))
+* **b:** arbitrary function calling ([a224ffa](https://github.com/airone01/ft/commit/a224ffaa09178e55c356a285654993f6575a9523))
+
+
+### Code Refactoring
+
+* **b:** lvalue grammar ([4fa733b](https://github.com/airone01/ft/commit/4fa733b6a3573e65e6e8c37be15593095d04bd40))
+
 ## [3.0.0](https://github.com/airone01/ft/compare/b-v2.0.2...b-v3.0.0) (2026-11-09)
 
 
