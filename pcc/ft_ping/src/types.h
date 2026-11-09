@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 
 typedef struct {
+  int npackets;
+  int flood;
   int verbose;
 
   const char *address;

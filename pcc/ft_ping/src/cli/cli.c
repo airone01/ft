@@ -1,18 +1,25 @@
 // https://man7.org/linux/man-pages/man3/getopt_long.3.html
-#include <string.h>
 #define _GNU_SOURCE
 
 #include "cli.h"
+#include <errno.h>
 #include <getopt.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 static void print_help(FILE *stream, const char *pname) {
-  fprintf(stream, "Usage: %s [OPTION...] HOST ...\n", pname);
-  fprintf(stream, "Send ICMP ECHO_REQUEST packets to network hosts.\n");
-
-  fprintf(stream, "\nOptions valid for all request types:\n");
-  fprintf(stream, "  -v, --verbose  verbose output\n");
-  fprintf(stream, "  -?, --help     display this help list\n");
+  fprintf(stream,
+          "Usage: %s [OPTION...] HOST ...\n"
+          "Send ICMP ECHO_REQUEST packets to network hosts.\n"
+          "\n"
+          "Options valid for all request types:\n"
+          "  -c, --count <COUNT>  stop after sending COUNT packets\n"
+          "  -f                   flood ping (root only)\n"
+          "  -v, --verbose        verbose output\n"
+          "  -?, --help           display this help list\n",
+          pname);
 }
 
 int parse_args(int argc, const char *argv[], CliOptions *optsp) {
@@ -23,19 +30,42 @@ int parse_args(int argc, const char *argv[], CliOptions *optsp) {
 
   memset(optsp, 0, sizeof(*optsp));
   optsp->pname = argv[0];
+  optsp->npackets = -1;
 
-  while ((c = (char)getopt_long(argc, (char *const *)argv, "v?", long_options,
-                                NULL)) != -1)
+  while ((c = (char)getopt_long(argc, (char *const *)argv, "v?c:f",
+                                long_options, NULL)) != -1)
     switch (c) {
+    case 'c':
+      char *endptr;
+      errno = 0;
+      long val = strtol(optarg, &endptr, 10);
+      if (errno != 0 || *endptr != '\0' || val <= 0) {
+        fprintf(stderr, "%s: invalid value (`%s')\n", optsp->pname, optarg);
+        return -1;
+      }
+      optsp->npackets = val;
+      break;
+    case 'f':
+      if (getuid() != 0) {
+        fprintf(stderr, "%s: flood ping is not allowed for non-root users\n",
+                optsp->pname);
+        return -2;
+      }
+      optsp->flood = 1;
+      break;
     case 'v':
       optsp->verbose = 1;
       break;
     case '?':
-      print_help(stdout, argv[0]);
-      return -2;
+      if (optopt == 0 || optopt == '?') {
+        print_help(stdout, optsp->pname);
+        return -2;
+      }
+      fprintf(stderr, "Try '%s -?' for more information.\n", optsp->pname);
+      return -1;
     default:
       fprintf(stderr, "%s: invalid option -- '%c'\n", optsp->pname, c);
-      print_help(stderr, argv[0]);
+      print_help(stderr, optsp->pname);
       return -1;
     }
 
