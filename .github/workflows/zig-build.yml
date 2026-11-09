@@ -49,8 +49,8 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('tools/push-swap-visualizer-minecraft/Cargo.toml') }}
+            tools/ps-viz-mc/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('tools/ps-viz-mc/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
       - name: Build All Targets
