@@ -21,8 +21,16 @@ struct YYLTYPE {
 #include <stdio.h>
 #include <stdlib.h>
 
-void gen_lvalue(char *name, YYLTYPE _1);
+/*
+ * Common
+ */
+extern int is_lvalue;
 void gen_push_eax(void);
+void gen_lvalue_addr(char *name);
+void ensure_rvalue(void);
+void gen_assign_prep(void);
+void gen_unary_deref(void);
+void gen_unary_addrof(void);
 
 /*
  * Comparisons
@@ -76,7 +84,7 @@ typedef enum {
   Post,
   Pre,
 } IncrOrder;
-void gen_incr(IncrWay way, IncrOrder order);
+void gen_lvalue_inc(IncrWay way, IncrOrder order);
 
 /*
  * Array indexing

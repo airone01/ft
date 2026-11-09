@@ -41,4 +41,5 @@ void gen_arr_dec(void) {
 void gen_arr_acc(void) {
   printf("  pop ebx\n");
   printf("  lea eax, [ebx + eax*4]\n");
+  is_lvalue = 1;
 }
