@@ -21,7 +21,7 @@ jobs:
             libreadline-dev
       - name: Build and install NASM
         run: |
-          export NASM_VER="3.01"
+          export NASM_VER="3.02"
           wget https://www.nasm.us/pub/nasm/releasebuilds/${NASM_VER}/nasm-${NASM_VER}.tar.gz
           tar xzf nasm-${NASM_VER}.tar.gz
           cd nasm-${NASM_VER}
