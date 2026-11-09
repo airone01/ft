@@ -29,18 +29,19 @@ void update_fps_counter(t_data *data) {
 void display_fps(t_data *data) {
   char fps_text[32];
   t_color c;
-  int x;
-  int y;
 
+  int fps_counter_top = 0;
+  int fps_counter_left = 0;
   c.val = 0x000000;
   snprintf(fps_text, sizeof(fps_text), "FPS: %.1f", data->fps);
-  y = 4;
-  while (++y < 5 + FPS_COUNTER_TEXT_HEIGHT) {
-    x = 4;
-    while (++x < 5 + FPS_COUNTER_TEXT_WIDTH) {
+  for (int y = fps_counter_top; y < fps_counter_top + FPS_COUNTER_TEXT_HEIGHT;
+       y++) {
+    for (int x = fps_counter_left;
+         x < fps_counter_left + FPS_COUNTER_TEXT_WIDTH; x++) {
       if (x < data->win_width && y < data->win_height)
         my_mlx_pixel_put(&data->img, x, y, c);
     }
   }
-  mlx_string_put(data->mlx, data->win, 10, 20, 0xFFFFFF, fps_text);
+  mlx_string_put(data->mlx, data->win, fps_counter_left * 2 + 5,
+                 fps_counter_top * 2 + 15, 0xFFFFFF, fps_text);
 }
