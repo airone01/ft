@@ -239,7 +239,8 @@ expr:
   ;
 
 statement:
-    statement_in_braces
+    TOK_SEMI
+  | statement_in_braces
   | statement_expr
   | statement_while
   | statement_if
