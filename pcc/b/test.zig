@@ -43,6 +43,12 @@ fn testCaseStdin(comptime name: []const u8, stdin_data: []const u8) TestCase {
 }
 
 const tests = [_]TestCase{
+    // =============================== DEFENSE ================================
+    testCase("defense/hello_world"),
+    testCase("defense/loops_and_conditions"),
+    testCase("defense/functions"),
+    testCase("defense/vectors"),
+
     // ============================== ARITHMETIC ===============================
     testCase("arith_add"),
     testCase("arith_sub"),
