@@ -15,7 +15,7 @@ pub fn configure(
     const is_root = dirExists(b, "tools/ps-viz-mc");
     const prefix = if (is_root) "tools/ps-viz-mc" else ".";
     const manifest = b.pathJoin(&.{ prefix, "Cargo.toml" });
-    const binary = if (is_root) "target/release/mcps" else "target/release/mcps";
+    const binary = b.pathJoin(&.{ prefix, "target/release/mcps" });
 
     const cargo_build = b.addSystemCommand(&.{
         "cargo", "build", "--release", "--manifest-path", b.pathFromRoot(manifest),
