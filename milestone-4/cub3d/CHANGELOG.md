@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/airone01/ft/compare/cub3d-v2.2.2...cub3d-v2.2.3) (2026-11-09)
+
+
+### Bug Fixes
+
+* **cub3d:** move fps counter to top-left ([1d797d2](https://github.com/airone01/ft/commit/1d797d2e9349388abc2a970592b8c03263849082))
+
 ## [2.2.2](https://github.com/airone01/ft/compare/cub3d-v2.2.1...cub3d-v2.2.2) (2026-11-05)
 
 
