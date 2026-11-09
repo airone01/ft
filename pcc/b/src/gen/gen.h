@@ -176,7 +176,6 @@ void gen_compound_ass(AssignOp op);
 /*
  * Func
  */
-void gen_func_call_mid(char *name);
 void gen_func_call(int argc);
 void gen_func_def_mid(char *fname);
 void gen_func_def(void);

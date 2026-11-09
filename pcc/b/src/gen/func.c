@@ -1,20 +1,6 @@
 #include "gen.h"
 #include <string.h>
 
-void gen_func_call_mid(char *name) {
-  /* Load function from pointer */
-  Symbol *sym = get_symbol(name);
-  if (!sym || sym->type == TYPE_EXTERN) {
-    printf("  lea eax, \"%s\"\n", name);
-  } else if (sym->type == TYPE_AUTO) {
-    printf("  lea eax, [ebp %d]\n", sym->offset);
-  } else if (sym->type == TYPE_PARAM) {
-    printf("  lea eax, [ebp + %d]\n", sym->offset);
-  }
-  printf("  mov eax, [eax]\n");
-  gpe();
-}
-
 void gen_func_call(int argc) {
   /* Run function from loaded pointer */
   if (argc > 0) {
@@ -33,6 +19,7 @@ void gen_func_call(int argc) {
   if (argc > 0) {
     printf("  add esp, %d\n", argc * 4);
   }
+  is_lvalue = 0;
 }
 
 void gen_func_def_mid(char *fname) {
