@@ -133,6 +133,38 @@ statements_list:
   | statements_list statement
   ;
 
+primary_exp:
+    TOK_IDENT { gen_lvalue_addr($1); }
+  | TOK_NUM   { gen_expr_num($1); is_lvalue = 0; }
+  | TOK_STR   { gen_expr_deref($1); is_lvalue = 0; }
+  | TOK_LPAREN expr TOK_RPAREN
+  ;
+
+postfix_expr:
+    primary_exp
+  | postfix_expr TOK_LBRACKET  { ensure_rvalue(); gpe(); }
+    expr TOK_RBRACKET          { ensure_rvalue(); gen_arr_acc(); }
+  | postfix_expr TOK_LPAREN    { ensure_rvalue(); gpe(); }
+    args TOK_RPAREN            { gen_func_call($4); }
+  | postfix_expr TOK_INCREMENT { gen_lvalue_inc(Inc, Post); }
+  | postfix_expr TOK_DECREMENT { gen_lvalue_inc(Dec, Post); }
+  ;
+
+unary_expr:
+    postfix_expr
+  | TOK_INCREMENT unary_expr  { gen_lvalue_inc(Inc, Pre); }
+  | TOK_DECREMENT unary_expr  { gen_lvalue_inc(Dec, Pre); }
+  /* ref/deref */
+  | TOK_STAR unary_expr       { gen_unary_deref(); }
+  | TOK_AMPER unary_expr      { gen_unary_addrof(); }
+  /* ops */
+  | TOK_MINUS unary_expr      { ensure_rvalue(); gen_unary_neg(); }
+  | TOK_EXCL unary_expr       { ensure_rvalue(); gen_unary_excl(); }
+  | TOK_TILDE unary_expr      { ensure_rvalue(); gen_unary_not(); }
+  | TOK_HASH unary_expr       { ensure_rvalue(); gen_hash(); }
+  | TOK_HASH_HASH unary_expr  { ensure_rvalue(); gen_hash_hash(); }
+  ;
+
 assign_op:
     TOK_ASSIGN  { $$ = OP_ASSIGN; }
   | TOK_ASS_ADD { $$ = OP_ASSIGN_ADD; }
@@ -153,12 +185,7 @@ assign_op:
   | TOK_ASS_GTE { $$ = OP_ASSIGN_GTE; }
   ;
 
-lvalue:
-    TOK_IDENT { gen_lvalue($1, @1); }
-  ;
-
 expr:
-    expr_in_paren
   /* Note for mid-rule actions:
    * Because we don't have an AST, we must do some bullshit in order for the
    * code to be continuous and working.
@@ -171,64 +198,44 @@ expr:
    *   - Pops left operand into `ebx`
    *   - Use it as well as `eax` to run operation
    */
-  | TOK_IDENT TOK_LPAREN { gen_func_call_mid($1); }
-    args                 /* Load arguments to stack */
-    TOK_RPAREN           { gen_func_call($4); }
-  | TOK_IDENT                       { gen_expr_ident($1); }
-  | TOK_NUM                         { gen_expr_num($1); }
-  | TOK_AMPER lvalue %prec TOK_EXCL { gen_expr_addrof(); }
-  | TOK_STAR expr %prec TOK_EXCL    { gen_expr_deref_expr(); }
-  | TOK_STR                         { gen_expr_deref($1); }
-  | lvalue assign_op expr %prec TOK_ASSIGN { gen_compound_ass($2); }
-  | expr TOK_PLUS  { gpe(); } expr { gen_math_plus(); }
-  | expr TOK_MINUS { gpe(); } expr { gen_math_minus(); }
-  | expr TOK_STAR  { gpe(); } expr { gen_math_mult(); }
-  | expr TOK_DIV   { gpe(); } expr { gen_math_div(); }
-  | expr TOK_MOD   { gpe(); } expr { gen_math_mod(); }
-  | expr TOK_FPLUS { gpe(); } expr { gen_math_fplus(); }
-  | expr TOK_FMINUS { gpe(); } expr { gen_math_fminus(); }
-  | expr TOK_FMULT  { gpe(); } expr { gen_math_fmult(); }
-  | expr TOK_FDIV   { gpe(); } expr { gen_math_fdiv(); }
-  | TOK_HASH expr      { gen_hash(); }
-  | TOK_HASH_HASH expr { gen_hash_hash(); }
-  | expr TOK_LANGLE { gpe(); } expr { gen_cmp("setl"); }
-  | expr TOK_LTE    { gpe(); } expr { gen_cmp("setle"); }
-  | expr TOK_RANGLE { gpe(); } expr { gen_cmp("setg"); }
-  | expr TOK_GTE    { gpe(); } expr { gen_cmp("setge"); }
-  | expr TOK_EQ     { gpe(); } expr { gen_cmp("sete"); }
-  | expr TOK_NEQ    { gpe(); } expr { gen_cmp("setne"); }
-  | expr TOK_FLT    { gpe(); } expr { gen_fcmp("setb"); }
-  | expr TOK_FLTE   { gpe(); } expr { gen_fcmp("setbe"); }
-  | expr TOK_FGT    { gpe(); } expr { gen_fcmp("seta"); }
-  | expr TOK_FGTE   { gpe(); } expr { gen_fcmp("setae"); }
-  | expr TOK_FEQ    { gpe(); } expr { gen_fcmp("sete"); }
-  | expr TOK_FNEQ   { gpe(); } expr { gen_fcmp("setne"); }
-  | expr TOK_AMPER  { gpe(); } expr { gen_bit_cmp("and"); }
-  | expr TOK_PIPE   { gpe(); } expr { gen_bit_cmp("or"); }
-  | expr TOK_CARRET { gpe(); } expr { gen_bit_cmp("xor"); }
-  | expr TOK_LSHIFT { gpe(); } expr { gen_shift("shl"); }
-  | expr TOK_RSHIFT { gpe(); } expr { gen_shift("sar"); }
-  | TOK_EXCL expr                 { gen_unary_excl(); }
-  | TOK_TILDE expr                { gen_unary_not(); }
-  | TOK_MINUS expr %prec TOK_STAR { gen_unary_neg(); }
-  | lvalue TOK_INCREMENT { gen_incr(Inc, Post); }
-  | lvalue TOK_DECREMENT { gen_incr(Dec, Post); }
-  | TOK_INCREMENT lvalue { gen_incr(Inc, Pre); }
-  | TOK_DECREMENT lvalue { gen_incr(Dec, Pre); }
-  | arr_access                            { gen_arr_read(); }
-  | arr_access assign_op { gpe(); } expr %prec TOK_ASSIGN { gen_compound_ass($2); }
-  | arr_access TOK_INCREMENT              { gen_arr_inc(); }
-  | arr_access TOK_DECREMENT              { gen_arr_dec(); }
-  | expr TOK_DBL_AMPER { $<num>$ = gen_logi_and_mid(); }
-    expr { gen_logi_and($<num>3); }
-  | expr TOK_DBL_PIPE  { $<num>$ = gen_logi_or_mid(); }
-    expr               { gen_logi_or($<num>3); }
-  | expr TOK_QUES { $<num>$ = gen_ternary_mid(); }
-    expr TOK_COL  { $<num>$ = gen_ternary_colon($<num>3); }
-    expr          { gen_ternary_end($<num>6); }
-  ;
-expr_in_paren:
-    TOK_LPAREN expr TOK_RPAREN
+    unary_expr
+  | unary_expr assign_op { gen_assign_prep(); }
+    expr %prec TOK_ASSIGN { ensure_rvalue(); gen_compound_ass($2); }
+  /* bin exprs */
+  | expr TOK_PLUS   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_plus(); }
+  | expr TOK_MINUS  { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_minus(); }
+  | expr TOK_STAR   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_mult(); }
+  | expr TOK_DIV    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_div(); }
+  | expr TOK_MOD    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_mod(); }
+  | expr TOK_FPLUS  { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_fplus(); }
+  | expr TOK_FMINUS { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_fminus(); }
+  | expr TOK_FMULT  { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_fmult(); }
+  | expr TOK_FDIV   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_math_fdiv(); }
+  | expr TOK_LANGLE { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_cmp("setl"); }
+  | expr TOK_LTE    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_cmp("setle"); }
+  | expr TOK_RANGLE { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_cmp("setg"); }
+  | expr TOK_GTE    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_cmp("setge"); }
+  | expr TOK_EQ     { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_cmp("sete"); }
+  | expr TOK_NEQ    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_cmp("setne"); }
+  | expr TOK_FLT    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_fcmp("setb"); }
+  | expr TOK_FLTE   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_fcmp("setbe"); }
+  | expr TOK_FGT    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_fcmp("seta"); }
+  | expr TOK_FGTE   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_fcmp("setae"); }
+  | expr TOK_FEQ    { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_fcmp("sete"); }
+  | expr TOK_FNEQ   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_fcmp("setne"); }
+  | expr TOK_AMPER  { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_bit_cmp("and"); }
+  | expr TOK_PIPE   { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_bit_cmp("or"); }
+  | expr TOK_CARRET { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_bit_cmp("xor"); }
+  | expr TOK_LSHIFT { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_shift("shl"); }
+  | expr TOK_RSHIFT { ensure_rvalue(); gpe(); } expr { ensure_rvalue(); gen_shift("sar"); }
+  /* inline cond (and ternary) */
+  | expr TOK_DBL_AMPER { ensure_rvalue(); $<num>$ = gen_logi_and_mid(); }
+    expr               { ensure_rvalue(); gen_logi_and($<num>3); }
+  | expr TOK_DBL_PIPE  { ensure_rvalue(); $<num>$ = gen_logi_or_mid(); }
+    expr               { ensure_rvalue(); gen_logi_or($<num>3); }
+  | expr TOK_QUES      { ensure_rvalue(); $<num>$ = gen_ternary_mid(); }
+    expr TOK_COL       { ensure_rvalue(); $<num>$ = gen_ternary_colon($<num>3); }
+    expr               { ensure_rvalue(); gen_ternary_end($<num>6); }
   ;
 
 statement:
@@ -249,11 +256,11 @@ statement_in_braces:
   ;
 
 statement_expr:
-    expr TOK_SEMI
+    expr TOK_SEMI { ensure_rvalue(); }
   ;
 
 statement_while:
-    while_start TOK_LPAREN expr TOK_RPAREN { gen_while_mid($1); }
+    while_start TOK_LPAREN expr TOK_RPAREN { ensure_rvalue(); gen_while_mid($1); }
     statement                              { gen_while($1); }
   ;
 while_start:
@@ -266,12 +273,12 @@ statement_if:
     statement                         { gen_if($<num>4); }
   ;
 if_header:
-    TOK_IF TOK_LPAREN expr TOK_RPAREN { $$ = gen_if_hdr(); }
+    TOK_IF TOK_LPAREN expr TOK_RPAREN { ensure_rvalue(); $$ = gen_if_hdr(); }
   ;
 
 statement_return:
     TOK_RETURN TOK_SEMI      { gen_ret(); }
-  | TOK_RETURN expr TOK_SEMI { gen_ret(); }
+  | TOK_RETURN expr TOK_SEMI { ensure_rvalue(); gen_ret(); }
   ;
 
 args:
@@ -279,8 +286,8 @@ args:
   | args_list                { $$ = $1; }
   ;
 args_list:
-    expr                     { gpe(); $$ = 1; }
-  | args_list TOK_COMMA expr { gpe(); $$ = $1 + 1; }
+    expr                     { ensure_rvalue(); gpe(); $$ = 1; }
+  | args_list TOK_COMMA expr { ensure_rvalue(); gpe(); $$ = $1 + 1; }
   ;
 func_def:
     TOK_IDENT TOK_LPAREN params TOK_RPAREN TOK_LBRACE { gen_func_def_mid($1); }
@@ -299,7 +306,7 @@ statement_switch:
     switch_start statement                { gen_switch(); }
   ;
 switch_start:
-    TOK_SWITCH TOK_LPAREN expr TOK_RPAREN { gen_switch_start(); }
+    TOK_SWITCH TOK_LPAREN expr TOK_RPAREN { ensure_rvalue(); gen_switch_start(); }
   ;
 statement_case: case_label statement;
 case_label:
@@ -312,11 +319,6 @@ default_label:
 
 statement_break:
     TOK_BREAK TOK_SEMI { gen_break(@1); }
-  ;
-
-arr_access:
-    expr TOK_LBRACKET { gpe(); }
-    expr TOK_RBRACKET { gen_arr_acc(); }
   ;
 
 %%

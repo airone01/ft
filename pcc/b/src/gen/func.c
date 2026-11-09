@@ -1,4 +1,5 @@
 #include "gen.h"
+#include <string.h>
 
 void gen_func_call_mid(char *name) {
   /* Load function from pointer */
@@ -46,6 +47,8 @@ void gen_func_def_mid(char *fname) {
 }
 
 void gen_func_def(void) {
+  if (current_func_name && strcmp(current_func_name, "main") == 0)
+    printf("  xor eax, eax\n");
   printf("  leave\n");
   printf("  ret\n");
   /* Reset offsets for new function.
