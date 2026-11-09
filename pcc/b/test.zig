@@ -94,6 +94,7 @@ const tests = [_]TestCase{
 
     // =========================== POINTERS & ARRAYS ===========================
     testCase("address_of_and_deref"),
+    testCase("address_of_param"),
     testCase("array_index_and_inc"),
     testCase("global_scalars_and_vectors"),
 
