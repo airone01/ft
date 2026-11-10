@@ -39,6 +39,7 @@
   "pcc/ft_ls": "1.0.0",
   "pcc/ft_ping": "1.0.0",
   "pcc/libasm": "1.2.1",
+  "pcc/malloc": "0.0.0",
   "pcc/nm": "1.0.0",
   "pcc/snow-crash": "1.0.0",
   "rushes/hotrace": "2.2.1",
