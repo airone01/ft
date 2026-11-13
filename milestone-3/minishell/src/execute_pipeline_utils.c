@@ -61,7 +61,7 @@ void wait_for_children(t_ctx *ctx, pid_t *pids, int cmd_count) {
         sig = WTERMSIG(status);
         ctx->exit_status = 128 + sig;
         if (sig == SIGQUIT)
-          write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+          (void)!write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
       }
     }
     i++;

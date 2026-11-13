@@ -18,7 +18,7 @@ For best signals, see:
 void sig_interactive_handler(int sig) {
   if (sig == SIGINT) {
     g_signal_status = 130;
-    write(STDOUT_FILENO, "^C\n", 3);
+    (void)!write(STDOUT_FILENO, "^C\n", 3);
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();

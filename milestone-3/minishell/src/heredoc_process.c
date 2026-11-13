@@ -1,5 +1,3 @@
-
-#include "env.h"
 #include "execute.h"
 #include "globals.h"
 
@@ -10,8 +8,8 @@ static int process_heredoc_line(int fd, char *line, t_ctx *ctx) {
   free(line);
   if (!expanded_line)
     return (-1);
-  write(fd, expanded_line, ft_strlen(expanded_line));
-  write(fd, "\n", 1);
+  (void)!write(fd, expanded_line, ft_strlen(expanded_line));
+  (void)!write(fd, "\n", 1);
   free(expanded_line);
   return (0);
 }

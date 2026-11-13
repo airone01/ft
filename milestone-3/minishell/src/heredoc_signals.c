@@ -5,7 +5,7 @@
 void sig_heredoc_handler(int sig) {
   if (sig == SIGINT) {
     g_signal_status = 130;
-    write(STDOUT_FILENO, "^C", 2);
+    (void)!write(STDOUT_FILENO, "^C", 2);
     rl_replace_line("", 0);
     rl_redisplay();
   }
