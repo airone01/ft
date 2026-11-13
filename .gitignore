@@ -61,9 +61,6 @@ dkms.conf
 /.pre-commit-config.yaml
 result
 
-# CMake
-compile_commands.json
-
 # Jetbrains
 .idea/
 
@@ -86,3 +83,7 @@ vgcore.*
 # Zig
 zig-out/
 .zig-cache/
+
+# CMake
+build/
+compile_commands.json
