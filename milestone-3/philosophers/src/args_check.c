@@ -12,9 +12,9 @@
 ** This is just to avoid unreadable code
 */
 static void write_combined_err(const char *s1, const char *s2, const char *s3) {
-  write(STDERR_FILENO, s1, ft_strlen(s1));
-  write(STDERR_FILENO, s2, ft_strlen(s2));
-  write(STDERR_FILENO, s3, ft_strlen(s3));
+  (void)!write(STDERR_FILENO, s1, ft_strlen(s1));
+  (void)!write(STDERR_FILENO, s2, ft_strlen(s2));
+  (void)!write(STDERR_FILENO, s3, ft_strlen(s3));
 }
 
 /*
@@ -50,8 +50,8 @@ static bool contains_invalid_chars(char *str) {
 
 static bool is_valid_number(char *str) {
   if (ft_strlen(str) == 0) {
-    write(STDERR_FILENO, FG_RED ERR_COLON ERR_NOARG NC,
-          ERR_LEN_BASE + ERR_LEN_NOARG);
+    (void)!write(STDERR_FILENO, FG_RED ERR_COLON ERR_NOARG NC,
+                 ERR_LEN_BASE + ERR_LEN_NOARG);
     return (false);
   }
   if (!contains_invalid_chars(str))
@@ -67,8 +67,8 @@ bool args_check(int argc, char **argv) {
   int i;
 
   if (argc < 5 || argc > 6) {
-    write(STDERR_FILENO, FG_YELLOW ERR_COLON ERR_USAG1 ERR_USAG2 NC,
-          ERR_LEN_BASE + ERR_LEN_USAGE);
+    (void)!write(STDERR_FILENO, FG_YELLOW ERR_COLON ERR_USAG1 ERR_USAG2 NC,
+                 ERR_LEN_BASE + ERR_LEN_USAGE);
     return (true);
   }
   i = 1;
