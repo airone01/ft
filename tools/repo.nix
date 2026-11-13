@@ -58,33 +58,31 @@ in {
     };
 
     devShells.default = pkgs.mkShell {
+      nativeBuildInputs = with pkgs; [
+        cmake
+        just
+        pkg-config
+      ];
       buildInputs = with pkgs; [
-        # ASM
+        # Compilers
         nasm
-
-        # B
-        bison # yacc
-        flex # lex
+        bison
+        flex
+        gcc
 
         # Rust
-        pkg-config
         rustc
         cargo
-        gcc
         rustfmt
 
-        # X11
-        libX11
-        libX11.dev
-        libXext
-        libXext.dev
-
-        # minishell
-        readline
-
-        # Build
-        bear
-        just
+        # Libs
+        readline # for minishell
+        ## X11
+        libx11
+        libx11.dev
+        libxext
+        libxext.dev
+        xorgproto # needed by FindX11.cmake
 
         # Test
         valgrind
