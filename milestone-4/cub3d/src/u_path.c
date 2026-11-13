@@ -1,6 +1,6 @@
-
 #include "libft.h"
 #include "utils.h"
+#include <stdlib.h>
 #include <unistd.h>
 
 static char *get_directory_path(const char *filepath) {

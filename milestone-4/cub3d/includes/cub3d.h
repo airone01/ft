@@ -17,17 +17,22 @@
 #define YELLOW "\033[093m"
 #define CYAN "\033[36m"
 
-#ifdef __3DS__
+#if !defined(WIN_H) && !defined(WIN_W)
+
+#if defined(__3DS__)
 #define WIN_H 240
 #define WIN_W 400
-#else
-// Valgrind mode :-)
+
+#elif defined(__VALGRIND__)
 #define WIN_H 480
 #define WIN_W 640
-#endif
 
-// # define WIN_H 720
-// # define WIN_W 1280
+#else
+#define WIN_H 720
+#define WIN_W 1280
+#endif /* __3DS__ __VALGRIND__ */
+
+#endif /* WIN_H WIN_W */
 
 #define FPS_COUNTER_TEXT_HEIGHT 20
 #define FPS_COUNTER_TEXT_WIDTH 80
@@ -37,9 +42,6 @@
 
 #define MAX_SPRITE_FRAMES 8
 #define SPRITE_SCALE 0.7
-
-// float.h is forbidden
-#define DBL_MAX 1.7976931348623157E+308
 
 /*******************************************************************************
  *                                    Enums                                    *
@@ -190,7 +192,7 @@ typedef union u_color {
     uint8_t green;
     uint8_t red;
     uint8_t alpha;
-  };
+  } rgba;
 } t_color;
 
 typedef struct s_map_buffer {

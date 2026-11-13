@@ -40,9 +40,9 @@ static bool get_color_floor(t_data *data, char *color) {
     ft_printf(RED "Error\nColor values must be between 0-255\n" RESET);
     return (true);
   }
-  data->floor_color.red = (uint8_t)r;
-  data->floor_color.green = (uint8_t)g;
-  data->floor_color.blue = (uint8_t)b;
+  data->floor_color.rgba.red = (uint8_t)r;
+  data->floor_color.rgba.green = (uint8_t)g;
+  data->floor_color.rgba.blue = (uint8_t)b;
   return (false);
 }
 
@@ -62,9 +62,9 @@ static bool get_color_ceil(t_data *data, char *color) {
     ft_printf(RED "Error\nColor values must be between 0-255\n" RESET);
     return (true);
   }
-  data->ceil_color.red = (uint8_t)r;
-  data->ceil_color.green = (uint8_t)g;
-  data->ceil_color.blue = (uint8_t)b;
+  data->ceil_color.rgba.red = (uint8_t)r;
+  data->ceil_color.rgba.green = (uint8_t)g;
+  data->ceil_color.rgba.blue = (uint8_t)b;
   return (false);
 }
 

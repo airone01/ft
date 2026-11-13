@@ -6,6 +6,7 @@
 #include "pproc.h"
 #include "raycasting.h"
 #include "sprite_bonus.h"
+#include <stddef.h>
 
 /*
 ** Rendering pipeline. Note: we memset the image to zero, not sure it's a good

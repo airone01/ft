@@ -1,6 +1,6 @@
-
 #include "libft.h"
 #include "parsing.h"
+#include <stdlib.h>
 
 bool expand_buffer(t_map_buffer *buffer) {
   char **new_lines;

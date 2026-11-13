@@ -1,6 +1,7 @@
-
 #include "libft.h"
 #include "parsing.h"
+#include <stddef.h>
+#include <stdlib.h>
 
 char **create_map_copy(t_data *data) {
   char **map_copy;

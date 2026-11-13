@@ -1,6 +1,6 @@
-
 #include "libft.h"
 #include "mem.h"
+#include <stddef.h>
 
 bool init_map_buffer(t_map_buffer *buffer) {
   buffer->capacity = 50;

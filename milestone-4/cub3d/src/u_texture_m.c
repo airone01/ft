@@ -1,8 +1,8 @@
-
 #include "cub3d.h"
 #include "libft.h"
 #include "texture.h"
 #include "utils.h"
+#include <stddef.h>
 
 bool load_game_textures_bonus(t_data *data) {
   (void)data;

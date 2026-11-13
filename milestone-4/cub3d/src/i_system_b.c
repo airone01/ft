@@ -1,7 +1,7 @@
-
 #include "cub3d.h"
 #include "ft_printf.h"
 #include "libft.h"
+#include <stdlib.h>
 
 static void init_door_system_loop(t_data *data, int x, int y) {
   if (data->map[y][x] == 'D') {

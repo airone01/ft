@@ -1,9 +1,9 @@
-
 #include "cub3d.h"
 #include "ft_printf.h"
 #include "libft.h"
 #include "mlx.h"
 #include "sprite_bonus.h"
+#include <stdlib.h>
 
 bool add_sprite(t_data *data, double x, double y) {
   t_sprite *sprite;
