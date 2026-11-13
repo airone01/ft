@@ -1,21 +1,6 @@
-
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
-
-int main(void) {
-  size_t fd;
-  char *line;
-
-  fd = open("./1char.txt", O_RDONLY);
-  while (1) {
-    line = get_next_line(fd);
-    if (!line)
-      return (0);
-    printf("Line >%s", line);
-    free(line);
-  }
-}
 
 int main(void) {
   int fd;
