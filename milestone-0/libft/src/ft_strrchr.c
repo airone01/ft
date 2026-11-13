@@ -1,5 +1,5 @@
-
 #include "libft.h"
+#include <stddef.h>
 
 char *ft_strrchr(const char *s, char c) {
   char *se;

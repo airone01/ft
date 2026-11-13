@@ -1,7 +1,9 @@
-
 #include "libft.h"
+#include <sys/types.h>
+#include <unistd.h>
 
-void ft_putendl_fd(const char *s, int fd) {
-  write(fd, s, ft_strlen(s) * sizeof(char));
-  write(fd, "\n", sizeof(char));
+ssize_t ft_putendl_fd(const char *s, int fd) {
+  ssize_t r = write(fd, s, ft_strlen(s) * sizeof(char));
+  r += write(fd, "\n", sizeof(char));
+  return r;
 }

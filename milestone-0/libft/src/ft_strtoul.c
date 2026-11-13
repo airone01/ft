@@ -1,5 +1,6 @@
-
 #include "libft.h"
+#include <errno.h>
+#include <limits.h>
 
 static int ft_get_digit_ul(char c) {
   if (c >= '0' && c <= '9')

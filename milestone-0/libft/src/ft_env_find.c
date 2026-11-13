@@ -1,5 +1,5 @@
-
 #include "libft.h"
+#include <stddef.h>
 
 char *ft_env_find(char **envp, const char *var) {
   unsigned long len;
