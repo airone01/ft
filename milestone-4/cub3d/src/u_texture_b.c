@@ -1,9 +1,9 @@
-
 #include "cub3d.h"
 #include "ft_printf.h"
 #include "libft.h"
 #include "texture.h"
 #include "utils.h"
+#include <stdlib.h>
 
 bool load_game_textures_bonus(t_data *data) {
   char *door_resolved_path;

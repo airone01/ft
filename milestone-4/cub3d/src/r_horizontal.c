@@ -1,5 +1,5 @@
-
 #include "raycasting.h"
+#include <float.h>
 #include <math.h>
 
 static void calculate_horizontal_steps(double angle, double *step_x,

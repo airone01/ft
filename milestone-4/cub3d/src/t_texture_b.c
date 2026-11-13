@@ -1,7 +1,7 @@
-
 #include "cub3d.h"
 #include "libft.h"
 #include "mlx.h"
+#include <stddef.h>
 
 bool load_bonus_textures(t_data *data, char *door_path) {
   if (!door_path)

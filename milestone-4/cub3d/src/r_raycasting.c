@@ -3,6 +3,7 @@
 #include "draw.h"
 #include "libft.h"
 #include "raycasting.h"
+#include <float.h>
 #include <math.h>
 
 static double calculate_distance(double x1, double y1, double x2, double y2) {
