@@ -1,4 +1,3 @@
-
 #include "pipex.h"
 
 /**
@@ -24,7 +23,7 @@ int handle_here_doc(t_ctx *app, char *limiter) {
       free(line);
       break;
     }
-    write(app->bonus_pipes[1], line, ft_strlen(line));
+    (void)!write(app->bonus_pipes[1], line, ft_strlen(line));
     free(line);
   }
   close(app->bonus_pipes[1]);
