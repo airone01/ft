@@ -2,12 +2,9 @@
 #ifndef LIBFT_H
 #define LIBFT_H
 
-#include <errno.h>   // errno
-#include <limits.h>  // LLONG_MAX
-#include <stdbool.h> // bool
-#include <stdint.h>  // SIZE_MAX
-#include <stdlib.h>  // malloc, free
-#include <unistd.h>  // write
+#include <stdbool.h>
+#include <stdint.h>
+#include <sys/types.h>
 
 // Bonuses
 typedef struct s_list {
@@ -208,7 +205,7 @@ int ft_tolower(char c);
 int ft_toupper(char c);
 
 ////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////// String ////////////////////////////////////
+////////////////////////////////// Text Output /////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -219,7 +216,7 @@ int ft_toupper(char c);
  * @param fd The file descriptor on which to write.
  * @return void
  */
-void ft_putendl_fd(const char *s, int fd);
+ssize_t ft_putendl_fd(const char *s, int fd);
 
 /**
  * @brief Outputs a character to the specified file descriptor.
@@ -228,7 +225,7 @@ void ft_putendl_fd(const char *s, int fd);
  * @param fd The file descriptor on which to write.
  * @return void
  */
-void ft_putchar_fd(char c, int fd);
+ssize_t ft_putchar_fd(char c, int fd);
 
 /**
  * @brief Outputs a string to the specified file descriptor.
@@ -237,7 +234,7 @@ void ft_putchar_fd(char c, int fd);
  * @param fd The file descriptor on which to write.
  * @return void
  */
-void ft_putstr_fd(char *s, int fd);
+ssize_t ft_putstr_fd(char *s, int fd);
 
 /**
  * @brief Outputs an integer to the specified file descriptor.
@@ -246,7 +243,11 @@ void ft_putstr_fd(char *s, int fd);
  * @param fd The file descriptor on which to write.
  * @return void
  */
-void ft_putnbr_fd(int n, int fd);
+ssize_t ft_putnbr_fd(int n, int fd);
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////// String Manipulation /////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Locates the first occurrence of a character in a string.
