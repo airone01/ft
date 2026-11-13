@@ -1,9 +1,9 @@
 %{
 #include <stdio.h>
-#include "src/yy.h"
-#include "src/symtab.h"
-#include "src/color.h"
-#include "src/gen/gen.h"
+#include "yy.h"
+#include "symtab.h"
+#include "color.h"
+#include "gen/gen.h"
 %}
 
 %define parse.error verbose
