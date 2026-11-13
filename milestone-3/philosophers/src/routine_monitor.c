@@ -54,11 +54,12 @@ static void write_green_message(t_ctx *ctx) {
   if (!s)
     return;
   pthread_mutex_lock(&ctx->print_mtx);
-  write(STDERR_FILENO,
-        FG_GREEN "All philosophers ate the maximum number of meals (", 55);
-  write(STDERR_FILENO, s, ft_strlen(s));
+  (void)!write(STDERR_FILENO,
+               FG_GREEN "All philosophers ate the maximum number of meals (",
+               55);
+  (void)!write(STDERR_FILENO, s, ft_strlen(s));
   free(s);
-  write(STDERR_FILENO, ").\n" NC, 7);
+  (void)!write(STDERR_FILENO, ").\n" NC, 7);
   pthread_mutex_unlock(&ctx->print_mtx);
 }
 

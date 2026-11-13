@@ -17,8 +17,8 @@ bool init_philos(t_ctx *ctx) {
     ctx->philos[i].ctx = ctx;
     ctx->philos_created++;
     if (pthread_mutex_init(&ctx->philos[i].meal_mtx, NULL)) {
-      write(STDERR_FILENO, FG_RED ERR_COLON ERR_MUTXC NC,
-            ERR_LEN_BASE + ERR_LEN_MUTXC);
+      (void)!write(STDERR_FILENO, FG_RED ERR_COLON ERR_MUTXC NC,
+                   ERR_LEN_BASE + ERR_LEN_MUTXC);
       free_ctx(ctx);
       return (true);
     }
