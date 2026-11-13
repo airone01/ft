@@ -1,4 +1,3 @@
-
 #include "push_swap.h"
 #include <errno.h>
 
@@ -16,8 +15,8 @@ int run_program(int argc, char **argv) {
   sorted = stack_sorted(stack_a);
   stack_clear(stack_a);
   if (sorted)
-    return ((void)write(1, "OK\n", 3), 0);
-  return ((void)write(1, "KO\n", 3), 1);
+    return ((void)!write(1, "OK\n", 3), 0);
+  return ((void)!write(1, "KO\n", 3), 1);
 }
 
 int main(int argc, char **argv) {
