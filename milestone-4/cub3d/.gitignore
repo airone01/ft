@@ -8,6 +8,7 @@ cub3d_extra
 .vscode/
 *.xml
 *.txt
+!CMakeLists.txt
 !version.txt
 compile_commands.json
 .cache/
