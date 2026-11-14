@@ -53,5 +53,6 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
   add_subdirectory(pcc/malloc)
   add_subdirectory(pcc/nm)
   add_subdirectory(rushes/hotrace)
+  add_subdirectory(rushes/libunit)
 endif()
 

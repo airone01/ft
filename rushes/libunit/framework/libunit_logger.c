@@ -1,6 +1,6 @@
-
 #include "libunit.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static void print_tabbed(int fd1, int fd2, char *s, size_t expected_len) {
   size_t i;
