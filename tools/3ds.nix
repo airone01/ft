@@ -9,7 +9,11 @@
       pkgs.mkShell.override {
         stdenv = pkgs.devkitNix.stdenvARM;
       } {
-        packages = [pkgs.azahar];
+        buildInputs = with pkgs; [
+          cmake
+          gcc
+          ninja
+        ];
       };
   };
 }

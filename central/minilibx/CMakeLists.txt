@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.20)
 project(mlx C)
 
+# When building for the 3DS, don't compile anything
+# X11 is hence not required for MLX on 3DS
+if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
+  add_library(mlx INTERFACE)
+  target_include_directories(mlx INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
+  add_library(42::mlx ALIAS mlx)
+  return()
+endif()
+
 file(GLOB MLX_SOURCES CONFIGURE_DEPENDS "mlx_*.c")
 list(FILTER MLX_SOURCES EXCLUDE REGEX ".*(mlx_lib_xpm|mlx_ext_randr)\\.c$")
 

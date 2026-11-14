@@ -1,5 +1,5 @@
 # MLX is bugged and doesn't really respects what X11 awaits of it, resulting in
-# a bad writev. This file fixes it.
+# a bad writev. This file suppresses it.
 
 {
    mlx_writev_uninit_vector0

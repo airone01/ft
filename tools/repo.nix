@@ -60,6 +60,7 @@ in {
     devShells.default = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         cmake
+        ninja
         just
         pkg-config
       ];
