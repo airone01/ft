@@ -1,5 +1,5 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
 static bool do_stuff(char **requests, char *str, int *j) {
   if (str[0] != '\0') {

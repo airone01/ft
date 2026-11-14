@@ -1,7 +1,7 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
-int handle_key_value(t_list *tbl[TBL_SIZE], char *key, char *value) {
+int handle_key_value(t_hlist *tbl[TBL_SIZE], char *key, char *value) {
   if (!append_to_table(tbl, key, value)) {
     free(key);
     free(value);
@@ -13,8 +13,8 @@ int handle_key_value(t_list *tbl[TBL_SIZE], char *key, char *value) {
   return (0);
 }
 
-void handle_request(t_list *tbl[TBL_SIZE], char *line) {
-  t_list *found;
+void handle_request(t_hlist *tbl[TBL_SIZE], char *line) {
+  t_hlist *found;
 
   if (!is_empty_line(line)) {
     found = tbl_find_node(tbl, line);
@@ -28,7 +28,7 @@ void handle_request(t_list *tbl[TBL_SIZE], char *line) {
   free(line);
 }
 
-int process_pair(t_list *tbl[TBL_SIZE], char *key) {
+int process_pair(t_hlist *tbl[TBL_SIZE], char *key) {
   char *value;
 
   value = get_next_line(0);
@@ -40,7 +40,7 @@ int process_pair(t_list *tbl[TBL_SIZE], char *key) {
   return (handle_key_value(tbl, key, value));
 }
 
-int process_line_main(t_list *tbl[TBL_SIZE], char *line, bool *reading_pairs) {
+int process_line_main(t_hlist *tbl[TBL_SIZE], char *line, bool *reading_pairs) {
   line = strip_newline(line);
   if (*reading_pairs) {
     if (is_empty_line(line)) {
@@ -55,7 +55,7 @@ int process_line_main(t_list *tbl[TBL_SIZE], char *line, bool *reading_pairs) {
   return (0);
 }
 
-int process_input(t_list *tbl[TBL_SIZE]) {
+int process_input(t_hlist *tbl[TBL_SIZE]) {
   char *line;
   bool reading_pairs;
 

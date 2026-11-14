@@ -1,5 +1,5 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
 bool is_empty_line(char *line) {
   return (!line || line[0] == '\n' || line[0] == '\0');

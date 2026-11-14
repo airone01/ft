@@ -1,4 +1,3 @@
-
 #ifndef HOTRACE_H
 #define HOTRACE_H
 
@@ -39,25 +38,25 @@ typedef struct s_file_content {
   size_t capacity;
 } t_file_content;
 
-typedef struct s_list {
+typedef struct s_hlist {
   char *key;
   char *value;
-  struct s_list *next;
-} t_list;
+  struct s_hlist *next;
+} t_hlist;
 
-int process_input(t_list *tbl[TBL_SIZE]);
-int process_line_main(t_list *tbl[TBL_SIZE], char *line, bool *reading_pairs);
-int process_pair(t_list *tbl[TBL_SIZE], char *key);
-void handle_request(t_list *tbl[TBL_SIZE], char *line);
-int handle_key_value(t_list *tbl[TBL_SIZE], char *key, char *value);
+int process_input(t_hlist *tbl[TBL_SIZE]);
+int process_line_main(t_hlist *tbl[TBL_SIZE], char *line, bool *reading_pairs);
+int process_pair(t_hlist *tbl[TBL_SIZE], char *key);
+void handle_request(t_hlist *tbl[TBL_SIZE], char *line);
+int handle_key_value(t_hlist *tbl[TBL_SIZE], char *key, char *value);
 
 /* List */
-t_list *ft_lstnew(char *key, char *value);
-t_list *ft_lstlast(t_list *lst);
-void ft_lstadd_front(t_list **lst, t_list *new);
+t_hlist *h_lstnew(char *key, char *value);
+t_hlist *h_lstlast(t_hlist *lst);
+void h_lstadd_front(t_hlist **lst, t_hlist *new);
 
 /* Memory */
-void final_countdown(t_list *tbl[TBL_SIZE]);
+void final_countdown(t_hlist *tbl[TBL_SIZE]);
 void free_2d_array(void **ptrs);
 
 /* Errors handling */
@@ -77,9 +76,9 @@ uint32_t fnv1a_hash(const void *data, size_t size);
 int hash_find_index(char *key);
 
 /* Table */
-bool append_to_table(t_list *tbl[TBL_SIZE], char *key, char *value);
-t_list *find_node(t_list *head, char *key);
-t_list *tbl_find_node(t_list *tbl[TBL_SIZE], char *key);
+bool append_to_table(t_hlist *tbl[TBL_SIZE], char *key, char *value);
+t_hlist *find_node(t_hlist *head, char *key);
+t_hlist *tbl_find_node(t_hlist *tbl[TBL_SIZE], char *key);
 
 /* Get next line */
 t_file_content *init_file_content(void);
@@ -89,19 +88,5 @@ char *initialize_buffer(char *buffer);
 char *get_next_line(int fd);
 int append_line(t_file_content *content, char *line);
 int expand_capacity(t_file_content *content);
-
-/* Libft utils */
-void ft_putendl_fd(const char *s, int fd);
-void *ft_calloc(size_t nmemb, size_t size);
-char *ft_strdup(const char *s);
-char *ft_strjoin(char const *s1, char const *s2);
-unsigned long ft_strlcpy(char *dst, const char *src, unsigned long size);
-unsigned long ft_strlcat(char *dst, const char *src, unsigned long size);
-char *ft_strchr(const char *s, char c);
-size_t ft_strlen(const char *str);
-int ft_strcmp(const char *s1, const char *s2);
-void ft_bzero(void *s, size_t n);
-void *ft_memcpy(void *dest, const void *src, size_t size);
-void ft_putstr_fd(char *s, int fd);
 
 #endif

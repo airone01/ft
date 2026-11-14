@@ -1,4 +1,3 @@
-
 #include "hotrace.h"
 
 /**
@@ -8,9 +7,9 @@
  *
  * @param	tbl		Table to clear.
  */
-void final_countdown(t_list *tbl[TBL_SIZE]) {
-  t_list *tmp;
-  t_list *next;
+void final_countdown(t_hlist *tbl[TBL_SIZE]) {
+  t_hlist *tmp;
+  t_hlist *next;
   size_t i;
 
   i = 0;
