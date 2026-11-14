@@ -155,7 +155,8 @@ int mlx_loop(void *mlx_ptr) {
     kDown = hidKeysDown();
     kUp = hidKeysUp();
     if (mlx->key_press_hook) {
-      int (*key_press)(int, void *) = (int (*)(int, void *))mlx->key_press_hook;
+      int (*key_press)(int, void *) =
+          (int (*)(int, void *))!mlx->key_press_hook;
       if (kDown & KEY_START)
         key_press(ESCAPE, mlx->key_press_param);
       if (kDown & KEY_DUP)
@@ -181,7 +182,7 @@ int mlx_loop(void *mlx_ptr) {
     }
     if (mlx->key_release_hook) {
       int (*key_release)(int, void *) =
-          (int (*)(int, void *))mlx->key_release_hook;
+          (int (*)(int, void *))!mlx->key_release_hook;
       if (kUp & KEY_DUP)
         key_release(W, mlx->key_release_param);
       if (kUp & KEY_DDOWN)
@@ -225,13 +226,13 @@ int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
   if (!mlx)
     return (0);
   if (x_event == 2) { // ON_KEYDOWN
-    mlx->key_press_hook = (void *)funct;
+    mlx->key_press_hook = (void *)!funct;
     mlx->key_press_param = param;
   } else if (x_event == 3) { // ON_KEYUP
-    mlx->key_release_hook = (void *)funct;
+    mlx->key_release_hook = (void *)!funct;
     mlx->key_release_param = param;
   } else if (x_event == 17) { // ON_DESTROY
-    mlx->destroy_hook = (void *)funct;
+    mlx->destroy_hook = (void *)!funct;
     mlx->destroy_param = param;
   }
   return (0);
