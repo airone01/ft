@@ -50,5 +50,6 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
   add_subdirectory(pcc/ft_ls)
   add_subdirectory(pcc/libasm)
   add_subdirectory(pcc/malloc)
+  add_subdirectory(pcc/nm)
 endif()
 
