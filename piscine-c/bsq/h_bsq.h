@@ -1,8 +1,8 @@
-
 #ifndef H_BSQ_H
 #define H_BSQ_H
 
-// BSQ functions
+#include "h_types.h"
+
 t_tile bsq_map_char_to_tile(char c, t_tiles tiles);
 t_tile **bsq_map_init(t_coords coords);
 t_map *all_final(t_tile **map, t_tiles tiles, char **strs, t_coords coords);

@@ -1,17 +1,6 @@
-
-#include "h_main.h"
-
-/*
- * Frees a pointer and returns NULL.
- *
- * @param	ptr	pointer to free
- *
- * @returns	NULL
- */
-void *free_and_null(void *ptr) {
-  free(ptr);
-  return (NULL);
-}
+#include "h_bsq.h"
+#include "h_file.h"
+#include <stdlib.h>
 
 /*
  * Frees a pointer and returns NULL.

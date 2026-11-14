@@ -1,6 +1,5 @@
-
-#include "h_main.h"
-#include <stdio.h>
+#include "h_bsq.h"
+#include <stdlib.h>
 
 /*
  * Frees a map struct.

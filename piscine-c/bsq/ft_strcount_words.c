@@ -1,3 +1,4 @@
+#include "h_str.h"
 
 /*
  * Counts words in a string, separated by a given separator.

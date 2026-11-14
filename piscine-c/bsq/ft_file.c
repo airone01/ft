@@ -1,5 +1,7 @@
-
-#include "h_main.h"
+#include "h_file.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
  * Allocates a buffer and reads a file to it.
@@ -42,8 +44,10 @@ void *ft_stdin_read(int fsize) {
 
   buff = malloc(fsize * sizeof(char) + 1);
   sread = read(0, buff, fsize);
-  if (sread == -1)
-    return (free_and_null(buff));
+  if (sread == -1) {
+    free(buff);
+    return NULL;
+  }
   ((char *)buff)[sread] = '\0';
   return (buff);
 }

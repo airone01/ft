@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# Simple map generator for testing
+
 use	warnings;
 use	strict;
 
