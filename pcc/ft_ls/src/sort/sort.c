@@ -3,7 +3,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-static _Thread_local const CliOptions *g_sort_opts = NULL;
+static const CliOptions *g_sort_opts = NULL;
 
 static int file_cmp(const void *p1, const void *p2) {
   const File *f1 = (const File *)p1;
