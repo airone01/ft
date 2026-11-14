@@ -1,5 +1,5 @@
-
-#include "h_main.h"
+#include "h_bsq.h"
+#include "libft.h"
 
 /*
  * Puts a tile to the string. Needs the map to convert it to a character.

@@ -1,5 +1,7 @@
-
-#include "h_main.h"
+#include "h_bsq.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
  * Counts the bytes of a file.

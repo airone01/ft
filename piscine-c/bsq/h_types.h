@@ -1,4 +1,3 @@
-
 #ifndef H_TYPES_H
 #define H_TYPES_H
 
@@ -21,7 +20,6 @@ typedef struct s_map {
   t_tiles tiles;
   t_tile **map;
 } t_map;
-typedef enum e_bool { false, true } bool;
 typedef struct s_strsplit_args {
   unsigned long *i;
   unsigned long *j;

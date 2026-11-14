@@ -1,5 +1,7 @@
-
-#include "h_main.h"
+#include "h_bsq.h"
+#include "h_file.h"
+#include "libft.h"
+#include <stdlib.h>
 
 /*
  * Reads a file, then splits it, then frees the data and returns the
@@ -15,7 +17,7 @@ char **bsq_read_split_free(char *fname, int fsize) {
   char **strs;
 
   str = (char *)ft_file_read(fname, fsize);
-  strs = ft_strsplit(str, '\n');
+  strs = ft_split(str, '\n');
   free(str);
   return (strs);
 }
@@ -33,7 +35,7 @@ char **bsq_read_split_free_stdin(int fsize) {
   char **strs;
 
   str = (char *)ft_stdin_read(fsize);
-  strs = ft_strsplit(str, '\n');
+  strs = ft_split(str, '\n');
   free(str);
   return (strs);
 }

@@ -1,5 +1,9 @@
-
-#include "h_main.h"
+#include "h_bsq.h"
+#include "h_file.h"
+#include "h_str.h"
+#include "libft.h"
+#include <stdbool.h>
+#include <stdlib.h>
 
 /*
  * Checks if the map is correct by calculating
@@ -23,7 +27,7 @@ bool bsq_map_valid(char **strs, t_coords *coords) {
     return (false);
   i = 1;
   while (i < coords->y - 1) {
-    if (ft_strlen(strs[i]) != coords->x)
+    if ((int)ft_strlen(strs[i]) != coords->x)
       return (false);
     i++;
   }
@@ -102,8 +106,10 @@ t_map *bsq_map_read(char *fname, int fsize) {
     free_strs(strs);
     return (NULL);
   }
-  if (!bsq_map_valid(strs, &coords))
-    return (free_and_null(strs));
+  if (!bsq_map_valid(strs, &coords)) {
+    free(strs);
+    return NULL;
+  }
   tiles = bsq_map_meta(strs);
   map = bsq_map_from_str(strs, coords, tiles);
   if (map == NULL) {
@@ -114,40 +120,45 @@ t_map *bsq_map_read(char *fname, int fsize) {
   return (all_final(map, tiles, strs, coords));
 }
 
-// /*
-//  * Reads a map from STDIN.
-//  *
-//  * @returns	allocated map with data
-//  * @returns	null if error
-//  */
-// t_map	*bsq_map_stdin_read(int fsize)
-// {
-// 	t_coords	coords;
-// 	t_tiles		tiles;
-// 	t_tile		**map;
-// 	t_map		*final;
-// 	char		**strs;
+/*
+ * Reads a map from STDIN.
+ *
+ * @returns	allocated map with data
+ * @returns	null if error
+ */
+t_map *bsq_map_stdin_read(int fsize) {
+  t_coords coords;
+  t_tiles tiles;
+  t_tile **map;
+  t_map *final;
+  char **strs;
 
-// 	strs = bsq_read_split_free_stdin(fsize);
-// 	if (bsq_matrix_count(strs) == 0)
-// 		return (free_and_null(strs));
-// 	if (!bsq_map_valid(strs, &coords))
-// 		return (free_and_null(strs));
-// 	tiles = bsq_map_meta(strs);
-// 	map = bsq_map_from_str(strs, coords, tiles);
-// 	if (map == NULL)
-// 	{
-// 		bsq_map_free(map, coords);
-// 		free_strs(strs);
-// 		return (NULL);
-// 	}
-// 	final = malloc(sizeof(t_map));
-// 	if (final == NULL)
-// 		return (free_and_null_map(strs, map, coords));
-// 	free_strs(strs);
-// 	free(strs);
-// 	final->map = map;
-// 	final->tiles = tiles;
-// 	final->coords = coords;
-// 	return (final);
-// }
+  strs = bsq_read_split_free_stdin(fsize);
+  if (bsq_matrix_count(strs) == 0) {
+    free(strs);
+    return NULL;
+  }
+  if (!bsq_map_valid(strs, &coords)) {
+    free(strs);
+    return NULL;
+  }
+  tiles = bsq_map_meta(strs);
+  map = bsq_map_from_str(strs, coords, tiles);
+  if (map == NULL) {
+    bsq_map_free(map, coords);
+    free_strs(strs);
+    return (NULL);
+  }
+  final = malloc(sizeof(t_map));
+  if (final == NULL) {
+    free(strs);
+    bsq_map_free(map, coords);
+    return NULL;
+  }
+  free_strs(strs);
+  free(strs);
+  final->map = map;
+  final->tiles = tiles;
+  final->coords = coords;
+  return (final);
+}

@@ -1,5 +1,4 @@
-
-#include "h_main.h"
+#include "h_bsq.h"
 
 static int min(int a, int b, int c) {
   if (a <= b && a <= c)

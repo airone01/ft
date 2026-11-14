@@ -1,5 +1,4 @@
-
-#include "h_main.h"
+#include "h_str.h"
 
 bool char_is_alpha(char c) {
   return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));

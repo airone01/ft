@@ -1,12 +1,14 @@
-
-#include "h_main.h"
+#include "h_bsq.h"
+#include "h_types.h"
+#include "libft.h"
+#include <unistd.h>
 
 t_map *read_map_from_argv(int *len, char *str) {
   t_map *map;
 
   *len = bsq_map_file_size(str);
   if (*len == -1) {
-    ft_puterr("map error\n");
+    ft_putstr_fd("map error\n", STDERR_FILENO);
     return (NULL);
   }
   map = bsq_map_read(str, *len);
@@ -25,7 +27,7 @@ int main(int argc, char **argv) {
     else
       map = read_map_from_argv(&len, argv[i]);
     if (map == NULL) {
-      ft_puterr("map error\n");
+      ft_putstr_fd("map error\n", STDERR_FILENO);
       bsq_smap_free(map);
       break;
     }
