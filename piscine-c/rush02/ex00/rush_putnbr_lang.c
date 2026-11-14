@@ -1,5 +1,7 @@
-
-#include "h_main.h"
+#include "h_putnbr_lang.h"
+#include "h_rush.h"
+#include "libft.h"
+#include <stdlib.h>
 
 void putnbr_lang_3x(struct s_lang_args args, int three_x);
 
@@ -22,19 +24,19 @@ int get_3x(struct s_lang_args args) {
   int i;
 
   nbr_len = ft_strlen(args.nbr);
-  dest = ft_strnew(nbr_len + 3);
+  dest = ft_calloc(nbr_len + 3, sizeof(char));
   ft_strcpy(dest, args.nbr);
   if (nbr_len % 3 != 0) {
     diff = nbr_len % 3;
     free(dest);
-    dest = ft_strnew(nbr_len + diff + 1);
+    dest = ft_calloc(nbr_len + diff + 1, sizeof(char));
     i = 0;
     while (i < 3 - diff) {
       dest[i++] = '0';
     }
     ft_strcat(dest, args.nbr);
   }
-  dest2 = ft_strnew(nbr_len + 3);
+  dest2 = ft_calloc(nbr_len + 3, sizeof(char));
   ft_strncpy(dest2, dest, (args.ite + 1) * 3);
   dest2 += args.ite * 3;
   return (atoi(dest2));

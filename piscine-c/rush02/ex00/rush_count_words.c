@@ -1,3 +1,4 @@
+#include "h_str.h"
 
 int count_words(char *str) {
   int sum;

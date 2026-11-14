@@ -1,5 +1,6 @@
-
-#include "h_main.h"
+#include "h_putnbr_lang.h"
+#include "h_rush.h"
+#include "libft.h"
 
 /*
  * Puts "special" numbers of a 3x.

@@ -1,5 +1,6 @@
-
-#include "h_main.h"
+#include "h_rush.h"
+#include "libft.h"
+#include <stdlib.h>
 
 /*
  * Finds the word in the cube corresponding to the searched number.
@@ -38,7 +39,7 @@ char *find_word(char ***cube, int len, int u, int qty) {
   char *head;
 
   head = ft_itoa(u);
-  a_to_find = ft_strnew(1 + ft_strlen(head) + (3 * qty));
+  a_to_find = ft_calloc(1 + ft_strlen(head) + (3 * qty), sizeof(char));
   ft_strcat(a_to_find, head);
   i = 0;
   while (i < qty) {

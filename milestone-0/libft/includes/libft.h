@@ -380,6 +380,8 @@ void ft_striteri(char *s, void (*f)(unsigned int, char *));
  *                Returns NULL if allocation fails.
  */
 char **ft_split(char *str, char c);
+char **ft_split_charset(char *str, char *charset);
+char **ft_split_charset2(char *str, char *charset);
 
 /**
  * @brief Concatenates two strings into a new string.

@@ -1,5 +1,37 @@
+#include "libft.h"
+#include <stdlib.h>
 
-#include "h_main.h"
+static int check_charset(char *str, char *charset, int i) {
+  int j;
+
+  j = 0;
+  while (charset[j]) {
+    if (charset[j] != str[i + 1])
+      return (0);
+    i++;
+    j++;
+  }
+  return (1);
+}
+
+static int count_words(char *str, const char *charset) {
+  int sum;
+  int i;
+
+  sum = 0;
+  i = 0;
+  while (str[i]) {
+    if (str[i] > 32 && str[i] < 127) {
+      for (unsigned j = 0; charset[j]; i++)
+        if (str[i + 1] == charset[j])
+          sum++;
+      if (str[i + 1] == '\0')
+        return (sum + 1);
+    }
+    i++;
+  }
+  return (sum);
+}
 
 int ft_strlen_sani(char *str) {
   int i;
@@ -52,7 +84,7 @@ char *save_word(char **tab, char *str, int *limit, int c) {
   return (tab[c]);
 }
 
-char **ft_split_rush2(char *str, char *charset) {
+char **ft_split_charset2(char *str, char *charset) {
   int nbr;
   int i;
   int limit[2];
@@ -85,7 +117,7 @@ char **ft_split_rush2(char *str, char *charset) {
   return (result);
 }
 
-char **ft_split_rush(char *str, char *charset) {
+char **ft_split_charset(char *str, char *charset) {
   int nbr;
   int i;
   int limit[2];
