@@ -1,4 +1,3 @@
-
 #ifndef RUSH_H
 #define RUSH_H
 
@@ -17,7 +16,5 @@ unsigned int read_grid_axis_size(char *str);
 unsigned int ft_facto(unsigned int size);
 void read_grid(char *str, unsigned int **grid, unsigned int size);
 void show_grid(unsigned int **grid, unsigned int size);
-void ft_putstr(char *str);
-void ft_putchar(char c);
 
 #endif
