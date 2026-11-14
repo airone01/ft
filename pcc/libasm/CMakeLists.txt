@@ -18,6 +18,24 @@ set_target_properties(libasm PROPERTIES
 
 add_library(42::libasm ALIAS libasm)
 
-add_executable(libasm_test test.c)
-target_link_libraries(libasm_test PRIVATE 42::libasm)
+if(BUILD_TESTING)
+  set(LIBASM_TESTS
+    strlen
+    strcpy
+    strcmp
+    write
+    read
+    strdup
+    atoi_base
+    list
+  )
 
+  foreach(name ${LIBASM_TESTS})
+    set(target_name "libasm_test_${name}")
+    add_executable(${target_name} "tests/test_${name}.c")
+    target_link_libraries(${target_name} PRIVATE 42::libasm)
+    target_include_directories(${target_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+
+    add_test(NAME "libasm::${name}" COMMAND ${target_name})
+  endforeach()
+endif()
