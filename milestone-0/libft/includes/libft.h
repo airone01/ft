@@ -1,4 +1,3 @@
-
 #ifndef LIBFT_H
 #define LIBFT_H
 
@@ -217,6 +216,7 @@ int ft_toupper(char c);
  * @return void
  */
 ssize_t ft_putendl_fd(const char *s, int fd);
+ssize_t ft_putend(const char *s);
 
 /**
  * @brief Outputs a character to the specified file descriptor.
@@ -226,6 +226,7 @@ ssize_t ft_putendl_fd(const char *s, int fd);
  * @return void
  */
 ssize_t ft_putchar_fd(char c, int fd);
+ssize_t ft_putchar(char c);
 
 /**
  * @brief Outputs a string to the specified file descriptor.
@@ -235,6 +236,7 @@ ssize_t ft_putchar_fd(char c, int fd);
  * @return void
  */
 ssize_t ft_putstr_fd(char *s, int fd);
+ssize_t ft_putstr(char *s);
 
 /**
  * @brief Outputs an integer to the specified file descriptor.
@@ -244,6 +246,7 @@ ssize_t ft_putstr_fd(char *s, int fd);
  * @return void
  */
 ssize_t ft_putnbr_fd(int n, int fd);
+ssize_t ft_putnbr(int n);
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////// String Manipulation /////////////////////////////
@@ -560,5 +563,61 @@ long ft_min(long a, long b);
  * @warning The searched variable *must* end with a '='.
  */
 char *ft_env_find(char **envp, const char *var);
+
+/*
+ * Gets the square root of a number.
+ *
+ * @param	nb	number
+ *
+ * @returns	square root
+ * @returns	0 if no square root is found
+ */
+int ft_sqrt(int nb);
+
+/*
+ * Concatenates a source string to a destination string.
+ *
+ * @param	dest	destination of the concatenation
+ * @param	src		source to copy
+ */
+char *ft_strcat(char *dest, char *src);
+
+/*
+ * Copies at most `n` characters from a string into another string.
+ * Strings must be initialized and big enough.
+ *
+ * @see	strnew
+ * @see	strcpy
+ *
+ * @param	dest	string to copy to
+ * @param	src		string to copy
+ * @param	n		max number of characters to copy
+ *
+ * @returns	dest
+ */
+char *ft_strncpy(char *dest, char *src, unsigned int n);
+/*
+ * Copies a string to another string.
+ *
+ * @see	strnew
+ * @see	strncpy
+ *
+ * @param	dest	destination string to copy to
+ * @param	src		what to copy
+ *
+ * @returns	dest
+ */
+char *ft_strcpy(char *dest, char *src);
+
+/*
+ * Allocates and cuts a word from `start` to `finish`.
+ *
+ * @param	str		source string
+ * @param	start	starting index
+ * @param	finish	ending index
+ *
+ * @returns duplicated and cut string
+ */
+char *ft_strcut(char *str, int start, int finish);
 
 #endif
