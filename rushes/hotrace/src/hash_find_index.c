@@ -1,5 +1,5 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
 /**
  * @brief	Find the index of the key in the table.

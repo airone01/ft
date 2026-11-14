@@ -1,8 +1,8 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
 int main(void) {
-  t_list *tbl[TBL_SIZE];
+  t_hlist *tbl[TBL_SIZE];
 
   ft_bzero(tbl, sizeof(tbl));
   if (process_input(tbl) != 0) {

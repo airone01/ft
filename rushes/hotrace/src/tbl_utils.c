@@ -1,9 +1,9 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
-t_list *tbl_find_node(t_list *tbl[TBL_SIZE], char *key) {
-  t_list *head;
-  t_list *found;
+t_hlist *tbl_find_node(t_hlist *tbl[TBL_SIZE], char *key) {
+  t_hlist *head;
+  t_hlist *found;
   int index;
 
   if (!tbl || !key)
@@ -28,8 +28,8 @@ t_list *tbl_find_node(t_list *tbl[TBL_SIZE], char *key) {
  * @return    true if the key-value pair was successfully appended,
  *            false otherwise.
  */
-bool append_to_table(t_list *tbl[TBL_SIZE], char *key, char *value) {
-  t_list *new;
+bool append_to_table(t_hlist *tbl[TBL_SIZE], char *key, char *value) {
+  t_hlist *new;
   int index;
   char *new_key;
   char *new_value;
@@ -45,9 +45,9 @@ bool append_to_table(t_list *tbl[TBL_SIZE], char *key, char *value) {
     free(new_key);
     return (false);
   }
-  new = ft_lstnew(new_key, new_value);
+  new = h_lstnew(new_key, new_value);
   if (!new)
     return (false);
-  ft_lstadd_front(&tbl[index], new);
+  h_lstadd_front(&tbl[index], new);
   return (true);
 }

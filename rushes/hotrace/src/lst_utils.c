@@ -1,10 +1,10 @@
-
 #include "hotrace.h"
+#include "libft.h"
 
-t_list *ft_lstnew(char *key, char *value) {
-  t_list *new;
+t_hlist *h_lstnew(char *key, char *value) {
+  t_hlist *new;
 
-  new = malloc(sizeof(t_list));
+  new = malloc(sizeof(t_hlist));
   if (!new)
     return (NULL);
   new->key = key;
@@ -13,8 +13,8 @@ t_list *ft_lstnew(char *key, char *value) {
   return (new);
 }
 
-t_list *ft_lstlast(t_list *lst) {
-  t_list *last;
+t_hlist *h_lstlast(t_hlist *lst) {
+  t_hlist *last;
 
   if (!lst)
     return (NULL);
@@ -24,7 +24,7 @@ t_list *ft_lstlast(t_list *lst) {
   return (last);
 }
 
-void ft_lstadd_front(t_list **lst, t_list *new) {
+void h_lstadd_front(t_hlist **lst, t_hlist *new) {
   if (!lst)
     return;
   if (!*lst) {
@@ -35,8 +35,8 @@ void ft_lstadd_front(t_list **lst, t_list *new) {
   *lst = new;
 }
 
-t_list *find_node(t_list *head, char *key) {
-  t_list *current;
+t_hlist *find_node(t_hlist *head, char *key) {
+  t_hlist *current;
 
   current = head;
   while (current != NULL) {
@@ -47,8 +47,8 @@ t_list *find_node(t_list *head, char *key) {
   return (NULL);
 }
 
-void free_list(t_list **lst) {
-  t_list *cpy;
+void free_list(t_hlist **lst) {
+  t_hlist *cpy;
 
   if (!lst || !(*lst))
     return;
