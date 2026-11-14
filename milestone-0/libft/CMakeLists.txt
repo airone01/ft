@@ -30,4 +30,50 @@ else()
   )
 
   add_library(42::ft ALIAS ft)
+
+  if(BUILD_TESTING)
+    set(LIBFT_TESTS
+      atoi
+      bzero
+      calloc
+      isalnum
+      isalpha
+      isascii
+      isdigit
+      isprint
+      itoa
+      memchr
+      memcmp
+      memcpy
+      memmove
+      memset
+      putchar_fd
+      putendl_fd
+      split
+      strchr
+      strdup
+      striteri
+      strjoin
+      strlcat
+      strlcpy
+      strlen
+      strmapi
+      strncmp
+      strnstr
+      strrchr
+      strtrim
+      substr
+      tolower
+      toupper
+    )
+  
+    foreach(name ${LIBFT_TESTS})
+      set(target_name "libft_test_${name}")
+      add_executable(${target_name} "tests/test_${name}.c")
+      target_link_libraries(${target_name} PRIVATE 42::ft)
+      target_include_directories(${target_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+  
+      add_test(NAME "libft::${name}" COMMAND ${target_name})
+    endforeach()
+  endif()
 endif()
