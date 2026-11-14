@@ -1,4 +1,4 @@
-void ft_putchar(char c);
+#include "libft.h"
 
 // Prints the characters that are in the corners
 // according to the sign of the parameters
