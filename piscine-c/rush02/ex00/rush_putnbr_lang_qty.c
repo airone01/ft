@@ -1,5 +1,5 @@
-
-#include "h_main.h"
+#include "h_rush.h"
+#include "libft.h"
 
 /*
  * Puts the hundreds of a 3x

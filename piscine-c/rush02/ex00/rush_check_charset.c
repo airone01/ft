@@ -1,3 +1,4 @@
+#include "h_str.h"
 
 /*
  * Validates the charset.

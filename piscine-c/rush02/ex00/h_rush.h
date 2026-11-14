@@ -1,4 +1,3 @@
-
 #ifndef H_RUSH_H
 #define H_RUSH_H
 

@@ -1,5 +1,5 @@
-
-#include "h_main.h"
+#include "libft.h"
+#include <stdlib.h>
 
 char ***mk_cube(int *len) {
   int i;
