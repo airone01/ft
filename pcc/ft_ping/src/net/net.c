@@ -9,6 +9,8 @@
 
 int resolve_host(const CliOptions opts, struct sockaddr_in **target,
                  struct addrinfo **res, char ip_str[], int ipnmemb) {
+  (void)ipnmemb;
+
   if (!res)
     return 1;
 
