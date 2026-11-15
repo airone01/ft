@@ -14,7 +14,6 @@ set(PATCHED_DIR "${CMAKE_CURRENT_BINARY_DIR}/mlx_patched")
 file(GLOB PATCHES CONFIGURE_DEPENDS "*.patch")
 list(SORT PATCHES) # need them sorted for 0001 -> 0002... order
 file(GLOB MLX_ORIG_SOURCES CONFIGURE_DEPENDS "src/*.c" "includes/*.h")
-list(FILTER MLX_ORIG_SOURCES EXCLUDE REGEX "src/.*(mlx_lib_xpm|mlx_ext_randr)\\.c$")
 
 file(REMOVE_RECURSE "${PATCHED_DIR}")
 file(COPY src includes DESTINATION "${PATCHED_DIR}")
