@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.3.0](https://github.com/airone01/ft/compare/libft-v2.2.1...libft-v2.3.0) (2026-11-15)
+
+
+### Features
+
+* **libft:** missing util functions ([6c198d3](https://github.com/airone01/ft/commit/6c198d30971f2e0d77ea6cac49f32c73d514b4c3))
+
+
+### Bug Fixes
+
+* **libft:** itoa casting error ([3a3708d](https://github.com/airone01/ft/commit/3a3708de06b906177f1b1ad280de165930eeb79b))
+* **rush02:** modernize ([4c0752a](https://github.com/airone01/ft/commit/4c0752a04df043e995e58bff1178f42fed7ec7a4))
+
 ## [2.2.1](https://github.com/airone01/ft/compare/libft-v2.2.0...libft-v2.2.1) (2026-10-02)
 
 

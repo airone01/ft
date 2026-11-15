@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/airone01/ft/compare/piscine-c-rush01-v1.1.1...piscine-c-rush01-v1.1.2) (2026-11-15)
+
+
+### Bug Fixes
+
+* **rush01:** modernize ([82db2d1](https://github.com/airone01/ft/commit/82db2d1e16541acadddc7ea89a1e22c8534338fd))
+
 ## [1.1.1](https://github.com/airone01/ft/compare/piscine-c-rush01-v1.1.0...piscine-c-rush01-v1.1.1) (2026-10-02)
 
 
