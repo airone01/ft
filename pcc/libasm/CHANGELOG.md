@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/airone01/ft/compare/libasm-v1.2.1...libasm-v1.2.2) (2026-11-15)
+
+
+### Bug Fixes
+
+* **libasm:** strlen null pointer exception ([fc2e79e](https://github.com/airone01/ft/commit/fc2e79e1f6663c4504e5e92e7da9145df9d533cc))
+
 ## [1.2.1](https://github.com/airone01/ft/compare/libasm-v1.2.0...libasm-v1.2.1) (2026-10-02)
 
 

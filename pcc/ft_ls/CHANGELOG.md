@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/airone01/ft/compare/ft_ls-v1.0.0...ft_ls-v1.0.1) (2026-11-15)
+
+
+### Bug Fixes
+
+* **ft_ls:** don't use _Thread_local ([17b406f](https://github.com/airone01/ft/commit/17b406f88331471ec8af79e2e23bd365ea3b7772))
+
 ## 1.0.0 (2026-10-02)
 
 

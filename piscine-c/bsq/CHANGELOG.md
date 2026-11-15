@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/airone01/ft/compare/piscine-c-bsq-v1.0.1...piscine-c-bsq-v1.1.0) (2026-11-15)
+
+
+### Features
+
+* **bsq:** modernize ([d02dc36](https://github.com/airone01/ft/commit/d02dc362980b32e1957057e1f5e84a37e0860e7d))
+
 ## [1.0.1](https://github.com/airone01/ft/compare/piscine-c-bsq-v1.0.0...piscine-c-bsq-v1.0.1) (2026-06-02)
 
 
