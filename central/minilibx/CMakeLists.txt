@@ -10,19 +10,37 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
   return()
 endif()
 
-file(GLOB MLX_SOURCES CONFIGURE_DEPENDS "mlx_*.c")
-list(FILTER MLX_SOURCES EXCLUDE REGEX ".*(mlx_lib_xpm|mlx_ext_randr)\\.c$")
+set(PATCHED_DIR "${CMAKE_CURRENT_BINARY_DIR}/mlx_patched")
+file(GLOB PATCHES CONFIGURE_DEPENDS "*.patch")
+list(SORT PATCHES) # need them sorted for 0001 -> 0002... order
+file(GLOB MLX_ORIG_SOURCES CONFIGURE_DEPENDS "src/*.c" "includes/*.h")
+list(FILTER MLX_ORIG_SOURCES EXCLUDE REGEX "src/.*(mlx_lib_xpm|mlx_ext_randr)\\.c$")
 
+file(REMOVE_RECURSE "${PATCHED_DIR}")
+file(COPY src includes DESTINATION "${PATCHED_DIR}")
+
+find_program(PATCH_EXECUTABLES patch REQUIRED)
+foreach(p IN LISTS PATCHES)
+  execute_process(
+    COMMAND ${PATCH_EXECUTABLES} -p1 --no-backup-if-mismatch -i "${p}"
+    WORKING_DIRECTORY "${PATCHED_DIR}"
+    RESULT_VARIABLE rc
+  )
+  if(NOT rc EQUAL 0)
+    message(FATAL_ERROR "Failed to apply ${p}")
+  endif()
+endforeach()
+
+file(GLOB_RECURSE MLX_SOURCES "${PATCHED_DIR}/src/*.c")
 add_library(mlx STATIC ${MLX_SOURCES})
 include(GNUInstallDirs)
 
 target_compile_options(mlx PRIVATE
   -O3
-  -w # suppress all warnings in 3rd-party/legacy code
-  # TODO: Fix the MLX and make patch files instead
+  -w # TODO: Fix the MLX and make patch files instead of suppressing all warns
 )
 target_include_directories(mlx PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${PATCHED_DIR}/includes>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
