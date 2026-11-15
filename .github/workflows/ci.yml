@@ -1,0 +1,42 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  build:
+    name: Build Projects
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install system
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libx11-dev \
+            libxext-dev \
+            libreadline-dev \
+            nasm \
+            ninja-build
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache Cargo
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            tools/ps-viz-mc/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('tools/ps-viz-mc/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+      - name: Build Targets
+        run: |
+          cmake -B build -G Ninja
+          cmake --build build
+      - name: Test Targets
+        run: |
+          ctest --test-dir build --output-on-failure
