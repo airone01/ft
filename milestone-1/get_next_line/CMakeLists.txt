@@ -25,11 +25,20 @@ else()
   list(FILTER GNL_SOURCES EXCLUDE REGEX "src/main\\.c$")
 
   add_library(gnl STATIC ${GNL_SOURCES})
+  add_library(42::gnl ALIAS gnl)
+  include(GNUInstallDirs)
 
   target_include_directories(gnl PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/includes"
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/includes>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
-  target_link_libraries(gnl PRIVATE 42::ft)
+  if(NOT TARGET 42::libft)
+    find_package(libft CONFIG REQUIRED)
+  endif()
+  target_link_libraries(gnl PRIVATE 42::libft)
 
-  add_library(42::gnl ALIAS gnl)
+  install(TARGETS gnl EXPORT gnlConfig ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  install(EXPORT gnlConfig NAMESPACE 42:: FILE gnlConfig.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/gnl)
 endif()
