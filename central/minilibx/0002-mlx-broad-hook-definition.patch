@@ -1,0 +1,220 @@
+From 011365c17a8220e93acf9aade64da08b068e3a1a Mon Sep 17 00:00:00 2001
+From: airone01 <airone01@proton.me>
+Date: Sun, 15 Nov 2026 16:03:49 +0100
+Subject: [PATCH 2/2] mlx: broad hook definition
+
+---
+ includes/mlx.h            | 14 ++++----
+ includes/mlx_hook.h       |  6 ++++
+ includes/mlx_int.h        | 11 +++---
+ src/mlx_int_param_event.c | 75 ++++++++++++++++++++++++---------------
+ 4 files changed, 65 insertions(+), 41 deletions(-)
+ create mode 100644 central/minilibx/includes/mlx_hook.h
+
+diff --git a/includes/mlx.h b/includes/mlx.h
+index 1bf8c028..027b9aef 100644
+--- a/includes/mlx.h
++++ b/includes/mlx.h
+@@ -29,7 +29,8 @@
+ 
+ #define MLX_H
+ 
+-void *mlx_init();
++#include "mlx_hook.h"
++void *mlx_init(void);
+ /*
+ **  needed before everything else.
+ **  return (void *)0 if failed
+@@ -75,11 +76,11 @@ int mlx_get_color_value(void *mlx_ptr, int color);
+ ** dealing with Events
+ */
+ 
+-void mlx_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param);
+-void mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param);
+-void mlx_expose_hook(void *win_ptr, int (*funct_ptr)(), void *param);
++void mlx_mouse_hook(void *win_ptr, t_hook funct_ptr, void *param);
++void mlx_key_hook(void *win_ptr, t_hook funct_ptr, void *param);
++void mlx_expose_hook(void *win_ptr, t_hook funct_ptr, void *param);
+ 
+-void mlx_loop_hook(void *mlx_ptr, int (*funct_ptr)(), void *param);
++void mlx_loop_hook(void *mlx_ptr, t_hook funct_ptr, void *param);
+ int mlx_loop(void *mlx_ptr);
+ int mlx_loop_end(void *mlx_ptr);
+ 
+@@ -114,8 +115,7 @@ void mlx_destroy_display(void *mlx_ptr);
+ **    can be hooked. Some macro and defines from X11/X.h are needed here.
+ */
+ 
+-void mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
+-              void *param);
++void mlx_hook(void *win_ptr, int x_event, int x_mask, t_hook funct, void *param);
+ 
+ void mlx_do_key_autorepeatoff(void *mlx_ptr);
+ void mlx_do_key_autorepeaton(void *mlx_ptr);
+diff --git a/includes/mlx_hook.h b/includes/mlx_hook.h
+new file mode 100644
+index 00000000..510a702d
+--- /dev/null
++++ b/includes/mlx_hook.h
+@@ -0,0 +1,6 @@
++#ifndef MLX_HOOK_H
++#define MLX_HOOK_H
++
++typedef int (*t_hook)(void *);
++
++#endif /* MLX_HOOK_H */
+diff --git a/includes/mlx_int.h b/includes/mlx_int.h
+index b8f5f8c8..381a5105 100644
+--- a/includes/mlx_int.h
++++ b/includes/mlx_int.h
+@@ -16,6 +16,7 @@
+ 
+ #define MLX_INT_H
+ 
++#include "mlx_hook.h"
+ #include <X11/XKBlib.h>
+ #include <X11/Xlib.h>
+ #include <X11/Xutil.h>
+@@ -54,7 +55,7 @@ struct s_col_name {
+ 
+ typedef struct s_event_list {
+   int mask;
+-  int (*hook)();
++  t_hook hook;
+   void *param;
+ } t_event_list;
+ 
+@@ -62,9 +63,9 @@ typedef struct s_win_list {
+   Window window;
+   GC gc;
+   struct s_win_list *next;
+-  int (*mouse_hook)();
+-  int (*key_hook)();
+-  int (*expose_hook)();
++  t_hook mouse_hook;
++  t_hook key_hook;
++  t_hook expose_hook;
+   void *mouse_param;
+   void *key_param;
+   void *expose_param;
+@@ -94,7 +95,7 @@ typedef struct s_xvar {
+   Colormap cmap;
+   int private_cmap;
+   t_win_list *win_list;
+-  int (*loop_hook)();
++  t_hook loop_hook;
+   void *loop_param;
+   int use_xshm;
+   int pshm_format;
+diff --git a/src/mlx_int_param_event.c b/src/mlx_int_param_event.c
+index 5b588881..d0185175 100644
+--- a/src/mlx_int_param_event.c
++++ b/src/mlx_int_param_event.c
+@@ -13,34 +13,35 @@
+ void mlx_int_param_undef(void) {}
+ 
+ void mlx_int_param_KeyPress(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+-  win->hooks[KeyPress].hook(
++  ((int (*)())win->hooks[KeyPress].hook)(
+       XkbKeycodeToKeysym(xvar->display, ev->xkey.keycode, 0, 0),
+       win->hooks[KeyPress].param);
+ }
+ 
+ void mlx_int_param_KeyRelease(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+-  win->hooks[KeyRelease].hook(
++  ((int (*)())win->hooks[KeyRelease].hook)(
+       XkbKeycodeToKeysym(xvar->display, ev->xkey.keycode, 0, 0),
+       win->hooks[KeyRelease].param);
+ }
+ 
+ void mlx_int_param_ButtonPress(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+   (void)xvar;
+-  win->hooks[ButtonPress].hook(ev->xbutton.button, ev->xbutton.x, ev->xbutton.y,
+-                               win->hooks[ButtonPress].param);
++  ((int (*)())win->hooks[ButtonPress].hook)(ev->xbutton.button, ev->xbutton.x,
++                                            ev->xbutton.y,
++                                            win->hooks[ButtonPress].param);
+ }
+ 
+ void mlx_int_param_ButtonRelease(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+   (void)xvar;
+-  win->hooks[ButtonRelease].hook(ev->xbutton.button, ev->xbutton.x,
+-                                 ev->xbutton.y,
+-                                 win->hooks[ButtonRelease].param);
++  ((int (*)())win->hooks[ButtonRelease].hook)(ev->xbutton.button, ev->xbutton.x,
++                                              ev->xbutton.y,
++                                              win->hooks[ButtonRelease].param);
+ }
+ 
+ void mlx_int_param_MotionNotify(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+   (void)xvar;
+-  win->hooks[MotionNotify].hook(ev->xbutton.x, ev->xbutton.y,
+-                                win->hooks[MotionNotify].param);
++  ((int (*)())win->hooks[MotionNotify].hook)(ev->xbutton.x, ev->xbutton.y,
++                                             win->hooks[MotionNotify].param);
+ }
+ 
+ void mlx_int_param_Expose(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+@@ -55,23 +56,39 @@ void mlx_int_param_generic(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+ }
+ 
+ int (*(mlx_int_param_event[]))() = {
+-    mlx_int_param_undef, /* 0 */
+-    mlx_int_param_undef,        mlx_int_param_KeyPress,
+-    mlx_int_param_KeyRelease, /* 3 */
+-    mlx_int_param_ButtonPress,  mlx_int_param_ButtonRelease,
+-    mlx_int_param_MotionNotify, /* 6 */
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_Expose, /* 12 */
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic,      mlx_int_param_generic,
+-    mlx_int_param_generic};
++    (int (*)())mlx_int_param_undef, /* 0 */
++    (int (*)())mlx_int_param_undef,
++    (int (*)())mlx_int_param_KeyPress,
++    (int (*)())mlx_int_param_KeyRelease, /* 3 */
++    (int (*)())mlx_int_param_ButtonPress,
++    (int (*)())mlx_int_param_ButtonRelease,
++    (int (*)())mlx_int_param_MotionNotify, /* 6 */
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_Expose, /* 12 */
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic,
++    (int (*)())mlx_int_param_generic};
+-- 
+2.55.0
+

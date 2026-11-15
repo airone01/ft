@@ -1,0 +1,613 @@
+From f4a64c7c75e35a696fd2adb19bacf05d755a3fa2 Mon Sep 17 00:00:00 2001
+From: airone01 <airone01@proton.me>
+Date: Sun, 15 Nov 2026 16:02:01 +0100
+Subject: [PATCH 1/2] mlx: drop k&r c
+
+---
+ includes/mlx.h                   | 42 ++++++++++++++++----------------
+ includes/mlx_int.h               | 26 ++++++++++----------
+ src/mlx_clear_window.c           |  2 +-
+ src/mlx_destroy_display.c        |  2 +-
+ src/mlx_destroy_image.c          |  2 +-
+ src/mlx_destroy_window.c         |  2 +-
+ src/mlx_expose_hook.c            |  2 +-
+ src/mlx_flush_event.c            |  2 +-
+ src/mlx_hook.c                   | 10 ++++----
+ src/mlx_init.c                   |  6 ++---
+ src/mlx_int_anti_resize_win.c    |  2 +-
+ src/mlx_int_do_nothing.c         |  2 +-
+ src/mlx_int_param_event.c        | 21 ++++++++++------
+ src/mlx_int_set_win_event_mask.c |  3 +--
+ src/mlx_int_wait_first_expose.c  |  2 +-
+ src/mlx_key_hook.c               |  2 +-
+ src/mlx_loop.c                   |  2 +-
+ src/mlx_loop_hook.c              |  2 +-
+ src/mlx_mouse.c                  |  4 +--
+ src/mlx_mouse_hook.c             |  2 +-
+ src/mlx_new_image.c              |  5 ++--
+ src/mlx_pixel_put.c              |  2 +-
+ src/mlx_put_image_to_window.c    |  4 +--
+ src/mlx_screen_size.c            |  5 ++--
+ src/mlx_string_put.c             |  4 +--
+ src/mlx_xpm.c                    |  8 +++---
+ 26 files changed, 85 insertions(+), 81 deletions(-)
+
+diff --git a/includes/mlx.h b/includes/mlx.h
+index 2692606d..1bf8c028 100644
+--- a/includes/mlx.h
++++ b/includes/mlx.h
+@@ -43,8 +43,8 @@ void *mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);
+ /*
+ **  return void *0 if failed
+ */
+-int mlx_clear_window(void *mlx_ptr, void *win_ptr);
+-int mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
++void mlx_clear_window(void *mlx_ptr, void *win_ptr);
++void mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);
+ /*
+ **  origin for x & y is top left corner of the window
+ **  y down is positive
+@@ -67,19 +67,19 @@ char *mlx_get_data_addr(void *img_ptr, int *bits_per_pixel, int *size_line,
+ **  endian : 0 = sever X is little endian, 1 = big endian
+ **  for mlx_new_image2, 2nd arg of mlx_get_data_addr is number_of_planes
+ */
+-int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
+-                            int y);
++void mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
++                             int y);
+ int mlx_get_color_value(void *mlx_ptr, int color);
+ 
+ /*
+ ** dealing with Events
+ */
+ 
+-int mlx_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param);
+-int mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param);
+-int mlx_expose_hook(void *win_ptr, int (*funct_ptr)(), void *param);
++void mlx_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param);
++void mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param);
++void mlx_expose_hook(void *win_ptr, int (*funct_ptr)(), void *param);
+ 
+-int mlx_loop_hook(void *mlx_ptr, int (*funct_ptr)(), void *param);
++void mlx_loop_hook(void *mlx_ptr, int (*funct_ptr)(), void *param);
+ int mlx_loop(void *mlx_ptr);
+ int mlx_loop_end(void *mlx_ptr);
+ 
+@@ -97,35 +97,35 @@ int mlx_loop_end(void *mlx_ptr);
+ **  Usually asked...
+ */
+ 
+-int mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color,
+-                   char *string);
++void mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color,
++                    char *string);
+ void mlx_set_font(void *mlx_ptr, void *win_ptr, char *name);
+ void *mlx_xpm_to_image(void *mlx_ptr, char **xpm_data, int *width, int *height);
+ void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width,
+                             int *height);
+-int mlx_destroy_window(void *mlx_ptr, void *win_ptr);
++void mlx_destroy_window(void *mlx_ptr, void *win_ptr);
+ 
+-int mlx_destroy_image(void *mlx_ptr, void *img_ptr);
++void mlx_destroy_image(void *mlx_ptr, void *img_ptr);
+ 
+-int mlx_destroy_display(void *mlx_ptr);
++void mlx_destroy_display(void *mlx_ptr);
+ 
+ /*
+ **  generic hook system for all events, and minilibX functions that
+ **    can be hooked. Some macro and defines from X11/X.h are needed here.
+ */
+ 
+-int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
+-             void *param);
++void mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
++              void *param);
+ 
+-int mlx_do_key_autorepeatoff(void *mlx_ptr);
+-int mlx_do_key_autorepeaton(void *mlx_ptr);
+-int mlx_do_sync(void *mlx_ptr);
++void mlx_do_key_autorepeatoff(void *mlx_ptr);
++void mlx_do_key_autorepeaton(void *mlx_ptr);
++void mlx_do_sync(void *mlx_ptr);
+ 
+ int mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+ int mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
+-int mlx_mouse_hide(void *mlx_ptr, void *win_ptr);
+-int mlx_mouse_show(void *mlx_ptr, void *win_ptr);
++void mlx_mouse_hide(void *mlx_ptr, void *win_ptr);
++void mlx_mouse_show(void *mlx_ptr, void *win_ptr);
+ 
+-int mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
++void mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
+ 
+ #endif /* MLX_H */
+diff --git a/includes/mlx_int.h b/includes/mlx_int.h
+index b9047d1f..b8f5f8c8 100644
+--- a/includes/mlx_int.h
++++ b/includes/mlx_int.h
+@@ -105,20 +105,20 @@ typedef struct s_xvar {
+   int end_loop;
+ } t_xvar;
+ 
+-int mlx_int_do_nothing();
+-int mlx_get_color_value();
+-int mlx_int_get_good_color();
+-int mlx_int_find_in_pcm();
+-int mlx_int_anti_resize_win();
+-int mlx_int_wait_first_expose();
+-int mlx_int_rgb_conversion();
+-int mlx_int_deal_shm();
+-void *mlx_int_new_xshm_image();
+-char **mlx_int_str_to_wordtab();
+-void *mlx_new_image();
+-int shm_att_pb();
++void mlx_int_do_nothing(void *param);
++int mlx_get_color_value(t_xvar *xvar, int color);
++int mlx_int_get_good_color(t_xvar *xvar, int color);
++int mlx_int_find_in_pcm(void);
++void mlx_int_anti_resize_win(t_xvar *xvar, Window win, int w, int h);
++void mlx_int_wait_first_expose(t_xvar *xvar, Window win);
++void mlx_int_rgb_conversion(t_xvar *xvar);
++void mlx_int_deal_shm(t_xvar *xvar);
++void *mlx_int_new_xshm_image(t_xvar *xvar, int width, int height, int format);
++char **mlx_int_str_to_wordtab(char *str);
++void *mlx_new_image(t_xvar *xvar, int width, int height);
++void shm_att_pb(Display *d, XErrorEvent *ev);
+ int mlx_int_get_visual(t_xvar *xvar);
+-int mlx_int_set_win_event_mask(t_xvar *xvar);
++void mlx_int_set_win_event_mask(t_xvar *xvar);
+ int mlx_int_str_str_cote(char *str, char *find, int len);
+ int mlx_int_str_str(char *str, char *find, int len);
+ 
+diff --git a/src/mlx_clear_window.c b/src/mlx_clear_window.c
+index 2be4303e..5753d630 100644
+--- a/src/mlx_clear_window.c
++++ b/src/mlx_clear_window.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_clear_window(t_xvar *xvar, t_win_list *win) {
++void mlx_clear_window(t_xvar *xvar, t_win_list *win) {
+   XClearWindow(xvar->display, win->window);
+   if (xvar->do_flush)
+     XFlush(xvar->display);
+diff --git a/src/mlx_destroy_display.c b/src/mlx_destroy_display.c
+index e6ea72eb..4651fcae 100644
+--- a/src/mlx_destroy_display.c
++++ b/src/mlx_destroy_display.c
+@@ -1,4 +1,4 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_destroy_display(t_xvar *xvar) { XCloseDisplay(xvar->display); }
++void mlx_destroy_display(t_xvar *xvar) { XCloseDisplay(xvar->display); }
+diff --git a/src/mlx_destroy_image.c b/src/mlx_destroy_image.c
+index bd84104b..e115ea85 100644
+--- a/src/mlx_destroy_image.c
++++ b/src/mlx_destroy_image.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_destroy_image(t_xvar *xvar, t_img *img) {
++void mlx_destroy_image(t_xvar *xvar, t_img *img) {
+   if (img->type == MLX_TYPE_SHM_PIXMAP || img->type == MLX_TYPE_SHM) {
+     XShmDetach(xvar->display, &(img->shm));
+     shmdt(img->shm.shmaddr);
+diff --git a/src/mlx_destroy_window.c b/src/mlx_destroy_window.c
+index 6281dd40..df758f98 100644
+--- a/src/mlx_destroy_window.c
++++ b/src/mlx_destroy_window.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_destroy_window(t_xvar *xvar, t_win_list *win) {
++void mlx_destroy_window(t_xvar *xvar, t_win_list *win) {
+   t_win_list *w;
+   t_win_list *prev;
+   t_win_list first;
+diff --git a/src/mlx_expose_hook.c b/src/mlx_expose_hook.c
+index 98da5805..bb6ac484 100644
+--- a/src/mlx_expose_hook.c
++++ b/src/mlx_expose_hook.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_expose_hook(t_win_list *win, int (*funct)(), void *param) {
++void mlx_expose_hook(t_win_list *win, int (*funct)(), void *param) {
+   win->hooks[Expose].hook = funct;
+   win->hooks[Expose].param = param;
+   win->hooks[Expose].mask = ExposureMask;
+diff --git a/src/mlx_flush_event.c b/src/mlx_flush_event.c
+index 5d2505f8..e2bf458d 100644
+--- a/src/mlx_flush_event.c
++++ b/src/mlx_flush_event.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_flush_event(t_xvar *xvar) {
++void mlx_flush_event(t_xvar *xvar) {
+   XEvent ev;
+ 
+   while (XPending(xvar->display)) {
+diff --git a/src/mlx_hook.c b/src/mlx_hook.c
+index 8c57d4c4..fc0e09e2 100644
+--- a/src/mlx_hook.c
++++ b/src/mlx_hook.c
+@@ -10,15 +10,15 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_hook(t_win_list *win, int x_event, int x_mask, int (*funct)(),
+-             void *param) {
++void mlx_hook(t_win_list *win, int x_event, int x_mask, int (*funct)(),
++              void *param) {
+   win->hooks[x_event].hook = funct;
+   win->hooks[x_event].param = param;
+   win->hooks[x_event].mask = x_mask;
+ }
+ 
+-int mlx_do_key_autorepeatoff(t_xvar *xvar) { XAutoRepeatOff(xvar->display); }
++void mlx_do_key_autorepeatoff(t_xvar *xvar) { XAutoRepeatOff(xvar->display); }
+ 
+-int mlx_do_key_autorepeaton(t_xvar *xvar) { XAutoRepeatOn(xvar->display); }
++void mlx_do_key_autorepeaton(t_xvar *xvar) { XAutoRepeatOn(xvar->display); }
+ 
+-int mlx_do_sync(t_xvar *xvar) { XSync(xvar->display, False); }
++void mlx_do_sync(t_xvar *xvar) { XSync(xvar->display, False); }
+diff --git a/src/mlx_init.c b/src/mlx_init.c
+index 8f40c5b8..2f6609f4 100644
+--- a/src/mlx_init.c
++++ b/src/mlx_init.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-void *mlx_init() {
++void *mlx_init(void) {
+   t_xvar *xvar;
+ 
+   if (!(xvar = malloc(sizeof(*xvar))))
+@@ -49,7 +49,7 @@ void *mlx_init() {
+ ** in remote Xserver connections.
+ */
+ 
+-int mlx_int_deal_shm(t_xvar *xvar) {
++void mlx_int_deal_shm(t_xvar *xvar) {
+   int use_pshm;
+   int bidon;
+   char *dpy;
+@@ -73,7 +73,7 @@ int mlx_int_deal_shm(t_xvar *xvar) {
+ ** TrueColor Visual is needed to have *_mask correctly set
+ */
+ 
+-int mlx_int_rgb_conversion(t_xvar *xvar) {
++void mlx_int_rgb_conversion(t_xvar *xvar) {
+   bzero(xvar->decrgb, sizeof(int) * 6);
+   while (!(xvar->visual->red_mask & 1)) {
+     xvar->visual->red_mask >>= 1;
+diff --git a/src/mlx_int_anti_resize_win.c b/src/mlx_int_anti_resize_win.c
+index 7ce67fd6..9c8d65bb 100644
+--- a/src/mlx_int_anti_resize_win.c
++++ b/src/mlx_int_anti_resize_win.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_int_anti_resize_win(t_xvar *xvar, Window win, int w, int h) {
++void mlx_int_anti_resize_win(t_xvar *xvar, Window win, int w, int h) {
+   XSizeHints hints;
+   long toto;
+ 
+diff --git a/src/mlx_int_do_nothing.c b/src/mlx_int_do_nothing.c
+index a8d126f0..d1b7dd30 100644
+--- a/src/mlx_int_do_nothing.c
++++ b/src/mlx_int_do_nothing.c
+@@ -8,4 +8,4 @@
+ ** Last update Tue Sep 25 15:56:22 2001 Charlie Root
+ */
+ 
+-int mlx_int_do_nothing(void *param) {}
++void mlx_int_do_nothing(void *param) { (void)param; }
+diff --git a/src/mlx_int_param_event.c b/src/mlx_int_param_event.c
+index 2735a4a9..5b588881 100644
+--- a/src/mlx_int_param_event.c
++++ b/src/mlx_int_param_event.c
+@@ -10,42 +10,47 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_int_param_undef() {}
++void mlx_int_param_undef(void) {}
+ 
+-int mlx_int_param_KeyPress(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_KeyPress(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+   win->hooks[KeyPress].hook(
+       XkbKeycodeToKeysym(xvar->display, ev->xkey.keycode, 0, 0),
+       win->hooks[KeyPress].param);
+ }
+ 
+-int mlx_int_param_KeyRelease(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_KeyRelease(t_xvar *xvar, XEvent *ev, t_win_list *win) {
+   win->hooks[KeyRelease].hook(
+       XkbKeycodeToKeysym(xvar->display, ev->xkey.keycode, 0, 0),
+       win->hooks[KeyRelease].param);
+ }
+ 
+-int mlx_int_param_ButtonPress(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_ButtonPress(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++  (void)xvar;
+   win->hooks[ButtonPress].hook(ev->xbutton.button, ev->xbutton.x, ev->xbutton.y,
+                                win->hooks[ButtonPress].param);
+ }
+ 
+-int mlx_int_param_ButtonRelease(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_ButtonRelease(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++  (void)xvar;
+   win->hooks[ButtonRelease].hook(ev->xbutton.button, ev->xbutton.x,
+                                  ev->xbutton.y,
+                                  win->hooks[ButtonRelease].param);
+ }
+ 
+-int mlx_int_param_MotionNotify(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_MotionNotify(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++  (void)xvar;
+   win->hooks[MotionNotify].hook(ev->xbutton.x, ev->xbutton.y,
+                                 win->hooks[MotionNotify].param);
+ }
+ 
+-int mlx_int_param_Expose(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_Expose(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++  (void)xvar;
+   if (!ev->xexpose.count)
+     win->hooks[Expose].hook(win->hooks[Expose].param);
+ }
+ 
+-int mlx_int_param_generic(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++void mlx_int_param_generic(t_xvar *xvar, XEvent *ev, t_win_list *win) {
++  (void)xvar;
+   win->hooks[ev->type].hook(win->hooks[ev->type].param);
+ }
+ 
+diff --git a/src/mlx_int_set_win_event_mask.c b/src/mlx_int_set_win_event_mask.c
+index e329dbc1..0850105d 100644
+--- a/src/mlx_int_set_win_event_mask.c
++++ b/src/mlx_int_set_win_event_mask.c
+@@ -10,9 +10,8 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_int_set_win_event_mask(t_xvar *xvar) {
++void mlx_int_set_win_event_mask(t_xvar *xvar) {
+   t_win_list *win;
+-  int mask;
+   int i;
+   XSetWindowAttributes xwa;
+ 
+diff --git a/src/mlx_int_wait_first_expose.c b/src/mlx_int_wait_first_expose.c
+index e33ec4f4..0121d440 100644
+--- a/src/mlx_int_wait_first_expose.c
++++ b/src/mlx_int_wait_first_expose.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_int_wait_first_expose(t_xvar *xvar, Window win) {
++void mlx_int_wait_first_expose(t_xvar *xvar, Window win) {
+   XEvent ev;
+ 
+   XWindowEvent(xvar->display, win, ExposureMask, &ev);
+diff --git a/src/mlx_key_hook.c b/src/mlx_key_hook.c
+index d5146d74..f22b06fc 100644
+--- a/src/mlx_key_hook.c
++++ b/src/mlx_key_hook.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_key_hook(t_win_list *win, int (*funct)(), void *param) {
++void mlx_key_hook(t_win_list *win, int (*funct)(), void *param) {
+   win->hooks[KeyRelease].hook = funct;
+   win->hooks[KeyRelease].param = param;
+   win->hooks[KeyRelease].mask = KeyReleaseMask;
+diff --git a/src/mlx_loop.c b/src/mlx_loop.c
+index 387810f6..3dbf1820 100644
+--- a/src/mlx_loop.c
++++ b/src/mlx_loop.c
+@@ -45,7 +45,7 @@ int mlx_loop(t_xvar *xvar) {
+ 
+       if (win && ev.type == ClientMessage &&
+           ev.xclient.message_type == xvar->wm_protocols &&
+-          ev.xclient.data.l[0] == xvar->wm_delete_window &&
++          ev.xclient.data.l[0] == (long)xvar->wm_delete_window &&
+           win->hooks[DestroyNotify].hook)
+         win->hooks[DestroyNotify].hook(win->hooks[DestroyNotify].param);
+       if (win && ev.type < MLX_MAX_EVENT && win->hooks[ev.type].hook)
+diff --git a/src/mlx_loop_hook.c b/src/mlx_loop_hook.c
+index b1f4e2f5..58709209 100644
+--- a/src/mlx_loop_hook.c
++++ b/src/mlx_loop_hook.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_loop_hook(t_xvar *xvar, int (*funct)(), void *param) {
++void mlx_loop_hook(t_xvar *xvar, int (*funct)(), void *param) {
+   xvar->loop_hook = funct;
+   xvar->loop_param = param;
+ }
+diff --git a/src/mlx_mouse.c b/src/mlx_mouse.c
+index 6a0cdb38..5efad040 100644
+--- a/src/mlx_mouse.c
++++ b/src/mlx_mouse.c
+@@ -5,7 +5,7 @@ int mlx_mouse_move(t_xvar *xvar, t_win_list *win, int x, int y) {
+   return (0);
+ }
+ 
+-int mlx_mouse_hide(t_xvar *xvar, t_win_list *win) {
++void mlx_mouse_hide(t_xvar *xvar, t_win_list *win) {
+   static char data[1] = {0};
+   Cursor cursor;
+   Pixmap blank;
+@@ -19,7 +19,7 @@ int mlx_mouse_hide(t_xvar *xvar, t_win_list *win) {
+   XFreeCursor(xvar->display, cursor);
+ }
+ 
+-int mlx_mouse_show(t_xvar *xvar, t_win_list *win) {
++void mlx_mouse_show(t_xvar *xvar, t_win_list *win) {
+   XUndefineCursor(xvar->display, win->window);
+ }
+ 
+diff --git a/src/mlx_mouse_hook.c b/src/mlx_mouse_hook.c
+index 525bc427..71fd6cf3 100644
+--- a/src/mlx_mouse_hook.c
++++ b/src/mlx_mouse_hook.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_mouse_hook(t_win_list *win, int (*funct)(), void *param) {
++void mlx_mouse_hook(t_win_list *win, int (*funct)(), void *param) {
+   win->hooks[ButtonPress].hook = funct;
+   win->hooks[ButtonPress].param = param;
+   win->hooks[ButtonPress].mask = ButtonPressMask;
+diff --git a/src/mlx_new_image.c b/src/mlx_new_image.c
+index b6b23039..4ff46aaf 100644
+--- a/src/mlx_new_image.c
++++ b/src/mlx_new_image.c
+@@ -9,6 +9,7 @@
+ */
+ 
+ #include "mlx_int.h"
++#include <X11/Xlib.h>
+ 
+ /*
+ ** To handle X errors
+@@ -18,7 +19,7 @@
+ 
+ int mlx_X_error;
+ 
+-int shm_att_pb(Display *d, XErrorEvent *ev) {
++void shm_att_pb(Display *d, XErrorEvent *ev) {
+   if (ev->request_code == 146 && ev->minor_code == X_ShmAttach)
+     write(2, WARN_SHM_ATTACH, strlen(WARN_SHM_ATTACH));
+   mlx_X_error = 1;
+@@ -63,7 +64,7 @@ void *mlx_int_new_xshm_image(t_xvar *xvar, int width, int height, int format) {
+   }
+   img->shm.readOnly = False;
+   mlx_X_error = 0;
+-  save_handler = XSetErrorHandler(shm_att_pb);
++  save_handler = XSetErrorHandler((XErrorHandler)shm_att_pb);
+   if (!XShmAttach(xvar->display, &(img->shm)) ||
+       0 & XSync(xvar->display, False) || mlx_X_error) {
+     XSetErrorHandler(save_handler);
+diff --git a/src/mlx_pixel_put.c b/src/mlx_pixel_put.c
+index 65cf5613..729b3a16 100644
+--- a/src/mlx_pixel_put.c
++++ b/src/mlx_pixel_put.c
+@@ -10,7 +10,7 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_pixel_put(t_xvar *xvar, t_win_list *win, int x, int y, int color) {
++void mlx_pixel_put(t_xvar *xvar, t_win_list *win, int x, int y, int color) {
+   XGCValues xgcv;
+ 
+   xgcv.foreground = mlx_int_get_good_color(xvar, color);
+diff --git a/src/mlx_put_image_to_window.c b/src/mlx_put_image_to_window.c
+index c523ce64..ede065b3 100644
+--- a/src/mlx_put_image_to_window.c
++++ b/src/mlx_put_image_to_window.c
+@@ -10,8 +10,8 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_put_image_to_window(t_xvar *xvar, t_win_list *win, t_img *img, int x,
+-                            int y) {
++void mlx_put_image_to_window(t_xvar *xvar, t_win_list *win, t_img *img, int x,
++                             int y) {
+   GC gc;
+ 
+   gc = win->gc;
+diff --git a/src/mlx_screen_size.c b/src/mlx_screen_size.c
+index d2b0b8bf..5afadabb 100644
+--- a/src/mlx_screen_size.c
++++ b/src/mlx_screen_size.c
+@@ -1,12 +1,11 @@
+ #include "mlx_int.h"
+ 
+-int mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey) {
++void mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey) {
+   XWindowAttributes xwAttr;
+-  Status ret;
+   t_xvar *xvar;
+ 
+   xvar = mlx_ptr;
+-  ret = XGetWindowAttributes(xvar->display, xvar->root, &xwAttr);
++  XGetWindowAttributes(xvar->display, xvar->root, &xwAttr);
+   (*sizex) = xwAttr.width;
+   (*sizey) = xwAttr.height;
+ }
+diff --git a/src/mlx_string_put.c b/src/mlx_string_put.c
+index ce154839..bbd196a4 100644
+--- a/src/mlx_string_put.c
++++ b/src/mlx_string_put.c
+@@ -10,8 +10,8 @@
+ 
+ #include "mlx_int.h"
+ 
+-int mlx_string_put(t_xvar *xvar, t_win_list *win, int x, int y, int color,
+-                   char *string) {
++void mlx_string_put(t_xvar *xvar, t_win_list *win, int x, int y, int color,
++                    char *string) {
+   XGCValues xgcv;
+ 
+   xgcv.foreground = mlx_int_get_good_color(xvar, color);
+diff --git a/src/mlx_xpm.c b/src/mlx_xpm.c
+index c6da7772..d92463e9 100644
+--- a/src/mlx_xpm.c
++++ b/src/mlx_xpm.c
+@@ -110,7 +110,7 @@ int mlx_int_get_text_rgb(char *name, char *end) {
+   return (0);
+ }
+ 
+-int mlx_int_xpm_set_pixel(t_img *img, char *data, int opp, int col, int x) {
++void mlx_int_xpm_set_pixel(t_img *img, char *data, int opp, int col, int x) {
+   int dec;
+ 
+   dec = opp;
+@@ -266,7 +266,7 @@ void *mlx_int_parse_xpm(t_xvar *xvar, void *info, int info_size, char *(*f)()) {
+   return (img);
+ }
+ 
+-int mlx_int_file_get_rid_comment(char *ptr, int size) {
++void mlx_int_file_get_rid_comment(char *ptr, int size) {
+   int com_begin;
+   int com_end;
+ 
+@@ -296,7 +296,7 @@ void *mlx_xpm_file_to_image(t_xvar *xvar, char *file, int *width, int *height) {
+     return ((void *)0);
+   }
+   mlx_int_file_get_rid_comment(ptr, size);
+-  if (img = mlx_int_parse_xpm(xvar, ptr, size, mlx_int_get_line)) {
++  if ((img = mlx_int_parse_xpm(xvar, ptr, size, mlx_int_get_line))) {
+     *width = img->width;
+     *height = img->height;
+   }
+@@ -308,7 +308,7 @@ void *mlx_xpm_file_to_image(t_xvar *xvar, char *file, int *width, int *height) {
+ void *mlx_xpm_to_image(t_xvar *xvar, char **xpm_data, int *width, int *height) {
+   t_img *img;
+ 
+-  if (img = mlx_int_parse_xpm(xvar, xpm_data, 0, mlx_int_static_line)) {
++  if ((img = mlx_int_parse_xpm(xvar, xpm_data, 0, mlx_int_static_line))) {
+     *width = img->width;
+     *height = img->height;
+   }
+-- 
+2.55.0
+
