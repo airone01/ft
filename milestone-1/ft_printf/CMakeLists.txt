@@ -5,7 +5,6 @@ if (CUSTOM_FT_PRINTF_PATH)
   messagge(STATUS "Using external ft_printf: ${CUSTOM_FT_PRINTF_PATH}")
 
   add_library(42::ft_printf STATIC IMPORTED GLOBAL)
-
   set_target_properties(42::ft_printf PROPERTIES
     IMPORTED_LOCATION "${CUSTOM_FT_PRINTF_PATH}"
   )
@@ -19,16 +18,24 @@ if (CUSTOM_FT_PRINTF_PATH)
       INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/includes"
     )
   endif()
-
 else()
   file(GLOB_RECURSE FT_PRINTF_SOURCES CONFIGURE_DEPENDS "src/*.c")
 
   add_library(ft_printf STATIC ${FT_PRINTF_SOURCES})
+  add_library(42::ft_printf ALIAS ft_printf)
+  include(GNUInstallDirs)
 
   target_include_directories(ft_printf PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/includes"
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/includes>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
-  target_link_libraries(ft_printf PRIVATE 42::ft)
+  if(NOT TARGET 42::libft)
+    find_package(libft CONFIG REQUIRED)
+  endif()
+  target_link_libraries(ft_printf PRIVATE 42::libft)
 
-  add_library(42::ft_printf ALIAS ft_printf)
+  install(TARGETS ft_printf EXPORT ft_printfConfig ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  install(EXPORT ft_printfConfig NAMESPACE 42:: FILE ft_printfConfig.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ft_printf)
 endif()
