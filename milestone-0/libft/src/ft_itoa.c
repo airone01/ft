@@ -2,43 +2,36 @@
 #include <stddef.h>
 
 static long get_num_len(int n, const char *b) {
-  long len;
-  long bl;
-  long num;
+  long len = 0;
+  long blen = (long)ft_strlen(b);
+  long long num;
 
-  len = 0;
   if (n <= 0)
     len = 1;
-  bl = (long)ft_strlen(b);
   num = n;
   if (n < 0)
-    num = -n;
+    num = -num;
   while (num > 0) {
-    num /= bl;
+    num /= blen;
     len++;
   }
   return (len);
 }
 
 static void fill_number(char *s, int n, long len, const char *b) {
-  long bl;
-  long num;
-  int is_negative;
+  long blen = (long)ft_strlen(b);
+  long long num = n;
+  int neg = (n < 0);
 
-  bl = (long)ft_strlen(b);
-  is_negative = 0;
-  if (n < 0)
-    is_negative = 1;
-  num = n;
-  if (is_negative)
-    num = -n;
+  if (neg)
+    num = -num;
   s[len] = '\0';
-  while (len > is_negative) {
+  while (len > neg) {
     len--;
-    s[len] = b[num % bl];
-    num /= bl;
+    s[len] = b[num % blen];
+    num /= blen;
   }
-  if (is_negative)
+  if (neg)
     s[0] = '-';
 }
 
