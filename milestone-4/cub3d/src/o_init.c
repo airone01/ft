@@ -1,5 +1,6 @@
 
 #include "mlx.h"
+#include "mlx_hook.h"
 #include "mouse_bonus.h"
 
 static t_mouse g_mouse;
@@ -23,6 +24,6 @@ void mouse_toggle(void) {
 }
 
 void mouse_setup_hooks(t_data *data) {
-  mlx_hook(data->win, 6, 1L << 6, mouse_move_handler, data);
-  mlx_hook(data->win, 4, 1L << 2, mouse_press_handler, data);
+  mlx_hook(data->win, 6, 1L << 6, (t_hook)mouse_move_handler, data);
+  mlx_hook(data->win, 4, 1L << 2, (t_hook)mouse_press_handler, data);
 }
