@@ -8,6 +8,8 @@ ft_strlen:
 	mov rax, rdi; save str ptr in rax
 
 .find_loop:
+	cmp rdi, 0; null pointer
+	je  .done
 	cmp byte [rdi], 0
 	je  .done
 	inc rdi
