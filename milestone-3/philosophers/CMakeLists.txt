@@ -7,7 +7,7 @@ add_executable(philo ${PHILOSOPHERS_SOURCES})
 target_include_directories(philo PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/includes"
 )
-target_link_libraries(philo PRIVATE 42::ft)
+target_link_libraries(philo PRIVATE 42::libft)
 
 include(GNUInstallDirs)
 install(TARGETS philo DESTINATION ${CMAKE_INSTALL_BINDIR})

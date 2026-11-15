@@ -16,7 +16,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
 	target_compile_options(cub3d PRIVATE -Wno-cast-function-type)
 
 	target_link_libraries(cub3d PRIVATE
-		42::ft
+		42::libft
 		42::ft_printf
 		42::gnl
 		# 3DS version of the MLX is just a header interface
@@ -55,7 +55,7 @@ else()
 	target_include_directories(cub3d_common PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/includes")
 	target_compile_options(cub3d_common PUBLIC -Wno-cast-function-type)
 	target_link_libraries(cub3d_common PUBLIC
-		42::ft
+		42::libft
 		42::ft_printf
 		42::gnl
 		42::mlx
