@@ -9,7 +9,7 @@ target_include_directories(pipex PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/includes"
 )
 target_link_libraries(pipex PRIVATE
-  42::ft
+  42::libft
   42::ft_printf
   42::gnl
 )

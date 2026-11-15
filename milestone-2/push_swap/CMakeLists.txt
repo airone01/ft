@@ -6,7 +6,7 @@ list(FILTER PS_COMMON_SOURCES EXCLUDE REGEX "src/(checker|_main)\\.c$")
 
 add_library(ps_common OBJECT ${PS_COMMON_SOURCES})
 target_include_directories(ps_common PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/includes")
-target_link_libraries(ps_common PUBLIC 42::ft 42::gnl)
+target_link_libraries(ps_common PUBLIC 42::libft 42::gnl)
 
 add_executable(push_swap src/_main.c)
 target_link_libraries(push_swap PRIVATE ps_common)

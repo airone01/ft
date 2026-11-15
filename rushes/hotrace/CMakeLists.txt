@@ -10,7 +10,7 @@ target_include_directories(hotrace PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/includes"
 )
 target_link_libraries(hotrace PRIVATE
-  42::ft
+  42::libft
   42::gnl
 )
 

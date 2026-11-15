@@ -11,7 +11,7 @@ target_include_directories(fdf PRIVATE
 # TODO: Fix the MLX and make patch files instead
 target_compile_options(fdf PRIVATE -Wno-cast-function-type)
 target_link_libraries(fdf PRIVATE
-  42::ft
+  42::libft
   42::gnl
   42::ft_printf
   42::mlx

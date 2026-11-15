@@ -11,7 +11,7 @@ target_include_directories(minishell PRIVATE
   "${CMAKE_CURRENT_SOURCE_DIR}/includes"
 )
 target_link_libraries(minishell PRIVATE
-  42::ft
+  42::libft
   42::ft_printf
   Readline::Readline
 )
