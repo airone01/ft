@@ -14,15 +14,15 @@
       /></a>
     <a href="https://github.com/airone01/ft?tab=readme-ov-file#number-of-projects"><img
         alt="How many projects are in this repo"
-        src="https://img.shields.io/badge/project_count-42_(yes,_really)-_?style=flat-square&logo=42&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41"
+        src="https://img.shields.io/badge/project_count-45-_?style=flat-square&logo=42&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41"
       /></a>
     <a href="https://github.com/airone01/ft"><img
         alt="Repo size in bytes"
         src="https://img.shields.io/github/repo-size/airone01/ft?color=%23DDB6F2&label=repo%20size&logo=codesandbox&style=flat-square&logoColor=D9E0EE&labelColor=302D41"
       /></a>
-    <a href="https://github.com/airone01/ft/actions/workflows/zig-build.yml"><img
-        alt="Zig workflow status"
-        src="https://img.shields.io/github/actions/workflow/status/airone01/ft/zig-build.yml?style=flat-square&logo=zig&logoColor=D9E0EE&labelColor=302D41"
+    <a href="https://github.com/airone01/ft/actions/workflows/ci.yml"><img
+        alt="CI status"
+        src="https://img.shields.io/github/actions/workflow/status/airone01/ft/ci.yml?style=flat-square&logo=cmake&logoColor=D9E0EE&labelColor=302D41"
       /></a>
   </p>
 </div>
