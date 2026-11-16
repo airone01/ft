@@ -112,7 +112,11 @@ static t_chunk_hdr *alloc_chunk(t_zone_hdr *zone_ptr, size_t size) {
 
   // Splitting
   target->is_free = 0;
-  if (full_nmbytes >= size + CHUNK_HDR_SIZE + MIN_PAYLOAD) {
+  size_t min_needed_bytes =
+      (CHUNK_HDR_SIZE + size)          ///< Size of this payload
+      + (CHUNK_HDR_SIZE + MIN_PAYLOAD) ///< Size of another potential payload
+      ;
+  if (full_nmbytes >= min_needed_bytes) {
     target->nmbytes = CHUNK_HDR_SIZE + size;
 
     size_t rshift_size = CHUNK_HDR_SIZE + size;
