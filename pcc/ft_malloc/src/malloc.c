@@ -1,6 +1,8 @@
 #include "malloc.h"
 #include <assert.h>
+#include <errno.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/mman.h>
 
@@ -154,10 +156,17 @@ static t_chunk_hdr *try_alloc_chunk(t_zone_hdr *zone, size_t size) {
 void *malloc(size_t size) {
   if (size <= 0)
     return NULL;
-  size = ALIGN16(size);
 
   setup_alloc();
 
+  if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
+    /// Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back to
+    /// 0. After setup_alloc because we need to know page size.
+    errno = ENOMEM;
+    return NULL;
+  }
+
+  size = ALIGN16(size);
   t_data_type data_type = resolve_data_size(size);
 
   t_zone_hdr **zone_lst = &alloc_conf.zones[data_type];
