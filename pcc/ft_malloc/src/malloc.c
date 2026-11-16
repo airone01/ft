@@ -4,15 +4,13 @@
 #include <stdio.h>
 #include <sys/mman.h>
 
-#define ALIGN16(x) (((x) + 15) & ~15)
-
 /// Aligns 'num' to a greater multiple of 'mult'.
 /// \see https://stackoverflow.com/a/40518597
 static size_t align(size_t num, size_t mult) {
-  return num + mult - (num % mult);
+  return (num + mult - 1) / mult * mult;
 }
 
-static DataType resolve_data_size(size_t size) {
+static t_data_type resolve_data_size(size_t size) {
   if (size <= alloc_conf.sizes[Tiny])
     return Tiny;
   if (size <= alloc_conf.sizes[Small])
@@ -20,20 +18,13 @@ static DataType resolve_data_size(size_t size) {
   return Large;
 }
 
-/// Gets the free space remaining in 'zone' in bytes.
-/// \todo
-static size_t get_free_space(void *zone) {
-  (void)zone;
-  return 0;
-}
-
 /// Allocates a zone with space for 100 chunks and writes initial headers.
 /// \param data_type The data size to account for.
-static void *alloc_zone_100(DataType data_type) {
+static void *alloc_zone(t_data_type data_type) {
   // Calculate zone size
-  size_t total_zone_bytes =
-      align(sizeof(ZoneHdr) + (100 * (sizeof(ChnkHdr) + data_type)),
-            alloc_conf.page_size);
+  size_t total_zone_bytes = align(
+      ZONE_HDR_SIZE + (100 * (CHUNK_HDR_SIZE + alloc_conf.sizes[data_type])),
+      alloc_conf.page_size);
 
   /// Requests pages from the kernel.
   void *zone_ptr =
@@ -54,18 +45,17 @@ static void *alloc_zone_100(DataType data_type) {
 
   // Now we're safe and we can write initial header followed by chunk header
 
-  ZoneHdr *zone = (ZoneHdr *)zone_ptr;
-  ChnkHdr *first_chnk =
-      (ChnkHdr *)((char *)zone_ptr + ALIGN16(sizeof(ZoneHdr)));
+  t_zone_hdr *zone = (t_zone_hdr *)zone_ptr;
+  t_chunk_hdr *first_chnk = (t_chunk_hdr *)((char *)zone_ptr + ZONE_HDR_SIZE);
 
   zone->type = data_type;
-  zone->size = total_zone_bytes;
+  zone->nmbytes = total_zone_bytes - ZONE_HDR_SIZE;
   zone->chunk = first_chnk;
   zone->next = NULL;
   zone->prev = NULL;
 
   /// Calculate usable payload capacity for this individual big chunk
-  size_t hdrs_overhead = ALIGN16(sizeof(ZoneHdr)) + ALIGN16(sizeof(ChnkHdr));
+  size_t hdrs_overhead = ZONE_HDR_SIZE + CHUNK_HDR_SIZE;
   size_t usable_space = total_zone_bytes - hdrs_overhead;
 
   first_chnk->nmbytes = usable_space;
@@ -76,28 +66,128 @@ static void *alloc_zone_100(DataType data_type) {
   return zone_ptr;
 }
 
+/// Finds the first chunk in a zone that has enough space.
+/// \note No defragmentation
+/// \return pointer to free zone
+/// \return NULL on null pointer
+/// \return NULL on not enough space in zone
+static t_chunk_hdr *find_free_chunk_in_zone(t_zone_hdr *zone_ptr,
+                                            size_t nmbytes) {
+  if (!zone_ptr)
+    return NULL;
+
+  t_chunk_hdr *chunk = zone_ptr->chunk;
+
+  while (chunk) {
+    if (chunk->is_free && (chunk->nmbytes >= nmbytes))
+      return chunk;
+    chunk = chunk->next;
+  }
+
+  return NULL;
+}
+
+/// Allocates a chunk of a set size in a zone.
+/// \param zone The zone that has enough space for the chunk.
+/// \param size The size of the free space expected by the user.
+/// \return NULL on null pointer
+/// \return NULL on not enough space in zone
+/// \return A pointer to the address of the allocated chunk
+static t_chunk_hdr *alloc_chunk(t_zone_hdr *zone_ptr, size_t size) {
+  if (!zone_ptr)
+    return NULL;
+
+  /// The chunk we will allocate, also the old free chunk.
+  t_chunk_hdr *target =
+      find_free_chunk_in_zone(zone_ptr, CHUNK_HDR_SIZE + size);
+  if (!target)
+    return NULL;
+
+  size_t full_nmbytes = target->nmbytes;
+  /// The old next chunk
+  /// \note Is either NULL or a pointer to an unfree chunk
+  t_chunk_hdr *next = target->next;
+
+  /// Here I'm assuming we will have space left for another chunk after.
+  /// \todo Calculate space left for the next chunk, and if it's smaller than
+  /// the smallest posible chunk of this data type, then just take the full
+  /// space instead of splitting
+
+  // Splitting
+  target->is_free = 0;
+  if (full_nmbytes >= size + CHUNK_HDR_SIZE + MIN_PAYLOAD) {
+    target->nmbytes = CHUNK_HDR_SIZE + size;
+
+    size_t rshift_size = CHUNK_HDR_SIZE + size;
+    /// Add the new free chunk
+    t_chunk_hdr *free_chunk = (t_chunk_hdr *)((char *)target + rshift_size);
+    target->next = free_chunk;
+
+    free_chunk->is_free = 1;
+    free_chunk->next = next;
+    free_chunk->prev = target;
+    free_chunk->nmbytes = full_nmbytes - rshift_size;
+
+    if (next != NULL)
+      next->prev = target;
+  }
+
+  return target;
+}
+
+/// Instead of calculating the size of the zone, I just iterate over the zones
+/// until I find one where there is space to allocate a chunk.
+static t_chunk_hdr *try_alloc_chunk(t_zone_hdr *zone, size_t size) {
+  if (!zone)
+    return NULL;
+
+  while (zone) {
+    t_chunk_hdr *chunk = alloc_chunk(zone, size);
+    if (chunk)
+      return chunk;
+    zone = zone->next;
+  }
+
+  return NULL;
+}
+
 void *malloc(size_t size) {
   if (size <= 0)
     return NULL;
   size = ALIGN16(size);
 
-  void *zone = NULL;
-  (void)zone;
-
   setup_alloc();
 
-  DataType data_type = resolve_data_size(size);
+  t_data_type data_type = resolve_data_size(size);
 
-  if (!alloc_conf.zones[data_type] ||
-      (get_free_space(alloc_conf.zones[data_type]) < size))
-    // Then we allocate a new zone of required size
-    // Also this can fail, protection needed
-    zone = alloc_zone_100(data_type);
+  t_zone_hdr **zone_lst = &alloc_conf.zones[data_type];
+  if (!*zone_lst) {
+    t_zone_hdr *z = alloc_zone(data_type);
+    if (!z)
+      return NULL;
+    *zone_lst = z;
+  }
 
   // Now we have a guaranteed zone for size.
   // We can split to get our chunk
   // Might need to be protected
   // Pointer is decided here, and we can return it
 
-  return NULL;
+  t_chunk_hdr *chunk = NULL;
+  chunk = try_alloc_chunk(*zone_lst, size);
+  if (!chunk) {
+    // No space in present zones, need to make new zone
+    t_zone_hdr *new = alloc_zone(data_type);
+    t_zone_hdr *last = *zone_lst;
+    while (last->next)
+      last = last->next;
+    last->next = new;
+    new->prev = last;
+    chunk = alloc_chunk(new, size);
+  }
+  if (!chunk)
+    return NULL;
+
+  void *ret = (void *)((char *)chunk + CHUNK_HDR_SIZE);
+  return ret;
 }
