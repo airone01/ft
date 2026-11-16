@@ -20,18 +20,13 @@ static t_data_type resolve_data_size(size_t size) {
   return Large;
 }
 
-/// Allocates a zone with space for 100 chunks and writes initial headers.
+/// Allocates a zone and writes initial headers.
 /// \param data_type The data size to account for.
-static void *alloc_zone(t_data_type data_type) {
-  // Calculate zone size
-  size_t total_zone_bytes = align(
-      ZONE_HDR_SIZE + (100 * (CHUNK_HDR_SIZE + alloc_conf.sizes[data_type])),
-      alloc_conf.page_size);
-
+static void *alloc_zone(t_data_type data_type, size_t total_nmbytes) {
   /// Requests pages from the kernel.
   void *zone_ptr =
-      mmap(NULL,             ///< Kernel picks address
-           total_zone_bytes, ///< Padded on page size
+      mmap(NULL,          ///< Kernel picks address
+           total_nmbytes, ///< Padded on page size
            PROT_READ | PROT_WRITE,
            MAP_ANONYMOUS | MAP_PRIVATE, ///< \todo use MAP_ANON on BSD
            -1,                          ///< No FD
@@ -51,14 +46,14 @@ static void *alloc_zone(t_data_type data_type) {
   t_chunk_hdr *first_chnk = (t_chunk_hdr *)((char *)zone_ptr + ZONE_HDR_SIZE);
 
   zone->type = data_type;
-  zone->nmbytes = total_zone_bytes - ZONE_HDR_SIZE;
+  zone->nmbytes = total_nmbytes - ZONE_HDR_SIZE;
   zone->chunk = first_chnk;
   zone->next = NULL;
   zone->prev = NULL;
 
   /// Calculate usable payload capacity for this individual big chunk
   size_t hdrs_overhead = ZONE_HDR_SIZE + CHUNK_HDR_SIZE;
-  size_t usable_space = total_zone_bytes - hdrs_overhead;
+  size_t usable_space = total_nmbytes - hdrs_overhead;
 
   first_chnk->nmbytes = usable_space;
   first_chnk->is_free = 1;
@@ -153,6 +148,15 @@ static t_chunk_hdr *try_alloc_chunk(t_zone_hdr *zone, size_t size) {
   return NULL;
 }
 
+static size_t calc_total_nmbytes(t_data_type data_type, size_t size) {
+  return data_type == Large
+             ? align(ZONE_HDR_SIZE + CHUNK_HDR_SIZE + size,
+                     alloc_conf.page_size)
+             : align(ZONE_HDR_SIZE +
+                         (100 * (CHUNK_HDR_SIZE + alloc_conf.sizes[data_type])),
+                     alloc_conf.page_size);
+}
+
 void *malloc(size_t size) {
   if (size <= 0)
     return NULL;
@@ -171,7 +175,8 @@ void *malloc(size_t size) {
 
   t_zone_hdr **zone_lst = &alloc_conf.zones[data_type];
   if (!*zone_lst) {
-    t_zone_hdr *z = alloc_zone(data_type);
+    size_t total_nmbytes = calc_total_nmbytes(data_type, size);
+    t_zone_hdr *z = alloc_zone(data_type, total_nmbytes);
     if (!z)
       return NULL;
     *zone_lst = z;
@@ -186,7 +191,8 @@ void *malloc(size_t size) {
   chunk = try_alloc_chunk(*zone_lst, size);
   if (!chunk) {
     // No space in present zones, need to make new zone
-    t_zone_hdr *new = alloc_zone(data_type);
+    size_t total_nmbytes = calc_total_nmbytes(data_type, size);
+    t_zone_hdr *new = alloc_zone(data_type, total_nmbytes);
     t_zone_hdr *last = *zone_lst;
     while (last->next)
       last = last->next;
