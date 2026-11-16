@@ -2,7 +2,8 @@
 #include <assert.h>
 #include <unistd.h>
 
-AllocConf alloc_conf = {
+t_alloc_conf alloc_conf = {
+    .initialized = 0,
     .page_size = -1,
     .sizes = {-1, -1},
     .zones = {NULL, NULL, NULL},
@@ -15,7 +16,8 @@ void setup_alloc(void) {
   // static_assert(sizeof(ZoneHdr) == 32, "ZoneHdr is not padded");
   // static_assert(sizeof(ChnkHdr) == 32, "ChnkHdr is not padded");
 
-  if (alloc_conf.page_size <= 0) {
+  if (!alloc_conf.initialized) {
+    alloc_conf.initialized = 1;
     // These sizes on my machine are in order: 4096, 128, and 1024.
     alloc_conf.page_size = sysconf(_SC_PAGESIZE);
     alloc_conf.sizes[Tiny] = alloc_conf.page_size / 32;

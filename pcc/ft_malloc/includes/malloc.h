@@ -3,6 +3,10 @@
 
 #include <stddef.h>
 
+#define ALIGN16(x) (((x) % 16) == 0 ? (x) : (((x) + 15) & ~15))
+
+#define MIN_PAYLOAD 16
+
 /**
  * @brief Frees 'ptr' (assuming it was provided by 'malloc()').
  *
@@ -59,42 +63,54 @@ typedef enum {
   Tiny = 0,
   Small = 1,
   Large = 2,
-} DataType;
-#define NmDataSizes Large + 1
-
-/**
- * @brief Header containing information about the memory zone.
- *
- * @see https://stackoverflow.com/a/24933481
- * @see https://stackoverflow.com/a/4306269
- */
-typedef struct {
-  void *prev;
-  void *next;
-  void *chunk;       ///< \note Might not even be needed because the first chunk
-                     ///< header should always follow
-  unsigned int size; ///< Full size of the zone
-  DataType type;
-} ZoneHdr;
+} t_data_type;
+#define NMDATA_TYPES (Large + 1)
 
 /**
  * @brief Header containing information about the memory chunk.
  * Placed before where the chunk pointer points to.
  *
+ * @note A pointer to a 't_chunk_hdr' must ALWAYS point to the header, NOT the
+ * data space after (this is what 'void*' is for).
+ *
  * @see https://stackoverflow.com/a/24933481
  * @see https://stackoverflow.com/a/4306269
  */
-typedef struct ChnkHdr {
+typedef struct s_chunk_hdr {
+  /// Size of the chunk in bytes, header included
   size_t nmbytes;
   unsigned int is_free : 1;
-  struct ChnkHdr *prev;
-  struct ChnkHdr *next;
-} ChnkHdr;
+  struct s_chunk_hdr *prev;
+  struct s_chunk_hdr *next;
+} t_chunk_hdr;
+#define CHUNK_HDR_SIZE (ALIGN16(sizeof(t_chunk_hdr)))
+
+/**
+ * @brief Header containing information about the memory zone.
+ *
+ * @note A pointer to a 't_zone_hdr' must ALWAYS point to the header, NOT the
+ * data space after (this is what 'void*' is for).
+ *
+ * @see https://stackoverflow.com/a/24933481
+ * @see https://stackoverflow.com/a/4306269
+ */
+typedef struct s_zone_hdr {
+  struct s_zone_hdr *prev;
+  struct s_zone_hdr *next;
+  t_chunk_hdr *chunk; ///< \note Might not even be needed because the first
+                      ///< chunk header should always follow
+
+  /// Size of the zone in bytes, header included
+  size_t nmbytes;
+  t_data_type type;
+} t_zone_hdr;
+#define ZONE_HDR_SIZE (ALIGN16(sizeof(t_zone_hdr)))
 
 /**
  * @brief Global allocation settings and data
  */
 typedef struct {
+  unsigned int initialized;
   /// Sizes
   size_t page_size;
   /// Sizes in bytes of data size levels.
@@ -102,13 +118,13 @@ typedef struct {
   /// 'sizes[1]' is small
   /// Large is any larger size
   /// \see DataType
-  size_t sizes[NmDataSizes - 1];
+  size_t sizes[NMDATA_TYPES - 1];
   /// Pointers to memory zones.
   /// Same as 'sizes'.
-  void *zones[NmDataSizes];
-} AllocConf;
+  t_zone_hdr *zones[NMDATA_TYPES];
+} t_alloc_conf;
 
-extern AllocConf alloc_conf;
+extern t_alloc_conf alloc_conf;
 
 // Global configuration
 
