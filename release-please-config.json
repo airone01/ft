@@ -161,9 +161,9 @@
       "release-type": "simple",
       "package-name": "libasm"
     },
-    "pcc/malloc": {
+    "pcc/ft_malloc": {
       "release-type": "simple",
-      "package-name": "malloc"
+      "package-name": "ft_malloc"
     },
     "pcc/nm": {
       "release-type": "simple",
