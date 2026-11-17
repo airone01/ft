@@ -1,6 +1,7 @@
 #ifndef SRC_MALLOC_H
 #define SRC_MALLOC_H
 
+#include <stdbool.h>
 #include <stddef.h>
 
 #define ALIGN16(x) (((x) % 16) == 0 ? (x) : (((x) + 15) & ~15))
@@ -141,6 +142,10 @@ extern t_alloc_conf alloc_conf;
  * @return NULL on chunk not found
  */
 t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type);
+
+t_chunk_hdr *_split(t_chunk_hdr *lchunk, size_t full_nmbytes, size_t size);
+bool _grow(t_chunk_hdr *lchunk);
+void _shrink(t_chunk_hdr *lchunk, size_t total);
 
 #define SETUP_ALLOC                                                            \
   {                                                                            \
