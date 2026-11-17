@@ -11,6 +11,7 @@ target_include_directories(ft_malloc PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/includes>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+target_compile_options(ft_malloc PRIVATE -O3 -fno-builtin)
 
 install(TARGETS ft_malloc EXPORT mallocConfig ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
@@ -19,10 +20,13 @@ install(EXPORT mallocConfig NAMESPACE 42:: FILE mallocConfig.cmake
 
 if(BUILD_TESTING)
   set(FT_MALLOC_TESTS
-    chunk
-    chunk2
-    zeroes
-    zone
+    basic
+    edge
+    free
+    large
+    # realloc
+    # show_alloc_mem
+    stress
   )
 
   foreach(name ${FT_MALLOC_TESTS})
@@ -30,6 +34,7 @@ if(BUILD_TESTING)
     add_executable(${target_name} "tests/test_${name}.c")
     target_link_libraries(${target_name} PRIVATE 42::ft_malloc)
     target_include_directories(${target_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+    target_compile_options(${target_name} PRIVATE -w -O3 -fno-builtin)
 
     add_test(NAME "ft_malloc::${name}" COMMAND ${target_name})
   endforeach()
