@@ -46,14 +46,13 @@ static void *alloc_zone(t_data_type data_type, size_t total_nmbytes) {
   t_chunk_hdr *first_chnk = (t_chunk_hdr *)((char *)zone_ptr + ZONE_HDR_SIZE);
 
   zone->type = data_type;
-  zone->nmbytes = total_nmbytes - ZONE_HDR_SIZE;
+  zone->nmbytes = total_nmbytes;
   zone->chunk = first_chnk;
   zone->next = NULL;
   zone->prev = NULL;
 
   /// Calculate usable payload capacity for this individual big chunk
-  size_t hdrs_overhead = ZONE_HDR_SIZE + CHUNK_HDR_SIZE;
-  size_t usable_space = total_nmbytes - hdrs_overhead;
+  size_t usable_space = total_nmbytes - ZONE_HDR_SIZE;
 
   first_chnk->nmbytes = usable_space;
   first_chnk->is_free = 1;
