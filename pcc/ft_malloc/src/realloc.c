@@ -46,5 +46,6 @@ void *realloc(void *ptr, size_t size) {
     return NULL;
   void *nwptr = (void *)((char *)nwchunk - CHUNK_HDR_SIZE);
   memcpy(nwptr, ptr, orig_size);
+  free(ptr);
   return nwptr;
 }
