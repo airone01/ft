@@ -24,7 +24,7 @@ if(BUILD_TESTING)
     edge
     free
     large
-    # realloc
+    realloc
     # show_alloc_mem
     stress
   )

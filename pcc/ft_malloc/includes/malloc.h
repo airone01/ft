@@ -129,14 +129,40 @@ typedef struct {
 
 extern t_alloc_conf alloc_conf;
 
-// Global configuration
+// Shared functions
 
 /**
- * Calls 'sysconf()' early to save some settings.
- *
- * @note 'sysconf()' results cannot change during a program lifetime.
- * @see sysconf(3)
+ * Finds in all lists the first chunk whose pointer corresponds to the passed
+ * pointer.
+ * @param ptr The user-provided pointer
+ * @param[out] zone The zone to save when found
+ * @param[out] type The data type to save when found
+ * @return The found chunk
+ * @return NULL on chunk not found
  */
-void setup_alloc(void);
+t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type);
+
+#define SETUP_ALLOC                                                            \
+  {                                                                            \
+    if (size <= 0) {                                                           \
+      errno = EINVAL;                                                          \
+      return NULL;                                                             \
+    }                                                                          \
+    if (!alloc_conf.initialized) {                                             \
+      alloc_conf.initialized = 1;                                              \
+      /* These sizes on my machine are in order: 4096, 128, and 1024. */       \
+      alloc_conf.page_size = sysconf(_SC_PAGESIZE);                            \
+      alloc_conf.sizes[Tiny] = alloc_conf.page_size / 32;                      \
+      alloc_conf.sizes[Small] = alloc_conf.page_size / 4;                      \
+    }                                                                          \
+    if (size >                                                                 \
+        SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {    \
+      /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back  \
+       */                                                                      \
+      /*to 0. After setup_alloc because we need to know page size. */          \
+      errno = ENOMEM;                                                          \
+      return NULL;                                                             \
+    }                                                                          \
+  }
 
 #endif /* SRC_MALLOC_H */
