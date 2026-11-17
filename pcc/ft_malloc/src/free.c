@@ -1,15 +1,7 @@
 #include "malloc.h"
 #include <sys/mman.h>
 
-/// Finds in all lists the first chunk whose pointer to corresponds to the
-/// passed pointer.
-/// \param ptr The user-provided pointer
-/// \param[out] zone The zone to save when found
-/// \param[out] type The data type to save when found
-/// \return The found chunk
-/// \return NULL on chunk not found
-static t_chunk_hdr *find_chunk(void *ptr, t_zone_hdr **zone,
-                               t_data_type *type) {
+t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type) {
   for (t_data_type ltype = 0; ltype < NMDATA_TYPES; ltype++) {
     t_zone_hdr *lzone = alloc_conf.zones[ltype];
     for (; lzone; lzone = lzone->next) {
@@ -43,7 +35,7 @@ void free(void *ptr) {
 
   t_zone_hdr *zone;
   t_data_type type;
-  t_chunk_hdr *chunk = find_chunk(ptr, &zone, &type);
+  t_chunk_hdr *chunk = _find_chunk(ptr, &zone, &type);
   if (!chunk || chunk->is_free)
     return; ///< No such chunk; nothing to do.
 
