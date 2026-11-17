@@ -1,32 +1,14 @@
 #include "malloc.h"
+#include <stdbool.h>
 #include <sys/mman.h>
 
-t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type) {
-  for (t_data_type ltype = 0; ltype < NMDATA_TYPES; ltype++) {
-    t_zone_hdr *lzone = alloc_conf.zones[ltype];
-    for (; lzone; lzone = lzone->next) {
-      t_chunk_hdr *chunk = lzone->chunk;
-      for (; chunk; chunk = chunk->next)
-        if ((void *)((char *)(chunk) + CHUNK_HDR_SIZE) == ptr) {
-          *zone = lzone;
-          *type = ltype;
-          return chunk;
-        }
-    }
+static bool _lgrow(t_chunk_hdr **chunk) {
+  if ((*chunk)->prev && (*chunk)->prev->is_free) {
+    *chunk = (*chunk)->prev;
+    _grow(*chunk);
+    return 1;
   }
-
-  return NULL;
-}
-
-/// Merges a chunk and its next one if existing and both are free
-static void unsplit(t_chunk_hdr *chunk) {
-  if (!chunk || !chunk->is_free || !chunk->next || !chunk->next->is_free)
-    return;
-
-  chunk->nmbytes += chunk->next->nmbytes;
-  chunk->next = chunk->next->next;
-  if (chunk->next)
-    chunk->next->prev = chunk;
+  return 0;
 }
 
 void free(void *ptr) {
@@ -40,11 +22,12 @@ void free(void *ptr) {
     return; ///< No such chunk; nothing to do.
 
   chunk->is_free = 1;
-  unsplit(chunk);
-  if (chunk->prev && chunk->prev->is_free) {
-    chunk = chunk->prev;
-    unsplit(chunk);
-  }
+  // Right-grow
+  while (_grow(chunk))
+    ;
+  // Left-grow
+  while (_lgrow(&chunk))
+    ;
 
   // Chunk is alone and now empty
   if (!chunk->prev && !chunk->next) {

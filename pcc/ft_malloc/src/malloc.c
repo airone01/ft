@@ -108,37 +108,9 @@ static t_chunk_hdr *alloc_chunk(t_zone_hdr *zone_ptr, size_t size) {
     return NULL;
 
   size_t full_nmbytes = target->nmbytes;
-  /// The old next chunk
-  /// \note Is either NULL or a pointer to an unfree chunk
-  t_chunk_hdr *next = target->next;
-
-  /// Here I'm assuming we will have space left for another chunk after.
-  /// \todo Calculate space left for the next chunk, and if it's smaller than
-  /// the smallest posible chunk of this data type, then just take the full
-  /// space instead of splitting
-
-  // Splitting
   target->is_free = 0;
-  size_t min_needed_bytes =
-      (CHUNK_HDR_SIZE + size)          ///< Size of this payload
-      + (CHUNK_HDR_SIZE + MIN_PAYLOAD) ///< Size of another potential payload
-      ;
-  if (full_nmbytes >= min_needed_bytes) {
-    target->nmbytes = CHUNK_HDR_SIZE + size;
 
-    size_t rshift_size = CHUNK_HDR_SIZE + size;
-    /// Add the new free chunk
-    t_chunk_hdr *free_chunk = (t_chunk_hdr *)((char *)target + rshift_size);
-    target->next = free_chunk;
-
-    free_chunk->is_free = 1;
-    free_chunk->next = next;
-    free_chunk->prev = target;
-    free_chunk->nmbytes = full_nmbytes - rshift_size;
-
-    if (next != NULL)
-      next->prev = free_chunk;
-  }
+  _split(target, full_nmbytes, size);
 
   return target;
 }

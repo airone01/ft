@@ -5,6 +5,31 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+/// "Slide" the chunk of the header of the next chunk to the right into a free
+/// chunk if possible, or abort.
+/// \note This only supports right-sidedness, meaning we are growing 'lchunk',
+/// not shrinking it. Use _slide_hdr_l for this.
+/// \note This is tailored for 'realloc()', so it only works when
+/// 'lchunk->next->is_free' is true.
+/// \param chunk The leftmost chunk
+/// \param size The expected data size
+/// \return Whether 'realloc()' sould "grow in place"
+static bool _slide_hdr_r(t_chunk_hdr *lchunk, size_t size) {
+  // Note: the check here is needed still even though it's also done in
+  // '_split()', because we run '_grow()' before '_split()' and don't want to
+  // grow for nothing.
+
+  if (lchunk->next && lchunk->next->is_free &&
+      (lchunk->nmbytes + lchunk->next->nmbytes >= size + CHUNK_HDR_SIZE)) {
+    _grow(lchunk);
+    _split(lchunk, lchunk->nmbytes, size);
+
+    return true;
+  }
+
+  return false;
+}
+
 void *realloc(void *ptr, size_t size) {
   if (!ptr)
     return malloc(size);
@@ -21,30 +46,24 @@ void *realloc(void *ptr, size_t size) {
     errno = EINVAL;
     return NULL;
   }
+
+  size = ALIGN16(size);
+  size_t needed = CHUNK_HDR_SIZE + size;
   size_t orig_size = chunk->nmbytes - CHUNK_HDR_SIZE;
 
-  if (chunk->nmbytes >= size + CHUNK_HDR_SIZE)
-    // Already have enough space in chunk
-    return ptr;
-
-  /// Total bytes needed for all the data (assuming it were all in a single
-  /// chunk).
-  size_t needed_nmbytes = size + CHUNK_HDR_SIZE;
-
-  // Enough space with next free chunk merged: merge next chunk
-  if (chunk->next && chunk->next->is_free &&
-      (chunk->nmbytes - CHUNK_HDR_SIZE + chunk->next->nmbytes >=
-       needed_nmbytes)) {
-    chunk->next = chunk->next->next;
-    chunk->next->prev = chunk;
-    chunk->nmbytes = needed_nmbytes;
+  if (chunk->nmbytes >= size + CHUNK_HDR_SIZE) {
+    // Too big, need to shrink
+    _shrink(chunk, needed);
     return ptr;
   }
 
-  t_chunk_hdr *nwchunk = malloc(size);
-  if (!nwchunk)
+  if (_slide_hdr_r(chunk, size))
+    // Enough space to "grow in place"
+    return ptr;
+
+  void *nwptr = malloc(size);
+  if (!nwptr)
     return NULL;
-  void *nwptr = (void *)((char *)nwchunk - CHUNK_HDR_SIZE);
   memcpy(nwptr, ptr, orig_size);
   free(ptr);
   return nwptr;
