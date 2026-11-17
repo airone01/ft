@@ -130,7 +130,7 @@ static t_chunk_hdr *alloc_chunk(t_zone_hdr *zone_ptr, size_t size) {
     free_chunk->nmbytes = full_nmbytes - rshift_size;
 
     if (next != NULL)
-      next->prev = target;
+      next->prev = free_chunk;
   }
 
   return target;
