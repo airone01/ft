@@ -210,9 +210,9 @@ static void test_mixed_classes_interleaved(void) {
 }
 
 int main(void) {
-  // RUN(test_random_1);
-  // RUN(test_random_2);
-  // RUN(test_random_3);
+  RUN(test_random_1);
+  RUN(test_random_2);
+  RUN(test_random_3);
   RUN(test_alloc_free_loop);
   RUN(test_many_tiny_freed_forward);
   RUN(test_many_tiny_freed_in_reverse);

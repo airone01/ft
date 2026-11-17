@@ -5,6 +5,14 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/mman.h>
+#include <unistd.h>
+
+t_alloc_conf alloc_conf = {
+    .initialized = 0,
+    .page_size = -1,
+    .sizes = {-1, -1},
+    .zones = {NULL, NULL, NULL},
+};
 
 /// Aligns 'num' to a greater multiple of 'mult'.
 /// \see https://stackoverflow.com/a/40518597
@@ -161,17 +169,7 @@ static size_t calc_total_nmbytes(t_data_type data_type, size_t size) {
 }
 
 void *malloc(size_t size) {
-  if (size <= 0)
-    return NULL;
-
-  setup_alloc();
-
-  if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
-    /// Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back to
-    /// 0. After setup_alloc because we need to know page size.
-    errno = ENOMEM;
-    return NULL;
-  }
+  SETUP_ALLOC
 
   size = ALIGN16(size);
   t_data_type data_type = resolve_data_size(size);
