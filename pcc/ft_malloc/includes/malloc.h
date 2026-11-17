@@ -18,6 +18,7 @@
  * @see free(3)
  */
 void free(void *ptr);
+#define ft_free free
 /**
  * @brief Allocates 'size' bytes of memory and returns a pointer to the
  * allocated memory.
@@ -28,6 +29,7 @@ void free(void *ptr);
  * @see malloc(3)
  */
 void *malloc(size_t size);
+#define ft_malloc malloc
 /**
  * Changes the size of the allocation pointed to by 'ptr' to 'size', and returns
  * 'ptr'. If there is not enough room to enlarge the memory allocation pointed
@@ -45,6 +47,7 @@ void *malloc(size_t size);
  * @see malloc(3)
  */
 void *realloc(void *ptr, size_t size);
+#define ft_realloc realloc
 
 /**
  * @example Output
