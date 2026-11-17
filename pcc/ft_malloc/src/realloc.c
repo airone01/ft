@@ -33,8 +33,8 @@ void *realloc(void *ptr, size_t size) {
 
   // Enough space with next free chunk merged: merge next chunk
   if (chunk->next && chunk->next->is_free &&
-      chunk->nmbytes - CHUNK_HDR_SIZE + chunk->next->nmbytes - CHUNK_HDR_SIZE >=
-          needed_nmbytes) {
+      (chunk->nmbytes - CHUNK_HDR_SIZE + chunk->next->nmbytes >=
+       needed_nmbytes)) {
     chunk->next = chunk->next->next;
     chunk->next->prev = chunk;
     chunk->nmbytes = needed_nmbytes;
