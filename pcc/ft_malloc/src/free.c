@@ -60,6 +60,8 @@ void free(void *ptr) {
       alloc_conf.zones[type] = zone->next;
     else
       zone->prev->next = zone->next;
+    if (zone->next)
+      zone->next->prev = zone->prev;
     munmap(zone, zone->nmbytes);
   }
 }
