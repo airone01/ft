@@ -197,6 +197,10 @@ void *malloc(size_t size) {
     // No space in present zones, need to make new zone
     size_t total_nmbytes = calc_total_nmbytes(data_type, size);
     t_zone_hdr *new = alloc_zone(data_type, total_nmbytes);
+    if (!new) {
+      errno = ENOMEM;
+      return NULL;
+    }
     t_zone_hdr *last = *zone_lst;
     while (last->next)
       last = last->next;
