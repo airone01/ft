@@ -204,9 +204,6 @@ static void test_sorted_within_each_section(void) {
   for (size_t i = 1; i < nents; i++) {
     if (ents[i].section != ents[i - 1].section)
       continue;
-    fprintf(stderr, ">>> start %zu start2 %zu ? %i i %d sz %zu\n",
-            ents[i].start, ents[i - 1].start, ents[i].start > ents[i - 1].start,
-            i, ents[i].bytes);
     assert(ents[i].start > ents[i - 1].start);
     assert(ents[i].start >= ents[i - 1].end);
   }

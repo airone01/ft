@@ -27,7 +27,11 @@ void free(void *ptr) {
   t_chunk_hdr *chunk = _find_chunk(ptr, &zone, &type);
   if (!chunk || chunk->is_free) {
     pthread_mutex_unlock(&_mut);
-    return; ///< No such chunk; nothing to do.
+    if (chunk && chunk->is_free)
+      _err(DoubleFree, ptr, "free");
+    else
+      _err(NotFound, ptr, "free");
+    return;
   }
 
   chunk->is_free = 1;

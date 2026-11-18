@@ -158,12 +158,17 @@ int _setup_alloc(void);
 // were greatly inspired by glibc, specifically my PC's version, 2.44.
 
 typedef enum {
+  NotFound,
+  DoubleFree,
+} t_err;
+
+typedef enum {
   /// @see mallopt(3)
   ///
-  /// Setting this parameter controls how ft_malloc responds when various
+  /// Setting this parameter controls how 'ft_malloc' responds when various
   /// kinds of programming errors are detected (e.g., freeing the same pointer
   /// twice). The 3 least significant bits (2, 1 and 0) of the value assigned to
-  /// this parameter determine the ft_malloc behavior, as follows:
+  /// this parameter determine the 'ft_malloc' behavior, as follows:
   ///
   /// Bit 0: If this bit is set, then print a one-line message on stderr that
   ///        provides details about the error. The message starts with the
@@ -198,17 +203,22 @@ typedef enum {
   /// // This makes the app print a message and abort on ft_malloc error.
   /// mallopt(M_CHECK_ACTION, M_CA_EMBS | M_CA_ABRT);
   M_CHECK_ACTION
-#define M_CA_EMSG 1
-#define M_CA_ABRT 2
-#define M_CA_SMPL 4
-
 } t_debug_flag;
-#define NMDEBUG_FLAGS sizeof(M_CHECK_ACTION + 1)
+#define NMDEBUG_FLAGS (M_CHECK_ACTION + 1)
+
+enum {
+  M_CA_NONE = 0,
+  M_CA_EMSG = 1 << 0,
+  M_CA_ABRT = 1 << 1,
+  M_CA_SMPL = 1 << 2,
+};
 
 int mallopt(t_debug_flag param, int value);
 
-#define DFLT_M_DBG_CNF {0}
+#define DFLT_M_DBG_CNF {M_CA_NONE}
 void _dbg_env_load(unsigned int cfg[NMDEBUG_FLAGS]);
+
+void _err(t_err error, void *ptr, const char *fname);
 
 /////////////////////////////// GLOBAL CONFIG ///////////////////////////////
 
