@@ -38,7 +38,7 @@ static int check(const void *p, size_t n, unsigned seed) {
 }
 static size_t zones(int type) {
   size_t n = 0;
-  for (t_zone_hdr *z = alloc_conf.zones[type]; z; z = z->next)
+  for (t_zone_hdr *z = _alloc_conf.zones[type]; z; z = z->next)
     n++;
   return n;
 }

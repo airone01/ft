@@ -50,7 +50,7 @@ static int mapped(const void *addr) {
 }
 static size_t zones(int type) {
   size_t n = 0;
-  for (t_zone_hdr *z = alloc_conf.zones[type]; z; z = z->next)
+  for (t_zone_hdr *z = _alloc_conf.zones[type]; z; z = z->next)
     n++;
   return n;
 }
@@ -270,7 +270,7 @@ static void test_empty_last_zone_is_unmapped(void) {
   void *ptr[1000];
   int n = fill_zones(ptr, base + 1);
 
-  t_zone_hdr *last = alloc_conf.zones[Small];
+  t_zone_hdr *last = _alloc_conf.zones[Small];
   while (last->next)
     last = last->next;
   char *start = (char *)last;
@@ -288,7 +288,7 @@ static void test_release_middle_zone(void) {
   void *ptr[1000];
   int n = fill_zones(ptr, zones(Small) + 3);
   size_t base = zones(Small);
-  t_zone_hdr *first = alloc_conf.zones[Small];
+  t_zone_hdr *first = _alloc_conf.zones[Small];
   t_zone_hdr *mid = first->next;
   t_zone_hdr *after = mid->next;
   assert(after != NULL);
@@ -313,7 +313,7 @@ static void test_release_head_zone(void) {
   void *ptr[1000];
   int n = fill_zones(ptr, zones(Small) + 2);
   size_t base = zones(Small);
-  t_zone_hdr *head = alloc_conf.zones[Small];
+  t_zone_hdr *head = _alloc_conf.zones[Small];
 
   /* Skip if libc itself owns a block in the head zone: it can't be freed. */
   size_t used = 0, ours = 0;
@@ -334,9 +334,9 @@ static void test_release_head_zone(void) {
       free(ptr[i]);
 
   assert(zones(Small) == base - 1);
-  assert(alloc_conf.zones[Small] != head);
-  assert(alloc_conf.zones[Small] != NULL);
-  assert(alloc_conf.zones[Small]->prev == NULL);
+  assert(_alloc_conf.zones[Small] != head);
+  assert(_alloc_conf.zones[Small] != NULL);
+  assert(_alloc_conf.zones[Small]->prev == NULL);
   for (int i = 0; i < n; i++)
     if (!in_head[i])
       assert(check(ptr[i], BLK, (unsigned)i));

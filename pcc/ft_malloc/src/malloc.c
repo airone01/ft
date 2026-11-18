@@ -14,9 +14,9 @@ static size_t align(size_t num, size_t mult) {
 }
 
 static t_data_type resolve_data_size(size_t size) {
-  if (size <= alloc_conf.sizes[Tiny])
+  if (size <= _alloc_conf.sizes[Tiny])
     return Tiny;
-  if (size <= alloc_conf.sizes[Small])
+  if (size <= _alloc_conf.sizes[Small])
     return Small;
   return Large;
 }
@@ -125,10 +125,10 @@ static t_chunk_hdr *try_alloc_chunk(t_zone_hdr *zone, size_t size) {
 static size_t calc_total_nmbytes(t_data_type data_type, size_t size) {
   return data_type == Large
              ? align(ZONE_HDR_SIZE + CHUNK_HDR_SIZE + size,
-                     alloc_conf.page_size)
-             : align(ZONE_HDR_SIZE +
-                         (100 * (CHUNK_HDR_SIZE + alloc_conf.sizes[data_type])),
-                     alloc_conf.page_size);
+                     _alloc_conf.page_size)
+             : align(ZONE_HDR_SIZE + (100 * (CHUNK_HDR_SIZE +
+                                             _alloc_conf.sizes[data_type])),
+                     _alloc_conf.page_size);
 }
 
 void *malloc(size_t size) {
@@ -143,7 +143,8 @@ void *malloc(size_t size) {
     return NULL;
   }
 
-  if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
+  if (size >
+      SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - _alloc_conf.page_size) {
     /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back*/
     /*to 0. After setup_alloc because we need to know page size. */
     errno = ENOMEM;
@@ -154,7 +155,7 @@ void *malloc(size_t size) {
   size = ALIGN16(size);
   t_data_type data_type = resolve_data_size(size);
 
-  t_zone_hdr **zone_lst = &alloc_conf.zones[data_type];
+  t_zone_hdr **zone_lst = &_alloc_conf.zones[data_type];
   if (!*zone_lst) {
     size_t total_nmbytes = calc_total_nmbytes(data_type, size);
     t_zone_hdr *z = alloc_zone(data_type, total_nmbytes);
