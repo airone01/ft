@@ -53,7 +53,7 @@ static int mapped(const void *addr) {
   return mincore((void *)((uintptr_t)addr & ~mask), 1, &v) == 0;
 }
 static int in_zone(int type, const void *p) {
-  for (t_zone_hdr *z = alloc_conf.zones[type]; z; z = z->next)
+  for (t_zone_hdr *z = _alloc_conf.zones[type]; z; z = z->next)
     if ((const char *)p >= (const char *)z &&
         (const char *)p < (const char *)z + z->nmbytes)
       return 1;
@@ -61,7 +61,7 @@ static int in_zone(int type, const void *p) {
 }
 static size_t zones(int type) {
   size_t n = 0;
-  for (t_zone_hdr *z = alloc_conf.zones[type]; z; z = z->next)
+  for (t_zone_hdr *z = _alloc_conf.zones[type]; z; z = z->next)
     n++;
   return n;
 }

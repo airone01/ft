@@ -41,7 +41,7 @@ void free(void *ptr) {
   // Chunk is alone and now empty
   if (!chunk->prev && !chunk->next) {
     if (!zone->prev)
-      alloc_conf.zones[type] = zone->next;
+      _alloc_conf.zones[type] = zone->next;
     else
       zone->prev->next = zone->next;
     if (zone->next)
