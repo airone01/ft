@@ -37,13 +37,17 @@ void *realloc(void *ptr, size_t size) {
     errno = EINVAL;
     return NULL;
   }
-
-  _setup_alloc();
+  pthread_mutex_lock(&_mut);
+  if (_setup_alloc()) {
+    pthread_mutex_unlock(&_mut);
+    return NULL;
+  }
 
   if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
     /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back*/
     /*to 0. After setup_alloc because we need to know page size. */
     errno = ENOMEM;
+    pthread_mutex_unlock(&_mut);
     return NULL;
   }
 
@@ -55,6 +59,7 @@ void *realloc(void *ptr, size_t size) {
     // May or may not be the expected behavior.
     // TODO: check this
     errno = EINVAL;
+    pthread_mutex_unlock(&_mut);
     return NULL;
   }
 
@@ -65,13 +70,17 @@ void *realloc(void *ptr, size_t size) {
   if (chunk->nmbytes >= size + CHUNK_HDR_SIZE) {
     // Too big, need to shrink
     _shrink(chunk, needed);
+    pthread_mutex_unlock(&_mut);
     return ptr;
   }
 
-  if (_slide_hdr_r(chunk, size))
+  if (_slide_hdr_r(chunk, size)) {
     // Enough space to "grow in place"
+    pthread_mutex_unlock(&_mut);
     return ptr;
+  }
 
+  pthread_mutex_unlock(&_mut);
   void *nwptr = malloc(size);
   if (!nwptr)
     return NULL;
