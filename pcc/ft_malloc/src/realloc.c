@@ -33,8 +33,19 @@ static bool _slide_hdr_r(t_chunk_hdr *lchunk, size_t size) {
 void *realloc(void *ptr, size_t size) {
   if (!ptr)
     return malloc(size);
+  if (size <= 0) {
+    errno = EINVAL;
+    return NULL;
+  }
 
-  SETUP_ALLOC
+  _setup_alloc();
+
+  if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
+    /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back*/
+    /*to 0. After setup_alloc because we need to know page size. */
+    errno = ENOMEM;
+    return NULL;
+  }
 
   t_zone_hdr *zone;
   t_data_type type;

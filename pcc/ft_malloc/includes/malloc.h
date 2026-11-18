@@ -142,32 +142,9 @@ extern t_alloc_conf alloc_conf;
  * @return NULL on chunk not found
  */
 t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type);
-
 t_chunk_hdr *_split(t_chunk_hdr *lchunk, size_t full_nmbytes, size_t size);
 bool _grow(t_chunk_hdr *lchunk);
 void _shrink(t_chunk_hdr *lchunk, size_t total);
-
-#define SETUP_ALLOC                                                            \
-  {                                                                            \
-    if (size <= 0) {                                                           \
-      errno = EINVAL;                                                          \
-      return NULL;                                                             \
-    }                                                                          \
-    if (!alloc_conf.initialized) {                                             \
-      alloc_conf.initialized = 1;                                              \
-      /* These sizes on my machine are in order: 4096, 128, and 1024. */       \
-      alloc_conf.page_size = sysconf(_SC_PAGESIZE);                            \
-      alloc_conf.sizes[Tiny] = alloc_conf.page_size / 32;                      \
-      alloc_conf.sizes[Small] = alloc_conf.page_size / 4;                      \
-    }                                                                          \
-    if (size >                                                                 \
-        SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {    \
-      /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back  \
-       */                                                                      \
-      /*to 0. After setup_alloc because we need to know page size. */          \
-      errno = ENOMEM;                                                          \
-      return NULL;                                                             \
-    }                                                                          \
-  }
+void _setup_alloc(void);
 
 #endif /* SRC_MALLOC_H */
