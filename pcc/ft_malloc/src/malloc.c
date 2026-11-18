@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/mman.h>
-#include <unistd.h>
 
 t_alloc_conf alloc_conf = {
     .initialized = 0,
@@ -141,7 +140,19 @@ static size_t calc_total_nmbytes(t_data_type data_type, size_t size) {
 }
 
 void *malloc(size_t size) {
-  SETUP_ALLOC
+  if (size <= 0) {
+    errno = EINVAL;
+    return NULL;
+  }
+
+  _setup_alloc();
+
+  if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
+    /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back*/
+    /*to 0. After setup_alloc because we need to know page size. */
+    errno = ENOMEM;
+    return NULL;
+  }
 
   size = ALIGN16(size);
   t_data_type data_type = resolve_data_size(size);
