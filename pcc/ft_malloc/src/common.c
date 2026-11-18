@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 pthread_mutex_t _mut;
@@ -21,8 +22,8 @@ int _setup_alloc(void) {
       return pr;
     }
 
-    _dbg_env_load(_alloc_conf.debug);
     _alloc_conf.initialized = 1;
+    _dbg_env_load(_alloc_conf.debug);
     /* These sizes on my machine are in order: 4096, 128, and 1024. */
     _alloc_conf.page_size = sysconf(_SC_PAGESIZE);
     _alloc_conf.sizes[Tiny] = _alloc_conf.page_size / 32;
