@@ -1,6 +1,7 @@
 #ifndef SRC_MALLOC_H
 #define SRC_MALLOC_H
 
+#include <pthread.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -130,6 +131,8 @@ typedef struct {
 
 extern t_alloc_conf alloc_conf;
 
+extern pthread_mutex_t _mut;
+
 // Shared functions
 
 /**
@@ -145,6 +148,6 @@ t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type);
 t_chunk_hdr *_split(t_chunk_hdr *lchunk, size_t full_nmbytes, size_t size);
 bool _grow(t_chunk_hdr *lchunk);
 void _shrink(t_chunk_hdr *lchunk, size_t total);
-void _setup_alloc(void);
+int _setup_alloc(void);
 
 #endif /* SRC_MALLOC_H */
