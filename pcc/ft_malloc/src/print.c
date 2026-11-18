@@ -15,9 +15,11 @@ void show_alloc_mem(void) {
       printf("%s : 0x%" PRIXPTR "\n", tnames[type], zone);
       for (t_chunk_hdr *chunk = zone->chunk; chunk; chunk = chunk->next) {
         if (!chunk->is_free) {
-          printf("0x%" PRIXPTR " - 0x%" PRIXPTR " : %zu bytes\n", chunk,
-                 (t_chunk_hdr *)((char *)chunk + chunk->nmbytes),
-                 chunk->nmbytes);
+          printf(
+              "0x%" PRIXPTR " - 0x%" PRIXPTR " : %zu bytes\n",
+              (t_chunk_hdr *)((char *)chunk + CHUNK_HDR_SIZE),
+              (t_chunk_hdr *)((char *)chunk + chunk->nmbytes + CHUNK_HDR_SIZE),
+              chunk->nmbytes);
           total_nmbytes += chunk->nmbytes;
         }
       }
