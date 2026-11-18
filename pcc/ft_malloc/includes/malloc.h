@@ -111,6 +111,107 @@ typedef struct s_zone_hdr {
 } t_zone_hdr;
 #define ZONE_HDR_SIZE (ALIGN16(sizeof(t_zone_hdr)))
 
+/////////////////////////////// SHARED FUNCTIONS ///////////////////////////////
+
+/**
+ * Finds in all lists the first chunk whose pointer corresponds to the passed
+ * pointer.
+ * @param ptr The user-provided pointer
+ * @param[out] zone The zone to save when found
+ * @param[out] type The data type to save when found
+ * @return The found chunk
+ * @return NULL on chunk not found
+ */
+t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type);
+
+/**
+ * Splits 'lchunk' at 'lchunk_size'.
+ * @param size The total number of bytes of the sequence
+ * @param size The size of the first chunk
+ * @return The second chunk
+ * @return NULL if no space
+ */
+t_chunk_hdr *_split(t_chunk_hdr *lchunk, size_t full_nmbytes, size_t size);
+
+/**
+ * Merges a chunk and its next one if existing and both are free
+ * @return Whether it grew
+ */
+bool _grow(t_chunk_hdr *lchunk);
+
+/**
+ * Shrinks 'chunk' to 'total' bytes (header included). The rest becomes a free
+ * chunk if it is big enough to be one, and is merged with a free next chunk.
+ * @warn This is probably not agnostic and will have side effects, as it was
+ * made inline for realloc. Need to check thoroughly.
+ */
+void _shrink(t_chunk_hdr *lchunk, size_t total);
+
+/**
+ * Sets up the global object ft_malloc config if unset.
+ */
+int _setup_alloc(void);
+
+/////////////////////////// FT_MALLOC DEBUG ENV VARS ///////////////////////////
+
+// Described here are the environment variables for controlling malloc. They
+// were greatly inspired by glibc, specifically my PC's version, 2.44.
+
+typedef enum {
+  /// @see mallopt(3)
+  ///
+  /// Setting this parameter controls how ft_malloc responds when various
+  /// kinds of programming errors are detected (e.g., freeing the same pointer
+  /// twice). The 3 least significant bits (2, 1 and 0) of the value assigned to
+  /// this parameter determine the ft_malloc behavior, as follows:
+  ///
+  /// Bit 0: If this bit is set, then print a one-line message on stderr that
+  ///        provides details about the error. The message starts with the
+  ///        string "*** ft_malloc detected ***", followed by the program name,
+  ///        the name of the memory-allocation function in which the error was
+  ///        detected, a brief explanation of the error, and the memory address
+  ///        where the error was detected.
+  /// Bit 1: If this bit is set, then, after printing any error message
+  ///        specified by bit 0, the program is terminated by calling abort(3).
+  ///        If bit 0 is also set, then between printing the error message and
+  ///        aborting, the program also prints the process's memory mapping in
+  ///        the style described in the subject.
+  /// Bit 2: This bit only has an effect if bit 0 is also set. If this bit is
+  ///        set, then the one-line message describing the error is simplified
+  ///        to contain just the name of the function where the error was
+  ///        detected and the brief description of the error.
+  ///
+  /// In order, these bits are aliased by M_CA_EMSG, M_CA_ABRT, and M_CA_SMPL.
+  /// The remaining bits are ignored.
+  ///
+  /// Combining the above details, the following numeric values are meaningful
+  /// for M_CHECK_ACTION:
+  ///
+  /// 0: Ignore error conditions; continue execution (with undefined results).
+  /// 1: Print a detailed error message and continue execution.
+  /// 2: Abort the program.
+  /// 3: Print a detailed error message, and abort the program.
+  /// 5: Print a simple error message and continue execution.
+  /// 7: Print a detailed error message, and abort the program.
+  ///
+  /// @example
+  /// // This makes the app print a message and abort on ft_malloc error.
+  /// mallopt(M_CHECK_ACTION, M_CA_EMBS | M_CA_ABRT);
+  M_CHECK_ACTION
+#define M_CA_EMSG 1
+#define M_CA_ABRT 2
+#define M_CA_SMPL 4
+
+} t_debug_flag;
+#define NMDEBUG_FLAGS sizeof(M_CHECK_ACTION + 1)
+
+int mallopt(t_debug_flag param, int value);
+
+#define DFLT_M_DBG_CNF {0}
+void _dbg_env_load(unsigned int cfg[NMDEBUG_FLAGS]);
+
+/////////////////////////////// GLOBAL CONFIG ///////////////////////////////
+
 /**
  * @brief Global allocation settings and data
  */
@@ -127,27 +228,11 @@ typedef struct {
   /// Pointers to memory zones.
   /// Same as 'sizes'.
   t_zone_hdr *zones[NMDATA_TYPES];
+  /// Debug configuration
+  unsigned int debug[NMDEBUG_FLAGS];
 } t_alloc_conf;
 
-extern t_alloc_conf alloc_conf;
-
+extern t_alloc_conf _alloc_conf;
 extern pthread_mutex_t _mut;
-
-// Shared functions
-
-/**
- * Finds in all lists the first chunk whose pointer corresponds to the passed
- * pointer.
- * @param ptr The user-provided pointer
- * @param[out] zone The zone to save when found
- * @param[out] type The data type to save when found
- * @return The found chunk
- * @return NULL on chunk not found
- */
-t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type);
-t_chunk_hdr *_split(t_chunk_hdr *lchunk, size_t full_nmbytes, size_t size);
-bool _grow(t_chunk_hdr *lchunk);
-void _shrink(t_chunk_hdr *lchunk, size_t total);
-int _setup_alloc(void);
 
 #endif /* SRC_MALLOC_H */

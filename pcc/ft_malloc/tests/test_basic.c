@@ -42,7 +42,7 @@ static int check(const void *p, size_t n, unsigned seed) {
 }
 
 static int in_zone(int type, const void *p) {
-  for (t_zone_hdr *z = alloc_conf.zones[type]; z; z = z->next)
+  for (t_zone_hdr *z = _alloc_conf.zones[type]; z; z = z->next)
     if ((const char *)p >= (const char *)z &&
         (const char *)p < (const char *)z + z->nmbytes)
       return 1;
@@ -50,7 +50,7 @@ static int in_zone(int type, const void *p) {
 }
 static size_t zones(int type) {
   size_t n = 0;
-  for (t_zone_hdr *z = alloc_conf.zones[type]; z; z = z->next)
+  for (t_zone_hdr *z = _alloc_conf.zones[type]; z; z = z->next)
     n++;
   return n;
 }
@@ -135,7 +135,7 @@ static void test_spills_into_new_zone(void) {
   assert(zones(Small) >= before + 1);
   for (int i = 0; i < N; i++) {
     t_zone_hdr *z = NULL; /* every chunk lies inside some zone */
-    for (z = alloc_conf.zones[Small]; z; z = z->next)
+    for (z = _alloc_conf.zones[Small]; z; z = z->next)
       if ((char *)p[i] > (char *)z && (char *)p[i] < (char *)z + z->nmbytes)
         break;
     assert(z != NULL);

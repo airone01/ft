@@ -51,14 +51,14 @@ void show_alloc_mem(void) {
   size_t total_nmbytes = 0;
 
   for (t_data_type type = 0; type < NMDATA_TYPES - 1; type++) {
-    t_zone_hdr *zone = alloc_conf.zones[type];
+    t_zone_hdr *zone = _alloc_conf.zones[type];
 
     for (; zone; zone = zone->next) {
       printf("%s : 0x%" PRIXPTR "\n", tnames[type], zone);
       display_chunk(zone->chunk, &total_nmbytes);
     }
   }
-  display_large_zone(alloc_conf.zones[Large], &total_nmbytes);
+  display_large_zone(_alloc_conf.zones[Large], &total_nmbytes);
 
   printf("Total : %zu bytes\n", total_nmbytes);
 }
