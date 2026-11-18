@@ -1,17 +1,11 @@
 #include "malloc.h"
 #include <assert.h>
 #include <errno.h>
+#include <pthread.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/mman.h>
-
-t_alloc_conf alloc_conf = {
-    .initialized = 0,
-    .page_size = -1,
-    .sizes = {-1, -1},
-    .zones = {NULL, NULL, NULL},
-};
 
 /// Aligns 'num' to a greater multiple of 'mult'.
 /// \see https://stackoverflow.com/a/40518597
@@ -42,10 +36,8 @@ static void *alloc_zone(t_data_type data_type, size_t total_nmbytes) {
 
   /// 'mmap()' returns MAP_FAILED on failure, not NULL.
   /// Also it sets 'errno'.
-  if (zone_ptr == MAP_FAILED) {
-    perror("mmap failed");
+  if (zone_ptr == MAP_FAILED)
     return NULL;
-  }
 
   // Now we're safe and we can write initial header followed by chunk header
 
@@ -145,12 +137,17 @@ void *malloc(size_t size) {
     return NULL;
   }
 
-  _setup_alloc();
+  pthread_mutex_lock(&_mut);
+  if (_setup_alloc()) {
+    pthread_mutex_unlock(&_mut);
+    return NULL;
+  }
 
   if (size > SIZE_MAX - ZONE_HDR_SIZE - CHUNK_HDR_SIZE - alloc_conf.page_size) {
     /* Need to catch this since ALIGN16 on SIZE_MAX overflows, looping back*/
     /*to 0. After setup_alloc because we need to know page size. */
     errno = ENOMEM;
+    pthread_mutex_unlock(&_mut);
     return NULL;
   }
 
@@ -161,8 +158,10 @@ void *malloc(size_t size) {
   if (!*zone_lst) {
     size_t total_nmbytes = calc_total_nmbytes(data_type, size);
     t_zone_hdr *z = alloc_zone(data_type, total_nmbytes);
-    if (!z)
+    if (!z) {
       return NULL;
+      pthread_mutex_unlock(&_mut);
+    }
     *zone_lst = z;
   }
 
@@ -179,6 +178,7 @@ void *malloc(size_t size) {
     t_zone_hdr *new = alloc_zone(data_type, total_nmbytes);
     if (!new) {
       errno = ENOMEM;
+      pthread_mutex_unlock(&_mut);
       return NULL;
     }
     t_zone_hdr *last = *zone_lst;
@@ -188,6 +188,9 @@ void *malloc(size_t size) {
     new->prev = last;
     chunk = alloc_chunk(new, size);
   }
+
+  pthread_mutex_unlock(&_mut);
+
   if (!chunk)
     return NULL;
 
