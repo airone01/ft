@@ -202,9 +202,22 @@ typedef enum {
   /// @example
   /// // This makes the app print a message and abort on ft_malloc error.
   /// mallopt(M_CHECK_ACTION, M_CA_EMBS | M_CA_ABRT);
-  M_CHECK_ACTION
+  M_CHECK_ACTION,
+
+  /// @see mallopt(3)
+  ///
+  /// If this parameter is set to a nonzero value, then bytes of allocated
+  /// memory (other than allocations via calloc(3)) are initialized to the
+  /// complement of the value in the least significant byte of the value, the
+  /// freed bytes are set to the least significant byte of value.
+  /// This can be useful for detecting errors where the programs incorrectly
+  /// rely on allocated memory being initialized to zero, or reuse values in
+  /// memory that has already been freed.
+  ///
+  /// The default value for this parameter is 0.
+  M_PERTURB,
 } t_debug_flag;
-#define NMDEBUG_FLAGS (M_CHECK_ACTION + 1)
+#define NMDEBUG_FLAGS (M_PERTURB + 1)
 
 enum {
   M_CA_NONE = 0,
@@ -213,14 +226,31 @@ enum {
   M_CA_SMPL = 1 << 2,
 };
 
+/**
+ * Set memory allocation parameters.
+ * @param param The property to set
+ * @param value The value of the property
+ * @see malloc.h
+ * @see mallopt(3)
+ */
 int mallopt(t_debug_flag param, int value);
 
-#define DFLT_M_DBG_CNF {M_CA_NONE}
 void _dbg_env_load(unsigned int cfg[NMDEBUG_FLAGS]);
 
 void _err(t_err error, void *ptr, const char *fname);
 
 /////////////////////////////// GLOBAL CONFIG ///////////////////////////////
+
+typedef enum { OP_MALLOC, OP_FREE, OP_REALLOC } t_op;
+typedef struct {
+  t_op op;
+  void *ptr; ///< Result
+  size_t size;
+} t_hist_entry;
+
+#ifndef M_HIST_LEN
+#define M_HIST_LEN 1000
+#endif /* M_HIST_LEN */
 
 /**
  * @brief Global allocation settings and data
@@ -240,6 +270,10 @@ typedef struct {
   t_zone_hdr *zones[NMDATA_TYPES];
   /// Debug configuration
   unsigned int debug[NMDEBUG_FLAGS];
+  /// Allocation history
+  t_hist_entry hist[M_HIST_LEN];
+  /// Number of elements in hists
+  unsigned int nhist;
 } t_alloc_conf;
 
 extern t_alloc_conf _alloc_conf;

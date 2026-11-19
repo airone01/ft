@@ -38,7 +38,7 @@ static int getenv_int(const char *name) {
 /// \param[in/out] cfg Debug config
 void _dbg_env_load(unsigned int cfg[NMDEBUG_FLAGS]) {
   const char *names[NMDEBUG_FLAGS] = /* */
-      {"MALLOC_CHECK"};
+      {"MALLOC_CHECK", "MALLOC_PERTURB"};
 
   for (t_debug_flag f = 0; f < NMDEBUG_FLAGS; f++) {
     int r = getenv_int(names[f]);

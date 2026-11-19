@@ -11,7 +11,7 @@ t_alloc_conf _alloc_conf = {
     .page_size = -1,
     .sizes = {-1, -1},
     .zones = {NULL, NULL, NULL},
-    .debug = DFLT_M_DBG_CNF,
+    .debug = {M_CA_NONE, 5},
 };
 
 int _setup_alloc(void) {
