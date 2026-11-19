@@ -1,6 +1,7 @@
 #include "malloc.h"
 #include <pthread.h>
 #include <stdbool.h>
+#include <string.h>
 #include <sys/mman.h>
 
 static bool _lgrow(t_chunk_hdr **chunk) {
@@ -41,6 +42,11 @@ void free(void *ptr) {
   // Left-grow
   while (_lgrow(&chunk))
     ;
+
+  if (_alloc_conf.debug[M_PERTURB])
+    memset((char *)chunk + CHUNK_HDR_SIZE + 1,
+           -(unsigned char)(_alloc_conf.debug[M_PERTURB]),
+           chunk->nmbytes - CHUNK_HDR_SIZE - 1);
 
   // Chunk is alone and now empty
   if (!chunk->prev && !chunk->next) {

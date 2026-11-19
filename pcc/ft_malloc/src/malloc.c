@@ -5,6 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/mman.h>
 
 /// Aligns 'num' to a greater multiple of 'mult'.
@@ -102,6 +103,10 @@ static t_chunk_hdr *alloc_chunk(t_zone_hdr *zone_ptr, size_t size) {
   target->is_free = 0;
 
   _split(target, full_nmbytes, size);
+
+  if (_alloc_conf.debug[M_PERTURB])
+    memset((char *)target + CHUNK_HDR_SIZE + 1,
+           -(unsigned char)(_alloc_conf.debug[M_PERTURB]), size - 1);
 
   return target;
 }
