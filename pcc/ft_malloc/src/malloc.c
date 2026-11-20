@@ -195,11 +195,15 @@ void *malloc(size_t size) {
     chunk = alloc_chunk(new, size);
   }
 
-  pthread_mutex_unlock(&_mut);
-
-  if (!chunk)
+  if (!chunk) {
+    pthread_mutex_unlock(&_mut);
     return NULL;
+  }
 
   void *ret = (void *)((char *)chunk + CHUNK_HDR_SIZE);
+  _rec_hist((t_hist_entry){.op = OP_MALLOC, .ptr = ret, .size = size});
+
+  pthread_mutex_unlock(&_mut);
+
   return ret;
 }

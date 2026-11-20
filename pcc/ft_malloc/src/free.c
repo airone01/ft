@@ -26,6 +26,10 @@ void free(void *ptr) {
   t_zone_hdr *zone;
   t_data_type type;
   t_chunk_hdr *chunk = _find_chunk(ptr, &zone, &type);
+  _rec_hist(
+      (t_hist_entry){.op = OP_FREE,
+                     .ptr = ptr,
+                     .size = chunk ? chunk->nmbytes - CHUNK_HDR_SIZE : 0});
   if (!chunk || chunk->is_free) {
     pthread_mutex_unlock(&_mut);
     if (chunk && chunk->is_free)
