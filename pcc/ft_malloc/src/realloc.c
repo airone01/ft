@@ -71,6 +71,7 @@ void *realloc(void *ptr, size_t size) {
   if (chunk->nmbytes >= size + CHUNK_HDR_SIZE) {
     // Too big, need to shrink
     _shrink(chunk, needed);
+    _rec_hist((t_hist_entry){.op = OP_REALLOC, .ptr = ptr, .size = size});
     pthread_mutex_unlock(&_mut);
     return ptr;
   }
@@ -81,11 +82,21 @@ void *realloc(void *ptr, size_t size) {
     return ptr;
   }
 
+  // TODO: update this implementation so it doesn't drop the mutex mid-realloc,
+  // which can cause other calls to ft_malloc utils to update the linked lists
+  // while this is running, causing undefined behavior.
+
   pthread_mutex_unlock(&_mut);
   void *nwptr = malloc(size);
   if (!nwptr)
     return NULL;
+
   memcpy(nwptr, ptr, orig_size);
   free(ptr);
+
+  pthread_mutex_lock(&_mut);
+  _rec_hist((t_hist_entry){.op = OP_REALLOC, .ptr = nwptr, .size = size});
+  pthread_mutex_unlock(&_mut);
+
   return nwptr;
 }
