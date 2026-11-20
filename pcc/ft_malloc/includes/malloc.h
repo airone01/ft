@@ -281,7 +281,23 @@ extern pthread_mutex_t _mut;
 
 /////////////////////////////////// HISTORY ////////////////////////////////////
 
-/// \note Thread-unsafe, must be run after locking the mutex.
+/**
+ * @note Thread-unsafe, must be run after locking the mutex.
+ */
 void _rec_hist(t_hist_entry hist);
+
+/**
+ * Prints a history of (de)allocation calls to the error output.
+ * The output is sorted from oldest event first to newest last.
+ *
+ * @example
+ * show_alloc_mem_ex();
+ * // *** ft_malloc usage history ***
+ * // malloc()  : 0x7F030EEE1050 : 4096 bytes
+ * // malloc()  : 0x7F030EEE5270 : 480 bytes
+ * // free()    : 0x7F030EEE5270 : 480 bytes
+ * // free()    : 0x7F030EEE1050 : 4096 bytes
+ */
+void show_alloc_mem_ex(void);
 
 #endif /* SRC_MALLOC_H */
