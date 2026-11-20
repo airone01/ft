@@ -1,8 +1,10 @@
 #include "malloc.h"
 #include <errno.h>
+#include <netinet/in.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 pthread_mutex_t _mut;
@@ -106,4 +108,13 @@ t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type) {
   }
 
   return NULL;
+}
+
+void _rec_hist(t_hist_entry hist) {
+  if (_alloc_conf.nhist >= M_HIST_LEN) {
+    memset(_alloc_conf.hist, '\0', M_HIST_LEN);
+    _alloc_conf.nhist = 0;
+  }
+
+  _alloc_conf.hist[_alloc_conf.nhist++] = hist;
 }

@@ -279,4 +279,9 @@ typedef struct {
 extern t_alloc_conf _alloc_conf;
 extern pthread_mutex_t _mut;
 
+/////////////////////////////////// HISTORY ////////////////////////////////////
+
+/// \note Thread-unsafe, must be run after locking the mutex.
+void _rec_hist(t_hist_entry hist);
+
 #endif /* SRC_MALLOC_H */
