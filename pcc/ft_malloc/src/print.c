@@ -62,3 +62,14 @@ void show_alloc_mem(void) {
 
   printf("Total : %zu bytes\n", total_nmbytes);
 }
+
+void show_alloc_mem_ex(void) {
+  const char *names[3] = {"free()   ", "malloc() ", "realloc()"};
+
+  fprintf(stderr, "*** ft_malloc usage history ***\n");
+  for (unsigned int i = 0; i < _alloc_conf.nhist; i++) {
+    t_hist_entry ent = _alloc_conf.hist[i];
+    fprintf(stderr, "%s : 0x%" PRIXPTR " : %zu bytes\n", names[ent.op], ent.ptr,
+            ent.size);
+  }
+}
