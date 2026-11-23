@@ -14,7 +14,7 @@
   "piscine-c/rush01": "1.1.2",
   "piscine-c/rush02": "1.1.2",
   "piscine-c/bsq": "1.1.0",
-  "milestone-0/libft": "2.3.0",
+  "milestone-0/libft": "2.3.1",
   "milestone-1/ft_printf": "3.3.1",
   "milestone-1/get_next_line": "2.1.1",
   "milestone-2/fdf": "2.1.1",
@@ -45,5 +45,6 @@
   "rushes/hotrace": "2.2.1",
   "rushes/libunit": "1.1.1",
   "tools/fdf-map-converter": "1.0.0",
-  "tools/ps-viz-mc": "0.1.2"
+  "tools/ps-viz-mc": "0.1.2",
+  "pcc/ft_malloc": "1.0.0"
 }
