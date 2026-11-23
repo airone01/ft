@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/airone01/ft/compare/libft-v2.3.1...libft-v2.3.2) (2026-11-23)
+
+
+### Bug Fixes
+
+* **libft:** ft_memset debug output leftover ([d9cf90f](https://github.com/airone01/ft/commit/d9cf90fdd248a8687c8f080ed61fac879a851365))
+
 ## [2.3.1](https://github.com/airone01/ft/compare/libft-v2.3.0...libft-v2.3.1) (2026-11-23)
 
 
