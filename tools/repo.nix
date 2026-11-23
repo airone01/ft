@@ -8,6 +8,7 @@ _: let
     "pcc/snow-crash/auto.sh"
     "central/minilibx/**/*.sh"
     "milestone-4/cpp00/ex01/test.sh"
+    "**/stb_*.h"
   ];
   preCommitExcludes = [
     "CHANGELOG\\.md$"
@@ -18,6 +19,7 @@ _: let
     "pcc/snow-crash/auto.sh$"
     "central/minilibx/test/.*\\.sh$"
     "milestone-4/cpp00/ex01/test\\.sh$"
+    ".*stb_.*\\.h$"
   ];
 in {
   perSystem = {

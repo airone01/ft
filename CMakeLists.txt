@@ -63,5 +63,6 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
   add_subdirectory(piscine-c/rush02)
   add_subdirectory(rushes/hotrace)
   add_subdirectory(rushes/libunit)
+  add_subdirectory(tools/fdf-map-converter)
 endif()
 
