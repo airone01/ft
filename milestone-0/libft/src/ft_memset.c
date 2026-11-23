@@ -1,15 +1,15 @@
-
 #include "libft.h"
+#include <stdint.h>
+#include <stdio.h>
 
 void *ft_memset(void *s, uint8_t c, size_t n) {
   uint8_t *pt;
 
-  if (n != 0) {
+  if (n) {
     pt = s;
-    while (n != 0) {
-      *pt++ = (uint8_t)c;
-      n--;
-    }
+    for (; n != 0; n--)
+      *pt++ = c;
   }
+  fprintf(stderr, "huh?\n");
   return (s);
 }
