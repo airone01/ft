@@ -104,7 +104,7 @@ void *ft_memmove(void *dest, const void *src, size_t n);
  * @brief Fills a memory area with a constant byte.
  *
  * @param s Memory area to fill.
- * @param c Byte value to set (interpreted as uint8_t).
+ * @param c Byte value to set.
  * @param n Number of bytes to fill.
  * @return void* Pointer to the memory area.
  */
