@@ -14,10 +14,10 @@ void display_large_zone(t_zone_hdr *zone, size_t *total_nmbytes) {
 
   if (!zone->chunk->is_free) {
     *total_nmbytes += zone->chunk->nmbytes - CHUNK_HDR_SIZE;
-    printf("LARGE : 0x%" PRIXPTR "\n", zone);
+    printf("LARGE : 0x%" PRIXPTR "\n", (unsigned long)zone);
     printf("0x%" PRIXPTR " - 0x%" PRIXPTR " : %zu bytes\n",
-           (t_chunk_hdr *)((char *)zone->chunk + CHUNK_HDR_SIZE),
-           (t_chunk_hdr *)((char *)zone->chunk + zone->chunk->nmbytes),
+           (unsigned long)((char *)zone->chunk + CHUNK_HDR_SIZE),
+           (unsigned long)((char *)zone->chunk + zone->chunk->nmbytes),
            zone->chunk->nmbytes - CHUNK_HDR_SIZE);
   }
 
@@ -36,8 +36,8 @@ void display_chunk(t_chunk_hdr *chunk, size_t *total_nmbytes) {
   if (!chunk->is_free) {
     *total_nmbytes += chunk->nmbytes - CHUNK_HDR_SIZE;
     printf("0x%" PRIXPTR " - 0x%" PRIXPTR " : %zu bytes\n",
-           (t_chunk_hdr *)((char *)chunk + CHUNK_HDR_SIZE),
-           (t_chunk_hdr *)((char *)chunk + chunk->nmbytes),
+           (unsigned long)((char *)chunk + CHUNK_HDR_SIZE),
+           (unsigned long)((char *)chunk + chunk->nmbytes),
            chunk->nmbytes - CHUNK_HDR_SIZE);
   }
 
@@ -52,7 +52,7 @@ void show_alloc_mem(void) {
 
   for (t_data_type type = 0; type < NMDATA_TYPES - 1; type++) {
     for (t_zone_hdr *zone = _alloc_conf.zones[type]; zone; zone = zone->next) {
-      printf("%s : 0x%" PRIXPTR "\n", tnames[type], zone);
+      printf("%s : 0x%" PRIXPTR "\n", tnames[type], (unsigned long)zone);
       display_chunk(zone->chunk, &total_nmbytes);
     }
   }
@@ -67,8 +67,8 @@ void show_alloc_mem_ex(void) {
   fprintf(stderr, "*** ft_malloc usage history ***\n");
   for (unsigned int i = 0; i < _alloc_conf.nhist; i++) {
     t_hist_entry ent = _alloc_conf.hist[i];
-    fprintf(stderr, "%s : 0x%" PRIXPTR " : %zu bytes\n", names[ent.op], ent.ptr,
-            ent.size);
+    fprintf(stderr, "%s : 0x%" PRIXPTR " : %zu bytes\n", names[ent.op],
+            (unsigned long)ent.ptr, ent.size);
   }
 }
 
@@ -79,7 +79,7 @@ static void _dump_zone(t_zone_hdr *zone) {
         continue;
       const unsigned char *ptr = (const unsigned char *)chunk + CHUNK_HDR_SIZE;
       size_t size = chunk->nmbytes - CHUNK_HDR_SIZE;
-      fprintf(stderr, "0x%" PRIXPTR " : %zu bytes\n", ptr, size);
+      fprintf(stderr, "0x%" PRIXPTR " : %zu bytes\n", (unsigned long)ptr, size);
 
       // One line is 16 bytes, so 32 hex chars in packs of 4
       for (size_t i = 0; i < size + 16; i += 16) {

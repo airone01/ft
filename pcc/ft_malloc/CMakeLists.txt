@@ -11,7 +11,7 @@ target_include_directories(ft_malloc PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/includes>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-target_compile_options(ft_malloc PRIVATE -O3 -fno-builtin)
+target_compile_options(ft_malloc PRIVATE -O3)
 
 install(TARGETS ft_malloc EXPORT mallocConfig ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

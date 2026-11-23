@@ -112,7 +112,7 @@ t_chunk_hdr *_find_chunk(void *ptr, t_zone_hdr **zone, t_data_type *type) {
 
 void _rec_hist(t_hist_entry hist) {
   if (_alloc_conf.nhist >= M_HIST_LEN) {
-    memset(_alloc_conf.hist, '\0', M_HIST_LEN);
+    memset(_alloc_conf.hist, '\0', M_HIST_LEN * sizeof(t_hist_entry));
     _alloc_conf.nhist = 0;
   }
 
