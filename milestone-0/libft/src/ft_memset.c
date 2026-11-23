@@ -10,6 +10,5 @@ void *ft_memset(void *s, uint8_t c, size_t n) {
     for (; n != 0; n--)
       *pt++ = c;
   }
-  fprintf(stderr, "huh?\n");
   return (s);
 }
