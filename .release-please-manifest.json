@@ -44,6 +44,6 @@
   "pcc/snow-crash": "1.0.0",
   "rushes/hotrace": "2.2.1",
   "rushes/libunit": "1.1.1",
-  "tools/fdf-map-converter": "0.0.0",
+  "tools/fdf-map-converter": "1.0.0",
   "tools/ps-viz-mc": "0.1.2"
 }
