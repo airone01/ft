@@ -64,7 +64,7 @@ void _err(t_err error, void *ptr, const char *fname) {
             program_invocation_name, msg);
     if (!(_alloc_conf.debug[M_CHECK_ACTION] & M_CA_SMPL))
       fprintf(stderr, " (in %s)", fname);
-    fprintf(stderr, ": 0x%" PRIXPTR " ***\n", ptr);
+    fprintf(stderr, ": 0x%" PRIXPTR " ***\n", (unsigned long)ptr);
   }
 
   if (_alloc_conf.debug[M_CHECK_ACTION] & M_CA_ABRT)
