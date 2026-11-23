@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.1](https://github.com/airone01/ft/compare/libft-v2.3.0...libft-v2.3.1) (2026-11-23)
+
+
+### Bug Fixes
+
+* **libft:** don't assume glibc malloc ([956b6be](https://github.com/airone01/ft/commit/956b6be01d22d64a5152b5bcc83be10ce68db8f2))
+* link ft_malloc ([544e600](https://github.com/airone01/ft/commit/544e600df89d46c4a4b060308ec11f6635ea8659))
+
 ## [2.3.0](https://github.com/airone01/ft/compare/libft-v2.2.1...libft-v2.3.0) (2026-11-15)
 
 
