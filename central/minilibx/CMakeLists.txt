@@ -43,7 +43,10 @@ target_include_directories(mlx PUBLIC
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(mlx PUBLIC m) # math
+target_link_libraries(mlx PUBLIC
+  42::ft_malloc # use my own malloc
+  m # math
+)
 if(APPLE)
   # TODO: Check on OSX
   target_link_libraries(mlx PRIVATE
