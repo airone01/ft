@@ -18,6 +18,11 @@ install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT mallocConfig NAMESPACE 42:: FILE mallocConfig.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ft_malloc)
 
+add_executable(ex_dump "examples/dump.c")
+target_link_libraries(ex_dump PRIVATE 42::ft_malloc)
+target_include_directories(ex_dump PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/includes")
+target_compile_options(ex_dump PRIVATE -fno-builtin)
+
 if(BUILD_TESTING)
   set(FT_MALLOC_TESTS
     basic

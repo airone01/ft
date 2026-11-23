@@ -51,9 +51,7 @@ void show_alloc_mem(void) {
   size_t total_nmbytes = 0;
 
   for (t_data_type type = 0; type < NMDATA_TYPES - 1; type++) {
-    t_zone_hdr *zone = _alloc_conf.zones[type];
-
-    for (; zone; zone = zone->next) {
+    for (t_zone_hdr *zone = _alloc_conf.zones[type]; zone; zone = zone->next) {
       printf("%s : 0x%" PRIXPTR "\n", tnames[type], zone);
       display_chunk(zone->chunk, &total_nmbytes);
     }
@@ -72,4 +70,39 @@ void show_alloc_mem_ex(void) {
     fprintf(stderr, "%s : 0x%" PRIXPTR " : %zu bytes\n", names[ent.op], ent.ptr,
             ent.size);
   }
+}
+
+static void _dump_zone(t_zone_hdr *zone) {
+  for (; zone; zone = zone->next) {
+    for (t_chunk_hdr *chunk = zone->chunk; chunk; chunk = chunk->next) {
+      if (chunk->is_free)
+        continue;
+      const unsigned char *ptr = (const unsigned char *)chunk + CHUNK_HDR_SIZE;
+      size_t size = chunk->nmbytes - CHUNK_HDR_SIZE;
+      fprintf(stderr, "0x%" PRIXPTR " : %zu bytes\n", ptr, size);
+
+      // One line is 16 bytes, so 32 hex chars in packs of 4
+      for (size_t i = 0; i < size + 16; i += 16) {
+        fprintf(stderr, "%08zx", i);
+        if (i < size)
+          fprintf(stderr, " ");
+        for (size_t j = 0; j < 16; j++) {
+          if (i + j < size) {
+            fprintf(stderr, "%02x", ptr[i * 16 + j]);
+            if (j % 2 == 1 && j != 15)
+              fprintf(stderr, " ");
+          }
+        }
+        fprintf(stderr, "\n");
+      }
+    }
+  }
+}
+
+void show_alloc_mem_dump(void) {
+  fprintf(stderr, "*** ft_malloc stack dump ***\n");
+  for (t_data_type type = 0; type < NMDATA_TYPES - 1; type++)
+    for (t_zone_hdr *zone = _alloc_conf.zones[type]; zone; zone = zone->next)
+      _dump_zone(zone);
+  _dump_zone(_alloc_conf.zones[Large]);
 }

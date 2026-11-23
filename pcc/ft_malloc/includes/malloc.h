@@ -300,4 +300,10 @@ void _rec_hist(t_hist_entry hist);
  */
 void show_alloc_mem_ex(void);
 
+/**
+ * Dump the stack to the error output.
+ * The output is not sorted.
+ */
+void show_alloc_mem_dump(void);
+
 #endif /* SRC_MALLOC_H */
