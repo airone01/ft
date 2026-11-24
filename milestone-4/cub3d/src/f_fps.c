@@ -1,4 +1,3 @@
-
 #include "draw.h"
 #include "mlx.h"
 #include <stdio.h>
@@ -42,6 +41,6 @@ void display_fps(t_data *data) {
         my_mlx_pixel_put(&data->img, x, y, c);
     }
   }
-  mlx_string_put(data->mlx, data->win, fps_counter_left * 2 + 5,
-                 fps_counter_top * 2 + 15, 0xFFFFFF, fps_text);
+  mlx_string_put(data->mlx, data->win, fps_counter_left + 5,
+                 fps_counter_top + 15, 0xFFFFFF, fps_text);
 }
