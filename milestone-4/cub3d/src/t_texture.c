@@ -60,15 +60,15 @@ bool load_textures(t_textures *textures, void *mlx_ptr, char *paths[4]) {
 
 t_color get_pixel_color(t_texture *texture, int x, int y) {
   char *pixel;
-  t_color black;
+  t_color debug_magenta;
 
   if (!texture || !texture->addr) {
-    black.val = 0x000000;
-    return (black);
+    debug_magenta.val = 0xff00ff;
+    return (debug_magenta);
   }
   if (x < 0 || x >= texture->width || y < 0 || y >= texture->height) {
-    black.val = 0x000000;
-    return (black);
+    debug_magenta.val = 0xff00ff;
+    return (debug_magenta);
   }
   pixel = texture->addr +
           (y * texture->line_length + x * (texture->bits_per_pixel / 8));
