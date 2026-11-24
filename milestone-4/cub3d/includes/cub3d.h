@@ -1,4 +1,3 @@
-
 #ifndef CUB3D_H
 #define CUB3D_H
 
@@ -16,23 +15,6 @@
 #define GREEN "\033[092m"
 #define YELLOW "\033[093m"
 #define CYAN "\033[36m"
-
-#if !defined(WIN_H) && !defined(WIN_W)
-
-#if defined(__3DS__)
-#define WIN_H 240
-#define WIN_W 400
-
-#elif defined(__VALGRIND__)
-#define WIN_H 480
-#define WIN_W 640
-
-#else
-#define WIN_H 720
-#define WIN_W 1280
-#endif /* __3DS__ __VALGRIND__ */
-
-#endif /* WIN_H WIN_W */
 
 #define FPS_COUNTER_TEXT_HEIGHT 20
 #define FPS_COUNTER_TEXT_WIDTH 80
@@ -170,22 +152,11 @@ typedef struct s_textures {
 } t_textures;
 
 /*
-** Info for the MLX stored here for convenience
-*/
-typedef struct s_img {
-  void *img;
-  char *addr;
-  int bits_per_pixel;
-  int line_length;
-  int endian;
-} t_img;
-
-/*
 ** Union type for easily manipulating color
 ** This is way more convenient than an unsigned integer.
 ** Also we're using uint8_t because we need a type of 8 bytes long of
 */
-typedef union u_color {
+typedef union {
   unsigned int val;
   struct {
     uint8_t blue;
@@ -193,7 +164,7 @@ typedef union u_color {
     uint8_t red;
     uint8_t alpha;
   } rgba;
-} t_color;
+} color;
 
 typedef struct s_map_buffer {
   char **lines;
@@ -264,7 +235,7 @@ typedef struct s_data {
   char *texture_door;
   char *texture_sprite;
   // MLX stuff
-  t_img img;
+  // img img;
   void *mlx;
   void *win;
   // Sizes
@@ -276,8 +247,8 @@ typedef struct s_data {
   t_player player;
   t_textures textures;
   // Colors
-  t_color floor_color;
-  t_color ceil_color;
+  color floor_color;
+  color ceil_color;
   bool color_f_found;
   bool color_c_found;
   // Frame timing

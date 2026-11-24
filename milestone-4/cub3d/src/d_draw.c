@@ -4,17 +4,6 @@
 #include "texture.h"
 #include <cub3d.h>
 
-void my_mlx_pixel_put(t_img *img, int x, int y, t_color color) {
-  char *dst;
-
-  if (!img || !img->addr)
-    return;
-  if (x < 0 || y < 0 || x >= WIN_W || y >= WIN_H)
-    return;
-  dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-  *(unsigned int *)dst = color.val;
-}
-
 void draw_ceiling(t_data *data, int x, int start_y, t_color ceil_color) {
   int y;
 

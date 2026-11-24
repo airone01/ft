@@ -1,4 +1,3 @@
-
 #include "ft_printf.h"
 #include "get_next_line.h"
 #include "mem.h"
@@ -26,13 +25,10 @@ bool process_config_line(t_data *data, char *line) {
   return (true);
 }
 
-static int read_file_content(int fd, t_data *data, t_map_buffer *buffer) {
+static int read_file_content(int fd, t_map_buffer *buffer) {
+  bool map_section_started = false;
   char *line;
-  bool map_section_started;
-
-  map_section_started = false;
-  line = get_next_line(fd);
-  while (line) {
+  for (line = get_next_line(fd); line;) {
     if (process_single_line(data, line, &map_section_started, buffer) ||
         data->error_detected) {
       free(line);
@@ -48,17 +44,17 @@ static int read_file_content(int fd, t_data *data, t_map_buffer *buffer) {
   return (0);
 }
 
-int read_file(t_data *data, const char *file) {
+int read_file(const char *file) {
   t_map_buffer map_buffer;
   int result;
   int fd;
 
   fd = open(file, O_RDONLY);
   if (fd < 0) {
-    printf("read_file: Error: could not open %s\n", file);
+    ft_printf("read_file: Error: could not open %s\n", file);
     return (1);
   }
-  printf("read_file: Opened %s\n", file);
+  ft_printf("read_file: Opened %s\n", file);
   if (init_map_buffer(&map_buffer)) {
     close(fd);
     return (1);

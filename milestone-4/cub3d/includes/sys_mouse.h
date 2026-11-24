@@ -1,8 +1,9 @@
-
-#ifndef MOUSE_BONUS_H
-#define MOUSE_BONUS_H
+#ifndef SYS_MOUSE_H
+#define SYS_MOUSE_H
 
 #include "cub3d.h"
+
+#define SYS_MOUSE "CUB_MOUSE"
 
 /*******************************************************************************
  *                                    Macros                                   *
@@ -20,7 +21,7 @@
  *                                  Structures                                 *
  ******************************************************************************/
 
-typedef struct s_mouse {
+typedef struct {
   int x;
   int y;
   int last_x;
@@ -28,15 +29,11 @@ typedef struct s_mouse {
   bool is_active;
   bool first_move;
   double sensitivity;
-} t_mouse;
+} mouse_data;
 
 /*******************************************************************************
  *                             Function Prototypes                             *
  ******************************************************************************/
-
-/*
-** o_buttons.c
-*/
 
 /**
  * @brief Handle mouse scroll wheel events
@@ -53,27 +50,8 @@ void handle_scroll_wheel(int button);
  */
 int mouse_press_handler(int button);
 
-/*
-** o_init.c
-*/
-
 /**
- * @brief Initialize mouse system with window dimensions
- *
- * @param win_width Window width in pixels
- * @param win_height Window height in pixels
- */
-void mouse_init(int win_width, int win_height);
-
-/**
- * @brief Get pointer to global mouse state
- *
- * @return Pointer to global mouse structure
- */
-t_mouse *mouse_get_state(void);
-
-/**
- * @brief Toggle mouse activation state
+ * Toggle mouse activation state
  */
 void mouse_toggle(void);
 
@@ -83,10 +61,6 @@ void mouse_toggle(void);
  * @param data Main game data structure
  */
 void mouse_setup_hooks(t_data *data);
-
-/*
-** o_mouse.c
-*/
 
 /**
  * @brief Handle mouse movement events and camera rotation
@@ -98,4 +72,4 @@ void mouse_setup_hooks(t_data *data);
  */
 int mouse_move_handler(int x, int y, t_data *data);
 
-#endif // !MOUSE_BONUS_H
+#endif /* SYS_MOUSE_H */

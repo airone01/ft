@@ -8,6 +8,7 @@
 #include "pproc.h"
 #include "utils.h"
 #include <limits.h>
+#include <pal.h>
 #include <stdio.h>
 
 t_data *init_data(void) {
@@ -19,21 +20,9 @@ t_data *init_data(void) {
   data->error_detected = false;
   data->color_f_found = false;
   data->color_c_found = false;
-  data->mlx = mlx_init();
-  if (!data->mlx)
-    return (free_resources(&data));
-  data->win_width = WIN_W;
-  data->win_height = WIN_H;
   data->z_buffer = ft_calloc((unsigned long)data->win_width, sizeof(double));
   if (!data->z_buffer)
     return (free_resources(&data));
-  data->win = mlx_new_window(data->mlx, data->win_width, data->win_height,
-                             (char *)"~~~ kyubu kui ~~~");
-  if (!data->win)
-    return (free_resources(&data));
-  data->img.img = mlx_new_image(data->mlx, data->win_width, data->win_height);
-  data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel,
-                                     &data->img.line_length, &data->img.endian);
   gettimeofday(&data->last_frame, NULL);
   return (data);
 }
@@ -129,6 +118,7 @@ int main(int argc, char **argv) {
   DEBUG_LOG("MAIN: Entering loop...\n");
   mlx_loop(data->mlx);
   DEBUG_LOG("MAIN: Exited loop.\n");
+  pal_free();
   free_resources(&data);
 #ifdef __3DS__
   romfsExit();
