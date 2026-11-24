@@ -3,6 +3,43 @@
 #include "libft.h"
 #include <stdlib.h>
 
+t_door *get_door_at(t_data *data, int x, int y) {
+  int i;
+
+  i = -1;
+  while (++i < data->door_sys.count) {
+    if (data->door_sys.doors[i].x == x && data->door_sys.doors[i].y == y)
+      return (&data->door_sys.doors[i]);
+  }
+  return (NULL);
+}
+
+void toggle_door(t_data *data, int x, int y) {
+  t_door *door;
+
+  door = get_door_at(data, x, y);
+  if (!door)
+    return;
+  if (door->open || door->opening) {
+    door->open = false;
+    door->opening = false;
+    door->closing = true;
+  } else if (!door->open || door->closing) {
+    door->open = false;
+    door->closing = false;
+    door->opening = true;
+  }
+}
+
+bool is_door_passable(t_data *data, int x, int y) {
+  t_door *door;
+
+  door = get_door_at(data, x, y);
+  if (!door)
+    return (false);
+  return (door->prog > 0.7f);
+}
+
 static void init_door_system_loop(t_data *data, int x, int y) {
   if (data->map[y][x] == 'D') {
     if (data->door_sys.count < data->door_sys.capacity) {

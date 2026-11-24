@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 project(philo C)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
-	file(GLOB CUB3D_SRCS CONFIGURE_DEPENDS "src/*.c" "src/*_b*.c" "3ds/mlx_3ds.c")
-	list(FILTER CUB3D_SRCS EXCLUDE REGEX ".*_m2?\\.c$")
+	file(GLOB CUB3D_SRCS CONFIGURE_DEPENDS "src/*.c" "src/*_b.c" "3ds/mlx_3ds.c")
+	list(FILTER CUB3D_SRCS EXCLUDE REGEX ".*_m\\.c$")
 
 	add_executable(cub3d ${CUB3D_SRCS})
 
@@ -50,8 +50,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
 	)
 else()
 	file(GLOB_RECURSE CUB3D_COMMON_SOURCES CONFIGURE_DEPENDS "src/*.c")
-	file(GLOB_RECURSE CUB3D_MANDATORY_SOURCES CONFIGURE_DEPENDS "src/*_m.c" "src/*_m2.c")
-	file(GLOB_RECURSE CUB3D_BONUS_SOURCES CONFIGURE_DEPENDS "src/*_b.c" "src/*_b2.c" "src/*_e.c" "src/*_e2.c")
+	file(GLOB_RECURSE CUB3D_MANDATORY_SOURCES CONFIGURE_DEPENDS "src/*_m.c")
+	file(GLOB_RECURSE CUB3D_BONUS_SOURCES CONFIGURE_DEPENDS "src/*_b.c" "src/*_e.c")
 	list(FILTER CUB3D_COMMON_SOURCES EXCLUDE REGEX "src/.*_[bm]2?\\.c$")
 
 	add_library(cub3d_common OBJECT ${CUB3D_COMMON_SOURCES})
