@@ -15,7 +15,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
 	)
 	target_compile_options(cub3d PRIVATE
 		-Wno-cast-function-type
-		-O3 # TODO: check
+		-O2 # TODO: check
 	)
 
 	target_link_libraries(cub3d PRIVATE
@@ -56,7 +56,7 @@ else()
 
 	add_library(cub3d_common OBJECT ${CUB3D_COMMON_SOURCES})
 	target_include_directories(cub3d_common PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/includes")
-	target_compile_options(cub3d_common PUBLIC -Wno-cast-function-type)
+	target_compile_options(cub3d_common PUBLIC -Wno-cast-function-type -O2)
 	target_link_libraries(cub3d_common PUBLIC
 		42::libft
 		42::ft_printf
@@ -69,6 +69,7 @@ else()
 	target_link_libraries(cub3d PRIVATE cub3d_common)
 	
 	add_executable(cub3d_bonus ${CUB3D_BONUS_SOURCES})
+	target_compile_options(cub3d_bonus PUBLIC -g)
 	target_link_libraries(cub3d_bonus PRIVATE cub3d_common)
 	
 	include(GNUInstallDirs)
