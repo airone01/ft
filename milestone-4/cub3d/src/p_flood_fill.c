@@ -50,9 +50,9 @@ bool flood_fill_recursive(char **map_copy, int x, int y, t_data *data) {
   if (is_boundary_position(x, y, data) && map_copy[y][x] != '1')
     return (true);
   map_copy[y][x] = 'V';
-  if (flood_fill_recursive(map_copy, x + 1, y, data) ||
-      flood_fill_recursive(map_copy, x - 1, y, data) ||
-      flood_fill_recursive(map_copy, x, y + 1, data) ||
+  if (flood_fill_recursive(map_copy, x + 1, y, data) &&
+      flood_fill_recursive(map_copy, x - 1, y, data) &&
+      flood_fill_recursive(map_copy, x, y + 1, data) &&
       flood_fill_recursive(map_copy, x, y - 1, data))
     return (true);
   return (false);
