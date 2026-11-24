@@ -87,3 +87,4 @@ zig-out/
 # CMake
 build/
 compile_commands.json
+build_events.json

@@ -90,8 +90,8 @@ void *mlx_new_image(void *mlx_ptr, int width, int height) {
   img->bits_per_pixel = 32;
   img->line_length = width * 4;
   img->endian = 0;
-  img->data = malloc(width * height * 4);
-  memset(img->data, 0, width * height * 4);
+  img->data = malloc((unsigned long)(width * height * 4));
+  memset(img->data, 0, (unsigned long)(width * height * 4));
   return (img);
 }
 
@@ -108,8 +108,8 @@ char *mlx_get_data_addr(void *img_ptr, int *bits_per_pixel, int *size_line,
   return (img->data);
 }
 
-int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
-                            int y) {
+void mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
+                             int y) {
   t_3ds_img *img;
   u8 *fb;
   int src_idx;
@@ -123,7 +123,7 @@ int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
   (void)y;
   img = (t_3ds_img *)img_ptr;
   if (!img || !img->data)
-    return (0);
+    return;
   fb = gfxGetFramebuffer(GFX_TOP, GFX_LEFT, NULL, NULL);
   // Screen is 240x400 physically (portrait),
   // but we use it as 400x240(landscape)
@@ -141,7 +141,6 @@ int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
       fb[dst_idx + 2] = img->data[src_idx + 2]; // R
     }
   }
-  return (0);
 }
 
 int mlx_loop(void *mlx_ptr) {
@@ -215,8 +214,8 @@ int mlx_loop(void *mlx_ptr) {
   return (0);
 }
 
-int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
-             void *param) {
+void mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
+              void *param) {
   extern void *g_mlx_ptr;
   t_3ds_mlx *mlx;
 
@@ -224,7 +223,7 @@ int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
   (void)x_mask;
   mlx = (t_3ds_mlx *)g_mlx_ptr;
   if (!mlx)
-    return (0);
+    return;
   if (x_event == 2) { // ON_KEYDOWN
     mlx->key_press_hook = (void *)!funct;
     mlx->key_press_param = param;
@@ -235,25 +234,22 @@ int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct)(),
     mlx->destroy_hook = (void *)!funct;
     mlx->destroy_param = param;
   }
-  return (0);
 }
 
-int mlx_loop_hook(void *mlx_ptr, int (*funct_ptr)(), void *param) {
+void mlx_loop_hook(void *mlx_ptr, int (*funct_ptr)(), void *param) {
   t_3ds_mlx *mlx;
 
   mlx = (t_3ds_mlx *)mlx_ptr;
   mlx->loop_hook = (int (*)(void *))funct_ptr;
   mlx->loop_param = param;
-  return (0);
 }
 
-int mlx_destroy_window(void *mlx_ptr, void *win_ptr) {
+void mlx_destroy_window(void *mlx_ptr, void *win_ptr) {
   (void)mlx_ptr;
   (void)win_ptr;
-  return (0);
 }
 
-int mlx_destroy_image(void *mlx_ptr, void *img_ptr) {
+void mlx_destroy_image(void *mlx_ptr, void *img_ptr) {
   t_3ds_img *img;
 
   (void)mlx_ptr;
@@ -263,19 +259,14 @@ int mlx_destroy_image(void *mlx_ptr, void *img_ptr) {
       free(img->data);
     free(img);
   }
-  return (0);
 }
 
-int mlx_destroy_display(void *mlx_ptr) {
-  (void)mlx_ptr;
-  return (0);
-}
+void mlx_destroy_display(void *mlx_ptr) { (void)mlx_ptr; }
 
-int mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey) {
+void mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey) {
   (void)mlx_ptr;
   *sizex = SCREEN_WIDTH;
   *sizey = SCREEN_HEIGHT;
-  return (0);
 }
 
 // VERY basic XPM loader for 3DS
@@ -396,33 +387,29 @@ void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width,
 }
 
 // Dummy implementations for others
-int mlx_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param) {
+void mlx_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param) {
   (void)win_ptr;
   (void)funct_ptr;
   (void)param;
-  return 0;
 }
-int mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param) {
+void mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param) {
   (void)win_ptr;
   (void)funct_ptr;
   (void)param;
-  return 0;
 }
-int mlx_expose_hook(void *win_ptr, int (*funct_ptr)(), void *param) {
+void mlx_expose_hook(void *win_ptr, int (*funct_ptr)(), void *param) {
   (void)win_ptr;
   (void)funct_ptr;
   (void)param;
-  return 0;
 }
-int mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color,
-                   char *string) {
+void mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color,
+                    char *string) {
   (void)mlx_ptr;
   (void)win_ptr;
   (void)x;
   (void)y;
   (void)color;
   (void)string;
-  return 0;
 }
 void mlx_set_font(void *mlx_ptr, void *win_ptr, char *name) {
   (void)mlx_ptr;
@@ -451,13 +438,11 @@ int mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y) {
   (void)y;
   return 0;
 }
-int mlx_mouse_hide(void *mlx_ptr, void *win_ptr) {
+void mlx_mouse_hide(void *mlx_ptr, void *win_ptr) {
   (void)mlx_ptr;
   (void)win_ptr;
-  return 0;
 }
-int mlx_mouse_show(void *mlx_ptr, void *win_ptr) {
+void mlx_mouse_show(void *mlx_ptr, void *win_ptr) {
   (void)mlx_ptr;
   (void)win_ptr;
-  return 0;
 }

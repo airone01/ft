@@ -31,9 +31,11 @@ else()
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/includes>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
-  target_link_libraries(libft PUBLIC
-    42::ft_malloc
-  )
+  if(NOT CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
+    target_link_libraries(libft PUBLIC
+      42::ft_malloc
+    )
+  endif()
 
   install(TARGETS libft EXPORT libftConfig ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
   install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

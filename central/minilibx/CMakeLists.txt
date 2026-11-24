@@ -1,14 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(mlx C)
 
-# When building for the 3DS, don't compile anything
-# X11 is hence not required for MLX on 3DS
-if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
-  add_library(mlx INTERFACE)
-  target_include_directories(mlx INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
-  add_library(42::mlx ALIAS mlx)
-  return()
-endif()
+## Patch phase
 
 set(PATCHED_DIR "${CMAKE_CURRENT_BINARY_DIR}/mlx_patched")
 file(GLOB PATCHES CONFIGURE_DEPENDS "*.patch")
@@ -30,6 +23,17 @@ foreach(p IN LISTS PATCHES)
   endif()
 endforeach()
 
+# When building for the 3DS, don't compile anything, just include the headers.
+# A window manager is not required for MLX on 3DS.
+if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
+  add_library(mlx INTERFACE)
+  target_include_directories(mlx INTERFACE "${PATCHED_DIR}/includes")
+  add_library(42::mlx ALIAS mlx)
+  return()
+endif()
+
+## Compilation phase
+
 file(GLOB_RECURSE MLX_SOURCES "${PATCHED_DIR}/src/*.c")
 add_library(mlx STATIC ${MLX_SOURCES})
 include(GNUInstallDirs)
@@ -42,11 +46,20 @@ target_include_directories(mlx PUBLIC
   $<BUILD_INTERFACE:${PATCHED_DIR}/includes>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+set_target_properties(mlx PROPERTIES
+  OUTPUT_NAME "mlx"
+)
+
+## Linking phase
 
 target_link_libraries(mlx PUBLIC
-  42::ft_malloc # use my own malloc
   m # math
 )
+if(NOT CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
+  target_link_libraries(libft PUBLIC
+    42::ft_malloc
+  )
+endif()
 if(APPLE)
   # TODO: Check on OSX
   target_link_libraries(mlx PRIVATE
@@ -61,9 +74,7 @@ else()
   )
 endif()
 
-set_target_properties(mlx PROPERTIES
-  OUTPUT_NAME "mlx"
-)
+## Install phase
 
 install(TARGETS mlx EXPORT mlxConfig ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY includes/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

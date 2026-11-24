@@ -13,7 +13,10 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Nintendo3DS")
 		"3ds"
 		"$ENV{DEVKITPRO}/libctru/include"
 	)
-	target_compile_options(cub3d PRIVATE -Wno-cast-function-type)
+	target_compile_options(cub3d PRIVATE
+		-Wno-cast-function-type
+		-O3 # TODO: check
+	)
 
 	target_link_libraries(cub3d PRIVATE
 		42::libft
