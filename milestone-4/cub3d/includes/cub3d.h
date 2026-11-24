@@ -294,11 +294,15 @@ typedef struct s_data {
   double *z_buffer;
 } t_data;
 
-// This is very specific
-typedef struct s_double_int {
+typedef struct {
   int *x;
   int *y;
-} t_double_int;
+} mut_vec2;
+
+typedef struct {
+  const int x;
+  const int y;
+} vec2;
 
 /*******************************************************************************
  *                             Function Prototypes                             *

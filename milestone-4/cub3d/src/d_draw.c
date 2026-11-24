@@ -1,8 +1,8 @@
-
 #include "door_bonus.h"
 #include "draw.h"
 #include "libft.h"
 #include "texture.h"
+#include <cub3d.h>
 
 static void draw_line_pixels(t_data *data, t_ray *ray, t_texture *texture,
                              int x) {
@@ -26,8 +26,8 @@ static void draw_line_pixels(t_data *data, t_ray *ray, t_texture *texture,
   }
 }
 
-static void draw_textured_line_init(t_ray *ray, struct s_double_int s,
-                                    t_texture *texture, t_data *data) {
+static void draw_textured_line_init(t_ray *ray, mut_vec2 s, t_texture *texture,
+                                    t_data *data) {
   double wall_x;
 
   wall_x = calculate_wall_hit(data, ray);
@@ -49,8 +49,7 @@ void draw_textured_line(t_data *data, t_ray *ray, int x) {
   int door_offset;
 
   texture = get_wall_texture(data, &data->textures, ray);
-  draw_textured_line_init(ray, (struct s_double_int){&map_x, &map_y}, texture,
-                          data);
+  draw_textured_line_init(ray, (mut_vec2){&map_x, &map_y}, texture, data);
   if (map_y >= 0 && map_y < data->map_height && map_x >= 0 &&
       map_x < data->map_width && data->map[map_y] &&
       map_x < (int)ft_strlen(data->map[map_y]) &&

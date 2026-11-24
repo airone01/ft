@@ -7,18 +7,11 @@
 #include "mouse_bonus.h"
 #include "player.h"
 
-void handle_mlx_bonus_features_loop(struct s_double_int player, t_data *data) {
-  int dx;
-  int dy;
-  int check_x;
-  int check_y;
-
-  dy = -2;
-  while (++dy <= 1) {
-    dx = -2;
-    while (++dx <= 1) {
-      check_x = *player.x + dx;
-      check_y = *player.y + dy;
+static void handle_mlx_bonus_features_loop(vec2 player_pos, t_data *data) {
+  for (int dy = -2; ++dy <= 1;) {
+    for (int dx = -2; ++dx <= 1;) {
+      int check_x = player_pos.x + dx;
+      int check_y = player_pos.y + dy;
       if (check_x >= 0 && check_x < data->map_width && check_y >= 0 &&
           check_y < data->map_height && data->map[check_y] &&
           check_x < (int)ft_strlen(data->map[check_y]) &&
@@ -52,7 +45,7 @@ void handle_mlx_bonus_features(t_data *data, int keycode) {
     }
     pl_x = (int)data->player.pos_x;
     pl_y = (int)data->player.pos_y;
-    handle_mlx_bonus_features_loop((t_double_int){&pl_x, &pl_y}, data);
+    handle_mlx_bonus_features_loop((vec2){pl_x, pl_y}, data);
   }
 }
 
