@@ -8,8 +8,8 @@
  *                                    Macros                                   *
  ******************************************************************************/
 
-#define MINIMAP_SIZE 150
-#define MINIMAP_MARGIN 40
+#define MINIMAP_SIZE 100
+#define MINIMAP_MARGIN 10
 #define MINIMAP_SCALE 15
 #define MINIMAP_PLAYER_SIZE 3
 #define MINIMAP_FOV_LENGTH 200

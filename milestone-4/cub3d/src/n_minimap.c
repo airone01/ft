@@ -1,4 +1,3 @@
-
 #include "draw.h"
 #include "minimap_bonus.h"
 
@@ -14,10 +13,10 @@ static void init_draw_params(t_draw_params *params, t_data *data) {
 
 static void draw_minimap_background(t_data *data, t_draw_params *params) {
   params->color.val = 0x150000;
-  params->x = params->minimap_x;
-  params->y = params->minimap_y;
-  params->width = MINIMAP_SIZE;
-  params->height = MINIMAP_SIZE;
+  params->x = params->minimap_x - 1;
+  params->y = params->minimap_y - 1;
+  params->width = MINIMAP_SIZE + 3;
+  params->height = MINIMAP_SIZE + 3;
   draw_filled_rect(data, params);
 }
 
@@ -36,9 +35,6 @@ void draw_minimap(t_data *data) {
 }
 
 void draw_filled_rect(t_data *data, t_draw_params *params) {
-  int i;
-  int j;
-
   if (params->x >= data->win_width || params->y >= data->win_height ||
       params->x + params->width <= 0 || params->y + params->height <= 0)
     return;
@@ -49,13 +45,8 @@ void draw_filled_rect(t_data *data, t_draw_params *params) {
   if (params->y < 0)
     params->y = 0;
   clamp_rect_bounds(data, params);
-  i = params->y;
-  while (i < params->y + params->height) {
-    j = params->x;
-    while (j < params->x + params->width) {
+
+  for (int i = params->y; i < params->y + params->height; i++)
+    for (int j = params->x; j < params->x + params->width; j++)
       my_mlx_pixel_put(&data->img, j, i, params->color);
-      j++;
-    }
-    i++;
-  }
 }
